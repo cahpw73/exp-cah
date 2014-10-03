@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:o="http://omnifaces.org/ui"
+                template="/WEB-INF/layout/template.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{permissionBean.canAccess(3)}"/>
+        <f:viewParam name="userId" value="#{userEditBean.userId}"/>
+        <f:viewAction action="#{userEditBean.loadUserSelected}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:panelGroup>
+            <div>
+            </div>
+        </h:panelGroup>
+        <h2>#{msgs['user.edit.title']}</h2>
+        <h:form id="userEditForm" class="form-horizontal" role="form">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.username']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputUsername" value="#{userEditBean.userSelected.username}"
+                                     jsf:placeholder="#{msgs['user.edit.lbl.username']}" required="true">
+                        </h:inputText>
+                        <p:message for="inputUsername" id="msgInputUsername"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.first.name']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputFirstName" value="#{userEditBean.userSelected.firstName}"
+                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"/>
+                        <p:message for="inputFirstName" id="msgInputFirstName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.name']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputName" value="#{userEditBean.userSelected.name}"
+                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"/>
+                        <p:message for="inputName" id="msgInputName"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                     <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.email']}"/>
+                     <div class="col-sm-9">
+                         <h:inputText class="form-control" id="inputEmail" value="#{userEditBean.userSelected.email}"
+                                      jsf:placeholder="#{msgs['user.edit.lbl.email']}" required="true">
+                         </h:inputText>
+                         <p:message for="inputEmail" id="msgInputEmail"/>
+                     </div>
+                </div>
+
+                <div class="form-group">
+                     <p:outputLabel class="col-sm-3 control-label" for="pwd1" value="#{msgs['user.edit.lbl.pwd.hash']}" />
+                     <div class="col-sm-9">
+                         <p:password id="pwd1" value="#{userEditBean.userSelected.password}" match="pwd2" required="true"
+                                     jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash']}" autocomplete="off"
+                                     redisplay="true"/>
+                         <p:message id="msgPwd1" for="pwd1"/>
+                     </div>
+                </div>
+                <div class="form-group">
+                     <p:outputLabel class="col-sm-3 control-label" for="pwd2" value="#{msgs['user.edit.lbl.pwd.hash.confirm']}" />
+                     <div class="col-sm-9">
+                         <p:password id="pwd2" value="#{userEditBean.userSelected.password}" jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash.confirm']}"
+                                     required="true" redisplay="true" />
+                         <p:message id="msgPwd2" for="pwd2"/>
+                     </div>
+                </div>
+                <div class="form-group">
+                     <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.Role']}"/>
+                     <div class="col-sm-9">
+                         <h:selectOneMenu id="inputRole" class="form-control" value="#{userEditBean.roleEnum}">
+                             <f:selectItems value="#{userEditBean.roles}"
+                                            var="_role"
+                                            itemValue="#{_role}"
+                                            itemLabel="#{_role.label}"/>
+                          </h:selectOneMenu>
+                     </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label"
+                                   value="#{msgs['user.edit.lbl.status']}"/>
+
+                    <div class="col-sm-9">
+                        <h:selectOneMenu id="inputStatus" class="form-control" value="#{userEditBean.statusEnum}">
+                            <f:selectItems value="#{userEditBean.statuses}"
+                                           var="_status"
+                                           itemValue="#{_status}"
+                                           itemLabel="#{_status.label}"/>
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+                <div>
+                    <div class="pull-right">
+                        <h:commandButton value="#{msgs['user.edit.lbl.button.save']}" styleClass="btn btn-primary"
+                                         action="#{userEditBean.doSave}"/>
+                        &#160;
+                        <h:button value="#{msgs['user.edit.lbl.button.cancel']}" outcome="/user/list"
+                                  styleClass="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

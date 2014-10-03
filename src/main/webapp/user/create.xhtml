@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/layout/template.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{permissionBean.canAccess(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:panelGroup>
+            <div>
+            </div>
+        </h:panelGroup>
+        <h2>#{msgs['user.create.title']}</h2>
+        <h:form id="userCreateForm" class="form-horizontal" role="form">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.username']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputUsername" value="#{userCreateBean.userEntity.username}"
+                                     jsf:placeholder="#{msgs['user.create.lbl.username']}" required="true">
+                        </h:inputText>
+                        <p:message for="inputUsername" id="msgInputUsername"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.first.name']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputFirstName" value="#{userCreateBean.userEntity.firstName}"
+                                     jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"/>
+                        <p:message for="inputFirstName" id="msgInputFirstName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.name']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputName" value="#{userCreateBean.userEntity.name}"
+                                     jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"/>
+                        <p:message for="inputName" id="msgInputName"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.email']}"/>
+                    <div class="col-sm-9">
+                        <h:inputText class="form-control" id="inputEmail" value="#{userCreateBean.userEntity.email}"
+                                     jsf:placeholder="#{msgs['user.create.lbl.email']}" required="true">
+                        </h:inputText>
+                        <p:message for="inputEmail" id="msgInputEmail"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p:outputLabel class="col-sm-3 control-label" for="pwd1" value="#{msgs['user.create.lbl.pwd.hash']}" />
+                    <div class="col-sm-9">
+                        <p:password id="pwd1" value="#{userCreateBean.userEntity.password}" match="pwd2" required="true"
+                                    jsf:placeholder="#{msgs['user.create.lbl.pwd.hash']}" autocomplete="off"/>
+                        <p:message id="msgPwd1" for="pwd1"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel class="col-sm-3 control-label" for="pwd2" value="#{msgs['user.create.lbl.pwd.hash.confirm']}" />
+                    <div class="col-sm-9">
+                        <p:password id="pwd2" value="#{userCreateBean.userEntity.password}" jsf:placeholder="#{msgs['user.create.lbl.pwd.hash.confirm']}"
+                                    required="true" />
+                        <p:message id="msgPwd2" for="pwd2"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.Role']}"/>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu id="inputRole" class="form-control" value="#{userCreateBean.roleName}">
+                            <f:selectItems value="#{userCreateBean.roles}"
+                                           var="_role"
+                                           itemLabel="#{_role.label}"/>
+                         </h:selectOneMenu>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.status']}"/>
+                    <div class="col-sm-9">
+                        <h:selectOneMenu id="inputStatus" class="form-control" value="#{userCreateBean.statusId}">
+                            <f:selectItems value="#{userCreateBean.statuses}"
+                                           var="_status"
+                                           itemValue="#{_status.id}"
+                                           itemLabel="#{_status.label}"/>
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+                <div>
+                    <div class="pull-right">
+                        <h:commandButton value="#{msgs['user.create.lbl.button.save']}" styleClass="btn btn-primary"
+                                         action="#{userCreateBean.doSave}"/>
+                        &#160;
+                        <h:button value="#{msgs['user.create.lbl.button.cancel']}" outcome="/user/list"
+                                  styleClass="btn btn-primary"/>
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

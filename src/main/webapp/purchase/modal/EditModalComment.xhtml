@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+<h:form id="commentFormId" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
+        styleClass="form-horizontal">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['po.attach.tbl.column.from']}"/>
+                <div class="col-sm-8">
+                    <h:inputText type="text"
+                                 id="nameComment"
+                                 jsf:placeholder="#{msgs['po.attach.tbl.column.from']}"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.commentEdit.name}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['po.attach.tbl.column.reason']}"/>
+
+                <div class="col-sm-8">
+                    <h:inputText type="text"
+                                 id="reasonComment"
+                                 jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.commentEdit.reason}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['po.attach.tbl.column.observations']}"/>
+                <div class="col-sm-8">
+                    <h:inputText type="text"
+                                 id="descriptionComment"
+                                 jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.commentEdit.description}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p:fileUpload  styleClass="col-sm-4 col-lg-4 col-md-4" fileUploadListener="#{purchaseOrderEdit.handleCommentUpload}" mode="advanced"
+                           update="fileNameDivId"
+                          dragDropSupport="false" auto="true">
+            </p:fileUpload>
+            <h:panelGroup id="fileNameDivId">
+                <div class="col-sm-8">
+                    #{purchaseOrderEdit.commentEdit.fileName}
+                </div>
+            </h:panelGroup>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <div class="pull-right">
+                    <h:commandButton id="addComment" value="#{msgs['lbl.add']}" class='btn btn-primary'>
+                        <p:ajax onsuccess="PF('commentEditModal').hide();" update=":empForm:commentList"
+                                listener="#{purchaseOrderEdit.addComment}"
+                                process="nameComment, descriptionComment, reasonComment, addComment"/>
+                    </h:commandButton>
+                    <button type="button" onclick="PF('commentEditModal').hide();" class="btn btn-primary">
+                       #{msgs['lbl.cancel']}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:form>
+</ui:composition>

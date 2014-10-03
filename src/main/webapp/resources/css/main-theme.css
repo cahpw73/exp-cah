@@ -1,0 +1,37 @@
+body {
+    padding-top: 50px;
+    font-size: 14px;
+}
+
+
+.ui-inputfield{
+    font-weight: normal;
+    margin: 0;
+    outline: medium none;
+    padding: 4px;
+    width: 100%;
+}
+
+/* Small devices (celular, 768px and up) */
+@media only screen and (max-width: 768px) {
+
+}
+/* Small devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+/* Medium devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+/* Large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .container-fluid {
+        width: 1286px!important;
+        min-height: 640px;
+    }
+
+    .footer.footer-tmp{
+        top: 50px;
+    }
+}

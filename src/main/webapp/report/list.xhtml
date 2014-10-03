@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/layout/template.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{permissionBean.canAccess(200)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <h2 class="sub-header">#{msgs['purchase.order.filter.title']}</h2>
+
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
+                        <p:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
+                                     value="#{reportListBean.searchPurchase.project}" styleClass="form-control"
+                                     maxlength="18">
+                        </p:inputText>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
+                                     value="#{reportListBean.searchPurchase.po}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
+                                     value="#{reportListBean.searchPurchase.variation}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            <ui:remove>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
+                                     value="#{reportListBean.searchPurchase.supplier}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            </ui:remove>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                     value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <br/>
+
+            <div>
+                <div class="pull-right">
+                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
+                                     type="submit" class="btn btn-primary"></h:commandButton>
+                    &#160;
+                    <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
+                                     type="submit" class="btn btn-primary"/>
+                </div>
+
+            </div>
+        </h:form>
+
+        <div class="clearfix"/>
+        <br/>
+        <h:form>
+
+        </h:form>
+        <h:form id="purchaseList" prependId="false">
+            <h2 class="sub-header">#{msgs['po.list.title']}</h2>
+            <p:dataTable value="#{reportListBean.list}" var="_purchase"
+                         paginator="true" rows="5" lazy="true"
+                         rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
+                <p:column headerText="#{msgs['po.lbl.project']}">
+                    #{_purchase.project}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.po']}">
+                    #{_purchase.po}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.variation']}">
+                    #{_purchase.variation}
+                </p:column>
+                <ui:remove>
+                <p:column headerText="#{msgs['po.lbl.supplier']}">
+
+                </p:column>
+                </ui:remove>
+                <p:column headerText="#{msgs['po.lbl.po.title']}">
+                    #{_purchase.poTitle}
+                </p:column>
+                <p:column headerText="#{msgs['lbl.action']}">
+                    <p:commandLink value="Add to report">
+                            <p:ajax  update=":purchaseList:listSelected" listener="#{reportBean.addPurchaseOrder(_purchase.id)}"></p:ajax>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <p:dataTable  id="listSelected"  value="#{reportBean.selected}" var="_po">
+                <p:column headerText="#{msgs['po.lbl.project']}">
+                    #{_po.project}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.po']}">
+                    #{_po.po}
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <h:commandLink styleClass="btn btn-primary" value="Report Receivable Manifest" action="#{reportBean.printReportReceivableManifest()}" target="#{reportBean.openReport?'_blank':''}"/>
+            &#160;
+            <h:commandLink styleClass="btn btn-primary" value="Report Job Summary" action="#{reportBean.printReportJobSummary()}" target="#{reportBean.openReport?'_blank':''}"/>
+            &#160;
+            <h:commandLink styleClass="btn btn-primary" value="Clean Purchases">
+
+                <p:ajax update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}" ></p:ajax>
+            </h:commandLink>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

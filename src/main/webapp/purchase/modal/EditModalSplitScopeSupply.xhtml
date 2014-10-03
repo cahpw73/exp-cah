@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <h:form id="scopeSupplySplitFormId" role="form" prependId="false" enctype="multipart/form-data"
+            styleClass="form-horizontal"
+            acceptcharset="UTF-8">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <h:outputLabel for="scopeSupplySplitQuantity2" class="col-sm-12 control-label"
+                               value="Original Quantity"/>
+                <h:inputText id="scopeSupplySplitQuantity2" type="text"
+                             jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
+                             value="#{purchaseOrderEdit.selectedScopeSupply.quantity}"
+                             class="form-control">
+                    <p:ajax event="blur" listener="#{purchaseOrderEdit.calculateNewScopeSupplyQuantity()}"
+                            update=":scopeSupplySplitFormId:scopeSupplySplitQuantity"/>
+                </h:inputText>
+                <h:message for="scopeSupplySplitQuantity2"/>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <h:outputLabel class="control-label" value="#{msgs['po.supply.scope.column.quantity']}"/>
+                </div>
+                <div class="col-sm-6">
+                    <h:outputLabel class="control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
+                </div>
+                <div class="col-sm-6">
+                    <h:inputText id="scopeSupplySplitQuantity" type="text"
+                                 jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
+                                 value="#{purchaseOrderEdit.scopeSupplySplit.quantity}"
+                                 class="form-control">
+                        <p:ajax event="blur" listener="#{purchaseOrderEdit.calculateOldScopeSupplyQuantity()}"
+                                update=":scopeSupplySplitFormId:scopeSupplySplitQuantity2"/>
+                    </h:inputText>
+                    <h:message for="scopeSupplySplitQuantity" id="msgScopeSupplySplitQuantity"/>
+                </div>
+                <div class="col-sm-6">
+                    <h:inputText type="text" jsf:placeholder="#{msgs['po.supply.scope.column.unit']}"
+                                 value="#{purchaseOrderEdit.scopeSupplySplit.unit}"
+                                 class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['po.supply.scope.column.description']}"/>
+                <h:inputTextarea value="#{purchaseOrderEdit.scopeSupplySplit.description}" styleClass="form-control"/>
+            </div>
+            <div class="form-row">
+                <h:outputLabel value="#{msgs['supply.scope.lbl.work.date']}"/>
+                <p:calendar id="exWorkDateSplit" styleClass="p-calendar"
+                            pattern="#{configuration.formatDate}"
+                            converterMessage="#{msgs['validator.date.invalid']}"
+                            jsf:placeholder="#{msgs['lbl.format.date']}"
+                            value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDate}">
+                    <p:ajax process="@this" event="dateSelect"
+                            update=":scopeSupplySplitFormId:siteDateCalculatedSplit"></p:ajax>
+                </p:calendar>
+                    <h:inputText maxlength="50" type="text"
+                                 value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDateDescription}"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
+                                 class="form-control"/>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <h:outputLabel class="control-label"
+                                   value="#{msgs['supply.scope.lbl.delivery.time']}"/>
+                </div>
+                <div class="col-sm-6">
+                    <h:outputLabel class="control-label"
+                                   value="Measure"/>
+                </div>
+                <div class="col-sm-6">
+                    <h:inputText maxlength="255" type="text"
+                                 value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeQt}"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
+                                 class="form-control">
+                        <f:ajax execute="@this" render="siteDateCalculatedSplit"/>
+                    </h:inputText>
+                </div>
+                <div class="col-sm-6">
+                    <h:selectOneMenu id="measurementUnitSplit"
+                                     value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeMs}"
+                                     styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                        <f:selectItems value="#{allTimeMeasurement}"/>
+                        <f:ajax execute="@this" render="siteDateCalculatedSplit"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel style="width: 100%" value="#{msgs['supply.scope.lbl.site.date']}"/>
+                <h:outputLabel id="siteDateCalculatedSplit" value="#{purchaseOrderEdit.calculateDate()}">
+                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                </h:outputLabel>
+                <h:inputText style="width: 100%" maxlength="50" type="text"
+                             value="#{purchaseOrderEdit.scopeSupplySplit.siteDateDescription}"
+                             jsf:placeholder="#{msgs['supply.scope.ph.site.date.observations']}"
+                             class="form-control"/>
+            </div>
+            <div class="clearfix"/>
+            <br/>
+            <div class="form-group">
+                <div class="pull-right">
+                    <h:commandButton value="split"
+                                     class='btn btn-primary'>
+                        <p:ajax update=":empForm:scopeSupplyList :scopeSupplySplitFormId"
+                                listener="#{purchaseOrderEdit.split()}"
+                                onsuccess="PF('scopeSupplySplitModal').hide();"
+                                process="scopeSupplySplitFormId"/>
+                    </h:commandButton>
+                    &#160;
+                    <button type="button" class="btn btn-primary" onclick="PF('scopeSupplySplitModal').hide();">
+                        #{msgs['lbl.cancel']}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </h:form>
+</ui:composition>

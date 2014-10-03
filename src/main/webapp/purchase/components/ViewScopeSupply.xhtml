@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h2 class="sub-header">#{msgs['po.supply.scope.title']}</h2>
+    <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderView.scopeSupplies}" rowKey="#{_index+1}"
+                 rowIndexVar="_index">
+        <p:column style="width: 45px;" headerText="#{msgs['po.supply.scope.column.item']}">
+            #{_index+1}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.code']}">
+            #{_scopeSupply.code}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}">
+            #{_scopeSupply.quantity}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.unit']}">
+            #{_scopeSupply.unit}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.cost']}">
+            #{_scopeSupply.cost}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.description']}">
+            #{_scopeSupply.description}
+        </p:column>
+    </p:dataTable>
+</ui:composition>

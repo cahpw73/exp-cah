@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JobSummary" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71430e76-2a1b-4fbb-a63c-2ff243ffaee5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="purchaseID" class="java.util.Collection"/>
+	<parameter name="TIME_MEASUREMENT" class="java.util.Map"/>
+	<queryString>
+		<![CDATA[select id,project,po
+from purchase_order
+WHERE  $X{IN, id, purchaseID} and status_id=1
+order by id DESC;]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="project" class="java.lang.String"/>
+	<field name="po" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="78" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b" x="701" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="224" y="20" width="261" height="42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Job Summary]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="73031216-32c4-43a0-8b95-81a50cd2739a" x="2" y="0" width="800" height="40"/>
+				<subreportParameter name="PURCHASE_ORDER_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_MEASURE_LIST">
+					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "JobSummary_scopeSupply.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="f779b89a-60bd-4125-bbe0-280a091b4ee9" x="771" y="0" width="30" height="18"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="384ce6ac-1b80-4adb-bdfe-03b8e42ec97e" x="766" y="0" width="5" height="18"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="37fdd986-335d-4860-94d2-7b3d489e9e94" x="2" y="0" width="222" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[First Quantum Mineral Expediting System]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="603342f6-27f1-4162-8b8e-9d48ba1fee72" x="736" y="0" width="30" height="18"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

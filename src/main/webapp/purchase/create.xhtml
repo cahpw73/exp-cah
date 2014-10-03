@@ -1,0 +1,262 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/layout/template.xhtml">
+
+<ui:define name="title">Inicio</ui:define>
+<f:metadata>
+    <f:viewAction action="#{identity.isLoggedIn()}"/>
+    <f:viewAction action="#{permissionBean.canAccess(101)}"/>
+</f:metadata>
+<ui:define name="body">
+
+<div class="row">
+<o:highlight/>
+
+<div class="col-lg-12">
+<h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
+        acceptcharset="UTF-8">
+
+<!-- Form Name -->
+<h2 class="sub-header">#{msgs['po.new.title']}</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <!-- Text input-->
+        <div class="form-group">
+            <p:outputLabel for="projectName" class="col-sm-4 control-label" value="#{msgs['po.lbl.project']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="projectName" type="text"
+                             required="true"
+                             maxlength="50"
+                             jsf:placeholder="#{msgs['po.ph.project']}"
+                             value="#{newPurchaseOrder.project}"
+                             class="form-control"/>
+                <p:message for="projectName" id="msgProject"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <h:inputText type="text" class="form-control"
+                             maxlength="50"
+                             value="#{newPurchaseOrder.description}"
+                             jsf:placeholder="#{msgs['po.ph.description']}"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <p:outputLabel for="po" class="col-sm-4 control-label" value="#{msgs['po.lbl.po']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="po" type="text" jsf:placeholder="#{msgs['po.ph.po']}"
+                             maxlength="50"
+                             required="true"
+                             value="#{newPurchaseOrder.po}"
+                             class="form-control"/>
+                <p:message for="po" id="msgPO"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="name" maxlength="50" type="text"
+                             value="#{newPurchaseOrder.variation}"
+                             jsf:placeholder="#{msgs['po.ph.variation']}" class="form-control"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Text input-->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.supplier']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="supplier" type="text" maxlength="50" value="#{newSupplier.supplier}"
+                             jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row"><!---->
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="address" maxlength="50" type="text" value="#{newSupplier.address}"
+                             jsf:placeholder="#{msgs['po.ph.address']}" class="form-control"/>
+                <p:message for="address" id="msgAddress"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h:inputText maxlength="255" type="text" value="#{newSupplier.addresDescription}"
+                     jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label"
+                           value="#{msgs['po.lbl.contact.name']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="contactName" maxlength="50" type="text"
+                             value="#{newSupplier.contactName}"
+                             jsf:placeholder="#{msgs['po.ph.contact.name']}"
+                             class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h:inputText maxlength="50" type="text"
+                     value="#{newSupplier.contactNameDescription}"
+                     jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
+                     class="form-control"/>
+    </div>
+</div>
+<div class="row">
+    <!-- Text input-->
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.po.title']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="poTitle" maxlength="50" type="text"
+                             value="#{newPurchaseOrder.poTitle}"
+                             jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Text input-->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label"
+                           value="#{msgs['po.lbl.po.inco.term']}"/>
+
+            <div class="col-sm-8">
+                <h:inputText id="incoTerm" type="text" maxlength="50"
+                             value="#{newPurchaseOrder.poIncoTerm}"
+                             jsf:placeholder="#{msgs['po.ph.po.inco.term']}"
+                             class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h:inputText maxlength="255" type="text"
+                     value="#{newPurchaseOrder.poIncoTermDescription}"
+                     jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label"
+                           value="#{msgs['po.lbl.po.delivery.date']}"/>
+
+            <div class="col-sm-8">
+                <p:calendar id="deliveryDate" type="text" styleClass="calendar"
+                            mask="true"
+                            navigator="true"
+                            pattern="#{configuration.formatDate}"
+                            jsf:placeholder="#{msgs['lbl.format.date']}"
+                            converterMessage="#{msgs['validator.date.invalid']}"
+                            value="#{newPurchaseOrder.poDeliveryDate}">
+                    <p:ajax process="@this" event="dateSelect" />
+                 </p:calendar>
+                <h:message for="deliveryDate" id="msgDeliveryDate"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h:inputText maxlength="50" type="text"
+                     value="#{newPurchaseOrder.poDeliveryDateDescription}"
+                     jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-4 control-label"
+                           value="#{msgs['po.lbl.responsible']}"/>
+            <div class="col-sm-8">
+                <h:inputText id="responsible" type="text" maxlength="100"
+                             value="#{newPurchaseOrder.responsibleExpediting}"
+                             jsf:placeholder="#{msgs['po.ph.responsible']}"
+                             class="form-control"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <ui:include src="components/CreateScopeSupply.xhtml"/>
+</div>
+<br/>
+<div class="row">
+<ui:include src="components/CreateAdditionalData.xhtml"/>
+</div>
+<br/>
+<div class="row">
+<ui:include src="components/CreateAttachments.xhtml"/>
+</div>
+<br/>
+<br/>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <div class="pull-right">
+                <h:commandButton id="save" value="#{msgs['lbl.save']}" class='btn btn-primary'
+                                 action="#{purchaseOrderCreate.doSave}"
+                                 type='submit'/>
+                &#160;
+                <h:commandButton id="add" value="#{msgs['lbl.save.add']}" class='btn btn-primary'
+                                 action="#{purchaseOrderCreate.doSaveAndAdd()}"
+                                 type='submit'/>
+                &#160;
+                <h:link id="delete" value="#{msgs['lbl.cancel']}" class='btn btn-primary'
+                                    outcome="/purchase/list"
+                                 type='submit'/>
+            </div>
+        </div>
+    </div>
+</div>
+</h:form>
+</div>
+<!-- /.col-lg-12 -->
+</div>
+
+<p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentModal" resizable="false"  height="300" width="700">
+    <ui:include src="modal/CreateModalComment.xhtml"/>
+</p:dialog>
+<p:dialog id="commentModalEditId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentEditModal" resizable="false"  height="300" width="700">
+    <ui:include src="modal/CreateCommentModalEdit.xhtml"/>
+</p:dialog>
+
+<p:dialog id="scopeSuypplyModalId" header="#{msgs['modal.scope.supply.title']}" resizable="false" widgetVar="scopeSupplyModal" height="500"  width="900">
+    <ui:include src="modal/CreateModalScopeSupply.xhtml"/>
+</p:dialog>
+<p:dialog id="scopeSuypplyEditModalId" header="#{msgs['modal.scope.supply.edit.title']}" resizable="false" widgetVar="scopeSupplyEditModal" height="500" width="900">
+    <ui:include src="modal/CreateModalScopeSupplyEditing.xhtml"/>
+</p:dialog>
+</ui:define>
+</ui:composition>

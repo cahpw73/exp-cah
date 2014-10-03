@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="col-lg-4">
+            <div class="navbar-header topmenu-title">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="pull-left main-logo">
+                    <h:graphicImage name="img/logo-1.jpg"/>
+                </div>
+                <h:link styleClass="navbar-brand" outcome="/home"> #{msgs['main.title']}</h:link>
+
+            </div>
+        </div>
+        <!--Sub Top Menu-->
+        <div class="col-lg-4" style="text-align: center;align-content: center; vertical-align: middle; margin-top: 15px; position: relative">
+            <div class="navbar-header "  style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
+                    <span class="link-navigation-label">
+                        <h:link rendered="#{permissionBean.hasPermission(100)}" outcome="/purchase/list">Purchase order</h:link>
+                    </span>
+                    <span class="link-navigation-label">
+                        <h:link rendered="#{permissionBean.hasPermission(1)}" outcome="/user/list">Users</h:link>
+                    </span>
+                    <span class="link-navigation-label">
+                        <h:link rendered="#{permissionBean.hasPermission(200)}" outcome="/report/list">Reports</h:link>
+                    </span>
+            </div>
+        </div>
+        <!-- End Sub Top Menu-->
+        <div class="col-lg-4">
+            <div class="navbar-collapse collapse">
+                <h:form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="inputSearchId">
+                            <input type="text" class="form-control" placeholder="Search..."/>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
+                                <li><p:commandLink value="#{msgs['user.change.password']}"
+                                                   action="#{userChangePassBean.loadUserSelected()}"
+                                                   oncomplete="PF('changePassDlg').show();"
+                                                   update=":changePassDlgId">
+
+                                </p:commandLink></li>
+                                <li class="divider"></li>
+                                <li>
+                                    <p:commandLink id="logout" value="#{msgs['close.session']}"
+                                                   actionListener="#{identity.logout}" process="@this"
+                                                   action="/login?faces-redirect=true" rendered="#{identity.loggedIn}">
+                                        <f:param name="nocid" value="true"/>
+                                    </p:commandLink>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </h:form>
+            </div>
+        </div>
+    </nav>
+    <!--Modal change password-->
+    <p:dialog id="changePassDlgId" widgetVar="changePassDlg">
+        <ui:include src="/user/change_password.xhtml"/>
+    </p:dialog>
+    <!--End modal change password-->
+
+</ui:composition>

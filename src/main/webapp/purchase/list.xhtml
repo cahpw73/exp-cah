@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/layout/template.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{permissionBean.canAccess(100)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form>
+            <h2 class="sub-header">#{msgs['purchase.order.filter.title']}</h2>
+
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
+                        <p:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
+                                     value="#{ purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"
+                                     maxlength="18">
+                        </p:inputText>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.po}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.variation}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            <ui:remove>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.supplier}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            </ui:remove>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.poTitle}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <br/>
+
+            <div>
+                <div class="pull-left">
+                    <h:button value="Create purchase order" rendered="#{permissionBean.hasPermission(101)}" outcome="/purchase/create"
+                              styleClass="btn btn-primary"/>
+                </div>
+                <div class="pull-right">
+                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{purchaseOrderListBean.doSearch}"
+                                     type="submit" class="btn btn-primary"></h:commandButton>
+                    &#160;
+                    <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
+                                     type="submit" class="btn btn-primary"/>
+                </div>
+
+            </div>
+        </h:form>
+
+        <div class="clearfix"/>
+        <br/>
+        <h:form>
+            <h2 class="sub-header">#{msgs['po.list.title']}</h2>
+            <p:dataTable value="#{purchaseOrderListBean.list}" var="_purchase"
+                         paginator="true" rows="5" lazy="true"
+                         rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
+                <p:column headerText="#{msgs['po.lbl.project']}">
+                    #{_purchase.project}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.po']}">
+                    #{_purchase.po}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.variation']}">
+                    #{_purchase.variation}
+                </p:column>
+                <ui:remove>
+                <p:column headerText="#{msgs['po.lbl.supplier']}">
+
+                </p:column>
+                </ui:remove>
+                <p:column headerText="#{msgs['po.lbl.po.title']}">
+                    #{_purchase.poTitle}
+                </p:column>
+                <p:column headerText="#{msgs['lbl.action']}">
+                    <h:link value="#{msgs['lbl.view']}" rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
+                        <f:param name="poId" value="#{_purchase.id}"/>
+                    </h:link>
+                    &#160;
+                    <h:link rendered="#{permissionBean.hasPermission(102)}" value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
+                        <f:param name="poId" value="#{_purchase.id}"/>
+                    </h:link>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h2 class="sub-header">#{msgs['po.supply.scope.title']}</h2>
+    <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderEdit.activeScopeSupplies}" rowKey="#{_index+1}"
+                 rowIndexVar="_index">
+        <p:column style="width: 45px;" headerText="#{msgs['po.supply.scope.column.item']}">
+            #{_index+1}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.code']}">
+            #{_scopeSupply.code}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}">
+            #{_scopeSupply.quantity}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.unit']}">
+            #{_scopeSupply.unit}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.cost']}">
+            #{_scopeSupply.cost}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.description']}">
+            #{_scopeSupply.description}
+        </p:column>
+        <p:column headerText="#{msgs['lbl.action']}">
+            <h:commandLink value="#{msgs['lbl.delete']}"  >
+                <p:ajax update="scopeSupplyList" listener="#{purchaseOrderEdit.deleteScopeSupply(_scopeSupply.id)}"/>
+            </h:commandLink>
+            &#160;
+            <h:commandLink rendered="#{permissionBean.hasPermission(105)}"  value="#{msgs['supply.scope.lbl.split']}" onclick="PF('scopeSupplySplitModal').show();"  >
+                <p:ajax update=":scopeSupplySplitFormId" listener="#{purchaseOrderEdit.selectScopeSupply(_scopeSupply.id)}"/>
+            </h:commandLink>
+            &#160;
+            <h:commandLink value="#{msgs['lbl.edit']}" onclick="PF('scopeSupplyEditingModal').show();"  >
+                <p:ajax update=":scopeSupplyEditFormId" listener="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}" />
+            </h:commandLink>
+            &#160;
+            <h:commandLink value="#{msgs['lbl.view']}">
+            </h:commandLink>
+        </p:column>
+    </p:dataTable>
+
+    <p:commandButton styleClass="component-left" value="#{msgs['lbl.add.scope.supply']}">
+        <p:ajax event="click" update=":scopeSuypplyModalId" listener="#{purchaseOrderEdit.cleanScopeSupply}"
+                oncomplete="PF('scopeSupplyEditModal').show();"/>
+    </p:commandButton>
+</ui:composition>

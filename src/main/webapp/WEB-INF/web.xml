@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+
+    <!--
+    <context-param>
+        <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-value>-1</param-value>
+    </context-param>  -->
+    <!-- Some primefaces components displays the following warning message -->
+    <!-- The button/link/text component needs to have a Form in its ancestry. Please add <h:form> -->
+    <!-- This warning will only appear when javax.faces.PROJECT_STAGE is set to Development. So if everything works fine in spite of the warning,  -->
+    <!-- then you can safely ignore it. It won't appear in Production stage.
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param> -->
+    <context-param>
+        <param-name>
+            javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL
+        </param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <session-config>
+        <session-timeout>
+            60
+        </session-timeout>
+    </session-config>
+
+</web-app>

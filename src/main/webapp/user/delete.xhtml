@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:o="http://omnifaces.org/ui">
+
+        <h2>#{msgs['user.delete.title']}</h2>
+        <h:form id="userDeleteForm" class="form-horizontal" role="form">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.delete.lbl.username']}"/>
+                    <div class="col-sm-9">
+                        <h:outputText class="form-control" id="inputUsername" value="#{userDeleteBean.userSelected.username}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.delete.lbl.first.name']}"/>
+                    <div class="col-sm-9">
+                        <h:outputText class="form-control" id="inputFirstName" value="#{userDeleteBean.userSelected.firstName}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.delete.lbl.name']}"/>
+                    <div class="col-sm-9">
+                        <h:outputText class="form-control" id="inputName" value="#{userDeleteBean.userSelected.name}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                     <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.delete.lbl.email']}"/>
+                     <div class="col-sm-9">
+                         <h:outputText class="form-control" id="inputEmail" value="#{userDeleteBean.userSelected.email}"/>
+                     </div>
+                </div>
+
+                <div class="form-group">
+                     <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label" value="#{msgs['user.delete.lbl.Role']}"/>
+                     <div class="col-sm-9">
+                         <h:outputText id="inputRole" styleClass="form-control" value="#{userDeleteBean.roleEnum.label}"/>
+                     </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label"
+                                   value="#{msgs['user.delete.lbl.status']}"/>
+
+                    <div class="col-sm-9">
+                        <h:outputText id="inputStatus" styleClass="form-control" value="#{userDeleteBean.statusEnum.label}"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="pull-right">
+                        <h:commandButton value="#{msgs['user.delete.lbl.button.save']}" styleClass="btn btn-primary"
+                                         action="#{userDeleteBean.doSave}"/>
+                        &#160;
+                        <button type="button" onclick="PF('deleteUserDlg').hide();" class="btn btn-primary">
+                            #{msgs['user.delete.lbl.button.cancel']}
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+</ui:composition>
