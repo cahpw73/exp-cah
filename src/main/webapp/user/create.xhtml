@@ -22,7 +22,8 @@
                     <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.username']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputUsername" value="#{userCreateBean.userEntity.username}"
-                                     jsf:placeholder="#{msgs['user.create.lbl.username']}" required="true">
+                                     jsf:placeholder="#{msgs['user.create.lbl.username']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.user.name.required']}">
                         </h:inputText>
                         <p:message for="inputUsername" id="msgInputUsername"/>
                     </div>
@@ -31,7 +32,8 @@
                     <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.first.name']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputFirstName" value="#{userCreateBean.userEntity.firstName}"
-                                     jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"/>
+                                     jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.first.name.required']}"/>
                         <p:message for="inputFirstName" id="msgInputFirstName"/>
                     </div>
                 </div>
@@ -39,7 +41,8 @@
                     <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.name']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputName" value="#{userCreateBean.userEntity.name}"
-                                     jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"/>
+                                     jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                         <p:message for="inputName" id="msgInputName"/>
                     </div>
                 </div>
@@ -48,7 +51,8 @@
                     <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.create.lbl.email']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputEmail" value="#{userCreateBean.userEntity.email}"
-                                     jsf:placeholder="#{msgs['user.create.lbl.email']}" required="true">
+                                     jsf:placeholder="#{msgs['user.create.lbl.email']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.email.required']}">
                         </h:inputText>
                         <p:message for="inputEmail" id="msgInputEmail"/>
                     </div>
@@ -58,7 +62,8 @@
                     <p:outputLabel class="col-sm-3 control-label" for="pwd1" value="#{msgs['user.create.lbl.pwd.hash']}" />
                     <div class="col-sm-9">
                         <p:password id="pwd1" value="#{userCreateBean.userEntity.password}" match="pwd2" required="true"
-                                    jsf:placeholder="#{msgs['user.create.lbl.pwd.hash']}" autocomplete="off"/>
+                                    jsf:placeholder="#{msgs['user.create.lbl.pwd.hash']}" autocomplete="off"
+                                    requiredMessage="#{msgs['user.lbl.password.required']}"/>
                         <p:message id="msgPwd1" for="pwd1"/>
                     </div>
                 </div>
@@ -66,7 +71,7 @@
                     <p:outputLabel class="col-sm-3 control-label" for="pwd2" value="#{msgs['user.create.lbl.pwd.hash.confirm']}" />
                     <div class="col-sm-9">
                         <p:password id="pwd2" value="#{userCreateBean.userEntity.password}" jsf:placeholder="#{msgs['user.create.lbl.pwd.hash.confirm']}"
-                                    required="true" />
+                                    required="true" autocomplete="off" requiredMessage="#{msgs['user.lbl.password.required']}" />
                         <p:message id="msgPwd2" for="pwd2"/>
                     </div>
                 </div>

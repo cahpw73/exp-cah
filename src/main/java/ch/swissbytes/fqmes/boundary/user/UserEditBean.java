@@ -55,13 +55,18 @@ public class UserEditBean implements Serializable {
         log.info("destroy UserEditBean");
     }
 
-    public void loadUserSelected(){
+    public String loadUserSelected(){
         log.info("Loading User EntityTbl....");
-        userSelected = userService.findUserById(userId);
-        password = userSelected.getPassword();
-        statusId = userSelected.getStatus().getId();
-        statusEnum = StatusEnum.valueOf(userSelected.getStatus().getId());
-        roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
+        if(userId != null){
+            userSelected = userService.findUserById(userId);
+            password = userSelected.getPassword();
+            statusId = userSelected.getStatus().getId();
+            statusEnum = StatusEnum.valueOf(userSelected.getStatus().getId());
+            roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
+        }else{
+            return "list.jsf?faces-redirect=true";
+        }
+        return "";
     }
 
     public String doSave(){

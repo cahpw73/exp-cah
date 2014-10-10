@@ -30,8 +30,7 @@
             <h:commandLink action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_comment.id)}" rendered="#{_comment.id>0}" value="#{msgs['lbl.download']}"/>
         </p:column>
     </p:dataTable>
-    <p:commandButton styleClass="component-left" value="#{msgs['lbl.add.comment']}">
-        <p:ajax event="click" update=":commentModalId" oncomplete="PF('commentEditModal').show();"
-                listener="#{purchaseOrderEdit.cleanComment()}"/>
-    </p:commandButton>
+    <h:commandButton styleClass="component-left btn btn-primary" value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}" >
+        <p:ajax update=":commentModalId" oncomplete="PF('commentEditModal').show();"/>
+    </h:commandButton>
 </ui:composition>

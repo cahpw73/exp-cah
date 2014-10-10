@@ -25,7 +25,8 @@
                     <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.username']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputUsername" value="#{userEditBean.userSelected.username}"
-                                     jsf:placeholder="#{msgs['user.edit.lbl.username']}" required="true">
+                                     jsf:placeholder="#{msgs['user.edit.lbl.username']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.user.name.required']}">
                         </h:inputText>
                         <p:message for="inputUsername" id="msgInputUsername"/>
                     </div>
@@ -34,7 +35,8 @@
                     <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.first.name']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputFirstName" value="#{userEditBean.userSelected.firstName}"
-                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"/>
+                                     jsf:placeholder="#{msgs['user.edit.lbl.first.name']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.first.name.required']}"/>
                         <p:message for="inputFirstName" id="msgInputFirstName"/>
                     </div>
                 </div>
@@ -42,7 +44,8 @@
                     <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.name']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputName" value="#{userEditBean.userSelected.name}"
-                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"/>
+                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"
+                                     requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                         <p:message for="inputName" id="msgInputName"/>
                     </div>
                 </div>
@@ -51,7 +54,8 @@
                      <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.email']}"/>
                      <div class="col-sm-9">
                          <h:inputText class="form-control" id="inputEmail" value="#{userEditBean.userSelected.email}"
-                                      jsf:placeholder="#{msgs['user.edit.lbl.email']}" required="true">
+                                      jsf:placeholder="#{msgs['user.edit.lbl.email']}" required="true"
+                                      requiredMessage="#{msgs['user.lbl.email.required']}">
                          </h:inputText>
                          <p:message for="inputEmail" id="msgInputEmail"/>
                      </div>
@@ -62,7 +66,7 @@
                      <div class="col-sm-9">
                          <p:password id="pwd1" value="#{userEditBean.userSelected.password}" match="pwd2" required="true"
                                      jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash']}" autocomplete="off"
-                                     redisplay="true"/>
+                                     redisplay="true" requiredMessage="#{msgs['user.lbl.password.required']}"/>
                          <p:message id="msgPwd1" for="pwd1"/>
                      </div>
                 </div>
@@ -70,7 +74,7 @@
                      <p:outputLabel class="col-sm-3 control-label" for="pwd2" value="#{msgs['user.edit.lbl.pwd.hash.confirm']}" />
                      <div class="col-sm-9">
                          <p:password id="pwd2" value="#{userEditBean.userSelected.password}" jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash.confirm']}"
-                                     required="true" redisplay="true" />
+                                     required="true" redisplay="true" requiredMessage="#{msgs['user.lbl.password.required']}" />
                          <p:message id="msgPwd2" for="pwd2"/>
                      </div>
                 </div>

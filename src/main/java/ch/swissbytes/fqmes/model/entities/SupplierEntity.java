@@ -35,7 +35,7 @@ public class SupplierEntity implements Serializable{
         this.id = id;
     }
 
-    @Column(name="address",  length=50)
+    @Column(name="address",  length=500)
     public String getAddress() {
         return address;
     }

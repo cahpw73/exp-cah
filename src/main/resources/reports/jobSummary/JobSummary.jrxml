@@ -23,14 +23,14 @@ order by id DESC;]]>
 	<title>
 		<band height="78" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b" x="701" y="0" width="100" height="20"/>
+				<reportElement x="701" y="0" width="100" height="20" uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="224" y="20" width="261" height="42"/>
+				<reportElement x="233" y="20" width="261" height="42" uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="24" isBold="true"/>
 				</textElement>
@@ -47,7 +47,7 @@ order by id DESC;]]>
 	<detail>
 		<band height="42" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="73031216-32c4-43a0-8b95-81a50cd2739a" x="2" y="0" width="800" height="40"/>
+				<reportElement x="2" y="0" width="800" height="40" uuid="73031216-32c4-43a0-8b95-81a50cd2739a"/>
 				<subreportParameter name="PURCHASE_ORDER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -65,21 +65,21 @@ order by id DESC;]]>
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<textField evaluationTime="Report">
-				<reportElement uuid="f779b89a-60bd-4125-bbe0-280a091b4ee9" x="771" y="0" width="30" height="18"/>
+				<reportElement x="771" y="0" width="30" height="18" uuid="f779b89a-60bd-4125-bbe0-280a091b4ee9"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="384ce6ac-1b80-4adb-bdfe-03b8e42ec97e" x="766" y="0" width="5" height="18"/>
+				<reportElement x="766" y="0" width="5" height="18" uuid="384ce6ac-1b80-4adb-bdfe-03b8e42ec97e"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[/]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="37fdd986-335d-4860-94d2-7b3d489e9e94" x="2" y="0" width="222" height="20"/>
+				<reportElement x="2" y="0" width="222" height="20" uuid="37fdd986-335d-4860-94d2-7b3d489e9e94"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 					<paragraph leftIndent="5"/>
@@ -87,7 +87,7 @@ order by id DESC;]]>
 				<text><![CDATA[First Quantum Mineral Expediting System]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="603342f6-27f1-4162-8b8e-9d48ba1fee72" x="736" y="0" width="30" height="18"/>
+				<reportElement x="736" y="0" width="30" height="18" uuid="603342f6-27f1-4162-8b8e-9d48ba1fee72"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="8"/>
 				</textElement>

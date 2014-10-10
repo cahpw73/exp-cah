@@ -13,21 +13,21 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-4 col-xs-6">
                     <p:calendar id="introEmailDate" type="text"
                                 mask="true"
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{newPurchaseOrder.introEmail}">
+                                value="#{purchaseOrderCreate.newPurchaseOrder.introEmail}">
                             </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
             <h:inputText maxlength="50" type="text"
-                         value="#{newPurchaseOrder.introEmailDescription}"
+                         value="#{purchaseOrderCreate.newPurchaseOrder.introEmailDescription}"
                          jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
         </div>
     </div>
@@ -37,21 +37,21 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-4 col-sm-6">
                     <p:calendar id="requiredSiteDate" type="text"
                                 mask="true"
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{newPurchaseOrder.requiredDate}">
+                                value="#{purchaseOrderCreate.newPurchaseOrder.requiredDate}">
                     </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
             <h:inputText maxlength="50" type="text"
-                         value="#{newPurchaseOrder.requiredDateDescription}"
+                         value="#{purchaseOrderCreate.newPurchaseOrder.requiredDateDescription}"
                          jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
         </div>
     </div>
@@ -60,21 +60,21 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
-                <div class="col-sm-8">
+                <div class="col-sm-4 col-xs-6">
                     <p:calendar id="actualSiteDate" type="text"
                                 mask="true"
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{newPurchaseOrder.actualDate}">
+                                value="#{purchaseOrderCreate.newPurchaseOrder.actualDate}">
                      </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
             <h:inputText maxlength="50" type="text"
-                         value="#{newPurchaseOrder.actualDateDescription}"
+                         value="#{purchaseOrderCreate.newPurchaseOrder.actualDateDescription}"
                          jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
         </div>
     </div>

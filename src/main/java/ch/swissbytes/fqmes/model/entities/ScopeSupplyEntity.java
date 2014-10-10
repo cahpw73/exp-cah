@@ -5,9 +5,13 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alvaro on 9/10/14.
@@ -34,6 +38,17 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
+    private Date deliveryDate;
+    private Date actualExWorkDate;
+    private Date requiredSiteDate;
+    private Date actualSiteDate;
+    private String deliveryDateObs;
+    private String actualExWorkDateObs;
+    private String requiredSiteDateObs;
+    private String actualSiteDateObs;
+    private Boolean isForecastSiteDateCalculated;
+
+    private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
 
 
 
@@ -66,7 +81,9 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setCode(String code) {
         this.code = code;
     }
+
     @Column(name="quantity",nullable = false)
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -188,6 +205,94 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         return that.hashCode()==this.hashCode();
     }
 
+    @NotNull(message = "please enter delivery date")
+    @Column(name="DELIVERY_DATE", nullable=false)
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    @Column(name="ACTUAL_EX_WORK_DATE")
+    public Date getActualExWorkDate() {
+        return actualExWorkDate;
+    }
+
+    public void setActualExWorkDate(Date actualExWorkDate) {
+        this.actualExWorkDate = actualExWorkDate;
+    }
+
+    @NotNull(message = "please enter required site date")
+    @Column(name="REQUIRED_SITE_DATE", nullable=false)
+    public Date getRequiredSiteDate() {
+        return requiredSiteDate;
+    }
+
+    public void setRequiredSiteDate(Date requiredSiteDate) {
+        this.requiredSiteDate = requiredSiteDate;
+    }
+
+    @Column(name="ACTUAL_SITE_DATE")
+    public Date getActualSiteDate() {
+        return actualSiteDate;
+    }
+
+    public void setActualSiteDate(Date actualSiteDate) {
+        this.actualSiteDate = actualSiteDate;
+    }
+
+
+    @Column(name="DELIVERY_DATE_OBS",length = 50)
+    public String getDeliveryDateObs() {
+        return deliveryDateObs;
+    }
+
+    public void setDeliveryDateObs(String deliveryDateObs) {
+        this.deliveryDateObs = deliveryDateObs;
+    }
+
+    @Column(name="ACTUAL_EX_WORK_DATE_OBS",length = 50)
+    public String getActualExWorkDateObs() {
+        return actualExWorkDateObs;
+    }
+
+    public void setActualExWorkDateObs(String actualExWorkDateObs) {
+        this.actualExWorkDateObs = actualExWorkDateObs;
+    }
+    @Column(name="REQUIRED_SITE_DATE_OBS",length = 50)
+    public String getRequiredSiteDateObs() {
+        return requiredSiteDateObs;
+    }
+
+    public void setRequiredSiteDateObs(String requiredSiteDateObs) {
+        this.requiredSiteDateObs = requiredSiteDateObs;
+    }
+    @Column(name="ACTUAL_SITE_DATE_OBS",length = 50)
+    public String getActualSiteDateObs() {
+        return actualSiteDateObs;
+    }
+
+    public void setActualSiteDateObs(String actualSiteDateObs) {
+        this.actualSiteDateObs = actualSiteDateObs;
+    }
+
+    @NotNull
+    @Column(name="IS_FORECAST_SITE_DATE_CALCULATED",nullable = false)
+    public Boolean getIsForecastSiteDateCalculated() {
+        return isForecastSiteDateCalculated;
+    }
+
+    public void setIsForecastSiteDateCalculated(Boolean isForecastSiteDateCalculated) {
+        this.isForecastSiteDateCalculated = isForecastSiteDateCalculated;
+    }
+
+    @Transient
+    public List<TransitDeliveryPointEntity> getTdpList() {
+        return tdpList;
+    }
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
@@ -204,8 +309,17 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         result = 31 * result + (siteDate != null ? siteDate.hashCode() : 0);
         result = 31 * result + (siteDateDescription != null ? siteDateDescription.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
-        result = 31 * result + (purchaseOrder != null ? purchaseOrder.getId().hashCode() : 0);
-        result = 31 * result + (status != null ? status.getId().hashCode() : 0);
+        result = 31 * result + (purchaseOrder != null ? purchaseOrder.hashCode() : 0);
+        result = 31 * result + (status != null ? status.getId() : 0);
+        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
+        result = 31 * result + (actualExWorkDate != null ? actualExWorkDate.hashCode() : 0);
+        result = 31 * result + (requiredSiteDate != null ? requiredSiteDate.hashCode() : 0);
+        result = 31 * result + (actualSiteDate != null ? actualSiteDate.hashCode() : 0);
+        result = 31 * result + (deliveryDateObs != null ? deliveryDateObs.hashCode() : 0);
+        result = 31 * result + (actualExWorkDateObs != null ? actualExWorkDateObs.hashCode() : 0);
+        result = 31 * result + (requiredSiteDateObs != null ? requiredSiteDateObs.hashCode() : 0);
+        result = 31 * result + (actualSiteDateObs != null ? actualSiteDateObs.hashCode() : 0);
+        result = 31 * result + (isForecastSiteDateCalculated != null ? isForecastSiteDateCalculated.hashCode() : 0);
         return result;
     }
 }

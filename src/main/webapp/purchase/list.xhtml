@@ -49,9 +49,9 @@
             <div class="col-md-4">
                 <div class='form-row'>
                     <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.supplier}" class='form-control'
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.location']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.location']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.location}" class='form-control'
                                      size='4' type='text'/>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                     #{_purchase.variation}
                 </p:column>
                 <ui:remove>
-                <p:column headerText="#{msgs['po.lbl.supplier']}">
+                <p:column headerText="#{msgs['po.lbl.location']}">
 
                 </p:column>
                 </ui:remove>

@@ -31,11 +31,13 @@ public class Service<T> implements Serializable {
 
     public List<T> getActives(List<T> entities){
         List<T>list=new ArrayList<>();
-        for(T object:entities){
-            if(object instanceof EntityTbl){
-                EntityTbl entity=(EntityTbl)object;
-                if(StatusEnum.ENABLE.equalsTo(entity.getStatus().getId())){
-                    list.add((T)entity);
+        if(entities!=null){
+            for(T object:entities){
+                if(object instanceof EntityTbl){
+                    EntityTbl entity=(EntityTbl)object;
+                    if(StatusEnum.ENABLE.equalsTo(entity.getStatus().getId())){
+                        list.add((T)entity);
+                    }
                 }
             }
         }

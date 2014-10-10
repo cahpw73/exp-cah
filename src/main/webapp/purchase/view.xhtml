@@ -29,14 +29,14 @@
                             <div class="form-group">
                                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.project']}"/>
                                 <div class="col-sm-8">
-                                    #{purchaseOrder.project}
+                                    #{purchaseOrderView.purchaseOrder.project}
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    #{purchaseOrder.description}
+                                    #{purchaseOrderView.purchaseOrder.description}
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.po']}"/>
                                 <div class="col-sm-8">
-                                    #{purchaseOrder.po}
+                                    #{purchaseOrderView.purchaseOrder.po}
                                 </div>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             <div class="form-group">
                                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
                                 <div class="col-sm-8">
-                                    #{purchaseOrder.variation}
+                                    #{purchaseOrderView.purchaseOrder.variation}
                                 </div>
                             </div>
                         </div>
@@ -65,9 +65,9 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.supplier']}"/>
+                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.location']}"/>
                                 <div class="col-sm-8">
-                                        #{supplierView.supplier}
+                                        #{purchaseOrderView.supplierView.supplier}
                                 </div>
                             </div>
                         </div>
@@ -75,15 +75,17 @@
                     <div class="row"><!---->
                         <div class="col-lg-6">
                             <div class="form-group">
+
                                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="col-sm-8">
-                                    #{supplierView.address}
+                                    <h:inputTextarea readonly="true" class="col-sm-7" value="#{purchaseOrderView.supplierView.address}"
+                                                     style="height: auto;"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            #{supplierView.addresDescription}
+                            #{purchaseOrderView.supplierView.addresDescription}
                         </div>
                     </div>
                     <div class="row">
@@ -93,12 +95,12 @@
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
                                 <div class="col-sm-8">
-                                    #{supplierView.contactName}
+                                    #{purchaseOrderView.supplierView.contactName}
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            #{supplierView.contactNameDescription}
+                            #{purchaseOrderView.supplierView.contactNameDescription}
                         </div>
                     </div>
                     <div class="row">
@@ -107,7 +109,7 @@
                             <div class="form-group">
                                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.po.title']}"/>
                                 <div class="col-sm-8">
-                                    #{purchaseOrder.poTitle}
+                                    #{purchaseOrderView.purchaseOrder.poTitle}
                                 </div>
                             </div>
                         </div>
@@ -119,12 +121,12 @@
                                 <h:outputLabel class="col-sm-4 control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
                                 <div class="col-sm-8">
-                                    #{purchaseOrder.poIncoTerm}
+                                    #{purchaseOrderView.purchaseOrder.poIncoTerm}
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            #{purchaseOrder.poIncoTermDescription}
+                            #{purchaseOrderView.purchaseOrder.poIncoTermDescription}
 
                         </div>
                     </div>
@@ -135,14 +137,14 @@
                                                value="#{msgs['po.lbl.po.delivery.date']}"/>
 
                                 <div class="col-sm-8">
-                                   <h:outputLabel value="#{purchaseOrder.poDeliveryDate}">
+                                   <h:outputLabel value="#{purchaseOrderView.purchaseOrder.poDeliveryDate}">
                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                    </h:outputLabel>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            #{purchaseOrder.poDeliveryDateDescription}
+                            #{purchaseOrderView.purchaseOrder.poDeliveryDateDescription}
                         </div>
                     </div>
                     <div class="row">
@@ -151,14 +153,17 @@
                                 <h:outputLabel class="col-sm-4 control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
                                 <div class="col-sm-8">
-                                    #{purchaseOrder.responsibleExpediting}
+                                    #{purchaseOrderView.purchaseOrder.responsibleExpediting}
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <ui:include src="components/ViewScopeSupply.xhtml"/>
                     <ui:include src="components/ViewAdditionalData.xhtml"/>
                     <ui:include src="components/ViewAttachments.xhtml"/>
+                    <ui:remove>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
@@ -166,13 +171,15 @@
                                     <h:link value="#{msgs['lbl.edit']}" class='btn btn-primary' outcome="/purchase/edit"
                                             rendered="#{permissionBean.hasPermission(102)}"
                                                      type='submit'>
-                                        <f:param name="poId" value="#{purchaseOrder.id}"/>
+                                        <f:param name="poId" value="#{purchaseOrderView.purchaseOrder.id}"/>
                                     </h:link>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </ui:remove>
                 </h:form>
+
             </div>
             <!-- /.col-lg-12 -->
         </div>

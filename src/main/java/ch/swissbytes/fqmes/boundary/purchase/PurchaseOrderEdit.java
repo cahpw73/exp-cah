@@ -14,6 +14,8 @@ import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -30,7 +32,7 @@ import java.util.logging.Logger;
  * Created by alvaro on 9/8/14.
  */
 @Named
-@ViewScoped
+@ConversationScoped
 public class PurchaseOrderEdit implements Serializable{
 
     @Inject
@@ -50,8 +52,8 @@ public class PurchaseOrderEdit implements Serializable{
 
     @Inject
     private EnumService enumService;
-
-
+@Inject
+private Conversation conversation;
 
     private String purchaseOrderId;
 
@@ -98,25 +100,41 @@ public class PurchaseOrderEdit implements Serializable{
     private static final Logger log = Logger.getLogger(PurchaseOrderEdit.class.getName());
 
 
+
+
     public void load(){
+        log.info("loading...");
         originalQuantity =0;
-        poEdit =service.load(Long.parseLong(purchaseOrderId));
-        if(poEdit !=null){
+            poEdit =service.load(Long.parseLong(purchaseOrderId));
             supplierEdit=supplierDao.findByPurchaseOrder(poEdit.getId());
-            comments=commentService.findByPurchaseOrder(poEdit.getId());
-            scopeSupplies=scopeSupplyService.findByPurchaseOrder(poEdit.getId());
-            attachments=attachmentService.findByPurchaseOrder(poEdit.getId());
-        }
+
+                supplierEdit=supplierDao.findByPurchaseOrder(poEdit.getId());
+                if(comments==null||comments.size()==0){
+                    comments=commentService.findByPurchaseOrder(poEdit.getId());
+                }else{
+
+                }
+                if(scopeSupplies==null||scopeSupplies.size()==0){
+                    scopeSupplies=scopeSupplyService.findByPurchaseOrder(poEdit.getId());
+                }
+                if(attachments==null||attachments.size()==0){
+                    attachments=attachmentService.findByPurchaseOrder(poEdit.getId());
+                }
+
         commentIndexSelected =-1;
     }
 
     @PostConstruct
     public void create(){
-        poEdit=new PurchaseOrderEntity();
+       // poEdit=new PurchaseOrderEntity();
         comments=new ArrayList<>();
         commentEdit=new CommentEntity();
         attachments=new ArrayList<>();
+        //scopeSupplies=new ArrayList<>();
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
+        if(conversation.isTransient()){
+            conversation.begin();
+        }
     }
     @PreDestroy
     public void destroy(){
@@ -126,6 +144,9 @@ public class PurchaseOrderEdit implements Serializable{
         log.info("upgrading...");
         updateStatusesAndLastUpdate();
         service.doUpdate(poEdit,supplierEdit,comments,scopeSupplies,attachments);
+        if(!conversation.isTransient()){
+            conversation.end();
+        }
         return "view?faces-redirect=true&poId="+poEdit.getId();
     }
     private void updateStatusesAndLastUpdate(){
@@ -202,7 +223,7 @@ public class PurchaseOrderEdit implements Serializable{
     public void handleCommentUpload(FileUploadEvent event){
         UploadedFile uf=event.getFile();
         log.info(uf.getFileName());
-        if(commentIndexSelected>=0){
+        if(commentIndexSelected!=null&&commentIndexSelected>=0){
             try{
                 editingComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
             }catch (IOException ioe){
@@ -220,23 +241,6 @@ public class PurchaseOrderEdit implements Serializable{
 
 
     }
-    public void handleAttachmentUpload(FileUploadEvent event){
-        UploadedFile uf=event.getFile();
-        log.info(uf.getFileName());
-        AttachmentEntity attachmentEntity=new AttachmentEntity();
-        try{
-            relativeCurrentAttachmentId--;
-            attachmentEntity.setId(relativeCurrentAttachmentId);
-            attachmentEntity.setFile(IOUtils.toByteArray(uf.getInputstream()));
-            attachmentEntity.setFileName(uf.getFileName());
-            attachmentEntity.setMimeType(uf.getContentType());
-            attachmentEntity.setStatus(enumService.getStatusEnumEnable());
-            attachmentEntity.setName(uf.getFileName());
-        }catch (IOException ioe){
-        }
-        attachments.add(attachmentEntity);
-
-    }
 
     public List<AttachmentEntity> getAttachmentActives(){
         return attachmentService.getActives(attachments);
@@ -247,9 +251,11 @@ public class PurchaseOrderEdit implements Serializable{
         commentIndexSelected =-1;
     }
 
-    public void cleanScopeSupply(){
+    public String cleanScopeSupply(){
         currentOperation=CREATE;//CREATING...
         scopeSupplyEdit=new ScopeSupplyEntity();
+        scopeSupplyEdit.setIsForecastSiteDateCalculated(true);
+        return "/purchase/modal/EditModalScopeSupply?faces-redirect=true";
     }
 
 
@@ -269,16 +275,12 @@ public class PurchaseOrderEdit implements Serializable{
         this.selectedScopeSupply = selectedScopeSupply;
     }
 
-    @Produces
-    @ViewScoped
-    @Named
+
     public PurchaseOrderEntity getPoEdit() {
         return poEdit;
     }
 
-    @Produces
-    @ViewScoped
-    @Named
+
     public SupplierEntity getSupplierEdit() {
         return supplierEdit;
     }
@@ -295,7 +297,7 @@ public class PurchaseOrderEdit implements Serializable{
         return scopeSupplies;
     }
     @Produces
-    @ViewScoped
+    @ConversationScoped
     @Named
     public CommentEntity getCommentEdit() {
         return commentEdit;
@@ -323,7 +325,7 @@ public class PurchaseOrderEdit implements Serializable{
             } else {
                 log.info("comments previous "+comments.size());
                 comments.remove(index.intValue());
-                log.info("comments "+comments.size());
+                log.info("comments " + comments.size());
             }
         } else {
 
@@ -384,19 +386,24 @@ public class PurchaseOrderEdit implements Serializable{
         }
     } 
     public List<ScopeSupplyEntity>getActiveScopeSupplies(){
+//        log.info("size about scope supply "+scopeSupplies.size());
        return scopeSupplyService.getActives(scopeSupplies);
     }
 
-    public void addScopeSupply(){
+    public String addScopeSupply(){
         registerScopeSupply();
+        return "/purchase/edit?faces-redirect=true";
     }
 
     public void addScopeSupplyAndAdd(){
         registerScopeSupply();
         cleanScopeSupply();
     }
+    public String cancel(){
+        return "/purchase/edit?faces-redirect=true";
+    }
 
-    public void split(){
+    public String split(){
         log.info("split....");
         if(originalQuantity.intValue()>0&& scopeSupplySplit.getQuantity().intValue()<originalQuantity.intValue()){
             //selectedScopeSupply.setQuantity(originalQuantity.intValue()-scopeSupplySplit.getQuantity().intValue());
@@ -408,20 +415,21 @@ public class PurchaseOrderEdit implements Serializable{
             if(index>=0 && index <scopeSupplies.size()){
                 scopeSupplies.set(index,scopeSupplyService.clone(selectedScopeSupply));
             }
-
         }else{
             Messages.addGlobalError("invalid quantity");
         }
         log.info("finished splitting");
+        return "/purchase/edit?faces-redirect=true";
     }
 
-    public void doUpdateScopeSupply(){
+    public String doUpdateScopeSupply(){
         if(indexForScopeSupplyEditing>=0){
             scopeSupplies.set(indexForScopeSupplyEditing,scopeSupplyService.clone(scopeSupplyEditing));
         }
+        return "/purchase/edit?faces-redirect=true";
     }
 
-    public void selectScopeSupply(final Long idScopeSupply){
+    public String selectScopeSupply(final Long idScopeSupply){
         currentOperation=SPLIT;//spliting...
         final int index=scopeSupplyService.getIndexById(idScopeSupply,scopeSupplies);
         if(index>=0){
@@ -430,6 +438,7 @@ public class PurchaseOrderEdit implements Serializable{
             scopeSupplySplit=scopeSupplyService.clone(selectedScopeSupply);
             scopeSupplySplit.setQuantity(0);
         }
+        return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId="+idScopeSupply;
     }
 
     public void calculateNewScopeSupplyQuantity(){
@@ -449,7 +458,7 @@ public class PurchaseOrderEdit implements Serializable{
         }
     }
 
-    public void selectScopeSuppplyForEditing(Long id){
+    public String selectScopeSuppplyForEditing(Long id){
         currentOperation=EDIT;//EDITING
         final int index=scopeSupplyService.getIndexById(id,scopeSupplies);
         indexForScopeSupplyEditing=-1;
@@ -458,7 +467,7 @@ public class PurchaseOrderEdit implements Serializable{
             indexForScopeSupplyEditing=index;
         }
 
-
+        return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId="+id;
     }
 
     public ScopeSupplyEntity getScopeSupplySplit() {
@@ -486,22 +495,59 @@ public class PurchaseOrderEdit implements Serializable{
         Date date=null;
         switch (currentOperation){
             case 0://CREATING
-                date=scopeSupplyService.calculateForecastSiteDate(scopeSupplyEdit,poEdit);
+                if(scopeSupplyEdit.getIsForecastSiteDateCalculated()){
+                    date=scopeSupplyService.calculateForecastSiteDate(scopeSupplyEdit);
+                    scopeSupplyEdit.setSiteDate(date);
+                }
                 break;
             case 1://EDITING
-                date=scopeSupplyService.calculateForecastSiteDate(scopeSupplyEditing,poEdit);
+                if(scopeSupplyEditing.getIsForecastSiteDateCalculated()){
+                    date=scopeSupplyService.calculateForecastSiteDate(scopeSupplyEditing);
+                    scopeSupplyEditing.setSiteDate(date);
+                }
                 break;
             case 2://SPLITING
-                date=scopeSupplyService.calculateForecastSiteDate(getScopeSupplySplit(),poEdit);
+                if(getScopeSupplySplit().getIsForecastSiteDateCalculated()){
+                    date=scopeSupplyService.calculateForecastSiteDate(getScopeSupplySplit());
+                    getScopeSupplySplit().setSiteDate(date);
+                }
                 break;
             default:
                 log.info("no possible computation");
                 break;
         }
 
-
         log.info("date calculated "+date);
         return date;
+    }
+    public void switchModeForecastSiteDate() {
+        log.info("public void switchModeForecastSiteDate()");
+        switch (currentOperation){
+            case 0://CREATING
+                if(scopeSupplyEdit.getIsForecastSiteDateCalculated()){
+                    scopeSupplyEdit.setSiteDate(null);
+                }else{
+                    calculateDate();
+                }
+                break;
+            case 1://EDITING
+                if(scopeSupplyEditing.getIsForecastSiteDateCalculated()){
+                    scopeSupplyEditing.setSiteDate(null);
+                }else{
+                    calculateDate();
+                }
+                break;
+            case 2://SPLITING
+                if(getScopeSupplySplit().getIsForecastSiteDateCalculated()){
+                    getScopeSupplySplit().setSiteDate(null);
+                }else{
+                    calculateDate();
+                }
+                break;
+            default:
+                log.info("no possible computation");
+                break;
+        }
     }
 
 }

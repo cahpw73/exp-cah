@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:form id="TDP" class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Location</label>
+
+            <div class="col-sm-10">
+                <h:inputText class="form-control" value="#{scopeSupplyBean.tdp.location}" placeholder="Location"/>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-row">
+                <div class="col-sm-12">
+                    <label>Lead Time</label>
+                </div>
+                <div class="col-sm-6">
+                    <h:inputText type="email" class="form-control" value="#{scopeSupplyBean.tdp.leadTime}" placeholder="Lead Time"/>
+                </div>
+                <div class="col-sm-6">
+                    <h:selectOneMenu value="#{scopeSupplyBean.tdp.measurementTime}"
+                                     styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                        <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
+                        <f:selectItems value="#{allTimeMeasurement}"/>
+                    </h:selectOneMenu>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-row">
+                <label>Forecast site date</label>
+                <p:calendar mask="true"
+                            navigator="true"
+                            value="#{scopeSupplyBean.tdp.forecastDeliveryDate}"
+                            pattern="#{configuration.formatDate}"
+                            converterMessage="#{msgs['validator.date.invalid']}"
+                            jsf:placeholder="#{msgs['lbl.format.date']}"/>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-row">
+                <label>Actual Site date</label>
+                <p:calendar mask="true" navigator="true"
+                            pattern="#{configuration.formatDate}"
+                            value="#{scopeSupplyBean.tdp.actualDeliveryDate}"
+                            converterMessage="#{msgs['validator.date.invalid']}"
+                            jsf:placeholder="#{msgs['lbl.format.date']}"/>
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <div class="col-sm-12 form-group" style="margin-top: 15px;">
+            <label class="col-sm-2 control-label">Comments</label>
+            <div class="col-sm-10">
+                <p:inputTextarea maxlength="500" value="#{scopeSupplyBean.tdp.comment}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <div class="pull-right">
+                        <h:commandButton  value="#{msgs['lbl.save']}" class='btn btn-primary'
+                                          actionListener="#{scopeSupplyBean.addTransitDeliveryPoint}">
+                            <p:ajax onsuccess="PF('tdp').hide();"
+                                    process="TDP"
+                                    update=":scopeSupplyFormId:tdpCreate"/>
+                        </h:commandButton>
+                        <button  type="button" class="btn btn-primary"
+                                 onclick="PF('tdp').hide();">#{msgs['lbl.cancel']}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

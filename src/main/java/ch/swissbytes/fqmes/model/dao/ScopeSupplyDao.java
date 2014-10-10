@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.model.dao;
 import ch.swissbytes.fqmes.model.Filter;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 
 import javax.persistence.*;
@@ -19,6 +20,10 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
         for(ScopeSupplyEntity sse: list){
             sse.setPurchaseOrder(purchaseOrderEntity);
             super.save(sse);
+            for (TransitDeliveryPointEntity tdp: sse.getTdpList()){
+                tdp.setScopeSupply(sse);
+                entityManager.persist(tdp);
+            }
         }
     }
 

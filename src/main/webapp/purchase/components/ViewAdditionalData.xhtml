@@ -11,12 +11,12 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
                 <div class="col-sm-8">
-                    #{purchaseOrder.introEmail}
+                    #{scopeSupply.introEmail}
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            #{purchaseOrder.introEmailDescription}
+            #{scopeSupply.introEmailDescription}
         </div>
     </div>
     <div class="row">
@@ -25,14 +25,14 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{purchaseOrder.requiredDate}">
+                    <h:outputLabel value="#{scopeSupply.requiredDate}">
                         <f:convertDateTime pattern="#{configuration.formatDate}"/>
                     </h:outputLabel>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            #{purchaseOrder.requiredDateDescription}
+            #{scopeSupply.requiredDateDescription}
         </div>
     </div>
     <div class="row">
@@ -41,7 +41,7 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{purchaseOrder.actualDate}">
+                    <h:outputLabel value="#{scopeSupply.actualDate}">
                         <f:convertDateTime pattern="#{configuration.formatDate}"/>
                     </h:outputLabel>
 
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            #{purchaseOrder.actualDateDescription}
+            #{scopeSupply.actualDateDescription}
         </div>
     </div>
 

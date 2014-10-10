@@ -52,8 +52,6 @@ public class PurchaseOrderView implements Serializable{
 
     private List<ScopeSupplyEntity>scopeSupplies;
 
-    private ScopeSupplyEntity selectedScopeSupply;
-
     private static final Logger log = Logger.getLogger(PurchaseOrderView.class.getName());
 
     @PostConstruct
@@ -66,6 +64,7 @@ public class PurchaseOrderView implements Serializable{
     }
 
     public void load(){
+        log.info("loading....");
         purchaseOrder=service.load(Long.parseLong(purchaseOrderId));
         if(purchaseOrder!=null){
             supplierView=supplierDao.findByPurchaseOrder(purchaseOrder.getId());
@@ -75,16 +74,12 @@ public class PurchaseOrderView implements Serializable{
         }
     }
 
-    @Produces
-    @ViewScoped
-    @Named
+
     public PurchaseOrderEntity getPurchaseOrder() {
         return purchaseOrder;
     }
 
-    @Produces
-    @ViewScoped
-    @Named
+
     public SupplierEntity getSupplierView() {
         return supplierView;
     }
@@ -97,28 +92,12 @@ public class PurchaseOrderView implements Serializable{
         this.purchaseOrderId = purchaseOrderId;
     }
 
-    public ScopeSupplyEntity getSelectedScopeSupply() {
-        return selectedScopeSupply;
-    }
-
-    public void setSelectedScopeSupply(ScopeSupplyEntity selectedScopeSupply) {
-        this.selectedScopeSupply = selectedScopeSupply;
-    }
-
     public List<CommentEntity> getComments() {
         return comments;
     }
 
     public List<ScopeSupplyEntity> getScopeSupplies() {
         return scopeSupplies;
-    }
-
-    public List<AttachmentEntity> getAttachmentEntities() {
-        return attachmentEntities;
-    }
-
-    public void downloadAttachmentFile(final Long id){
-        attachmentService.download(id);
     }
 
     public void downloadAttachedFileOnComment(final long id){

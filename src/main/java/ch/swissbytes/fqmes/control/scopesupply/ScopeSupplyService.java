@@ -31,21 +31,20 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         return dao.load(id);
     }
 
-
-
     public List<ScopeSupplyEntity> findByPurchaseOrder(final Long purchaseOrderId){
         return dao.findByPurchaseOrder(purchaseOrderId);
-
     }
 
-    public Date calculateForecastSiteDate(ScopeSupplyEntity scopeSupplyEntity, PurchaseOrderEntity purchaseOrderEntity) {
+    public Date calculateForecastSiteDate(ScopeSupplyEntity scopeSupplyEntity) {
         log.info("calculateForecastSiteDate");
         Date computedDate = null;
         if (scopeSupplyEntity != null) {
-            if (scopeSupplyEntity.getExWorkDate() != null) {
+            if(scopeSupplyEntity.getActualExWorkDate()!=null){
+                computedDate= calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getActualExWorkDate());
+            }else if (scopeSupplyEntity.getExWorkDate() != null) {
                 computedDate= calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getExWorkDate());
-            }else if(purchaseOrderEntity.getPoDeliveryDate()!=null){
-                computedDate=calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),purchaseOrderEntity.getPoDeliveryDate());
+            }else if(scopeSupplyEntity.getDeliveryDate()!=null){
+                computedDate=calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getDeliveryDate());
             }
         }
         return computedDate;

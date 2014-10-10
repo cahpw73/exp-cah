@@ -35,8 +35,9 @@
                              required="true"
                              maxlength="50"
                              jsf:placeholder="#{msgs['po.ph.project']}"
-                             value="#{newPurchaseOrder.project}"
-                             class="form-control"/>
+                             value="#{purchaseOrderCreate.newPurchaseOrder.project}"
+                             class="form-control"
+                             requiredMessage="#{msgs['po.lbl.project.required']}"/>
                 <p:message for="projectName" id="msgProject"/>
             </div>
         </div>
@@ -46,7 +47,7 @@
             <div class="col-sm-12">
                 <h:inputText type="text" class="form-control"
                              maxlength="50"
-                             value="#{newPurchaseOrder.description}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.description}"
                              jsf:placeholder="#{msgs['po.ph.description']}"/>
             </div>
         </div>
@@ -61,8 +62,9 @@
                 <h:inputText id="po" type="text" jsf:placeholder="#{msgs['po.ph.po']}"
                              maxlength="50"
                              required="true"
-                             value="#{newPurchaseOrder.po}"
-                             class="form-control"/>
+                             value="#{purchaseOrderCreate.newPurchaseOrder.po}"
+                             class="form-control"
+                             requiredMessage="#{msgs['po.lbl.reference.required']}"/>
                 <p:message for="po" id="msgPO"/>
             </div>
         </div>
@@ -75,7 +77,7 @@
 
             <div class="col-sm-8">
                 <h:inputText id="name" maxlength="50" type="text"
-                             value="#{newPurchaseOrder.variation}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.variation}"
                              jsf:placeholder="#{msgs['po.ph.variation']}" class="form-control"/>
             </div>
         </div>
@@ -85,11 +87,11 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="form-group">
-            <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.supplier']}"/>
+            <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.location']}"/>
 
             <div class="col-sm-8">
-                <h:inputText id="supplier" type="text" maxlength="50" value="#{newSupplier.supplier}"
-                             jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
+                <h:inputText id="location" type="text" maxlength="50" value="#{purchaseOrderCreate.newSupplier.supplier}"
+                             jsf:placeholder="#{msgs['po.ph.location']}" class="form-control"/>
             </div>
         </div>
     </div>
@@ -100,15 +102,15 @@
             <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
 
             <div class="col-sm-8">
-                <h:inputText id="address" maxlength="50" type="text" value="#{newSupplier.address}"
+                <h:inputTextarea id="leadTime" maxlength="50" type="text" value="#{purchaseOrderCreate.newSupplier.address}"
                              jsf:placeholder="#{msgs['po.ph.address']}" class="form-control"/>
-                <p:message for="address" id="msgAddress"/>
+                <p:message for="leadTime" id="msgAddress"/>
             </div>
         </div>
     </div>
     <div class="col-lg-6">
-        <h:inputText maxlength="255" type="text" value="#{newSupplier.addresDescription}"
-                     jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
+        <h:inputText maxlength="255" type="text" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
+                     jsf:placeholder="#{msgs['po.ph.leadTime.description']}" class="form-control"/>
     </div>
 </div>
 <div class="row">
@@ -118,8 +120,8 @@
                            value="#{msgs['po.lbl.contact.name']}"/>
 
             <div class="col-sm-8">
-                <h:inputText id="contactName" maxlength="50" type="text"
-                             value="#{newSupplier.contactName}"
+                <h:inputText id="forecastDeliveryDate" maxlength="50" type="text"
+                             value="#{purchaseOrderCreate.newSupplier.contactName}"
                              jsf:placeholder="#{msgs['po.ph.contact.name']}"
                              class="form-control"/>
             </div>
@@ -127,7 +129,7 @@
     </div>
     <div class="col-lg-6">
         <h:inputText maxlength="50" type="text"
-                     value="#{newSupplier.contactNameDescription}"
+                     value="#{purchaseOrderCreate.newSupplier.contactNameDescription}"
                      jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                      class="form-control"/>
     </div>
@@ -140,7 +142,7 @@
 
             <div class="col-sm-8">
                 <h:inputText id="poTitle" maxlength="50" type="text"
-                             value="#{newPurchaseOrder.poTitle}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
                              jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
             </div>
         </div>
@@ -155,7 +157,7 @@
 
             <div class="col-sm-8">
                 <h:inputText id="incoTerm" type="text" maxlength="50"
-                             value="#{newPurchaseOrder.poIncoTerm}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTerm}"
                              jsf:placeholder="#{msgs['po.ph.po.inco.term']}"
                              class="form-control"/>
             </div>
@@ -163,7 +165,7 @@
     </div>
     <div class="col-lg-6">
         <h:inputText maxlength="255" type="text"
-                     value="#{newPurchaseOrder.poIncoTermDescription}"
+                     value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTermDescription}"
                      jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
 
     </div>
@@ -174,14 +176,14 @@
             <h:outputLabel class="col-sm-4 control-label"
                            value="#{msgs['po.lbl.po.delivery.date']}"/>
 
-            <div class="col-sm-8">
+            <div class="col-sm-4 col-xs-6">
                 <p:calendar id="deliveryDate" type="text" styleClass="calendar"
                             mask="true"
                             navigator="true"
                             pattern="#{configuration.formatDate}"
                             jsf:placeholder="#{msgs['lbl.format.date']}"
                             converterMessage="#{msgs['validator.date.invalid']}"
-                            value="#{newPurchaseOrder.poDeliveryDate}">
+                            value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}">
                     <p:ajax process="@this" event="dateSelect" />
                  </p:calendar>
                 <h:message for="deliveryDate" id="msgDeliveryDate"/>
@@ -190,7 +192,7 @@
     </div>
     <div class="col-lg-6">
         <h:inputText maxlength="50" type="text"
-                     value="#{newPurchaseOrder.poDeliveryDateDescription}"
+                     value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDateDescription}"
                      jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
     </div>
 </div>
@@ -201,7 +203,7 @@
                            value="#{msgs['po.lbl.responsible']}"/>
             <div class="col-sm-8">
                 <h:inputText id="responsible" type="text" maxlength="100"
-                             value="#{newPurchaseOrder.responsibleExpediting}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpediting}"
                              jsf:placeholder="#{msgs['po.ph.responsible']}"
                              class="form-control"/>
             </div>
@@ -252,11 +254,5 @@
     <ui:include src="modal/CreateCommentModalEdit.xhtml"/>
 </p:dialog>
 
-<p:dialog id="scopeSuypplyModalId" header="#{msgs['modal.scope.supply.title']}" resizable="false" widgetVar="scopeSupplyModal" height="500"  width="900">
-    <ui:include src="modal/CreateModalScopeSupply.xhtml"/>
-</p:dialog>
-<p:dialog id="scopeSuypplyEditModalId" header="#{msgs['modal.scope.supply.edit.title']}" resizable="false" widgetVar="scopeSupplyEditModal" height="500" width="900">
-    <ui:include src="modal/CreateModalScopeSupplyEditing.xhtml"/>
-</p:dialog>
 </ui:define>
 </ui:composition>
