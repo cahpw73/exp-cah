@@ -50,17 +50,17 @@ public class PermissionBean implements Serializable {
 
     @PostConstruct
     public void init(){
-        log.info("Permission Bean initialize...");
+        //log.info("Permission Bean initialize...");
         initialDate=new Date();
         User user=(User)identity.getAccount();
         List<RoleEntity> currentRoles=service.getRolesFor(user.getLoginName());
         permissions=service.getPermissions(collectIds(currentRoles));
-        log.info("permission granted for "+user.getLoginName());
+        /*log.info("permission granted for "+user.getLoginName());
         log.info("================================");
         for(PermissionGrantedEntity pe:permissions){
             log.info(pe.getOptions().getName());
         }
-        log.info("===================================");
+        log.info("===================================");*/
 
     }
 
@@ -77,7 +77,7 @@ public class PermissionBean implements Serializable {
     }
 
     public String canAccess(Integer option){
-        log.info("public String canAccess(Integer option="+option+")");
+        //log.info("public String canAccess(Integer option="+option+")");
         return hasPermission(option)?"GRANTED":"ACCESS_DENIED";
     }
 
@@ -91,7 +91,7 @@ public class PermissionBean implements Serializable {
 
     @PreDestroy
     public void destroy(){
-        log.info("Permission Bean destroy...");
+        //log.info("Permission Bean destroy...");
         Date endDate=new Date();
         Long diff=endDate.getTime()-initialDate.getTime();
         log.info(String.format("duration time for permission loading [%s]",diff.longValue()));

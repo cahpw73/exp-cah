@@ -53,7 +53,7 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setReason(String reason) {
         this.reason = reason;
     }
-    @Column(name="description", length=255)
+    @Column(name="description", length=1000)
     public String getDescription() {
         return description;
     }

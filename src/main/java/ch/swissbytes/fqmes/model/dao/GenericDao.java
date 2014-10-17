@@ -285,6 +285,28 @@ public abstract class GenericDao<T> {
         return query.toString();
     }
 
+    protected String createQuery(final boolean count,Filter filter,String sortBy){
+        StringBuilder query=new StringBuilder();
+        if(count){
+            query.append("SELECT COUNT(x) ");
+        }else{
+            query.append("SELECT x ");
+        }
+        query.append(" FROM ");
+        query.append(getEntity());
+        query.append(" x ");
+        query.append(" WHERE 1=1 ");
+        String prepositions=addCriteria(filter);
+        if(prepositions!=null&&!prepositions.isEmpty()){
+            query.append(" AND ");
+            query.append(prepositions);
+        }
+        if(!count){
+            query.append(orderBy(sortBy));
+        }
+        return query.toString();
+    }
+
     protected abstract void applyCriteriaValues(Query query,Filter filter);
 
     protected abstract String getEntity();
@@ -292,7 +314,9 @@ public abstract class GenericDao<T> {
     public String orderBy(){
         return " ORDER BY id DESC ";
     }
-
+    public String orderBy(String field){
+        return "";
+    }
 
     /**
      * Adds preposition for pagination.
@@ -314,6 +338,13 @@ public abstract class GenericDao<T> {
     public T load(final Class<T>clazz,final Long id){
         List<T>list=findById(clazz,id);
         return list.isEmpty()?null:list.get(0);
+    }
+    public <T> List<T> findByPage(int startAt, int maxPerPage,final Filter filter,String sort ) {
+        Query query = entityManager.createQuery(createQuery(false,filter,sort));
+        query.setMaxResults(maxPerPage);
+        query.setFirstResult(startAt);
+        applyCriteriaValues(query,filter);
+        return query.getResultList();
     }
 
 }

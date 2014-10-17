@@ -8,14 +8,8 @@
         <p:column headerText="#{msgs['po.attach.tbl.column.from']}">
             #{_comment.name}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}">
-            #{_comment.reason}
-        </p:column>
         <p:column headerText="#{msgs['po.attach.tbl.column.observations']}">
             #{_comment.description}
-        </p:column>
-        <p:column headerText="#{msgs['lbl.attachment']}">
-            #{_comment.fileName}
         </p:column>
         <p:column headerText="#{msgs['lbl.action']}">
             <h:commandLink value="#{msgs['lbl.delete']}">
@@ -25,6 +19,9 @@
             <h:commandLink value="#{msgs['lbl.edit']}">
                 <p:ajax oncomplete="PF('commentEditModal').show();" listener="#{purchaseOrderCreate.editComment(_index)}" update=":commentEditFormId"/>
             </h:commandLink>
+        </p:column>
+        <p:column headerText="#{msgs['lbl.attachment']}">
+            #{_comment.fileName}
         </p:column>
     </p:dataTable>
     <h:commandButton styleClass="btn btn-primary component-left" action="purchaseOrderCreate.cleanComment" value="#{msgs['lbl.add.comment']}">

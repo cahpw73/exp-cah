@@ -12,7 +12,7 @@ import java.util.Date;
 @Named
 @Entity
 @Table(name = "TRANSIT_DELIVERY_POINT")
-public class TransitDeliveryPointEntity {
+public class TransitDeliveryPointEntity implements EntityTbl{
 
     private Long id;
     private StatusEntity status;
@@ -91,7 +91,7 @@ public class TransitDeliveryPointEntity {
         this.location = location;
     }
 
-    @Column(name="comments", length=500)
+    @Column(name="comments", length=1000)
     public String getComment() {
         return comment;
     }
@@ -119,6 +119,26 @@ public class TransitDeliveryPointEntity {
         this.lastUpdate = lastUpdate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TransitDeliveryPointEntity)) return false;
+        TransitDeliveryPointEntity that = (TransitDeliveryPointEntity) o;
+        return that.hashCode()==this.hashCode();
+    }
 
-
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (status != null ? status.getId().hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (leadTime != null ? leadTime.hashCode() : 0);
+        result = 31 * result + (measurementTime != null ? measurementTime.hashCode() : 0);
+        result = 31 * result + (forecastDeliveryDate != null ? forecastDeliveryDate.hashCode() : 0);
+        result = 31 * result + (actualDeliveryDate != null ? actualDeliveryDate.hashCode() : 0);
+        result = 31 * result + (scopeSupply != null ? scopeSupply.getId().hashCode() : 0);
+        result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        return result;
+    }
 }

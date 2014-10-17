@@ -43,7 +43,7 @@ public class SupplierEntity implements Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
-    @Column(name="address_description",length=255)
+    @Column(name="address_description",length=1000)
     public String getAddresDescription() {
         return addresDescription;
     }
@@ -59,7 +59,7 @@ public class SupplierEntity implements Serializable{
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
-    @Column(name="contact_name_description", length=255)
+    @Column(name="contact_name_description", length=1000)
     public String getContactNameDescription() {
         return contactNameDescription;
     }

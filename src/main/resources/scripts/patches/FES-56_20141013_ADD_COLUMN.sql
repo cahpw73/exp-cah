@@ -1,0 +1,4 @@
+
+--@author Alvaro Cardozo.
+
+ALTER TABLE SCOPE_SUPPLY ADD COLUMN CURRENCY VARCHAR(5);

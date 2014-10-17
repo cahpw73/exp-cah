@@ -65,7 +65,7 @@
                                           actionListener="#{scopeSupplyBean.doUpdateTdp()}">
                             <p:ajax onsuccess="PF('edittdp').hide();"
                                     process="TDPEdit"
-                                    update=":scopeSupplyFormId:tdpCreate"/>
+                                    update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forecastSiteDateCreate"/>
                         </h:commandButton>
                         <button  type="button" class="btn btn-primary"
                                  onclick="PF('edittdp').hide();">#{msgs['lbl.cancel']}</button>

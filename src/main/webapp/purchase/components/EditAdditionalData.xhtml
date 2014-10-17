@@ -18,14 +18,16 @@
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
-                                value="#{purchaseOrderEdit.poEdit.introEmail}"/>
+                                value="#{purchaseOrderEdit.poEdit.introEmail}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <h:inputText maxlength="50" type="text"
-                         value="#{purchaseOrderEdit.poEdit.introEmailDescription}"
-                         jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
+            <p:inputTextarea style="max-height: 34px;"
+                              maxlength="1000" type="text"
+                             value="#{purchaseOrderEdit.poEdit.introEmailDescription}"
+                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
         </div>
     </div>
     <div class="row">
@@ -40,14 +42,16 @@
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 value="#{purchaseOrderEdit.poEdit.requiredDate}"
-                                mask="true"/>
+                                mask="true"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <h:inputText maxlength="50" type="text"
-                         value="#{purchaseOrderEdit.poEdit.requiredDateDescription}"
-                         jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
+            <p:inputTextarea style="max-height: 34px;"
+                             maxlength="1000" type="text"
+                             value="#{purchaseOrderEdit.poEdit.requiredDateDescription}"
+                             jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
         </div>
     </div>
     <div class="row">
@@ -55,7 +59,6 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
-
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="actualSiteDate" type="text"
                                 navigator="true"
@@ -63,14 +66,16 @@
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
-                                value="#{purchaseOrderEdit.poEdit.actualDate}"/>
+                                value="#{purchaseOrderEdit.poEdit.actualDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <h:inputText maxlength="50" type="text"
-                         value="#{purchaseOrderEdit.poEdit.actualDateDescription}"
-                         jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
+            <p:inputTextarea style="max-height: 34px;"
+                             maxlength="1000" type="text"
+                             value="#{purchaseOrderEdit.poEdit.actualDateDescription}"
+                             jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
         </div>
     </div>
 

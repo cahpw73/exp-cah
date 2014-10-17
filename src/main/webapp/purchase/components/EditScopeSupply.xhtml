@@ -20,7 +20,9 @@
             #{_scopeSupply.unit}
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.cost']}">
-            #{_scopeSupply.cost}
+            <h:outputText value="#{_scopeSupply.cost}">
+                <f:convertNumber pattern="#0.00"/>
+            </h:outputText>
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.description']}">
             #{_scopeSupply.description}
@@ -34,13 +36,12 @@
                            action="#{purchaseOrderEdit.selectScopeSupply(_scopeSupply.id)}"
                            value="#{msgs['supply.scope.lbl.split']}"/>
             &#160;
-            <h:commandLink value="#{msgs['lbl.edit']}" action="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}"/>
+            <h:commandLink styleClass="btn-link" value="#{msgs['lbl.edit']}"
+                           action="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}"/>
         </p:column>
     </p:dataTable>
 
-    <h:commandButton immediate="true" styleClass="component-left btn btn-primary" process="@this"
-                     value="#{msgs['lbl.add.scope.supply']}"
+    <h:commandButton styleClass="component-left btn btn-primary" value="#{msgs['lbl.add.scope.supply']}"
                      action="#{purchaseOrderEdit.cleanScopeSupply}">
-        <f:ajax execute="@this"  immediate="true" />
     </h:commandButton>
 </ui:composition>

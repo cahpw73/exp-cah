@@ -37,7 +37,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         for(PurchaseOrderEntity entity:orders ){
             ids.add(entity.getId());
         }
-        addParameters("purchaseID",ids);
+        if(ids.size()>0){
+            addParameters("purchaseID",ids);
+        }
         addParameters("SUBREPORT_DIR","reports/jobSummary/");
         LookupValueFactory lookupValueFactory=new LookupValueFactory();
         addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());

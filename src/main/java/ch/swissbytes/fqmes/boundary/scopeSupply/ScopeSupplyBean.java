@@ -38,6 +38,9 @@ public class ScopeSupplyBean implements Serializable {
     private List<ScopeSupplyEntity>scopeSupplies;
 
     @Inject
+    private Date deliveryDate;
+
+    @Inject
     private TransitDeliveryPointService tdpService;
 
     private ScopeSupplyEntity selectedScopeSupply;
@@ -56,6 +59,8 @@ public class ScopeSupplyBean implements Serializable {
         log.info("initializing...");
         if(indexScopeSupplyEditing!=null&&indexScopeSupplyEditing>=0&&indexScopeSupplyEditing<scopeSupplies.size()){
             editScopeSupply=scopeSupplyService.clone(scopeSupplies.get(indexScopeSupplyEditing));
+            editScopeSupply.getTdpList().clear();
+            editScopeSupply.getTdpList().addAll(scopeSupplies.get(indexScopeSupplyEditing).getTdpList());
         }else{
             log.info("index invalid");
         }
@@ -63,7 +68,10 @@ public class ScopeSupplyBean implements Serializable {
 
     public String doUpdateScopeSupply(){
         if(indexScopeSupplyEditing>=0){
-            scopeSupplies.set(indexScopeSupplyEditing,scopeSupplyService.clone(editScopeSupply));
+            ScopeSupplyEntity ss=scopeSupplyService.clone(editScopeSupply);
+            ss.getTdpList().clear();
+            ss.getTdpList().addAll(editScopeSupply.getTdpList());
+            scopeSupplies.set(indexScopeSupplyEditing,ss);
         }
         return "/purchase/create?faces-redirect=true";
     }
@@ -74,6 +82,13 @@ public class ScopeSupplyBean implements Serializable {
         newScopeSupply=new ScopeSupplyEntity();
         tdp=new TransitDeliveryPointEntity();
         newScopeSupply.setIsForecastSiteDateCalculated(true);
+        if(deliveryDate.getYear()>0){
+            newScopeSupply.setDeliveryDate(deliveryDate);
+        }
+    }
+
+    public void setDeliveryDate(Date date){
+        newScopeSupply.setDeliveryDate(date);
     }
 
     public void cleanTransitDeliveryPoint(){
@@ -85,14 +100,20 @@ public class ScopeSupplyBean implements Serializable {
     public void addTransitDeliveryPoint(){
         log.info("public void addTransitDeliveryPoint()");
         newScopeSupply.getTdpList().add(tdpService.clone(tdp));
+        calculateDate();
+    }
+    public void addTransitDeliveryPointOnEdition(){
+        log.info("public void addTransitDeliveryPoint()");
+        editScopeSupply.getTdpList().add(tdpService.clone(tdp));
+        calculateDate();
     }
     public void switchModeForecastSiteDate() {
         log.info("public void switchModeForecastSiteDate()");
         if (indexScopeSupplyEditing==null||indexScopeSupplyEditing < 0) {
             if (newScopeSupply.getIsForecastSiteDateCalculated()) {
-                newScopeSupply.setSiteDate(null);
-            }else{
                 calculateDate();
+            }else{
+                newScopeSupply.setSiteDate(null);
             }
         } else if (editScopeSupply.getIsForecastSiteDateCalculated()) {
             editScopeSupply.setSiteDate(null);
@@ -130,6 +151,7 @@ public class ScopeSupplyBean implements Serializable {
     public void deleteTransitDeliveryPoint (Integer index){
         if(index>=0&&index< newScopeSupply.getTdpList().size()){
             newScopeSupply.getTdpList().remove(index.intValue());
+            calculateDate();
         }
     }
     @PreDestroy
@@ -154,6 +176,18 @@ public class ScopeSupplyBean implements Serializable {
 
         log.info("date calculated "+date);
         return date;
+    }
+    public void calulateForecasteDateForTdpCreation(){
+        log.info("calulateForecasteDateForTdpCreation....");
+        List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();
+        TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
+        tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(newScopeSupply, newScopeSupply.getTdpList().size()==0,tdpPrevious, tdp));
+    }
+    public void calulateForecasteDateForTdpEdition(){
+        log.info("calulateForecasteDateForTdpCreation....");
+        List<TransitDeliveryPointEntity>list=editScopeSupply.getTdpList();
+        TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
+        tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(editScopeSupply, editScopeSupply.getTdpList().size() == 0, tdpPrevious, tdp));
     }
 
     public void cleanScopeSupply(){
@@ -185,13 +219,19 @@ public class ScopeSupplyBean implements Serializable {
     }
 
     public void setIndexScopeSupplyEditing(Integer indexScopeSupplyEditing) {
-        System.out.println("setting "+indexScopeSupplyEditing);
         this.indexScopeSupplyEditing = indexScopeSupplyEditing;
     }
 
     public void selectTransitDeliveryPoint(final int index){
         if(index>=0 && index<newScopeSupply.getTdpList().size()){
            editTdp= tdpService.clone(newScopeSupply.getTdpList().get(index));
+            indexEditingTdp=index;
+        }
+
+    }
+    public void selectTransitDeliveryPointOnEdition(final int index){
+        if(index>=0 && index<editScopeSupply.getTdpList().size()){
+            editTdp= tdpService.clone(editScopeSupply.getTdpList().get(index));
             indexEditingTdp=index;
         }
 
@@ -217,6 +257,14 @@ public class ScopeSupplyBean implements Serializable {
         if(indexEditingTdp>=0&&indexEditingTdp<newScopeSupply.getTdpList().size()){
             editTdp.setLastUpdate(new Date());
             newScopeSupply.getTdpList().set(indexEditingTdp,tdpService.clone(editTdp));
+            calculateDate();
+        }
+    }
+    public void doUpdateTdpOnEdition(){
+        if(indexEditingTdp>=0&&indexEditingTdp<editScopeSupply.getTdpList().size()){
+            editTdp.setLastUpdate(new Date());
+            editScopeSupply.getTdpList().set(indexEditingTdp,tdpService.clone(editTdp));
+            calculateDate();
         }
     }
 }

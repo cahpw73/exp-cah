@@ -35,7 +35,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     }
 
     public List<CommentEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        String hql = "SELECT cs FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id DESC" ;
+        String hql = "SELECT cs FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
         TypedQuery<CommentEntity> query = this.entityManager.createQuery(
                 hql, CommentEntity.class);
         query.setParameter("purchase_id", purchaseOrderId);

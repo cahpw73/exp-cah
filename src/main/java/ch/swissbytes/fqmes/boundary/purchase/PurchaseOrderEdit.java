@@ -5,6 +5,7 @@ import ch.swissbytes.fqmes.control.comment.CommentService;
 import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
+import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.SupplierDao;
 import ch.swissbytes.fqmes.model.entities.*;
 import org.apache.commons.io.IOUtils;
@@ -33,7 +34,7 @@ import java.util.logging.Logger;
  */
 @Named
 @ConversationScoped
-public class PurchaseOrderEdit implements Serializable{
+public class PurchaseOrderEdit implements Serializable {
 
     @Inject
     private SupplierDao supplierDao;
@@ -52,8 +53,11 @@ public class PurchaseOrderEdit implements Serializable{
 
     @Inject
     private EnumService enumService;
-@Inject
-private Conversation conversation;
+    @Inject
+    private Conversation conversation;
+
+    @Inject
+    private TransitDeliveryPointService tdpService;
 
     private String purchaseOrderId;
 
@@ -63,7 +67,7 @@ private Conversation conversation;
 
     private List<AttachmentEntity> attachments;
 
-    private List<ScopeSupplyEntity>scopeSupplies;
+    private List<ScopeSupplyEntity> scopeSupplies;
 
     private ScopeSupplyEntity selectedScopeSupply;
 
@@ -79,140 +83,179 @@ private Conversation conversation;
 
     private ScopeSupplyEntity scopeSupplyEdit;
 
-    private Integer currentOperation=-1;
+    private Integer currentOperation = -1;
 
 
-    private Long relativeCurrentCommentId=0L;
-    private Long relativeCurrentAttachmentId=0L;
-    private Long relativeCurrentScopeSupplyId =0L;
+    private Long relativeCurrentCommentId = 0L;
+    private Long relativeCurrentAttachmentId = 0L;
+    private Long relativeCurrentScopeSupplyId = 0L;
 
     private ScopeSupplyEntity scopeSupplyEditing;
 
-    private Integer indexForScopeSupplyEditing=-1;
+    private Integer indexForScopeSupplyEditing = -1;
 
-    private final static Integer SPLIT=2;
-    private final static Integer CREATE=0;
-    private final static Integer EDIT=1;
+    private final static Integer SPLIT = 2;
+    private final static Integer CREATE = 0;
+    private final static Integer EDIT = 1;
 
 
     private Integer originalQuantity;
 
     private static final Logger log = Logger.getLogger(PurchaseOrderEdit.class.getName());
 
+    private TransitDeliveryPointEntity newTdp;
+
+    private TransitDeliveryPointEntity tdpEdit;
+
+    private Long temporaryIdForTdp=0L;
+
+    private Integer currentIndexForTdp=-1;
+    private String fase="0";
+
+    private Integer currentHashCode;
 
 
-
-    public void load(){
+    public void load() {
         log.info("loading...");
-        originalQuantity =0;
-            poEdit =service.load(Long.parseLong(purchaseOrderId));
-            supplierEdit=supplierDao.findByPurchaseOrder(poEdit.getId());
+        if(!fase.equals("1")){
+            originalQuantity = 0;
+            poEdit = service.load(Long.parseLong(purchaseOrderId));
+            supplierEdit = supplierDao.findByPurchaseOrder(poEdit.getId());
 
-                supplierEdit=supplierDao.findByPurchaseOrder(poEdit.getId());
-                if(comments==null||comments.size()==0){
-                    comments=commentService.findByPurchaseOrder(poEdit.getId());
-                }else{
+            supplierEdit = supplierDao.findByPurchaseOrder(poEdit.getId());
+            currentHashCode=service.getAbsoluteHashcode(poEdit.getId());
+            log.info(String.format("hashcode starting [%s]",currentHashCode));
+            if (comments == null || comments.size() == 0) {
+                comments = commentService.findByPurchaseOrder(poEdit.getId());
+            } else {
 
-                }
-                if(scopeSupplies==null||scopeSupplies.size()==0){
-                    scopeSupplies=scopeSupplyService.findByPurchaseOrder(poEdit.getId());
-                }
-                if(attachments==null||attachments.size()==0){
-                    attachments=attachmentService.findByPurchaseOrder(poEdit.getId());
-                }
+            }
+            if (scopeSupplies == null || scopeSupplies.size() == 0) {
+                scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
+            }
+            if (attachments == null || attachments.size() == 0) {
+                attachments = attachmentService.findByPurchaseOrder(poEdit.getId());
+            }
 
-        commentIndexSelected =-1;
+            commentIndexSelected = -1;
+        }
+
     }
 
     @PostConstruct
-    public void create(){
-       // poEdit=new PurchaseOrderEntity();
-        comments=new ArrayList<>();
-        commentEdit=new CommentEntity();
-        attachments=new ArrayList<>();
+    public void create() {
+        log.info("creating Purchase Order Edit...");
+        // poEdit=new PurchaseOrderEntity();
+        comments = new ArrayList<>();
+        commentEdit = new CommentEntity();
+        attachments = new ArrayList<>();
         //scopeSupplies=new ArrayList<>();
-        log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
-        if(conversation.isTransient()){
+        log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
+        if (conversation.isTransient()) {
+            log.info("Creating conversation...");
             conversation.begin();
+            //conversation.setTimeout();
+            log.info(String.format("conversation started [%s]", conversation.getTimeout()));
         }
     }
+
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.log(Level.INFO, String.format("bean destroyed [%s]", this.getClass().toString()));
     }
-    public String doUpdate(){
+
+    public String doUpdate() {
         log.info("upgrading...");
-        updateStatusesAndLastUpdate();
-        service.doUpdate(poEdit,supplierEdit,comments,scopeSupplies,attachments);
-        if(!conversation.isTransient()){
-            conversation.end();
+        Integer hashCode=service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]",hashCode));
+        String url = "";
+        if(hashCode.intValue()==currentHashCode.intValue()){
+            updateStatusesAndLastUpdate();
+            service.doUpdate(poEdit, supplierEdit, comments, scopeSupplies, attachments);
+            if (!conversation.isTransient()) {
+                conversation.end();
+            }
+            url="view?faces-redirect=true&poId=" + poEdit.getId();
+
+        }else{
+            if (!conversation.isTransient()) {
+                log.info("Deleting the conversation...");
+                conversation.end();
+                url="edit?faces-redirect=true&poId=" + poEdit.getId();
+            }
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
-        return "view?faces-redirect=true&poId="+poEdit.getId();
+        return url;
     }
-    private void updateStatusesAndLastUpdate(){
-        PurchaseOrderEntity oldPurchaseOrder=service.load(poEdit.getId());
-        Date now =new Date();
-        if(!oldPurchaseOrder.equals(poEdit)){
+
+    private void updateStatusesAndLastUpdate() {
+        PurchaseOrderEntity oldPurchaseOrder = service.load(poEdit.getId());
+        Date now = new Date();
+        if (!oldPurchaseOrder.equals(poEdit)) {
             poEdit.setLastUpdate(now);
         }
-       SupplierEntity oldSupplier= supplierDao.load(supplierEdit.getId());
-        if(!oldSupplier.equals(supplierEdit)){
+        SupplierEntity oldSupplier = supplierDao.load(supplierEdit.getId());
+        if (!oldSupplier.equals(supplierEdit)) {
             supplierEdit.setLastUpdate(now);
         }
-        for(final CommentEntity commentEntity:comments){
-            if(commentEntity.getId()<=0){
+        for (final CommentEntity commentEntity : comments) {
+            if (commentEntity.getId() <= 0) {
                 commentEntity.setId(null);
                 commentEntity.setLastUpdate(now);
-            }else{
-                CommentEntity oldComment=commentService.load(commentEntity.getId());
-                if(!oldComment.equals(commentEntity)){
+            } else {
+                CommentEntity oldComment = commentService.load(commentEntity.getId());
+                if (!oldComment.equals(commentEntity)) {
                     commentEntity.setLastUpdate(now);
                 }
             }
         }
-        for(final ScopeSupplyEntity scopeSupply:scopeSupplies){
-            if(scopeSupply.getId()<=0){
+        for (final ScopeSupplyEntity scopeSupply : scopeSupplies) {
+            if (scopeSupply.getId() <= 0) {
                 scopeSupply.setId(null);
                 scopeSupply.setLastUpdate(now);
-            }else{
-                ScopeSupplyEntity oldScopeSupply=scopeSupplyService.load(scopeSupply.getId());
-                if(!oldScopeSupply.equals(scopeSupply)){
+            } else {
+                ScopeSupplyEntity oldScopeSupply = scopeSupplyService.load(scopeSupply.getId());
+                if (!oldScopeSupply.equals(scopeSupply)) {
                     scopeSupply.setLastUpdate(now);
                 }
             }
         }
-        for(final AttachmentEntity attachment:attachments){
-            if(attachment.getId()<=0){
+        for (final AttachmentEntity attachment : attachments) {
+            if (attachment.getId() <= 0) {
                 attachment.setId(null);
                 attachment.setLastUpdate(now);
-            }else{
-                AttachmentEntity oldAttachment=attachmentService.load(attachment.getId());
-                if(!oldAttachment.equals(attachment)){
+            } else {
+                AttachmentEntity oldAttachment = attachmentService.load(attachment.getId());
+                if (!oldAttachment.equals(attachment)) {
                     attachment.setLastUpdate(now);
                 }
             }
         }
     }
-    public void addComment(){
-        log.log(Level.INFO,"COMMENT NAME    "+commentEdit.getName());
-        log.log(Level.INFO,"size    "+comments.size());
-        CommentEntity commentEntity=new CommentEntity();
-        try{
-            commentEntity=(CommentEntity)org.apache.commons.beanutils.BeanUtils.cloneBean(commentEdit);
+
+    public void addComment() {
+        log.log(Level.INFO, "COMMENT NAME    " + commentEdit.getName());
+        log.log(Level.INFO, "size    " + comments.size());
+        CommentEntity commentEntity = new CommentEntity();
+        try {
+            commentEntity = (CommentEntity) org.apache.commons.beanutils.BeanUtils.cloneBean(commentEdit);
             relativeCurrentCommentId--;
             commentEntity.setId(relativeCurrentCommentId);
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         commentEntity.setStatus(enumService.getStatusEnumEnable());
         comments.add(commentEntity);
     }
-    private void registerScopeSupply(){
-        log.log(Level.INFO,"SCOPE CODE    "+scopeSupplyEdit.getCode());
-        ScopeSupplyEntity scopeSupplyEntity=new ScopeSupplyEntity();
-        try{
-            scopeSupplyEntity=(ScopeSupplyEntity)org.apache.commons.beanutils.BeanUtils.cloneBean(scopeSupplyEdit);
-        }catch (Exception ex){
+
+    private void registerScopeSupply() {
+        log.log(Level.INFO, "SCOPE CODE    " + scopeSupplyEdit.getCode());
+        ScopeSupplyEntity scopeSupplyEntity = new ScopeSupplyEntity();
+        try {
+            scopeSupplyEntity = (ScopeSupplyEntity) org.apache.commons.beanutils.BeanUtils.cloneBean(scopeSupplyEdit);
+            scopeSupplyEntity.getTdpList().clear();
+            scopeSupplyEntity.getTdpList().addAll(scopeSupplyEdit.getTdpList());
+        } catch (Exception ex) {
         }
         scopeSupplyEntity.setStatus(enumService.getStatusEnumEnable());
         relativeCurrentAttachmentId--;
@@ -220,20 +263,21 @@ private Conversation conversation;
         scopeSupplies.add(scopeSupplyEntity);
 
     }
-    public void handleCommentUpload(FileUploadEvent event){
-        UploadedFile uf=event.getFile();
+
+    public void handleCommentUpload(FileUploadEvent event) {
+        UploadedFile uf = event.getFile();
         log.info(uf.getFileName());
-        if(commentIndexSelected!=null&&commentIndexSelected>=0){
-            try{
+        if (commentIndexSelected != null && commentIndexSelected >= 0) {
+            try {
                 editingComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-            }catch (IOException ioe){
+            } catch (IOException ioe) {
             }
             editingComment.setFileName(uf.getFileName());
             editingComment.setMimeType(uf.getContentType());
-        }else{
-            try{
+        } else {
+            try {
                 commentEdit.setFile(IOUtils.toByteArray(uf.getInputstream()));
-            }catch (IOException ioe){
+            } catch (IOException ioe) {
             }
             commentEdit.setFileName(uf.getFileName());
             commentEdit.setMimeType(uf.getContentType());
@@ -242,18 +286,20 @@ private Conversation conversation;
 
     }
 
-    public List<AttachmentEntity> getAttachmentActives(){
+    public List<AttachmentEntity> getAttachmentActives() {
         return attachmentService.getActives(attachments);
     }
 
-    public void cleanComment(){
-        commentEdit=new CommentEntity();
-        commentIndexSelected =-1;
+    public void cleanComment() {
+        commentEdit = new CommentEntity();
+        commentIndexSelected = -1;
     }
 
-    public String cleanScopeSupply(){
-        currentOperation=CREATE;//CREATING...
-        scopeSupplyEdit=new ScopeSupplyEntity();
+    public String cleanScopeSupply() {
+        log.info("cleanScopeSupply.....................");
+        currentOperation = CREATE;//CREATING...
+        scopeSupplyEdit = new ScopeSupplyEntity();
+        scopeSupplyEdit.setDeliveryDate(poEdit.getPoDeliveryDate());
         scopeSupplyEdit.setIsForecastSiteDateCalculated(true);
         return "/purchase/modal/EditModalScopeSupply?faces-redirect=true";
     }
@@ -296,6 +342,7 @@ private Conversation conversation;
     public List<ScopeSupplyEntity> getScopeSupplies() {
         return scopeSupplies;
     }
+
     @Produces
     @ConversationScoped
     @Named
@@ -303,7 +350,7 @@ private Conversation conversation;
         return commentEdit;
     }
 
-    public List<CommentEntity> getActiveComments(){
+    public List<CommentEntity> getActiveComments() {
         return commentService.getActives(comments);
     }
 
@@ -317,13 +364,13 @@ private Conversation conversation;
 
     public void deleteComment(Long id) {
         log.info("deleting commment ");
-        Integer index = commentService.getIndexById(id,comments);
+        Integer index = commentService.getIndexById(id, comments);
         if (index >= 0) {
             CommentEntity comment = comments.get(index);
             if (comment.getId() > 0) {
                 comment.setStatus(enumService.getStatusEnumDeleted());
             } else {
-                log.info("comments previous "+comments.size());
+                log.info("comments previous " + comments.size());
                 comments.remove(index.intValue());
                 log.info("comments " + comments.size());
             }
@@ -331,8 +378,9 @@ private Conversation conversation;
 
         }
     }
+
     public void editComment(Long id) {
-        Integer index = commentService.getIndexById(id,comments);
+        Integer index = commentService.getIndexById(id, comments);
         if (index >= 0) {
             CommentEntity comment = comments.get(index);
             if (comment.getId() > 0) {
@@ -345,18 +393,19 @@ private Conversation conversation;
         }
     }
 
-    public void selectComment(final Long id){
-        commentIndexSelected =-1;
-        Integer index = commentService.getIndexById(id,comments);
+    public void selectComment(final Long id) {
+        commentIndexSelected = -1;
+        Integer index = commentService.getIndexById(id, comments);
         if (index >= 0) {
-            commentIndexSelected =index;
-            editingComment= commentService.clone(comments.get(index));
+            commentIndexSelected = index;
+            editingComment = commentService.clone(comments.get(index));
         }
     }
-    public void doUpdateComment(){
-        Integer index = commentService.getIndexById(editingComment.getId(),comments);
-        if(index>=0&&index<comments.size()){
-            comments.set(index,commentService.clone(editingComment));
+
+    public void doUpdateComment() {
+        Integer index = commentService.getIndexById(editingComment.getId(), comments);
+        if (index >= 0 && index < comments.size()) {
+            comments.set(index, commentService.clone(editingComment));
         }
     }
 
@@ -384,101 +433,112 @@ private Conversation conversation;
                 attachments.remove(index);
             }
         }
-    } 
-    public List<ScopeSupplyEntity>getActiveScopeSupplies(){
+    }
+
+    public List<ScopeSupplyEntity> getActiveScopeSupplies() {
 //        log.info("size about scope supply "+scopeSupplies.size());
-       return scopeSupplyService.getActives(scopeSupplies);
+        return scopeSupplyService.getActives(scopeSupplies);
     }
 
-    public String addScopeSupply(){
+    public String addScopeSupply() {
         registerScopeSupply();
-        return "/purchase/edit?faces-redirect=true";
+        return "/purchase/edit?faces-redirect=true&fase=1";
     }
 
-    public void addScopeSupplyAndAdd(){
+    public void addScopeSupplyAndAdd() {
         registerScopeSupply();
         cleanScopeSupply();
     }
-    public String cancel(){
-        return "/purchase/edit?faces-redirect=true";
+
+    public String cancel() {
+        log.info("cancel to edit purchase order...........");
+        return "/purchase/edit?faces-redirect=true&cid="+conversation.getId()+"&fase=1";
     }
 
-    public String split(){
+    public String split() {
         log.info("split....");
-        if(originalQuantity.intValue()>0&& scopeSupplySplit.getQuantity().intValue()<originalQuantity.intValue()){
+        if (originalQuantity.intValue() > 0 && scopeSupplySplit.getQuantity().intValue() < originalQuantity.intValue()) {
             //selectedScopeSupply.setQuantity(originalQuantity.intValue()-scopeSupplySplit.getQuantity().intValue());
             relativeCurrentAttachmentId--;
             scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
             scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
             scopeSupplies.add(scopeSupplyService.clone(scopeSupplySplit));
-            final int index=scopeSupplyService.getIndexById(selectedScopeSupply.getId(),scopeSupplies);
-            if(index>=0 && index <scopeSupplies.size()){
-                scopeSupplies.set(index,scopeSupplyService.clone(selectedScopeSupply));
+            final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
+            if (index >= 0 && index < scopeSupplies.size()) {
+                scopeSupplies.set(index, scopeSupplyService.clone(selectedScopeSupply));
             }
-        }else{
+        } else {
             Messages.addGlobalError("invalid quantity");
         }
         log.info("finished splitting");
-        return "/purchase/edit?faces-redirect=true";
+        return "/purchase/edit?faces-redirect=true&fase=1";
     }
 
-    public String doUpdateScopeSupply(){
-        if(indexForScopeSupplyEditing>=0){
-            scopeSupplies.set(indexForScopeSupplyEditing,scopeSupplyService.clone(scopeSupplyEditing));
+    public String doUpdateScopeSupply() {
+        if (indexForScopeSupplyEditing >= 0) {
+            ScopeSupplyEntity ss=scopeSupplyService.clone(scopeSupplyEditing);
+            ss.getTdpList().clear();
+            ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
+            scopeSupplies.set(indexForScopeSupplyEditing, ss);
         }
-        return "/purchase/edit?faces-redirect=true";
+        return "/purchase/edit?faces-redirect=true&fase=1";
     }
 
-    public String selectScopeSupply(final Long idScopeSupply){
-        currentOperation=SPLIT;//spliting...
-        final int index=scopeSupplyService.getIndexById(idScopeSupply,scopeSupplies);
-        if(index>=0){
-            selectedScopeSupply=scopeSupplyService.clone(scopeSupplies.get(index));
-            originalQuantity=selectedScopeSupply.getQuantity();
-            scopeSupplySplit=scopeSupplyService.clone(selectedScopeSupply);
+    public String selectScopeSupply(final Long idScopeSupply) {
+        currentOperation = SPLIT;//spliting...
+        final int index = scopeSupplyService.getIndexById(idScopeSupply, scopeSupplies);
+        if (index >= 0) {
+            selectedScopeSupply = scopeSupplyService.clone(scopeSupplies.get(index));
+            originalQuantity = selectedScopeSupply.getQuantity();
+            scopeSupplySplit = scopeSupplyService.clone(selectedScopeSupply);
             scopeSupplySplit.setQuantity(0);
         }
-        return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId="+idScopeSupply;
+        return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;
     }
 
-    public void calculateNewScopeSupplyQuantity(){
-        if(selectedScopeSupply.getQuantity().intValue()>=0 && selectedScopeSupply.getQuantity().intValue()<originalQuantity){
-            scopeSupplySplit.setQuantity(originalQuantity.intValue()-selectedScopeSupply.getQuantity().intValue());
-        }else{
-            selectedScopeSupply.setQuantity(originalQuantity);
-            scopeSupplySplit.setQuantity(0);
-        }
-    }
-    public void calculateOldScopeSupplyQuantity(){
-        if(scopeSupplySplit.getQuantity().intValue()>=0 && scopeSupplySplit.getQuantity().intValue()<originalQuantity){
-            selectedScopeSupply.setQuantity(originalQuantity.intValue()-scopeSupplySplit.getQuantity().intValue());
-        }else{
+    public void calculateNewScopeSupplyQuantity() {
+        if (selectedScopeSupply.getQuantity().intValue() >= 0 && selectedScopeSupply.getQuantity().intValue() < originalQuantity) {
+            scopeSupplySplit.setQuantity(originalQuantity.intValue() - selectedScopeSupply.getQuantity().intValue());
+        } else {
             selectedScopeSupply.setQuantity(originalQuantity);
             scopeSupplySplit.setQuantity(0);
         }
     }
 
-    public String selectScopeSuppplyForEditing(Long id){
-        currentOperation=EDIT;//EDITING
-        final int index=scopeSupplyService.getIndexById(id,scopeSupplies);
-        indexForScopeSupplyEditing=-1;
-        if(index>=0){
-            scopeSupplyEditing=scopeSupplyService.clone(scopeSupplies.get(index));
-            indexForScopeSupplyEditing=index;
+    public void calculateOldScopeSupplyQuantity() {
+        if (scopeSupplySplit.getQuantity().intValue() >= 0 && scopeSupplySplit.getQuantity().intValue() < originalQuantity) {
+            selectedScopeSupply.setQuantity(originalQuantity.intValue() - scopeSupplySplit.getQuantity().intValue());
+        } else {
+            selectedScopeSupply.setQuantity(originalQuantity);
+            scopeSupplySplit.setQuantity(0);
         }
+    }
 
-        return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId="+id;
+    public String selectScopeSuppplyForEditing(Long id) {
+        currentOperation = EDIT;//EDITING
+        final int index = scopeSupplyService.getIndexById(id, scopeSupplies);
+        indexForScopeSupplyEditing = -1;
+        scopeSupplyEditing = scopeSupplyService.clone(scopeSupplies.get(index));
+        scopeSupplyEditing.getTdpList().clear();
+        if (id >= 0) {
+            scopeSupplyEditing.getTdpList().addAll(tdpService.findByScopeSupply(id));
+
+        }
+        indexForScopeSupplyEditing = index;
+        scopeSupplyEditing.getTdpList().addAll(scopeSupplies.get(index).getTdpList());
+        return  "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id;
     }
 
     public ScopeSupplyEntity getScopeSupplySplit() {
         return scopeSupplySplit;
     }
 
-    public void downloadAttachmentFile(final long id){
+    public void downloadAttachmentFile(final long id) {
         log.info("public void downloadAttachmentFile(final long id)");
         attachmentService.download(id);
     }
-    public void downloadAttachedFileOnComment(final long id){
+
+    public void downloadAttachedFileOnComment(final long id) {
         log.info("public void downloadAttachedFileOnComment(final long id)");
         commentService.download(id);
     }
@@ -492,23 +552,23 @@ private Conversation conversation;
     }
 
     public Date calculateDate() {
-        Date date=null;
-        switch (currentOperation){
+        Date date = null;
+        switch (currentOperation) {
             case 0://CREATING
-                if(scopeSupplyEdit.getIsForecastSiteDateCalculated()){
-                    date=scopeSupplyService.calculateForecastSiteDate(scopeSupplyEdit);
+                if (scopeSupplyEdit.getIsForecastSiteDateCalculated()) {
+                    date = scopeSupplyService.calculateForecastSiteDate(scopeSupplyEdit);
                     scopeSupplyEdit.setSiteDate(date);
                 }
                 break;
             case 1://EDITING
-                if(scopeSupplyEditing.getIsForecastSiteDateCalculated()){
-                    date=scopeSupplyService.calculateForecastSiteDate(scopeSupplyEditing);
+                if (scopeSupplyEditing.getIsForecastSiteDateCalculated()) {
+                    date = scopeSupplyService.calculateForecastSiteDate(scopeSupplyEditing);
                     scopeSupplyEditing.setSiteDate(date);
                 }
                 break;
             case 2://SPLITING
-                if(getScopeSupplySplit().getIsForecastSiteDateCalculated()){
-                    date=scopeSupplyService.calculateForecastSiteDate(getScopeSupplySplit());
+                if (getScopeSupplySplit().getIsForecastSiteDateCalculated()) {
+                    date = scopeSupplyService.calculateForecastSiteDate(getScopeSupplySplit());
                     getScopeSupplySplit().setSiteDate(date);
                 }
                 break;
@@ -517,30 +577,31 @@ private Conversation conversation;
                 break;
         }
 
-        log.info("date calculated "+date);
+        log.info("date calculated " + date);
         return date;
     }
+
     public void switchModeForecastSiteDate() {
         log.info("public void switchModeForecastSiteDate()");
-        switch (currentOperation){
+        switch (currentOperation) {
             case 0://CREATING
-                if(scopeSupplyEdit.getIsForecastSiteDateCalculated()){
+                if (scopeSupplyEdit.getIsForecastSiteDateCalculated()) {
                     scopeSupplyEdit.setSiteDate(null);
-                }else{
+                } else {
                     calculateDate();
                 }
                 break;
             case 1://EDITING
-                if(scopeSupplyEditing.getIsForecastSiteDateCalculated()){
+                if (scopeSupplyEditing.getIsForecastSiteDateCalculated()) {
                     scopeSupplyEditing.setSiteDate(null);
-                }else{
+                } else {
                     calculateDate();
                 }
                 break;
             case 2://SPLITING
-                if(getScopeSupplySplit().getIsForecastSiteDateCalculated()){
+                if (getScopeSupplySplit().getIsForecastSiteDateCalculated()) {
                     getScopeSupplySplit().setSiteDate(null);
-                }else{
+                } else {
                     calculateDate();
                 }
                 break;
@@ -548,6 +609,128 @@ private Conversation conversation;
                 log.info("no possible computation");
                 break;
         }
+    }
+
+    public TransitDeliveryPointEntity getNewTdp() {
+        return newTdp;
+    }
+
+    public TransitDeliveryPointEntity getTdpEdit() {
+        return tdpEdit;
+    }
+
+    public void cleanTransitDeliveryPoint(){
+        newTdp=new TransitDeliveryPointEntity();
+        currentIndexForTdp=-1;
+    }
+    public void selectTdp(Long id){
+        int index=tdpService.getIndexById(id,scopeSupplyEdit.getTdpList());
+        if(index>=0&&index<scopeSupplyEdit.getTdpList().size()){
+            tdpEdit=tdpService.clone(scopeSupplyEdit.getTdpList().get(index));
+            currentIndexForTdp=index;
+        }
+    }
+    public void selectTdpEditing(Long id){
+        int index=tdpService.getIndexById(id,scopeSupplyEditing.getTdpList());
+        if(index>=0&&index<scopeSupplyEditing.getTdpList().size()){
+            tdpEdit=tdpService.clone(scopeSupplyEditing.getTdpList().get(index));
+            currentIndexForTdp=index;
+        }
+    }
+    public void deleteTdp(Long id){
+        Integer index=tdpService.getIndexById(id,scopeSupplyEdit.getTdpList());
+        if(index>=0){
+            TransitDeliveryPointEntity tde=scopeSupplyEdit.getTdpList().get(index);
+            if(tde.getId()!=null&&tde.getId()>0){
+                tde.setStatus(enumService.getStatusEnumDeleted());
+                tde.setLastUpdate(new Date());
+            }else{
+                scopeSupplyEdit.getTdpList().remove(index.intValue());
+            }
+        }
+    }
+    public void deleteTdpOnEdition(Long id){
+        Integer index=tdpService.getIndexById(id,scopeSupplyEditing.getTdpList());
+        if(index>=0){
+            TransitDeliveryPointEntity tde=scopeSupplyEditing.getTdpList().get(index);
+            if(tde.getId()!=null&&tde.getId()>0){
+                tde.setStatus(enumService.getStatusEnumDeleted());
+                tde.setLastUpdate(new Date());
+            }else{
+                scopeSupplyEditing.getTdpList().remove(index.intValue());
+            }
+        }
+    }
+    public void doSaveTdp(){
+        newTdp.setStatus(enumService.getStatusEnumEnable());
+        temporaryIdForTdp--;
+        newTdp.setId(temporaryIdForTdp);
+        newTdp.setLastUpdate(new Date());
+        scopeSupplyEdit.getTdpList().add(tdpService.clone(newTdp));
+        calculateDate();
+    }
+    public void doSaveOnEdition(){
+        newTdp.setStatus(enumService.getStatusEnumEnable());
+        temporaryIdForTdp--;
+        newTdp.setId(temporaryIdForTdp);
+        newTdp.setLastUpdate(new Date());
+        scopeSupplyEditing.getTdpList().add(tdpService.clone(newTdp));
+        calculateDate();
+    }
+    public void doUpdateTdp(){
+        if(currentIndexForTdp>=0&&currentIndexForTdp<scopeSupplyEdit.getTdpList().size()){
+            tdpEdit.setLastUpdate(new Date());
+            scopeSupplyEdit.getTdpList().set(currentIndexForTdp,tdpService.clone(tdpEdit));
+            calculateDate();
+        }
+    }
+    public void doUpdateTdpOnEdition(){
+        if(currentIndexForTdp>=0&&currentIndexForTdp<scopeSupplyEditing.getTdpList().size()){
+            tdpEdit.setLastUpdate(new Date());
+            scopeSupplyEditing.getTdpList().set(currentIndexForTdp,tdpService.clone(tdpEdit));
+            calculateDate();
+        }
+    } 
+    public String cancelEditPurchaseOrder(){
+        if(!conversation.isTransient()){
+            log.info("Finish conversation...");
+            conversation.end();
+        }
+        return"/purchase/list?faces-redirect=true";
+    }
+
+    public String getFase() {
+        return fase;
+    }
+
+    public void setFase(String fase) {
+        this.fase = fase;
+    }
+
+    public void calulateForecasteDateForTdpCreation(){
+        log.info("calulateForecasteDateForTdpCreation....");
+        List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
+        TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
+        newTdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEdit, scopeSupplyEdit.getTdpList().size()==0,tdpPrevious, newTdp));
+    }
+    public void calulateForecasteDateForTdpEdition(){
+        log.info("calulateForecasteDateForTdpCreation....");
+        List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
+        TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
+        tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEdit, scopeSupplyEdit.getTdpList().size() == 0, tdpPrevious, tdpEdit));
+    }
+
+    public void calulateForecasteDateForTdpCreation1(){
+        log.info("calulateForecasteDateForTdpCreation....");
+        List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
+        TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
+        newTdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, scopeSupplyEditing.getTdpList().size()==0,tdpPrevious, newTdp));
+    }
+    public void calulateForecasteDateForTdpEdition1(){
+        log.info("calulateForecasteDateForTdpCreation....");
+        List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
+        TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
+        tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, scopeSupplyEditing.getTdpList().size() == 0, tdpPrevious, tdpEdit));
     }
 
 }

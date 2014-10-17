@@ -1,0 +1,24 @@
+
+--@author Christian Alba
+ALTER TABLE comments ALTER COLUMN description TYPE VARCHAR(1000);
+
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN DESCRIPTION TYPE VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN po_inco_term_description TYPE VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN po_delivery_date_description TYPE VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN intro_email_sent_description TYPE VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN required_date_description TYPE VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN actual_date_description TYPE VARCHAR(1000);
+
+ALTER TABLE scope_supply ALTER COLUMN description TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN ex_work_date_description TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN delivery_lead_time_description TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN site_date_description TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN delivery_date_obs TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN actual_ex_work_date_obs TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN required_site_date_obs TYPE VARCHAR(1000);
+ALTER TABLE scope_supply ALTER COLUMN actual_site_date_obs TYPE VARCHAR(1000);
+
+ALTER TABLE supplier ALTER COLUMN address_description TYPE VARCHAR(1000);
+ALTER TABLE supplier ALTER COLUMN contact_name_description TYPE VARCHAR(1000);
+
+ALTER TABLE transit_delivery_point ALTER COLUMN comments TYPE VARCHAR(1000);

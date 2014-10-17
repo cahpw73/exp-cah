@@ -67,6 +67,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="clearfix"/>
             <br/>
 
@@ -76,30 +77,29 @@
                               styleClass="btn btn-primary"/>
                 </div>
                 <div class="pull-right">
-                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{purchaseOrderListBean.doSearch}"
-                                     type="submit" class="btn btn-primary"></h:commandButton>
-                    &#160;
                     <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
                                      type="submit" class="btn btn-primary"/>
+                    &#160;
+                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{purchaseOrderListBean.doSearch}"
+                                     type="submit" class="btn btn-primary"></h:commandButton>
                 </div>
-
             </div>
         </h:form>
 
         <div class="clearfix"/>
         <br/>
-        <h:form>
+        <h:form id="purchaseListForm">
             <h2 class="sub-header">#{msgs['po.list.title']}</h2>
             <p:dataTable value="#{purchaseOrderListBean.list}" var="_purchase"
-                         paginator="true" rows="5" lazy="true"
-                         rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
+                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                         rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.list.total)}" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['po.lbl.project']}">
                     #{_purchase.project}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}">
+                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}">
                     #{_purchase.po}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.variation']}">
+                <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}">
                     #{_purchase.variation}
                 </p:column>
                 <ui:remove>
@@ -111,15 +111,50 @@
                     #{_purchase.poTitle}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}">
+                    <h:link rendered="#{permissionBean.hasPermission(102)}" value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
+                        <f:param name="poId" value="#{_purchase.id}"/>
+                    </h:link>
+                    &#160;
                     <h:link value="#{msgs['lbl.view']}" rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
                         <f:param name="poId" value="#{_purchase.id}"/>
                     </h:link>
                     &#160;
-                    <h:link rendered="#{permissionBean.hasPermission(102)}" value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
-                        <f:param name="poId" value="#{_purchase.id}"/>
-                    </h:link>
+                    <h:commandLink value="#{msgs['lbl.delete']}">
+                        <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.id)}"
+                                oncomplete="PF('deleteDlg').show();"
+                                update=":purchaseListForm:deleteDlgId"/>
+                    </h:commandLink>
+
+
                 </p:column>
             </p:dataTable>
+            <p:confirmDialog id="deleteDlgId" header="Delete Purchase Order" widgetVar="deleteDlg" >
+                <f:facet name="message">
+                    Are you sure to delete Purchase Order?
+                    <div class="form-group">
+                        <label for="projectDlgId">Project</label>
+                        &#160;
+                        <h:outputText id="projectDlgId" value="#{purchaseOrderListBean.purchaseOrderSelected.project}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="poDlgId">PO Reference</label>
+                        &#160;
+                        <h:outputText id="poDlgId"  value="#{purchaseOrderListBean.purchaseOrderSelected.po}"/>
+                    </div>
+                </f:facet>
+                <div class="pull-right">
+                    <h:commandButton  value="#{msgs['lbl.delete']}" class='btn btn-primary'
+                                      actionListener="#{purchaseOrderListBean.doDeletePurchaseOrder}">
+                        <p:ajax onsuccess="PF('deleteDlg').hide();"
+                                process="deleteDlgId"
+                                update=":purchaseListForm"/>
+                    </h:commandButton>
+                        &#160;
+                    <button class="btn btn-primary" type="button"
+                            onclick="PF('deleteDlg').hide();">
+                            #{msgs['lbl.cancel']}</button>
+                </div>
+            </p:confirmDialog>
         </h:form>
     </ui:define>
 </ui:composition>

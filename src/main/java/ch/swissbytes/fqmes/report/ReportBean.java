@@ -4,7 +4,6 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
-import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -30,17 +29,14 @@ public class ReportBean implements Serializable {
     private EntityManager entityManager;
 
 
-
     private Locale locale;
 
-    private Map<String,String> messages;
+    private Map<String, String> messages;
 
-    private Boolean openReport=false;
+    private Boolean openReport = false;
 
 
-
-private List<PurchaseOrderEntity> selected;
-
+    private List<PurchaseOrderEntity> selected;
 
 
     private String typeId;
@@ -50,71 +46,59 @@ private List<PurchaseOrderEntity> selected;
     @Inject
     private PurchaseOrderService service;
 
-public Boolean getOpenReport(){
-    return openReport;
-}
+    public Boolean getOpenReport() {
+        return openReport;
+    }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("ReportBean init!");
-        selected=new ArrayList<>();
+        selected = new ArrayList<>();
 
 
     }
 
-    public List<PurchaseOrderEntity> getSelected(){
+    public List<PurchaseOrderEntity> getSelected() {
         return selected;
     }
-    public void addPurchaseOrder(final Long id){
-        log.info("public void addPurchaseOrder(final Long id="+id+")");
+
+    public void addPurchaseOrder(final Long id) {
+        log.info("public void addPurchaseOrder(final Long id=" + id + ")");
         selected.add(service.load(id));
     }
-    public void cleanPurchaseSelected(){
-        selected=new ArrayList<>();
+
+    public void cleanPurchaseSelected() {
+        selected = new ArrayList<>();
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("Report Bean destroyed!");
     }
 
-    public void printReportReceivableManifest(){
+    public void printReportReceivableManifest() {
         log.info("public void printReportReceivableManifest()");
-        openReport=false;
-        if(selected!=null&& selected.size()>0){
-            initializeParametersToJasperReport();
-            ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest","Receivable.Manifest", messages,locale, entityManager,selected);
-            reportView.printDocument(null);
-            openReport=true;
-        }else{
-
-            Messages.addGlobalError("you should select at least one purchase order");
-        }
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, selected);
+        reportView.printDocument(null);
+        openReport = true;
     }
-    public void printReportJobSummary(){
+
+    public void printReportJobSummary() {
         log.info("public void printReportJobSummary()");
-        openReport=false;
-        if(selected!=null&& selected.size()>0){
-            initializeParametersToJasperReport();
-            ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary","Job.Summary", messages,locale, entityManager,selected);
-            reportView.printDocument(null);
-            openReport=true;
-        }else{
-
-            Messages.addGlobalError("you should select at least one purchase order");
-        }
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, selected);
+        reportView.printDocument(null);
+        openReport = true;
     }
 
 
-
-
-
-
-    private void initializeParametersToJasperReport(){
+    private void initializeParametersToJasperReport() {
         locale = new Locale(Locale.ENGLISH.getLanguage());
         messages = new HashMap<String, String>();
     }
-
 
 
     public Locale getLocale() {
@@ -134,7 +118,6 @@ public Boolean getOpenReport(){
     }
 
 
-
     public String getTypeId() {
         return typeId;
     }
@@ -142,7 +125,6 @@ public Boolean getOpenReport(){
     public void setTypeId(String typeId) {
         this.typeId = typeId;
     }
-
 
 
     public boolean isAllProviders() {

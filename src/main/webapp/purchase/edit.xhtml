@@ -11,6 +11,7 @@
 <f:metadata>
     <f:viewAction action="#{identity.isLoggedIn()}"/>
     <f:viewParam name="poId" value="#{purchaseOrderEdit.purchaseOrderId}"/>
+    <f:viewParam name="fase" value="#{purchaseOrderEdit.fase}"/>
     <f:viewAction action="#{permissionBean.canAccess(102)}"/>
     <f:viewAction action="#{purchaseOrderEdit.load}"/>
 
@@ -23,6 +24,29 @@
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
                         acceptcharset="UTF-8">
+                <script>
+                    $(document).ready(function() {
+                        if (document.referrer != "") {
+                            var referringURL = document.referrer;
+                            if(referringURL.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
+                                console.log("is create scope supply");
+                                hasChanges = true;
+                            }else if(referringURL.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
+                                console.log("is create scope supply editing");
+                                hasChanges = true;
+                            }else if(referringURL.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
+                                console.log("is edit scope supply")
+                                hasChanges = true;
+                            }else if(referringURL.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
+                                console.log("is edit scope supply editing")
+                                hasChanges = true;
+                            }else if(referringURL.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
+                                console.log("is edit split scope supply")
+                                hasChanges = true;
+                            }
+                        }
+                    });
+                </script>
 
                     <!-- Form Name -->
                     <h2 class="sub-header">#{msgs['po.view.edit']}</h2>
@@ -43,9 +67,10 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <h:inputText value="#{purchaseOrderEdit.poEdit.description}"
-                                                 jsf:placeholder="#{msgs['po.ph.description']}" maxlength="255"
-                                                 class="form-control"/>
+                                    <p:inputTextarea value="#{purchaseOrderEdit.poEdit.description}"
+                                                     jsf:placeholder="#{msgs['po.ph.description']}"
+                                                     maxlength="1000" style="height: 34px;"
+                                                     class="form-control"/>
                                 </div>
                             </div>
                         </div>
@@ -92,14 +117,16 @@
                                 <h:outputLabel  class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="col-sm-8">
-                                    <h:inputTextarea maxlength="50" jsf:placeholder="#{msgs['po.ph.address']}"
-                                                 value="#{purchaseOrderEdit.supplierEdit.address}" class="form-control" />
+                                    <p:inputTextarea maxlength="255" jsf:placeholder="#{msgs['po.ph.address']}"
+                                                     style="max-height: 60px;"
+                                                     value="#{purchaseOrderEdit.supplierEdit.address}" class="form-control" />
                                 </div>
                             </div>
                         </div>
                             <div class="col-lg-6">
-                                <h:inputText maxlength="255" type="text" value="#{purchaseOrderEdit.supplierEdit.addresDescription}"
-                                             jsf:placeholder="#{msgs['po.ph.leadTime.description']}" class="form-control"/>
+                                <p:inputTextarea maxlength="1000" type="text" value="#{purchaseOrderEdit.supplierEdit.addresDescription}"
+                                             style="max-height: 60px;"
+                                                 jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
                             </div>
                     </div>
                     <div class="row">
@@ -114,7 +141,9 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <h:inputText maxlength="255" value="#{purchaseOrderEdit.supplierEdit.contactNameDescription}"  jsf:placeholder="#{msgs['po.ph.contact.name.description']}" class="form-control" />
+                            <p:inputTextarea style="max-height: 34px;"
+                                             maxlength="1000" value="#{purchaseOrderEdit.supplierEdit.contactNameDescription}"
+                                             jsf:placeholder="#{msgs['po.ph.contact.name.description']}" class="form-control"/>
                         </div>
                     </div>
                     <div class="row">
@@ -140,7 +169,9 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <h:inputText  maxlength="255" value="#{purchaseOrderEdit.poEdit.poIncoTermDescription}" jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control" />
+                            <p:inputTextarea style="max-height: 34px;"
+                                             maxlength="1000" value="#{purchaseOrderEdit.poEdit.poIncoTermDescription}"
+                                             jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
                         </div>
                     </div>
                     <div class="row">
@@ -155,14 +186,17 @@
                                                 mask="true"
                                                 navigator="true"
                                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                                jsf:placeholder="#{msgs['lbl.format.date']}">
+                                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                                onselect="calendarChanges();" onchange="calendarChanges();">
                                         <p:ajax event="dateSelect" process="@this"/>
                                     </p:calendar>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <h:inputText maxlength="50" jsf:placeholder="#{msgs['po.ph.delivery.date']}" value="#{purchaseOrderEdit.poEdit.poDeliveryDateDescription}" class="form-control" />
+                            <p:inputTextarea style="max-height: 34px;"
+                                             maxlength="1000" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
+                                             value="#{purchaseOrderEdit.poEdit.poDeliveryDateDescription}" class="form-control"/>
                         </div>
                     </div>
                     <div class="row">
@@ -193,14 +227,33 @@
                                                      action="#{purchaseOrderEdit.doUpdate}"
                                                      type='submit'/>
                                     &#160;
-                                    <h:link id="delete" value="#{msgs['lbl.cancel']}" class='btn btn-primary'
-                                            outcome="/purchase/list"
-                                            type='submit'/>
+                                    <h:commandButton id="cancelCreateBtn"
+                                                     value="#{msgs['lbl.cancel']}"
+                                                     class='btn btn-primary'>
+                                        <p:ajax process="@this"
+                                                oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
+                                    </h:commandButton>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
+                        <f:facet name="message">
+                            <p>#{msgs['lbl.confirm.cancel.your.change']}</p>
+                            <p>#{msgs['lbl.confirm.cancel.sure']}</p>
+                        </f:facet>
+                        <div class="pull-right">
+                            <h:commandButton value="#{msgs['lbl.yes']}" immediate="true"
+                                             class='btn btn-primary'
+                                             action="#{purchaseOrderEdit.cancelEditPurchaseOrder}">
+                            </h:commandButton>
+                            &#160;
+                            <button class="btn btn-primary" type="button"
+                                    onclick="PF('confCancelDlg').hide();">
+                                #{msgs['lbl.no']}
+                            </button>
+                        </div>
+                    </p:confirmDialog>
                 </h:form>
             </div>
             <!-- /.col-lg-12 -->

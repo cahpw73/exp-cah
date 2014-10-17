@@ -20,15 +20,17 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.introEmail}">
+                                value="#{purchaseOrderCreate.newPurchaseOrder.introEmail}"
+                                onselect="calendarChanges();" onchange="calendarChanges();">
                             </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <h:inputText maxlength="50" type="text"
-                         value="#{purchaseOrderCreate.newPurchaseOrder.introEmailDescription}"
-                         jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
+            <p:inputTextarea style="max-height: 34px;"
+                             maxlength="50" type="text"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.introEmailDescription}"
+                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
         </div>
     </div>
     <div class="row">
@@ -44,15 +46,17 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.requiredDate}">
+                                value="#{purchaseOrderCreate.newPurchaseOrder.requiredDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();">
                     </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <h:inputText maxlength="50" type="text"
-                         value="#{purchaseOrderCreate.newPurchaseOrder.requiredDateDescription}"
-                         jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
+            <p:inputTextarea maxlength="50" type="text"
+                             style="max-height: 34px;"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.requiredDateDescription}"
+                             jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
         </div>
     </div>
     <div class="row">
@@ -67,15 +71,17 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.actualDate}">
+                                value="#{purchaseOrderCreate.newPurchaseOrder.actualDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();">
                      </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <h:inputText maxlength="50" type="text"
-                         value="#{purchaseOrderCreate.newPurchaseOrder.actualDateDescription}"
-                         jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
+            <p:inputTextarea style="max-height: 34px;"
+                             maxlength="50" type="text"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.actualDateDescription}"
+                             jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
         </div>
     </div>
 

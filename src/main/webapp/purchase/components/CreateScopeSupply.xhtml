@@ -20,7 +20,9 @@
             #{_scopeSupply.unit}
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.cost']}">
-            #{_scopeSupply.cost}
+            <h:outputText value="#{_scopeSupply.cost}">
+                <f:convertNumber pattern="#0.00"/>
+            </h:outputText>
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.description']}">
             #{_scopeSupply.description}
@@ -30,12 +32,8 @@
                 <p:ajax update="scopeSupplyList"/>
             </h:commandLink>
             &#160;
-            <h:commandLink value="#{msgs['lbl.edit']}" action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}">
-
-            </h:commandLink>
+            <h:commandLink value="#{msgs['lbl.edit']}" action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
         </p:column>
     </p:dataTable>
-    <h:commandButton styleClass="btn btn-primary component-left" action="#{purchaseOrderCreate.cleanScopeSupply}" value="#{msgs['lbl.add.scope.supply']}">
-        <f:param name="cid" value="#{javax.enterprise.context.conversation.id}"/>
-    </h:commandButton>
+    <h:commandButton styleClass="btn btn-primary component-left" action="#{purchaseOrderCreate.cleanScopeSupply}" value="#{msgs['lbl.add.scope.supply']}"/>
 </ui:composition>

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
     private Long id;
     private BigDecimal cost;
+    private String currency;
     private String code;
     private Integer quantity;
     private String unit;
@@ -99,7 +101,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-    @Column(name="description",length = 510)
+    @Column(name="description",length = 1000)
     public String getDescription() {
         return description;
     }
@@ -116,7 +118,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setExWorkDate(Date exWorkDate) {
         this.exWorkDate = exWorkDate;
     }
-    @Column(name="EX_WORK_DATE_DESCRIPTION", length = 255)
+    @Column(name="EX_WORK_DATE_DESCRIPTION", length = 1000)
     public String getExWorkDateDescription() {
         return exWorkDateDescription;
     }
@@ -143,7 +145,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setDeliveryLeadTimeMs(TimeMeasurementEnum deliveryLeadTimeMs) {
         this.deliveryLeadTimeMs = deliveryLeadTimeMs;
     }
-    @Column(name="DELIVERY_LEAD_TIME_DESCRIPTION")
+    @Column(name="DELIVERY_LEAD_TIME_DESCRIPTION", length = 1000)
     public String getGetDeliveryLeadTimeDescription() {
         return getDeliveryLeadTimeDescription;
     }
@@ -159,7 +161,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setSiteDate(Date siteDate) {
         this.siteDate = siteDate;
     }
-    @Column(name="SITE_DATE_DESCRIPTION")
+    @Column(name="SITE_DATE_DESCRIPTION", length = 1000)
     public String getSiteDateDescription() {
         return siteDateDescription;
     }
@@ -205,8 +207,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         return that.hashCode()==this.hashCode();
     }
 
-    @NotNull(message = "please enter delivery date")
-    @Column(name="DELIVERY_DATE", nullable=false)
+
+    @Column(name="DELIVERY_DATE")
     public Date getDeliveryDate() {
         return deliveryDate;
     }
@@ -224,8 +226,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.actualExWorkDate = actualExWorkDate;
     }
 
-    @NotNull(message = "please enter required site date")
-    @Column(name="REQUIRED_SITE_DATE", nullable=false)
+
+    @Column(name="REQUIRED_SITE_DATE")
     public Date getRequiredSiteDate() {
         return requiredSiteDate;
     }
@@ -244,7 +246,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     }
 
 
-    @Column(name="DELIVERY_DATE_OBS",length = 50)
+    @Column(name="DELIVERY_DATE_OBS",length = 1000)
     public String getDeliveryDateObs() {
         return deliveryDateObs;
     }
@@ -253,7 +255,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.deliveryDateObs = deliveryDateObs;
     }
 
-    @Column(name="ACTUAL_EX_WORK_DATE_OBS",length = 50)
+    @Column(name="ACTUAL_EX_WORK_DATE_OBS",length = 1000)
     public String getActualExWorkDateObs() {
         return actualExWorkDateObs;
     }
@@ -261,7 +263,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setActualExWorkDateObs(String actualExWorkDateObs) {
         this.actualExWorkDateObs = actualExWorkDateObs;
     }
-    @Column(name="REQUIRED_SITE_DATE_OBS",length = 50)
+    @Column(name="REQUIRED_SITE_DATE_OBS",length = 1000)
     public String getRequiredSiteDateObs() {
         return requiredSiteDateObs;
     }
@@ -269,7 +271,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setRequiredSiteDateObs(String requiredSiteDateObs) {
         this.requiredSiteDateObs = requiredSiteDateObs;
     }
-    @Column(name="ACTUAL_SITE_DATE_OBS",length = 50)
+    @Column(name="ACTUAL_SITE_DATE_OBS",length = 1000)
     public String getActualSiteDateObs() {
         return actualSiteDateObs;
     }
@@ -291,6 +293,16 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     @Transient
     public List<TransitDeliveryPointEntity> getTdpList() {
         return tdpList;
+    }
+
+    @Size(max = 5, message = "currency at most need 5 characters")
+    @Column(name="CURRENCY",length = 5)
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     @Override
@@ -320,6 +332,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         result = 31 * result + (requiredSiteDateObs != null ? requiredSiteDateObs.hashCode() : 0);
         result = 31 * result + (actualSiteDateObs != null ? actualSiteDateObs.hashCode() : 0);
         result = 31 * result + (isForecastSiteDateCalculated != null ? isForecastSiteDateCalculated.hashCode() : 0);
+        result = 31 * result + (currency != null ? currency.hashCode() : 0);
         return result;
     }
 }

@@ -1,11 +1,13 @@
 package ch.swissbytes.fqmes.model.dao;
 
+import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.Filter;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -16,13 +18,17 @@ import java.util.List;
 
 public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Serializable {
 
+    @Inject
+    private TransitDeliveryPointService tdpService;
+
     public void persist(List<ScopeSupplyEntity> list,PurchaseOrderEntity purchaseOrderEntity){
         for(ScopeSupplyEntity sse: list){
             sse.setPurchaseOrder(purchaseOrderEntity);
             super.save(sse);
             for (TransitDeliveryPointEntity tdp: sse.getTdpList()){
+                tdp.setId(null);
                 tdp.setScopeSupply(sse);
-                entityManager.persist(tdp);
+                tdpService.save(tdp);
             }
         }
     }
@@ -32,7 +38,7 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
     }
 
     public List<ScopeSupplyEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        String hql = "SELECT ss FROM ScopeSupplyEntity ss where ss.purchaseOrder.id=:purchase_id AND  ss.status.id<>:DELETED ORDER BY ss.id DESC" ;
+        String hql = "SELECT ss FROM ScopeSupplyEntity ss where ss.purchaseOrder.id=:purchase_id AND  ss.status.id<>:DELETED ORDER BY ss.id" ;
         TypedQuery<ScopeSupplyEntity> query = this.entityManager.createQuery(
                 hql, ScopeSupplyEntity.class);
         query.setParameter("purchase_id", purchaseOrderId);
@@ -42,11 +48,27 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
     }
     public void update(List<ScopeSupplyEntity>scopeSupplyEntities,PurchaseOrderEntity purchaseOrderEntity){
         for(ScopeSupplyEntity scopeSupplyEntity:scopeSupplyEntities){
-            if(scopeSupplyEntity.getId()==null){//new one{
+            if(scopeSupplyEntity.getId()==null){//new one
+                List<TransitDeliveryPointEntity> tdps=scopeSupplyEntity.getTdpList();
                 scopeSupplyEntity.setPurchaseOrder(purchaseOrderEntity);
                 super.save(scopeSupplyEntity);
+                for(TransitDeliveryPointEntity tdp:tdps){
+                    tdp.setId(null);
+                    tdp.setScopeSupply(scopeSupplyEntity);
+                    tdpService.save(tdp);
+                }
             }else{
+                List<TransitDeliveryPointEntity> tdps=scopeSupplyEntity.getTdpList();
                 super.update(scopeSupplyEntity);
+                for(TransitDeliveryPointEntity tdp:tdps){
+                    tdp.setScopeSupply(scopeSupplyEntity);
+                    if(tdp.getId()==null||tdp.getId().longValue()<=0){
+                        tdp.setId(null);
+                        tdpService.save(tdp);
+                    }else{
+                        tdpService.update(tdp);
+                    }
+                }
             }
 
         }
@@ -54,7 +76,6 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
-
     }
 
     @Override

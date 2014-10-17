@@ -1,5 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
+import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
 import ch.swissbytes.fqmes.control.comment.CommentService;
 import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
@@ -46,6 +47,9 @@ public class PurchaseOrderCreate implements Serializable {
     @Inject
     private ScopeSupplyService scopeSupplyService;
 
+    @Inject
+    private ScopeSupplyBean scopeSupplyBean;
+
     private PurchaseOrderEntity newPurchaseOrder;
 
     private SupplierEntity newSupplier;
@@ -71,12 +75,19 @@ public class PurchaseOrderCreate implements Serializable {
     private Integer indexScopeSupplyEditing;
 
     private static final Logger log = Logger.getLogger(PurchaseOrderCreate.class.getName());
+
     @Inject
     private Conversation conversation;
+
+
 
     @PostConstruct
     public void create(){
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
+        reset();
+    }
+
+    private void reset(){
         newPurchaseOrder =new PurchaseOrderEntity();
         newSupplier =new SupplierEntity();
         commentEntities=new ArrayList<>();
@@ -84,10 +95,6 @@ public class PurchaseOrderCreate implements Serializable {
         atachmentEntities =new ArrayList<>();
         scopeSupplies=new ArrayList<>();
         newScopeSupply=new ScopeSupplyEntity();
-        if(conversation.isTransient()){
-            conversation.begin();
-            log.info("conversation started");
-        }
     }
 
     public void cleanComment(){
@@ -105,6 +112,10 @@ public class PurchaseOrderCreate implements Serializable {
     }
     public String doSaveAndAdd(){
         savePurchase();
+        reset();
+        if(!conversation.isTransient()){
+            conversation.end();
+        }
         return "create?faces-redirect=true";
     }
 
@@ -135,7 +146,6 @@ public class PurchaseOrderCreate implements Serializable {
         }
     }
 
-
     public String addComment(){
         log.log(Level.INFO,"COMMENT NAME    "+newComment.getName());
         log.log(Level.INFO,"size    "+commentEntities.size());
@@ -146,19 +156,6 @@ public class PurchaseOrderCreate implements Serializable {
 
         }
         commentEntities.add(commentEntity);
-        return "";
-    }
-
-
-
-    public void doUpdateScopeSupply(){
-        if(indexScopeSupplyEditing>=0){
-            scopeSupplies.set(indexScopeSupplyEditing,scopeSupplyService.clone(editScopeSupply));
-        }
-    }
-    public String addScopeSupplyAndAdd(){
-        registerScopeSupply();
-        cleanScopeSupply();
         return "";
     }
     private void registerScopeSupply(){
@@ -184,12 +181,7 @@ public class PurchaseOrderCreate implements Serializable {
     }
     public void updateComment(){
         if(indexCommentEditing>=0&&indexCommentEditing<commentEntities.size()){
-            commentEntities.set(indexCommentEditing,editComment);
-        }
-    }
-    public void deleteAttachment(final int index){
-        if(index>=0 && index < atachmentEntities.size()){
-            atachmentEntities.remove(index);
+            commentEntities.set(indexCommentEditing, editComment);
         }
     }
 
@@ -206,7 +198,7 @@ public class PurchaseOrderCreate implements Serializable {
     public void handleCommentUpload(FileUploadEvent event){
         UploadedFile uf=event.getFile();
         log.info(uf.getFileName());
-        if(indexCommentEditing>=0){
+        if(indexCommentEditing!=null&& indexCommentEditing>=0){
             try{
                 editComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
             }catch (IOException ioe){
@@ -265,18 +257,34 @@ public class PurchaseOrderCreate implements Serializable {
        /* indexScopeSupplyEditing=-1;
         newScopeSupply=new ScopeSupplyEntity();
         newScopeSupply.setIsForecastSiteDateCalculated(true);*/
+        if(conversation.isTransient()){
+            conversation.begin();
+            log.info(String.format("conversation started [%s]",conversation.getTimeout()));
+        }
+        String cid=conversation.getId();
 
-        return "/purchase/modal/CreateModalScopeSupply?faces-redirect=true";
+        return "/purchase/modal/CreateModalScopeSupply?faces-redirect=true&cid="+cid;
     }
 
     public String selectForEditingScopeSuppply(Integer index){
-        /*indexScopeSupplyEditing=-1;
-            if(index>=0&&index <=scopeSupplies.size()){
-                indexScopeSupplyEditing=index;
-                editScopeSupply= scopeSupplyService.clone(scopeSupplies.get(index));
-            }*/
-        return  "/purchase/modal/CreateModalScopeSupplyEditing?faces-redirect=true&index="+index;
+        log.info("selectForEditingScopeSuppply.................");
+        if(conversation.isTransient()){
+            conversation.begin();
+            log.info(String.format("conversation started [%s]",conversation.getTimeout()));
+        }
+        String cid=conversation.getId();
+        return  "/purchase/modal/CreateModalScopeSupplyEditing?faces-redirect=true&index="+index+"&cid="+cid;
     }
+
+    public String cancelCreatePurchaseOrder(){
+        if(!conversation.isTransient()){
+            log.info("Finish conversation...");
+
+            conversation.end();
+        }
+        return"/purchase/list?faces-redirect=true";
+    }
+
 
 
     public CommentEntity getEditComment() {
@@ -313,4 +321,14 @@ public class PurchaseOrderCreate implements Serializable {
     public ScopeSupplyEntity getEditScopeSupply() {
         return editScopeSupply;
     }
+
+    @ConversationScoped
+    @Named
+    @Produces
+    public Date getDeliveryDate(){
+        Date date=new Date();
+        date.setYear(0);
+        return newPurchaseOrder.getPoDeliveryDate()!=null?newPurchaseOrder.getPoDeliveryDate():date;
+    }
+
 }

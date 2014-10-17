@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -19,20 +20,33 @@ public class PurchaseOrderTbl extends LazyDataModel<PurchaseOrderEntity> {
     private PurchaseOrderDao dao;
     private Filter filter;
 
+    private Long total;
+
     public PurchaseOrderTbl(PurchaseOrderDao dao,Filter filter){
         log.info("creating tbl ");
-        log.info((dao!=null?"dao has value":"dao doesnt have value"));
+        log.info((dao!=null?"dao has value":"dao has no value"));
         this.filter=filter;
         this.dao=dao;
+        total=0L;
+    }
+
+    public Long getTotal() {
+        return total;
     }
 
     @Override
     public List<PurchaseOrderEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        log.info("loading data...");
-        List<PurchaseOrderEntity> purchaseOrderEntityList= dao.findByPage(first, pageSize,filter);
+        log.info("loading data... "+sortField);
+        List<PurchaseOrderEntity> purchaseOrderEntityList=new ArrayList<>();
+        if(sortField!=null){
+            purchaseOrderEntityList= dao.findByPage(first, pageSize,filter,sortField);
+        }else{
+            purchaseOrderEntityList= dao.findByPage(first, pageSize,filter);
+        }
         if(super.getRowCount()<=0){
             Long total= dao.findTotal(null);
             this.setRowCount(total.intValue());
+            this.total=total;
         }
         this.setPageSize(pageSize);
         return purchaseOrderEntityList;

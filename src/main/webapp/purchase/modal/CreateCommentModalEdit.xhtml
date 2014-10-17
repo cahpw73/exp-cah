@@ -42,8 +42,8 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.attach.tbl.column.observations']}"/>
                 <div class="col-sm-8">
-                    <h:inputText type="text"
-                                 id="descriptionEditComment"
+                    <p:inputTextarea type="text" style="height: 34px;"
+                                 id="descriptionEditComment" maxlength="1000"
                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
                                  class="form-control"
                                  value="#{purchaseOrderCreate.editComment.description}"/>

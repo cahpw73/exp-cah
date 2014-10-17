@@ -1,6 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.fqmes.types.UoMEnum;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -39,6 +40,15 @@ public class LookupValueFactory implements Serializable {
         return result;
     }
 
-
+    @Produces
+    @SessionScoped
+    @Named("unitOfMeasurement")
+    public Map<String,UoMEnum> getUnitOfMeasurement(){
+        Map<String,UoMEnum> result = new HashMap<>();
+        for(UoMEnum measurement : UoMEnum.values()){
+            result.put(bundle.getString("uom."+measurement.name().toLowerCase()),measurement);
+        }
+        return result;
+    }
 
 }

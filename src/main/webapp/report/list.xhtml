@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/layout/template.xhtml">
-    <ui:define name="title">Inicio</ui:define>
+    <ui:define name="title">Home</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{permissionBean.canAccess(200)}"/>
@@ -72,13 +72,12 @@
 
             <div>
                 <div class="pull-right">
-                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
-                                     type="submit" class="btn btn-primary"></h:commandButton>
-                    &#160;
                     <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
                                      type="submit" class="btn btn-primary"/>
+                    &#160;
+                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
+                                     type="submit" class="btn btn-primary"/>
                 </div>
-
             </div>
         </h:form>
 
@@ -90,15 +89,15 @@
         <h:form id="purchaseList" prependId="false">
             <h2 class="sub-header">#{msgs['po.list.title']}</h2>
             <p:dataTable value="#{reportListBean.list}" var="_purchase"
-                         paginator="true" rows="5" lazy="true"
-                         rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
+                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                         rowsPerPageTemplate="#{configuration.pagesSize}" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['po.lbl.project']}">
                     #{_purchase.project}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}">
+                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}">
                     #{_purchase.po}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.variation']}">
+                <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}">
                     #{_purchase.variation}
                 </p:column>
                 <ui:remove>
@@ -110,7 +109,7 @@
                     #{_purchase.poTitle}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}">
-                    <p:commandLink value="Add to report">
+                    <p:commandLink value="#{msgs['report.purchase.order.link.add']}">
                             <p:ajax  update=":purchaseList:listSelected" listener="#{reportBean.addPurchaseOrder(_purchase.id)}"></p:ajax>
                     </p:commandLink>
                 </p:column>
@@ -125,16 +124,22 @@
                 </p:column>
             </p:dataTable>
             <br/>
-            <h:commandLink styleClass="btn btn-primary" value="Report Receivable Manifest" action="#{reportBean.printReportReceivableManifest()}" target="#{reportBean.openReport?'_blank':''}"/>
+            <h:commandLink styleClass="btn btn-primary"
+                           value="#{msgs['report.purchase.order.btn.get.scope.supply.report']}"
+                           action="#{reportBean.printReportReceivableManifest()}"
+                           target="_blank"/>
             &#160;
-            <h:commandLink styleClass="btn btn-primary" value="Report Job Summary" action="#{reportBean.printReportJobSummary()}" target="#{reportBean.openReport?'_blank':''}"/>
+            <h:commandLink styleClass="btn btn-primary"
+                           value="#{msgs['report.purchase.order.btn.get.job.summary.report']}"
+                           action="#{reportBean.printReportJobSummary()}"
+                           target="_blank"/>
             &#160;
-            <h:commandLink styleClass="btn btn-primary" value="Clean Purchases">
-
+            <h:commandLink styleClass="btn btn-primary"
+                           value="#{msgs['report.purchase.order.btn.clear.selection.for.report']}">
                 <p:ajax update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}" ></p:ajax>
             </h:commandLink>
-
         </h:form>
-
+        <div class="clearfix"></div>
+        <br/>
     </ui:define>
 </ui:composition>

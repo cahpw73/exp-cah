@@ -34,6 +34,11 @@ public class PurchaseOrderEntity implements Serializable{
     private Date lastUpdate;
     private StatusEntity status;
 
+
+    private String poReference;
+
+    private String variationNumber;
+
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -76,7 +81,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setVariation(String variation) {
         this.variation = variation;
     }
-    @Column(name="description", length=255)
+    @Column(name="description", length=1000)
     public String getDescription() {
         return description;
     }
@@ -100,7 +105,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setPoIncoTerm(String poIncoTerm) {
         this.poIncoTerm = poIncoTerm;
     }
-    @Column(name="po_inco_term_description", length=255)
+    @Column(name="po_inco_term_description", length=1000)
     public String getPoIncoTermDescription() {
         return poIncoTermDescription;
     }
@@ -118,7 +123,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setPoDeliveryDate(Date poDeliveryDate) {
         this.poDeliveryDate = poDeliveryDate;
     }
-    @Column(name="po_delivery_date_description",  length=255)
+    @Column(name="po_delivery_date_description",  length=1000)
     public String getPoDeliveryDateDescription() {
         return poDeliveryDateDescription;
     }
@@ -143,7 +148,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setIntroEmail(Date introEmail) {
         this.introEmail = introEmail;
     }
-    @Column(name="intro_email_sent_description", length=255)
+    @Column(name="intro_email_sent_description", length=1000)
     public String getIntroEmailDescription() {
         return introEmailDescription;
     }
@@ -160,7 +165,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
     }
-    @Column(name="required_date_description", length=255)
+    @Column(name="required_date_description", length=1000)
     public String getRequiredDateDescription() {
         return requiredDateDescription;
     }
@@ -177,7 +182,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setActualDate(Date actualDate) {
         this.actualDate = actualDate;
     }
-    @Column(name="actual_date_description", length=255)
+    @Column(name="actual_date_description", length=1000)
     public String getActualDateDescription() {
         return actualDateDescription;
     }
@@ -202,6 +207,18 @@ public class PurchaseOrderEntity implements Serializable{
     public void setStatus(StatusEntity status) {
         this.status = status;
     }
+
+    @Transient
+    public String getPoReference(){
+        poReference=po!=null?po:"";
+        return poReference;
+    }
+    @Transient
+    public String getVariationNumber(){
+        variationNumber=variation!=null?variation:"";
+        return variationNumber;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -11,12 +11,14 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
                 <div class="col-sm-8">
-                    #{scopeSupply.introEmail}
+                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.introEmail}">
+                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                    </h:outputLabel>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            #{scopeSupply.introEmailDescription}
+            #{purchaseOrderView.purchaseOrder.introEmailDescription}
         </div>
     </div>
     <div class="row">
@@ -25,14 +27,14 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{scopeSupply.requiredDate}">
+                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.requiredDate}">
                         <f:convertDateTime pattern="#{configuration.formatDate}"/>
                     </h:outputLabel>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            #{scopeSupply.requiredDateDescription}
+            #{purchaseOrderView.purchaseOrder.requiredDateDescription}
         </div>
     </div>
     <div class="row">
@@ -41,7 +43,7 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{scopeSupply.actualDate}">
+                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.actualDate}">
                         <f:convertDateTime pattern="#{configuration.formatDate}"/>
                     </h:outputLabel>
 
@@ -49,7 +51,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            #{scopeSupply.actualDateDescription}
+            #{purchaseOrderView.purchaseOrder.actualDateDescription}
         </div>
     </div>
 

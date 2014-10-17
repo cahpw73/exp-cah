@@ -3,47 +3,54 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:form id="btnLink" prependId="false">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="col-lg-4">
+                <div class="navbar-header topmenu-title">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="pull-left main-logo">
+                        <h:graphicImage name="img/logo-1.jpg"/>
+                    </div>
+                    <h:link id="homeLinkId" styleClass="navbar-brand" outcome="/home"> #{msgs['main.title']}</h:link>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="col-lg-4">
-            <div class="navbar-header topmenu-title">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="pull-left main-logo">
-                    <h:graphicImage name="img/logo-1.jpg"/>
                 </div>
-                <h:link styleClass="navbar-brand" outcome="/home"> #{msgs['main.title']}</h:link>
-
             </div>
-        </div>
-        <!--Sub Top Menu-->
-        <div class="col-lg-4" style="text-align: center;align-content: center; vertical-align: middle; margin-top: 15px; position: relative">
-            <div class="navbar-header "  style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
-                    <span class="link-navigation-label">
-                        <h:link rendered="#{permissionBean.hasPermission(100)}" outcome="/purchase/list">Purchase order</h:link>
-                    </span>
-                    <span class="link-navigation-label">
-                        <h:link rendered="#{permissionBean.hasPermission(1)}" outcome="/user/list">Users</h:link>
-                    </span>
-                    <span class="link-navigation-label">
-                        <h:link rendered="#{permissionBean.hasPermission(200)}" outcome="/report/list">Reports</h:link>
-                    </span>
+            <!--Sub Top Menu-->
+            <div class="col-lg-4"
+                 style="text-align: center;align-content: center; vertical-align: middle; margin-top: 15px; position: relative">
+                <div class="navbar-header "
+                     style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
+                        <span class="link-navigation-label">
+                            <h:link id="purchaseOrderId" rendered="#{permissionBean.hasPermission(100)}"
+                                    outcome="/purchase/list">#{msgs['top.menu.lbl.purchase.order']}
+                            </h:link>
+                        </span>
+                        <span class="link-navigation-label">
+                            <h:link id="userLinkId" rendered="#{permissionBean.hasPermission(1)}"
+                                    outcome="/user/list">#{msgs['top.menu.lbl.user']}</h:link>
+                        </span>
+                        <span class="link-navigation-label">
+                            <h:link id="reportLinkId" rendered="#{permissionBean.hasPermission(200)}"
+                                    outcome="/report/list">#{msgs['top.menu.lbl.reports']}</h:link>
+                        </span>
+                </div>
             </div>
-        </div>
-        <!-- End Sub Top Menu-->
-        <div class="col-lg-4">
-            <div class="navbar-collapse collapse">
-                <h:form>
+            <!-- End Sub Top Menu-->
+            <div class="col-lg-4">
+                <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li id="inputSearchId">
                             <input type="text" class="form-control" placeholder="Search..."/>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b
+                                    class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><h:link value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
                                 <li><p:commandLink value="#{msgs['user.change.password']}"
@@ -64,10 +71,196 @@
                         </li>
 
                     </ul>
-                </h:form>
+                </div>
             </div>
+        </nav>
+    </h:form>
+
+    <script language="JavaScript" type="text/javascript">
+
+        $("#purchaseOrderId").click(function(e){
+            console.log("click purchase order....")
+            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
+                console.log("is create or edit..");
+                leavePageToPurchaseList(e);
+            }else{
+                if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
+                    console.log("is create scope supply");
+                    toLeavePageFromModalToPurchaseList(e)
+                }else if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is create scope supply editing");
+                    toLeavePageFromModalToPurchaseList(e)
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
+                    console.log("is edit scope supply")
+                    toLeavePageFromModalToPurchaseList(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is edit scope supply editing")
+                    toLeavePageFromModalToPurchaseList(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
+                    console.log("is edit split scope supply")
+                    toLeavePageFromModalToPurchaseList(e);
+                }
+            }
+        })
+
+        $("#reportLinkId").click(function(e){
+            console.log("click purchase order....")
+            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
+                console.log("is create or edit..");
+                leavePageToReport(e);
+            }else{
+                if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
+                    console.log("is create scope supply");
+                    toLeavePageFromModalToReportList(e)
+                }else if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is create scope supply editing");
+                    toLeavePageFromModalToReportList(e)
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
+                    console.log("is edit scope supply")
+                    toLeavePageFromModalToReportList(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is edit scope supply editing")
+                    toLeavePageFromModalToReportList(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
+                    console.log("is edit split scope supply")
+                    toLeavePageFromModalToReportList(e);
+                }
+            }
+        })
+
+        $("#homeLinkId").click(function(e){
+            console.log("click purchase order....")
+            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
+                console.log("is create or edit..");
+                leavePageToHome(e);
+            }else{
+                if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
+                    console.log("is create scope supply");
+                    toLeavePageFromModalToHome(e)
+                }else if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is create scope supply editing");
+                    toLeavePageFromModalToHome(e)
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
+                    console.log("is edit scope supply")
+                    toLeavePageFromModalToHome(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is edit scope supply editing")
+                    toLeavePageFromModalToHome(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
+                    console.log("is edit split scope supply")
+                    toLeavePageFromModalToHome(e);
+                }
+            }
+        })
+        function toLeavePageFromModalToPurchaseList(e){
+            e.preventDefault();
+            var sw;
+            console.log("toLeavePageFromModal");
+            if(hasChanges){
+                console.log("hasChanges true");
+                PF('confCancelPurchaseList').show();
+            }else{
+                window.location = "../../purchase/list.jsf"
+            }
+
+        }
+        function toLeavePageFromModalToReportList(e){
+            e.preventDefault();
+            var sw;
+            console.log("toLeavePageFromModal");
+            if(hasChanges){
+                console.log("hasChanges true");
+                PF('confCancelReportList').show();
+            }else{
+                window.location = "../../report/list.jsf"
+            }
+
+        }
+        function toLeavePageFromModalToHome(e){
+            e.preventDefault();
+            var sw;
+            console.log("toLeavePageFromModal");
+            if(hasChanges){
+                console.log("hasChanges true");
+                PF('confCancelHometList').show();
+            }else{
+                window.location = "../home.jsf"
+            }
+
+        }
+        function leavePageToPurchaseList(e){
+            e.preventDefault();
+            var sw;
+            if(hasChanges){
+                PF('confCancelPurchaseList').show();
+            }else{
+                window.location = "../purchase/list.jsf"
+            }
+        }
+        function leavePageToReport(e){
+            e.preventDefault();
+            var sw;
+            if(hasChanges){
+                PF('confCancelReportList').show();
+            }else{
+                window.location = "../report/list.jsf"
+            }
+        }
+        function leavePageToHome(e){
+            e.preventDefault();
+            var sw;
+            if(hasChanges){
+                PF('confCancelHometList').show();
+            }else{
+                window.location = "../home.jsf"
+            }
+        }
+    </script>
+
+    <p:confirmDialog widgetVar="confCancelPurchaseList" id="confrDialogLinkId" header="Cancel">
+        <f:facet name="message">
+            <p> Any unsaved data will be lost (including changes to Scopes of Supply). </p>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:link outcome="/purchase/list" class='btn btn-primary'>#{msgs['lbl.yes']}</h:link>
+            &#160;
+            <button class="btn btn-primary" type="button"
+                    onclick="PF('confCancelPurchaseList').hide();">
+                #{msgs['lbl.no']}
+            </button>
         </div>
-    </nav>
+    </p:confirmDialog>
+
+    <p:confirmDialog widgetVar="confCancelReportList" id="confrDialogReportId" header="Cancel">
+        <f:facet name="message">
+            <p> Any unsaved data will be lost (including changes to Scopes of Supply). </p>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:link outcome="/report/list" class='btn btn-primary'>#{msgs['lbl.yes']}</h:link>
+            &#160;
+            <button class="btn btn-primary" type="button"
+                    onclick="PF('confCancelReportList').hide();">
+                #{msgs['lbl.no']}
+            </button>
+        </div>
+    </p:confirmDialog>
+
+    <p:confirmDialog widgetVar="confCancelHometList" id="confrDialogHomeId" header="Cancel">
+        <f:facet name="message">
+            <p> Any unsaved data will be lost (including changes to Scopes of Supply). </p>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:link outcome="/home" class='btn btn-primary'>#{msgs['lbl.yes']}</h:link>
+            &#160;
+            <button class="btn btn-primary" type="button"
+                    onclick="PF('confCancelHometList').hide();">
+                #{msgs['lbl.no']}
+            </button>
+        </div>
+    </p:confirmDialog>
     <!--Modal change password-->
     <p:dialog id="changePassDlgId" widgetVar="changePassDlg">
         <ui:include src="/user/change_password.xhtml"/>
