@@ -238,7 +238,7 @@
                 </h:commandLink>
                 &#160;
                 <h:commandLink value="#{msgs['lbl.delete']}">
-                    <p:ajax listener="#{scopeSupplyBean.deleteTransitDeliveryPoint(_index)}" update=":scopeSupplyEditFormId:tdpCreate"/>
+                    <p:ajax listener="#{scopeSupplyBean.deleteTransitDeliveryPoint2(_index)}" update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forecastSiteDateEdit"/>
                 </h:commandLink>
             </p:column>
         </p:dataTable>

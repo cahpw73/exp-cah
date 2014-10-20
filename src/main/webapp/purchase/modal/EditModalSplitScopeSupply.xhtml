@@ -12,32 +12,28 @@
     <h:form id="scopeSupplySplitFormId" role="form" prependId="false" enctype="multipart/form-data"
             styleClass="form-horizontal"
             acceptcharset="UTF-8">
-    <script >
-        $(document).ready(function() {
-            hasChanges=true;
-        });
-    </script>
+
         <div class="col-sm-3">
             <div class="form-group">
-                <p:outputLabel for="scopeSupplySplitQuantity2" class="pull-left control-label"
+                <p:outputLabel for="arrivedQuantity" class="pull-left control-label"
                                value="#{msgs['supply.scope.split.lbl.initial.quantity']}"/>
-                <h:inputText id="scopeSupplySplitQuantity2" type="text"
+                <h:inputText id="arrivedQuantity" type="text"
                              jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
                              value="#{purchaseOrderEdit.selectedScopeSupply.quantity}"
                              class="form-control"
                              requiredMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
                              validatorMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
-                             converterMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}">
-                    <p:ajax event="blur" listener="#{purchaseOrderEdit.calculateNewScopeSupplyQuantity()}"
-                            update=":scopeSupplySplitFormId:scopeSupplySplitQuantity"/>
+                             converterMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
+                             onkeyup="calculateNewScopeSupplyQuantity();"
+                             onblur="verifyArrivedQuantity();">
                 </h:inputText>
-                <p:message for="scopeSupplySplitQuantity2"/>
+                <p:message for="arrivedQuantity"/>
             </div>
         </div>
         <div class="col-sm-9">
             <div class="form-group">
                 <div class="col-sm-6">
-                    <p:outputLabel for="scopeSupplySplitQuantity" class="control-label" value="#{msgs['po.supply.scope.column.quantity']}"/>
+                    <p:outputLabel for="newQuantitySupplySplit" class="control-label" value="#{msgs['po.supply.scope.column.quantity']}"/>
                 </div>
                 <div class="col-sm-6">
                     <h:outputLabel class="control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
@@ -49,17 +45,17 @@
                     </p:selectOneMenu>
                 </div>
                 <div class="col-sm-6">
-                    <h:inputText id="scopeSupplySplitQuantity"
+                    <h:inputText id="newQuantitySupplySplit"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
                                  value="#{purchaseOrderEdit.scopeSupplySplit.quantity}"
                                  class="form-control"
                                  requiredMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
                                  validatorMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
-                                 converterMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}">
-                        <p:ajax event="blur" listener="#{purchaseOrderEdit.calculateOldScopeSupplyQuantity()}"
-                                update=":scopeSupplySplitFormId:scopeSupplySplitQuantity2"/>
+                                 converterMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
+                                 onkeyup="calculateOldScopeSupplyQuantity();"
+                                 onblur="verifyNewQuantity();">
                     </h:inputText>
-                    <p:message for="scopeSupplySplitQuantity" id="msgScopeSupplySplitQuantity"/>
+                    <p:message for="newQuantitySupplySplit" id="msgScopeSupplySplitQuantity"/>
                 </div>
             </div>
             <div class="form-group">
@@ -257,5 +253,6 @@
             </div>
         </p:confirmDialog>
     </h:form>
+    <h:outputScript name="js/calculateSplitQuantity.js"/>
 </ui:define>
 </ui:composition>

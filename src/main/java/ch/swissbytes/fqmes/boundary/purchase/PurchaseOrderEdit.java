@@ -509,21 +509,29 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void calculateNewScopeSupplyQuantity() {
+        log.info("calculateNewScopeSupplyQuantity()");
+        log.info(String.format("original Quantity [%s]",originalQuantity));
+        log.info(String.format("old value [%s]", selectedScopeSupply.getQuantity()));
         if (selectedScopeSupply.getQuantity().intValue() >= 0 && selectedScopeSupply.getQuantity().intValue() < originalQuantity) {
             scopeSupplySplit.setQuantity(originalQuantity.intValue() - selectedScopeSupply.getQuantity().intValue());
         } else {
             selectedScopeSupply.setQuantity(originalQuantity);
             scopeSupplySplit.setQuantity(0);
         }
+        log.info(String.format("value calculated [%s]",scopeSupplySplit.getQuantity()));
     }
 
     public void calculateOldScopeSupplyQuantity() {
+        log.info("calculateOldScopeSupplyQuantity()");
+        log.info(String.format("original Quantity [%s]",originalQuantity));
+        log.info(String.format("new value [%s]",scopeSupplySplit.getQuantity()));
         if (scopeSupplySplit.getQuantity().intValue() >= 0 && scopeSupplySplit.getQuantity().intValue() < originalQuantity) {
             selectedScopeSupply.setQuantity(originalQuantity.intValue() - scopeSupplySplit.getQuantity().intValue());
         } else {
             selectedScopeSupply.setQuantity(originalQuantity);
             scopeSupplySplit.setQuantity(0);
         }
+        log.info(String.format("value calculated [%s]",scopeSupplySplit.getQuantity()));
     }
 
     public String selectScopeSuppplyForEditing(Long id) {

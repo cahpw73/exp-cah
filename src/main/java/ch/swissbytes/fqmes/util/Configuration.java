@@ -4,6 +4,8 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import sun.util.logging.resources.logging;
 
 import javax.inject.Named;
+import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;

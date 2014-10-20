@@ -164,8 +164,18 @@ public class ScopeSupplyBean implements Serializable {
         scopeSupplies.add(scopeSupplyEntity);
     }
     public void deleteTransitDeliveryPoint (Integer index){
+        log.info(String.format("deleteTransitDeliveryPoint index [%s]",index));
         if(index>=0&&index< newScopeSupply.getTdpList().size()){
+            log.info("removing.....");
             newScopeSupply.getTdpList().remove(index.intValue());
+            calculateDate();
+        }
+    }
+    public void deleteTransitDeliveryPoint2(Integer index){
+        log.info(String.format("deleteTransitDeliveryPoint index [%s]",index));
+        if(index>=0&&index< editScopeSupply.getTdpList().size()){
+            log.info("removing.....");
+            editScopeSupply.getTdpList().remove(index.intValue());
             calculateDate();
         }
     }
@@ -271,6 +281,8 @@ public class ScopeSupplyBean implements Serializable {
         }
 
     }
+
+
 
     public TransitDeliveryPointEntity getTdp() {
         return tdp;

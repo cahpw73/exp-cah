@@ -63,7 +63,7 @@
                                  validatorMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
                                  requiredMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
                                  converterMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}">
-                        <f:convertNumber pattern="#0.00"/>
+                        <f:convertNumber  pattern="#0.00"/>
                     </h:inputText>
                     <p:message for="scopeSupplyCost" id="msgScopeSpplyCost"/>
                      </div>
@@ -100,7 +100,7 @@
                                 mask="true"
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{configuration.formatDate}"
+                                jsf:placeholder="#{msgs['lbl.format.date']}"
                                 value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -124,7 +124,7 @@
                                     mask="true"
                                     navigator="true"
                                     pattern="#{configuration.formatDate}"
-                                    jsf:placeholder="#{configuration.formatDate}"
+                                    jsf:placeholder="#{msgs['lbl.format.date']}"
                                     value="#{purchaseOrderEdit.scopeSupplyEdit.exWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit"
@@ -146,7 +146,7 @@
                                 mask="true"
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{configuration.formatDate}"
+                                jsf:placeholder="#{msgs['lbl.format.date']}"
                                 value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                         <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit"

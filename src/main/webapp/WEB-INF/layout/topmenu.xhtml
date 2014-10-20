@@ -4,6 +4,11 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:form id="btnLink" prependId="false">
+        <style type="text/css">
+            .ui-icon.ui-icon-alert.ui-confirm-dialog-severity {
+                background-image: url("") !important;
+            }
+        </style>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="col-lg-4">
                 <div class="navbar-header topmenu-title">
@@ -219,7 +224,15 @@
 
     <p:confirmDialog widgetVar="confCancelPurchaseList" id="confrDialogLinkId" header="Cancel">
         <f:facet name="message">
-            <p> Any unsaved data will be lost (including changes to Scopes of Supply). </p>
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                    <br/>(including changes to Scopes of Supply).
+                </div>
+            </div>
         </f:facet>
 
         <div class="pull-right">
@@ -234,7 +247,15 @@
 
     <p:confirmDialog widgetVar="confCancelReportList" id="confrDialogReportId" header="Cancel">
         <f:facet name="message">
-            <p> Any unsaved data will be lost (including changes to Scopes of Supply). </p>
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                    <br/>(including changes to Scopes of Supply).
+                </div>
+            </div>
         </f:facet>
 
         <div class="pull-right">
@@ -249,7 +270,15 @@
 
     <p:confirmDialog widgetVar="confCancelHometList" id="confrDialogHomeId" header="Cancel">
         <f:facet name="message">
-            <p> Any unsaved data will be lost (including changes to Scopes of Supply). </p>
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                    <br/>(including changes to Scopes of Supply).
+                </div>
+            </div>
         </f:facet>
 
         <div class="pull-right">
