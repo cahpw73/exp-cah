@@ -81,6 +81,7 @@ public class ScopeSupplyBean implements Serializable {
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
         newScopeSupply=new ScopeSupplyEntity();
         tdp=new TransitDeliveryPointEntity();
+        tdp.setIsForecastSiteDateCalculated(true);
         newScopeSupply.setIsForecastSiteDateCalculated(true);
         if(deliveryDate.getYear()>0){
             newScopeSupply.setDeliveryDate(deliveryDate);
@@ -93,6 +94,7 @@ public class ScopeSupplyBean implements Serializable {
 
     public void cleanTransitDeliveryPoint(){
         tdp=new TransitDeliveryPointEntity();
+        tdp.setIsForecastSiteDateCalculated(true);
         tdp.setStatus(enumService.getStatusEnumEnable());
         tdp.setLastUpdate(new Date());
     }
@@ -119,6 +121,19 @@ public class ScopeSupplyBean implements Serializable {
             editScopeSupply.setSiteDate(null);
         }else{
             calculateDate();
+        }
+    }
+    public void switchModeForecastSiteDateForTdp(boolean editing){
+        if(editing){
+            if(editTdp.getIsForecastSiteDateCalculated()){
+                calulateForecasteDateForTdpEdition();
+            }else{
+                editTdp.setForecastDeliveryDate(null);
+            }
+        }else if(tdp.getIsForecastSiteDateCalculated()){
+            calulateForecasteDateForTdpCreation();
+        }else {
+            tdp.setForecastDeliveryDate(null);
         }
     }
     public String addScopeSupply(){
@@ -179,17 +194,37 @@ public class ScopeSupplyBean implements Serializable {
     }
     public void calulateForecasteDateForTdpCreation(){
         log.info("calulateForecasteDateForTdpCreation....");
-        List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();
-        TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
-        tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(newScopeSupply, newScopeSupply.getTdpList().size()==0,tdpPrevious, tdp));
-    }
-    public void calulateForecasteDateForTdpEdition(){
-        log.info("calulateForecasteDateForTdpCreation....");
-        List<TransitDeliveryPointEntity>list=editScopeSupply.getTdpList();
-        TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
-        tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(editScopeSupply, editScopeSupply.getTdpList().size() == 0, tdpPrevious, tdp));
+        if(tdp.getIsForecastSiteDateCalculated()){
+            List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();
+            TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
+            tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(newScopeSupply, newScopeSupply.getTdpList().size()==0,tdpPrevious, tdp));
+        }
     }
 
+    public void calulateForecasteDateForTdpEdition(){
+        log.info("calulateForecasteDateForTdpEdition....");
+        if(tdp.getIsForecastSiteDateCalculated()){
+            if(editScopeSupply!=null){
+            List<TransitDeliveryPointEntity>list=editScopeSupply.getTdpList();
+            TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
+            tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(editScopeSupply, editScopeSupply.getTdpList().size() == 0, tdpPrevious, tdp));
+            }else{
+                if(newScopeSupply!=null){
+                    /*List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();
+                    TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
+                    tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(newScopeSupply, newScopeSupply.getTdpList().size() == 0, tdpPrevious, tdp));*/
+                }
+            }
+        }
+    }
+  /*  public void calulateForecasteDateForTdpEdition2(){
+        log.info("calulateForecasteDateForTdpEdition2....");
+        if(tdp.getIsForecastSiteDateCalculated()){
+            List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();
+            TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
+            tdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(newScopeSupply, newScopeSupply.getTdpList().size() == 0, tdpPrevious, tdp));
+        }
+    }*/
     public void cleanScopeSupply(){
         log.info("cleaning scope supply");
         indexScopeSupplyEditing=-1;

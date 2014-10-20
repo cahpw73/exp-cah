@@ -204,7 +204,7 @@
         <br/>
 
         <h3 class="sub-header">#{msgs['tdp.title']}</h3>
-        <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.scopeSupplyEditing.tdpList}"
+        <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.activesTdp()}"
                      var="_tdp" rowIndexVar="_index">
             <p:column headerText="#{msgs['tdp.lbl.location']}">
                 #{_tdp.location}

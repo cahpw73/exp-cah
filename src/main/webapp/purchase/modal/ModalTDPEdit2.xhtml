@@ -34,10 +34,18 @@
                 <label>#{msgs['tdp.lbl.forecast.delivery.date']}</label>
                 <p:calendar mask="true"
                             navigator="true"
+                            id="forecastDeliveryDateTdp4"
                             value="#{scopeSupplyBean.editTdp.forecastDeliveryDate}"
+                            disabled="#{scopeSupplyBean.editTdp.isForecastSiteDateCalculated}"
                             pattern="#{configuration.formatDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                <p:selectBooleanButton value="#{scopeSupplyBean.editTdp.isForecastSiteDateCalculated}"
+                                       onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}">
+                    <p:ajax event="change"
+                            update=":TDPEdit:forecastDeliveryDateTdp4"
+                            listener="#{scopeSupplyBean.switchModeForecastSiteDateForTdp(true)}"/>
+                </p:selectBooleanButton>
             </div>
         </div>
         <div class="col-sm-4">

@@ -42,8 +42,15 @@
                             navigator="true"
                             value="#{purchaseOrderEdit.newTdp.forecastDeliveryDate}"
                             pattern="#{configuration.formatDate}"
+                            disabled="#{purchaseOrderEdit.newTdp.getIsForecastSiteDateCalculated()}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                <p:selectBooleanButton value="#{purchaseOrderEdit.newTdp.isForecastSiteDateCalculated}"
+                                       onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}">
+                    <p:ajax event="change"
+                            update=":TDP:forecastDeliveryDateTdp1"
+                            listener="#{purchaseOrderEdit.switchModeForecastSiteDateForTdp(false)}"/>
+                </p:selectBooleanButton>
             </div>
         </div>
         <div class="col-sm-4">

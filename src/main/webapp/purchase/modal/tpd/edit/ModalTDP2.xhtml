@@ -28,7 +28,7 @@
                                      styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
                         <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                         <f:selectItems value="#{allTimeMeasurement}"/>
-                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation1}" render="forecastDeliveryDateTdp2" />
+                        <f:ajax event="change" execute="@this" listener="#{purchaseOrderEdit.calulateForecasteDateForTdpCreation1}" render="forecastDeliveryDateTdp2" />
                     </h:selectOneMenu>
                 </div>
             </div>
@@ -40,9 +40,17 @@
                             id="forecastDeliveryDateTdp2"
                             navigator="true"
                             value="#{purchaseOrderEdit.newTdp.forecastDeliveryDate}"
+                            disabled="#{purchaseOrderEdit.newTdp.getIsForecastSiteDateCalculated()}"
                             pattern="#{configuration.formatDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{msgs['lbl.format.date']}"/>
+
+                <p:selectBooleanButton value="#{purchaseOrderEdit.newTdp.isForecastSiteDateCalculated}"
+                                       onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}">
+                <p:ajax event="change"
+                        update=":TDP:forecastDeliveryDateTdp2"
+                        listener="#{purchaseOrderEdit.switchModeForecastSiteDateForTdp(false)}"/>
+                </p:selectBooleanButton>
             </div>
         </div>
         <div class="col-sm-4">

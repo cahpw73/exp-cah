@@ -37,14 +37,24 @@
         <div class="col-sm-4">
             <div class="form-row">
                 <label>#{msgs['tdp.lbl.forecast.delivery.date']}</label>
+
                 <p:calendar
                             id="forecastDeliveryDateTdp1"
                             mask="true"
                             navigator="true"
+                            disabled="#{scopeSupplyBean.tdp.isForecastSiteDateCalculated}"
                             value="#{scopeSupplyBean.tdp.forecastDeliveryDate}"
                             pattern="#{configuration.formatDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                <div class="pull-right ">
+                    <p:selectBooleanButton value="#{scopeSupplyBean.tdp.isForecastSiteDateCalculated}"
+                                           onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}">
+                        <p:ajax event="change"
+                                update=":TDP:forecastDeliveryDateTdp1"
+                                listener="#{scopeSupplyBean.switchModeForecastSiteDateForTdp(false)}"/>
+                    </p:selectBooleanButton>
+                </div>
             </div>
         </div>
         <div class="col-sm-4">

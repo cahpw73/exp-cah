@@ -4,6 +4,7 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 
 import javax.inject.Named;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -24,6 +25,7 @@ public class TransitDeliveryPointEntity implements EntityTbl{
     private ScopeSupplyEntity scopeSupply;
     private String comment;
     private Date lastUpdate;
+    private Boolean isForecastSiteDateCalculated;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -127,6 +129,16 @@ public class TransitDeliveryPointEntity implements EntityTbl{
         return that.hashCode()==this.hashCode();
     }
 
+    @NotNull
+    @Column(name="IS_FORECAST_SITE_DATE_CALCULATED",nullable = false)
+    public Boolean getIsForecastSiteDateCalculated() {
+        return isForecastSiteDateCalculated;
+    }
+
+    public void setIsForecastSiteDateCalculated(Boolean isForecastSiteDateCalculated) {
+        this.isForecastSiteDateCalculated = isForecastSiteDateCalculated;
+    }
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
@@ -139,6 +151,7 @@ public class TransitDeliveryPointEntity implements EntityTbl{
         result = 31 * result + (scopeSupply != null ? scopeSupply.getId().hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        result = 31 * result + (isForecastSiteDateCalculated != null ? isForecastSiteDateCalculated.hashCode() : 0);
         return result;
     }
 }
