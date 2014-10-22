@@ -1,5 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
+import ch.swissbytes.fqmes.types.IncoTermsEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.types.UoMEnum;
 
@@ -47,6 +48,17 @@ public class LookupValueFactory implements Serializable {
         Map<String,UoMEnum> result = new HashMap<>();
         for(UoMEnum measurement : UoMEnum.values()){
             result.put(bundle.getString("uom."+measurement.name().toLowerCase()),measurement);
+        }
+        return result;
+    }
+
+    @Produces
+    @SessionScoped
+    @Named("incoTerms")
+    public Map<String,IncoTermsEnum> getIncoTerms(){
+        Map<String,IncoTermsEnum> result = new HashMap<>();
+        for(IncoTermsEnum incoTerms : IncoTermsEnum.values()){
+            result.put(incoTerms.name(),incoTerms);
         }
         return result;
     }

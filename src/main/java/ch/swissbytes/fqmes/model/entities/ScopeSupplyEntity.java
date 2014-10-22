@@ -49,6 +49,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String requiredSiteDateObs;
     private String actualSiteDateObs;
     private Boolean isForecastSiteDateCalculated;
+    private String spIncoTerm;
+    private String spIncoTermDescription;
 
     private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
 
@@ -305,6 +307,23 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.currency = currency;
     }
 
+    @Column(name="sp_inco_term",length=50)
+    public String getSpIncoTerm() {
+        return spIncoTerm;
+    }
+
+    public void setSpIncoTerm(String spIncoTerm) {
+        this.spIncoTerm = spIncoTerm;
+    }
+    @Column(name="sp_inco_term_description", length=1000)
+    public String getSpIncoTermDescription() {
+        return spIncoTermDescription;
+    }
+
+    public void setSpIncoTermDescription(String spIncoTermDescription) {
+        this.spIncoTermDescription = spIncoTermDescription;
+    }
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
@@ -332,7 +351,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         result = 31 * result + (requiredSiteDateObs != null ? requiredSiteDateObs.hashCode() : 0);
         result = 31 * result + (actualSiteDateObs != null ? actualSiteDateObs.hashCode() : 0);
         result = 31 * result + (isForecastSiteDateCalculated != null ? isForecastSiteDateCalculated.hashCode() : 0);
-        result = 31 * result + (currency != null ? currency.hashCode() : 0);
+        result = 31 * result + (spIncoTerm != null ? spIncoTerm.hashCode() : 0);
+        result = 31 * result + (spIncoTermDescription != null ? spIncoTermDescription.hashCode() : 0);
         return result;
     }
 }

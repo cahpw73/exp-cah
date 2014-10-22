@@ -21,7 +21,7 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-2 control-label" value="#{msgs['po.supply.scope.column.code']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <h:inputText type="text" jsf:placeholder="#{msgs['po.supply.scope.column.code']}"
                                  maxlength="50"
                                  value="#{scopeSupplyBean.newScopeSupply.code}"
@@ -32,7 +32,7 @@
                 <p:outputLabel for="scopeSupplyQuantity" class="col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.column.quantity']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <h:inputText id="scopeSupplyQuantity" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
                                  value="#{scopeSupplyBean.newScopeSupply.quantity}"
@@ -46,10 +46,9 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-2 control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <p:selectOneMenu id="city" value="#{scopeSupplyBean.newScopeSupply.unit}" effect="fold" editable="true"
-                                     maxlength="50">
-                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                                     maxlength="50" style="width: 100%">
                         <f:selectItems value="#{unitOfMeasurement}"/>
                     </p:selectOneMenu>
                 </div>
@@ -58,7 +57,7 @@
                 <p:outputLabel  class="col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.column.cost']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <div class="col-sm-4"  style="padding-left: 0px;">
                         <h:inputText id="scopeSupplyCost" type="text"
                                      jsf:placeholder="#{msgs['po.supply.scope.column.cost']}"
@@ -87,11 +86,31 @@
                 <h:outputLabel class="col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.column.description']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <p:inputTextarea maxlength="500" style="height: 75px" autoResize="false"
                                      value="#{scopeSupplyBean.newScopeSupply.description}"/>
                 </div>
             </div>
+            <div class="form-group">
+                <h:outputLabel for="incoTerm" class="col-sm-2 control-label"
+                               value="#{msgs['po.supply.scope.lbl.inco.term']}"/>
+
+                <div class="col-sm-2">
+                    <p:selectOneMenu id="incoTerm" value="#{scopeSupplyBean.newScopeSupply.spIncoTerm}"
+                                     effect="fold" editable="true"
+                                     maxlength="50"  style="width: 100%">
+                        <f:selectItems value="#{incoTerms}"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="col-sm-3">
+                    <p:inputTextarea style="max-height: 34px;"
+                                     maxlength="1000" type="text"
+                                     value="#{scopeSupplyBean.newScopeSupply.spIncoTermDescription}"
+                                     jsf:placeholder="#{msgs['po.supply.scope.lbl.inco.term.description']}" class="form-control"/>
+
+                </div>
+            </div>
+
         </div>
         <div class="clearfix"/>
         <h3 class="sub-header">Source</h3>
@@ -166,53 +185,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 10px;">
-            <h:panelGroup id="deliveryLeadTimeGrp">
-            <div class="col-lg-8">
-                <div class="form-group">
-                    <h:panelGroup id="deliveryLeadTimeGrpId">
-                        <p:outputLabel for="deliveryLeadTimeQtId" class="col-sm-6 control-label"
-                                       value="#{msgs['supply.scope.lbl.delivery.time']}"/>
 
-                        <div class="col-sm-3">
-                            <h:inputText id="deliveryLeadTimeQtId" type="text"
-                                         value="#{scopeSupplyBean.newScopeSupply.deliveryLeadTimeQt}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
-                                         class="form-control"
-                                         requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
-                                         validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
-                                         converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
-                                <p:ajax event="change" update=":scopeSupplyFormId:forecastSiteDateCreate"
-                                        listener="#{scopeSupplyBean.calculateDate}"/>
-                            </h:inputText>
-                            <p:message id="msgDeliveryLead" for="deliveryLeadTimeQtId"/>
-                        </div>
-                    </h:panelGroup>
-
-                    <div class="col-sm-3">
-                        <h:selectOneMenu id="measurementUnit"
-                                         value="#{scopeSupplyBean.newScopeSupply.deliveryLeadTimeMs}"
-                                         styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                            <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
-                            <f:selectItems value="#{allTimeMeasurement}"/>
-                            <p:ajax event="change" process="measurementUnit, deliveryLeadTimeGrpId"
-                                    update="forecastSiteDateCreate, deliveryLeadTimeGrpId"
-                                    listener="#{scopeSupplyBean.calculateDate}"/>
-                        </h:selectOneMenu>
-                    </div>
-
-                </div>
-
-            </div>
-            </h:panelGroup>
-            <div class="col-lg-4">
-                <p:inputTextarea maxlength="1000" type="text" style="height: 34px;"
-                             value="#{scopeSupplyBean.newScopeSupply.getDeliveryLeadTimeDescription}"
-                             jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
-                             class="form-control"/>
-            </div>
-
-        </div>
         <h3 class="sub-header">#{msgs['tdp.title']}</h3>
         <p:dataTable id="tdpCreate" value="#{scopeSupplyBean.newScopeSupply.tdpList}"
                      var="_tdp" rowIndexVar="_index">
@@ -254,6 +227,51 @@
         </h:commandButton>
 
         <h3 class="sub-header">#{msgs['supply.scope.split.lbl.destination']}</h3>
+
+        <div class="row" style="margin-top: 10px;">
+            <h:panelGroup id="deliveryLeadTimeGrp">
+                <div class="col-lg-8">
+                    <div class="form-group">
+                        <h:panelGroup id="deliveryLeadTimeGrpId">
+                            <p:outputLabel for="deliveryLeadTimeQtId" class="col-sm-6 control-label"
+                                           value="#{msgs['supply.scope.lbl.delivery.time']}"/>
+                            <div class="col-sm-3">
+                                <h:inputText id="deliveryLeadTimeQtId" type="text" style="margin-top: 5px; margin-left: 5px;"
+                                             value="#{scopeSupplyBean.newScopeSupply.deliveryLeadTimeQt}"
+                                             jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
+                                             class="form-control"
+                                             requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
+                                             validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
+                                             converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
+                                    <p:ajax event="change" update=":scopeSupplyFormId:forecastSiteDateCreate"
+                                            listener="#{scopeSupplyBean.calculateDate}"/>
+                                </h:inputText>
+                                <p:message id="msgDeliveryLead" for="deliveryLeadTimeQtId"/>
+                            </div>
+                        </h:panelGroup>
+                        <div class="col-sm-3">
+                            <h:selectOneMenu id="measurementUnit" style="margin-top: 5px;"
+                                             value="#{scopeSupplyBean.newScopeSupply.deliveryLeadTimeMs}"
+                                             styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                                <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
+                                <f:selectItems value="#{allTimeMeasurement}"/>
+                                <p:ajax event="change" process="measurementUnit, deliveryLeadTimeGrpId"
+                                        update="forecastSiteDateCreate, deliveryLeadTimeGrpId"
+                                        listener="#{scopeSupplyBean.calculateDate}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <div class="form-row">
+                <div class="col-md-4" style="padding-left: 10px; padding-right:15px;">
+                    <p:inputTextarea maxlength="1000" type="text" style="height: 34px;"
+                                     value="#{scopeSupplyBean.newScopeSupply.getDeliveryLeadTimeDescription}"
+                                     jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
+                                     class="form-control"/>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-4">
@@ -352,10 +370,16 @@
         </div>
         <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
             <f:facet name="message">
-                <p> #{msgs['lbl.confirm.cancel.your.change']} </p>
-                <p> #{msgs['lbl.confirm.cancel.sure']} </p>
+                <div>
+                    <div class="col-md-1">
+                        <h:graphicImage name="img/icon-alert.jpg"/>
+                    </div>
+                    <div class="col-md-11">
+                        Do you wish to leave this page and lose your unsaved data?
+                        <br/>(including changes to Scopes of Supply).
+                    </div>
+                </div>
             </f:facet>
-
             <div class="pull-right">
                 <h:commandButton value="#{msgs['lbl.yes']}" type="submit"
                                  role="button"

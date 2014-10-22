@@ -67,9 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="clearfix"/>
-            <br/>
-
+            <div class="clearfix"></div>
             <div>
                 <div class="pull-right">
                     <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
@@ -79,15 +77,10 @@
                                      type="submit" class="btn btn-primary"/>
                 </div>
             </div>
-        </h:form>
-
-        <div class="clearfix"/>
-        <br/>
-        <h:form>
-
+            <div class="clearfix"/>
+            <br/>
         </h:form>
         <h:form id="purchaseList" prependId="false">
-            <h2 class="sub-header">#{msgs['po.list.title']}</h2>
             <p:dataTable value="#{reportListBean.list}" var="_purchase"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.pagesSize}" paginatorPosition="bottom">

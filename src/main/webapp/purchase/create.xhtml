@@ -183,11 +183,12 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.lbl.po.inco.term']}"/>
 
-                <div class="col-sm-8">
-                    <h:inputText id="incoTerm" type="text" maxlength="50"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTerm}"
-                                 jsf:placeholder="#{msgs['po.ph.po.inco.term']}"
-                                 class="form-control"/>
+                <div class="col-sm-4">
+                    <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTerm}"
+                                     effect="fold" editable="true"
+                                     maxlength="50"  style="width: 100%">
+                        <f:selectItems value="#{incoTerms}"/>
+                    </p:selectOneMenu>
                 </div>
             </div>
         </div>
@@ -281,9 +282,17 @@
     </div>
     <p:confirmDialog widgetVar="confCancelDlg" id="cconfirmDialogId" header="Cancel">
         <f:facet name="message">
-            <p> #{msgs['lbl.confirm.cancel.your.change']} </p>
-            <p> #{msgs['lbl.confirm.cancel.sure']} </p>
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                    <br/>(including changes to Scopes of Supply).
+                </div>
+            </div>
         </f:facet>
+
 
         <div class="pull-right">
             <h:commandButton value="#{msgs['lbl.yes']}"

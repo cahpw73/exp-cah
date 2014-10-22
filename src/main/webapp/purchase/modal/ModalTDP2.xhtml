@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-sm-6">
                     <h:inputText class="form-control" value="#{scopeSupplyBean.tdp.leadTime}" placeholder="Lead Time">
-                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpEdition()}" render="forecastDeliveryDateTdp2" />
+                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation()}" render="forecastDeliveryDateTdp2" />
                     </h:inputText>
                 </div>
                 <div class="col-sm-6">
@@ -27,7 +27,7 @@
                                      styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
                         <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                         <f:selectItems value="#{allTimeMeasurement}"/>
-                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpEdition()}" render="forecastDeliveryDateTdp2" />
+                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation()}" render="forecastDeliveryDateTdp2" />
                     </h:selectOneMenu>
                 </div>
             </div>

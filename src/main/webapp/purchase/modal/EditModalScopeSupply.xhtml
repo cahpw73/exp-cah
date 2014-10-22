@@ -20,7 +20,7 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-2 control-label" value="#{msgs['po.supply.scope.column.code']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <h:inputText type="text" maxlength="50" jsf:placeholder="#{msgs['po.supply.scope.column.code']}"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.code}"
                                  class="form-control"/>
@@ -29,7 +29,7 @@
             <div class="form-group">
                 <p:outputLabel for="scopeSupplyQuantity" class="col-sm-2 control-label" value="#{msgs['po.supply.scope.column.quantity']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <h:inputText id="scopeSupplyQuantity" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.quantity}"
@@ -43,9 +43,9 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-2 control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
 
-                <div class="col-sm-6">
-                    <p:selectOneMenu id="city" value="#{purchaseOrderEdit.scopeSupplyEdit.unit}" effect="fold" editable="true" maxlength="50">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
+                <div class="col-sm-2">
+                    <p:selectOneMenu id="city" value="#{purchaseOrderEdit.scopeSupplyEdit.unit}"
+                                     effect="fold" editable="true" maxlength="50" style="width: 100%">
                         <f:selectItems value="#{unitOfMeasurement}" />
                     </p:selectOneMenu>
                 </div>
@@ -54,7 +54,7 @@
                 <p:outputLabel for="scopeSupplyCost" class="col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.column.cost']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <div class="col-sm-4"  style="padding-left: 0px;">
                     <h:inputText id="scopeSupplyCost" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.cost']}"
@@ -83,9 +83,28 @@
                 <h:outputLabel class="col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.column.description']}"/>
 
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <p:inputTextarea maxlength="1000" style="height: 75px" autoResize="false"
                                      value="#{purchaseOrderEdit.scopeSupplyEdit.description}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="incoTerm" class="col-sm-2 control-label"
+                               value="#{msgs['po.supply.scope.lbl.inco.term']}"/>
+
+                <div class="col-sm-2">
+                    <p:selectOneMenu id="incoTerm" value="#{purchaseOrderEdit.scopeSupplyEdit.spIncoTerm}"
+                                     effect="fold" editable="true"
+                                     maxlength="50"  style="width: 100%">
+                        <f:selectItems value="#{incoTerms}"/>
+                    </p:selectOneMenu>
+                </div>
+                <div class="col-sm-3">
+                    <p:inputTextarea style="max-height: 34px;"
+                                     maxlength="1000" type="text"
+                                     value="#{purchaseOrderEdit.scopeSupplyEdit.spIncoTermDescription}"
+                                     jsf:placeholder="#{msgs['po.supply.scope.lbl.inco.term.description']}" class="form-control"/>
+
                 </div>
             </div>
         </div>
@@ -163,48 +182,6 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-lg-8">
-                <div class="form-group">
-                    <h:panelGroup id="deliveryLeadTimeGrpId">
-                    <p:outputLabel for="deliveryLeadTimeQtId" class="col-sm-6 control-label"
-                                   value="#{msgs['supply.scope.lbl.delivery.time']}"/>
-
-                    <div class="col-sm-3">
-                        <h:inputText id="deliveryLeadTimeQtId" maxlength="255" type="text"
-                                     value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeQt}"
-                                     jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
-                                     class="form-control"
-                                     requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
-                                     validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
-                                     converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
-                            <f:ajax event="change" render="forescastSiteDateEdit" listener="#{purchaseOrderEdit.calculateDate}"/>
-                        </h:inputText>
-                        <p:message id="msgDeliveryLead" for="deliveryLeadTimeQtId"/>
-                    </div>
-                    </h:panelGroup>
-                    <div class="col-sm-3">
-                        <h:selectOneMenu id="measurementUnitEdit"
-                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeMs}"
-                                         styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                            <f:selectItems value="#{allTimeMeasurement}"/>
-                            <p:ajax event="change" process="measurementUnitEdit, deliveryLeadTimeGrpId"
-                                    listener="#{purchaseOrderEdit.calculateDate}"
-                                    update="deliveryLeadTimeGrpId, forescastSiteDateEdit"
-                                        />
-                        </h:selectOneMenu>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <p:inputTextarea maxlength="1000" type="text" style="height: 34px;"
-                             value="#{purchaseOrderEdit.scopeSupplyEdit.getDeliveryLeadTimeDescription}"
-                             jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
-                             class="form-control"/>
-            </div>
-
-        </div>
-
         <h3 class="sub-header">#{msgs['tdp.title']}</h3>
         <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.scopeSupplyEdit.tdpList}"
                      var="_tdp" rowIndexVar="_index">
@@ -234,7 +211,7 @@
                 </h:commandLink>
                 &#160;
                 <h:commandLink value="#{msgs['lbl.delete']}">
-                    <p:ajax update="tdpCreate" listener="#{purchaseOrderEdit.deleteTdp(_tdp.id)}"/>
+                    <p:ajax update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit" listener="#{purchaseOrderEdit.deleteTdp(_tdp.id)}"/>
                 </h:commandLink>
             </p:column>
         </p:dataTable>
@@ -244,6 +221,50 @@
         </h:commandButton>
         <br/>
         <h3 class="sub-header">#{msgs['supply.scope.split.lbl.destination']}</h3>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <h:panelGroup id="deliveryLeadTimeGrpId">
+                        <p:outputLabel for="deliveryLeadTimeQtId" class="col-sm-6 control-label"
+                                       value="#{msgs['supply.scope.lbl.delivery.time']}"/>
+
+                        <div class="col-sm-3">
+                            <h:inputText id="deliveryLeadTimeQtId" maxlength="255" type="text"
+                                         style="margin-top: 5px; margin-left: 5px;"
+                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeQt}"
+                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
+                                         class="form-control"
+                                         requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
+                                         validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
+                                         converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
+                                <f:ajax event="change" render="forescastSiteDateEdit" listener="#{purchaseOrderEdit.calculateDate}"/>
+                            </h:inputText>
+                            <p:message id="msgDeliveryLead" for="deliveryLeadTimeQtId"/>
+                        </div>
+                    </h:panelGroup>
+                    <div class="col-sm-3">
+                        <h:selectOneMenu id="measurementUnitEdit" style="margin-top: 5px; margin-left: 5px;"
+                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeMs}"
+                                         styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                            <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
+                            <f:selectItems value="#{allTimeMeasurement}"/>
+                            <p:ajax event="change" process="measurementUnitEdit, deliveryLeadTimeGrpId"
+                                    listener="#{purchaseOrderEdit.calculateDate}"
+                                    update="deliveryLeadTimeGrpId, forescastSiteDateEdit"
+                                    />
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-lg-4" style="padding-left: 10px; padding-right:15px;">
+                    <p:inputTextarea maxlength="1000" type="text" style="height: 34px;"
+                                     value="#{purchaseOrderEdit.scopeSupplyEdit.getDeliveryLeadTimeDescription}"
+                                     jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
+                                     class="form-control"/>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-row">
@@ -337,10 +358,16 @@
         </div>
         <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
             <f:facet name="message">
-                <p> #{msgs['lbl.confirm.cancel.your.change']} </p>
-                <p> #{msgs['lbl.confirm.cancel.sure']} </p>
+                <div>
+                    <div class="col-md-1">
+                        <h:graphicImage name="img/icon-alert.jpg"/>
+                    </div>
+                    <div class="col-md-11">
+                        Do you wish to leave this page and lose your unsaved data?
+                        <br/>(including changes to Scopes of Supply).
+                    </div>
+                </div>
             </f:facet>
-
             <div class="pull-right">
                 <h:commandButton value="#{msgs['lbl.yes']}" type="submit"
                                  role="button"

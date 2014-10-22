@@ -163,18 +163,28 @@ public class PurchaseOrderEdit implements Serializable {
     public void destroy() {
         log.log(Level.INFO, String.format("bean destroyed [%s]", this.getClass().toString()));
     }
-    public void  switchModeForecastSiteDateForTdp(boolean editing){
-       /* if(editing){
-            if(editTdp.getIsForecastSiteDateCalculated()){
-                calulateForecasteDateForTdpEdition();
-            }else{
-                editTdp.setForecastDeliveryDate(null);
-            }
-        }else if(tdp.getIsForecastSiteDateCalculated()){
-            calulateForecasteDateForTdpCreation();
-        }else {
-            tdp.setForecastDeliveryDate(null);
-        }*/
+
+    public void switchModeForecastSiteDateForTdp(boolean editing) {
+        switch (currentOperation) {
+            case 0://CREATING
+                if (!editing) {
+                    calulateForecasteDateForTdpCreation();
+                } else {
+                    calulateForecasteDateForTdpEdition();
+                }
+                break;
+            case 1://EDITING
+                if (!editing) {
+                    calulateForecasteDateForTdpCreation1();
+                } else {
+                    calulateForecasteDateForTdpEdition1();
+                }
+                break;
+            default:
+                log.info("no possible computation");
+                break;
+        }
+
     }
     public String doUpdate() {
         log.info("upgrading...");
@@ -468,9 +478,8 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public String split() {
-        log.info("split....");
-        if (originalQuantity.intValue() > 0 && scopeSupplySplit.getQuantity().intValue() < originalQuantity.intValue()) {
-            //selectedScopeSupply.setQuantity(originalQuantity.intValue()-scopeSupplySplit.getQuantity().intValue());
+        String url="/purchase/edit?faces-redirect=true&fase=1";
+        if(validateValuesAboutSplit()){
             relativeCurrentAttachmentId--;
             scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
             scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
@@ -481,9 +490,12 @@ public class PurchaseOrderEdit implements Serializable {
             }
         } else {
             Messages.addGlobalError("invalid quantity");
+            url= "";
         }
-        log.info("finished splitting");
-        return "/purchase/edit?faces-redirect=true&fase=1";
+        return url;
+    }
+    private boolean validateValuesAboutSplit(){
+        return originalQuantity.intValue()==scopeSupplySplit.getQuantity().intValue()+selectedScopeSupply.getQuantity().intValue();
     }
 
     public String doUpdateScopeSupply() {
@@ -497,17 +509,20 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public String selectScopeSupply(final Long idScopeSupply) {
-        currentOperation = SPLIT;//spliting...
+        currentOperation = SPLIT;
         final int index = scopeSupplyService.getIndexById(idScopeSupply, scopeSupplies);
         if (index >= 0) {
             selectedScopeSupply = scopeSupplyService.clone(scopeSupplies.get(index));
             originalQuantity = selectedScopeSupply.getQuantity();
             scopeSupplySplit = scopeSupplyService.clone(selectedScopeSupply);
+            if( scopeSupplySplit.getActualSiteDate()==null){
+                scopeSupplySplit.setActualSiteDate(new Date());
+            }
             scopeSupplySplit.setQuantity(0);
         }
         return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;
     }
-
+/*
     public void calculateNewScopeSupplyQuantity() {
         log.info("calculateNewScopeSupplyQuantity()");
         log.info(String.format("original Quantity [%s]",originalQuantity));
@@ -532,7 +547,7 @@ public class PurchaseOrderEdit implements Serializable {
             scopeSupplySplit.setQuantity(0);
         }
         log.info(String.format("value calculated [%s]",scopeSupplySplit.getQuantity()));
-    }
+    }*/
 
     public String selectScopeSuppplyForEditing(Long id) {
         currentOperation = EDIT;//EDITING
@@ -576,6 +591,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public Date calculateDate() {
+        log.info("calculateDate()");
         Date date = null;
         switch (currentOperation) {
             case 0://CREATING
@@ -609,23 +625,20 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("public void switchModeForecastSiteDate()");
         switch (currentOperation) {
             case 0://CREATING
+                scopeSupplyEdit.setSiteDate(null);
                 if (scopeSupplyEdit.getIsForecastSiteDateCalculated()) {
-                    scopeSupplyEdit.setSiteDate(null);
-                } else {
                     calculateDate();
                 }
                 break;
             case 1://EDITING
+                scopeSupplyEditing.setSiteDate(null);
                 if (scopeSupplyEditing.getIsForecastSiteDateCalculated()) {
-                    scopeSupplyEditing.setSiteDate(null);
-                } else {
                     calculateDate();
                 }
                 break;
             case 2://SPLITING
+                getScopeSupplySplit().setSiteDate(null);
                 if (getScopeSupplySplit().getIsForecastSiteDateCalculated()) {
-                    getScopeSupplySplit().setSiteDate(null);
-                } else {
                     calculateDate();
                 }
                 break;
@@ -672,6 +685,7 @@ public class PurchaseOrderEdit implements Serializable {
             }else{
                 scopeSupplyEdit.getTdpList().remove(index.intValue());
             }
+            calculateDate();
         }
     }
     public void deleteTdpOnEdition(Long id){
@@ -684,6 +698,7 @@ public class PurchaseOrderEdit implements Serializable {
             }else{
                 scopeSupplyEditing.getTdpList().remove(index.intValue());
             }
+            calculateDate();
         }
     }
     public void doSaveTdp(){
@@ -734,6 +749,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpCreation(){
         log.info("calulateForecasteDateForTdpCreation....");
+        newTdp.setForecastDeliveryDate(null);
         if(newTdp.getIsForecastSiteDateCalculated()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
@@ -742,15 +758,17 @@ public class PurchaseOrderEdit implements Serializable {
     }
     public void calulateForecasteDateForTdpEdition(){
         log.info("calulateForecasteDateForTdpCreation....");
+        tdpEdit.setForecastDeliveryDate(null);
         if(tdpEdit.getIsForecastSiteDateCalculated()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
-            TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
-            tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEdit, scopeSupplyEdit.getTdpList().size() == 0, tdpPrevious, tdpEdit));
+            TransitDeliveryPointEntity tdpPrevious=list.size()>1&&currentIndexForTdp>0?list.get(currentIndexForTdp-1):null;
+            tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEdit, currentIndexForTdp.intValue() == 0, tdpPrevious, tdpEdit));
         }
     }
 
     public void calulateForecasteDateForTdpCreation1(){
         log.info("calulateForecasteDateForTdpCreation....");
+        newTdp.setForecastDeliveryDate(null);
         if(newTdp.getIsForecastSiteDateCalculated()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
@@ -759,10 +777,11 @@ public class PurchaseOrderEdit implements Serializable {
     }
     public void calulateForecasteDateForTdpEdition1(){
         log.info("calulateForecasteDateForTdpCreation....");
+        tdpEdit.setForecastDeliveryDate(null);
         if(tdpEdit.getIsForecastSiteDateCalculated()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
-            TransitDeliveryPointEntity tdpPrevious=list.size()>=0?list.get(list.size()-1):null;
-            tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, scopeSupplyEditing.getTdpList().size() == 0, tdpPrevious, tdpEdit));
+            TransitDeliveryPointEntity tdpPrevious=list.size()>1&&currentIndexForTdp>0?list.get(currentIndexForTdp-1):null;
+            tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, currentIndexForTdp.intValue() == 0, tdpPrevious, tdpEdit));
         }
     }
 
