@@ -67,6 +67,16 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.lbl.supplier']}"
+                                     value="#{reportListBean.searchPurchase.supplier}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
             <div class="clearfix"></div>
             <div>
                 <div class="pull-right">
@@ -101,9 +111,12 @@
                 <p:column headerText="#{msgs['po.lbl.po.title']}">
                     #{_purchase.poTitle}
                 </p:column>
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}">
+                    #{_purchase.supplier}
+                </p:column>
                 <p:column headerText="#{msgs['lbl.action']}">
                     <p:commandLink value="#{msgs['report.purchase.order.link.add']}">
-                            <p:ajax  update=":purchaseList:listSelected" listener="#{reportBean.addPurchaseOrder(_purchase.id)}"></p:ajax>
+                            <p:ajax  update=":purchaseList:listSelected" listener="#{reportBean.addPurchaseOrder(_purchase.poId)}"></p:ajax>
                     </p:commandLink>
                 </p:column>
             </p:dataTable>

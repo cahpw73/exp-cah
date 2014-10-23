@@ -51,6 +51,7 @@ public class ScopeSupplyBean implements Serializable {
 
     private TransitDeliveryPointEntity tdp;
     private int indexEditingTdp=-1;
+    private int temporaryIdForTdp =-1;
 
     private static final Logger log = Logger.getLogger(ScopeSupplyBean.class.getName());
 
@@ -102,11 +103,15 @@ public class ScopeSupplyBean implements Serializable {
 
     public void addTransitDeliveryPoint(){
         log.info("public void addTransitDeliveryPoint()");
+        tdp.setId(Long.parseLong(Integer.toString(temporaryIdForTdp)));
+        temporaryIdForTdp--;
         newScopeSupply.getTdpList().add(tdpService.clone(tdp));
         calculateDate();
     }
     public void addTransitDeliveryPointOnEdition(){
         log.info("public void addTransitDeliveryPoint()");
+        tdp.setId(Long.parseLong(Integer.toString(temporaryIdForTdp)));
+        temporaryIdForTdp--;
         editScopeSupply.getTdpList().add(tdpService.clone(tdp));
         calculateDate();
     }
@@ -119,9 +124,9 @@ public class ScopeSupplyBean implements Serializable {
                 newScopeSupply.setSiteDate(null);
             }
         } else if (editScopeSupply.getIsForecastSiteDateCalculated()) {
-            editScopeSupply.setSiteDate(null);
-        }else{
             calculateDate();
+        }else{
+            editScopeSupply.setSiteDate(null);
         }
     }
     public void switchModeForecastSiteDateForTdp(boolean editing){
@@ -188,7 +193,7 @@ public class ScopeSupplyBean implements Serializable {
     public Date calculateDate() {
         log.info("calculateDate");
         Date date=null;
-            if(indexScopeSupplyEditing!=null&&indexScopeSupplyEditing>=0){
+            if(indexScopeSupplyEditing>=0){
                 if(editScopeSupply.getIsForecastSiteDateCalculated()){
                     date=scopeSupplyService.calculateForecastSiteDate(editScopeSupply);
                     editScopeSupply.setSiteDate(date);

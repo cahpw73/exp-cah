@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.util.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -75,6 +76,9 @@ public class PurchaseOrderCreate implements Serializable {
     private Integer indexScopeSupplyEditing;
 
     private static final Logger log = Logger.getLogger(PurchaseOrderCreate.class.getName());
+
+    @Inject
+    private Configuration configuration;
 
     @Inject
     private Conversation conversation;
@@ -259,6 +263,7 @@ public class PurchaseOrderCreate implements Serializable {
         newScopeSupply.setIsForecastSiteDateCalculated(true);*/
         if(conversation.isTransient()){
             conversation.begin();
+            conversation.setTimeout(configuration.getTimeOutConversation());
             log.info(String.format("conversation started [%s]",conversation.getTimeout()));
         }
         String cid=conversation.getId();

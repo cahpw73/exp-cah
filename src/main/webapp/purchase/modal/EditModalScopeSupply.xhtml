@@ -104,7 +104,6 @@
                                      maxlength="1000" type="text"
                                      value="#{purchaseOrderEdit.scopeSupplyEdit.spIncoTermDescription}"
                                      jsf:placeholder="#{msgs['po.supply.scope.lbl.inco.term.description']}" class="form-control"/>
-
                 </div>
             </div>
         </div>
@@ -112,7 +111,7 @@
         <br/>
         <h3 class="sub-header">Source</h3>
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-row">
                     <p:outputLabel for="deliveryDateId"  value="#{msgs['supply.scope.lbl.delivery.date']}" style="margin-bottom: 10px;"/>
                     <p:calendar id="deliveryDateId"
@@ -123,9 +122,9 @@
                                 value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
-                        <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit"
+                        <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                 listener="#{purchaseOrderEdit.calculateDate}"/>
-                        <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit"
+                        <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                 listener="#{purchaseOrderEdit.calculateDate}"/>
                     </p:calendar>
                     <p:message for="deliveryDateId" id="msgDeliveryDate"/>
@@ -136,7 +135,8 @@
                                  class="form-control"/>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-3">
                 <div class="form-row">
                     <h:outputLabel  value="#{msgs['supply.scope.lbl.work.date']}" style="margin-bottom: 10px;"/>
                         <p:calendar id="exWorkDate"
@@ -146,9 +146,9 @@
                                     jsf:placeholder="#{msgs['lbl.format.date']}"
                                     value="#{purchaseOrderEdit.scopeSupplyEdit.exWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
-                            <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit"
+                            <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
-                            <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit"
+                            <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                     <p:inputTextarea maxlength="1000" type="text"
@@ -158,7 +158,7 @@
                                  class="form-control"/>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-row">
                     <h:outputLabel  value="#{msgs['supply.scope.lbl.actual.ex.works.date']}" style="margin-bottom: 10px;"/>
                     <p:calendar styleClass="p-calendar"
@@ -168,16 +168,16 @@
                                 jsf:placeholder="#{msgs['lbl.format.date']}"
                                 value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
-                        <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit"
+                        <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                 listener="#{purchaseOrderEdit.calculateDate}"/>
-                        <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit"
+                        <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                 listener="#{purchaseOrderEdit.calculateDate}"/>
                     </p:calendar>
                     <p:inputTextarea maxlength="1000" type="text"
-                                 style="margin-top: 10px; height: 34px;"
-                                 value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDateObs}"
-                                 jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
-                                 class="form-control"/>
+                                     style="margin-top: 10px; height: 34px;"
+                                     value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDateObs}"
+                                     jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
+                                     class="form-control"/>
                 </div>
             </div>
         </div>
@@ -185,88 +185,54 @@
         <h3 class="sub-header">#{msgs['tdp.title']}</h3>
         <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.scopeSupplyEdit.tdpList}"
                      var="_tdp" rowIndexVar="_index">
-            <p:column headerText="Location">
+            <p:column headerText="#{msgs['tdp.lbl.location']}">
                 #{_tdp.location}
-            </p:column>
-            <p:column headerText="#{msgs['tdp.lbl.forecast.delivery.date']}">
-                <h:outputText value="#{_tdp.forecastDeliveryDate}">
-                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="#{msgs['tdp.lbl.actual.delivery.date']}">
-                <h:outputText value="#{_tdp.actualDeliveryDate}">
-                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                </h:outputText>
             </p:column>
             <p:column headerText="#{msgs['tdp.lbl.lead.time']}">
                 #{_tdp.leadTime}
                 &#160;
                 #{ configuration.getTimeMeasurement(_tdp.measurementTime)}
             </p:column>
+            <p:column headerText="#{msgs['tdp.lbl.forecast.delivery.date']}">
+                <h:outputText value="#{_tdp.forecastDeliveryDate}">
+                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                </h:outputText>
+            </p:column>
+            <p:column width="100">
+                <h:outputText rendered="#{_tdp.isForecastSiteDateCalculated}"
+                              value="#{msgs['lbl.automatic']}"/>
+                <h:outputText rendered="#{! _tdp.isForecastSiteDateCalculated}"
+                              value="#{msgs['lbl.manual']}"/>
+            </p:column>
+            <p:column headerText="#{msgs['tdp.lbl.actual.delivery.date']}">
+                <h:outputText value="#{_tdp.actualDeliveryDate}">
+                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                </h:outputText>
+            </p:column>
             <p:column headerText="#{msgs['lbl.action']}">
-                <h:commandLink value="#{msgs['lbl.edit']}">
+                <h:commandLink styleClass="btn btn-primary cLink-color-scope-supply" value="#{msgs['lbl.edit']}">
                     <p:ajax listener="#{purchaseOrderEdit.selectTdp(_tdp.id)}"
                             update=":TDPEdit"
                             onsuccess="PF('edittdp').show();"/>
                 </h:commandLink>
                 &#160;
-                <h:commandLink value="#{msgs['lbl.delete']}">
+                <h:commandLink styleClass="btn btn-primary cLink-color-scope-supply" value="#{msgs['lbl.delete']}">
                     <p:ajax update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit" listener="#{purchaseOrderEdit.deleteTdp(_tdp.id)}"/>
                 </h:commandLink>
             </p:column>
         </p:dataTable>
-
-        <h:commandButton styleClass="btn btn-primary component-left" value="#{msgs['tdp.btn.add']}">
-            <p:ajax oncomplete="PF('tdp').show();" update=":TDP"  listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"/>
-        </h:commandButton>
+        <div class="clearfix"></div>
+        <br/>
+        <div class="pull-right">
+            <h:commandButton styleClass="btn btn-primary" value="#{msgs['tdp.btn.add']}">
+                <p:ajax oncomplete="PF('tdp').show();" update=":TDP"  listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"/>
+            </h:commandButton>
+        </div>
         <br/>
         <h3 class="sub-header">#{msgs['supply.scope.split.lbl.destination']}</h3>
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-lg-8">
-                <div class="form-group">
-                    <h:panelGroup id="deliveryLeadTimeGrpId">
-                        <p:outputLabel for="deliveryLeadTimeQtId" class="col-sm-6 control-label"
-                                       value="#{msgs['supply.scope.lbl.delivery.time']}"/>
 
-                        <div class="col-sm-3">
-                            <h:inputText id="deliveryLeadTimeQtId" maxlength="255" type="text"
-                                         style="margin-top: 5px; margin-left: 5px;"
-                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeQt}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
-                                         class="form-control"
-                                         requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
-                                         validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
-                                         converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
-                                <f:ajax event="change" render="forescastSiteDateEdit" listener="#{purchaseOrderEdit.calculateDate}"/>
-                            </h:inputText>
-                            <p:message id="msgDeliveryLead" for="deliveryLeadTimeQtId"/>
-                        </div>
-                    </h:panelGroup>
-                    <div class="col-sm-3">
-                        <h:selectOneMenu id="measurementUnitEdit" style="margin-top: 5px; margin-left: 5px;"
-                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeMs}"
-                                         styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                            <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
-                            <f:selectItems value="#{allTimeMeasurement}"/>
-                            <p:ajax event="change" process="measurementUnitEdit, deliveryLeadTimeGrpId"
-                                    listener="#{purchaseOrderEdit.calculateDate}"
-                                    update="deliveryLeadTimeGrpId, forescastSiteDateEdit"
-                                    />
-                        </h:selectOneMenu>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-lg-4" style="padding-left: 10px; padding-right:15px;">
-                    <p:inputTextarea maxlength="1000" type="text" style="height: 34px;"
-                                     value="#{purchaseOrderEdit.scopeSupplyEdit.getDeliveryLeadTimeDescription}"
-                                     jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
-                                     class="form-control"/>
-                </div>
-            </div>
-        </div>
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-row">
                     <h:outputLabel for="siteDateId" style="margin-bottom: 10px;" value="#{msgs['supply.scope.lbl.required.site.date']}"/>
                     <p:calendar id="siteDateId" mask="true" navigator="true"
@@ -283,31 +249,71 @@
                                  class="form-control"/>
                 </div>
             </div>
-            <div class="col-lg-4">
+
+            <div class="col-lg-3">
+                <div class="form-row">
+                    <h:outputLabel for="deliveryLeadTimeQtId" style="margin-bottom: 10px;"
+                                   value="#{msgs['supply.scope.lbl.delivery.time']}"/>
+                    <h:panelGroup id="deliveryLeadTimeGrp" style="display: block;  width: 100%;">
+                        <h:panelGroup id="deliveryLeadTimeGrpId">
+                            <h:inputText id="deliveryLeadTimeQtId" type="text"
+                                         style="background-color: #fff; background-image: none;
+                                                border: 1px solid #ccc; border-radius: 4px;
+                                                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+                                                color: #555; font-size: 14px; height: 34px;
+                                                line-height: 1.42857; padding: 6px 12px;
+                                                transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;"
+                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeQt}"
+                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
+                                         requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
+                                         validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
+                                         converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
+                                <p:ajax  process="@this" event="change" update="forescastSiteDateEdit"
+                                        listener="#{purchaseOrderEdit.calculateDate}"/>
+                            </h:inputText>
+                        </h:panelGroup>
+                        <h:selectOneMenu id="measurementUnitEdit" style="margin-left: 5px;"
+                                         value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeMs}">
+                            <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
+                            <f:selectItems value="#{allTimeMeasurement}"/>
+                            <p:ajax event="change" process="@this"
+                                    listener="#{purchaseOrderEdit.calculateDate}"
+                                    update="deliveryLeadTimeGrpId, forescastSiteDateEdit"/>
+                        </h:selectOneMenu>
+                    </h:panelGroup>
+                    <p:inputTextarea maxlength="1000" type="text" style="margin-top: 10px; height: 34px;"
+                                     value="#{purchaseOrderEdit.scopeSupplyEdit.getDeliveryLeadTimeDescription}"
+                                     jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
+                                     class="form-control"/>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
                 <div class="form-row">
                     <div>
                         <div class="pull-left "><h:outputLabel style="margin-bottom: 10px; " value="#{msgs['supply.scope.lbl.site.date']}"/></div>
-                        <div class="pull-right ">
-                            <p:selectBooleanButton value="#{purchaseOrderEdit.scopeSupplyEdit.isForecastSiteDateCalculated}"
-                                                   onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}" >
-                                <p:ajax update=":scopeSupplyFormId:forescastSiteDateEdit" listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
-                            </p:selectBooleanButton>
-                        </div>
-
                     </div>
-                    <p:calendar mask="true"
-                                id="forescastSiteDateEdit"
-                                navigator="true"
-                                disabled="#{purchaseOrderEdit.scopeSupplyEdit.isForecastSiteDateCalculated}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
-                                value="#{purchaseOrderEdit.scopeSupplyEdit.siteDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();">
-                        <p:ajax event="dateSelect"/>
-                        <p:ajax event="change"/>
-                            </p:calendar>
-
+                    <h:panelGroup id="forecastSiteDateCreateGrId" style="display: block;">
+                        <p:calendar mask="true"
+                                    id="forescastSiteDateEdit"
+                                    navigator="true"
+                                    disabled="#{purchaseOrderEdit.scopeSupplyEdit.isForecastSiteDateCalculated}"
+                                    pattern="#{configuration.formatDate}"
+                                    converterMessage="#{msgs['validator.date.invalid']}"
+                                    jsf:placeholder="#{msgs['lbl.format.date']}"
+                                    value="#{purchaseOrderEdit.scopeSupplyEdit.siteDate}"
+                                    onselect="calendarChanges();" onchange="calendarChanges();"
+                                    styleClass="forecastSiteDate">
+                            <p:ajax event="dateSelect"/>
+                            <p:ajax event="change"/>
+                        </p:calendar>
+                        <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.scopeSupplyEdit.isForecastSiteDateCalculated}"
+                                                  style="margin-left: 5px; margin-right: 5px;">
+                            <p:ajax update=":scopeSupplyFormId:forescastSiteDateEdit"
+                                    listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
+                        </p:selectBooleanCheckbox>
+                        <h:outputText value="Manual"/>
+                    </h:panelGroup>
 
                     <p:inputTextarea maxlength="1000" type="text"
                                  style="margin-top: 10px; height: 34px;"
@@ -316,7 +322,7 @@
                                  class="form-control"/>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-row">
                     <h:outputLabel value="#{msgs['supply.scope.lbl.actual.site.date']}" style="margin-bottom: 10px;"/>
                     <p:calendar mask="true"

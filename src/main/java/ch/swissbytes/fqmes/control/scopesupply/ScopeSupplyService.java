@@ -30,7 +30,6 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         super.initialize(dao);
     }
 
-
     public ScopeSupplyEntity load(Long id) {
         return dao.load(id);
     }
@@ -54,6 +53,11 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                     }
                 }
             }else {
+                //upgrading tdps
+                List<TransitDeliveryPointEntity>list=tdpService.getActives(scopeSupplyEntity.getTdpList());
+                Date date=calculateForecastDeliveryDateForTdp(scopeSupplyEntity,true, null, list.get(0));
+                list.get(0).setForecastDeliveryDate(date);
+
                 List<TransitDeliveryPointEntity>tdpList=tdpService.getActives(scopeSupplyEntity.getTdpList());
                 TransitDeliveryPointEntity lastTdp=tdpList.get(tdpList.size()-1);
                 if(lastTdp.getActualDeliveryDate()!=null){
@@ -61,6 +65,8 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 }else if(lastTdp.getForecastDeliveryDate()!=null){
                     computedDate=calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),lastTdp.getForecastDeliveryDate());
                 }
+
+
             }
         }
         log.info("computeDate "+computedDate);
@@ -111,9 +117,11 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                     date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),tdpPrevious.getForecastDeliveryDate());
                 }
             }
-        TransitDeliveryPointEntity tdpe= tdpService.clone(tdpCurrent);
-        tdpe.setForecastDeliveryDate(date);
-        doUpdateTdpPost(ss,tdpCurrent,tdpe);
+        if(tdpCurrent.getId()!=null){
+            TransitDeliveryPointEntity tdpe= tdpService.clone(tdpCurrent);
+            tdpe.setForecastDeliveryDate(date);
+            doUpdateTdpPost(ss,tdpCurrent,tdpe);
+        }
         log.info(String.format("Date calculated [%s]",date));
         return date;
     }
@@ -128,15 +136,17 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         return date;
     }
     private void doUpdateTdpPost(ScopeSupplyEntity ss, TransitDeliveryPointEntity tdp,TransitDeliveryPointEntity previous){
-        if(tdp.getId()!=null){
             int index=tdpService.getIndexById(tdp.getId(),tdpService.getActives(ss.getTdpList()));
             for(int i=index+1;i<ss.getTdpList().size();i++){
-                TransitDeliveryPointEntity tdp1=tdpService.clone(ss.getTdpList().get(i));
-                if(ss.getTdpList().get(i).getIsForecastSiteDateCalculated()){
-                    ss.getTdpList().get(i).setForecastDeliveryDate(calculateDate(previous,ss.getTdpList().get(i)));
+                TransitDeliveryPointEntity current=tdpService.clone(ss.getTdpList().get(i));
+                if(current.getIsForecastSiteDateCalculated()){
+                    Date d=calculateDate(previous,current);
+                    System.out.println("current date " + current.getForecastDeliveryDate());
+                    System.out.println("previous date " + previous.getForecastDeliveryDate());
+                    System.out.println("date calculated 2 "+d);
+                    ss.getTdpList().get(i).setForecastDeliveryDate(d);
                 }
-                previous=tdp1;
+                previous=tdpService.clone( ss.getTdpList().get(i));
             }
-        }
     }
 }

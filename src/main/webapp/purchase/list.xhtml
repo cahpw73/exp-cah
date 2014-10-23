@@ -67,6 +67,16 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.lbl.supplier']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.supplier}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
+                </div>
+            </div>
             <div class="clearfix"/>
             <br/>
             <div>
@@ -86,9 +96,10 @@
             <br/>
         </h:form>
         <h:form id="purchaseListForm">
-            <p:dataTable value="#{purchaseOrderListBean.list}" var="_purchase"
+            <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
-                         rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.list.total)}" paginatorPosition="bottom">
+                         rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
+                         paginatorPosition="bottom">
                 <p:column headerText="#{msgs['po.lbl.project']}">
                     #{_purchase.project}
                 </p:column>
@@ -106,17 +117,20 @@
                 <p:column headerText="#{msgs['po.lbl.po.title']}">
                     #{_purchase.poTitle}
                 </p:column>
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}">
+                    #{_purchase.supplier}
+                </p:column>
                 <p:column headerText="#{msgs['lbl.action']}">
                     <h:link rendered="#{permissionBean.hasPermission(102)}" value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
-                        <f:param name="poId" value="#{_purchase.id}"/>
+                        <f:param name="poId" value="#{_purchase.poId}"/>
                     </h:link>
                     &#160;
                     <h:link value="#{msgs['lbl.view']}" rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
-                        <f:param name="poId" value="#{_purchase.id}"/>
+                        <f:param name="poId" value="#{_purchase.poId}"/>
                     </h:link>
                     &#160;
                     <h:commandLink value="#{msgs['lbl.delete']}">
-                        <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.id)}"
+                        <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
                                 oncomplete="PF('deleteDlg').show();"
                                 update=":purchaseListForm:deleteDlgId"/>
                     </h:commandLink>

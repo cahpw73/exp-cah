@@ -1,9 +1,12 @@
 package ch.swissbytes.fqmes.report;
 
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
+import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.fqmes.model.dao.PurchaseOrderDao;
+import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
 import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;
@@ -23,9 +26,9 @@ import java.util.logging.Logger;
 public class ReportListBean implements Serializable {
 
     @Inject
-    private PurchaseOrderDao dao;
+    private PurchaseOrderViewDao dao;
 
-    private PurchaseOrderTbl tbl;
+    private PurchaseOrderViewTbl tbl;
 
     private SearchPurchase searchPurchase;
 
@@ -36,13 +39,13 @@ public class ReportListBean implements Serializable {
     public void create(){
         log.info("creating bean purchase list");
         log.log(Level.FINER,"FINER log");
-        tbl=new PurchaseOrderTbl(dao,searchPurchase);
+        tbl=new PurchaseOrderViewTbl(dao,searchPurchase);
         searchPurchase=new SearchPurchase();
     }
 
     private void  search(){
         log.info("search..."+searchPurchase);
-        tbl= new PurchaseOrderTbl(dao,searchPurchase);
+        tbl= new PurchaseOrderViewTbl(dao,searchPurchase);
     }
 
     @PreDestroy
@@ -50,7 +53,7 @@ public class ReportListBean implements Serializable {
         log.info("destroying bean");
     }
 
-    public LazyDataModel<PurchaseOrderEntity> getList(){
+    public LazyDataModel<VPurchaseOrder> getList(){
         return tbl;
     }
 

@@ -2,6 +2,7 @@ package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.model.dao.PurchaseOrderDao;
+import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import org.primefaces.model.LazyDataModel;
 
@@ -24,12 +25,14 @@ import java.util.logging.Logger;
 public class PurchaseOrderListBean implements Serializable {
 
     @Inject
-    private PurchaseOrderDao dao;
+    private PurchaseOrderViewDao dao;
 
     @Inject
     private PurchaseOrderService purchaseOrderService;
 
     private PurchaseOrderTbl tbl;
+
+    private PurchaseOrderViewTbl vTbl;
 
     private SearchPurchase searchPurchase;
 
@@ -43,14 +46,16 @@ public class PurchaseOrderListBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("creating bean purchase list");
-        log.log(Level.FINER,"FINER log");
-        tbl=new PurchaseOrderTbl(dao,searchPurchase);
+        log.log(Level.FINER, "FINER log");
+        //tbl=new PurchaseOrderTbl(dao,searchPurchase);
+        vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
         searchPurchase=new SearchPurchase();
     }
 
     private void  search(){
         log.info("search..."+searchPurchase);
-        tbl= new PurchaseOrderTbl(dao,searchPurchase);
+        //tbl= new PurchaseOrderTbl(dao,searchPurchase);
+        vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
     }
 
     public void selectPurchaseOrderId(final Long purchaseOrderId){
@@ -71,6 +76,10 @@ public class PurchaseOrderListBean implements Serializable {
 
     public PurchaseOrderTbl getList(){
         return tbl;
+    }
+
+    public PurchaseOrderViewTbl getListView() {
+        return vTbl;
     }
 
     public void doSearch(){

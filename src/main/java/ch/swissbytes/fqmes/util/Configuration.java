@@ -4,6 +4,7 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import sun.util.logging.resources.logging;
 
 import javax.inject.Named;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  * Created by alvaro on 9/26/14.
  */
 @Named
-public class Configuration {
+public class Configuration implements Serializable {
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
@@ -51,5 +52,8 @@ public class Configuration {
         return time!=null? bundle.getString("measurement.time."+time.name().toLowerCase()):"";
     }
 
+    public Long getTimeOutConversation(){
+        return 3600000L;
+    }
 
 }

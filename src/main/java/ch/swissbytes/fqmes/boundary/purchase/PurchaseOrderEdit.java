@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.SupplierDao;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.util.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -58,6 +59,9 @@ public class PurchaseOrderEdit implements Serializable {
 
     @Inject
     private TransitDeliveryPointService tdpService;
+
+    @Inject
+    private Configuration configuration;
 
     private String purchaseOrderId;
 
@@ -154,7 +158,7 @@ public class PurchaseOrderEdit implements Serializable {
         if (conversation.isTransient()) {
             log.info("Creating conversation...");
             conversation.begin();
-            //conversation.setTimeout();
+            conversation.setTimeout(configuration.getTimeOutConversation());
             log.info(String.format("conversation started [%s]", conversation.getTimeout()));
         }
     }
