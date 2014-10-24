@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.SupplierDao;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
@@ -69,7 +70,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     private List<CommentEntity> comments;
 
-    private List<AttachmentEntity> attachments;
+    //private List<AttachmentEntity> attachments;
 
     private List<ScopeSupplyEntity> scopeSupplies;
 
@@ -136,10 +137,10 @@ public class PurchaseOrderEdit implements Serializable {
             }
             if (scopeSupplies == null || scopeSupplies.size() == 0) {
                 scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
-            }
+            }/*
             if (attachments == null || attachments.size() == 0) {
                 attachments = attachmentService.findByPurchaseOrder(poEdit.getId());
-            }
+            }*/
 
             commentIndexSelected = -1;
         }
@@ -152,7 +153,7 @@ public class PurchaseOrderEdit implements Serializable {
         // poEdit=new PurchaseOrderEntity();
         comments = new ArrayList<>();
         commentEdit = new CommentEntity();
-        attachments = new ArrayList<>();
+        //attachments = new ArrayList<>();
         //scopeSupplies=new ArrayList<>();
         log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
         if (conversation.isTransient()) {
@@ -197,7 +198,7 @@ public class PurchaseOrderEdit implements Serializable {
         String url = "";
         if(hashCode.intValue()==currentHashCode.intValue()){
             updateStatusesAndLastUpdate();
-            service.doUpdate(poEdit, supplierEdit, comments, scopeSupplies, attachments);
+            service.doUpdate(poEdit, supplierEdit, comments, scopeSupplies);
             if (!conversation.isTransient()) {
                 conversation.end();
             }
@@ -246,7 +247,7 @@ public class PurchaseOrderEdit implements Serializable {
                 }
             }
         }
-        for (final AttachmentEntity attachment : attachments) {
+       /* for (final AttachmentEntity attachment : attachments) {
             if (attachment.getId() <= 0) {
                 attachment.setId(null);
                 attachment.setLastUpdate(now);
@@ -256,7 +257,7 @@ public class PurchaseOrderEdit implements Serializable {
                     attachment.setLastUpdate(now);
                 }
             }
-        }
+        }*/
     }
 
     public void addComment() {
@@ -311,10 +312,10 @@ public class PurchaseOrderEdit implements Serializable {
 
 
     }
-
+/*
     public List<AttachmentEntity> getAttachmentActives() {
         return attachmentService.getActives(attachments);
-    }
+    }*/
 
     public void cleanComment() {
         commentEdit = new CommentEntity();
@@ -326,7 +327,8 @@ public class PurchaseOrderEdit implements Serializable {
         currentOperation = CREATE;//CREATING...
         scopeSupplyEdit = new ScopeSupplyEntity();
         scopeSupplyEdit.setDeliveryDate(poEdit.getPoDeliveryDate());
-        scopeSupplyEdit.setIsForecastSiteDateCalculated(true);
+        scopeSupplyEdit.setIsForecastSiteDateManual(false);
+        scopeSupplyEdit.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
         return "/purchase/modal/EditModalScopeSupply?faces-redirect=true";
     }
 
@@ -361,9 +363,9 @@ public class PurchaseOrderEdit implements Serializable {
         return comments;
     }
 
-    public List<AttachmentEntity> getAttachments() {
+    /*public List<AttachmentEntity> getAttachments() {
         return attachments;
-    }
+    }*/
 
     public List<ScopeSupplyEntity> getScopeSupplies() {
         return scopeSupplies;
@@ -449,7 +451,7 @@ public class PurchaseOrderEdit implements Serializable {
         }
     }
 
-    public void deleteAttachment(Long id) {
+   /* public void deleteAttachment(Long id) {
         int index = attachmentService.getIndexById(id, attachments);
         if (index >= 0) {
             AttachmentEntity attachmentEntity = attachments.get(index);
@@ -459,10 +461,9 @@ public class PurchaseOrderEdit implements Serializable {
                 attachments.remove(index);
             }
         }
-    }
+    }*/
 
     public List<ScopeSupplyEntity> getActiveScopeSupplies() {
-//        log.info("size about scope supply "+scopeSupplies.size());
         return scopeSupplyService.getActives(scopeSupplies);
     }
 
@@ -484,13 +485,24 @@ public class PurchaseOrderEdit implements Serializable {
     public String split() {
         String url="/purchase/edit?faces-redirect=true&fase=1";
         if(validateValuesAboutSplit()){
-            relativeCurrentAttachmentId--;
+            relativeCurrentScopeSupplyId--;
             scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
             scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
-            scopeSupplies.add(scopeSupplyService.clone(scopeSupplySplit));
+            ScopeSupplyEntity ss=scopeSupplyService.clone(scopeSupplySplit);
+            ss.getTdpList().clear();
+
+            for(TransitDeliveryPointEntity tdpe:selectedScopeSupply.getTdpList()){
+                currentIndexForTdp--;
+                TransitDeliveryPointEntity tdp=tdpService.clone(tdpe);
+                tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
+                ss.getTdpList().add(tdp);
+            }
+            scopeSupplies.add(ss);
             final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
             if (index >= 0 && index < scopeSupplies.size()) {
-                scopeSupplies.set(index, scopeSupplyService.clone(selectedScopeSupply));
+                ScopeSupplyEntity sse=scopeSupplyService.clone(selectedScopeSupply);
+                sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
+                scopeSupplies.set(index, sse);
             }
         } else {
             Messages.addGlobalError("invalid quantity");
@@ -518,51 +530,28 @@ public class PurchaseOrderEdit implements Serializable {
         if (index >= 0) {
             selectedScopeSupply = scopeSupplyService.clone(scopeSupplies.get(index));
             originalQuantity = selectedScopeSupply.getQuantity();
-            scopeSupplySplit = scopeSupplyService.clone(selectedScopeSupply);
-            if( scopeSupplySplit.getActualSiteDate()==null){
-                scopeSupplySplit.setActualSiteDate(new Date());
+            scopeSupplySplit = scopeSupplyService.clone(scopeSupplies.get(index));
+            selectedScopeSupply.getTdpList().clear();
+            selectedScopeSupply.getTdpList().addAll(scopeSupplies.get(index).getTdpList());
+            if( selectedScopeSupply.getActualSiteDate()==null){
+                selectedScopeSupply.setActualSiteDate(new Date());
             }
             scopeSupplySplit.setQuantity(0);
         }
         return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;
     }
-/*
-    public void calculateNewScopeSupplyQuantity() {
-        log.info("calculateNewScopeSupplyQuantity()");
-        log.info(String.format("original Quantity [%s]",originalQuantity));
-        log.info(String.format("old value [%s]", selectedScopeSupply.getQuantity()));
-        if (selectedScopeSupply.getQuantity().intValue() >= 0 && selectedScopeSupply.getQuantity().intValue() < originalQuantity) {
-            scopeSupplySplit.setQuantity(originalQuantity.intValue() - selectedScopeSupply.getQuantity().intValue());
-        } else {
-            selectedScopeSupply.setQuantity(originalQuantity);
-            scopeSupplySplit.setQuantity(0);
-        }
-        log.info(String.format("value calculated [%s]",scopeSupplySplit.getQuantity()));
-    }
-
-    public void calculateOldScopeSupplyQuantity() {
-        log.info("calculateOldScopeSupplyQuantity()");
-        log.info(String.format("original Quantity [%s]",originalQuantity));
-        log.info(String.format("new value [%s]",scopeSupplySplit.getQuantity()));
-        if (scopeSupplySplit.getQuantity().intValue() >= 0 && scopeSupplySplit.getQuantity().intValue() < originalQuantity) {
-            selectedScopeSupply.setQuantity(originalQuantity.intValue() - scopeSupplySplit.getQuantity().intValue());
-        } else {
-            selectedScopeSupply.setQuantity(originalQuantity);
-            scopeSupplySplit.setQuantity(0);
-        }
-        log.info(String.format("value calculated [%s]",scopeSupplySplit.getQuantity()));
-    }*/
 
     public String selectScopeSuppplyForEditing(Long id) {
+        log.info("selectScopeSuppplyForEditing(Long id)");
         currentOperation = EDIT;//EDITING
         final int index = scopeSupplyService.getIndexById(id, scopeSupplies);
         indexForScopeSupplyEditing = -1;
         scopeSupplyEditing = scopeSupplyService.clone(scopeSupplies.get(index));
         scopeSupplyEditing.getTdpList().clear();
-        if (id >= 0) {
+      /*  if (id >= 0) {
             scopeSupplyEditing.getTdpList().addAll(tdpService.findByScopeSupply(id));
 
-        }
+        }*/
         indexForScopeSupplyEditing = index;
         scopeSupplyEditing.getTdpList().addAll(scopeSupplies.get(index).getTdpList());
         return  "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id;
@@ -571,11 +560,11 @@ public class PurchaseOrderEdit implements Serializable {
     public ScopeSupplyEntity getScopeSupplySplit() {
         return scopeSupplySplit;
     }
-
+/*
     public void downloadAttachmentFile(final long id) {
         log.info("public void downloadAttachmentFile(final long id)");
         attachmentService.download(id);
-    }
+    }*/
 
     public void downloadAttachedFileOnComment(final long id) {
         log.info("public void downloadAttachedFileOnComment(final long id)");
@@ -599,19 +588,19 @@ public class PurchaseOrderEdit implements Serializable {
         Date date = null;
         switch (currentOperation) {
             case 0://CREATING
-                if (scopeSupplyEdit.getIsForecastSiteDateCalculated()) {
+                if (!scopeSupplyEdit.getIsForecastSiteDateManual()) {
                     date = scopeSupplyService.calculateForecastSiteDate(scopeSupplyEdit);
                     scopeSupplyEdit.setSiteDate(date);
                 }
                 break;
             case 1://EDITING
-                if (scopeSupplyEditing.getIsForecastSiteDateCalculated()) {
+                if (!scopeSupplyEditing.getIsForecastSiteDateManual()) {
                     date = scopeSupplyService.calculateForecastSiteDate(scopeSupplyEditing);
                     scopeSupplyEditing.setSiteDate(date);
                 }
                 break;
             case 2://SPLITING
-                if (getScopeSupplySplit().getIsForecastSiteDateCalculated()) {
+                if (!getScopeSupplySplit().getIsForecastSiteDateManual()) {
                     date = scopeSupplyService.calculateForecastSiteDate(getScopeSupplySplit());
                     getScopeSupplySplit().setSiteDate(date);
                 }
@@ -630,19 +619,19 @@ public class PurchaseOrderEdit implements Serializable {
         switch (currentOperation) {
             case 0://CREATING
                 scopeSupplyEdit.setSiteDate(null);
-                if (scopeSupplyEdit.getIsForecastSiteDateCalculated()) {
+                if (!scopeSupplyEdit.getIsForecastSiteDateManual()) {
                     calculateDate();
                 }
                 break;
             case 1://EDITING
                 scopeSupplyEditing.setSiteDate(null);
-                if (scopeSupplyEditing.getIsForecastSiteDateCalculated()) {
+                if (!scopeSupplyEditing.getIsForecastSiteDateManual()) {
                     calculateDate();
                 }
                 break;
             case 2://SPLITING
                 getScopeSupplySplit().setSiteDate(null);
-                if (getScopeSupplySplit().getIsForecastSiteDateCalculated()) {
+                if (!getScopeSupplySplit().getIsForecastSiteDateManual()) {
                     calculateDate();
                 }
                 break;
@@ -663,6 +652,7 @@ public class PurchaseOrderEdit implements Serializable {
     public void cleanTransitDeliveryPoint(){
         newTdp=new TransitDeliveryPointEntity();
         newTdp.setIsForecastSiteDateCalculated(true);
+        newTdp.setMeasurementTime(TimeMeasurementEnum.DAY);
         currentIndexForTdp=-1;
     }
     public void selectTdp(Long id){

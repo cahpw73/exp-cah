@@ -58,7 +58,7 @@
                                value="#{msgs['po.supply.scope.column.cost']}"/>
 
                 <div class="col-sm-5">
-                    <div class="col-sm-4"  style="padding-left: 0px;">
+                    <div class="col-sm-5"  style="padding-left: 0px;">
                         <h:inputText id="scopeSupplyCost" type="text"
                                      jsf:placeholder="#{msgs['po.supply.scope.column.cost']}"
                                      value="#{scopeSupplyBean.newScopeSupply.cost}"
@@ -66,16 +66,16 @@
                                      validatorMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
                                      requiredMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
                                      converterMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}">
-                            <f:convertNumber pattern="#0.00"/>
+                            <f:convertNumber pattern="#{configuration.patternDecimal}"/>
                         </h:inputText>
                         <p:message id="msgCost" for="scopeSupplyCost"/>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <p:outputLabel for="scopeSupplyCost" class="col-sm-2 control-label"
                                        value="#{msgs['po.supply.scope.lbl.currency']}"/>
                     </div>
-                    <div class="col-sm-4" style="padding-right: 0px;">
-                        <h:inputText type="text" maxlength="5"
+                    <div class="col-sm-3" style=" margin-left:3px; padding-right: 0px;">
+                        <h:inputText type="text" maxlength="5" style="width: 90px;"
                                      jsf:placeholder="#{msgs['po.supply.scope.lbl.currency']}"
                                      value="#{scopeSupplyBean.newScopeSupply.currency}"
                                      class="form-control"/>
@@ -281,7 +281,6 @@
                         </h:panelGroup>
                         <h:selectOneMenu id="measurementUnit" style="margin-left: 5px;"
                                          value="#{scopeSupplyBean.newScopeSupply.deliveryLeadTimeMs}">
-                            <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                             <f:selectItems value="#{allTimeMeasurement}"/>
                             <p:ajax event="change" process="measurementUnit, deliveryLeadTimeGrpId"
                                     update="forecastSiteDateCreate, deliveryLeadTimeGrpId"
@@ -304,7 +303,7 @@
                     </div>
                     <h:panelGroup id="forecastSiteDateCreateGrId" style="display: block;">
                         <p:calendar id="forecastSiteDateCreate" mask="true" navigator="true"
-                                    disabled="#{scopeSupplyBean.newScopeSupply.isForecastSiteDateCalculated}"
+                                    disabled="#{not scopeSupplyBean.newScopeSupply.isForecastSiteDateManual}"
                                     pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     jsf:placeholder="#{msgs['lbl.format.date']}"
@@ -314,12 +313,12 @@
                             <p:ajax event="dateSelect"/>
                             <p:ajax event="change"/>
                         </p:calendar>
-                        <p:selectBooleanCheckbox  value="#{scopeSupplyBean.newScopeSupply.isForecastSiteDateCalculated}"
+                        <p:selectBooleanCheckbox  value="#{scopeSupplyBean.newScopeSupply.isForecastSiteDateManual}"
                                  style="margin-left: 5px; margin-right: 5px;">
                             <p:ajax event="change" update="forecastSiteDateCreateGrId, deliveryLeadTimeGrp"
                                     listener="#{scopeSupplyBean.switchModeForecastSiteDate()}"/>
                         </p:selectBooleanCheckbox>
-                        <h:outputText value="Manual"/>
+                        <h:outputText value="#{msgs['lbl.manual']}"/>
                     </h:panelGroup>
                     <p:inputTextarea style="margin-top: 10px; height: 34px;" maxlength="1000" type="text"
                                  value="#{scopeSupplyBean.newScopeSupply.siteDateDescription}"

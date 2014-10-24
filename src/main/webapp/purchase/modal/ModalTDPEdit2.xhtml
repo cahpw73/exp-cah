@@ -9,7 +9,9 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.location']}</label>
             <div class="col-sm-10">
-                <h:inputText class="form-control" value="#{scopeSupplyBean.editTdp.location}" placeholder="Location"/>
+                <h:inputText class="form-control" value="#{scopeSupplyBean.editTdp.location}" placeholder="Location">
+
+                        </h:inputText>
             </div>
         </div>
         <div class="col-sm-4">
@@ -18,13 +20,15 @@
                     <label>#{msgs['tdp.lbl.lead.time']}</label>
                 </div>
                 <div class="col-sm-6">
-                    <h:inputText class="form-control" value="#{scopeSupplyBean.editTdp.leadTime}" placeholder="Lead Time"/>
+                    <h:inputText class="form-control" value="#{scopeSupplyBean.editTdp.leadTime}" placeholder="Lead Time">
+                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpEdition}" render="forecastDeliveryDateTdp4" />
+                    </h:inputText>
                 </div>
                 <div class="col-sm-6">
                     <h:selectOneMenu value="#{scopeSupplyBean.editTdp.measurementTime}"
                                      styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                        <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                         <f:selectItems value="#{allTimeMeasurement}"/>
+                        <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpEdition}" render="forecastDeliveryDateTdp4" />
                     </h:selectOneMenu>
                 </div>
             </div>

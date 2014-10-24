@@ -6,6 +6,8 @@ import sun.util.logging.resources.logging;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -55,5 +57,14 @@ public class Configuration implements Serializable {
     public Long getTimeOutConversation(){
         return 3600000L;
     }
+
+    public String getPatternDecimal(){
+        return "#,##0.00";
+    }
+
+    public String getLocale(){
+        return "en_AU";
+    }
+
 
 }

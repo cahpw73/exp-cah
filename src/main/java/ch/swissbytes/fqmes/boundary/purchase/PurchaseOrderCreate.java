@@ -13,7 +13,6 @@ import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 
@@ -162,6 +161,19 @@ public class PurchaseOrderCreate implements Serializable {
         commentEntities.add(commentEntity);
         return "";
     }
+
+
+
+    public void doUpdateScopeSupply(){
+        if(indexScopeSupplyEditing>=0){
+            scopeSupplies.set(indexScopeSupplyEditing,scopeSupplyService.clone(editScopeSupply));
+        }
+    }
+    public String addScopeSupplyAndAdd(){
+        registerScopeSupply();
+        cleanScopeSupply();
+        return "";
+    }
     private void registerScopeSupply(){
         log.log(Level.INFO, "SCOPE CODE    " + newScopeSupply.getCode());
         ScopeSupplyEntity scopeSupplyEntity=new ScopeSupplyEntity();
@@ -186,6 +198,11 @@ public class PurchaseOrderCreate implements Serializable {
     public void updateComment(){
         if(indexCommentEditing>=0&&indexCommentEditing<commentEntities.size()){
             commentEntities.set(indexCommentEditing, editComment);
+        }
+    }
+    public void deleteAttachment(final int index){
+        if(index>=0 && index < atachmentEntities.size()){
+            atachmentEntities.remove(index);
         }
     }
 
@@ -258,9 +275,6 @@ public class PurchaseOrderCreate implements Serializable {
 
     public String cleanScopeSupply(){
         log.info("cleaning scope supply");
-       /* indexScopeSupplyEditing=-1;
-        newScopeSupply=new ScopeSupplyEntity();
-        newScopeSupply.setIsForecastSiteDateCalculated(true);*/
         if(conversation.isTransient()){
             conversation.begin();
             conversation.setTimeout(configuration.getTimeOutConversation());

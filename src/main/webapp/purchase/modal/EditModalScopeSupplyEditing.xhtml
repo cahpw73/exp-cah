@@ -55,7 +55,7 @@
                 <p:outputLabel for="scopeSupplyCostEdit" class="col-sm-2 control-label" value="#{msgs['po.supply.scope.column.cost']}"/>
 
                 <div class="col-sm-5">
-                    <div class="col-sm-4"  style="padding-left: 0px;">
+                    <div class="col-sm-5"  style="padding-left: 0px;">
                     <h:inputText id="scopeSupplyCostEdit" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.cost']}"
                                  value="#{purchaseOrderEdit.scopeSupplyEditing.cost}"
@@ -63,16 +63,16 @@
                                  validatorMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
                                  requiredMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
                                  converterMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}">
-                        <f:convertNumber pattern="#0.00" />
+                        <f:convertNumber pattern="#{configuration.patternDecimal}" />
                     </h:inputText>
                     <p:message for="scopeSupplyCostEdit"/>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <p:outputLabel class="col-sm-2 control-label"
                                        value="#{msgs['po.supply.scope.lbl.currency']}"/>
                     </div>
-                    <div class="col-sm-4" style="padding-right: 0px;">
-                        <h:inputText type="text" maxlength="5"
+                    <div class="col-sm-3" style="margin-left:3px; padding-right: 0px;">
+                        <h:inputText type="text" maxlength="5" style="width: 90px;"
                                      jsf:placeholder="#{msgs['po.supply.scope.lbl.currency']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.currency}"
                                      class="form-control"/>
@@ -280,7 +280,6 @@
                         </h:panelGroup>
                         <h:selectOneMenu id="measurementUnitEditing" style="margin-left: 5px;"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.deliveryLeadTimeMs}">
-                            <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                             <f:selectItems value="#{allTimeMeasurement}"/>
                             <p:ajax event="change" process="@this" update="forescastSiteDateEditing"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
@@ -301,7 +300,7 @@
                         <p:calendar mask="true"
                                     id="forescastSiteDateEditing"
                                     navigator="true"
-                                    disabled="#{purchaseOrderEdit.scopeSupplyEditing.isForecastSiteDateCalculated}"
+                                    disabled="#{not purchaseOrderEdit.scopeSupplyEditing.isForecastSiteDateManual}"
                                     pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     jsf:placeholder="#{msgs['lbl.format.date']}"
@@ -311,12 +310,12 @@
                             <p:ajax event="dateSelect" />
                             <p:ajax event="change"/>
                         </p:calendar>
-                        <p:selectBooleanCheckbox value="#{purchaseOrderEdit.scopeSupplyEditing.isForecastSiteDateCalculated}"
+                        <p:selectBooleanCheckbox value="#{purchaseOrderEdit.scopeSupplyEditing.isForecastSiteDateManual}"
                                                  style="margin-left: 5px; margin-right: 5px;">
                             <p:ajax update=":scopeSupplyEditFormId:forescastSiteDateEditing"
                                     listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
                         </p:selectBooleanCheckbox>
-                        <h:outputText value="Manual"/>
+                        <h:outputText value="#{msgs['lbl.manual']}"/>
                     </h:panelGroup>
                     <p:inputTextarea maxlength="1000" type="text"
                                  style="margin-top: 10px; height: 34px;"

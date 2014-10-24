@@ -175,7 +175,7 @@ public class UserDao extends GenericDao implements Serializable {
 
     protected  String addCriteria(Filter filter){
         StringBuilder sb=new StringBuilder();
-        sb.append(" x.status.id<>:DELETED ");
+        sb.append(" AND x.status.id<>:DELETED ");
         return sb.toString();
     }
 

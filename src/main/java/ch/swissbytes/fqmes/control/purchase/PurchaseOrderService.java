@@ -56,8 +56,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
-    public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, SupplierEntity supplierEntity, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities,
-                                        List<AttachmentEntity> attachmentEntities) {
+    public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, SupplierEntity supplierEntity, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities) {
         PurchaseOrderEntity entity = dao.update(por);
         supplierDao.update(supplierEntity);
         commentDao.update(commentEntities, entity);

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!--
+          Created by IntelliJ IDEA.
+          User: vladimir
+          Date: 12/03/14
+          Time: 15:36
+        -->
+        <!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fc="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<fc:metadata>
+    <fc:viewAction action="#{identity.isLoggedIn()}"/>
+</fc:metadata>
+<f:view>
+    <h:head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>#{msgs['login.title']}</title>
+        <h:outputStylesheet name="css/bootstrap.css"/>
+        <h:outputStylesheet name="css/bootstrap-theme.css"/>
+
+
+    </h:head>
+    <h:body styleClass="BodyLogin">
+        <div class="page-header">
+
+        </div>
+        <div class="container" />
+        <div class="row" style="margin-top:20px">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <h:form role="form">
+                    <p style="font-size: 30px;">
+                        Oops! Too much time without any activity. Please try again.
+                    </p>
+                    <p style="font-size: 20px;">You can go to
+                    <h:link value=" main page" outcome="/home"/>
+                    </p>
+                </h:form>
+            </div>
+        </div>
+        <h:outputScript name="js/bootstrap.min.js"/>
+    </h:body>
+</f:view>
+</html>

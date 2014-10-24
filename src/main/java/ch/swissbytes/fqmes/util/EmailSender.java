@@ -40,9 +40,12 @@ public class EmailSender implements Serializable{
             log.info(String.format("Your E-mail has been sent"));
 
         } catch (MailConnectException ce) {
-            throw new MessagingException("");
+            ce.printStackTrace();
+            throw new MessagingException(ce.toString());
         } catch (MessagingException ce) {
-            throw new MessagingException("");
+            ce.printStackTrace();
+            throw new MessagingException(ce.toString());
+
         }
     }
 

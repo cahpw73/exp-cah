@@ -5,7 +5,6 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -48,7 +47,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String actualExWorkDateObs;
     private String requiredSiteDateObs;
     private String actualSiteDateObs;
-    private Boolean isForecastSiteDateCalculated;
+    private Boolean isForecastSiteDateManual;
     private String spIncoTerm;
     private String spIncoTermDescription;
 
@@ -283,13 +282,13 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     }
 
     @NotNull
-    @Column(name="IS_FORECAST_SITE_DATE_CALCULATED",nullable = false)
-    public Boolean getIsForecastSiteDateCalculated() {
-        return isForecastSiteDateCalculated;
+    @Column(name="IS_FORECAST_SITE_DATE_MANUAL",nullable = false)
+    public Boolean getIsForecastSiteDateManual() {
+        return isForecastSiteDateManual;
     }
 
-    public void setIsForecastSiteDateCalculated(Boolean isForecastSiteDateCalculated) {
-        this.isForecastSiteDateCalculated = isForecastSiteDateCalculated;
+    public void setIsForecastSiteDateManual(Boolean isForecastSiteDateManual) {
+        this.isForecastSiteDateManual = isForecastSiteDateManual;
     }
 
     @Transient
@@ -350,7 +349,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         result = 31 * result + (actualExWorkDateObs != null ? actualExWorkDateObs.hashCode() : 0);
         result = 31 * result + (requiredSiteDateObs != null ? requiredSiteDateObs.hashCode() : 0);
         result = 31 * result + (actualSiteDateObs != null ? actualSiteDateObs.hashCode() : 0);
-        result = 31 * result + (isForecastSiteDateCalculated != null ? isForecastSiteDateCalculated.hashCode() : 0);
+        result = 31 * result + (isForecastSiteDateManual != null ? isForecastSiteDateManual.hashCode() : 0);
         result = 31 * result + (spIncoTerm != null ? spIncoTerm.hashCode() : 0);
         result = 31 * result + (spIncoTermDescription != null ? spIncoTermDescription.hashCode() : 0);
         return result;

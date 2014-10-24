@@ -27,6 +27,17 @@
                 </h:inputText>
                 <p:message for="arrivedQuantity"/>
             </div>
+            <div class="form-group">
+                <h:outputLabel for="arrivedActualSiteDate" value="#{msgs['supply.scope.lbl.actual.site.date']}"/>
+                <p:calendar id="arrivedActualSiteDate" mask="true"
+                            navigator="true"
+                            pattern="#{configuration.formatDate}"
+                            converterMessage="#{msgs['validator.date.invalid']}"
+                            jsf:placeholder="#{msgs['lbl.format.date']}"
+                            value="#{purchaseOrderEdit.selectedScopeSupply.actualSiteDate}"
+                            onselect="calendarChanges();" onchange="calendarChanges();">
+                </p:calendar>
+            </div>
         </div>
         <div class="col-md-9">
             <div class="col-md-12">
@@ -149,7 +160,6 @@
                             <h:selectOneMenu id="measurementUnitSplit"
                                              value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeMs}"
                                              styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                                <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                                 <f:selectItems value="#{allTimeMeasurement}"/>
                                 <f:ajax execute="@this" render="siteDateCalculatedSplit"/>
                                 <f:ajax event="change" render="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}"/>
@@ -176,7 +186,7 @@
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <div class="pull-left "><h:outputLabel style="margin-bottom: 10px; " value="#{msgs['supply.scope.lbl.site.date']}"/></div>
                         <div class="pull-right ">
-                            <p:selectBooleanButton value="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateCalculated}"
+                            <p:selectBooleanButton value="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
                                                    onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}" >
                                 <p:ajax update=":scopeSupplySplitFormId:forescastSiteDateSplit" listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
                             </p:selectBooleanButton>
@@ -187,7 +197,7 @@
                                     navigator="true"
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     jsf:placeholder="#{msgs['lbl.format.date']}"
-                                    disabled="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateCalculated}"
+                                    disabled="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
                                     value="#{purchaseOrderEdit.scopeSupplySplit.siteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
 

@@ -25,17 +25,21 @@
         </param-name>
         <param-value>true</param-value>
     </context-param>
+    <context-param>
+        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-value>true</param-value>
+    </context-param>
     <error-page>
         <exception-type>org.jboss.weld.context.NonexistentConversationException</exception-type>
-        <location>/error/error.jsf?nocid=true</location>
+        <location>/error/error1.jsf?faces-redirect=true&amp;type=1</location>
     </error-page>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/error/error.jsf</location>
+        <location>/error/error1.jsf?faces-redirect=true&amp;type=1</location>
     </error-page>
     <error-page>
         <exception-type>javax.servlet.ServletException</exception-type>
-        <location>/error/error.jsf</location>
+        <location>/error/error1.jsf?faces-redirect=true&amp;type=1</location>
     </error-page>
     <session-config>
         <session-timeout>

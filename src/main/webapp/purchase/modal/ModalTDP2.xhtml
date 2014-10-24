@@ -25,7 +25,6 @@
                 <div class="col-sm-6">
                     <h:selectOneMenu value="#{scopeSupplyBean.tdp.measurementTime}"
                                      styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                        <f:selectItem noSelectionOption="true" itemLabel="Select Option"/>
                         <f:selectItems value="#{allTimeMeasurement}"/>
                         <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation()}" render="forecastDeliveryDateTdp2" />
                     </h:selectOneMenu>

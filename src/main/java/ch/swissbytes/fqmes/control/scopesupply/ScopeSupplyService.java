@@ -35,7 +35,11 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
     }
 
     public List<ScopeSupplyEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        return dao.findByPurchaseOrder(purchaseOrderId);
+        List<ScopeSupplyEntity> list=dao.findByPurchaseOrder(purchaseOrderId);
+        for(ScopeSupplyEntity sse:list){
+           sse.getTdpList().addAll(tdpService.findByScopeSupply(sse.getId()));
+        }
+        return list;
     }
 
     public Date calculateForecastSiteDate(ScopeSupplyEntity scopeSupplyEntity) {
@@ -56,7 +60,9 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 //upgrading tdps
                 List<TransitDeliveryPointEntity>list=tdpService.getActives(scopeSupplyEntity.getTdpList());
                 Date date=calculateForecastDeliveryDateForTdp(scopeSupplyEntity,true, null, list.get(0));
-                list.get(0).setForecastDeliveryDate(date);
+                if(list.get(0).getIsForecastSiteDateCalculated()){
+                    list.get(0).setForecastDeliveryDate(date);
+                }
 
                 List<TransitDeliveryPointEntity>tdpList=tdpService.getActives(scopeSupplyEntity.getTdpList());
                 TransitDeliveryPointEntity lastTdp=tdpList.get(tdpList.size()-1);
@@ -119,8 +125,10 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
             }
         if(tdpCurrent.getId()!=null){
             TransitDeliveryPointEntity tdpe= tdpService.clone(tdpCurrent);
-            tdpe.setForecastDeliveryDate(date);
-            doUpdateTdpPost(ss,tdpCurrent,tdpe);
+            if(tdpe.getIsForecastSiteDateCalculated()){
+                tdpe.setForecastDeliveryDate(date);
+            }
+            doUpdateTdpPost(ss, tdpCurrent, tdpe);
         }
         log.info(String.format("Date calculated [%s]",date));
         return date;

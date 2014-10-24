@@ -40,6 +40,8 @@ public class VerificationTokenBean implements Serializable {
     @Inject
     private UserService userService;
 
+    private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
+
     private UserEntity userEntity;
 
     private String mail;
@@ -58,22 +60,21 @@ public class VerificationTokenBean implements Serializable {
                 try {
                     MimeMultipart multipart = createMimeMultipart(link);
                     sendMail(userEntity.getEmail(),multipart);
-                    //sendMail(userEntity.getEmail(), getEmailMessage() + link + getEmailGreetings());
+                    Messages.addFlashGlobalInfo("Your token generated was sent");
+                    log.info("Token was generated and sent to email");
                 } catch (MessagingException e) {
-                    Messages.addFlashGlobalInfo("Error occurred while sending the token to your email");
+                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
                     log.log(Level.SEVERE,"Messaging has error" + e.getMessage());
                     e.printStackTrace();
                 } catch (SocketConnectException e) {
-                    Messages.addFlashGlobalInfo("Error occurred while sending the token to your email");
+                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
                     e.printStackTrace();
                     log.log(Level.SEVERE,"Messaging has error" + e.getCause());
                 } catch (ConnectException e) {
-                    Messages.addFlashGlobalInfo("Error occurred while sending the token to your email");
+                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
                     log.log(Level.SEVERE,"Messaging has error" + e.getCause());
                     e.printStackTrace();
                 }
-                Messages.addFlashGlobalInfo("Your token generated was sent");
-                log.info("Token was generated and sent to email");
                 return "login?faces-redirect=true";
             }
         }
@@ -119,7 +120,7 @@ public class VerificationTokenBean implements Serializable {
 
     private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException {
 
-        email.setFrom("info@fqm.com");
+        email.setFrom(sendMailInfo);
         email.setTo(mail);
         email.setSubject("Reset Password");
         //email.setBody(message);

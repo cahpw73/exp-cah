@@ -5,6 +5,7 @@ import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -83,7 +84,8 @@ public class ScopeSupplyBean implements Serializable {
         newScopeSupply=new ScopeSupplyEntity();
         tdp=new TransitDeliveryPointEntity();
         tdp.setIsForecastSiteDateCalculated(true);
-        newScopeSupply.setIsForecastSiteDateCalculated(true);
+        newScopeSupply.setIsForecastSiteDateManual(false);
+        newScopeSupply.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
         if(deliveryDate.getYear()>0){
             newScopeSupply.setDeliveryDate(deliveryDate);
         }
@@ -98,6 +100,7 @@ public class ScopeSupplyBean implements Serializable {
         tdp.setIsForecastSiteDateCalculated(true);
         tdp.setStatus(enumService.getStatusEnumEnable());
         tdp.setLastUpdate(new Date());
+        tdp.setMeasurementTime(TimeMeasurementEnum.DAY);
         indexEditingTdp=-1;
     }
 
@@ -118,12 +121,12 @@ public class ScopeSupplyBean implements Serializable {
     public void switchModeForecastSiteDate() {
         log.info("public void switchModeForecastSiteDate()");
         if (indexScopeSupplyEditing==null||indexScopeSupplyEditing < 0) {
-            if (newScopeSupply.getIsForecastSiteDateCalculated()) {
+            if (!newScopeSupply.getIsForecastSiteDateManual()) {
                 calculateDate();
             }else{
                 newScopeSupply.setSiteDate(null);
             }
-        } else if (editScopeSupply.getIsForecastSiteDateCalculated()) {
+        } else if (!editScopeSupply.getIsForecastSiteDateManual()) {
             calculateDate();
         }else{
             editScopeSupply.setSiteDate(null);
@@ -194,12 +197,12 @@ public class ScopeSupplyBean implements Serializable {
         log.info("calculateDate");
         Date date=null;
             if(indexScopeSupplyEditing>=0){
-                if(editScopeSupply.getIsForecastSiteDateCalculated()){
+                if(!editScopeSupply.getIsForecastSiteDateManual()){
                     date=scopeSupplyService.calculateForecastSiteDate(editScopeSupply);
                     editScopeSupply.setSiteDate(date);
                 }
             }else{
-                if(newScopeSupply.getIsForecastSiteDateCalculated()){
+                if(!newScopeSupply.getIsForecastSiteDateManual()){
                     date=scopeSupplyService.calculateForecastSiteDate(newScopeSupply);
                     newScopeSupply.setSiteDate(date);
                 }
@@ -245,7 +248,7 @@ public class ScopeSupplyBean implements Serializable {
         log.info("cleaning scope supply");
         indexScopeSupplyEditing=-1;
         newScopeSupply=new ScopeSupplyEntity();
-        newScopeSupply.setIsForecastSiteDateCalculated(true);
+        newScopeSupply.setIsForecastSiteDateManual(false);
 
     }
 
