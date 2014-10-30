@@ -9,7 +9,7 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.location']}</label>
             <div class="col-sm-10">
-                <h:inputText class="form-control" value="#{purchaseOrderEdit.tdpEdit.location}" placeholder="Location"/>
+                <h:inputText class="form-control" maxlength="50"  value="#{purchaseOrderEdit.tdpEdit.location}" placeholder="Location"/>
             </div>
         </div>
         <div class="col-sm-4">
@@ -34,14 +34,14 @@
         <div class="col-sm-4">
             <div class="form-row">
                 <label>#{msgs['tdp.lbl.forecast.delivery.date']}</label>
-                <p:calendar mask="true"
+                <p:calendar mask="#{configuration.mask}"
                             id="forecastDeliveryDateTdp4"
                             navigator="true"
                             value="#{purchaseOrderEdit.tdpEdit.forecastDeliveryDate}"
                             disabled="#{purchaseOrderEdit.tdpEdit.getIsForecastSiteDateCalculated()}"
-                            pattern="#{configuration.formatDate}"
+                            locale="#{configuration.langLocalCalendar}"
                             converterMessage="#{msgs['validator.date.invalid']}"
-                            jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                            jsf:placeholder="#{configuration.formatDate}"/>
 
                 <p:selectBooleanButton value="#{purchaseOrderEdit.tdpEdit.isForecastSiteDateCalculated}"
                                        onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}">
@@ -54,11 +54,11 @@
         <div class="col-sm-4">
             <div class="form-row">
                 <label>#{msgs['tdp.lbl.actual.delivery.date']}</label>
-                <p:calendar mask="true" navigator="true"
-                            pattern="#{configuration.formatDate}"
+                <p:calendar mask="#{configuration.mask}" navigator="true"
+                            locale="#{configuration.langLocalCalendar}"
                             value="#{purchaseOrderEdit.tdpEdit.actualDeliveryDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
-                            jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                            jsf:placeholder="#{configuration.formatDate}"/>
             </div>
         </div>
         <div class="clearfix"/>

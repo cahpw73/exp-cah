@@ -15,22 +15,22 @@
 
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="introEmailDate" type="text"
-                                mask="true"
-                                navigator="true"
+                                mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.introEmail}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
-                            </p:calendar>
+                    </p:calendar>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <p:inputTextarea style="max-height: 34px;"
-                             maxlength="50" type="text"
+            <p:inputTextarea style="max-height: 34px;" id="introEmailDescription"
+                             maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.introEmailDescription}"
                              jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
+            <p:message for="introEmailDescription"/>
         </div>
     </div>
     <div class="row">
@@ -41,10 +41,9 @@
 
                 <div class="col-sm-4 col-sm-6">
                     <p:calendar id="requiredSiteDate" type="text"
-                                mask="true"
-                                navigator="true"
+                                mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.requiredDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -53,10 +52,11 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <p:inputTextarea maxlength="50" type="text"
+            <p:inputTextarea maxlength="998" type="text" id="requiredDateDescription"
                              style="max-height: 34px;"
                              value="#{purchaseOrderCreate.newPurchaseOrder.requiredDateDescription}"
                              jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
+            <p:message for="requiredDateDescription"/>
         </div>
     </div>
     <div class="row">
@@ -66,10 +66,9 @@
                                value="#{msgs['po.lbl.actual.site.date']}"/>
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="actualSiteDate" type="text"
-                                mask="true"
-                                navigator="true"
+                                mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.actualDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -78,10 +77,11 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <p:inputTextarea style="max-height: 34px;"
-                             maxlength="50" type="text"
+            <p:inputTextarea style="max-height: 34px;" id="actualDateDescription"
+                             maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.actualDateDescription}"
                              jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
+            <p:message for="actualDateDescription"/>
         </div>
     </div>
 

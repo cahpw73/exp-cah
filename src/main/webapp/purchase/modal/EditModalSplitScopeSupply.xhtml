@@ -29,11 +29,11 @@
             </div>
             <div class="form-group">
                 <h:outputLabel for="arrivedActualSiteDate" value="#{msgs['supply.scope.lbl.actual.site.date']}"/>
-                <p:calendar id="arrivedActualSiteDate" mask="true"
+                <p:calendar id="arrivedActualSiteDate" mask="#{configuration.mask}"
                             navigator="true"
                             pattern="#{configuration.formatDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
-                            jsf:placeholder="#{msgs['lbl.format.date']}"
+                            jsf:placeholder="#{configuration.formatDate}"
                             value="#{purchaseOrderEdit.selectedScopeSupply.actualSiteDate}"
                             onselect="calendarChanges();" onchange="calendarChanges();">
                 </p:calendar>
@@ -82,9 +82,9 @@
                         <p:calendar id="exWorkDateSplit"
                                     pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
-                                    mask="true"
+                                    mask="#{configuration.mask}"
                                     navigator="true"
-                                    jsf:placeholder="#{msgs['lbl.format.date']}"
+                                    jsf:placeholder="#{configuration.formatDate}"
                                     value="#{purchaseOrderEdit.scopeSupplySplit.deliveryDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
@@ -103,8 +103,8 @@
                         <p:calendar
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
-                                mask="true"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                mask="#{configuration.mask}"
                                 navigator="true"
                                 value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -123,8 +123,8 @@
                         <p:calendar
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
-                                mask="true"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                mask="#{configuration.mask}"
                                 navigator="true"
                                 value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -170,8 +170,8 @@
                         <h:outputLabel value="#{msgs['supply.scope.lbl.required.site.date']}" style="margin-bottom: 10px;"/>
                         <p:calendar id="siteId" pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
-                                    jsf:placeholder="#{msgs['lbl.format.date']}"
-                                    mask="true"
+                                    jsf:placeholder="#{configuration.formatDate}"
+                                    mask="#{configuration.mask}"
                                     navigator="true"
                                     value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
@@ -193,10 +193,9 @@
                         </div>
                         <p:calendar pattern="#{configuration.formatDate}"
                                     id="forescastSiteDateSplit"
-                                    mask="true"
-                                    navigator="true"
+                                    mask="#{configuration.mask}" navigator="true"
                                     converterMessage="#{msgs['validator.date.invalid']}"
-                                    jsf:placeholder="#{msgs['lbl.format.date']}"
+                                    jsf:placeholder="#{configuration.formatDate}"
                                     disabled="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
                                     value="#{purchaseOrderEdit.scopeSupplySplit.siteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
@@ -211,11 +210,11 @@
                     </div>
                     <div class="col-sm-4" style="margin-top: 10px;">
                         <h:outputLabel value="#{msgs['supply.scope.lbl.actual.site.date']}" style="margin-bottom: 10px;"/>
-                        <p:calendar mask="true"
+                        <p:calendar mask="#{configuration.mask}"
                                     navigator="true"
                                     pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
-                                    jsf:placeholder="#{msgs['lbl.format.date']}"
+                                    jsf:placeholder="#{configuration.formatDate}"
                                     value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                         </p:calendar>

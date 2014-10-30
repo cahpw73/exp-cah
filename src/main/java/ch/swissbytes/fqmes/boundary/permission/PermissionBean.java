@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ import java.util.logging.Logger;
  */
 @Named
 @Stateful
-@RequestScoped
+@ViewScoped
 public class PermissionBean implements Serializable {
 
     public static final String NAME = "permissionAction";

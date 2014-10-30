@@ -138,7 +138,7 @@
 
                                 <div class="col-sm-8">
                                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.poDeliveryDate}">
-                                       <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                       <f:convertDateTime pattern="#{configuration.formatDate}"/>
                                    </h:outputLabel>
                                 </div>
                             </div>

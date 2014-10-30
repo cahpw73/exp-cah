@@ -1,0 +1,14 @@
+<ui:composition template="/error/errorpage.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="contentTitle">Error</ui:define>
+    <ui:param name="showStackTrace" value="false"/>
+    <ui:define name="content">
+        <p style="font-size: 30px;">
+            Oops! Too much time without any activity. Please try again.
+        </p>
+
+    </ui:define>
+</ui:composition>

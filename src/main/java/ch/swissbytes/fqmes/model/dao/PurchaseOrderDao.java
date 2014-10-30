@@ -77,7 +77,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     }
 
     @Override
-    public String orderBy(String field){
+    public String orderBy(String field,boolean ascending){
         return "ORDER BY "+field;
     }
 

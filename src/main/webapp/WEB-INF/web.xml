@@ -29,21 +29,26 @@
         <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
         <param-value>true</param-value>
     </context-param>
+
     <error-page>
         <exception-type>org.jboss.weld.context.NonexistentConversationException</exception-type>
-        <location>/error/error1.jsf?faces-redirect=true&amp;type=1</location>
+        <location>/error/expired.jsf?faces-redirect=true</location>
     </error-page>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/error/error1.jsf?faces-redirect=true&amp;type=1</location>
+        <location>/error/expired.jsf?faces-redirect=true</location>
     </error-page>
     <error-page>
-        <exception-type>javax.servlet.ServletException</exception-type>
-        <location>/error/error1.jsf?faces-redirect=true&amp;type=1</location>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/error/error.jsf?faces-redirect=true</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.sql.SQLException</exception-type>
+        <location>/error/error.jsf?faces-redirect=true</location>
     </error-page>
     <session-config>
         <session-timeout>
-            60
+            480
         </session-timeout>
     </session-config>
 

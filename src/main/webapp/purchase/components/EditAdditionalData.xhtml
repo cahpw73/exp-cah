@@ -13,11 +13,10 @@
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="introEmailDate" type="text"
-                                mask="true"
-                                navigator="true"
+                                mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 value="#{purchaseOrderEdit.poEdit.introEmail}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
@@ -40,9 +39,9 @@
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 value="#{purchaseOrderEdit.poEdit.requiredDate}"
-                                mask="true"
+                                mask="#{configuration.mask}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
@@ -62,10 +61,10 @@
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="actualSiteDate" type="text"
                                 navigator="true"
-                                mask="true"
+                                mask="#{configuration.mask}"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 value="#{purchaseOrderEdit.poEdit.actualDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>

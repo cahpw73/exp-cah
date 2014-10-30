@@ -24,6 +24,29 @@ public class TransitDeliveryPointDao extends GenericDao<TransitDeliveryPointEnti
 
     }
 
+  /*  @Override
+    public void save(TransitDeliveryPointEntity entity){
+        if(entity.getLeadTime() == null){
+            entity.setLeadTime(0);
+        }
+        super.save(entity);
+    }*/
+  @Override
+  public <TransitDeliveryPointEntity>  void save(final TransitDeliveryPointEntity entity) {
+      ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity transitDeliveryPointEntity = (ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity) entity;
+      if(transitDeliveryPointEntity.getLeadTime() == null){
+          transitDeliveryPointEntity.setLeadTime(0);
+      }
+      super.save(entity);
+  }
+    @Override
+    public TransitDeliveryPointEntity update(final TransitDeliveryPointEntity entity) {
+        if(entity.getLeadTime() == null){
+            entity.setLeadTime(0);
+        }
+        return super.update(entity);
+    }
+
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
 

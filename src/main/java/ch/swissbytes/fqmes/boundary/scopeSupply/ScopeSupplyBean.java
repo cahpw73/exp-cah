@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.entities.*;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -69,19 +70,45 @@ public class ScopeSupplyBean implements Serializable {
     }
 
     public String doUpdateScopeSupply(){
-        if(indexScopeSupplyEditing>=0){
-            ScopeSupplyEntity ss=scopeSupplyService.clone(editScopeSupply);
-            ss.getTdpList().clear();
-            ss.getTdpList().addAll(editScopeSupply.getTdpList());
-            scopeSupplies.set(indexScopeSupplyEditing,ss);
+        if(isValidDataUpdate()){
+            if(indexScopeSupplyEditing>=0){
+                ScopeSupplyEntity ss=scopeSupplyService.clone(editScopeSupply);
+                ss.getTdpList().clear();
+                ss.getTdpList().addAll(editScopeSupply.getTdpList());
+                scopeSupplies.set(indexScopeSupplyEditing,ss);
+            }
+            return "/purchase/create?faces-redirect=true";
         }
-        return "/purchase/create?faces-redirect=true";
+        return "";
+    }
+
+    private boolean isValidData() {
+        log.info("boolean isValidData()");
+        boolean isValid = false;
+        int inc = 0;
+        Integer quantity=newScopeSupply.getQuantity()!=null?newScopeSupply.getQuantity():0;
+        Double cost=newScopeSupply.getCost()!=null?newScopeSupply.getCost().doubleValue():0D;
+        if(quantity >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Quantity has a invalid data");
+        }
+        if(cost >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Unit Price has a invalid data");
+        }
+        if(inc == 2){
+            isValid = true;
+        }
+        return isValid;
     }
 
     @PostConstruct
     public void create(){
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
         newScopeSupply=new ScopeSupplyEntity();
+        //editScopeSupply = new ScopeSupplyEntity();
         tdp=new TransitDeliveryPointEntity();
         tdp.setIsForecastSiteDateCalculated(true);
         newScopeSupply.setIsForecastSiteDateManual(false);
@@ -147,8 +174,33 @@ public class ScopeSupplyBean implements Serializable {
     }
     public String addScopeSupply(){
         log.info("public String addScopeSupply()");
-        registerScopeSupply();
-        return "/purchase/create?faces-redirect=true";
+        if(isValidData()){
+            registerScopeSupply();
+            return "/purchase/create?faces-redirect=true";
+        }
+        return "";
+    }
+
+    private boolean isValidDataUpdate() {
+        log.info("boolean isValidDataUpdate()");
+        boolean isValid = false;
+        int inc = 0;
+        Integer quantity=editScopeSupply.getQuantity()!=null?editScopeSupply.getQuantity():0;
+        Double cost=editScopeSupply.getCost()!=null?editScopeSupply.getCost().doubleValue():0D;
+        if(quantity >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Quantity has a invalid data");
+        }
+        if(cost >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Unit Price has a invalid data");
+        }
+        if(inc == 2){
+            isValid = true;
+        }
+        return isValid;
     }
 
     public String cancel(){
@@ -156,8 +208,10 @@ public class ScopeSupplyBean implements Serializable {
     }
 
     public String addScopeSupplyAndAdd(){
-        registerScopeSupply();
-        cleanScopeSupply();
+        if(isValidData()){
+            registerScopeSupply();
+            cleanScopeSupply();
+        }
         return "";
     }
     private void registerScopeSupply(){

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:of="http://omnifaces.org/functions"
+      xmlns:fc="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<fc:metadata>
+    <fc:viewAction action="#{identity.isLoggedIn()}"/>
+</fc:metadata>
+<f:view>
+    <h:head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>#{msgs['login.title']}</title>
+        <h:outputStylesheet name="css/bootstrap.css"/>
+        <h:outputStylesheet name="css/bootstrap-theme.css"/>
+    </h:head>
+    <h:body styleClass="BodyLogin">
+        <div class="page-header">
+
+        </div>
+        <div class="container" />
+        <div class="row" style="margin-top:20px">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <ui:insert name="content">Contenido por defecto</ui:insert>
+                <p style="font-size: 20px;">You can go to
+                    <h:link value=" main page" outcome="/home"/>
+                </p>
+                <br/>
+                <ul>
+                    <li>Date/time: #{of:formatDate(now, 'yyyy-MM-dd HH:mm:ss')}</li>
+                    <li>User agent: #{header['user-agent']}</li>
+                    <li>User IP: #{empty header['x-forwarded-for'] ? request.remoteAddr : fn:split(header['x-forwarded-for'], ',')[0]}</li>
+                    <li>Request URI: <a href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a></li>
+                    <li>Ajax request: #{facesContext.partialViewContext.ajaxRequest ? 'Yes' : 'No'}</li>
+                    <li>Status code: #{requestScope['javax.servlet.error.status_code']}</li>
+                    <li>Exception type: #{requestScope['javax.servlet.error.exception_type']}</li>
+                    <li>Exception message: #{requestScope['javax.servlet.error.message']}</li>
+                    <h:panelGroup rendered="#{showStackTrace}">
+                        <li>Stack trace:
+                                <pre><code>#{of:printStackTrace(requestScope['javax.servlet.error.exception'])}</code></pre>
+                        </li>
+                    </h:panelGroup>
+                </ul>
+                <h:outputScript rendered="#{facesContext.partialViewContext.ajaxRequest}">scrollTo(0, 0);</h:outputScript>
+            </div>
+        </div>
+        <h:outputScript name="js/bootstrap.min.js"/>
+    </h:body>
+</f:view>
+</html>

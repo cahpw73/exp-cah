@@ -21,7 +21,8 @@
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.cost']}">
             <h:outputText value="#{_scopeSupply.cost}">
-                <f:convertNumber pattern="#{configuration.patternDecimal}"/>
+                <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                 locale="#{configuration.langLocalDecimal}"/>
             </h:outputText>
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.description']}">

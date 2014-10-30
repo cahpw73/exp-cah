@@ -67,11 +67,12 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <div class="col-sm-12">
-                    <p:inputTextarea type="text" class="form-control"
+                    <p:inputTextarea type="text" class="form-control" id="description"
                                      style="max-height:34px;"
-                                     maxlength="1000"
+                                     maxlength="998"
                                      value="#{purchaseOrderCreate.newPurchaseOrder.description}"
                                      jsf:placeholder="#{msgs['po.ph.description']}"/>
+                    <p:message for="description" />
                 </div>
             </div>
         </div>
@@ -99,9 +100,10 @@
                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
 
                 <div class="col-sm-8">
-                    <h:inputText id="name" maxlength="50" type="text"
+                    <h:inputText id="variation" maxlength="50" type="text"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.variation}"
                                  jsf:placeholder="#{msgs['po.ph.variation']}" class="form-control"/>
+                    <p:message for="variation" />
                 </div>
             </div>
         </div>
@@ -113,31 +115,33 @@
                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.location']}"/>
 
                 <div class="col-sm-8">
-                    <h:inputText id="location" type="text" maxlength="50"
+                    <h:inputText id="supplier" type="text" maxlength="50"
                                  value="#{purchaseOrderCreate.newSupplier.supplier}"
                                  jsf:placeholder="#{msgs['po.ph.location']}" class="form-control"/>
+                    <p:message for="supplier" />
                 </div>
             </div>
         </div>
     </div>
-    <div class="row"><!---->
+    <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
 
                 <div class="col-sm-8">
-                    <p:inputTextarea id="leadTime" maxlength="1000" type="text"
+                    <p:inputTextarea id="address" maxlength="499" type="text"
                                      style="max-height: 60px;"
                                      value="#{purchaseOrderCreate.newSupplier.address}"
                                      jsf:placeholder="#{msgs['po.ph.address']}" class="form-control"/>
-                    <p:message for="leadTime" id="msgAddress"/>
+                    <p:message for="address" id="msgAddress"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <p:inputTextarea maxlength="1000" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
+            <p:inputTextarea id ="addressDescription" maxlength="998" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
                              style="max-height: 60px;" class="form-control"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
+            <p:message for="addressDescription"/>
         </div>
     </div>
     <div class="row">
@@ -147,19 +151,21 @@
                                value="#{msgs['po.lbl.contact.name']}"/>
 
                 <div class="col-sm-8">
-                    <h:inputText id="forecastDeliveryDate" maxlength="50" type="text"
+                    <h:inputText id="contactName" maxlength="100" type="text"
                                  value="#{purchaseOrderCreate.newSupplier.contactName}"
                                  jsf:placeholder="#{msgs['po.ph.contact.name']}"
                                  class="form-control"/>
+                    <p:message for="contactName"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <p:inputTextarea maxlength="1000" type="text"
+            <p:inputTextarea maxlength="998" type="text" id="cnDescription"
                              style="max-height: 34px;"
                              value="#{purchaseOrderCreate.newSupplier.contactNameDescription}"
                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                              class="form-control"/>
+            <p:message for="cnDescription"/>
         </div>
     </div>
     <div class="row">
@@ -172,6 +178,7 @@
                     <h:inputText id="poTitle" maxlength="50" type="text"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
                                  jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
+                    <p:message for="poTitle"/>
                 </div>
             </div>
         </div>
@@ -189,15 +196,16 @@
                                      maxlength="50"  style="width: 100%">
                         <f:selectItems value="#{incoTerms}"/>
                     </p:selectOneMenu>
+                    <p:message for="incoTermSelectOne"/>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <p:inputTextarea style="max-height: 34px;"
-                             maxlength="1000" type="text"
+            <p:inputTextarea style="max-height: 34px;" id="incoTermDescription"
+                             maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTermDescription}"
                              jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
-
+            <p:message for="incoTermDescription"/>
         </div>
     </div>
     <div class="row">
@@ -208,14 +216,13 @@
 
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="deliveryDate" type="text" styleClass="calendar"
-                                mask="true"
-                                navigator="true"
+                                navigator="true" mask="#{configuration.mask}"
                                 pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{msgs['lbl.format.date']}"
+                                jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();" >
-                        <p:ajax process="@this" event="dateSelect"/>
+                        <p:ajax process="@this" event="dateSelect" />
                     </p:calendar>
                     <h:message for="deliveryDate" id="msgDeliveryDate"/>
                 </div>
@@ -223,10 +230,11 @@
         </div>
         <div class="col-lg-6">
 
-            <p:inputTextarea style="max-height: 34px;"
-                             maxlength="1000" type="text"
+            <p:inputTextarea style="max-height: 34px;" id="poDeliveryDateDescription"
+                             maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDateDescription}"
                              jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
+            <p:message for="poDeliveryDateDescription"/>
         </div>
     </div>
     <div class="row">
@@ -240,6 +248,7 @@
                                  value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpediting}"
                                  jsf:placeholder="#{msgs['po.ph.responsible']}"
                                  class="form-control"/>
+                    <p:message for="responsible"/>
                 </div>
             </div>
         </div>

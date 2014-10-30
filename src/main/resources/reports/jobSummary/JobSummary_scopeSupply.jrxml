@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JobSummary_scopeSupply" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b9465e6-4f0c-45d0-a4df-9c93b428fda1">
-	<property name="ireport.zoom" value="3.6363636363636362"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PURCHASE_ORDER_ID" class="java.lang.Long"/>
 	<parameter name="TIME_MEASURE_LIST" class="java.util.Map"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="itemLbl" class="java.lang.String"/>
+	<parameter name="qtyLbl" class="java.lang.String"/>
+	<parameter name="uomLbl" class="java.lang.String"/>
+	<parameter name="titleLbl" class="java.lang.String"/>
+	<parameter name="equipmentLbl" class="java.lang.String"/>
+	<parameter name="incoTermLbl" class="java.lang.String"/>
+	<parameter name="deliveryDateLbl" class="java.lang.String"/>
+	<parameter name="forecastExWorksDateLbl" class="java.lang.String"/>
+	<parameter name="actualExWorksDateLbl" class="java.lang.String"/>
+	<parameter name="leadTimeLbl" class="java.lang.String"/>
+	<parameter name="forecastSiteDateLbl" class="java.lang.String"/>
+	<parameter name="actualSiteDateLbl" class="java.lang.String"/>
+	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ss.description as title,ss.actual_site_date,po.po_inco_term,ss.quantity,ss.ex_work_date,ss.purchase_order_id,po.project,po.po,ss.delivery_date,ss.ex_work_date,ss.delivery_lead_time_qt,ss.delivery_lead_time_ms,ss.required_site_date,ss.unit
 ,ss.actual_ex_work_date,ss.site_date
@@ -34,214 +48,221 @@ order by ss.id desc]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="59" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="2cce3e55-761f-44ec-8964-8152c2e4be0c" x="487" y="6" width="73" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Lead Time]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="ff17cb63-5c0d-46c2-83d3-7d50331f5d9b" x="276" y="6" width="54" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Delivery Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="b4bbba09-db0c-4022-8757-fffe94c6db88" x="224" y="6" width="48" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INCO Term]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="75541cc6-830d-424c-8b46-de164c361d33" x="2" y="6" width="31" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Item]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="0c84d3d9-5e1a-4ad8-8429-f39de5f1e913" x="332" y="6" width="70" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Forecast Ex Works Date]]></text>
-			</staticText>
+		<band height="49" splitType="Stretch">
 			<line>
-				<reportElement uuid="13d22800-1520-41ab-a696-cc14cd959cd7" x="0" y="35" width="801" height="1"/>
+				<reportElement uuid="13d22800-1520-41ab-a696-cc14cd959cd7" positionType="Float" x="0" y="23" width="801" height="1" isPrintWhenDetailOverflows="true"/>
 			</line>
-			<textField>
-				<reportElement uuid="5243c2f8-0761-4245-8eb9-aee5f166e059" x="11" y="38" width="100" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="5243c2f8-0761-4245-8eb9-aee5f166e059" positionType="Float" x="2" y="29" width="150" height="15"/>
 				<textElement>
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{project}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="3a4e52d8-4d40-4d58-abed-3dfb6fffb012" x="111" y="38" width="100" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="3a4e52d8-4d40-4d58-abed-3dfb6fffb012" positionType="Float" x="152" y="29" width="139" height="15"/>
 				<textElement>
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="1c1f0691-5fed-4608-9ea8-747a635689dc" x="0" y="3" width="801" height="2"/>
+				<reportElement uuid="1c1f0691-5fed-4608-9ea8-747a635689dc" x="0" y="3" width="801" height="1"/>
 			</line>
-			<staticText>
-				<reportElement uuid="7ec78f0c-1e06-495e-8966-88e6ae20133b" x="34" y="6" width="35" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="74c839c4-46ea-412b-ab4e-5d98a82cec07" x="741" y="5" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Qty]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="645cc930-88bd-4f1f-ae3e-f7d347f7f67a" x="72" y="6" width="35" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{requiredOnSiteDateLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="d2892c90-611a-47dd-affa-43b3414060cc" x="678" y="5" width="61" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[UoM]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="c0c6d137-db1d-48a3-8985-d2b075f43e07" x="631" y="6" width="64" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{actualSiteDateLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="cac7118f-f78c-47f5-8e88-fa998677c2cc" x="624" y="5" width="51" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Actual Site Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="8096f03d-c19b-4e20-8ec0-a0ce31a68ac9" x="704" y="6" width="87" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{forecastSiteDateLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="eeef4060-3490-489e-80c4-bda9534e3a72" x="559" y="5" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Required on Site Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="c1e55c1f-10af-4683-b2d6-163aa35865d5" x="112" y="6" width="41" height="27"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{leadTimeLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="8a871349-28b3-47c3-ab87-e1e8468015d7" x="497" y="5" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="ddfda09e-b209-442a-94d4-87f58b9b774f" x="157" y="6" width="67" height="27"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{actualExWorksDateLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="53a8f1cf-c9d2-4f44-8e79-ace44c057f8b" x="436" y="5" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Equipment Tag No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3e360825-5573-4fe2-9385-6c5ca57f8725" x="413" y="6" width="69" height="27"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{forecastExWorksDateLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e5bc3548-dd32-44d3-af8d-d07ce251a300" x="373" y="5" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Actual Ex Works Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="31525289-b7a0-427c-b03e-3181a40c4d77" x="566" y="6" width="60" height="27"/>
-				<textElement>
-					<font fontName="Arial" size="10" isBold="true"/>
+				<textFieldExpression><![CDATA[$P{deliveryDateLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7f0322db-0695-45d6-9f66-f42438f540fd" x="301" y="5" width="70" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Forecast Site Date]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$P{incoTermLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e9077965-1a13-4a98-8b54-78376fdc6bb1" x="247" y="5" width="53" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{equipmentLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e0a671f8-5c85-4f96-af28-7713af834521" x="113" y="5" width="134" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titleLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7b19ac98-936a-4916-9995-080517369119" x="74" y="5" width="35" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{uomLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="648093fb-0161-425b-9171-5db80c553cc6" x="48" y="5" width="25" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{qtyLbl}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ebdd62ac-1b21-44eb-a251-934df5630c20" x="2" y="5" width="45" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{itemLbl}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="529ca5fc-ea0f-49e1-9b50-f60da82d6d37" x="34" y="0" width="33" height="24"/>
-				<textElement verticalAlignment="Middle">
+		<band height="17" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="529ca5fc-ea0f-49e1-9b50-f60da82d6d37" x="47" y="1" width="25" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" x="276" y="0" width="54" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" x="370" y="1" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{delivery_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.time.DateFormatUtils.format($F{delivery_date}, $P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="3b0c7f29-741d-4d16-8f99-87e438e3fc03" x="332" y="0" width="70" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="3b0c7f29-741d-4d16-8f99-87e438e3fc03" x="432" y="1" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ex_work_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.time.DateFormatUtils.format($F{ex_work_date},$P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement uuid="d92191fd-41d2-45c0-88d6-cefb6e8e0e3d" x="487" y="0" width="30" height="24"/>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement uuid="d92191fd-41d2-45c0-88d6-cefb6e8e0e3d" x="555" y="1" width="35" height="15"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{delivery_lead_time_qt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{delivery_lead_time_qt} != null ? "+"+$F{delivery_lead_time_qt}:""]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="b21151a6-e6d9-411c-b4f5-3934792cd69c" x="521" y="0" width="39" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b21151a6-e6d9-411c-b4f5-3934792cd69c" x="591" y="1" width="22" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{TIME_MEASURE_LIST}.get($F{delivery_lead_time_ms})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.StringUtils.substring($P{TIME_MEASURE_LIST}.get($F{delivery_lead_time_ms}).toString(),0,1)]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="9143a567-0ce5-47b6-b8df-c3d40fae59ed" x="2" y="0" width="29" height="24"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="9143a567-0ce5-47b6-b8df-c3d40fae59ed" x="1" y="1" width="45" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{purchase_order_id_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="ba804b03-72a2-4bf2-bbcf-c869572a2e95" x="72" y="0" width="40" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="ba804b03-72a2-4bf2-bbcf-c869572a2e95" x="73" y="1" width="35" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="2b6aff9b-3766-4af3-add2-4a7312d0c3fc" x="224" y="0" width="48" height="24"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="2b6aff9b-3766-4af3-add2-4a7312d0c3fc" x="299" y="1" width="70" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
+					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po_inco_term}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" x="631" y="0" width="64" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" x="679" y="1" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{actual_site_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.time.DateFormatUtils.format($F{actual_site_date}, $P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="9dce046c-aebc-44d4-99fe-50b7558092a1" x="112" y="0" width="41" height="24"/>
-				<textElement verticalAlignment="Middle"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="9dce046c-aebc-44d4-99fe-50b7558092a1" x="110" y="1" width="134" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3" rightIndent="3"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" x="704" y="0" width="87" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" x="741" y="1" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{required_site_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.time.DateFormatUtils.format($F{required_site_date}, $P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="b4cdf750-ee11-4560-bb14-9b7147f91af5" x="413" y="0" width="69" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="b4cdf750-ee11-4560-bb14-9b7147f91af5" x="493" y="1" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{actual_ex_work_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.time.DateFormatUtils.format($F{actual_ex_work_date},$P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="e878a736-7554-40d3-9d3f-1f1642457a97" x="566" y="0" width="63" height="24"/>
-				<textElement verticalAlignment="Middle">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="e878a736-7554-40d3-9d3f-1f1642457a97" x="618" y="1" width="60" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{site_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[org.apache.commons.lang.time.DateFormatUtils.format($F{site_date},$P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

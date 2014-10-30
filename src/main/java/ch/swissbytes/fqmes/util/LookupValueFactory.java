@@ -12,12 +12,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 /**
  * Created by alvaro on 9/30/14.
  */
 public class LookupValueFactory implements Serializable {
 
+    private static final Logger log= Logger.getLogger(LookupValueFactory.class.getName());
 
     ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 

@@ -5,6 +5,7 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -84,6 +85,8 @@ public class TransitDeliveryPointEntity implements EntityTbl{
     public void setScopeSupply(ScopeSupplyEntity scopeSupply) {
         this.scopeSupply = scopeSupply;
     }
+
+    @Size(max = 50)
     @Column(name="location", nullable = false,length=50)
     public String getLocation() {
         return location;
@@ -92,7 +95,7 @@ public class TransitDeliveryPointEntity implements EntityTbl{
     public void setLocation(String location) {
         this.location = location;
     }
-
+    @Size(max = 1000)
     @Column(name="comments", length=1000)
     public String getComment() {
         return comment;

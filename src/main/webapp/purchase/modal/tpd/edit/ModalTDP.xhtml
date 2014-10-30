@@ -10,7 +10,8 @@
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.location']}</label>
 
             <div class="col-sm-10">
-                <h:inputText class="form-control" value="#{purchaseOrderEdit.newTdp.location}" placeholder="Location"/>
+                <h:inputText class="form-control" value="#{purchaseOrderEdit.newTdp.location}"
+                             placeholder="Location" maxlength="50"/>
             </div>
         </div>
         <div class="col-sm-4">
@@ -36,14 +37,14 @@
             <div class="form-row">
                 <label>#{msgs['tdp.lbl.forecast.delivery.date']}</label>
 
-                <p:calendar mask="true"
+                <p:calendar mask="#{configuration.mask}"
                             id="forecastDeliveryDateTdp1"
                             navigator="true"
                             value="#{purchaseOrderEdit.newTdp.forecastDeliveryDate}"
                             pattern="#{configuration.formatDate}"
                             disabled="#{purchaseOrderEdit.newTdp.getIsForecastSiteDateCalculated()}"
                             converterMessage="#{msgs['validator.date.invalid']}"
-                            jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                            jsf:placeholder="#{configuration.formatDate}"/>
                 <p:selectBooleanButton value="#{purchaseOrderEdit.newTdp.isForecastSiteDateCalculated}"
                                        onLabel="#{msgs['lbl.manual']}" offLabel="#{msgs['lbl.automatic']}">
                     <p:ajax event="change"
@@ -55,18 +56,18 @@
         <div class="col-sm-4">
             <div class="form-row">
                 <label>#{msgs['tdp.lbl.actual.delivery.date']}</label>
-                <p:calendar mask="true" navigator="true"
+                <p:calendar mask="#{configuration.mask}" navigator="true"
                             pattern="#{configuration.formatDate}"
                             value="#{purchaseOrderEdit.newTdp.actualDeliveryDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
-                            jsf:placeholder="#{msgs['lbl.format.date']}"/>
+                            jsf:placeholder="#{configuration.formatDate}"/>
             </div>
         </div>
         <div class="clearfix"/>
         <div class="col-sm-12 form-group" style="margin-top: 15px;">
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.comments']}</label>
             <div class="col-sm-10">
-                <p:inputTextarea maxlength="500" value="#{purchaseOrderEdit.newTdp.comment}"/>
+                <p:inputTextarea maxlength="1000" value="#{purchaseOrderEdit.newTdp.comment}"/>
             </div>
         </div>
             <div class="col-lg-12">

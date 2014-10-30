@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JobSummary" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71430e76-2a1b-4fbb-a63c-2ff243ffaee5">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -8,6 +8,20 @@
 	</parameter>
 	<parameter name="purchaseID" class="java.util.Collection"/>
 	<parameter name="TIME_MEASUREMENT" class="java.util.Map"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="itemLbl" class="java.lang.String"/>
+	<parameter name="qtyLbl" class="java.lang.String"/>
+	<parameter name="uomLbl" class="java.lang.String"/>
+	<parameter name="titleLbl" class="java.lang.String"/>
+	<parameter name="equipmentLbl" class="java.lang.String"/>
+	<parameter name="incoTermLbl" class="java.lang.String"/>
+	<parameter name="deliveryDateLbl" class="java.lang.String"/>
+	<parameter name="forecastExWorksDateLbl" class="java.lang.String"/>
+	<parameter name="actualExWorksDateLbl" class="java.lang.String"/>
+	<parameter name="leadTimeLbl" class="java.lang.String"/>
+	<parameter name="forecastSiteDateLbl" class="java.lang.String"/>
+	<parameter name="actualSiteDateLbl" class="java.lang.String"/>
+	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select id,project,po
 from purchase_order
@@ -24,13 +38,14 @@ order by id DESC;]]>
 		<band height="67" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
 				<reportElement uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b" x="701" y="0" width="100" height="20"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
+					<paragraph rightIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="233" y="10" width="261" height="42"/>
+				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="290" y="10" width="261" height="42"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="17" isBold="true"/>
 				</textElement>
@@ -48,11 +63,53 @@ order by id DESC;]]>
 		<band height="42" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="73031216-32c4-43a0-8b95-81a50cd2739a" x="2" y="0" width="800" height="40"/>
+				<subreportParameter name="qtyLbl">
+					<subreportParameterExpression><![CDATA[$P{qtyLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FORMAT_DATE">
+					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="leadTimeLbl">
+					<subreportParameterExpression><![CDATA[$P{leadTimeLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="titleLbl">
+					<subreportParameterExpression><![CDATA[$P{titleLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="requiredOnSiteDateLbl">
+					<subreportParameterExpression><![CDATA[$P{requiredOnSiteDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="forecastSiteDateLbl">
+					<subreportParameterExpression><![CDATA[$P{forecastSiteDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="itemLbl">
+					<subreportParameterExpression><![CDATA[$P{itemLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="uomLbl">
+					<subreportParameterExpression><![CDATA[$P{uomLbl}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="PURCHASE_ORDER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="actualExWorksDateLbl">
+					<subreportParameterExpression><![CDATA[$P{actualExWorksDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="deliveryDateLbl">
+					<subreportParameterExpression><![CDATA[$P{deliveryDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="forecastExWorksDateLbl">
+					<subreportParameterExpression><![CDATA[$P{forecastExWorksDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="TIME_MEASURE_LIST">
 					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="incoTermLbl">
+					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="actualSiteDateLbl">
+					<subreportParameterExpression><![CDATA[$P{actualSiteDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="equipmentLbl">
+					<subreportParameterExpression><![CDATA[$P{equipmentLbl}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "JobSummary_scopeSupply.jasper"]]></subreportExpression>

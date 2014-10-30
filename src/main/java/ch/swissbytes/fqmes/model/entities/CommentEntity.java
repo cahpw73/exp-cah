@@ -2,6 +2,7 @@ package ch.swissbytes.fqmes.model.entities;
 
 import javax.inject.Named;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setId(Long id) {
         this.id = id;
     }
+    @Size(max = 50)
     @Column(name="name", nullable=false, length=50)
     public String getName() {
         return name;
@@ -44,7 +46,7 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setName(String name) {
         this.name = name;
     }
-
+    @Size(max = 50)
     @Column(name="reason", nullable=false, length=50)
     public String getReason() {
         return reason;
@@ -53,6 +55,8 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    @Size(max = 1000)
     @Column(name="description", length=1000)
     public String getDescription() {
         return description;
@@ -61,7 +65,9 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setDescription(String description) {
         this.description = description;
     }
-    @Column(name="f_name",  length=50)
+
+    @Size(max = 255)
+    @Column(name="f_name",  length=255)
     public String getFileName() {
         return fileName;
     }
@@ -69,7 +75,10 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-    @Column(name="mime_type",  length=50)
+
+
+    @Size(max = 255)
+    @Column(name="mime_type",  length=255)
     public String getMimeType() {
         return mimeType;
     }

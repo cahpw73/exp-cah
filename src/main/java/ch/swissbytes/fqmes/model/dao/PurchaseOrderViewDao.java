@@ -84,8 +84,8 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
     }
 
     @Override
-    public String orderBy(String field){
-        return "";
+    public String orderBy(String field,boolean ascending){
+        return ascending?" ORDER BY "+field +" ASC ":" ORDER BY "+field+" DESC";
     }
 
 }

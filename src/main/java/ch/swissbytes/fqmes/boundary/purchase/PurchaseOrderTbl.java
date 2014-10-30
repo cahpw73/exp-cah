@@ -39,7 +39,7 @@ public class PurchaseOrderTbl extends LazyDataModel<PurchaseOrderEntity> {
         log.info("loading data... "+sortField);
         List<PurchaseOrderEntity> purchaseOrderEntityList=new ArrayList<>();
         if(sortField!=null){
-            purchaseOrderEntityList= dao.findByPage(first, pageSize,filter,sortField);
+            purchaseOrderEntityList= dao.findByPage(first, pageSize,filter,sortField,sortOrder.ordinal()==SortOrder.ASCENDING.ordinal());
         }else{
             purchaseOrderEntityList= dao.findByPage(first, pageSize,filter);
         }

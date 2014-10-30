@@ -65,6 +65,13 @@ public class PurchaseOrderListBean implements Serializable {
         log.info("Purchase Selected: " + purchaseOrderSelected.getProject());
     }
 
+    public void selectPurchaseOrder(){
+        log.info("selectPurchaseOrder()");
+        log.info("purchaseOrderId: " + purchaseOrderId);
+        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class,purchaseOrderId).get(0);
+        log.info("Purchase Selected: " + purchaseOrderSelected.getProject());
+    }
+
     public void doDeletePurchaseOrder(){
         purchaseOrderService.doDelete(purchaseOrderId);
     }
@@ -104,5 +111,20 @@ public class PurchaseOrderListBean implements Serializable {
 
     public void setPurchaseOrderSelected(PurchaseOrderEntity purchaseOrderSelected) {
         this.purchaseOrderSelected = purchaseOrderSelected;
+    }
+
+    public Long getPurchaseOrderId() {
+        return purchaseOrderId;
+    }
+
+    public void setPurchaseOrderId(Long purchaseOrderId) {
+        log.info("setPurchaseOrderId(Long purchaseOrderId["+purchaseOrderId+"])");
+        this.purchaseOrderId = purchaseOrderId;
+        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class,purchaseOrderId).get(0);
+        log.info("Purchase Selected: " + purchaseOrderSelected.getProject());
+    }
+
+    public String redirectCreatePurchaseOrder(){
+        return "/purchase/create?faces-redirect=true";
     }
 }

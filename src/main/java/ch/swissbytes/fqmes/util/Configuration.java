@@ -1,13 +1,14 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import org.apache.commons.lang3.StringUtils;
 import sun.util.logging.resources.logging;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
+import java.text.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,23 +20,23 @@ import java.util.logging.Logger;
 @Named
 public class Configuration implements Serializable {
 
+    @Inject
+    private LanguagePreference languagePreference;
+
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
     private static final Logger log = Logger.getLogger(Configuration.class.getName());
 
     private int []sizes={5,10,50,100};
 
-    public String getFormatDate(){
-        log.log(Level.FINE,"format date");
-        return "dd/MM/yyyy";
-    }
+    private final String laguangeDefault = "en-AU";
 
     public String getPagesSize(){
         return getPagesSize(0L);
     }
 
+
     public String getPagesSize(Long total){
-        log.info(String.format("total [%s]",total));
         String sizes="";
         for(int i=0;i<this.sizes.length;i++){
             sizes +=this.sizes[i]+" ";
@@ -50,7 +51,6 @@ public class Configuration implements Serializable {
     }
 
     public String getTimeMeasurement(TimeMeasurementEnum time){
-        log.info(String.format("time measurement [%s]",time));
         return time!=null? bundle.getString("measurement.time."+time.name().toLowerCase()):"";
     }
 
@@ -64,6 +64,50 @@ public class Configuration implements Serializable {
 
     public String getLocale(){
         return "en_AU";
+    }
+
+    public String getLangLocalDecimal() {
+        return StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;
+    }
+
+    public String getLangLocalCalendar(){
+        String pattern = laguangeDefault;
+        if(StringUtils.isNotEmpty(languagePreference.getLanguage()) && StringUtils.isNotBlank(languagePreference.getLanguage())){
+            String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+            String[] parts = string.split("-");
+            return parts.length > 1 ? parts[0] : languagePreference.getLanguage();
+        }
+       return pattern;
+    }
+
+    public String getFormatDate(){
+        log.log(Level.FINE,"format date");
+        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+        String[] parts = string.split("-");
+        Locale locale;
+        if(parts.length>1){
+            locale=new Locale(parts[0],parts[1]);
+        }else{
+            locale=new Locale(parts[0],"");
+        }
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        String localPattern  = ((SimpleDateFormat)formatter).toPattern();
+        return localPattern;
+    }
+
+    public String getLanguage(){
+        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+        String[] parts = string.split("-");
+        return parts!=null&&parts.length>0?parts[0]:"en";
+    }
+    public String getCountry(){
+        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+        String[] parts = string.split("-");
+        return parts!=null&&parts.length>1?parts[1]:"AU";
+    }
+
+    public Boolean getMask(){
+        return false;
     }
 
 

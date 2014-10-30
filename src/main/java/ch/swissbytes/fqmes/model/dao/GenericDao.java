@@ -285,7 +285,7 @@ public abstract class GenericDao<T> {
         return query.toString();
     }
 
-    protected String createQuery(final boolean count,Filter filter,String sortBy){
+    protected String createQuery(final boolean count,Filter filter,String sortBy,boolean ascending){
         StringBuilder query=new StringBuilder();
         if(count){
             query.append("SELECT COUNT(x) ");
@@ -302,7 +302,7 @@ public abstract class GenericDao<T> {
             query.append(prepositions);
         }
         if(!count){
-            query.append(orderBy(sortBy));
+            query.append(orderBy(sortBy,ascending));
         }
         return query.toString();
     }
@@ -314,7 +314,7 @@ public abstract class GenericDao<T> {
     public String orderBy(){
         return " ORDER BY id DESC ";
     }
-    public String orderBy(String field){
+    public String orderBy(String field,boolean ascending){
         return "";
     }
 
@@ -339,8 +339,8 @@ public abstract class GenericDao<T> {
         List<T>list=findById(clazz,id);
         return list.isEmpty()?null:list.get(0);
     }
-    public <T> List<T> findByPage(int startAt, int maxPerPage,final Filter filter,String sort ) {
-        Query query = entityManager.createQuery(createQuery(false,filter,sort));
+    public <T> List<T> findByPage(int startAt, int maxPerPage,final Filter filter,String sort,boolean ascending ) {
+        Query query = entityManager.createQuery(createQuery(false,filter,sort,ascending));
         query.setMaxResults(maxPerPage);
         query.setFirstResult(startAt);
         applyCriteriaValues(query,filter);

@@ -75,7 +75,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
-
+@Size(max = 50)
     @Column(name="code", length = 50)
     public String getCode() {
         return code;
@@ -90,6 +90,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public Integer getQuantity() {
         return quantity;
     }
+
+    @Size(max = 50)
     @Column(name="unit", length = 50)
     public String getUnit() {
         return unit;
@@ -102,6 +104,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    @Size(max = 1000)
     @Column(name="description",length = 1000)
     public String getDescription() {
         return description;
@@ -119,6 +123,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setExWorkDate(Date exWorkDate) {
         this.exWorkDate = exWorkDate;
     }
+
+    @Size(max = 1000)
     @Column(name="EX_WORK_DATE_DESCRIPTION", length = 1000)
     public String getExWorkDateDescription() {
         return exWorkDateDescription;
@@ -162,6 +168,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setSiteDate(Date siteDate) {
         this.siteDate = siteDate;
     }
+
+    @Size(max = 1000)
     @Column(name="SITE_DATE_DESCRIPTION", length = 1000)
     public String getSiteDateDescription() {
         return siteDateDescription;

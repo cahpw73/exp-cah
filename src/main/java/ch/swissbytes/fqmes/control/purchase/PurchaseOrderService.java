@@ -45,14 +45,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
 
     @Transactional
-    public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier,
-                       List<AttachmentEntity> attachmentEntities) {
+    public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier) {
         dao.save(newPurchaseOrder);
         supplier.setPurchaseOrder(newPurchaseOrder);
         supplierDao.persist(supplier);
         commentDao.persist(comments, newPurchaseOrder);
         scopeSupplyDao.persist(scopeSupplies, newPurchaseOrder);
-        //attachmentDao.save(attachmentEntities, newPurchaseOrder);
     }
 
     @Transactional

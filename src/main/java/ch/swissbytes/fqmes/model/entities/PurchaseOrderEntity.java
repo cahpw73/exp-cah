@@ -6,6 +6,7 @@ package ch.swissbytes.fqmes.model.entities;
 
 import javax.inject.Named;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -49,14 +50,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-/*
-    public StatusEntity getStatus() {
-        return status;
-    }
 
-    public void setStatus(StatusEntity status) {
-        this.status = status;
-    }*/
+    @Size(max = 50)
     @Column(name="project", nullable=false, length=50)
     public String getProject() {
         return project;
@@ -65,10 +60,14 @@ public class PurchaseOrderEntity implements Serializable{
     public void setProject(String project) {
         this.project = project;
     }
+
+    @Size(max = 50)
     @Column(name="variation",length=50)
     public String getVariation() {
         return variation;
     }
+
+    @Size(max = 50)
     @Column(name="po",nullable = false, length=50)
     public String getPo() {
         return po;
@@ -81,6 +80,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setVariation(String variation) {
         this.variation = variation;
     }
+
+    @Size(max = 1000)
     @Column(name="description", length=1000)
     public String getDescription() {
         return description;
@@ -89,6 +90,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+    @Size(max = 50)
     @Column(name= "po_title", length=50)
     public String getPoTitle() {
         return poTitle;
@@ -97,6 +99,7 @@ public class PurchaseOrderEntity implements Serializable{
     public void setPoTitle(String poTitle) {
         this.poTitle = poTitle;
     }
+    @Size(max = 50)
     @Column(name="po_inco_term",length=50)
     public String getPoIncoTerm() {
         return poIncoTerm;
@@ -105,6 +108,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setPoIncoTerm(String poIncoTerm) {
         this.poIncoTerm = poIncoTerm;
     }
+
+    @Size(max = 1000)
     @Column(name="po_inco_term_description", length=1000)
     public String getPoIncoTermDescription() {
         return poIncoTermDescription;
@@ -123,6 +128,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setPoDeliveryDate(Date poDeliveryDate) {
         this.poDeliveryDate = poDeliveryDate;
     }
+
+    @Size(max = 1000)
     @Column(name="po_delivery_date_description",  length=1000)
     public String getPoDeliveryDateDescription() {
         return poDeliveryDateDescription;
@@ -131,6 +138,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setPoDeliveryDateDescription(String poDeliveryDateDescription) {
         this.poDeliveryDateDescription = poDeliveryDateDescription;
     }
+
+    @Size(max = 100)
     @Column(name="responsible_expediting",  length=100)
     public String getResponsibleExpediting() {
         return responsibleExpediting;
@@ -140,7 +149,8 @@ public class PurchaseOrderEntity implements Serializable{
         this.responsibleExpediting = responsibleExpediting;
     }
 
-    @Column(name="intro_email_sent", length=255)
+
+    @Column(name="intro_email_sent")
     public Date getIntroEmail() {
         return introEmail;
     }
@@ -148,6 +158,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setIntroEmail(Date introEmail) {
         this.introEmail = introEmail;
     }
+
+    @Size(max = 1000)
     @Column(name="intro_email_sent_description", length=1000)
     public String getIntroEmailDescription() {
         return introEmailDescription;
@@ -157,7 +169,7 @@ public class PurchaseOrderEntity implements Serializable{
         this.introEmailDescription = introEmailDescription;
     }
 
-    @Column(name="required_date", length=255)
+    @Column(name="required_date")
     public Date getRequiredDate() {
         return requiredDate;
     }
@@ -165,6 +177,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
     }
+
+    @Size(max = 1000)
     @Column(name="required_date_description", length=1000)
     public String getRequiredDateDescription() {
         return requiredDateDescription;
@@ -174,7 +188,7 @@ public class PurchaseOrderEntity implements Serializable{
         this.requiredDateDescription = requiredDateDescription;
     }
 
-    @Column(name="actual_date", length=255)
+    @Column(name="actual_date")
     public Date getActualDate() {
         return actualDate;
     }
@@ -182,6 +196,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setActualDate(Date actualDate) {
         this.actualDate = actualDate;
     }
+
+    @Size(max = 1000)
     @Column(name="actual_date_description", length=1000)
     public String getActualDateDescription() {
         return actualDateDescription;

@@ -6,6 +6,7 @@ package ch.swissbytes.fqmes.model.entities;
 
 import javax.inject.Named;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,6 +36,7 @@ public class SupplierEntity implements Serializable{
         this.id = id;
     }
 
+    @Size(max=500)
     @Column(name="address",  length=500)
     public String getAddress() {
         return address;
@@ -51,6 +53,8 @@ public class SupplierEntity implements Serializable{
     public void setAddresDescription(String addresDescription) {
         this.addresDescription = addresDescription;
     }
+
+    @Size(max=100)
     @Column(name="contact_name", length=100)
     public String getContactName() {
         return contactName;
@@ -59,6 +63,8 @@ public class SupplierEntity implements Serializable{
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
+
+    @Size(max=1000)
     @Column(name="contact_name_description", length=1000)
     public String getContactNameDescription() {
         return contactNameDescription;
@@ -77,6 +83,8 @@ public class SupplierEntity implements Serializable{
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
     }
+
+    @Size(max=50)
     @Column(name="supplier", nullable = false,length=50)
     public String getSupplier() {
         return supplier;

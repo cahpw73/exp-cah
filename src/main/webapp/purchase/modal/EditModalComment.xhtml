@@ -11,7 +11,7 @@
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['po.attach.tbl.column.from']}"/>
                 <div class="col-sm-8">
-                    <h:inputText type="text"
+                    <h:inputText type="text" maxlength="50"
                                  id="nameComment"
                                  jsf:placeholder="#{msgs['po.attach.tbl.column.from']}"
                                  class="form-control"
@@ -27,7 +27,7 @@
                                value="#{msgs['po.attach.tbl.column.reason']}"/>
 
                 <div class="col-sm-8">
-                    <h:inputText type="text"
+                    <h:inputText type="text" maxlength="50"
                                  id="reasonComment"
                                  jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
                                  class="form-control"

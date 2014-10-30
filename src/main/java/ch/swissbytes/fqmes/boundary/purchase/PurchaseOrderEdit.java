@@ -332,6 +332,51 @@ public class PurchaseOrderEdit implements Serializable {
         return "/purchase/modal/EditModalScopeSupply?faces-redirect=true";
     }
 
+    private boolean isValidDataUpdate() {
+        log.info("boolean isValidDataUpdate()");
+        boolean isValid = false;
+        int inc = 0;
+        Integer quantity=scopeSupplyEditing.getQuantity()!=null?scopeSupplyEditing.getQuantity():0;
+        Double cost=scopeSupplyEditing.getCost()!=null?scopeSupplyEditing.getCost().doubleValue():0D;
+        if(quantity >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Quantity has a invalid data");
+        }
+        if(cost >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Unit Price has a invalid data");
+        }
+        if(inc == 2){
+            isValid = true;
+        }
+        return isValid;
+    }
+
+    private boolean isValidData() {
+        log.info("boolean isValidData()");
+        boolean isValid = false;
+        int inc = 0;
+        Integer quantity=scopeSupplyEdit.getQuantity()!=null?scopeSupplyEdit.getQuantity():0;
+        Double cost=scopeSupplyEdit.getCost()!=null?scopeSupplyEdit.getCost().doubleValue():0D;
+        if(quantity >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Quantity has a invalid data");
+        }
+        if(cost >= 0){
+            inc++;
+        }else{
+            Messages.addGlobalError("Unit Price has a invalid data");
+        }
+        if(inc == 2){
+            isValid = true;
+        }
+        return isValid;
+    }
+
+
 
     public String getPurchaseOrderId() {
         return purchaseOrderId;
@@ -468,13 +513,18 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public String addScopeSupply() {
+        if(isValidData()){
         registerScopeSupply();
         return "/purchase/edit?faces-redirect=true&fase=1";
+        }
+        return "";
     }
 
     public void addScopeSupplyAndAdd() {
-        registerScopeSupply();
-        cleanScopeSupply();
+        if(isValidData()){
+            registerScopeSupply();
+            cleanScopeSupply();
+        }
     }
 
     public String cancel() {
@@ -511,17 +561,22 @@ public class PurchaseOrderEdit implements Serializable {
         return url;
     }
     private boolean validateValuesAboutSplit(){
-        return originalQuantity.intValue()==scopeSupplySplit.getQuantity().intValue()+selectedScopeSupply.getQuantity().intValue();
+        int arrivedQuantity=(scopeSupplySplit!=null&&scopeSupplySplit.getQuantity()!=null)?scopeSupplySplit.getQuantity().intValue():0;
+        int newQuantity=(selectedScopeSupply!=null&&selectedScopeSupply.getQuantity()!=null)?selectedScopeSupply.getQuantity().intValue():0;
+        return originalQuantity.intValue()==arrivedQuantity+newQuantity;
     }
 
     public String doUpdateScopeSupply() {
-        if (indexForScopeSupplyEditing >= 0) {
-            ScopeSupplyEntity ss=scopeSupplyService.clone(scopeSupplyEditing);
-            ss.getTdpList().clear();
-            ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
-            scopeSupplies.set(indexForScopeSupplyEditing, ss);
+        if(isValidDataUpdate()){
+            if (indexForScopeSupplyEditing >= 0) {
+                ScopeSupplyEntity ss=scopeSupplyService.clone(scopeSupplyEditing);
+                ss.getTdpList().clear();
+                ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
+                scopeSupplies.set(indexForScopeSupplyEditing, ss);
+            }
+            return "/purchase/edit?faces-redirect=true&fase=1";
         }
-        return "/purchase/edit?faces-redirect=true&fase=1";
+        return "";
     }
 
     public String selectScopeSupply(final Long idScopeSupply) {

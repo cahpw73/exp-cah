@@ -32,7 +32,6 @@ import java.util.logging.Logger;
  */
 @Named
 @ConversationScoped
-
 public class PurchaseOrderCreate implements Serializable {
 
     @Inject
@@ -64,7 +63,7 @@ public class PurchaseOrderCreate implements Serializable {
 
     private List<CommentEntity> commentEntities;
 
-    private List<AttachmentEntity> atachmentEntities;
+    //private List<AttachmentEntity> atachmentEntities;
 
     private List<ScopeSupplyEntity> scopeSupplies;
 
@@ -88,6 +87,11 @@ public class PurchaseOrderCreate implements Serializable {
     public void create(){
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
         reset();
+        if(conversation.isTransient()){
+            conversation.begin();
+            conversation.setTimeout(configuration.getTimeOutConversation());
+            log.info(String.format("conversation started [%s]",conversation.getTimeout()));
+        }
     }
 
     private void reset(){
@@ -95,7 +99,7 @@ public class PurchaseOrderCreate implements Serializable {
         newSupplier =new SupplierEntity();
         commentEntities=new ArrayList<>();
         newComment=new CommentEntity();
-        atachmentEntities =new ArrayList<>();
+        //atachmentEntities =new ArrayList<>();
         scopeSupplies=new ArrayList<>();
         newScopeSupply=new ScopeSupplyEntity();
     }
@@ -125,7 +129,7 @@ public class PurchaseOrderCreate implements Serializable {
     private void savePurchase(){
         log.log(Level.INFO, String.format("trying to save purchase order"));
         initializeStatusesAndLastUpdate();
-        service.doSave(newPurchaseOrder, getCommentEntities(), scopeSupplies, newSupplier, atachmentEntities);
+        service.doSave(newPurchaseOrder, getCommentEntities(), scopeSupplies, newSupplier);
     }
 
     private void initializeStatusesAndLastUpdate(){
@@ -135,10 +139,10 @@ public class PurchaseOrderCreate implements Serializable {
         newPurchaseOrder.setLastUpdate(now);
         newSupplier.setStatus(enabled);
         newSupplier.setLastUpdate(now);
-        for(AttachmentEntity attachmentEntity:getAtachmentEntities()){
+       /* for(AttachmentEntity attachmentEntity:getAtachmentEntities()){
             attachmentEntity.setStatus(enabled);
             attachmentEntity.setLastUpdate(now);
-        }
+        }*/
         for(CommentEntity commentEntity:getCommentEntities()){
             commentEntity.setStatus(enabled);
             commentEntity.setLastUpdate(now);
@@ -189,10 +193,14 @@ public class PurchaseOrderCreate implements Serializable {
         }
     }
     public void editComment(final int index){
+        log.info("editComment(index["+index+"])");
         indexCommentEditing=-1;
+        log.info("commentEntities.size(): " + commentEntities.size());
         if(index>=0 && index < commentEntities.size()){
             editComment=commentService.clone(commentEntities.get(index));
             indexCommentEditing=index;
+            log.info("editComment: " + editComment.getReason());
+            log.info("indexCommentEditing: " + indexCommentEditing);
         }
     }
     public void updateComment(){
@@ -200,11 +208,7 @@ public class PurchaseOrderCreate implements Serializable {
             commentEntities.set(indexCommentEditing, editComment);
         }
     }
-    public void deleteAttachment(final int index){
-        if(index>=0 && index < atachmentEntities.size()){
-            atachmentEntities.remove(index);
-        }
-    }
+
 
     public void deleteScopeSupply(final int index){
         if(index>=0 && index < scopeSupplies.size()){
@@ -238,7 +242,7 @@ public class PurchaseOrderCreate implements Serializable {
         }
 
     }
-
+/*
     public void handleAttachmentUpload(FileUploadEvent event){
         UploadedFile uf=event.getFile();
         log.info(uf.getFileName());
@@ -251,7 +255,7 @@ public class PurchaseOrderCreate implements Serializable {
         attachment.setName(attachment.getFileName());
         attachment.setMimeType(uf.getContentType());
         getAtachmentEntities().add(attachment);
-    }
+    }*/
 
     @PreDestroy
     public void destroy(){
@@ -275,22 +279,18 @@ public class PurchaseOrderCreate implements Serializable {
 
     public String cleanScopeSupply(){
         log.info("cleaning scope supply");
-        if(conversation.isTransient()){
-            conversation.begin();
-            conversation.setTimeout(configuration.getTimeOutConversation());
-            log.info(String.format("conversation started [%s]",conversation.getTimeout()));
-        }
+
         String cid=conversation.getId();
 
         return "/purchase/modal/CreateModalScopeSupply?faces-redirect=true&cid="+cid;
     }
 
     public String selectForEditingScopeSuppply(Integer index){
-        log.info("selectForEditingScopeSuppply.................");
-        if(conversation.isTransient()){
+        log.info("selectForEditingScopeSupply.................");
+        /*if(conversation.isTransient()){
             conversation.begin();
             log.info(String.format("conversation started [%s]",conversation.getTimeout()));
-        }
+        }*/
         String cid=conversation.getId();
         return  "/purchase/modal/CreateModalScopeSupplyEditing?faces-redirect=true&index="+index+"&cid="+cid;
     }
@@ -328,14 +328,12 @@ public class PurchaseOrderCreate implements Serializable {
     @Named
     @Produces
     public List<ScopeSupplyEntity> getScopeSupplies() {
-        log.info("producing suppllies");
+        //log.info("producing suppllies");
         return scopeSupplies;
     }
 
 
-    public List<AttachmentEntity> getAtachmentEntities() {
-        return atachmentEntities;
-    }
+
 
     public ScopeSupplyEntity getEditScopeSupply() {
         return editScopeSupply;

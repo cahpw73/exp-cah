@@ -4,6 +4,7 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
+import ch.swissbytes.fqmes.util.Configuration;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -46,6 +47,9 @@ public class ReportBean implements Serializable {
     @Inject
     private PurchaseOrderService service;
 
+    @Inject
+    private Configuration configuration;
+
     public Boolean getOpenReport() {
         return openReport;
     }
@@ -80,7 +84,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportReceivableManifest()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, selected);
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, selected,configuration);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -89,7 +93,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportJobSummary()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, selected);
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, selected,configuration);
         reportView.printDocument(null);
         openReport = true;
     }
