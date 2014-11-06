@@ -2,15 +2,18 @@ package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTimeZone;
+import org.picketlink.common.util.StringUtil;
 import sun.util.logging.resources.logging;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.*;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,8 +110,21 @@ public class Configuration implements Serializable {
     }
 
     public Boolean getMask(){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpServletRequest request=(HttpServletRequest)facesContext.getExternalContext().getRequest();
+
         return false;
     }
 
+    public String getTimeZone(){
+        System.out.println("TIME ZONE!!!!!!!!!!!!!!!!");
+        System.out.println(StringUtil.isNotNull(languagePreference.getTimeZone())?languagePreference.getTimeZone(): TimeZone.getDefault().getID());
+        return StringUtil.isNotNull(languagePreference.getTimeZone())?languagePreference.getTimeZone(): TimeZone.getDefault().getID();
+    }
+
+    public TimeZone getTimeZone2(){
+        DateTimeZone zone = DateTimeZone.forID(getTimeZone());
+        return zone!=null?zone.toTimeZone():TimeZone.getDefault();
+    }
 
 }

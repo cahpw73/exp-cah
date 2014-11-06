@@ -14,6 +14,7 @@ public class SearchPurchaseView implements Filter {
     private String variation;
     private String supplier;
     private String poTitle;
+    private String responsibleExpediting;
 
     public String getProject() {
         return project;
@@ -55,6 +56,14 @@ public class SearchPurchaseView implements Filter {
         this.poTitle = poTitle;
     }
 
+    public String getResponsibleExpediting() {
+        return responsibleExpediting;
+    }
+
+    public void setResponsibleExpediting(String responsibleExpediting) {
+        this.responsibleExpediting = responsibleExpediting;
+    }
+
     @Override
     public void clean(){
         po=null;
@@ -62,5 +71,6 @@ public class SearchPurchaseView implements Filter {
         variation=null;
         supplier=null;
         poTitle=null;
+        responsibleExpediting=null;
     }
 }

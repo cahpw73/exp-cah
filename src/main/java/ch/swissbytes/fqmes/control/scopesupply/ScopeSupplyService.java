@@ -149,9 +149,6 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 TransitDeliveryPointEntity current=tdpService.clone(ss.getTdpList().get(i));
                 if(current.getIsForecastSiteDateCalculated()){
                     Date d=calculateDate(previous,current);
-                    System.out.println("current date " + current.getForecastDeliveryDate());
-                    System.out.println("previous date " + previous.getForecastDeliveryDate());
-                    System.out.println("date calculated 2 "+d);
                     ss.getTdpList().get(i).setForecastDeliveryDate(d);
                 }
                 previous=tdpService.clone( ss.getTdpList().get(i));

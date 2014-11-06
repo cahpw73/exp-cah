@@ -11,6 +11,7 @@
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{permissionBean.canAccess(101)}"/>
+        <f:viewAction action="#{purchaseOrderCreate.load}"/>
     </f:metadata>
     <ui:define name="body">
 
@@ -44,15 +45,17 @@
         });
     </script>
     <!-- Form Name -->
-    <h2 class="sub-header">#{msgs['po.new.title']}</h2>
-
+    <div class="title-page">
+        <h4 class="page-header">#{msgs['po.new.title']}</h4>
+    </div>
+    <br/>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <!-- Text input-->
             <div class="form-group">
-                <p:outputLabel for="projectName" class="col-sm-4 control-label" value="#{msgs['po.lbl.project']}"/>
+                <p:outputLabel for="projectName" styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.project']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h:inputText id="projectName" type="text"
                                  required="true"
                                  maxlength="50"
@@ -64,25 +67,23 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <div class="form-group">
-                <div class="col-sm-12">
-                    <p:inputTextarea type="text" class="form-control" id="description"
-                                     style="max-height:34px;"
-                                     maxlength="998"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.description}"
-                                     jsf:placeholder="#{msgs['po.ph.description']}"/>
-                    <p:message for="description" />
-                </div>
+                <p:inputTextarea type="text" class="form-control" id="description"
+                                 style="max-height:34px;"
+                                 maxlength="998"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.description}"
+                                 jsf:placeholder="#{msgs['po.ph.description']}"/>
+                <p:message for="description" />
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <p:outputLabel for="po" class="col-sm-4 control-label" value="#{msgs['po.lbl.po']}"/>
+                <p:outputLabel for="po" styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.po']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h:inputText id="po" type="text" jsf:placeholder="#{msgs['po.ph.po']}"
                                  maxlength="50"
                                  required="true"
@@ -95,11 +96,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
+                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.variation']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h:inputText id="variation" maxlength="50" type="text"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.variation}"
                                  jsf:placeholder="#{msgs['po.ph.variation']}" class="form-control"/>
@@ -109,26 +110,13 @@
         </div>
     </div>
     <!-- Text input-->
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.location']}"/>
 
-                <div class="col-sm-8">
-                    <h:inputText id="supplier" type="text" maxlength="50"
-                                 value="#{purchaseOrderCreate.newSupplier.supplier}"
-                                 jsf:placeholder="#{msgs['po.ph.location']}" class="form-control"/>
-                    <p:message for="supplier" />
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
+                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.address']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <p:inputTextarea id="address" maxlength="499" type="text"
                                      style="max-height: 60px;"
                                      value="#{purchaseOrderCreate.newSupplier.address}"
@@ -137,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea id ="addressDescription" maxlength="998" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
                              style="max-height: 60px;" class="form-control"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
@@ -145,12 +133,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.supplier']}"/>
+
+                <div class="col-sm-7">
+                    <h:inputText id="supplier" type="text" maxlength="50"
+                                 value="#{purchaseOrderCreate.newSupplier.supplier}"
+                                 jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
+                    <p:message for="supplier" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="form-group">
+                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label"
                                value="#{msgs['po.lbl.contact.name']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h:inputText id="contactName" maxlength="100" type="text"
                                  value="#{purchaseOrderCreate.newSupplier.contactName}"
                                  jsf:placeholder="#{msgs['po.ph.contact.name']}"
@@ -159,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea maxlength="998" type="text" id="cnDescription"
                              style="max-height: 34px;"
                              value="#{purchaseOrderCreate.newSupplier.contactNameDescription}"
@@ -169,25 +171,40 @@
         </div>
     </div>
     <div class="row">
-        <!-- Text input-->
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.po.title']}"/>
+                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
+                               value="#{msgs['po.lbl.po.delivery.date']}"/>
 
-                <div class="col-sm-8">
-                    <h:inputText id="poTitle" maxlength="50" type="text"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
-                                 jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
-                    <p:message for="poTitle"/>
+                <div class="col-sm-4">
+                    <p:calendar id="deliveryDate" type="text" styleClass="calendar"
+                                navigator="true" mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converter="#{dateConverter}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                timeZone="#{configuration.timeZone}"
+                                onselect="calendarChanges();" onchange="calendarChanges();" >
+                        <p:ajax process="@this" event="dateSelect" />
+                    </p:calendar>
+                    <h:message for="deliveryDate" id="msgDeliveryDate"/>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-3">
+            <p:inputTextarea style="max-height: 34px;" id="poDeliveryDateDescription"
+                             maxlength="998" type="text"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDateDescription}"
+                             jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
+            <p:message for="poDeliveryDateDescription"/>
         </div>
     </div>
     <!-- Text input-->
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label"
                                value="#{msgs['po.lbl.po.inco.term']}"/>
 
                 <div class="col-sm-4">
@@ -200,7 +217,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea style="max-height: 34px;" id="incoTermDescription"
                              maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTermDescription}"
@@ -209,60 +226,44 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <!-- Text input-->
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['po.lbl.po.delivery.date']}"/>
+                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.po.title']}"/>
 
-                <div class="col-sm-4 col-xs-6">
-                    <p:calendar id="deliveryDate" type="text" styleClass="calendar"
-                                navigator="true" mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();" >
-                        <p:ajax process="@this" event="dateSelect" />
-                    </p:calendar>
-                    <h:message for="deliveryDate" id="msgDeliveryDate"/>
+                <div class="col-sm-7">
+                    <h:inputText id="poTitle" maxlength="50" type="text"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
+                                 jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
+                    <p:message for="poTitle"/>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-
-            <p:inputTextarea style="max-height: 34px;" id="poDeliveryDateDescription"
-                             maxlength="998" type="text"
-                             value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDateDescription}"
-                             jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
-            <p:message for="poDeliveryDateDescription"/>
-        </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+        <div class="col-lg-5">
+            <div class="form-group text-left">
+                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.responsible']}"/>
 
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h:inputText id="responsible" type="text" maxlength="100"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpediting}"
                                  jsf:placeholder="#{msgs['po.ph.responsible']}"
-                                 class="form-control"/>
+                                 class="form-control">
+                            <p:ajax event="change"/>
+                     </h:inputText>
                     <p:message for="responsible"/>
                 </div>
             </div>
         </div>
     </div>
+    <ui:include src="components/CreateAdditionalData.xhtml"/>
+    <br/>
     <div class="row">
         <ui:include src="components/CreateScopeSupply.xhtml"/>
     </div>
     <br/>
-
-    <div class="row">
-        <ui:include src="components/CreateAdditionalData.xhtml"/>
-    </div>
-    <br/>
-
     <div class="row">
         <ui:include src="components/CreateAttachments.xhtml"/>
     </div>
@@ -273,15 +274,15 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <div class="pull-right">
-                    <h:commandButton id="save" value="#{msgs['lbl.save']}" class='btn btn-primary'
+                    <h:commandButton id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
                                      action="#{purchaseOrderCreate.doSave}"/>
                     &#160;
-                    <h:commandButton id="add" value="#{msgs['lbl.save.add']}" class='btn btn-primary'
+                    <h:commandButton id="add" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
                                      action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
                     &#160;
                     <h:commandButton id="cancelCreateBtn"
                                      value="#{msgs['lbl.cancel']}"
-                                     class='btn btn-primary'>
+                                     styleClass="btn btn-primary btn-sm">
                         <p:ajax process="@this"
                                 oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
                     </h:commandButton>
@@ -305,12 +306,12 @@
 
         <div class="pull-right">
             <h:commandButton value="#{msgs['lbl.yes']}"
-                             class='btn btn-primary'
+                             styleClass="btn btn-primary btn-sm"
                              immediate="true"
                              action="#{purchaseOrderCreate.cancelCreatePurchaseOrder}">
             </h:commandButton>
             &#160;
-            <button class="btn btn-primary" type="button"
+            <button class="btn btn-primary btn-sm" type="button"
                     onclick="PF('confCancelDlg').hide();">
                 #{msgs['lbl.no']}
             </button>
@@ -322,11 +323,11 @@
     </div>
 
     <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentModal" resizable="false"
-              height="300" width="700">
+              height="250" width="500">
         <ui:include src="modal/CreateModalComment.xhtml"/>
     </p:dialog>
     <p:dialog id="commentModalEditId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentEditModal"
-              resizable="false" height="300" width="700">
+              resizable="false" height="250" width="500">
         <ui:include src="modal/CreateCommentModalEdit.xhtml"/>
     </p:dialog>
     </ui:define>

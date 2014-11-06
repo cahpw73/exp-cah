@@ -29,6 +29,8 @@ public class VPurchaseOrder implements Serializable {
 
     private String supplier;
 
+    private String responsibleExpediting;
+
     @Id
     public Long getId() {
         return id;
@@ -90,5 +92,14 @@ public class VPurchaseOrder implements Serializable {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    @Column(name="responsible_expediting",updatable = false, insertable = false, nullable = true)
+    public String getResponsibleExpediting() {
+        return responsibleExpediting;
+    }
+
+    public void setResponsibleExpediting(String responsibleExpediting) {
+        this.responsibleExpediting = responsibleExpediting;
     }
 }

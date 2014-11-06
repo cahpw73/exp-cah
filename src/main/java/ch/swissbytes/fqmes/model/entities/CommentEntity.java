@@ -1,5 +1,7 @@
 package ch.swissbytes.fqmes.model.entities;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -25,6 +27,9 @@ public class CommentEntity implements Serializable, EntityTbl{
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
+
+    private Boolean justLoaded=false;
+
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -131,6 +136,20 @@ public class CommentEntity implements Serializable, EntityTbl{
         CommentEntity that = (CommentEntity) o;
 
       return that.hashCode()==this.hashCode();
+    }
+
+    @Transient
+    public Boolean getJustLoaded() {
+        return justLoaded;
+    }
+
+    public void setJustLoaded(Boolean justLoaded) {
+        this.justLoaded = justLoaded;
+    }
+
+    @Transient
+    public Boolean canDownload(){
+        return id.intValue()>0&& StringUtils.isNotEmpty(getFileName())&&!justLoaded;
     }
 
     @Override

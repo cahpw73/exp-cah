@@ -4,37 +4,59 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h2 class="sub-header">#{msgs['po.supply.scope.title']}</h2>
+    <h4 class="sub-header">#{msgs['po.supply.scope.title']}</h4>
     <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderCreate.scopeSupplies}" rowKey="#{_index+1}"
                  rowIndexVar="_index">
-        <p:column style="width: 45px;" headerText="#{msgs['po.supply.scope.column.item']}">
-            #{_index+1}
-        </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.code']}">
+        <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" sortFunction="#{sortScopeSupply.sortItemNumber}">
             #{_scopeSupply.code}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}">
+        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}"
+                  sortBy="#{_scopeSupply.quantity}" sortFunction="#{sortScopeSupply.sortQuantity}">
             #{_scopeSupply.quantity}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.unit']}">
+        <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_scopeSupply.unit}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.cost']}">
-            <h:outputText value="#{_scopeSupply.cost}">
-                <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                 locale="#{configuration.langLocalDecimal}"/>
-            </h:outputText>
-        </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.description']}">
+        <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_scopeSupply.description}
         </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}"  sortBy="#{_scopeSupply.spIncoTerm}" sortFunction="#{sortScopeSupply.sortDescription}" >
+            #{_scopeSupply.spIncoTerm}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.original.delivery.date']}" sortBy="#{_scopeSupply.deliveryDate}" sortFunction="#{sortScopeSupply.sortDate}">
+            #{util.toLocal(_scopeSupply.deliveryDate)}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.forecast.ex.works.date']}" sortBy="#{_scopeSupply.exWorkDate}" sortFunction="#{sortScopeSupply.sortDate}">
+            #{util.toLocal(_scopeSupply.exWorkDate)}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.actual.ex.works.date']}" sortBy="#{_scopeSupply.actualExWorkDate}" sortFunction="#{sortScopeSupply.sortDate}">
+            #{util.toLocal(_scopeSupply.actualExWorkDate)}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}" sortFunction="#{sortScopeSupply.sortLeadTime}" >
+            #{_scopeSupply.deliveryLeadTimeQt}
+            &#160;
+            #{_scopeSupply.deliveryLeadTimeMs}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.forecast.site.date']}" sortBy="#{_scopeSupply.siteDate}" sortFunction="#{sortScopeSupply.sortDate}">
+            #{util.toLocal(_scopeSupply.siteDate)}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.required.site.date']}" sortBy="#{_scopeSupply.requiredSiteDate}" sortFunction="#{sortScopeSupply.sortDate}">
+            #{util.toLocal(_scopeSupply.requiredSiteDate)}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.actual.site.date']}" sortBy="#{_scopeSupply.actualSiteDate}" sortFunction="#{sortScopeSupply.sortDate}">
+            #{util.toLocal(_scopeSupply.actualSiteDate)}
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" sortFunction="#{sortScopeSupply.sortDescription}">
+            #{_scopeSupply.responsibleExpediting}
+        </p:column>
+
         <p:column headerText="#{msgs['lbl.action']}" >
-            <h:commandLink value="#{msgs['lbl.delete']}" action="#{purchaseOrderCreate.deleteScopeSupply(_index)}">
+            <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.deleteScopeSupply(_index)}">
                 <p:ajax update="scopeSupplyList"/>
             </h:commandLink>
             &#160;
-            <h:commandLink value="#{msgs['lbl.edit']}" action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
+            <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
         </p:column>
     </p:dataTable>
-    <h:commandButton styleClass="btn btn-primary component-left" action="#{purchaseOrderCreate.cleanScopeSupply}" value="#{msgs['lbl.add.scope.supply']}"/>
+    <h:commandButton styleClass="btn btn-primary btn-sm component-left" action="#{purchaseOrderCreate.cleanScopeSupply}" value="#{msgs['lbl.add.scope.supply']}"/>
 </ui:composition>

@@ -45,6 +45,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(StringUtils.isNotBlank(filter.getSupplier())&&StringUtils.isNotEmpty(filter.getSupplier())){
                 query.setParameter("SUPPLIER","%"+filter.getSupplier().trim()+"%");
             }
+            if(StringUtils.isNotBlank(filter.getResponsibleExpediting())&&StringUtils.isNotEmpty(filter.getResponsibleExpediting())){
+                query.setParameter("RESPONSIBLE_EXPEDITING","%"+filter.getResponsibleExpediting().trim()+"%");
+            }
         }else{
             log.info("filter is null");
         }
@@ -76,6 +79,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if(StringUtils.isNotBlank(filter.getSupplier())&&StringUtils.isNotEmpty(filter.getSupplier())){
                 sb.append(" AND lower(x.supplier) like lower(:SUPPLIER)");
+            }
+            if(StringUtils.isNotBlank(filter.getResponsibleExpediting())&&StringUtils.isNotEmpty(filter.getResponsibleExpediting())){
+                sb.append(" AND lower(x.responsibleExpediting) like lower(:RESPONSIBLE_EXPEDITING)");
             }
         }else{
             log.info("filter is null");

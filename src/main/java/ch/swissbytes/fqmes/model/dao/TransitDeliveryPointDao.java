@@ -4,6 +4,7 @@ import ch.swissbytes.fqmes.model.Filter;
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Util;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -24,16 +25,12 @@ public class TransitDeliveryPointDao extends GenericDao<TransitDeliveryPointEnti
 
     }
 
-  /*  @Override
-    public void save(TransitDeliveryPointEntity entity){
-        if(entity.getLeadTime() == null){
-            entity.setLeadTime(0);
-        }
-        super.save(entity);
-    }*/
+
   @Override
   public <TransitDeliveryPointEntity>  void save(final TransitDeliveryPointEntity entity) {
       ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity transitDeliveryPointEntity = (ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity) entity;
+      transitDeliveryPointEntity.setLocation(Util.cutIfAny(transitDeliveryPointEntity.getLocation(),50));
+      transitDeliveryPointEntity.setComment(Util.cutIfAny(transitDeliveryPointEntity.getLocation(),1000));
       if(transitDeliveryPointEntity.getLeadTime() == null){
           transitDeliveryPointEntity.setLeadTime(0);
       }
@@ -41,6 +38,9 @@ public class TransitDeliveryPointDao extends GenericDao<TransitDeliveryPointEnti
   }
     @Override
     public TransitDeliveryPointEntity update(final TransitDeliveryPointEntity entity) {
+        entity.setLocation(Util.cutIfAny(entity.getLocation(),50));
+        entity.setComment(Util.cutIfAny(entity.getComment(), 1000));
+        //if(entity.getActualDeliveryDate().ge)
         if(entity.getLeadTime() == null){
             entity.setLeadTime(0);
         }

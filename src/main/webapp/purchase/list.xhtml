@@ -10,18 +10,20 @@
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{permissionBean.canAccess(100)}"/>
     </f:metadata>
+
     <ui:define name="body">
         <h:form>
-            <h2 class="sub-header">#{msgs['purchase.order.filter.title']}</h2>
-
+            <div class="title-page">
+                <h4 class="page-header">#{msgs['purchase.order.filter.title.page']}</h4>
+            </div>
+            <h4 class="sub-header">#{msgs['purchase.order.filter.title']}</h4>
+            <br/>
             <div class="col-md-4">
                 <div class='form-row'>
                     <div class='col-xs-12 form-group'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
-                        <p:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
-                                     value="#{ purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"
-                                     maxlength="18">
-                        </p:inputText>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
+                                     value="#{ purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"/>
                     </div>
                 </div>
             </div>
@@ -31,7 +33,7 @@
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
                                      value="#{purchaseOrderListBean.searchPurchase.po}" class='form-control'
-                                     size='4' type='text'/>
+                                     type='text'/>
                     </div>
                 </div>
             </div>
@@ -71,69 +73,86 @@
                 <div class='form-row'>
                     <div class='col-xs-12 form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.lbl.supplier']}"
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
                                      value="#{purchaseOrderListBean.searchPurchase.supplier}" class='form-control'
                                      size='4' type='text'/>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 ">
-                <div class="pull-right ">
-                    <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
-                                     type="submit" class="btn btn-primary" style="margin-top: 25px; "/>
-                    &#160;
-                    <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{purchaseOrderListBean.doSearch}"
-                                     type="submit" class="btn btn-primary" style="margin-top: 25px; margin-right: 15px;"/>
+                <div class='form-row'>
+                    <div class='col-xs-12 form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.responsible']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.hg.responsible']}"
+                                     value="#{purchaseOrderListBean.searchPurchase.responsibleExpediting}" class='form-control'
+                                     size='4' type='text'/>
+                    </div>
                 </div>
             </div>
-            <div class="clearfix"/>
-            <br/>
-            <div>
-                <div class="pull-left">
-                    <h:commandButton rendered="#{permissionBean.hasPermission(101)}" value="Create Purchase Order" action="#{purchaseOrderListBean.redirectCreatePurchaseOrder()}"
-                                     type="submit" class="btn btn-primary"/>
-                </div>
+            <div class="pull-right ">
+                <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
+                                 type="submit" styleClass="btn btn-primary btn-sm" style="margin-top: 25px; "/>
+                &#160;
+                <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{purchaseOrderListBean.doSearch}"
+                                 type="submit" styleClass="btn btn-primary btn-sm" style="margin-top: 25px; margin-right: 15px;"/>
             </div>
             <div class="clearfix"/>
             <br/>
             <br/>
         </h:form>
+        <h4 class="sub-header">#{msgs['purchase.order.list.title']}</h4>
+        <br/>
         <h:form id="purchaseListForm">
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">
-                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}">
+                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="10%">
                     #{_purchase.project}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}">
+                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="10%">
                     #{_purchase.po}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}">
+                <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}" width="10%">
                     #{_purchase.variation}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="30%">
                     #{_purchase.poTitle}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="20%">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['lbl.action']}">
-                    <h:link rendered="#{permissionBean.hasPermission(102)}" value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
-                        <f:param name="poId" value="#{_purchase.poId}"/>
-                    </h:link>
-                    &#160;
-                    <h:link value="#{msgs['lbl.view']}" rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
-                        <f:param name="poId" value="#{_purchase.poId}"/>
-                    </h:link>
-                    &#160;
-                    <h:commandLink value="#{msgs['lbl.delete']}">
-                        <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
-                                oncomplete="PF('deleteDlg').show();"
-                                update=":purchaseListForm:deleteDlgId"/>
-                    </h:commandLink>
+                <p:column headerText="#{msgs['lbl.action']}" width="20%">
+                    <div class="center-button">
+                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" rendered="#{permissionBean.hasPermission(102)}"
+                                value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
+                            <f:param name="poId" value="#{_purchase.poId}"/>
+                        </h:link>
+                        &#160;
+                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.view']}" rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
+                            <f:param name="poId" value="#{_purchase.poId}"/>
+                        </h:link>
+                        &#160;
+                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.delete']}">
+                            <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
+                                    oncomplete="PF('deleteDlg').show();"
+                                    update=":purchaseListForm:deleteDlgId"/>
+                        </h:commandLink>
+                    </div>
                 </p:column>
             </p:dataTable>
+
+            <div class="clearfix"/>
+            <br/>
+            <div>
+                <div class="pull-right">
+                    <h:commandButton rendered="#{permissionBean.hasPermission(101)}" value="Create Purchase Order"
+                                     action="#{purchaseOrderListBean.redirectCreatePurchaseOrder()}"
+                                     type="submit" styleClass="btn btn-primary btn-sm"/>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <br/>
 
             <p:confirmDialog id="deleteDlgId" header="Delete Purchase Order" widgetVar="deleteDlg" >
                 <f:facet name="message">
@@ -150,18 +169,19 @@
                     </div>
                 </f:facet>
                 <div class="pull-right">
-                    <h:commandButton  value="#{msgs['lbl.delete']}" class='btn btn-primary'
+                    <h:commandButton  value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm"
                                       actionListener="#{purchaseOrderListBean.doDeletePurchaseOrder}">
                         <p:ajax onsuccess="PF('deleteDlg').hide();"
                                 process="deleteDlgId"
                                 update=":purchaseListForm"/>
                     </h:commandButton>
                         &#160;
-                    <button class="btn btn-primary" type="button"
+                    <button class="btn btn-primary btn-sm" type="button"
                             onclick="PF('deleteDlg').hide();">
                             #{msgs['lbl.cancel']}</button>
                 </div>
             </p:confirmDialog>
         </h:form>
+
     </ui:define>
 </ui:composition>

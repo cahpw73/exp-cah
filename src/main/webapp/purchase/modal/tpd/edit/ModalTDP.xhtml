@@ -6,22 +6,23 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:form id="TDP" class="form-horizontal" role="form">
-        <div class="form-group">
+        <div>
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.location']}</label>
 
             <div class="col-sm-10">
                 <h:inputText class="form-control" value="#{purchaseOrderEdit.newTdp.location}"
-                             placeholder="Location" maxlength="50"/>
+                             jsf:placeholder="#{msgs['supply.scope.ph.location']}" maxlength="50"/>
             </div>
         </div>
+        <div class="clearfix"></div>
+        <br/>
         <div class="col-sm-4">
-            <div class="form-row">
                 <div class="col-sm-12">
                     <label>#{msgs['tdp.lbl.lead.time']}</label>
                 </div>
                 <div class="col-sm-6">
-                    <h:inputText  class="form-control" value="#{purchaseOrderEdit.newTdp.leadTime}" placeholder="Lead Time">
-                        <f:ajax event="change" execute="@this" listener="#{purchaseOrderEdit.calulateForecasteDateForTdpCreation}" render="forecastDeliveryDateTdp1" />
+                    <h:inputText  class="form-control" value="#{purchaseOrderEdit.newTdp.leadTime}" jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}">
+                        <f:ajax event="change" execute="@this"  listener="#{purchaseOrderEdit.calulateForecasteDateForTdpCreation}" render="forecastDeliveryDateTdp1" />
                     </h:inputText>
                 </div>
                 <div class="col-sm-6">
@@ -31,10 +32,8 @@
                         <f:ajax event="change" execute="@this" listener="#{purchaseOrderEdit.calulateForecasteDateForTdpCreation}" render="forecastDeliveryDateTdp1" />
                     </h:selectOneMenu>
                 </div>
-            </div>
         </div>
         <div class="col-sm-4">
-            <div class="form-row">
                 <label>#{msgs['tdp.lbl.forecast.delivery.date']}</label>
 
                 <p:calendar mask="#{configuration.mask}"
@@ -42,6 +41,8 @@
                             navigator="true"
                             value="#{purchaseOrderEdit.newTdp.forecastDeliveryDate}"
                             pattern="#{configuration.formatDate}"
+                            converter="#{dateConverter}"
+                            timeZone="#{configuration.timeZone}"
                             disabled="#{purchaseOrderEdit.newTdp.getIsForecastSiteDateCalculated()}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{configuration.formatDate}"/>
@@ -51,38 +52,37 @@
                             update=":TDP:forecastDeliveryDateTdp1"
                             listener="#{purchaseOrderEdit.switchModeForecastSiteDateForTdp(false)}"/>
                 </p:selectBooleanButton>
-            </div>
         </div>
         <div class="col-sm-4">
-            <div class="form-row">
                 <label>#{msgs['tdp.lbl.actual.delivery.date']}</label>
                 <p:calendar mask="#{configuration.mask}" navigator="true"
                             pattern="#{configuration.formatDate}"
                             value="#{purchaseOrderEdit.newTdp.actualDeliveryDate}"
+                            timeZone="#{configuration.timeZone}"
+                            converter="#{dateConverter}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{configuration.formatDate}"/>
+        </div>
+        <div class="clearfix"/>
+        <div style="margin-top: 15px;">
+            <label class="col-sm-2 control-label">#{msgs['tdp.lbl.comments']}</label>
+            <div class="col-sm-10">
+                <p:inputTextarea maxlength="500" jsf:placeholder="#{msgs['ph.description']}" value="#{purchaseOrderEdit.newTdp.comment}"/>
             </div>
         </div>
         <div class="clearfix"/>
-        <div class="col-sm-12 form-group" style="margin-top: 15px;">
-            <label class="col-sm-2 control-label">#{msgs['tdp.lbl.comments']}</label>
-            <div class="col-sm-10">
-                <p:inputTextarea maxlength="1000" value="#{purchaseOrderEdit.newTdp.comment}"/>
+        <br/>
+        <div class="col-lg-12">
+            <div class="pull-right">
+                <h:commandButton  value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                                  actionListener="#{purchaseOrderEdit.doSaveTdp}">
+                    <p:ajax onsuccess="PF('tdp').hide();"
+                            process="TDP"
+                            update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit"/>
+                </h:commandButton>
+                <button  type="button" class="btn btn-primary btn-sm"
+                         onclick="PF('tdp').hide();">#{msgs['lbl.cancel']}</button>
             </div>
-        </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <div class="pull-right">
-                        <h:commandButton  value="#{msgs['lbl.save']}" class='btn btn-primary'
-                                          actionListener="#{purchaseOrderEdit.doSaveTdp}">
-                            <p:ajax onsuccess="PF('tdp').hide();"
-                                    process="TDP"
-                                    update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit"/>
-                        </h:commandButton>
-                        <button  type="button" class="btn btn-primary"
-                                 onclick="PF('tdp').hide();">#{msgs['lbl.cancel']}</button>
-                    </div>
-                </div>
         </div>
     </h:form>
 </ui:composition>

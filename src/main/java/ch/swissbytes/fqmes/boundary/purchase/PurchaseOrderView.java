@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.dao.*;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.util.SortScopeSupply;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -40,6 +41,9 @@ public class PurchaseOrderView implements Serializable{
     @Inject
     private AttachmentService attachmentService;
 
+    @Inject
+    private SortScopeSupply sortScopeSupply;
+
     private String purchaseOrderId;
 
     private PurchaseOrderEntity purchaseOrder;
@@ -71,6 +75,9 @@ public class PurchaseOrderView implements Serializable{
             comments=commentService.findByPurchaseOrder(purchaseOrder.getId());
             scopeSupplies=scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
             attachmentEntities=attachmentService.findByPurchaseOrder(purchaseOrder.getId());
+            if(scopeSupplies != null && !scopeSupplies.isEmpty()){
+                sortScopeSupply.sortScopeSupplyEntity(scopeSupplies);
+            }
         }
     }
 

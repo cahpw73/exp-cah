@@ -7,6 +7,8 @@ import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.entities.*;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.Purchase;
+import ch.swissbytes.fqmes.util.SortScopeSupply;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -49,6 +51,9 @@ public class PurchaseOrderCreate implements Serializable {
     @Inject
     private ScopeSupplyBean scopeSupplyBean;
 
+    @Inject
+    private SortScopeSupply sortScopeSupply;
+
     private PurchaseOrderEntity newPurchaseOrder;
 
     private SupplierEntity newSupplier;
@@ -62,8 +67,6 @@ public class PurchaseOrderCreate implements Serializable {
     private Integer indexCommentEditing;
 
     private List<CommentEntity> commentEntities;
-
-    //private List<AttachmentEntity> atachmentEntities;
 
     private List<ScopeSupplyEntity> scopeSupplies;
 
@@ -82,7 +85,6 @@ public class PurchaseOrderCreate implements Serializable {
     private Conversation conversation;
 
 
-
     @PostConstruct
     public void create(){
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
@@ -91,6 +93,13 @@ public class PurchaseOrderCreate implements Serializable {
             conversation.begin();
             conversation.setTimeout(configuration.getTimeOutConversation());
             log.info(String.format("conversation started [%s]",conversation.getTimeout()));
+        }
+    }
+
+    public void load(){
+        log.info("void load()");
+        if(scopeSupplies != null && !scopeSupplies.isEmpty()){
+            sortScopeSupply.sortScopeSupplyEntity(scopeSupplies);
         }
     }
 
@@ -117,6 +126,8 @@ public class PurchaseOrderCreate implements Serializable {
         }
         return "view?faces-redirect=true&poId="+newPurchaseOrder.getId();
     }
+
+
     public String doSaveAndAdd(){
         savePurchase();
         reset();
@@ -281,7 +292,6 @@ public class PurchaseOrderCreate implements Serializable {
         log.info("cleaning scope supply");
 
         String cid=conversation.getId();
-
         return "/purchase/modal/CreateModalScopeSupply?faces-redirect=true&cid="+cid;
     }
 
@@ -328,12 +338,9 @@ public class PurchaseOrderCreate implements Serializable {
     @Named
     @Produces
     public List<ScopeSupplyEntity> getScopeSupplies() {
-        //log.info("producing suppllies");
+        log.info("List<ScopeSupplyEntity> getScopeSupplies()");
         return scopeSupplies;
     }
-
-
-
 
     public ScopeSupplyEntity getEditScopeSupply() {
         return editScopeSupply;
@@ -347,5 +354,15 @@ public class PurchaseOrderCreate implements Serializable {
         date.setYear(0);
         return newPurchaseOrder.getPoDeliveryDate()!=null?newPurchaseOrder.getPoDeliveryDate():date;
     }
+
+    @Purchase
+    @ConversationScoped
+    @Named
+    @Produces
+    public PurchaseOrderEntity getPurchaseOrder(){
+        return (PurchaseOrderEntity)service.clone(newPurchaseOrder);
+    }
+
+
 
 }

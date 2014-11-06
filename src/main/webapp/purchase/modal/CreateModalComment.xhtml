@@ -5,81 +5,63 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 <h:form id="commentFormId" role="form"  prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
         styleClass="form-horizontal">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['po.attach.tbl.column.from']}"/>
-                <div class="col-sm-8">
-                    <h:inputText type="text"
-                                 id="nameComment"
-                                 maxlength="50"
-                                 jsf:placeholder="#{msgs['po.attach.tbl.column.from']}"
-                                 class="form-control"
-                                 value="#{purchaseOrderCreate.newComment.name}"/>
-                </div>
-            </div>
+    <div class="col-sm-12" style="margin-bottom: 10px;">
+        <h:outputLabel class="col-sm-3 control-label"
+                       value="#{msgs['po.attach.tbl.column.from']}"/>
+        <div class="col-sm-9">
+            <h:inputText type="text"
+                         id="nameComment"
+                         maxlength="50"
+                         jsf:placeholder="#{msgs['po.attach.tbl.column.from']}"
+                         class="form-control"
+                         value="#{purchaseOrderCreate.newComment.name}"/>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['po.attach.tbl.column.reason']}"/>
+    <div class="col-sm-12" style="margin-bottom: 10px;">
+        <h:outputLabel class="col-sm-3 control-label"
+                       value="#{msgs['po.attach.tbl.column.reason']}"/>
 
-                <div class="col-sm-8">
-                    <h:inputText type="text"
-                                 id="reasonComment"
-                                 maxlength="50"
-                                 jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
-                                 class="form-control"
-                                 value="#{purchaseOrderCreate.newComment.reason}"/>
-                </div>
-            </div>
+        <div class="col-sm-9">
+            <h:inputText type="text"
+                         id="reasonComment"
+                         maxlength="50"
+                         jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
+                         class="form-control"
+                         value="#{purchaseOrderCreate.newComment.reason}"/>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['po.attach.tbl.column.observations']}"/>
-                <div class="col-sm-8">
-                    <p:inputTextarea type="text" style="height: 34px;" maxlength="1000"
-                                 id="descriptionComment" class="form-control"
-                                 jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
-                                 value="#{purchaseOrderCreate.newComment.description}"/>
-                </div>
-            </div>
+    <div class="col-sm-12" style="margin-bottom: 10px;">
+        <h:outputLabel class="col-sm-3 control-label"
+                       value="#{msgs['po.attach.tbl.column.observations']}"/>
+        <div class="col-sm-9">
+            <p:inputTextarea type="text" style="height: 34px;" maxlength="1000"
+                         id="descriptionComment" class="form-control"
+                         jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
+                         value="#{purchaseOrderCreate.newComment.description}"/>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <p:fileUpload  styleClass="col-sm-4 col-lg-4 col-md-4" fileUploadListener="#{purchaseOrderCreate.handleCommentUpload}" mode="advanced"
-                           update="fileNameDivId"
-                          dragDropSupport="false" auto="true">
-            </p:fileUpload>
-            <h:panelGroup id="fileNameDivId">
-                <div class="col-sm-8">
-                    #{purchaseOrderCreate.newComment.fileName}
-                </div>
-            </h:panelGroup>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <div class="pull-right">
-                    <h:commandButton id="addComment" value="#{msgs['lbl.add']}" class='btn btn-primary'>
-                        <p:ajax onsuccess="PF('commentModal').hide();" update=":empForm:commentList"
-                                listener="#{purchaseOrderCreate.addComment}"
-                                process="nameComment, descriptionComment, reasonComment, addComment"/>
-                    </h:commandButton>
-                    <button  type="button" class="btn btn-primary"
-                             onclick="PF('commentModal').hide();">#{msgs['lbl.cancel']}</button>
-
-                </div>
+    <div class="col-sm-12" style="margin-bottom: 10px;">
+        <p:fileUpload  styleClass="col-sm-4 col-lg-4 col-md-4" fileUploadListener="#{purchaseOrderCreate.handleCommentUpload}" mode="advanced"
+                       update="fileNameDivId"
+                      dragDropSupport="false" auto="true">
+        </p:fileUpload>
+        <h:panelGroup id="fileNameDivId">
+            <div class="col-sm-8">
+                #{purchaseOrderCreate.newComment.fileName}
             </div>
+        </h:panelGroup>
+    </div>
+    <div class="col-sm-12" style="padding-right: 30px;">
+        <div class="pull-right">
+            <h:commandButton id="addComment" value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm">
+                <p:ajax onsuccess="PF('commentModal').hide();" update=":empForm:commentList"
+                        listener="#{purchaseOrderCreate.addComment}"
+                        process="nameComment, descriptionComment, reasonComment, addComment"/>
+            </h:commandButton>
+            <button  type="button" class="btn btn-primary btn-sm"
+                     onclick="PF('commentModal').hide();">#{msgs['lbl.cancel']}</button>
+
         </div>
     </div>
 </h:form>

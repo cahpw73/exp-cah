@@ -50,6 +50,9 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private Boolean isForecastSiteDateManual;
     private String spIncoTerm;
     private String spIncoTermDescription;
+    private String responsibleExpediting;
+    private String responsibleExpeditingObservation;
+
 
     private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
 
@@ -331,6 +334,31 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.spIncoTermDescription = spIncoTermDescription;
     }
 
+    @Column(name="RESPONSIBLE_EXPEDITING",length=100)
+    public String getResponsibleExpediting() {
+        return responsibleExpediting;
+    }
+
+
+    public void setResponsibleExpediting(String responsibleExpediting) {
+        this.responsibleExpediting = responsibleExpediting;
+    }
+
+    @Column(name="RESPONSIBLE_EXPEDITING_OBSERVATION",length=1000)
+    public String getResponsibleExpeditingObservation() {
+        return responsibleExpeditingObservation;
+    }
+
+    public void setResponsibleExpeditingObservation(String responsibleExpeditingObservation) {
+        this.responsibleExpeditingObservation = responsibleExpeditingObservation;
+    }
+
+    @Transient
+    public String getCustomLeadTime(){
+        return Integer.toString(deliveryLeadTimeQt!=null?deliveryLeadTimeQt.intValue():0)+"-"+Integer.toString(deliveryLeadTimeMs.ordinal());
+
+    }
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
@@ -360,6 +388,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         result = 31 * result + (isForecastSiteDateManual != null ? isForecastSiteDateManual.hashCode() : 0);
         result = 31 * result + (spIncoTerm != null ? spIncoTerm.hashCode() : 0);
         result = 31 * result + (spIncoTermDescription != null ? spIncoTermDescription.hashCode() : 0);
+        result = 31 * result + (responsibleExpediting != null ? responsibleExpediting.hashCode() : 0);
+        result = 31 * result + (responsibleExpeditingObservation != null ? responsibleExpeditingObservation.hashCode() : 0);
         return result;
     }
 }

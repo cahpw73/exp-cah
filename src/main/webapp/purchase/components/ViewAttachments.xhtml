@@ -3,10 +3,16 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h2 class="sub-header">#{msgs['po.attachments.title']}</h2>
+    <h4 class="sub-header">#{msgs['po.attachments.title']}</h4>
     <p:dataTable id="commentList" value="#{purchaseOrderView.comments}" rowIndexVar="_index" var="_comment">
+        <p:column headerText="#{msgs['po.attach.tbl.column.date']}">
+
+        </p:column>
         <p:column headerText="#{msgs['po.attach.tbl.column.from']}">
             #{_comment.name}
+        </p:column>
+        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}">
+            #{_comment.reason}
         </p:column>
         <p:column headerText="#{msgs['po.attach.tbl.column.observations']}">
             #{_comment.description}

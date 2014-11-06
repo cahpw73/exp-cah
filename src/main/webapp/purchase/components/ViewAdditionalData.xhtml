@@ -3,16 +3,15 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h2 class="sub-header">#{msgs['po.additional.input.title']}</h2>
+
 
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.introEmail}">
-                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.introEmail)}">
                     </h:outputLabel>
                 </div>
             </div>
@@ -24,11 +23,10 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.requiredDate}">
-                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.requiredDate)}">
                     </h:outputLabel>
                 </div>
             </div>
@@ -40,11 +38,10 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
                 <div class="col-sm-8">
-                    <h:outputLabel value="#{purchaseOrderView.purchaseOrder.actualDate}">
-                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.actualDate)}">
                     </h:outputLabel>
 
                 </div>

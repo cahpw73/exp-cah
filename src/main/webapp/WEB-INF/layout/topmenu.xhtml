@@ -21,7 +21,7 @@
                     <div class="pull-left main-logo">
                         <h:graphicImage name="img/logo-1.jpg"/>
                     </div>
-                    <h:link id="homeLinkId" styleClass="navbar-brand" outcome="/home"> #{msgs['main.title']}</h:link>
+                    <h:link id="homeLinkId" styleClass="navbar-brand lbl-color-df" outcome="/home"> #{msgs['main.title']}</h:link>
 
                 </div>
             </div>
@@ -31,16 +31,16 @@
                 <div class="navbar-header "
                      style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
                         <span class="link-navigation-label">
-                            <h:link id="purchaseOrderId" rendered="#{permissionBean.hasPermission(100)}"
+                            <h:link id="purchaseOrderId" rendered="#{permissionBean.hasPermission(100)}" styleClass="lbl-color-df"
                                     outcome="/purchase/list">#{msgs['top.menu.lbl.purchase.order']}
                             </h:link>
                         </span>
                         <span class="link-navigation-label">
-                            <h:link id="userLinkId" rendered="#{permissionBean.hasPermission(1)}"
+                            <h:link id="userLinkId" rendered="#{permissionBean.hasPermission(1)}" styleClass="lbl-color-df"
                                     outcome="/user/list">#{msgs['top.menu.lbl.user']}</h:link>
                         </span>
                         <span class="link-navigation-label">
-                            <h:link id="reportLinkId" rendered="#{permissionBean.hasPermission(200)}"
+                            <h:link id="reportLinkId" rendered="#{permissionBean.hasPermission(200)}" styleClass="lbl-color-df"
                                     outcome="/report/list">#{msgs['top.menu.lbl.reports']}</h:link>
                         </span>
                 </div>
@@ -49,11 +49,8 @@
             <div class="col-lg-4">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li id="inputSearchId">
-                            <input type="text" class="form-control" placeholder="Search..."/>
-                        </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle"
+                            <a href="#" class="dropdown-toggle" style="color: #ffffff"
                                data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">

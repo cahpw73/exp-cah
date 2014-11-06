@@ -15,6 +15,7 @@ public class LanguagePreference implements Serializable {
     private static final Logger log= Logger.getLogger(LanguagePreference.class.getName());
 
     private String language;
+    private String timeZone;
 
     public String getLanguage() {
         return language;
@@ -23,5 +24,13 @@ public class LanguagePreference implements Serializable {
     public void setLanguage(String language) {
         log.info("setLanguage: "+ language);
         this.language = language;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 }

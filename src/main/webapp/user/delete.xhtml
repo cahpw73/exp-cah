@@ -6,7 +6,7 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:o="http://omnifaces.org/ui">
 
-        <h2>#{msgs['user.delete.title']}</h2>
+        <h4>#{msgs['user.delete.title']}</h4>
         <h:form id="userDeleteForm" class="form-horizontal" role="form">
             <div class="col-md-12">
                 <div class="form-group">
@@ -51,10 +51,10 @@
                 </div>
                 <div>
                     <div class="pull-right">
-                        <h:commandButton value="#{msgs['user.delete.lbl.button.save']}" styleClass="btn btn-primary"
+                        <h:commandButton value="#{msgs['user.delete.lbl.button.save']}" styleClass="btn btn-primary btn-sm"
                                          action="#{userDeleteBean.doSave}"/>
                         &#160;
-                        <button type="button" onclick="PF('deleteUserDlg').hide();" class="btn btn-primary">
+                        <button type="button" onclick="PF('deleteUserDlg').hide();" class="btn btn-primary btn-sm">
                             #{msgs['user.delete.lbl.button.cancel']}
                         </button>
 

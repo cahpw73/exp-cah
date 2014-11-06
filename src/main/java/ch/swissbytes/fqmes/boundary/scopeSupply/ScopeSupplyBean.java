@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.entities.*;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.fqmes.util.Purchase;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
@@ -51,6 +52,11 @@ public class ScopeSupplyBean implements Serializable {
 
     private Integer indexScopeSupplyEditing=-1;
 
+
+    @Inject
+    @Purchase
+    private PurchaseOrderEntity purchaseOrder;
+
     private TransitDeliveryPointEntity tdp;
     private int indexEditingTdp=-1;
     private int temporaryIdForTdp =-1;
@@ -68,6 +74,7 @@ public class ScopeSupplyBean implements Serializable {
             log.info("index invalid");
         }
     }
+
 
     public String doUpdateScopeSupply(){
         if(isValidDataUpdate()){
@@ -116,6 +123,7 @@ public class ScopeSupplyBean implements Serializable {
         if(deliveryDate.getYear()>0){
             newScopeSupply.setDeliveryDate(deliveryDate);
         }
+        newScopeSupply.setResponsibleExpediting(purchaseOrder !=null&&purchaseOrder.getResponsibleExpediting()!=null? purchaseOrder.getResponsibleExpediting().toString():null);
     }
 
     public void setDeliveryDate(Date date){

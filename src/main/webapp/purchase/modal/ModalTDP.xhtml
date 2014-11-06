@@ -6,20 +6,20 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:form id="TDP" class="form-horizontal" role="form">
-        <div class="form-group">
+        <div>
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.location']}</label>
-
             <div class="col-sm-10">
-                <h:inputText class="form-control" maxlength="50" value="#{scopeSupplyBean.tdp.location}" placeholder="Location"/>
+                <h:inputText class="form-control" maxlength="50" value="#{scopeSupplyBean.tdp.location}" jsf:placeholder="#{msgs['supply.scope.ph.location']}"/>
             </div>
         </div>
+        <div class="clearfix"></div>
+        <br/>
         <div class="col-sm-4">
-            <div class="form-row">
                 <div class="col-sm-12">
                     <label>#{msgs['tdp.lbl.lead.time']}</label>
                 </div>
                 <div class="col-sm-6">
-                    <h:inputText id="leadTime1" class="form-control" value="#{scopeSupplyBean.tdp.leadTime}" placeholder="Lead Time">
+                    <h:inputText id="leadTime1" class="form-control" value="#{scopeSupplyBean.tdp.leadTime}" jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}">
                         <f:ajax event="change" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation}" execute="@this" render="forecastDeliveryDateTdp1" />
                      </h:inputText>
                     <h:message for="leadTime1"/>
@@ -31,16 +31,15 @@
                         <f:ajax event="change" execute="@this" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation}" render="forecastDeliveryDateTdp1" />
                     </h:selectOneMenu>
                 </div>
-            </div>
         </div>
         <div class="col-sm-4">
-            <div class="form-row">
                 <label>#{msgs['tdp.lbl.forecast.delivery.date']}</label>
 
                 <p:calendar id="forecastDeliveryDateTdp1"
                             mask="#{configuration.mask}" navigator="true"
                             pattern="#{configuration.formatDate}"
                             disabled="#{scopeSupplyBean.tdp.isForecastSiteDateCalculated}"
+                            converter="#{dateConverter}"
                             value="#{scopeSupplyBean.tdp.forecastDeliveryDate}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{configuration.formatDate}"/>
@@ -52,39 +51,35 @@
                                 listener="#{scopeSupplyBean.switchModeForecastSiteDateForTdp(false)}"/>
                     </p:selectBooleanButton>
                 </div>
-            </div>
         </div>
         <div class="col-sm-4">
-            <div class="form-row">
                 <label>#{msgs['tdp.lbl.actual.delivery.date']}</label>
                 <p:calendar mask="#{configuration.mask}" navigator="true"
                             pattern="#{configuration.formatDate}"
                             value="#{scopeSupplyBean.tdp.actualDeliveryDate}"
+                            converter="#{dateConverter}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{configuration.formatDate}"/>
-            </div>
         </div>
         <div class="clearfix"/>
-        <div class="col-sm-12 form-group" style="margin-top: 15px;">
+        <div style="margin-top: 15px;">
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.comments']}</label>
             <div class="col-sm-10">
-                <p:inputTextarea maxlength="500" value="#{scopeSupplyBean.tdp.comment}"/>
+                <p:inputTextarea maxlength="500" jsf:placeholder="#{msgs['ph.description']}" value="#{scopeSupplyBean.tdp.comment}"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <div class="pull-right">
-                        <h:commandButton  value="#{msgs['lbl.save']}" class='btn btn-primary'
-                                          actionListener="#{scopeSupplyBean.addTransitDeliveryPoint}">
-                            <p:ajax onsuccess="PF('tdp').hide();"
-                                    process="TDP"
-                                    update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forecastSiteDateCreate"/>
-                        </h:commandButton>
-                        <button  type="button" class="btn btn-primary"
-                                 onclick="PF('tdp').hide();">#{msgs['lbl.cancel']}</button>
-                    </div>
-                </div>
+        <div class="clearfix"></div>
+        <br/>
+        <div class="col-lg-12">
+            <div class="pull-right">
+                <h:commandButton  value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                                  actionListener="#{scopeSupplyBean.addTransitDeliveryPoint}">
+                    <p:ajax onsuccess="PF('tdp').hide();"
+                            process="TDP"
+                            update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forecastSiteDateCreate"/>
+                </h:commandButton>
+                <button  type="button" class="btn btn-primary btn-sm"
+                         onclick="PF('tdp').hide();">#{msgs['lbl.cancel']}</button>
             </div>
         </div>
     </h:form>

@@ -4,12 +4,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-    <h2 class="sub-header">#{msgs['po.additional.input.title']}</h2>
+
 
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="introEmailDate" type="text"
@@ -17,12 +17,14 @@
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 jsf:placeholder="#{configuration.formatDate}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
                                 value="#{purchaseOrderEdit.poEdit.introEmail}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea style="max-height: 34px;"
                               maxlength="1000" type="text"
                              value="#{purchaseOrderEdit.poEdit.introEmailDescription}"
@@ -32,7 +34,7 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="requiredSiteDate" type="text"
@@ -40,13 +42,15 @@
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 jsf:placeholder="#{configuration.formatDate}"
+                                timeZone="#{configuration.timeZone}"
+                                converter="#{dateConverter}"
                                 value="#{purchaseOrderEdit.poEdit.requiredDate}"
                                 mask="#{configuration.mask}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea style="max-height: 34px;"
                              maxlength="1000" type="text"
                              value="#{purchaseOrderEdit.poEdit.requiredDateDescription}"
@@ -56,7 +60,7 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="actualSiteDate" type="text"
@@ -64,13 +68,15 @@
                                 mask="#{configuration.mask}"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{purchaseOrderEdit.poEdit.actualDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea style="max-height: 34px;"
                              maxlength="1000" type="text"
                              value="#{purchaseOrderEdit.poEdit.actualDateDescription}"

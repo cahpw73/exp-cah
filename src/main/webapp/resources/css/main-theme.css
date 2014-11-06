@@ -1,8 +1,42 @@
-body {
-    padding-top: 50px;
-    font-size: 14px;
+@font-face {
+    font-family: 'FqDejaVuSans';
+    src: url('../../resources/fonts/DejaVuSans.eot');
+    src: url('../../resources/fonts/DejaVuSans.eot?#iefix') format('embedded-opentype'),
+    url('../../resources/fonts/DejaVuSans.woff') format('woff'),
+    url('../../resources/fonts/DejaVuSans.svg') format('svg'),
+    url('../../resources/fonts/DejaVuSans.otf') format('otf'),
+    url('../../resources/fonts/DejaVuSans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
+body {
+    padding-top: 50px;
+    background: no-repeat;
+    background-color: #EEEEEE;
+    font-family: 'FqDejaVuSans';
+    font-size: 12px;
+}
+
+.ui-datatable thead th {
+    font-family: 'FqDejaVuSans' !important;
+    border-style: none!important;
+    color: #000000;
+    font-weight: normal;
+}
+
+.ui-state-default {
+    box-shadow: none!important;
+}
+
+.navbar-inverse {
+    background-color: #33a3c0;
+    border-color: #000;
+}
+
+.lbl-color-df {
+    color: #ffffff!important;
+}
 
 .ui-inputfield{
     font-weight: normal;
@@ -10,11 +44,90 @@ body {
     outline: medium none;
     padding: 4px;
     width: 100%;
+    font-family:FqDejaVuSans!important;
 }
 
 .forecastSiteDate
 .ui-inputfield{
     width: 70%;
+}
+
+.ui-datatable-data
+.ui-widget-content  {
+    background-color: #EEEEEE;
+    color: #000000;
+    font-family: FqDejaVuSans!important;
+}
+.ui-outputlabel{
+    font-family: FqDejaVuSans!important;
+}
+
+.color-btn-data-table{
+    color: #ffffff!important;
+}
+
+.title-page{
+    align-content: center; margin: 0 auto; text-align: center; vertical-align: middle
+}
+
+.center-button{
+    align-content: center; margin: 0 auto; text-align: center; vertical-align: middle
+}
+
+.ui-datatable thead th,
+.ui-datatable tfoot td {
+    text-align: left!important;
+    background: #EEEEEE !important;
+}
+
+
+.ui-datatable thead th,
+.ui-datatable tbody,
+.ui-datatable tbody tr,
+.ui-datatable tbody td {
+    border-style: none none ridge none!important;
+    border-width: 2px!important;
+}
+
+.ui-paginator,
+.ui-paginator-bottom,
+.ui-widget-header,
+.ui-corner-bottom{
+    background: none!important;
+    border:none!important;
+}
+
+.form-control{
+    font-size: 12px;
+}
+
+.text-lbl-ltr{
+    text-align:left!important; direction: ltr!important;
+}
+.btn {
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 0px 10px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+    border-radius: 5px;
+    font-size: 11px;
+    line-height: 1.5;
+    padding: 0px 10px;
+    min-width: 62px!important;
+    font-weight: lighter;
 }
 
 /* Small devices (celular, 768px and up) */

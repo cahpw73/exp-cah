@@ -8,33 +8,36 @@
 <ui:define name="body">
     <h:form id="scopeSupplyFormId" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
             styleClass="form-horizontal">
-        <br/>
         <script >
             $(document).ready(function() {
                 hasChanges=true;
             });
         </script>
+        <div class="title-page">
+            <h4 class="page-header">#{msgs['poi.title.create']}</h4>
+        </div>
 
-        <h2 class="sub-header">#{msgs['modal.scope.supply.title']}</h2>
 
         <div class="col-lg-8">
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.supply.scope.column.code']}"/>
+                <h:outputLabel class="text-lbl-ltr col-sm-2 control-label" value="#{msgs['po.supply.scope.lbl.code']}"/>
 
                 <div class="col-sm-5">
-                    <h:inputText type="text" jsf:placeholder="#{msgs['po.supply.scope.column.code']}"
+                    <h:inputText type="text" jsf:placeholder="#{msgs['po.supply.scope.ph.code']}"
+                                 id="code"
                                  maxlength="50"
                                  value="#{scopeSupplyBean.newScopeSupply.code}"
                                  class="form-control"/>
+                    <p:message for="code"/>
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="scopeSupplyQuantity" class="col-sm-3 control-label"
-                               value="#{msgs['po.supply.scope.column.quantity']}"/>
+                <p:outputLabel for="scopeSupplyQuantity" class="text-lbl-ltr col-sm-2 control-label"
+                               value="#{msgs['po.supply.scope.lbl.quantity']}"/>
 
                 <div class="col-sm-5">
                     <h:inputText id="scopeSupplyQuantity" type="text"
-                                 jsf:placeholder="#{msgs['po.supply.scope.column.quantity']}"
+                                 jsf:placeholder="#{msgs['po.supply.scope.ph.quantity']}"
                                  value="#{scopeSupplyBean.newScopeSupply.quantity}"
                                  class="form-control scopeSupplyQuantity"
                                  validatorMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
@@ -46,31 +49,35 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
+                <h:outputLabel class="col-sm-2 control-label text-lbl-ltr" value="#{msgs['po.supply.scope.lbl.unit']}"/>
 
                 <div class="col-sm-2">
-                    <p:selectOneMenu id="city" value="#{scopeSupplyBean.newScopeSupply.unit}" effect="fold" editable="true"
+                    <p:selectOneMenu id="unit" value="#{scopeSupplyBean.newScopeSupply.unit}" effect="fold" editable="true"
                                      maxlength="50" style="width: 100%">
                         <f:selectItems value="#{unitOfMeasurement}"/>
                     </p:selectOneMenu>
+                    <p:message for="unit"/>
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label"
+                <h:outputLabel class="col-sm-2 control-label text-lbl-ltr"
                                value="#{msgs['po.supply.scope.column.description']}"/>
 
                 <div class="col-sm-5">
                     <p:inputTextarea maxlength="500" style="height: 75px" autoResize="false"
+                                     id="description"
+                                     jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
                                      value="#{scopeSupplyBean.newScopeSupply.description}"/>
+                    <p:message for="description"/>
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel  class="col-sm-3 control-label"
+                <p:outputLabel  class="col-sm-2 control-label text-lbl-ltr"
                                value="#{msgs['po.supply.scope.column.cost']}"/>
                 <div class="col-sm-5">
                     <div class="col-sm-5"  style="padding-left: 0px;">
                         <h:inputText id="scopeSupplyCost" type="text"
-                                     jsf:placeholder="#{msgs['po.supply.scope.column.cost']}"
+                                     jsf:placeholder="#{msgs['po.supply.scope.ph.cost']}"
                                      value="#{scopeSupplyBean.newScopeSupply.cost}"
                                      class="form-control scopeSupplyCost"
                                      validatorMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
@@ -89,10 +96,11 @@
                     </div>
                     <div class="col-sm-3" style=" margin-left:3px; padding-right: 0px;">
                         <h:inputText id="currencyPrice" type="text" maxlength="5" style="width: 90px;"
-                                     jsf:placeholder="#{msgs['po.supply.scope.lbl.currency']}"
+                                     jsf:placeholder="#{msgs['po.supply.scope.ph.currency']}"
                                      value="#{scopeSupplyBean.newScopeSupply.currency}"
                                      class="form-control currencyPrice"
                                      onkeyup="copyCurrencyLabel();"/>
+                        <p:message for="currencyPrice"/>
                     </div>
                 </div>
                 <div class="col-sm-0">
@@ -101,21 +109,22 @@
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="totalPriceTxt" class="col-sm-3 control-label"
+                <p:outputLabel for="totalPriceTxt" class="text-lbl-ltr col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.column.total.price']}"/>
 
                 <div class="col-sm-5">
                     <h:inputText id="totalPriceTxt" type="text"
-                                 jsf:placeholder="#{msgs['po.supply.scope.column.total.price']}"
+                                 jsf:placeholder="#{msgs['po.supply.scope.ph.cost']}"
                                  value="" disabled="true"
                                  class="form-control totalPriceTxt">
                         <f:convertNumber locale="#{configuration.langLocalDecimal}" pattern="#{configuration.patternDecimal}" />
                         <f:ajax event="keyup" render="@this" execute="@this"/>
                     </h:inputText>
+                    <p:message for="totalPriceTxt"/>
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel for="incoTerm" class="col-sm-3 control-label"
+                <h:outputLabel for="incoTerm" class="text-lbl-ltr col-sm-2 control-label"
                                value="#{msgs['po.supply.scope.lbl.inco.term']}"/>
 
                 <div class="col-sm-2">
@@ -127,16 +136,29 @@
                 </div>
                 <div class="col-sm-3">
                     <p:inputTextarea style="max-height: 34px;"
+                                     id="spIncoTermDescription"
                                      maxlength="998" type="text"
                                      value="#{scopeSupplyBean.newScopeSupply.spIncoTermDescription}"
                                      jsf:placeholder="#{msgs['po.supply.scope.lbl.inco.term.description']}" class="form-control"/>
-
+                    <p:message for="spIncoTermDescription"/>
                 </div>
             </div>
+            <div class="form-group">
+                <h:outputLabel for="incoTerm" class="text-lbl-ltr col-sm-2 control-label"
+                               value="#{msgs['purchase.order.filter.lbl.responsible']}"/>
+                <div class="col-sm-5">
+                    <h:inputText type="text" maxlength="100" id="responsibleExpediting"
+                                 class="form-control"
+                                 value="#{scopeSupplyBean.newScopeSupply.responsibleExpediting}"
+                                jsf:placeholder="#{msgs['purchase.order.filter.hg.responsible']}"/>
+                    <p:message for="responsibleExpediting"/>
+                    </div>
 
+            </div>
         </div>
         <div class="clearfix"/>
-        <h3 class="sub-header">Source</h3>
+        <br/>
+        <h4 class="sub-header">Source</h4>
 
         <div class="row">
             <div class="col-lg-3">
@@ -147,6 +169,7 @@
                     <p:calendar id="deliveryDateId" mask="#{configuration.mask}"
                                 navigator="true" pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{scopeSupplyBean.newScopeSupply.deliveryDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -158,9 +181,11 @@
                     <p:message for="deliveryDateId" id="msgDeliveryDate"/>
 
                     <p:inputTextarea maxlength="998" type="text" style="height: 34px; margin-top: 10px;"
+                                     id="deliveryDateObs"
                                  value="#{scopeSupplyBean.newScopeSupply.deliveryDateObs}" rows="1" autoResize="false"
-                                 jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.delivery.date.observations']}"
                                  class="form-control"/>
+                    <p:message for="deliveryDateObs"/>
                 </div>
             </div>
             <div class="col-lg-3"></div>
@@ -171,6 +196,7 @@
                                 mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{scopeSupplyBean.newScopeSupply.exWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -180,9 +206,11 @@
                                 listener="#{scopeSupplyBean.calculateDate}"/>
                     </p:calendar>
                     <p:inputTextarea maxlength="998" type="text" style="height: 34px; margin-top: 10px;"
+                                     id="exWorkDateDescription"
                                  value="#{scopeSupplyBean.newScopeSupply.exWorkDateDescription}"
                                  jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
                                  class="form-control" />
+                    <p:message for="exWorkDateDescription"/>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -191,6 +219,7 @@
                     <p:calendar mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{scopeSupplyBean.newScopeSupply.actualExWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -201,13 +230,17 @@
                     </p:calendar>
                     <p:inputTextarea maxlength="998" type="text" style="height:34px; margin-top:10px;"
                                  value="#{scopeSupplyBean.newScopeSupply.actualExWorkDateObs}"
-                                 jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
+                                 id="actualExWorkDateObs"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
                                  class="form-control" />
+                    <p:message for="actualExWorkDateObs"/>
                 </div>
             </div>
         </div>
 
-        <h3 class="sub-header">#{msgs['tdp.title']}</h3>
+        <div class="clearfix"></div>
+        <br/>
+        <h4 class="sub-header">#{msgs['tdp.title']}</h4>
         <p:dataTable id="tdpCreate" value="#{scopeSupplyBean.newScopeSupply.tdpList}"
                      var="_tdp" rowIndexVar="_index">
             <p:column headerText="Location">
@@ -219,8 +252,7 @@
                 #{ configuration.getTimeMeasurement(_tdp.measurementTime)}
             </p:column>
             <p:column headerText="#{msgs['tdp.lbl.forecast.delivery.date']}">
-                <h:outputText value="#{_tdp.forecastDeliveryDate}">
-                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                <h:outputText value="#{util.toLocal(_tdp.forecastDeliveryDate)}">
                 </h:outputText>
             </p:column>
             <p:column width="100">
@@ -230,18 +262,18 @@
                               value="#{msgs['lbl.manual']}"/>
             </p:column>
             <p:column headerText="#{msgs['tdp.lbl.actual.delivery.date']}">
-                <h:outputText value="#{_tdp.actualDeliveryDate}">
-                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                <h:outputText value="#{util.toLocal(_tdp.actualDeliveryDate)}">
+
                 </h:outputText>
             </p:column>
-            <p:column headerText="#{msgs['lbl.action']}">
-                <h:commandLink styleClass="btn btn-primary cLink-color-scope-supply" value="#{msgs['lbl.edit']}">
+            <p:column headerText="#{msgs['lbl.actions']}">
+                <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply" value="#{msgs['lbl.edit']}">
                     <p:ajax listener="#{scopeSupplyBean.selectTransitDeliveryPoint(_index)}"
                             update=":TDPEdit"
                             onsuccess="PF('edittdp').show();"/>
                 </h:commandLink>
                 &#160;
-                <h:commandLink styleClass="btn btn-primary cLink-color-scope-supply" value="#{msgs['lbl.delete']}">
+                <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply" value="#{msgs['lbl.delete']}">
                     <p:ajax listener="#{scopeSupplyBean.deleteTransitDeliveryPoint(_index)}"
                             update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forecastSiteDateCreate"/>
                 </h:commandLink>
@@ -250,12 +282,14 @@
         <div class="clearfix"></div>
         <br/>
         <div class="pull-right">
-            <h:commandButton styleClass="btn btn-primary" value="#{msgs['tdp.btn.add']}">
+            <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['tdp.btn.add']}">
                 <p:ajax oncomplete="PF('tdp').show();" listener="#{scopeSupplyBean.cleanTransitDeliveryPoint()}"
                         update=":TDP"></p:ajax>
             </h:commandButton>
         </div>
-        <h3 class="sub-header">#{msgs['supply.scope.split.lbl.destination']}</h3>
+        <div class="clearfix"></div>
+        <br/>
+        <h4 class="sub-header">#{msgs['supply.scope.split.lbl.destination']}</h4>
 
         <div class="row">
             <div class="col-lg-3">
@@ -266,15 +300,18 @@
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{scopeSupplyBean.newScopeSupply.requiredSiteDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                     </p:calendar>
                     <p:message id="msgSiteDate" for="siteDateId"/>
                     <p:inputTextarea style="margin-top: 10px; height: 34px;" maxlength="998" type="text"
+                                     id="requiredSiteDateObs"
                                  value="#{scopeSupplyBean.newScopeSupply.requiredSiteDateObs}"
-                                 jsf:placeholder="#{msgs['supply.scope.ph.site.date.observations']}"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.required.site.date.observations']}"
                                  class="form-control"/>
+                    <p:message for="requiredSiteDateObs"/>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -298,6 +335,7 @@
                                 <p:ajax event="change" update=":scopeSupplyFormId:forecastSiteDateCreate"
                                         listener="#{scopeSupplyBean.calculateDate}"/>
                             </h:inputText>
+                            <p:message for="deliveryLeadTimeQtId"/>
                         </h:panelGroup>
                         <h:selectOneMenu id="measurementUnit" style="margin-left: 5px;"
                                          value="#{scopeSupplyBean.newScopeSupply.deliveryLeadTimeMs}">
@@ -308,9 +346,11 @@
                         </h:selectOneMenu>
                     </h:panelGroup>
                     <p:inputTextarea maxlength="998" type="text" style="margin-top: 10px; height: 34px;"
+                                     id="deliveryLeadTimeDescription"
                                      value="#{scopeSupplyBean.newScopeSupply.getDeliveryLeadTimeDescription}"
-                                     jsf:placeholder="#{msgs['supply.scope.ph.delivery.time.observations']}"
+                                     jsf:placeholder="#{msgs['supply.scope.ph.lead.time.observations']}"
                                      class="form-control"/>
+                    <p:message for="deliveryLeadTimeDescription"/>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -326,6 +366,7 @@
                                     disabled="#{not scopeSupplyBean.newScopeSupply.isForecastSiteDateManual}"
                                     pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
+                                    converter="#{dateConverter}"
                                     jsf:placeholder="#{configuration.formatDate}"
                                     value="#{scopeSupplyBean.newScopeSupply.siteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();"
@@ -342,8 +383,10 @@
                     </h:panelGroup>
                     <p:inputTextarea style="margin-top: 10px; height: 34px;" maxlength="998" type="text"
                                  value="#{scopeSupplyBean.newScopeSupply.siteDateDescription}"
-                                 jsf:placeholder="#{msgs['supply.scope.ph.site.date.observations']}"
+                                 id="siteDateDescription"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.forecast.site.date.observations']}"
                                  class="form-control"/>
+                    <p:message for="siteDateDescription"/>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -352,6 +395,7 @@
                     <p:calendar mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{scopeSupplyBean.newScopeSupply.actualSiteDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -359,8 +403,10 @@
                     </p:calendar>
                     <p:inputTextarea style="margin-top: 5px; height: 34px;" maxlength="998" type="text"
                                  value="#{scopeSupplyBean.newScopeSupply.actualSiteDateObs}"
-                                 jsf:placeholder="#{msgs['supply.scope.ph.site.date.observations']}"
+                                 id="actualSiteDateObs"
+                                 jsf:placeholder="#{msgs['supply.scope.ph.actual.site.date.observations']}"
                                  class="form-control"/>
+                    <p:message for="actualSiteDateObs"/>
                 </div>
             </div>
         </div>
@@ -369,17 +415,17 @@
                 <div class="form-group">
                     <div class="pull-right" style="margin-top: 10px;">
                         <h:commandLink action="#{scopeSupplyBean.addScopeSupply}" value="#{msgs['lbl.save']}"
-                                       class='btn btn-primary'>
+                                       styleClass="btn btn-primary btn-sm">
                         </h:commandLink>
                         &#160;
-                        <h:commandButton id="addScopeSupply" value="#{msgs['lbl.save.add']}" class='btn btn-primary'>
+                        <h:commandButton id="addScopeSupply" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm">
                             <p:ajax listener="#{scopeSupplyBean.addScopeSupplyAndAdd}"
                                     update="scopeSupplyFormId" process="scopeSupplyFormId"/>
                         </h:commandButton>
                         &#160;
                         <h:commandButton onclick="PF('confCancelDlg').show();"
                                          value="#{msgs['lbl.cancel']}"
-                                         class='btn btn-primary'>
+                                         styleClass="btn btn-primary btn-sm">
                             <p:ajax process="@this"/>
                         </h:commandButton>
                     </div>
@@ -401,21 +447,21 @@
             <div class="pull-right">
                 <h:commandButton value="#{msgs['lbl.yes']}" type="submit"
                                  role="button"
-                                 class='btn btn-primary'
+                                 styleClass="btn btn-primary btn-sm"
                                  action="/purchase/create?faces-redirect=true">
                 </h:commandButton>
                 &#160;
-                <button class="btn btn-primary" type="button"
+                <button class="btn btn-primary btn-sm" type="button"
                         onclick="PF('confCancelDlg').hide();">
                     #{msgs['lbl.no']}
                 </button>
             </div>
         </p:confirmDialog>
     </h:form>
-    <p:dialog id="tdpId" header="#{msgs['tdp.create']}" widgetVar="tdp" resizable="false" height="300" width="750">
+    <p:dialog id="tdpId" header="#{msgs['tdp.create']}" widgetVar="tdp" resizable="false" height="280" width="650">
         <ui:include src="ModalTDP.xhtml"/>
     </p:dialog>
-    <p:dialog header="#{msgs['tdp.update']}" widgetVar="edittdp" resizable="false" height="300" width="750">
+    <p:dialog header="#{msgs['tdp.update']}" widgetVar="edittdp" resizable="false" height="280" width="650">
         <ui:include src="ModalTDPEdit.xhtml"/>
     </p:dialog>
     <h:outputScript name="js/calculateTotalPriceCreateScopeSupply.js"/>

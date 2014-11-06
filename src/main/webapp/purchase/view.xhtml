@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:o="http://omnifaces.org/ui"
+                xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/layout/template.xhtml">
 
 <ui:define name="title">Inicio</ui:define>
@@ -16,18 +17,18 @@
     <div class="container">
         <div class="row">
             <o:highlight/>
-
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false">
 
                     <!-- Form Name -->
-                    <h2 class="sub-header">#{msgs['po.view.title']}</h2>
-
+                    <div class="title-page">
+                        <h4 class="sub-header">#{msgs['po.view.title']}</h4>
+                    </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- Text input-->
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.project']}"/>
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.project']}"/>
                                 <div class="col-sm-8">
                                     #{purchaseOrderView.purchaseOrder.project}
                                 </div>
@@ -44,7 +45,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.po']}"/>
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.po']}"/>
                                 <div class="col-sm-8">
                                     #{purchaseOrderView.purchaseOrder.po}
                                 </div>
@@ -54,7 +55,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
                                 <div class="col-sm-8">
                                     #{purchaseOrderView.purchaseOrder.variation}
                                 </div>
@@ -62,25 +63,15 @@
                         </div>
                     </div>
                     <!-- Text input-->
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.location']}"/>
-                                <div class="col-sm-8">
-                                        #{purchaseOrderView.supplierView.supplier}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row"><!---->
                         <div class="col-lg-6">
                             <div class="form-group">
 
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="col-sm-8">
-                                    <h:inputTextarea readonly="true" class="col-sm-7" value="#{purchaseOrderView.supplierView.address}"
-                                                     style="height: auto;"/>
+                                    <h:inputTextarea readonly="true" styleClass="col-sm-7" value="#{purchaseOrderView.supplierView.address}"/>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +82,17 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label"
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.supplier']}"/>
+                                <div class="col-sm-8">
+                                    #{purchaseOrderView.supplierView.supplier}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
                                 <div class="col-sm-8">
@@ -104,21 +105,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- Text input-->
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label" value="#{msgs['po.lbl.po.title']}"/>
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                                               value="#{msgs['po.lbl.po.delivery.date']}"/>
+
                                 <div class="col-sm-8">
-                                    #{purchaseOrderView.purchaseOrder.poTitle}
+                                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.poDeliveryDate)}">
+                                    </h:outputLabel>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-6">
+                            #{purchaseOrderView.purchaseOrder.poDeliveryDateDescription}
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label"
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
                                 <div class="col-sm-8">
                                     #{purchaseOrderView.purchaseOrder.poIncoTerm}
@@ -130,27 +136,22 @@
 
                         </div>
                     </div>
+
                     <div class="row">
+                        <!-- Text input-->
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label"
-                                               value="#{msgs['po.lbl.po.delivery.date']}"/>
-
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.po.title']}"/>
                                 <div class="col-sm-8">
-                                   <h:outputLabel value="#{purchaseOrderView.purchaseOrder.poDeliveryDate}">
-                                       <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                   </h:outputLabel>
+                                    #{purchaseOrderView.purchaseOrder.poTitle}
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            #{purchaseOrderView.purchaseOrder.poDeliveryDateDescription}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <h:outputLabel class="col-sm-4 control-label"
+                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
                                 <div class="col-sm-8">
                                     #{purchaseOrderView.purchaseOrder.responsibleExpediting}
@@ -159,20 +160,21 @@
                         </div>
                     </div>
 
-
-                    <ui:include src="components/ViewScopeSupply.xhtml"/>
                     <ui:include src="components/ViewAdditionalData.xhtml"/>
+                    <div class="clearfix"></div>
+                    <br/>
+                    <ui:include src="components/ViewScopeSupply.xhtml"/>
+                    <div class="clearfix"></div>
+                    <br/>
                     <ui:include src="components/ViewAttachments.xhtml"/>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <h:link value="#{msgs['lbl.edit']}" class='btn btn-primary' outcome="/purchase/edit"
-                                            rendered="#{permissionBean.hasPermission(102)}"
-                                                     type='submit'>
-                                        <f:param name="poId" value="#{purchaseOrderView.purchaseOrder.id}"/>
-                                    </h:link>
-                                </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <h:link value="#{msgs['lbl.edit']}" class='btn btn-primary btn-sm' outcome="/purchase/edit"
+                                        rendered="#{permissionBean.hasPermission(102)}"
+                                                 type='submit'>
+                                    <f:param name="poId" value="#{purchaseOrderView.purchaseOrder.id}"/>
+                                </h:link>
                             </div>
                         </div>
                     </div>

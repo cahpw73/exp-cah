@@ -5,12 +5,10 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-    <h2 class="sub-header">#{msgs['po.additional.input.title']}</h2>
-
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
 
                 <div class="col-sm-4 col-xs-6">
@@ -19,24 +17,26 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.introEmail}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                     </p:calendar>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea style="max-height: 34px;" id="introEmailDescription"
                              maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.introEmailDescription}"
-                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
+                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}"
+                             styleClass="form-control"/>
             <p:message for="introEmailDescription"/>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.req.site.date']}"/>
 
                 <div class="col-sm-4 col-sm-6">
@@ -45,13 +45,14 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.requiredDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                     </p:calendar>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea maxlength="998" type="text" id="requiredDateDescription"
                              style="max-height: 34px;"
                              value="#{purchaseOrderCreate.newPurchaseOrder.requiredDateDescription}"
@@ -60,9 +61,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
+                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
                 <div class="col-sm-4 col-xs-6">
                     <p:calendar id="actualSiteDate" type="text"
@@ -70,13 +71,14 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
                                 value="#{purchaseOrderCreate.newPurchaseOrder.actualDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                      </p:calendar>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-3">
             <p:inputTextarea style="max-height: 34px;" id="actualDateDescription"
                              maxlength="998" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.actualDateDescription}"
