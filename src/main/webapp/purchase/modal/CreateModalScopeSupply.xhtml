@@ -243,28 +243,25 @@
         <h4 class="sub-header">#{msgs['tdp.title']}</h4>
         <p:dataTable id="tdpCreate" value="#{scopeSupplyBean.newScopeSupply.tdpList}"
                      var="_tdp" rowIndexVar="_index">
-            <p:column headerText="Location">
+            <p:column headerText="Location" sortBy="#{_tdp.location}" sortFunction="#{sortScopeSupply.sortDescription}">
                 #{_tdp.location}
             </p:column>
-            <p:column headerText="#{msgs['tdp.lbl.lead.time']}">
+            <p:column headerText="#{msgs['tdp.lbl.lead.time']}" sortBy="#{_tdp.customLeadTime}" sortFunction="#{sortScopeSupply.sortLeadTime}">
                 #{_tdp.leadTime}
                 &#160;
                 #{ configuration.getTimeMeasurement(_tdp.measurementTime)}
             </p:column>
-            <p:column headerText="#{msgs['tdp.lbl.forecast.delivery.date']}">
-                <h:outputText value="#{util.toLocal(_tdp.forecastDeliveryDate)}">
-                </h:outputText>
+            <p:column headerText="#{msgs['tdp.lbl.forecast.delivery.date']}" sortBy="#{_tdp.forecastDeliveryDate}" sortFunction="#{sortScopeSupply.sortDate}">
+                #{util.toLocal(_tdp.forecastDeliveryDate)}
             </p:column>
-            <p:column width="100">
+            <p:column width="100"  sortBy="#{_tdp.isForecastSiteDateCalculated}" sortFunction="#{sortScopeSupply.sortDescription}">
                 <h:outputText rendered="#{_tdp.isForecastSiteDateCalculated}"
                               value="#{msgs['lbl.automatic']}"/>
                 <h:outputText rendered="#{! _tdp.isForecastSiteDateCalculated}"
                               value="#{msgs['lbl.manual']}"/>
             </p:column>
-            <p:column headerText="#{msgs['tdp.lbl.actual.delivery.date']}">
-                <h:outputText value="#{util.toLocal(_tdp.actualDeliveryDate)}">
-
-                </h:outputText>
+            <p:column headerText="#{msgs['tdp.lbl.actual.delivery.date']}" sortBy="#{_tdp.actualDeliveryDate}" sortFunction="#{sortScopeSupply.sortDate}">
+                #{util.toLocal(_tdp.actualDeliveryDate)}
             </p:column>
             <p:column headerText="#{msgs['lbl.actions']}">
                 <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply" value="#{msgs['lbl.edit']}">

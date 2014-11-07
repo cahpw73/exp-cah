@@ -41,6 +41,7 @@
                         locale="#{configuration.langLocalCalendar}"
                         timeZone="#{configuration.timeZone}"
                         converter="#{dateConverter}"
+                        pattern="#{configuration.formatDate}"
                         converterMessage="#{msgs['validator.date.invalid']}"
                         jsf:placeholder="#{configuration.formatDate}"/>
 
@@ -57,6 +58,7 @@
                         locale="#{configuration.langLocalCalendar}"
                         value="#{purchaseOrderEdit.tdpEdit.actualDeliveryDate}"
                         timeZone="#{configuration.timeZone}"
+                        pattern="#{configuration.formatDate}"
                         converter="#{dateConverter}"
                         converterMessage="#{msgs['validator.date.invalid']}"
                         jsf:placeholder="#{configuration.formatDate}"/>

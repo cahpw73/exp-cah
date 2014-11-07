@@ -42,6 +42,14 @@ public class Util {
         }
         return null;
     }
+    public Date toLocalDate(Date date){
+        if(date!=null){
+            DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
+            long local = zone.convertUTCToLocal(date.getTime());
+            return new Date(local);
+        }
+        return null;
+    }
 
 
 

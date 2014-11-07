@@ -346,14 +346,6 @@ public class PurchaseOrderCreate implements Serializable {
         return editScopeSupply;
     }
 
-    @ConversationScoped
-    @Named
-    @Produces
-    public Date getDeliveryDate(){
-        Date date=new Date();
-        date.setYear(0);
-        return newPurchaseOrder.getPoDeliveryDate()!=null?newPurchaseOrder.getPoDeliveryDate():date;
-    }
 
     @Purchase
     @ConversationScoped

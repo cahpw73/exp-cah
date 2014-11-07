@@ -117,8 +117,6 @@ public class Configuration implements Serializable {
     }
 
     public String getTimeZone(){
-        System.out.println("TIME ZONE!!!!!!!!!!!!!!!!");
-        System.out.println(StringUtil.isNotNull(languagePreference.getTimeZone())?languagePreference.getTimeZone(): TimeZone.getDefault().getID());
         return StringUtil.isNotNull(languagePreference.getTimeZone())?languagePreference.getTimeZone(): TimeZone.getDefault().getID();
     }
 

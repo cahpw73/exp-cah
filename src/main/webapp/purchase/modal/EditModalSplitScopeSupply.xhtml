@@ -271,11 +271,10 @@
                     </h:commandButton>
                     &#160;
 
-                    <h:commandButton onclick="PF('confCancelDlg').show();"
-                                     value="#{msgs['lbl.cancel']}"
-                                     styleClass="btn btn-primary btn-sm">
-                        <p:ajax process="@this"/>
-                    </h:commandButton>
+                    <button class="btn btn-primary btn-sm" type="button"
+                            onclick="PF('confCancelDlg').show();">
+                        #{msgs['lbl.cancel']}
+                    </button>
                 </div>
             </div>
         </div>

@@ -142,6 +142,11 @@ public class TransitDeliveryPointEntity implements EntityTbl{
         this.isForecastSiteDateCalculated = isForecastSiteDateCalculated;
     }
 
+    @Transient
+    public String getCustomLeadTime(){
+        return Integer.toString(leadTime!=null?leadTime.intValue():0)+"-"+Integer.toString(measurementTime.ordinal());
+
+    }
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;

@@ -5,20 +5,20 @@
 
     <h4 class="sub-header">#{msgs['po.attachments.title']}</h4>
     <p:dataTable id="commentList" value="#{purchaseOrderEdit.activeComments}" rowIndexVar="_index" var="_comment">
-        <p:column headerText="#{msgs['po.attach.tbl.column.date']}" style="width: 20%;">
+        <p:column headerText="#{msgs['po.attach.tbl.column.date']}" style="width: 20%;" >
 
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" style="width: 15%;">
+        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" style="width: 15%;" sortBy="#{_comment.name}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_comment.name}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" style="width: 15%;">
+        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" style="width: 15%;" sortBy="#{_comment.reason}"  sortFunction="#{sortScopeSupply.sortDescription}">
             #{_comment.reason}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" style="width: 20%;">
+        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" style="width: 20%;" sortBy="#{_comment.description}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_comment.description}
         </p:column>
-        <p:column headerText="#{msgs['lbl.attachment']}" style="width: 20%;">
-            #{_comment.fileName}
+        <p:column headerText="#{msgs['lbl.attachment']}" style="width: 20%;" sortBy="#{_comment.fileName}" sortFunction="#{sortScopeSupply.sortDescription}">
+            <h:commandLink styleClass="#{not _comment.canDownload()?'disabled':''}" action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_comment.id)}"  disabled="#{not _comment.canDownload()}" value="#{_comment.fileName}"/>
         </p:column>
         <p:column headerText="#{msgs['lbl.action']}" style="width: 30%;">
             <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table">
@@ -28,11 +28,6 @@
             <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table">
                 <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId" process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
             </h:commandLink>
-            &#160;
-            <h:panelGroup rendered="#{_comment.fileName ne null}">
-                <h:commandLink action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_comment.id)}" rendered="#{_comment.canDownload()}" value="#{msgs['lbl.download']}"
-                               styleClass="btn btn-primary btn-sm color-btn-data-table"/>
-            </h:panelGroup>
         </p:column>
 
     </p:dataTable>

@@ -5,19 +5,19 @@
 
     <h4 class="sub-header">#{msgs['po.attachments.title']}</h4>
     <p:dataTable id="commentList" value="#{purchaseOrderView.comments}" rowIndexVar="_index" var="_comment">
-        <p:column headerText="#{msgs['po.attach.tbl.column.date']}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.date']}"  >
 
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.from']}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" sortBy="#{_comment.name}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_comment.name}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" sortBy="#{_comment.reason}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_comment.reason}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}" sortFunction="#{sortScopeSupply.sortDescription}">
             #{_comment.description}
         </p:column>
-        <p:column headerText="#{msgs['lbl.attachment']}">
+        <p:column headerText="#{msgs['lbl.attachment']}" sortBy="#{_comment.fileName}" sortFunction="#{sortScopeSupply.sortDescription}">
             <h:commandLink action="#{purchaseOrderView.downloadAttachedFileOnComment(_comment.id)}" rendered="#{not empty _comment.fileName}" value="#{_comment.fileName}"/>
         </p:column>
     </p:dataTable>

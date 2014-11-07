@@ -82,8 +82,8 @@
             <div class="col-md-4 pull-right">
                 <div class='form-row'>
                     <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.responsible']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.hg.responsible']}"
+                        <label class='control-label'>#{msgs['po.supply.scope.column.r.expediting']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
                                      value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
                                      size='4' type='text'/>
                     </div>
@@ -111,19 +111,22 @@
                 <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="10%">
                     #{_purchase.project}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="10%">
+                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="8%">
                     #{_purchase.po}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}" width="10%">
                     #{_purchase.variation}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="30%">
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="20%">
                     #{_purchase.poTitle}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="20%">
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="15%">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['lbl.action']}" width="10%">
+                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="17%">
+                    #{_purchase.responsibleExpediting}
+                </p:column>
+                <p:column headerText="#{msgs['lbl.action']}" width="20%">
                     <div class="center-button">
                         <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['report.purchase.order.link.add']}">
                                 <p:ajax  update=":purchaseList:listSelected" listener="#{reportBean.addPurchaseOrder(_purchase.poId)}"></p:ajax>

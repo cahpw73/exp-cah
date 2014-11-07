@@ -1,9 +1,12 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Collections;
@@ -19,6 +22,9 @@ import java.util.regex.Pattern;
 @Named
 @RequestScoped
 public class SortScopeSupply implements Serializable {
+
+    @Inject
+    private Util util;
 
     public void sortScopeSupplyEntity(List<ScopeSupplyEntity> list) {
         Comparator<ScopeSupplyEntity> comparator = new Comparator<ScopeSupplyEntity>() {
@@ -42,6 +48,7 @@ public class SortScopeSupply implements Serializable {
     public boolean matchRegexAtLeastOne(String code1, String code2) {
         return matchRegex(code1) || matchRegex(code2);
     }
+
 
 
     public int sortItemNumber(Object val1, Object val2) {
@@ -85,23 +92,47 @@ public class SortScopeSupply implements Serializable {
     }
 
     public int sortDescription(Object val1, Object val2) {
+        System.out.println("val1 "+val1.toString());
+        System.out.println("val2 "+val2.toString());
         String desc1 = val1.toString();
         String desc2 = val2.toString();
-        return desc1.compareTo(desc2);
+        return desc1.toLowerCase().compareTo(desc2.toLowerCase());
     }
     public int sortDate(Object val1, Object val2) {
-        Date dateA = val1!=null?(Date)val1:null;
-        Date dateB = val1!=null?(Date)val1:null;
-        return dateA.getTime()<dateB.getTime()?-1:1;
+
+        Date dateA = val1!=null?util.toLocalDate((Date) val1):null;
+        Date dateB = val2!=null?util.toLocalDate((Date)val2):null;
+
+        return dateA.compareTo(dateB);
     }
     public int sortLeadTime(Object val1, Object val2) {
         String []leadA = val1.toString().split("-");
         String []leadB = val2.toString().split("-");
-        if(Integer.parseInt(leadA[0])==Integer.parseInt(leadB[0])){
-            return Integer.parseInt(leadA[1])<Integer.parseInt(leadB[1])?-1:1;
-        }else{
-            return Integer.parseInt(leadA[0])<Integer.parseInt(leadB[0])?-1:1;
+        int daysA=Integer.parseInt(leadA[0]);
+        int daysB=Integer.parseInt(leadB[0]);
+        switch (Integer.parseInt(leadB[1])){
+            case 1:
+                daysB=daysB*7;
+                break;
+            case 2:
+                daysB=daysB*30;
+                break;
+            case 3:
+                daysB=daysB*365;
+                break;
         }
+        switch (Integer.parseInt(leadA[1])){
+            case 1:
+                daysA=daysA*7;
+                break;
+            case 2:
+                daysA=daysA*30;
+                break;
+            case 3:
+                daysA=daysA*365;
+                break;
+        }
+        return daysA<daysB?-1:1;
 
     }
 

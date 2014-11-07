@@ -66,6 +66,34 @@ body {
     color: #ffffff!important;
 }
 
+/*.ui-dialog,
+.ui-widget,
+.ui-widget-content{
+    font-family: FqDejaVuSans;
+}*/
+.ui-widget {
+    font-family: FqDejaVuSans!important;
+    font-size: 12px;
+}
+/*.ui-widget input{
+    font-family: FqDejaVuSans!important;
+}
+
+.widget button{
+    font-family: FqDejaVuSans!important;
+}*/
+
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button{
+    font-family: FqDejaVuSans!important;
+    font-size: 12px;
+}
+.ui-widget button{
+    font-size: 11px!important;
+}
+
 .title-page{
     align-content: center; margin: 0 auto; text-align: center; vertical-align: middle
 }
@@ -123,7 +151,7 @@ body {
 
 .btn-sm, .btn-group-sm > .btn {
     border-radius: 5px;
-    font-size: 11px;
+    font-size: 11px!important;
     line-height: 1.5;
     padding: 0px 10px;
     min-width: 62px!important;

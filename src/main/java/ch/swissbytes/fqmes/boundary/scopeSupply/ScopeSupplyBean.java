@@ -40,8 +40,6 @@ public class ScopeSupplyBean implements Serializable {
     @Inject
     private List<ScopeSupplyEntity>scopeSupplies;
 
-    @Inject
-    private Date deliveryDate;
 
     @Inject
     private TransitDeliveryPointService tdpService;
@@ -115,15 +113,13 @@ public class ScopeSupplyBean implements Serializable {
     public void create(){
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
         newScopeSupply=new ScopeSupplyEntity();
-        //editScopeSupply = new ScopeSupplyEntity();
         tdp=new TransitDeliveryPointEntity();
         tdp.setIsForecastSiteDateCalculated(true);
         newScopeSupply.setIsForecastSiteDateManual(false);
         newScopeSupply.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
-        if(deliveryDate.getYear()>0){
-            newScopeSupply.setDeliveryDate(deliveryDate);
-        }
         newScopeSupply.setResponsibleExpediting(purchaseOrder !=null&&purchaseOrder.getResponsibleExpediting()!=null? purchaseOrder.getResponsibleExpediting().toString():null);
+        newScopeSupply.setRequiredSiteDate(purchaseOrder.getRequiredDate());
+        newScopeSupply.setDeliveryDate(purchaseOrder.getPoDeliveryDate());
     }
 
     public void setDeliveryDate(Date date){
