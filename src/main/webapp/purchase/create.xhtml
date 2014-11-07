@@ -53,9 +53,9 @@
         <div class="col-lg-5">
             <!-- Text input-->
             <div class="form-group">
-                <p:outputLabel for="projectName" styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.project']}"/>
+                <p:outputLabel for="projectName" styleClass="col-6-po col-sm-6 text-lbl-ltr control-label" value="#{msgs['po.lbl.project']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="projectName" type="text"
                                  required="true"
                                  maxlength="50"
@@ -81,9 +81,9 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <p:outputLabel for="po" styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.po']}"/>
+                <p:outputLabel for="po" styleClass="col-6-po text-lbl-ltr col-sm-6 control-label" value="#{msgs['po.lbl.po']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="po" type="text" jsf:placeholder="#{msgs['po.ph.po']}"
                                  maxlength="50"
                                  required="true"
@@ -98,9 +98,9 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.variation']}"/>
+                <h:outputLabel styleClass="col-6-po text-lbl-ltr col-sm-6 control-label" value="#{msgs['po.lbl.variation']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="variation" maxlength="50" type="text"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.variation}"
                                  jsf:placeholder="#{msgs['po.ph.variation']}" class="form-control"/>
@@ -114,9 +114,9 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.address']}"/>
+                <h:outputLabel styleClass="col-6-po text-lbl-ltr col-sm-6 control-label" value="#{msgs['po.lbl.address']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <p:inputTextarea id="address" maxlength="499" type="text"
                                      style="max-height: 60px;"
                                      value="#{purchaseOrderCreate.newSupplier.address}"
@@ -135,9 +135,9 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.supplier']}"/>
+                <h:outputLabel styleClass="col-6-po text-lbl-ltr col-sm-6 control-label" value="#{msgs['po.lbl.supplier']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="supplier" type="text" maxlength="50"
                                  value="#{purchaseOrderCreate.newSupplier.supplier}"
                                  jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
@@ -149,10 +149,10 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label"
+                <h:outputLabel styleClass="col-6-po text-lbl-ltr col-sm-6 control-label"
                                value="#{msgs['po.lbl.contact.name']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="contactName" maxlength="100" type="text"
                                  value="#{purchaseOrderCreate.newSupplier.contactName}"
                                  jsf:placeholder="#{msgs['po.ph.contact.name']}"
@@ -173,7 +173,7 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
+                <h:outputLabel styleClass="col-6-po col-sm-6 control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.po.delivery.date']}"/>
 
                 <div class="col-sm-4">
@@ -204,7 +204,7 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label"
+                <h:outputLabel styleClass="col-6-po text-lbl-ltr col-sm-6 control-label"
                                value="#{msgs['po.lbl.po.inco.term']}"/>
 
                 <div class="col-sm-4">
@@ -229,9 +229,9 @@
         <!-- Text input-->
         <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel styleClass="text-lbl-ltr col-sm-5 control-label" value="#{msgs['po.lbl.po.title']}"/>
+                <h:outputLabel styleClass="col-6-po text-lbl-ltr col-sm-6 control-label" value="#{msgs['po.lbl.po.title']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="poTitle" maxlength="50" type="text"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
                                  jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
@@ -243,10 +243,10 @@
     <div class="row">
         <div class="col-lg-5">
             <div class="form-group text-left">
-                <h:outputLabel styleClass="col-sm-5 control-label text-lbl-ltr"
+                <h:outputLabel styleClass="col-6-po col-sm-6 control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.responsible']}"/>
 
-                <div class="col-sm-7">
+                <div class="col-sm-7 col-7-po">
                     <h:inputText id="responsible" type="text" maxlength="100"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpediting}"
                                  jsf:placeholder="#{msgs['po.ph.responsible']}"

@@ -21,18 +21,18 @@
     </div>
         <div  class="col-lg-8">
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.supply.scope.lbl.code']}"/>
+                <h:outputLabel class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.lbl.code']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText type="text" maxlength="50" jsf:placeholder="#{msgs['po.supply.scope.ph.code']}"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.code}"
                                  class="form-control"/>
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="scopeSupplyQuantity" class="col-sm-3 control-label" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
+                <p:outputLabel for="scopeSupplyQuantity" class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText id="scopeSupplyQuantity" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.ph.quantity']}"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.quantity}"
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
+                <h:outputLabel class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.lbl.unit']}"/>
 
                 <div class="col-sm-2">
                     <p:selectOneMenu id="unit" value="#{purchaseOrderEdit.scopeSupplyEdit.unit}"
@@ -57,10 +57,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['po.supply.scope.column.description']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <p:inputTextarea id="description" maxlength="1000" style="height: 75px" autoResize="false"
                                      jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEdit.description}"/>
@@ -68,10 +68,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="scopeSupplyCost" class="col-sm-3 control-label"
+                <p:outputLabel for="scopeSupplyCost" class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['po.supply.scope.column.cost']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="col-sm-5"  style="padding-left: 0px;">
                     <h:inputText id="scopeSupplyCost" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.ph.cost']}"
@@ -92,7 +92,7 @@
                                        value="#{msgs['po.supply.scope.lbl.currency']}"/>
                     </div>
                     <div class="col-sm-3" style=" margin-left:3px; padding-right: 0px;">
-                        <h:inputText type="text" maxlength="5" style="width: 90px;"
+                        <h:inputText type="text" maxlength="5" style="width: 115px;"
                                      id="currency"
                                      jsf:placeholder="#{msgs['po.supply.scope.ph.currency']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEdit.currency}"
@@ -102,15 +102,15 @@
                     </div>
                 </div>
                 <div class="col-sm-0">
-                    <p:outputLabel class="col-sm-3 control-label"
+                    <p:outputLabel class="col-sm-3 control-label text-lbl-ltr col-3-poi-lbl" style="padding-left: 0px;"
                                    value="ISO 4217 Currency Code"/>
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="totalPriceTxt" class="col-sm-3 control-label"
+                <p:outputLabel for="totalPriceTxt" class="col-sm-4 col-4-poi control-label text-lbl-ltr"
                                value="#{msgs['po.supply.scope.column.total.price']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText id="totalPriceTxt" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.total.price']}"
                                  value="" disabled="true"
@@ -123,7 +123,7 @@
             </div>
 
             <div class="form-group">
-                <h:outputLabel for="incoTerm" class="col-sm-3 control-label"
+                <h:outputLabel for="incoTerm" class="col-sm-4 col-4-poi control-label text-lbl-ltr"
                                value="#{msgs['po.supply.scope.lbl.inco.term']}"/>
 
                 <div class="col-sm-2">
@@ -134,7 +134,7 @@
                     </p:selectOneMenu>
                     <p:message for="incoTerm"/>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <p:inputTextarea style="max-height: 34px;"
                                      id="incoTermDescription"
                                      maxlength="1000" type="text"
@@ -145,9 +145,9 @@
 
             </div>
             <div class="form-group">
-                <h:outputLabel for="incoTerm" class="text-lbl-ltr col-sm-2 control-label"
+                <h:outputLabel for="incoTerm" class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['purchase.order.filter.lbl.responsible']}"/>
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText type="text" maxlength="100" id="responsibleExpediting"
                                  class="form-control"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.responsibleExpediting}"
@@ -243,7 +243,8 @@
                 </div>
             </div>
         </div>
-
+    <div class="clearfix"></div>
+    <br/>
         <h4 class="sub-header">#{msgs['tdp.title']}</h4>
         <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.scopeSupplyEdit.tdpList}"
                      var="_tdp" rowIndexVar="_index">

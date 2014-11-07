@@ -6,49 +6,54 @@
 
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
-                <div class="col-sm-8">
-                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.introEmail)}">
-                    </h:outputLabel>
+                <div class="col-sm-7 col-7-po">
+                    <div class="form-control view-po">
+                        <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.introEmail)}"/>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            #{purchaseOrderView.purchaseOrder.introEmailDescription}
+        <div class="col-sm-4">
+            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+                             value="#{purchaseOrderView.purchaseOrder.introEmailDescription}"/>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
-                <div class="col-sm-8">
-                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.requiredDate)}">
-                    </h:outputLabel>
+                <div class="col-sm-7 col-7-po">
+                    <div class="form-control view-po">
+                        <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.requiredDate)}"/>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            #{purchaseOrderView.purchaseOrder.requiredDateDescription}
+        <div class="col-sm-4">
+            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+                             value="#{purchaseOrderView.purchaseOrder.requiredDateDescription}"/>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="form-group">
-                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
-                <div class="col-sm-8">
-                    <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.actualDate)}">
-                    </h:outputLabel>
-
+                <div class="col-sm-7 col-7-po">
+                    <div class="form-control view-po">
+                        <h:outputLabel value="#{util.toLocal(purchaseOrderView.purchaseOrder.actualDate)}"/>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            #{purchaseOrderView.purchaseOrder.actualDateDescription}
+        <div class="col-sm-4">
+            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+                             value="#{purchaseOrderView.purchaseOrder.actualDateDescription}"/>
         </div>
     </div>
 

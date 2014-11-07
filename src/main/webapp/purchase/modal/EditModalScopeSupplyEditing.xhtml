@@ -21,8 +21,8 @@
     </div>
         <div class="col-lg-8">
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.supply.scope.lbl.code']}"/>
-                <div class="col-sm-5">
+                <h:outputLabel class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.lbl.code']}"/>
+                <div class="col-sm-6">
                     <h:inputText type="text" jsf:placeholder="#{msgs['po.supply.scope.ph.code']}"
                                  maxlength="50"
                                  id="code"
@@ -32,9 +32,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="scopeSupplyQuantityEdit" class="col-sm-3 control-label" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
+                <p:outputLabel for="scopeSupplyQuantityEdit" class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText id="scopeSupplyQuantityEdit" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.ph.quantity']}"
                                  value="#{purchaseOrderEdit.scopeSupplyEditing.quantity}"
@@ -48,10 +48,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.supply.scope.column.unit']}"/>
+                <h:outputLabel class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.lbl.unit']}"/>
 
-                <div class="col-sm-5">
-                    <p:selectOneMenu id="unit" value="#{purchaseOrderEdit.scopeSupplyEditing.unit}" effect="fold" editable="true" maxlength="50">
+                <div class="col-sm-2">
+                    <p:selectOneMenu id="unit" value="#{purchaseOrderEdit.scopeSupplyEditing.unit}" effect="fold" editable="true" maxlength="50" style="width: 100%">
                         <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{unitOfMeasurement}" />
                     </p:selectOneMenu>
@@ -59,10 +59,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel class="col-sm-3 control-label"
+                <h:outputLabel class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['po.supply.scope.column.description']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <p:inputTextarea id ="description" maxlength="500" style="height: 75px" autoResize="false"
                                      jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.description}"/>
@@ -70,9 +70,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="scopeSupplyCostEdit" class="col-sm-3 control-label" value="#{msgs['po.supply.scope.column.cost']}"/>
+                <p:outputLabel for="scopeSupplyCostEdit" class="text-lbl-ltr col-sm-4 col-4-poi control-label" value="#{msgs['po.supply.scope.column.cost']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="col-sm-5"  style="padding-left: 0px;">
                     <h:inputText id="scopeSupplyCostEdit" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.ph.cost']}"
@@ -93,7 +93,7 @@
                                        value="#{msgs['po.supply.scope.lbl.currency']}"/>
                     </div>
                     <div class="col-sm-3" style="margin-left:3px; padding-right: 0px;">
-                        <h:inputText type="text" maxlength="5" style="width: 90px;"
+                        <h:inputText type="text" maxlength="5" style="width: 115px;"
                                      id="currency"
                                      jsf:placeholder="#{msgs['po.supply.scope.ph.currency']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.currency}"
@@ -103,15 +103,15 @@
                     </div>
                 </div>
                 <div class="col-sm-0">
-                    <p:outputLabel class="col-sm-3 control-label"
+                    <p:outputLabel class="text-lbl-ltr col-sm-3 control-label col-3-poi-lbl" style="padding-left: 0px;"
                                    value="ISO 4217 Currency Code"/>
                 </div>
             </div>
             <div class="form-group">
-                <p:outputLabel for="totalPriceTxt" class="col-sm-3 control-label"
+                <p:outputLabel for="totalPriceTxt" class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['po.supply.scope.column.total.price']}"/>
 
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText id="totalPriceTxt" type="text"
                                  jsf:placeholder="#{msgs['po.supply.scope.column.total.price']}"
                                  value="" disabled="true"
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel for="incoTerm" class="col-sm-3 control-label"
+                <h:outputLabel for="incoTerm" class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['po.supply.scope.lbl.inco.term']}"/>
 
                 <div class="col-sm-2">
@@ -134,7 +134,7 @@
                     </p:selectOneMenu>
                     <p:message for="incoTerm" />
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <p:inputTextarea style="max-height: 34px;"
                                      id="spIncoTermDescription"
                                      maxlength="1000" type="text"
@@ -144,9 +144,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <h:outputLabel  class="text-lbl-ltr col-sm-2 control-label"
+                <h:outputLabel  class="text-lbl-ltr col-sm-4 col-4-poi control-label"
                                value="#{msgs['purchase.order.filter.lbl.responsible']}"/>
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <h:inputText type="text" maxlength="100" id="responsibleExpediting"
                                  class="form-control"
                                  value="#{purchaseOrderEdit.scopeSupplyEditing.responsibleExpediting}"
@@ -243,6 +243,7 @@
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
         <br/>
         <h4 class="sub-header">#{msgs['tdp.title']}</h4>
         <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.activesTdp()}"

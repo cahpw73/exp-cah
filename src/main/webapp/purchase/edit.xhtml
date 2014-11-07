@@ -17,7 +17,6 @@
 
 </f:metadata>
 <ui:define name="body">
-    <div class="container">
         <div class="row">
             <o:highlight/>
 
@@ -55,11 +54,11 @@
 
 
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <!-- Text input-->
                             <div class="form-group">
-                                <p:outputLabel class="text-lbl-ltr col-sm-4 control-label" for="project" value="#{msgs['po.lbl.project']}"/>
-                                <div class="col-sm-8">
+                                <p:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" for="project" value="#{msgs['po.lbl.project']}"/>
+                                <div class="col-sm-7 col-7-po">
                                     <h:inputText id="project" jsf:placeholder="#{msgs['po.ph.project']}" maxlength="50"
                                                  disabled="#{not permissionBean.hasPermission(300)}"
                                                  value="#{purchaseOrderEdit.poEdit.project}" class="form-control" required="true"
@@ -68,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <p:inputTextarea value="#{purchaseOrderEdit.poEdit.description}"
@@ -80,10 +79,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="form-group">
-                                <p:outputLabel class="text-lbl-ltr col-sm-4 control-label" for="po"  value="#{msgs['po.lbl.po']}"/>
-                                <div class="col-sm-8">
+                                <p:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" for="po"  value="#{msgs['po.lbl.po']}"/>
+                                <div class="col-sm-7 col-7-po">
                                     <h:inputText id="po" maxlength="50"  jsf:placeholder="#{msgs['po.ph.po']}"
                                                  value="#{purchaseOrderEdit.poEdit.po}" class="form-control" required="true"
                                                  disabled="#{not permissionBean.hasPermission(301)}"
@@ -94,10 +93,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.variation']}"/>
-                                <div class="col-sm-8">
+                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.variation']}"/>
+                                <div class="col-sm-7 col-7-po">
                                     <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" maxlength="50"
                                                  value="#{purchaseOrderEdit.poEdit.variation}" class="form-control" />
                                 </div>
@@ -107,28 +106,28 @@
                     <!-- Text input-->
 
                     <div class="row"><!---->
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="form-group">
-                                <h:outputLabel  class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.address']}"/>
+                                <h:outputLabel  class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.address']}"/>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-7 col-7-po">
                                     <p:inputTextarea maxlength="500" jsf:placeholder="#{msgs['po.ph.address']}"
                                                      style="max-height: 60px;"
                                                      value="#{purchaseOrderEdit.supplierEdit.address}" class="form-control" />
                                 </div>
                             </div>
                         </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <p:inputTextarea maxlength="1000" type="text" value="#{purchaseOrderEdit.supplierEdit.addresDescription}"
                                              style="max-height: 60px;"
                                                  jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
                             </div>
                     </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="form-group">
-                            <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.supplier']}"/>
-                            <div class="col-sm-8">
+                            <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.supplier']}"/>
+                            <div class="col-sm-7 col-7-po">
                                 <h:inputText jsf:placeholder="#{msgs['po.ph.supplier']}"  maxlength="50"
                                              value="#{purchaseOrderEdit.supplierEdit.supplier}" class="form-control" />
                             </div>
@@ -136,27 +135,27 @@
                     </div>
                 </div>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-7 col-7-po">
                                     <h:inputText maxlength="100" value="#{purchaseOrderEdit.supplierEdit.contactName}"
                                                  jsf:placeholder="#{msgs['po.ph.contact.name']}" class="form-control"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <p:inputTextarea style="max-height: 34px;"
                                              maxlength="1000" value="#{purchaseOrderEdit.supplierEdit.contactNameDescription}"
                                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}" class="form-control"/>
                         </div>
                     </div>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="form-group">
-                            <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                            <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                            value="#{msgs['po.lbl.po.delivery.date']}"/>
 
                             <div class="col-sm-4 col-xs-6">
@@ -169,7 +168,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                         <p:inputTextarea style="max-height: 34px;"
                                          maxlength="1000" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
                                          value="#{purchaseOrderEdit.poEdit.poDeliveryDateDescription}" class="form-control"/>
@@ -178,9 +177,9 @@
 
                     <!-- Text input-->
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
                                 <div class="col-sm-4">
                                     <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderEdit.poEdit.poIncoTerm}"
@@ -191,7 +190,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-3">
                             <p:inputTextarea style="max-height: 34px;"
                                              maxlength="1000" value="#{purchaseOrderEdit.poEdit.poIncoTermDescription}"
                                              jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
@@ -200,10 +199,10 @@
 
                 <div class="row">
                     <!-- Text input-->
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
                         <div class="form-group">
-                            <h:outputLabel class="text-lbl-ltr col-sm-4 control-label" value="#{msgs['po.lbl.po.title']}"/>
-                            <div class="col-sm-8">
+                            <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.po.title']}"/>
+                            <div class="col-sm-7 col-7-po">
                                 <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
                                              jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
                             </div>
@@ -211,11 +210,11 @@
                     </div>
                 </div>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-sm-4 control-label"
+                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7 col-7-po">
                                     <h:inputText maxlength="100" value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
                                                  jsf:placeholder="#{msgs['po.ph.responsible']}" class="form-control" />
                                 </div>
@@ -279,7 +278,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-    </div>
+
     <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentEditModal" resizable="false" height="250" width="500">
         <ui:include src="modal/EditModalComment.xhtml"/>
     </p:dialog>

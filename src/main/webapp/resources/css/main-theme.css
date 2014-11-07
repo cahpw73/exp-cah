@@ -66,22 +66,10 @@ body {
     color: #ffffff!important;
 }
 
-/*.ui-dialog,
-.ui-widget,
-.ui-widget-content{
-    font-family: FqDejaVuSans;
-}*/
 .ui-widget {
     font-family: FqDejaVuSans!important;
     font-size: 12px;
 }
-/*.ui-widget input{
-    font-family: FqDejaVuSans!important;
-}
-
-.widget button{
-    font-family: FqDejaVuSans!important;
-}*/
 
 .ui-widget input,
 .ui-widget select,
@@ -156,6 +144,24 @@ body {
     padding: 0px 10px;
     min-width: 62px!important;
     font-weight: lighter;
+}
+
+.col-6-po{
+    width: 42%!important;
+}
+.col-7-po{
+    width: 57%!important;
+}
+
+.col-4-poi{
+ width: 27%!important;
+}
+.col-3-poi-lbl{
+    width: 20%!important;
+}
+
+.view-po{
+    background-color: transparent!important;
 }
 
 /* Small devices (celular, 768px and up) */
