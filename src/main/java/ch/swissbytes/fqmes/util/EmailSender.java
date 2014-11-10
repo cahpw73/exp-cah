@@ -37,7 +37,7 @@ public class EmailSender implements Serializable{
             message.setSubject(subject);
             message.setContent(content);
             Transport.send(message);
-            log.info(String.format("Your E-mail has been sent"));
+            log.info(String.format("Your e-mail has been sent"));
 
         } catch (MailConnectException ce) {
             ce.printStackTrace();

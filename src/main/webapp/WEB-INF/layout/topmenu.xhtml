@@ -54,7 +54,7 @@
                                data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><h:link value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
+                                <li><h:link style="font-size: 12px;" value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
                                 <li><p:commandLink value="#{msgs['user.change.password']}"
                                                    action="#{userChangePassBean.loadUserSelected()}"
                                                    oncomplete="PF('changePassDlg').show();"

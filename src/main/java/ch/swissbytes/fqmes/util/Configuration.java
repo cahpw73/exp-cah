@@ -125,4 +125,8 @@ public class Configuration implements Serializable {
         return zone!=null?zone.toTimeZone():TimeZone.getDefault();
     }
 
+    public String getMessage(final String key){
+        return  bundle.getString(key);
+    }
+
 }

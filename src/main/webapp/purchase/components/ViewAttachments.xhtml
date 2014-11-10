@@ -4,20 +4,20 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h4 class="sub-header">#{msgs['po.attachments.title']}</h4>
-    <p:dataTable id="commentList" value="#{purchaseOrderView.comments}" rowIndexVar="_index" var="_comment">
-        <p:column headerText="#{msgs['po.attach.tbl.column.date']}"  >
-
+    <p:dataTable id="commentList" value="#{purchaseOrderView.comments}"  rowIndexVar="_index" var="_comment">
+        <p:column headerText="#{msgs['po.attach.tbl.column.date']}" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
+            #{util.toLocalDateGMT(_comment.lastUpdate)}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" sortBy="#{_comment.name}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" sortBy="#{_comment.name}" sortFunction="#{sortBean.sortStrings}">
             #{_comment.name}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" sortBy="#{_comment.reason}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" sortBy="#{_comment.reason}" sortFunction="#{sortBean.sortStrings}">
             #{_comment.reason}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
             #{_comment.description}
         </p:column>
-        <p:column headerText="#{msgs['lbl.attachment']}" sortBy="#{_comment.fileName}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['lbl.attachment']}" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
             <h:commandLink action="#{purchaseOrderView.downloadAttachedFileOnComment(_comment.id)}" rendered="#{not empty _comment.fileName}" value="#{_comment.fileName}"/>
         </p:column>
     </p:dataTable>

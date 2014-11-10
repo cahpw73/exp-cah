@@ -5,45 +5,58 @@
     <h4 class="sub-header">#{msgs['po.supply.scope.title']}</h4>
     <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderView.scopeSupplies}" rowKey="#{_index+1}"
                  rowIndexVar="_index">
-        <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" sortFunction="#{sortScopeSupply.sortItemNumber}">
+        <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="4%"
+                  sortFunction="#{sortBean.sortItemNumber}">
             #{_scopeSupply.code}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}" sortFunction="#{sortScopeSupply.sortQuantity}">
+        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}" width="3%"
+                  sortFunction="#{sortBean.sortIntegers}">
             #{_scopeSupply.quantity}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="3%"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.unit}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" width="9%"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.description}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}" width="5%"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.spIncoTerm}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.original.delivery.date']}" sortBy="#{_scopeSupply.deliveryDate}" sortFunction="#{sortScopeSupply.sortDate}">
+        <p:column headerText="#{msgs['po.supply.scope.column.original.delivery.date']}" sortBy="#{_scopeSupply.deliveryDate}" width="10%"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocal(_scopeSupply.deliveryDate)}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.forecast.ex.works.date']}" sortBy="#{_scopeSupply.exWorkDate}" sortFunction="#{sortScopeSupply.sortDate}">
+        <p:column headerText="#{msgs['po.supply.scope.column.forecast.ex.works.date']}" sortBy="#{_scopeSupply.exWorkDate}" width="10%"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocal(_scopeSupply.exWorkDate)}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.actual.ex.works.date']}" sortBy="#{_scopeSupply.actualExWorkDate}" sortFunction="#{sortScopeSupply.sortDate}">
+        <p:column headerText="#{msgs['po.supply.scope.column.actual.ex.works.date']}" sortBy="#{_scopeSupply.actualExWorkDate}" width="10%"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocal(_scopeSupply.actualExWorkDate)}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}" sortFunction="#{sortScopeSupply.sortLeadTime}">
+        <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}" width="5%"
+                  sortFunction="#{sortBean.sortLeadTime}">
             #{_scopeSupply.deliveryLeadTimeQt}
             &#160;
             #{_scopeSupply.deliveryLeadTimeMs}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.forecast.site.date']}" sortBy="#{_scopeSupply.siteDate}" sortFunction="#{sortScopeSupply.sortDate}">
+        <p:column headerText="#{msgs['po.supply.scope.column.forecast.site.date']}" sortBy="#{_scopeSupply.siteDate}" width="10%"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocal(_scopeSupply.siteDate)}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.required.site.date']}" sortBy="#{_scopeSupply.requiredSiteDate}" sortFunction="#{sortScopeSupply.sortDate}">
+        <p:column headerText="#{msgs['po.supply.scope.column.required.site.date']}" sortBy="#{_scopeSupply.requiredSiteDate}" width="10%"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocal(_scopeSupply.requiredSiteDate)}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.actual.site.date']}" sortBy="#{_scopeSupply.actualSiteDate}" sortFunction="#{sortScopeSupply.sortDate}">
+        <p:column headerText="#{msgs['po.supply.scope.column.actual.site.date']}" sortBy="#{_scopeSupply.actualSiteDate}" width="10%"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocal(_scopeSupply.actualSiteDate)}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" sortFunction="#{sortScopeSupply.sortDescription}">
+        <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="4%"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.responsibleExpediting}
         </p:column>
     </p:dataTable>

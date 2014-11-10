@@ -51,6 +51,19 @@ public class Util {
         return null;
     }
 
+    public String toLocalDateGMT(Date date){
+        DateTimeZone dtz= DateTimeZone.getDefault();
+        Date utcDate=convertUTC(date,dtz.toTimeZone().getID());
+        if(utcDate!=null){
+            DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
+            long local = zone.convertUTCToLocal(utcDate.getTime());
+            //return new Date(local);
+            SimpleDateFormat sdf=new SimpleDateFormat(configuration.getFormatDate(),new Locale("en"));
+            return sdf.format(new Date(local));
+        }
+        return "";
+    }
+
 
 
 

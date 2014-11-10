@@ -4,6 +4,7 @@ import ch.swissbytes.fqmes.control.user.VerificationTokenService;
 import ch.swissbytes.fqmes.control.user.UserService;
 import ch.swissbytes.fqmes.model.entities.UserEntity;
 import ch.swissbytes.fqmes.model.entities.VerificationTokenEntity;
+import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
 
@@ -23,8 +24,12 @@ public class ResetPasswordBean implements Serializable{
 
     private static final Logger log = Logger.getLogger(ResetPasswordBean.class.getName());
 
+
     @Inject
     private UserService userService;
+
+    @Inject
+    private Configuration configuration;
 
     private String newPassword;
     private String token;
@@ -71,10 +76,10 @@ public class ResetPasswordBean implements Serializable{
                     tokenActive = !tokenEntity.isVerified();
                     return "success";
                 }else{
-                    Messages.addGlobalError("Verification token is expired!");
+                    Messages.addGlobalError(configuration.getMessage("reset.expired"));
                 }
             }else{
-                Messages.addGlobalError("Token verification is used!");
+                Messages.addGlobalError(configuration.getMessage("reset.token.used"));
             }
         }
         return "failed";

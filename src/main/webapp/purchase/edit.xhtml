@@ -51,8 +51,10 @@
                 <div class="title-page">
                     <h4 class="page-header">#{msgs['po.view.edit']}</h4>
                 </div>
-
-
+                <div class="clearfix"></div>
+                <br/>
+                <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
+                <br/>
                     <div class="row">
                         <div class="col-lg-5">
                             <!-- Text input-->
@@ -222,6 +224,18 @@
                         </div>
                     </div>
                     <ui:include src="components/EditAdditionalData.xhtml"/>
+                <div class="pull-right">
+                    <h:commandButton id="save0" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
+                                     action="#{purchaseOrderEdit.doUpdate}"
+                                     type='submit'/>
+                    &#160;
+                    <h:commandButton id="cancelCreateBtn0"
+                                     value="#{msgs['lbl.cancel']}"
+                                     styleClass="btn btn-primary btn-sm">
+                        <p:ajax process="@this"
+                                oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
+                    </h:commandButton>
+                </div>
                     <div class="clearfix"></div>
                     <br/>
                     <div class="row">
@@ -232,24 +246,20 @@
                     <div class="row">
                         <ui:include src="components/EditAttachments.xhtml"/>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <h:commandButton id="save" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
-                                                     action="#{purchaseOrderEdit.doUpdate}"
-                                                     type='submit'/>
-                                    &#160;
-                                    <h:commandButton id="cancelCreateBtn"
-                                                     value="#{msgs['lbl.cancel']}"
-                                                     styleClass="btn btn-primary btn-sm">
-                                        <p:ajax process="@this"
-                                                oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
-                                    </h:commandButton>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="pull-right">
+                        <h:commandButton id="save" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
+                                         action="#{purchaseOrderEdit.doUpdate}"
+                                         type='submit'/>
+                        &#160;
+                        <h:commandButton id="cancelCreateBtn"
+                                         value="#{msgs['lbl.cancel']}"
+                                         styleClass="btn btn-primary btn-sm">
+                            <p:ajax process="@this"
+                                    oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
+                        </h:commandButton>
                     </div>
+                <div class="clearfix"></div>
+                <br/>
                     <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
                         <f:facet name="message">
                             <div>

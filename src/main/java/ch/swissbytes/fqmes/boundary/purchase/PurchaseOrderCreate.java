@@ -8,7 +8,7 @@ import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.entities.*;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
-import ch.swissbytes.fqmes.util.SortScopeSupply;
+import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -52,7 +52,7 @@ public class PurchaseOrderCreate implements Serializable {
     private ScopeSupplyBean scopeSupplyBean;
 
     @Inject
-    private SortScopeSupply sortScopeSupply;
+    private SortBean sortScopeSupply;
 
     private PurchaseOrderEntity newPurchaseOrder;
 
@@ -150,14 +150,6 @@ public class PurchaseOrderCreate implements Serializable {
         newPurchaseOrder.setLastUpdate(now);
         newSupplier.setStatus(enabled);
         newSupplier.setLastUpdate(now);
-       /* for(AttachmentEntity attachmentEntity:getAtachmentEntities()){
-            attachmentEntity.setStatus(enabled);
-            attachmentEntity.setLastUpdate(now);
-        }*/
-        for(CommentEntity commentEntity:getCommentEntities()){
-            commentEntity.setStatus(enabled);
-            commentEntity.setLastUpdate(now);
-        }
         for(ScopeSupplyEntity scopeSupplyEntity:getScopeSupplies()){
             scopeSupplyEntity.setStatus(enabled);
             scopeSupplyEntity.setLastUpdate(now);
@@ -173,6 +165,8 @@ public class PurchaseOrderCreate implements Serializable {
         }catch (Exception ex){
 
         }
+        commentEntity.setLastUpdate(new Date());
+        commentEntity.setStatus(enumService.getStatusEnumEnable());
         commentEntities.add(commentEntity);
         return "";
     }
@@ -209,9 +203,8 @@ public class PurchaseOrderCreate implements Serializable {
         log.info("commentEntities.size(): " + commentEntities.size());
         if(index>=0 && index < commentEntities.size()){
             editComment=commentService.clone(commentEntities.get(index));
+            editComment.setLastUpdate(new Date());
             indexCommentEditing=index;
-            log.info("editComment: " + editComment.getReason());
-            log.info("indexCommentEditing: " + indexCommentEditing);
         }
     }
     public void updateComment(){

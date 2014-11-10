@@ -48,6 +48,9 @@
     <div class="title-page">
         <h4 class="page-header">#{msgs['po.new.title']}</h4>
     </div>
+    <div class="clearfix"></div>
+    <br/>
+    <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
     <br/>
     <div class="row">
         <div class="col-lg-5">
@@ -259,6 +262,20 @@
         </div>
     </div>
     <ui:include src="components/CreateAdditionalData.xhtml"/>
+    <div class="pull-right">
+        <h:commandButton id="save0" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                         action="#{purchaseOrderCreate.doSave}"/>
+        &#160;
+        <h:commandButton id="add0" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                         action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+        &#160;
+        <h:commandButton id="cancelCreateBtn0"
+                         value="#{msgs['lbl.cancel']}"
+                         styleClass="btn btn-primary btn-sm">
+            <p:ajax process="@this"
+                    oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
+        </h:commandButton>
+    </div>
     <br/>
     <div class="row">
         <ui:include src="components/CreateScopeSupply.xhtml"/>
@@ -270,26 +287,22 @@
     <br/>
     <br/>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <div class="pull-right">
-                    <h:commandButton id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
-                                     action="#{purchaseOrderCreate.doSave}"/>
-                    &#160;
-                    <h:commandButton id="add" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
-                                     action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
-                    &#160;
-                    <h:commandButton id="cancelCreateBtn"
-                                     value="#{msgs['lbl.cancel']}"
-                                     styleClass="btn btn-primary btn-sm">
-                        <p:ajax process="@this"
-                                oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
-                    </h:commandButton>
-                </div>
-            </div>
-        </div>
+    <div class="pull-right">
+        <h:commandButton id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                         action="#{purchaseOrderCreate.doSave}"/>
+        &#160;
+        <h:commandButton id="add" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                         action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+        &#160;
+        <h:commandButton id="cancelCreateBtn"
+                         value="#{msgs['lbl.cancel']}"
+                         styleClass="btn btn-primary btn-sm">
+            <p:ajax process="@this"
+                    oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
+        </h:commandButton>
     </div>
+    <div class="clearfix"></div>
+    <br/>
     <p:confirmDialog widgetVar="confCancelDlg" id="cconfirmDialogId" header="Cancel">
         <f:facet name="message">
             <div>

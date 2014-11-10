@@ -15,80 +15,65 @@
             <div class="title-page">
                 <h4 class="page-header">#{msgs['report.purchase.order.filter.title.page']}</h4>
             </div>
-            <h4 class="sub-header">#{msgs['purchase.order.filter.title']}</h4>
+            <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.filter.title']}</h4>
             <br/>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group'>
+                    <div class='form-group'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
                                      value="#{reportListBean.searchPurchase.project}" styleClass="form-control">
                         </h:inputText>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
+                    <div class='form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
                                      value="#{reportListBean.searchPurchase.po}" class='form-control'
                                      type='text'/>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
+                    <div class='form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
                                      value="#{reportListBean.searchPurchase.variation}" class='form-control'
                                      type='text'/>
                     </div>
-                </div>
             </div>
             <ui:remove>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
+                    <div class='form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.location']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.location']}"
                                      value="#{reportListBean.searchPurchase.location}" class='form-control'
                                      type='text'/>
                     </div>
-                </div>
             </div>
             </ui:remove>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
+                    <div class='form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
                                      value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
                                      type='text'/>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
+                    <div class='form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
                                      value="#{reportListBean.searchPurchase.supplier}" class='form-control'
                                      type='text'/>
                     </div>
-                </div>
             </div>
-            <div class="col-md-4 pull-right">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
+            <div class="col-md-4">
+                    <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.r.expediting']}</label>
                         <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
                                      value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
                                      size='4' type='text'/>
                     </div>
-                </div>
-
             </div>
             <div class="pull-right">
                 <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
@@ -101,9 +86,9 @@
             <br/>
             <br/>
         </h:form>
-        <h4 class="sub-header">#{msgs['purchase.order.list.title']}</h4>
+        <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
-        <h:form id="purchaseList" prependId="false">
+        <h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
             <p:dataTable value="#{reportListBean.list}" var="_purchase"
 
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
@@ -117,13 +102,13 @@
                 <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}" width="10%">
                     #{_purchase.variation}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="20%">
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="19%">
                     #{_purchase.poTitle}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="15%">
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="19%">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="17%">
+                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="14%">
                     #{_purchase.responsibleExpediting}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="20%">

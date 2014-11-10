@@ -10,7 +10,7 @@ import ch.swissbytes.fqmes.model.dao.SupplierDao;
 import ch.swissbytes.fqmes.model.entities.*;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.SortScopeSupply;
+import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -66,7 +66,7 @@ public class PurchaseOrderEdit implements Serializable {
     private Configuration configuration;
 
     @Inject
-    private SortScopeSupply sortScopeSupply;
+    private SortBean sortScopeSupply;
 
     private String purchaseOrderId;
 
@@ -472,8 +472,16 @@ public class PurchaseOrderEdit implements Serializable {
     public void doUpdateComment() {
         Integer index = commentService.getIndexById(editingComment.getId(), comments);
         if (index >= 0 && index < comments.size()) {
+
+            int originalHascode=comments.get(index).hashCode();
+            int currentHascode=editingComment.hashCode();
+            if(currentHascode!=originalHascode){
+                editingComment.setLastUpdate(new Date());
+            }
             comments.set(index, commentService.clone(editingComment));
         }
+
+
         commentActives=commentService.getActives(comments);
     }
 

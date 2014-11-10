@@ -4,6 +4,7 @@ import ch.swissbytes.fqmes.control.user.VerificationTokenService;
 import ch.swissbytes.fqmes.control.user.UserService;
 import ch.swissbytes.fqmes.model.entities.UserEntity;
 import ch.swissbytes.fqmes.model.entities.VerificationTokenEntity;
+import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.EmailSender;
 import com.sun.mail.util.SocketConnectException;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,9 @@ public class VerificationTokenBean implements Serializable {
     @Inject
     private UserService userService;
 
+    @Inject
+    private Configuration configuration;
+
     private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
 
     private UserEntity userEntity;
@@ -56,7 +60,8 @@ public class VerificationTokenBean implements Serializable {
             if (tokenEntity != null) {
                 StringBuilder builder = new StringBuilder();
                 builder.append(getResetPasswordURL()).append("token=").append(tokenEntity.getToken());
-                String link = String.format("<a href=%s>%s</a>", builder.toString(), "reset your password");
+                ;
+                String link = String.format("<a href=%s>%s</a>", builder.toString(),configuration.getMessage("reset.link"));
                 try {
                     MimeMultipart multipart = createMimeMultipart(link);
                     sendMail(userEntity.getEmail(),multipart);
@@ -135,10 +140,10 @@ public class VerificationTokenBean implements Serializable {
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
             StringBuilder sbHtmlText = new StringBuilder();
-            sbHtmlText.append("<p> " + "You have requested to reset your password" + " </p>\n");
-            sbHtmlText.append("<p> " + "Click on  " + link +  " </p>\n");
+            sbHtmlText.append("<p> " + "We have received a request for your password to be reset. To reset your password, please click on the link below. When asked, please enter a new password." + " </p>\n");
+            sbHtmlText.append("<p> " + "Please " + link +  " </p>\n");
             sbHtmlText.append("\t\t\t\t\t<br/>\n");
-            sbHtmlText.append("<p> " + "If you didn't request ignore this email and report your administrator "+  " </p>\n");
+            sbHtmlText.append("<p> " + "If you have not requested that your password be reset, please do not click on the link above, and report this email to your system administrator"+  " </p>\n");
 
             messageBodyPart.setContent(sbHtmlText.toString(), "text/html");
             multipart.addBodyPart(messageBodyPart);

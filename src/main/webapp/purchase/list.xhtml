@@ -16,78 +16,64 @@
             <div class="title-page">
                 <h4 class="page-header">#{msgs['purchase.order.filter.title.page']}</h4>
             </div>
-            <h4 class="sub-header">#{msgs['purchase.order.filter.title']}</h4>
+            <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.filter.title']}</h4>
             <br/>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group'>
+                    <div class="form-group">
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
                                      value="#{ purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"/>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
+                    <div class="form-group">
+                        <label class="control-label">#{msgs['purchase.order.filter.lbl.po']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.po}" class='form-control'
+                                     value="#{purchaseOrderListBean.searchPurchase.po}" class="form-control"
                                      type='text'/>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
+                    <div class="form-group">
+                        <label class="control-label">#{msgs['purchase.order.filter.lbl.variation']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.variation}" class='form-control'
-                                     size='4' type='text'/>
+                                     value="#{purchaseOrderListBean.searchPurchase.variation}" class="form-control"
+                                     type='text'/>
                     </div>
-                </div>
             </div>
             <ui:remove>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.location']}</label>
+                    <div class="form-group">
+                        <label class="control-label">#{msgs['purchase.order.filter.lbl.location']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.location']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.location}" class='form-control'
-                                     size='4' type='text'/>
+                                     value="#{purchaseOrderListBean.searchPurchase.location}" class="form-control"
+                                     type='text'/>
                     </div>
-                </div>
             </div>
             </ui:remove>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                    <div class="form-group">
+                        <label class="control-label">#{msgs['purchase.order.filter.lbl.potitle']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.poTitle}" class='form-control'
-                                     size='4' type='text'/>
+                                     value="#{purchaseOrderListBean.searchPurchase.poTitle}" class="form-control"
+                                     type='text'/>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
+                    <div class="form-group">
+                        <label class="control-label">#{msgs['purchase.order.filter.lbl.supplier']}</label>
                         <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.supplier}" class='form-control'
-                                     size='4' type='text'/>
+                                     value="#{purchaseOrderListBean.searchPurchase.supplier}" class="form-control"
+                                     type="text"/>
                     </div>
-                </div>
             </div>
-            <div class="col-md-4 ">
-                <div class='form-row'>
-                    <div class='col-xs-12 form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.r.expediting']}</label>
+            <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">#{msgs['po.supply.scope.column.r.expediting']}</label>
                         <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.responsibleExpediting}" class='form-control'
-                                     size='4' type='text'/>
+                                     value="#{purchaseOrderListBean.searchPurchase.responsibleExpediting}" class="form-control"
+                                     type="text"/>
                     </div>
-                </div>
             </div>
             <div class="pull-right ">
                 <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
@@ -100,9 +86,9 @@
             <br/>
             <br/>
         </h:form>
-        <h4 class="sub-header">#{msgs['purchase.order.list.title']}</h4>
+        <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
-        <h:form id="purchaseListForm">
+        <h:form id="purchaseListForm" styleClass="fq-form-table">
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
@@ -116,13 +102,13 @@
                 <p:column headerText="#{msgs['po.lbl.variation']}" sortBy="#{_purchase.variation}" width="10%">
                     #{_purchase.variation}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="20%">
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="19%">
                     #{_purchase.poTitle}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="15%">
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="19%">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="17%">
+                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="14%">
                     #{_purchase.responsibleExpediting}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="20%">
