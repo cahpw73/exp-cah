@@ -22,7 +22,7 @@
         <h:form id="userEditForm" class="form-horizontal" role="form">
             <div class="col-md-6">
                 <div class="form-group">
-                    <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.username']}"/>
+                    <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.edit.lbl.username']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputUsername" value="#{userEditBean.userSelected.username}"
                                      jsf:placeholder="#{msgs['user.edit.lbl.username']}" required="true"
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.first.name']}"/>
+                    <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.edit.lbl.first.name']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputFirstName" value="#{userEditBean.userSelected.firstName}"
                                      jsf:placeholder="#{msgs['user.edit.lbl.first.name']}" required="true"
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.name']}"/>
+                    <p:outputLabel for="inputName" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.edit.lbl.name']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputName" value="#{userEditBean.userSelected.name}"
                                      jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="form-group">
-                     <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.email']}"/>
+                     <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.edit.lbl.email']}"/>
                      <div class="col-sm-9">
                          <h:inputText class="form-control" id="inputEmail" value="#{userEditBean.userSelected.email}"
                                       jsf:placeholder="#{msgs['user.edit.lbl.email']}" required="true"
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="form-group">
-                     <p:outputLabel class="col-sm-3 control-label" for="pwd1" value="#{msgs['user.edit.lbl.pwd.hash']}" />
+                     <p:outputLabel class="col-sm-3 control-label text-lbl-ltr" for="pwd1" value="#{msgs['user.edit.lbl.pwd.hash']}" />
                      <div class="col-sm-9">
                          <p:password id="pwd1" value="#{userEditBean.userSelected.password}" match="pwd2" required="true"
                                      jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash']}" autocomplete="off"
@@ -71,7 +71,7 @@
                      </div>
                 </div>
                 <div class="form-group">
-                     <p:outputLabel class="col-sm-3 control-label" for="pwd2" value="#{msgs['user.edit.lbl.pwd.hash.confirm']}" />
+                     <p:outputLabel class="col-sm-3 control-label text-lbl-ltr" for="pwd2" value="#{msgs['user.edit.lbl.pwd.hash.confirm']}" />
                      <div class="col-sm-9">
                          <p:password id="pwd2" value="#{userEditBean.userSelected.password}" jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash.confirm']}"
                                      required="true" redisplay="true" requiredMessage="#{msgs['user.lbl.password.required']}" />
@@ -79,7 +79,7 @@
                      </div>
                 </div>
                 <div class="form-group">
-                     <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.Role']}"/>
+                     <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.edit.lbl.Role']}"/>
                      <div class="col-sm-9">
                          <h:selectOneMenu id="inputRole" class="form-control" value="#{userEditBean.roleEnum}">
                              <f:selectItems value="#{userEditBean.roles}"
@@ -90,7 +90,7 @@
                      </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label"
+                    <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label text-lbl-ltr"
                                    value="#{msgs['user.edit.lbl.status']}"/>
 
                     <div class="col-sm-9">

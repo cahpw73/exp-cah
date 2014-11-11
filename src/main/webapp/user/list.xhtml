@@ -28,25 +28,28 @@
                     #{_user.roleEntity.name}
                 </p:column>
                 <p:column headerText="#{msgs['user.list.column.action']}">
-                    <h:commandLink id="btnGoToUserEdit" action="#{userListBean.goToEditUser(_user.id)}"
-                                   rendered="#{permissionBean.hasPermission(3)}" styleClass="btn btn-primary btn-sm color-btn-data-table"
-                                   value="#{msgs['lbl.edit']}">
-                    </h:commandLink>
-                    &#160;
-                    <h:commandLink id="btnGoToUserDelete" action="#{userDeleteBean.loadUserSelected(_user.id)}"
-                                   value="#{msgs['lbl.delete']}"
-                                   rendered="#{permissionBean.hasPermission(5)}"
-                                   styleClass="btn btn-primary btn-sm color-btn-data-table">
-                        <p:ajax update=":deleteUserDlgId" oncomplete="PF('deleteUserDlg').show();"/>
-                    </h:commandLink>
-
+                    <div class="pull-right">
+                        <h:commandLink id="btnGoToUserEdit" action="#{userListBean.goToEditUser(_user.id)}"
+                                       rendered="#{permissionBean.hasPermission(3)}" styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                       value="#{msgs['lbl.edit']}">
+                        </h:commandLink>
+                        &#160;
+                        <h:commandLink id="btnGoToUserDelete" action="#{userDeleteBean.loadUserSelected(_user.id)}"
+                                       value="#{msgs['lbl.delete']}"
+                                       rendered="#{permissionBean.hasPermission(5)}"
+                                       styleClass="btn btn-primary btn-sm color-btn-data-table">
+                            <p:ajax update=":deleteUserDlgId" oncomplete="PF('deleteUserDlg').show();"/>
+                        </h:commandLink>
+                    </div>
                 </p:column>
             </p:dataTable>
 
             <div class="form-group" style="margin-top: 20px;">
-                <h:button value="#{msgs['user.list.lbl.button.create.user']}" outcome="/user/create"
-                          rendered="#{permissionBean.hasPermission(2)}"
-                          styleClass="btn btn-primary btn-sm"/>
+                <div class="pull-right">
+                    <h:button value="#{msgs['user.list.lbl.button.create.user']}" outcome="/user/create"
+                              rendered="#{permissionBean.hasPermission(2)}"
+                              styleClass="btn btn-primary btn-sm"/>
+                </div>
             </div>
         </h:form>
 

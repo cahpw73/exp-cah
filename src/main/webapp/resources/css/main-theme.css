@@ -16,6 +16,17 @@ body {
     background-color: #EEEEEE;
     font-family: 'FqDejaVuSans';
     font-size: 12px;
+    height: 100%;
+}
+
+.container-fluid {
+    width: 1800px!important;
+    min-height: 94%;
+
+}
+
+.footer.footer-tmp{
+    margin-bottom: 0px;
 }
 
 .ui-datatable thead th {
@@ -29,6 +40,10 @@ body {
     box-shadow: none!important;
 }
 
+td, th {
+    display: table-cell;
+    vertical-align: top!important;
+}
 .navbar-inverse {
     background-color: #33a3c0;
     border-color: #000;
@@ -194,6 +209,10 @@ textarea.form-control {
     width: 15px!important;
 }
 
+.link-download{
+    color: #800080!important;
+}
+
 /* Small devices (celular, 768px and up) */
 @media only screen and (max-width: 768px) {
 
@@ -207,33 +226,10 @@ textarea.form-control {
 
 }
 /* Large devices (large desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
+
+@media only screen and (max-width: 1600px) {
     .container-fluid {
-        width: 1286px!important;
-        min-height: 640px;
-    }
-
-    .footer.footer-tmp{
-        top: 50px;
-    }
-}
-
-@media only screen and (min-width: 1600px) {
-    .container-fluid {
-        width: 1400px!important;
-    }
-
-    .footer.footer-tmp{
-        top: 50px;
-    }
-}
-
-@media only screen and (min-width: 1900px) {
-    .container-fluid {
-        width: 1800px!important;
-    }
-
-    .footer.footer-tmp{
-        top: 50px;
+        padding-left: 50px!important;
+        padding-right: 50px!important;
     }
 }

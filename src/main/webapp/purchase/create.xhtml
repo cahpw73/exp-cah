@@ -250,7 +250,7 @@
                                value="#{msgs['po.lbl.responsible']}"/>
 
                 <div class="col-sm-7 col-7-po">
-                    <h:inputText id="responsible" type="text" maxlength="100"
+                    <h:inputText id="responsible" type="text" maxlength="1000"
                                  value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpediting}"
                                  jsf:placeholder="#{msgs['po.ph.responsible']}"
                                  class="form-control">
@@ -260,24 +260,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3">
+            <p:inputTextarea style="max-height: 34px;"
+                             id="responsibleExpeditingObservation"
+                             maxlength="998" type="text"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpeditingObservation}"
+                             jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
+            <p:message for="responsibleExpeditingObservation"/>
+        </div>
     </div>
     <ui:include src="components/CreateAdditionalData.xhtml"/>
-    <div class="pull-right">
-        <h:commandButton id="save0" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
-                         action="#{purchaseOrderCreate.doSave}"/>
-        &#160;
-        <h:commandButton id="add0" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
-                         action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
-        &#160;
-        <h:commandButton id="cancelCreateBtn0"
-                         value="#{msgs['lbl.cancel']}"
-                         styleClass="btn btn-primary btn-sm">
-            <p:ajax process="@this"
-                    oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
-        </h:commandButton>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="pull-right">
+                <h:commandButton id="save0" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                                 action="#{purchaseOrderCreate.doSave}"/>
+                &#160;
+                <h:commandButton id="add0" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                                 action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+                &#160;
+                <h:commandButton id="cancelCreateBtn0"
+                                 value="#{msgs['lbl.cancel']}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax process="@this"
+                            oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
+                </h:commandButton>
+            </div>
+        </div>
     </div>
     <br/>
-    <div class="row">
+    <div class="row" style="min-width: 1800px!important;">
         <ui:include src="components/CreateScopeSupply.xhtml"/>
     </div>
     <br/>

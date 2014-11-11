@@ -161,22 +161,42 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+                                             value="#{purchaseOrderView.purchaseOrder.responsibleExpeditingObservation}"/>
+                        </div>
                     </div>
 
                     <ui:include src="components/ViewAdditionalData.xhtml"/>
                     <div class="clearfix"></div>
                     <br/>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="form-group fq-section-row">
+                                <div class="pull-right">
+                                    <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                                            type='submit'>
+                                    </h:link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <ui:include src="components/ViewScopeSupply.xhtml"/>
+                    <br/>
                     <div class="clearfix"></div>
+                    <div class="pull-right">
+                        <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                                type='submit'>
+                        </h:link>
+                    </div>
+
                     <br/>
                     <ui:include src="components/ViewAttachments.xhtml"/>
                     <div class="col-lg-12">
                         <div class="form-group">
                             <div class="pull-right">
-                                <h:link value="#{msgs['lbl.edit']}" class='btn btn-primary btn-sm' outcome="/purchase/edit"
-                                        rendered="#{permissionBean.hasPermission(102)}"
+                                <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
                                                  type='submit'>
-                                    <f:param name="poId" value="#{purchaseOrderView.purchaseOrder.id}"/>
                                 </h:link>
                             </div>
                         </div>

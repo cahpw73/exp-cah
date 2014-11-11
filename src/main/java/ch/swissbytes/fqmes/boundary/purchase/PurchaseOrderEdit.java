@@ -268,6 +268,7 @@ public class PurchaseOrderEdit implements Serializable {
         } catch (Exception ex) {
 
         }
+        commentEntity.setLastUpdate(new Date());
         commentEntity.setStatus(enumService.getStatusEnumEnable());
         comments.add(commentEntity);
         commentActives=commentService.getActives(comments);

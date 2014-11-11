@@ -64,14 +64,16 @@
             </p:column>
         <p:column headerText="#{msgs['lbl.action']}" width="15%">
             <div class="center-button">
+                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
+                &#160;
                 <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.deleteScopeSupply(_index)}">
                     <p:ajax update="scopeSupplyList"/>
                 </h:commandLink>
-                &#160;
-                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
             </div>
         </p:column>
         </p:dataTable>
-        <h:commandButton styleClass="btn btn-primary btn-sm component-left" action="#{purchaseOrderCreate.cleanScopeSupply}" value="#{msgs['lbl.add.scope.supply']}"/>
+        <h:commandButton styleClass="btn btn-primary btn-sm component-left pull-right"
+                         action="#{purchaseOrderCreate.cleanScopeSupply}"
+                         value="#{msgs['lbl.add.scope.supply']}"/>
     </div>
 </ui:composition>

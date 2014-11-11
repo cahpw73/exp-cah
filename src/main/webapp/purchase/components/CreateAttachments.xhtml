@@ -19,21 +19,26 @@
                 #{_comment.description}
             </p:column>
         <p:column headerText="#{msgs['lbl.attachment']}" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
+            <div class="link-download">
                 #{_comment.fileName}
-            </p:column>
-            <p:column headerText="#{msgs['lbl.action']}">
-                <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.delete']}">
-                    <p:ajax listener="#{purchaseOrderCreate.deleteComment(_index)}" update="commentList"/>
-                </h:commandLink>
-                &#160;
+            </div>
+        </p:column>
+        <p:column headerText="#{msgs['lbl.action']}">
+            <div class="pull-right">
                 <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.edit']}">
                     <p:ajax process="@this"  listener="#{purchaseOrderCreate.editComment(_index)}"
                             onsuccess="PF('commentEditModal').show();" update=":commentEditFormId"/>
                 </h:commandLink>
-            </p:column>
+                &#160;
+                <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.delete']}">
+                    <p:ajax listener="#{purchaseOrderCreate.deleteComment(_index)}" update="commentList"/>
+                </h:commandLink>
+            </div>
+        </p:column>
 
         </p:dataTable>
-        <h:commandButton type="button" styleClass="btn btn-primary btn-sm component-left" action="#{purchaseOrderCreate.cleanComment}" value="#{msgs['lbl.add.comment']}">
+        <h:commandButton type="button" styleClass="btn btn-primary btn-sm component-left pull-right"
+                         action="#{purchaseOrderCreate.cleanComment}" value="#{msgs['lbl.add.comment']}">
             <p:ajax update=":commentModalId" oncomplete="PF('commentModal').show();" immediate="true"/>
         </h:commandButton>
     </div>

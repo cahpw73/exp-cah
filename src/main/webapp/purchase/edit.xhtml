@@ -222,8 +222,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-3">
+                            <p:inputTextarea style="max-height: 34px;"
+                                             id="responsibleExpeditingObservation"
+                                             maxlength="995" type="text"
+                                             value="#{purchaseOrderEdit.poEdit.responsibleExpeditingObservation}"
+                                             jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
+                            <p:message for="responsibleExpeditingObservation"/>
+                        </div>
                     </div>
                     <ui:include src="components/EditAdditionalData.xhtml"/>
+                <div class="row">
+                <div class="col-lg-8">
                 <div class="pull-right">
                     <h:commandButton id="save0" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
                                      action="#{purchaseOrderEdit.doUpdate}"
@@ -236,6 +246,7 @@
                                 oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
                     </h:commandButton>
                 </div>
+                </div></div>
                     <div class="clearfix"></div>
                     <br/>
                     <div class="row">
@@ -246,6 +257,8 @@
                     <div class="row">
                         <ui:include src="components/EditAttachments.xhtml"/>
                     </div>
+                <div class="clearfix"></div>
+                <br/>
                     <div class="pull-right">
                         <h:commandButton id="save" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
                                          action="#{purchaseOrderEdit.doUpdate}"

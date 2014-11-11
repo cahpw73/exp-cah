@@ -140,10 +140,10 @@ public class VerificationTokenBean implements Serializable {
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
             StringBuilder sbHtmlText = new StringBuilder();
-            sbHtmlText.append("<p> " + "We have received a request for your password to be reset. To reset your password, please click on the link below. When asked, please enter a new password." + " </p>\n");
+            sbHtmlText.append("<p> " + configuration.getMessage("reset.message.request") + " </p>\n");
             sbHtmlText.append("<p> " + "Please " + link +  " </p>\n");
             sbHtmlText.append("\t\t\t\t\t<br/>\n");
-            sbHtmlText.append("<p> " + "If you have not requested that your password be reset, please do not click on the link above, and report this email to your system administrator"+  " </p>\n");
+            sbHtmlText.append("<p> " +configuration.getMessage("reset.message.warning") +  " </p>\n");
 
             messageBodyPart.setContent(sbHtmlText.toString(), "text/html");
             multipart.addBodyPart(messageBodyPart);

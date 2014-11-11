@@ -63,10 +63,9 @@
                 #{_scopeSupply.responsibleExpediting}
             </p:column>
             <p:column headerText="#{msgs['lbl.action']}" width="15%">
-                <div class="center-button">
-                    <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  >
-                        <p:ajax update="scopeSupplyList" listener="#{purchaseOrderEdit.deleteScopeSupply(_scopeSupply.id)}"/>
-                    </h:commandLink>
+                <div class="pull-right">
+                    <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"  value="#{msgs['lbl.edit']}"
+                                   action="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}"/>
                     &#160;
                     <h:commandLink rendered="#{permissionBean.hasPermission(105)}"
                                    disabled="#{not (_scopeSupply.quantity!=null and _scopeSupply.quantity>1)}"
@@ -74,12 +73,13 @@
                                    action="#{purchaseOrderEdit.selectScopeSupply(_scopeSupply.id)}"
                                    value="#{msgs['supply.scope.lbl.split']}"/>
                     &#160;
-                    <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"  value="#{msgs['lbl.edit']}"
-                                   action="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}"/>
+                    <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  >
+                        <p:ajax update="scopeSupplyList" listener="#{purchaseOrderEdit.deleteScopeSupply(_scopeSupply.id)}"/>
+                    </h:commandLink>
                 </div>
             </p:column>
         </p:dataTable>
-        <h:commandButton styleClass="component-left btn btn-primary btn-sm" value="#{msgs['lbl.add.scope.supply']}"
+        <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.scope.supply']}"
                          action="#{purchaseOrderEdit.cleanScopeSupply}">
         </h:commandButton>
     </div>

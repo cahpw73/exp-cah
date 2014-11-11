@@ -18,7 +18,8 @@
             #{_comment.description}
         </p:column>
         <p:column headerText="#{msgs['lbl.attachment']}" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
-            <h:commandLink action="#{purchaseOrderView.downloadAttachedFileOnComment(_comment.id)}" rendered="#{not empty _comment.fileName}" value="#{_comment.fileName}"/>
+           <h:commandLink styleClass="link-download" action="#{purchaseOrderView.downloadAttachedFileOnComment(_comment.id)}"
+                          rendered="#{not empty _comment.fileName}" value="#{_comment.fileName}"/>
         </p:column>
     </p:dataTable>
     <br/>

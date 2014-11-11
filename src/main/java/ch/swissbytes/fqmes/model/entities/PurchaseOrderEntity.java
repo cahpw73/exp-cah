@@ -34,6 +34,7 @@ public class PurchaseOrderEntity implements Serializable{
     private String actualDateDescription;
     private Date lastUpdate;
     private StatusEntity status;
+    private String responsibleExpeditingObservation;
 
 
     private String poReference;
@@ -243,6 +244,15 @@ public class PurchaseOrderEntity implements Serializable{
         PurchaseOrderEntity that = (PurchaseOrderEntity) o;
         return that.hashCode()==this.hashCode();
     }
+    @Size(max = 1000)
+    @Column(name="RESPONSIBLE_EXPEDITING_OBSERVATION")
+    public String getResponsibleExpeditingObservation() {
+        return responsibleExpeditingObservation;
+    }
+
+    public void setResponsibleExpeditingObservation(String responsibleExpeditingObservation) {
+        this.responsibleExpeditingObservation = responsibleExpeditingObservation;
+    }
 
     @Override
     public int hashCode() {
@@ -265,6 +275,7 @@ public class PurchaseOrderEntity implements Serializable{
         result = 31 * result + (actualDateDescription != null ? actualDateDescription.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (status != null ? status.getId().hashCode() : 0);
+        result = 31 * result + (responsibleExpeditingObservation != null ? responsibleExpeditingObservation.hashCode() : 0);
         return result;
     }
 }
