@@ -6,22 +6,22 @@
     <h4 class="sub-header fq-sub-header">#{msgs['po.attachments.title']}</h4>
     <div class="fq-form-table">
         <p:dataTable id="commentList" value="#{purchaseOrderEdit.activeComments}" rowIndexVar="_index" var="_comment">
-            <p:column headerText="#{msgs['po.attach.tbl.column.date']}" style="width: 20%;" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
+            <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
                 #{util.toLocalDateGMT(_comment.lastUpdate)}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.from']}" style="width: 15%;" sortBy="#{_comment.name}" sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300"  sortBy="#{_comment.name}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.name}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" style="width: 15%;" sortBy="#{_comment.reason}"  sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.reason}"  sortFunction="#{sortBean.sortStrings}">
                 #{_comment.reason}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" style="width: 20%;" sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.attach.tbl.column.observations']}"  sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.description}
             </p:column>
-            <p:column headerText="#{msgs['lbl.attachment']}" style="width: 20%;" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['lbl.attachment']}" width="210" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
                 <h:commandLink styleClass="#{not _comment.canDownload()?'disabled':'link-download'}" action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_comment.id)}"  disabled="#{not _comment.canDownload()}" value="#{_comment.fileName}"/>
             </p:column>
-            <p:column headerText="#{msgs['lbl.action']}" style="width: 30%;">
+            <p:column headerText="#{msgs['lbl.action']}" width="150">
                 <div class="pull-right">
                     <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId" process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>

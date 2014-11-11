@@ -213,6 +213,27 @@ textarea.form-control {
     color: #800080!important;
 }
 
+
+.orginal-delivery-date {
+    position: relative;
+}
+
+.orginal-delivery-date .ui-sortable-column-icon {
+    position: absolute;
+    top: 6px;
+    right: 43px;
+}
+
+.forecast-ex-work-date {
+    position: relative;
+}
+
+.forecast-ex-work-date .ui-sortable-column-icon {
+    position: absolute;
+    top: 6px;
+    right: 18px;
+}
+
 /* Small devices (celular, 768px and up) */
 @media only screen and (max-width: 768px) {
 

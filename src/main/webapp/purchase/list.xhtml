@@ -93,25 +93,25 @@
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">
-                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="8%">
+                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
                     #{_purchase.project}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="10%">
+                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="120">
                     #{_purchase.po}
                 </p:column>
-                <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="10%">
+                <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
                     #{_purchase.variation}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}" width="19%">
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
                     #{_purchase.poTitle}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}" width="19%">
+                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="14%">
+                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="220">
                     #{_purchase.responsibleExpediting}
                 </p:column>
-                <p:column headerText="#{msgs['lbl.action']}" width="20%">
+                <p:column headerText="#{msgs['lbl.action']}" width="223">
                     <div class="center-button">
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" rendered="#{permissionBean.hasPermission(102)}"
                                 value="#{msgs['lbl.edit']}" outcome="/purchase/edit">

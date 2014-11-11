@@ -8,61 +8,97 @@
     <div class="fq-form-table">
         <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderEdit.activeScopeSupplies}" rowKey="#{_index+1}"
                      rowIndexVar="_index">
-            <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="4%"
+            <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="70"
                       sortFunction="#{sortBean.sortItemNumber}">
                 #{_scopeSupply.code}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}" width="3%"
+            <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}" width="70"
                       sortFunction="#{sortBean.sortIntegers}">
                 #{_scopeSupply.quantity}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="3%"
+            <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="70"
                       sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.unit}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" width="9%"
+            <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}"
                       sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.description}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}" width="5%"
+            <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}" width="100"
                       sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.spIncoTerm}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.original.delivery.date']}" sortBy="#{_scopeSupply.deliveryDate}" width="9%"
-                      sortFunction="#{sortBean.sortDate}">
+            <p:column sortBy="#{_scopeSupply.deliveryDate}" width="110"
+                      sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
+                <f:facet name="header">
+                    <div style="width: 40px;">
+                    #{msgs['po.supply.scope.column.original.delivery.date']}
+                    </div>
+                </f:facet>
                  #{util.toLocal(_scopeSupply.deliveryDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.forecast.ex.works.date']}" sortBy="#{_scopeSupply.exWorkDate}" width="9%"
-                      sortFunction="#{sortBean.sortDate}">
+            <p:column sortBy="#{_scopeSupply.exWorkDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    <div style="width: 60px;">
+                        #{msgs['po.supply.scope.column.forecast.ex.works.date']}
+                    </div>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.exWorkDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.actual.ex.works.date']}" sortBy="#{_scopeSupply.actualExWorkDate}" width="9%"
-                      sortFunction="#{sortBean.sortDate}">
+            <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    <div style="width: 60px;">
+                        #{msgs['po.supply.scope.column.actual']}
+                        <br/>
+                        #{msgs['po.supply.scope.column.actual.ex.works']}
+                        <br/>
+                        #{msgs['po.supply.scope.column.actual.date']}
+                    </div>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.actualExWorkDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}" width="5%"
+            <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}" width="90"
                       sortFunction="#{sortBean.sortLeadTime}">
                 #{_scopeSupply.deliveryLeadTimeQt}
                 &#160;
                 #{_scopeSupply.deliveryLeadTimeMs}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.forecast.site.date']}" sortBy="#{_scopeSupply.siteDate}" width="8%"
-                      sortFunction="#{sortBean.sortDate}">
+            <p:column sortBy="#{_scopeSupply.siteDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    <div style="width: 60px;">
+                        #{msgs['po.supply.scope.column.forecast.site.date']}
+                    </div>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.siteDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.required.site.date']}" sortBy="#{_scopeSupply.requiredSiteDate}" width="8%"
-                      sortFunction="#{sortBean.sortDate}">
+            <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    <div style="width: 60px;">
+                        #{msgs['po.supply.scope.column.required.site.date']}
+                    </div>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.requiredSiteDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.actual.site.date']}" sortBy="#{_scopeSupply.actualSiteDate}" width="8%"
-                      sortFunction="#{sortBean.sortDate}">
+            <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    <div style="width: 60px;">
+                        #{msgs['po.supply.scope.column.actual.site']}
+                        <br/>
+                        #{msgs['po.supply.scope.column.site.date']}
+                    </div>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.actualSiteDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="4%"
+            <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="70"
                       sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.responsibleExpediting}
             </p:column>
-            <p:column headerText="#{msgs['lbl.action']}" width="15%">
+            <p:column headerText="#{msgs['lbl.action']}" width="250">
                 <div class="pull-right">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"  value="#{msgs['lbl.edit']}"
                                    action="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}"/>
