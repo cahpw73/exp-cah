@@ -29,35 +29,35 @@
                     <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
                     <br/>
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="section-lbl-input-po">
                             <!-- Text input-->
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.project']}"/>
-                                <div class="col-sm-7 col-7-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.project']}"/>
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.project}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" style="height: 34px;" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.description}"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.po']}"/>
-                                <div class="col-sm-7 col-7-po">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.po']}"/>
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.po}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.variation']}"/>
-                                <div class="col-sm-7 col-7-po">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.variation']}"/>
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.variation}"/>
                                 </div>
                             </div>
@@ -66,75 +66,75 @@
                     <!-- Text input-->
 
                     <div class="row"><!---->
-                        <div class="col-lg-5">
-                            <div class="form-group">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
 
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.address']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.address']}"/>
 
-                                <div class="col-sm-7 col-7-po">
+                                <div class="inputText-general-po">
                                     <h:inputTextarea readonly="true" styleClass="col-sm-7 form-control" value="#{purchaseOrderView.supplierView.address}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.supplierView.addresDescription}"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.supplier']}"/>
-                                <div class="col-sm-7 col-7-po">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.supplier']}"/>
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.supplier}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
-                                <div class="col-sm-7 col-7-po">
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.contactName}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" style="height: 34px;" styleClass="form-control"
                                              value="#{purchaseOrderView.supplierView.contactNameDescription}"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.po.delivery.date']}"/>
 
-                                <div class="col-sm-7 col-7-po">
+                                <div class="calendar-general-po">
                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.poDeliveryDate)}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" style="height: 34px;" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.poDeliveryDateDescription}"/>
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
-                                <div class="col-sm-7 col-7-po">
+                                <div class="calendar-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poIncoTerm}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
                                              value="#{purchaseOrderView.purchaseOrder.poIncoTermDescription}"/>
                         </div>
@@ -142,26 +142,26 @@
 
                     <div class="row">
                         <!-- Text input-->
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label" value="#{msgs['po.lbl.po.title']}"/>
-                                <div class="col-sm-7 col-7-po">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.po.title']}"/>
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poTitle}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5">
-                            <div class="form-group">
-                                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
-                                <div class="col-sm-7 col-7-po">
+                                <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.responsibleExpediting}"/>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
                                              value="#{purchaseOrderView.purchaseOrder.responsibleExpeditingObservation}"/>
                         </div>
@@ -171,8 +171,8 @@
                     <div class="clearfix"></div>
                     <br/>
                     <div class="row">
-                        <div class="col-lg-9">
-                            <div class="form-group fq-section-row">
+                        <div style="width: 910px;">
+                            <div class="pull-right">
                                 <div class="pull-right">
                                     <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
                                             type='submit'>
@@ -184,23 +184,24 @@
                     <ui:include src="components/ViewScopeSupply.xhtml"/>
                     <br/>
                     <div class="clearfix"></div>
-                    <div class="pull-right">
-                        <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
-                                type='submit'>
-                        </h:link>
-                    </div>
-
-                    <br/>
-                    <ui:include src="components/ViewAttachments.xhtml"/>
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <div class="pull-right">
-                                <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
-                                                 type='submit'>
-                                </h:link>
-                            </div>
+                    <div class="action-button-po">
+                        <div class="pull-right">
+                            <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                                    type='submit'>
+                            </h:link>
                         </div>
                     </div>
+                    <br/>
+                    <ui:include src="components/ViewAttachments.xhtml"/>
+                    <div class="action-button-po">
+                        <div class="pull-right">
+                            <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                                    type='submit'>
+                            </h:link>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br/>
                 </h:form>
 
             </div>

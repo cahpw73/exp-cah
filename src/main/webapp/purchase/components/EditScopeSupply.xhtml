@@ -12,11 +12,11 @@
                       sortFunction="#{sortBean.sortItemNumber}">
                 #{_scopeSupply.code}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}" width="70"
+            <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}" width="65"
                       sortFunction="#{sortBean.sortIntegers}">
                 #{_scopeSupply.quantity}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="70"
+            <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="65"
                       sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.unit}
             </p:column>
@@ -63,7 +63,7 @@
                       sortFunction="#{sortBean.sortLeadTime}">
                 #{_scopeSupply.deliveryLeadTimeQt}
                 &#160;
-                #{_scopeSupply.deliveryLeadTimeMs}
+                #{ configuration.getTimeMeasurement(_scopeSupply.deliveryLeadTimeMs)}
             </p:column>
             <p:column sortBy="#{_scopeSupply.siteDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
@@ -94,11 +94,13 @@
                 </f:facet>
                 #{util.toLocal(_scopeSupply.actualSiteDate)}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="70"
+            <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="75"
                       sortFunction="#{sortBean.sortStrings}">
+                <div style="margin-right: 50px;">
                 #{_scopeSupply.responsibleExpediting}
+                </div>
             </p:column>
-            <p:column headerText="#{msgs['lbl.action']}" width="250">
+            <p:column headerText="#{msgs['lbl.action']}" width="243">
                 <div class="pull-right">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"  value="#{msgs['lbl.edit']}"
                                    action="#{purchaseOrderEdit.selectScopeSuppplyForEditing(_scopeSupply.id)}"/>
@@ -115,9 +117,14 @@
                 </div>
             </p:column>
         </p:dataTable>
-        <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.scope.supply']}"
-                         action="#{purchaseOrderEdit.cleanScopeSupply}">
-        </h:commandButton>
+        <div class="action-button-po">
+            <div class="pull-right">
+                <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.scope.supply']}"
+                                 action="#{purchaseOrderEdit.cleanScopeSupply}">
+                </h:commandButton>
+            </div>
+        </div>
+
     </div>
 
 </ui:composition>

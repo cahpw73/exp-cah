@@ -20,7 +20,7 @@ body {
 }
 
 .container-fluid {
-    width: 1800px!important;
+    width: 95%!important;
     min-height: 94%;
 
 }
@@ -125,6 +125,47 @@ textarea.form-control {
     border-width: 2px!important;
 }
 
+.ui-datatable table{
+    min-width: 1350px!important;
+}
+
+.section-lbl-input-po{
+    width: 480px; float: left; padding-left: 15px
+}
+
+.section-text-area-po{
+    width: 370px!important; position: relative;
+    min-height: 1px;
+    margin-left: 60px;
+    padding-right: 0px;
+    padding-left: 15px; float: left;
+}
+
+.inputText-general-po{
+    width: 315px!important; position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 15px; float: left;
+}
+
+.calendar-general-po{
+    width: 160px!important; position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 15px; float: left;
+}
+
+.label-general-po{
+    width: 225px!important; position: relative;
+    min-height: 1px;
+    padding-right: 5px;
+    padding-left: 15px; float: left;
+}
+
+.action-button-po{
+    min-width: 1350px!important;
+}
+
 .ui-paginator,
 .ui-paginator-bottom,
 .ui-widget-header,
@@ -167,10 +208,10 @@ textarea.form-control {
 }
 
 .col-6-po{
-    width: 42%!important;
+    width:38%!important;
 }
 .col-7-po{
-    width: 57%!important;
+    width: 50%!important;
 }
 
 .col-4-poi{
@@ -233,24 +274,17 @@ textarea.form-control {
     top: 6px;
     right: 18px;
 }
-
-/* Small devices (celular, 768px and up) */
-@media only screen and (max-width: 768px) {
-
+.input-general-po{
+    margin-right: -60px!important;
 }
-/* Small devices (tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
 
+.ui-datatable thead th .ui-datatable tbody td .ui-datatable tfoot td .tblDescScPu{
+    min-width: 130px!important;
 }
-/* Medium devices (desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
-}
-/* Large devices (large desktops, 1200px and up) */
 
 @media only screen and (max-width: 1600px) {
-    .container-fluid {
+    /*.container-fluid {
         padding-left: 50px!important;
         padding-right: 50px!important;
-    }
+    }*/
 }

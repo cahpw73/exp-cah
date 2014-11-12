@@ -292,23 +292,23 @@
         <div class="fq-form-table">
             <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.scopeSupplyEdit.tdpList}"
                          var="_tdp" rowIndexVar="_index">
-                <p:column headerText="#{msgs['tdp.column.location']}" sortBy="#{_tdp.location}" sortFunction="#{sortBean.sortStrings}">
+                <p:column headerText="#{msgs['tdp.column.location']}" >
                     #{_tdp.location}
                 </p:column>
-                <p:column headerText="#{msgs['tdp.column.lead.time']}" sortBy="#{_tdp.customLeadTime}" sortFunction="#{sortBean.sortLeadTime}">
+                <p:column headerText="#{msgs['tdp.column.lead.time']}" >
                     #{_tdp.leadTime}
                     &#160;
                     #{ configuration.getTimeMeasurement(_tdp.measurementTime)}
                 </p:column>
-                <p:column headerText="#{msgs['tdp.column.forecast.delivery.date']}" sortBy="#{_tdp.forecastDeliveryDate}" sortFunction="#{sortBean.sortDate}">
+                <p:column headerText="#{msgs['tdp.column.forecast.delivery.date']}">
                     #{util.toLocal(_tdp.forecastDeliveryDate)}
                     &#160;
-                    <h:outputText rendered="#{_tdp.isForecastSiteDateCalculated}"
+                    <h:outputText rendered="#{_tdp.isForecastSiteDateManual}"
                                   value="#{msgs['lbl.automatic']}"/>
-                    <h:outputText rendered="#{! _tdp.isForecastSiteDateCalculated}"
+                    <h:outputText rendered="#{! _tdp.isForecastSiteDateManual}"
                                   value="#{msgs['lbl.manual']}"/>
                 </p:column>
-                <p:column headerText="#{msgs['tdp.column.actual.delivery.date']}" sortBy="#{_tdp.actualDeliveryDate}" sortFunction="#{sortBean.sortDate}">
+                <p:column headerText="#{msgs['tdp.column.actual.delivery.date']}">
                     <h:outputText value="#{util.toLocal(_tdp.actualDeliveryDate)}">
                     </h:outputText>
                 </p:column>
@@ -520,10 +520,10 @@
             </div>
         </p:confirmDialog>
     </h:form>
-    <p:dialog id="tdpId" header="#{msgs['tdp.create']}" widgetVar="tdp" resizable="false" height="300" width="750">
+    <p:dialog id="tdpId" header="#{msgs['tdp.create']}" widgetVar="tdp" resizable="false" height="300" width="800">
         <ui:include src="/purchase/modal/tpd/edit/ModalTDP.xhtml"/>
     </p:dialog>
-    <p:dialog  header="#{msgs['tdp.update']}" widgetVar="edittdp" resizable="false" height="300" width="750">
+    <p:dialog  header="#{msgs['tdp.update']}" widgetVar="edittdp" resizable="false" height="300" width="800">
         <ui:include src="/purchase/modal/tpd/edit/ModalTDPEdit.xhtml"/>
     </p:dialog>
     <h:outputScript name="js/calculateTotalPriceCreateScopeSupply.js"/>

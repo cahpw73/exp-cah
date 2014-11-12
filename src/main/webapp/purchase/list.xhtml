@@ -111,7 +111,7 @@
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="220">
                     #{_purchase.responsibleExpediting}
                 </p:column>
-                <p:column headerText="#{msgs['lbl.action']}" width="223">
+                <p:column headerText="#{msgs['lbl.action']}" width="209">
                     <div class="center-button">
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" rendered="#{permissionBean.hasPermission(102)}"
                                 value="#{msgs['lbl.edit']}" outcome="/purchase/edit">

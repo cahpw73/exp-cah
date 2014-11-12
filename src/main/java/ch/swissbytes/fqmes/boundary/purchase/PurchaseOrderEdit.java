@@ -709,7 +709,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void cleanTransitDeliveryPoint(){
         newTdp=new TransitDeliveryPointEntity();
-        newTdp.setIsForecastSiteDateCalculated(true);
+        newTdp.setIsForecastSiteDateManual(false);
         newTdp.setMeasurementTime(TimeMeasurementEnum.DAY);
         currentIndexForTdp=-1;
     }
@@ -804,16 +804,16 @@ public class PurchaseOrderEdit implements Serializable {
     public void calulateForecasteDateForTdpCreation(){
         log.info("calulateForecasteDateForTdpCreation....");
         newTdp.setForecastDeliveryDate(null);
-        if(newTdp.getIsForecastSiteDateCalculated()){
+        if(!newTdp.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
             newTdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEdit, scopeSupplyEdit.getTdpList().size()==0,tdpPrevious, newTdp));
         }
     }
     public void calulateForecasteDateForTdpEdition(){
-        log.info("calulateForecasteDateForTdpCreation....");
+        log.info("calulateForecasteDateForTdpEdition....");
         tdpEdit.setForecastDeliveryDate(null);
-        if(tdpEdit.getIsForecastSiteDateCalculated()){
+        if(!tdpEdit.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>1&&currentIndexForTdp>0?list.get(currentIndexForTdp-1):null;
             tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEdit, currentIndexForTdp.intValue() == 0, tdpPrevious, tdpEdit));
@@ -821,18 +821,18 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void calulateForecasteDateForTdpCreation1(){
-        log.info("calulateForecasteDateForTdpCreation....");
+        log.info("calulateForecasteDateForTdpCreation1....");
         newTdp.setForecastDeliveryDate(null);
-        if(newTdp.getIsForecastSiteDateCalculated()){
+        if(!newTdp.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
             newTdp.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, scopeSupplyEditing.getTdpList().size()==0,tdpPrevious, newTdp));
         }
     }
     public void calulateForecasteDateForTdpEdition1(){
-        log.info("calulateForecasteDateForTdpCreation....");
+        log.info("calulateForecasteDateForTdpEdition1....");
         tdpEdit.setForecastDeliveryDate(null);
-        if(tdpEdit.getIsForecastSiteDateCalculated()){
+        if(!tdpEdit.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>1&&currentIndexForTdp>0?list.get(currentIndexForTdp-1):null;
             tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, currentIndexForTdp.intValue() == 0, tdpPrevious, tdpEdit));

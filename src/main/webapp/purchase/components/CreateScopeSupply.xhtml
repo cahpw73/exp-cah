@@ -21,7 +21,7 @@
                 #{_scopeSupply.unit}
             </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}"
-                  sortFunction="#{sortBean.sortStrings}">
+                  sortFunction="#{sortBean.sortStrings}" styleClass="tblDescScPu" style="min-width: 130px!important;">
                 #{_scopeSupply.description}
             </p:column>
         <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}"  sortBy="#{_scopeSupply.spIncoTer+2}" width="100"
@@ -63,7 +63,7 @@
                   sortFunction="#{sortBean.sortLeadTime}" >
                 #{_scopeSupply.deliveryLeadTimeQt}
                 &#160;
-                #{_scopeSupply.deliveryLeadTimeMs}
+                #{ configuration.getTimeMeasurement(_scopeSupply.deliveryLeadTimeMs)}
             </p:column>
         <p:column sortBy="#{_scopeSupply.siteDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
@@ -98,7 +98,7 @@
                   sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.responsibleExpediting}
             </p:column>
-        <p:column headerText="#{msgs['lbl.action']}" width="150">
+        <p:column headerText="#{msgs['lbl.action']}" width="137">
             <div class="center-button">
                 <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
                 &#160;
@@ -108,8 +108,13 @@
             </div>
         </p:column>
         </p:dataTable>
-        <h:commandButton styleClass="btn btn-primary btn-sm component-left pull-right"
-                         action="#{purchaseOrderCreate.cleanScopeSupply}"
-                         value="#{msgs['lbl.add.scope.supply']}"/>
+        <div class="action-button-po">
+            <div class="pull-right">
+                <h:commandButton styleClass="btn btn-primary btn-sm component-left"
+                                 action="#{purchaseOrderCreate.cleanScopeSupply}"
+                                 value="#{msgs['lbl.add.scope.supply']}"/>
+            </div>
+        </div>
+
     </div>
 </ui:composition>

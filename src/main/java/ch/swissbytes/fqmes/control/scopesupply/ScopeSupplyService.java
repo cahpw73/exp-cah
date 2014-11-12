@@ -60,7 +60,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 //upgrading tdps
                 List<TransitDeliveryPointEntity>list=tdpService.getActives(scopeSupplyEntity.getTdpList());
                 Date date=calculateForecastDeliveryDateForTdp(scopeSupplyEntity,true, null, list.get(0));
-                if(list.get(0).getIsForecastSiteDateCalculated()){
+                if(list.get(0).getIsForecastSiteDateManual()){
                     list.get(0).setForecastDeliveryDate(date);
                 }
 
@@ -125,7 +125,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
             }
         if(tdpCurrent.getId()!=null){
             TransitDeliveryPointEntity tdpe= tdpService.clone(tdpCurrent);
-            if(tdpe.getIsForecastSiteDateCalculated()){
+            if(!tdpe.getIsForecastSiteDateManual()){
                 tdpe.setForecastDeliveryDate(date);
             }
             doUpdateTdpPost(ss, tdpCurrent, tdpe);
@@ -147,7 +147,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
             int index=tdpService.getIndexById(tdp.getId(),tdpService.getActives(ss.getTdpList()));
             for(int i=index+1;i<ss.getTdpList().size();i++){
                 TransitDeliveryPointEntity current=tdpService.clone(ss.getTdpList().get(i));
-                if(current.getIsForecastSiteDateCalculated()){
+                if(current.getIsForecastSiteDateManual()){
                     Date d=calculateDate(previous,current);
                     ss.getTdpList().get(i).setForecastDeliveryDate(d);
                 }

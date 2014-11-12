@@ -26,7 +26,7 @@ public class TransitDeliveryPointEntity implements EntityTbl{
     private ScopeSupplyEntity scopeSupply;
     private String comment;
     private Date lastUpdate;
-    private Boolean isForecastSiteDateCalculated;
+    private Boolean isForecastSiteDateManual;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -133,13 +133,13 @@ public class TransitDeliveryPointEntity implements EntityTbl{
     }
 
     @NotNull
-    @Column(name="IS_FORECAST_SITE_DATE_CALCULATED",nullable = false)
-    public Boolean getIsForecastSiteDateCalculated() {
-        return isForecastSiteDateCalculated;
+    @Column(name="IS_FORECAST_SITE_DATE_MANUAL",nullable = false)
+    public Boolean getIsForecastSiteDateManual() {
+        return isForecastSiteDateManual;
     }
 
-    public void setIsForecastSiteDateCalculated(Boolean isForecastSiteDateCalculated) {
-        this.isForecastSiteDateCalculated = isForecastSiteDateCalculated;
+    public void setIsForecastSiteDateManual(Boolean isForecastSiteDateManual) {
+        this.isForecastSiteDateManual = isForecastSiteDateManual;
     }
 
     @Transient
@@ -159,7 +159,7 @@ public class TransitDeliveryPointEntity implements EntityTbl{
         result = 31 * result + (scopeSupply != null ? scopeSupply.getId().hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
-        result = 31 * result + (isForecastSiteDateCalculated != null ? isForecastSiteDateCalculated.hashCode() : 0);
+        result = 31 * result + (isForecastSiteDateManual != null ? isForecastSiteDateManual.hashCode() : 0);
         return result;
     }
 }

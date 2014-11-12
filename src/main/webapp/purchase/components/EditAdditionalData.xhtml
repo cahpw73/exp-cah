@@ -7,11 +7,11 @@
 
 
     <div class="row">
-        <div class="col-lg-5">
-            <div class="form-group">
-                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+        <div class="section-lbl-input-po">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
-                <div class="col-sm-4 col-xs-6">
+                <div class="calendar-general-po">
                     <p:calendar id="introEmailDate" type="text"
                                 mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 34px;"
                               maxlength="1000" type="text"
                              value="#{purchaseOrderEdit.poEdit.introEmailDescription}"
@@ -32,11 +32,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-5">
-            <div class="form-group">
-                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+        <div class="section-lbl-input-po">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
-                <div class="col-sm-4 col-xs-6">
+                <div class="calendar-general-po">
                     <p:calendar id="requiredSiteDate" type="text"
                                 navigator="true"
                                 pattern="#{configuration.formatDate}"
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 34px;"
                              maxlength="1000" type="text"
                              value="#{purchaseOrderEdit.poEdit.requiredDateDescription}"
@@ -58,11 +58,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-5">
-            <div class="form-group">
-                <h:outputLabel class="text-lbl-ltr col-6-po col-sm-6 control-label"
+        <div class="section-lbl-input-po">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
-                <div class="col-sm-4 col-xs-6">
+                <div class="calendar-general-po">
                     <p:calendar id="actualSiteDate" type="text"
                                 navigator="true"
                                 mask="#{configuration.mask}"
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 34px;"
                              maxlength="1000" type="text"
                              value="#{purchaseOrderEdit.poEdit.actualDateDescription}"

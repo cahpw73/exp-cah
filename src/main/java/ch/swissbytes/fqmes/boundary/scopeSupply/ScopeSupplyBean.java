@@ -114,7 +114,7 @@ public class ScopeSupplyBean implements Serializable {
         log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
         newScopeSupply=new ScopeSupplyEntity();
         tdp=new TransitDeliveryPointEntity();
-        tdp.setIsForecastSiteDateCalculated(true);
+        tdp.setIsForecastSiteDateManual(true);
         newScopeSupply.setIsForecastSiteDateManual(false);
         newScopeSupply.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
         newScopeSupply.setResponsibleExpediting(purchaseOrder !=null&&purchaseOrder.getResponsibleExpediting()!=null? purchaseOrder.getResponsibleExpediting().toString():null);
@@ -128,7 +128,7 @@ public class ScopeSupplyBean implements Serializable {
 
     public void cleanTransitDeliveryPoint(){
         tdp=new TransitDeliveryPointEntity();
-        tdp.setIsForecastSiteDateCalculated(true);
+        tdp.setIsForecastSiteDateManual(false);
         tdp.setStatus(enumService.getStatusEnumEnable());
         tdp.setLastUpdate(new Date());
         tdp.setMeasurementTime(TimeMeasurementEnum.DAY);
@@ -165,15 +165,15 @@ public class ScopeSupplyBean implements Serializable {
     }
     public void switchModeForecastSiteDateForTdp(boolean editing){
         if(editing){
-            if(editTdp.getIsForecastSiteDateCalculated()){
-                calulateForecasteDateForTdpEdition();
-            }else{
+            if(editTdp.getIsForecastSiteDateManual()){
                 editTdp.setForecastDeliveryDate(null);
+            }else{
+                calulateForecasteDateForTdpEdition();
             }
-        }else if(tdp.getIsForecastSiteDateCalculated()){
-            calulateForecasteDateForTdpCreation();
-        }else {
+        }else if(tdp.getIsForecastSiteDateManual()){
             tdp.setForecastDeliveryDate(null);
+        }else {
+            calulateForecasteDateForTdpCreation();
         }
     }
     public String addScopeSupply(){
@@ -271,7 +271,7 @@ public class ScopeSupplyBean implements Serializable {
     }
     public void calulateForecasteDateForTdpCreation(){
         log.info("calulateForecasteDateForTdpCreation....");
-        if(tdp.getIsForecastSiteDateCalculated()){
+        if(!tdp.getIsForecastSiteDateManual()){
             if(indexScopeSupplyEditing<0){
                 List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();
                 TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
@@ -287,7 +287,7 @@ public class ScopeSupplyBean implements Serializable {
 
     public void calulateForecasteDateForTdpEdition(){
         log.info("calulateForecasteDateForTdpEdition....");
-        if(tdp.getIsForecastSiteDateCalculated()){
+        if(!tdp.getIsForecastSiteDateManual()){
             log.info("calculating...");;
             if(indexScopeSupplyEditing<0){
                 List<TransitDeliveryPointEntity>list=newScopeSupply.getTdpList();

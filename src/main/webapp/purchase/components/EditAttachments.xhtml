@@ -33,9 +33,13 @@
                 </div>
             </p:column>
         </p:dataTable>
-        <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}" >
-            <p:ajax update=":commentModalId" oncomplete="PF('commentEditModal').show();"/>
-        </h:commandButton>
+        <div class="action-button-po">
+            <div class="pull-right">
+                <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}" >
+                    <p:ajax update=":commentModalId" oncomplete="PF('commentEditModal').show();"/>
+                </h:commandButton>
+            </div>
+        </div>
     </div>
 
 </ui:composition>
