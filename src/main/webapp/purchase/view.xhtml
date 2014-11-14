@@ -16,14 +16,12 @@
         <div class="row">
             <o:highlight/>
             <div class="col-lg-12">
-                <h:form id="empForm" class="form-horizontal" role="form" prependId="false">
+                <div id="empForm" class="form-horizontal">
 
                     <!-- Form Name -->
                     <div class="title-page">
                         <h4 class="sub-header">#{msgs['po.view.title']}</h4>
                     </div>
-                    <div class="clearfix"></div>
-                    <br/>
                     <div class="clearfix"></div>
                     <br/>
                     <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
@@ -32,21 +30,21 @@
                         <div class="section-lbl-input-po">
                             <!-- Text input-->
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.project']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.project.type.required']}"/>
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.project}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputTextarea readonly="true" style="height: 34px;" styleClass="form-control"
+                            <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.description}"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.po']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.po.type.required']}"/>
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.po}"/>
                                 </div>
@@ -72,12 +70,15 @@
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputTextarea readonly="true" styleClass="col-sm-7 form-control" value="#{purchaseOrderView.supplierView.address}"/>
+                                    <h:inputTextarea style="height: 90px;" readonly="true"
+                                                     styleClass="form-control"
+                                                     value="#{purchaseOrderView.supplierView.address}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
+                                             style="height: 90px;"
                                              value="#{purchaseOrderView.supplierView.addresDescription}"/>
                         </div>
                     </div>
@@ -103,7 +104,7 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputTextarea readonly="true" style="height: 34px;" styleClass="form-control"
+                            <h:inputTextarea readonly="true"  styleClass="form-control"
                                              value="#{purchaseOrderView.supplierView.contactNameDescription}"/>
                         </div>
                     </div>
@@ -119,7 +120,7 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputTextarea readonly="true" style="height: 34px;" styleClass="form-control"
+                            <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.poDeliveryDateDescription}"/>
                         </div>
                     </div>
@@ -135,7 +136,7 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+                            <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.poIncoTermDescription}"/>
                         </div>
                     </div>
@@ -162,25 +163,22 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+                            <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.responsibleExpeditingObservation}"/>
                         </div>
                     </div>
-
                     <ui:include src="components/ViewAdditionalData.xhtml"/>
-                    <div class="clearfix"></div>
-                    <br/>
-                    <div class="row">
-                        <div style="width: 910px;">
+                    <div style="width: 940px;">
+                        <div class="pull-right">
                             <div class="pull-right">
-                                <div class="pull-right">
-                                    <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
-                                            type='submit'>
-                                    </h:link>
-                                </div>
+                                <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                                        type='submit'>
+                                </h:link>
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <br/>
                     <ui:include src="components/ViewScopeSupply.xhtml"/>
                     <br/>
                     <div class="clearfix"></div>
@@ -202,7 +200,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <br/>
-                </h:form>
+                </div>
 
             </div>
             <!-- /.col-lg-12 -->

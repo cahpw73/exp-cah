@@ -1,7 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <div class="row">
         <div class="section-lbl-input-po">
@@ -14,7 +13,7 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+            <h:inputTextarea readonly="true" styleClass="form-control"
                              value="#{purchaseOrderView.purchaseOrder.introEmailDescription}"/>
         </div>
     </div>
@@ -30,7 +29,7 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+            <h:inputTextarea readonly="true" styleClass="form-control"
                              value="#{purchaseOrderView.purchaseOrder.requiredDateDescription}"/>
         </div>
     </div>
@@ -45,7 +44,7 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <h:inputTextarea readonly="true" styleClass="form-control" style="height: 34px;"
+            <h:inputTextarea readonly="true" styleClass="form-control"
                              value="#{purchaseOrderView.purchaseOrder.actualDateDescription}"/>
         </div>
     </div>

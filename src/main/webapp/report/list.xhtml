@@ -90,7 +90,7 @@
         <br/>
         <h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
             <p:dataTable value="#{reportListBean.list}" var="_purchase"
-
+                         styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.pagesSize}" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
@@ -120,7 +120,9 @@
                 </p:column>
             </p:dataTable>
             <br/>
-            <p:dataTable  id="listSelected"  value="#{reportBean.selected}" var="_po">
+            <p:dataTable  id="listSelected"
+                          styleClass="data-table-po-sc"
+                          value="#{reportBean.selected}" var="_po">
                 <p:column headerText="#{msgs['po.lbl.project']}">
                     #{_po.project}
                 </p:column>

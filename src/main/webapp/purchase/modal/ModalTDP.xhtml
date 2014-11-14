@@ -22,7 +22,8 @@
                 <label>#{msgs['tdp.lbl.lead.time']}</label>
             </div>
             <div class="col-sm-6" style="padding-right: 0px;">
-                <h:inputText id="leadTime1" class="form-control" value="#{scopeSupplyBean.tdp.leadTime}"
+                <h:inputText id="leadTime1" class="form-control positive-number" value="#{scopeSupplyBean.tdp.leadTime}"
+                             onkeypress="return isNumberKey(event);"
                              style="min-width: 80px; "
                              jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}">
                     <f:ajax event="change" listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation}"
@@ -32,8 +33,7 @@
             </div>
             <div class="col-sm-6" style="padding-left: 5px;">
                 <h:selectOneMenu value="#{scopeSupplyBean.tdp.measurementTime}"
-                                 style="min-width: 90px;"
-                                 styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                                 styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all select-onemenu-po">
                     <f:selectItems value="#{allTimeMeasurement}"/>
                     <f:ajax event="change" execute="@this"
                             listener="#{scopeSupplyBean.calulateForecasteDateForTdpCreation}"
@@ -53,14 +53,17 @@
                         converter="#{dateConverter}"
                         value="#{scopeSupplyBean.tdp.forecastDeliveryDate}"
                         converterMessage="#{msgs['validator.date.invalid']}"
-                        jsf:placeholder="#{configuration.formatDate}"/>
+                        jsf:placeholder="#{configuration.formatDate}">
+                <p:ajax event="dateSelect" process="@this"/>
+                    </p:calendar>
 
-            <div class="col-sm-5" style="padding-left: 0px; padding-top: 9px;">
-                <p:selectBooleanCheckbox value="#{scopeSupplyBean.tdp.isForecastSiteDateManual}"
-                                         style="margin-left: 5px; margin-right: 5px;">
+            <div>
+                &#160;
+                <p:selectBooleanCheckbox value="#{scopeSupplyBean.tdp.isForecastSiteDateManual}">
                     <p:ajax event="change" update=":TDP:forecastDeliveryDateTdp1"
                             listener="#{scopeSupplyBean.switchModeForecastSiteDateForTdp(false)}"/>
                 </p:selectBooleanCheckbox>
+                &#160;
                 <h:outputText value="#{msgs['lbl.manual']}"/>
             </div>
         </div>
@@ -79,7 +82,7 @@
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.comments']}</label>
 
             <div class="col-sm-10">
-                <p:inputTextarea maxlength="500" jsf:placeholder="#{msgs['ph.description']}" styleClass="form-control"
+                <p:inputTextarea maxlength="450" jsf:placeholder="#{msgs['ph.description']}" styleClass="form-control"
                                  style="height: 61px;"
                                  value="#{scopeSupplyBean.tdp.comment}"/>
             </div>

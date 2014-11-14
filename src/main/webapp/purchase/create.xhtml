@@ -56,8 +56,7 @@
         <div class="section-lbl-input-po">
             <!-- Text input-->
             <div class="form-group input-general-po">
-                <p:outputLabel for="projectName" styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.project']}"/>
-
+                <h:outputLabel for="projectName" styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.project.type.required']}"/>
                 <div class="inputText-general-po">
                     <h:inputText id="projectName" type="text"
                                  required="true"
@@ -73,7 +72,7 @@
         <div class="section-text-area-po">
             <p:inputTextarea type="text" class="form-control" id="description"
                              style="max-height:34px;"
-                             maxlength="998"
+                             maxlength="950"
                              value="#{purchaseOrderCreate.newPurchaseOrder.description}"
                              jsf:placeholder="#{msgs['po.ph.description']}"/>
             <p:message for="description" />
@@ -82,7 +81,7 @@
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
-                <p:outputLabel for="po" styleClass="label-general-po text-lbl-ltr  control-label" value="#{msgs['po.lbl.po']}"/>
+                <h:outputLabel for="po" styleClass="label-general-po text-lbl-ltr  control-label" value="#{msgs['po.lbl.po.type.required']}"/>
 
                 <div class="inputText-general-po">
                     <h:inputText id="po" type="text" jsf:placeholder="#{msgs['po.ph.po']}"
@@ -118,8 +117,8 @@
                 <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.address']}"/>
 
                 <div class="inputText-general-po">
-                    <p:inputTextarea id="address" maxlength="499" type="text"
-                                     style="height: 70px;"
+                    <p:inputTextarea id="address" maxlength="450" type="text"
+                                     style="height: 90px;"
                                      value="#{purchaseOrderCreate.newSupplier.address}"
                                      jsf:placeholder="#{msgs['po.ph.address']}" class="form-control"/>
                     <p:message for="address" id="msgAddress"/>
@@ -127,8 +126,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea id ="addressDescription" maxlength="998" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
-                             style="height: 70px;" class="form-control"
+            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
+                             style="height: 90px;" class="form-control"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
             <p:message for="addressDescription"/>
         </div>
@@ -163,8 +162,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea maxlength="998" type="text" id="cnDescription"
-                             style="max-height: 34px;"
+            <p:inputTextarea maxlength="950" type="text" id="cnDescription"
+                             style="max-height: 29px;"
                              value="#{purchaseOrderCreate.newSupplier.contactNameDescription}"
                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                              class="form-control"/>
@@ -194,8 +193,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 34px;" id="poDeliveryDateDescription"
-                             maxlength="998" type="text"
+            <p:inputTextarea style="max-height: 29px;" id="poDeliveryDateDescription"
+                             maxlength="950" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDateDescription}"
                              jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
             <p:message for="poDeliveryDateDescription"/>
@@ -210,7 +209,7 @@
 
                 <div class="calendar-general-po">
                     <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTerm}"
-                                     effect="fold" editable="true"
+                                     effect="fold" editable="true" styleClass="menu-ddp"
                                      maxlength="50"  style="width: 100%">
                         <f:selectItems value="#{incoTerms}"/>
                     </p:selectOneMenu>
@@ -219,8 +218,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 34px;" id="incoTermDescription"
-                             maxlength="998" type="text"
+            <p:inputTextarea style="max-height: 29px;" id="incoTermDescription"
+                             maxlength="950" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTermDescription}"
                              jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
             <p:message for="incoTermDescription"/>
@@ -259,9 +258,9 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 34px;"
+            <p:inputTextarea style="max-height: 29px;"
                              id="responsibleExpeditingObservation"
-                             maxlength="998" type="text"
+                             maxlength="950" type="text"
                              value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpeditingObservation}"
                              jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
             <p:message for="responsibleExpeditingObservation"/>
@@ -270,22 +269,20 @@
     <ui:include src="components/CreateAdditionalData.xhtml"/>
     <div class="clearfix"></div>
     <br/>
-    <div class="row">
-        <div style="width: 910px;">
-            <div class="pull-right">
-                <h:commandButton id="save0" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderCreate.doSave}"/>
-                &#160;
-                <h:commandButton id="add0" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
-                &#160;
-                <h:commandButton id="cancelCreateBtn0"
-                                 value="#{msgs['lbl.cancel']}"
-                                 styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"
-                            oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
-                </h:commandButton>
-            </div>
+    <div style="width: 940px;">
+        <div class="pull-right">
+            <h:commandButton id="save0" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderCreate.doSave}"/>
+            &#160;
+            <h:commandButton id="add0" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+            &#160;
+            <h:commandButton id="cancelCreateBtn0"
+                             value="#{msgs['lbl.cancel']}"
+                             styleClass="btn btn-primary btn-sm">
+                <p:ajax process="@this"
+                        oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
+            </h:commandButton>
         </div>
     </div>
     <br/>

@@ -13,6 +13,7 @@
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
                 <div class="calendar-general-po">
                     <p:calendar id="introEmailDate" type="text"
+                                styleClass="calendar-date-po"
                                 mask="#{configuration.mask}" navigator="true"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
@@ -25,8 +26,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 34px;"
-                              maxlength="1000" type="text"
+            <p:inputTextarea style="max-height: 29px;"
+                              maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.introEmailDescription}"
                              jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
         </div>
@@ -51,8 +52,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 34px;"
-                             maxlength="1000" type="text"
+            <p:inputTextarea style="max-height: 29px;"
+                             maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.requiredDateDescription}"
                              jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
         </div>
@@ -77,8 +78,8 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 34px;"
-                             maxlength="1000" type="text"
+            <p:inputTextarea style="max-height: 29px;"
+                             maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.actualDateDescription}"
                              jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
         </div>

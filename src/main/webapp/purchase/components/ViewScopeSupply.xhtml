@@ -4,7 +4,9 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h4 class="sub-header">#{msgs['po.supply.scope.title']}</h4>
-    <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderView.scopeSupplies}" rowKey="#{_index+1}"
+    <p:dataTable id="scopeSupplyList" var="_scopeSupply"
+                 styleClass="data-table-po-sc"
+                 value="#{purchaseOrderView.scopeSupplies}" rowKey="#{_index+1}"
                  rowIndexVar="_index">
         <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="70"
                   sortFunction="#{sortBean.sortItemNumber}">
@@ -29,31 +31,25 @@
         <p:column sortBy="#{_scopeSupply.deliveryDate}" width="110"
                   sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
             <f:facet name="header">
-                <div style="width: 40px;">
                     #{msgs['po.supply.scope.column.original.delivery.date']}
-                </div>
             </f:facet>
             #{util.toLocal(_scopeSupply.deliveryDate)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.exWorkDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.forecast.ex.works.date']}
-                </div>
             </f:facet>
             #{util.toLocal(_scopeSupply.exWorkDate)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.actual']}
                     <br/>
                     #{msgs['po.supply.scope.column.actual.ex.works']}
                     <br/>
                     #{msgs['po.supply.scope.column.actual.date']}
-                </div>
             </f:facet>
             #{util.toLocal(_scopeSupply.actualExWorkDate)}
         </p:column>
@@ -61,34 +57,28 @@
                   sortFunction="#{sortBean.sortLeadTime}">
             #{_scopeSupply.deliveryLeadTimeQt}
             &#160;
-            #{_scopeSupply.deliveryLeadTimeMs}
+            #{configuration.getTimeMeasurement(_scopeSupply.deliveryLeadTimeMs)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.siteDate}" width="95"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.forecast.site.date']}
-                </div>
             </f:facet>
             #{util.toLocal(_scopeSupply.siteDate)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="95"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.required.site.date']}
-                </div>
             </f:facet>
             #{util.toLocal(_scopeSupply.requiredSiteDate)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="95"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.actual.site']}
                     <br/>
                     #{msgs['po.supply.scope.column.site.date']}
-                </div>
             </f:facet>
             #{util.toLocal(_scopeSupply.actualSiteDate)}
         </p:column>

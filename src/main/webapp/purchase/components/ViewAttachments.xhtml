@@ -4,7 +4,9 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h4 class="sub-header">#{msgs['po.attachments.title']}</h4>
-    <p:dataTable id="commentList" value="#{purchaseOrderView.comments}"  rowIndexVar="_index" var="_comment">
+    <p:dataTable id="commentList" value="#{purchaseOrderView.comments}"
+                 styleClass="data-table-po-sc"
+                 rowIndexVar="_index" var="_comment">
         <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
             #{util.toLocalDateGMT(_comment.lastUpdate)}
         </p:column>
@@ -17,10 +19,14 @@
         <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
             #{_comment.description}
         </p:column>
+
         <p:column  headerText="#{msgs['lbl.attachment']}" width="210" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
+            <h:form>
            <h:commandLink styleClass="link-download" action="#{purchaseOrderView.downloadAttachedFileOnComment(_comment.id)}"
                           rendered="#{not empty _comment.fileName}" value="#{_comment.fileName}"/>
+            </h:form>
         </p:column>
+
     </p:dataTable>
     <br/>
 

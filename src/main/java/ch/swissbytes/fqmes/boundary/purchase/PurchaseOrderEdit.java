@@ -803,7 +803,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpCreation(){
         log.info("calulateForecasteDateForTdpCreation....");
-        newTdp.setForecastDeliveryDate(null);
+      //  newTdp.setForecastDeliveryDate(null);
         if(!newTdp.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
@@ -812,7 +812,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
     public void calulateForecasteDateForTdpEdition(){
         log.info("calulateForecasteDateForTdpEdition....");
-        tdpEdit.setForecastDeliveryDate(null);
+      //  tdpEdit.setForecastDeliveryDate(null);
         if(!tdpEdit.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>1&&currentIndexForTdp>0?list.get(currentIndexForTdp-1):null;
@@ -822,7 +822,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpCreation1(){
         log.info("calulateForecasteDateForTdpCreation1....");
-        newTdp.setForecastDeliveryDate(null);
+      //  newTdp.setForecastDeliveryDate(null);
         if(!newTdp.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>0?list.get(list.size()-1):null;
@@ -831,7 +831,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
     public void calulateForecasteDateForTdpEdition1(){
         log.info("calulateForecasteDateForTdpEdition1....");
-        tdpEdit.setForecastDeliveryDate(null);
+       // tdpEdit.setForecastDeliveryDate(null);
         if(!tdpEdit.getIsForecastSiteDateManual()){
             List<TransitDeliveryPointEntity>list=scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious=list.size()>1&&currentIndexForTdp>0?list.get(currentIndexForTdp-1):null;

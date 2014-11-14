@@ -17,6 +17,7 @@ body {
     font-family: 'FqDejaVuSans';
     font-size: 12px;
     height: 100%;
+    min-width: 1200px;
 }
 
 .container-fluid {
@@ -62,16 +63,13 @@ td, th {
     font-family:FqDejaVuSans!important;
 }
 
-.forecastSiteDate
-.ui-inputfield{
-    width: 70%;
-}
 
 .ui-datatable-data
 .ui-widget-content  {
     background-color: #EEEEEE;
     color: #000000;
     font-family: FqDejaVuSans!important;
+
 }
 .ui-outputlabel{
     font-family: FqDejaVuSans!important;
@@ -84,6 +82,24 @@ td, th {
 .ui-widget {
     font-family: FqDejaVuSans!important;
     font-size: 12px;
+    padding-left: 6px!important;
+    padding-top: 6px!important;
+}
+
+.ui-selectonemenu{
+    padding-top: 0px!important;
+    padding-left: 0px!important;
+}
+
+
+
+.ui-selectonemenu-label{
+    height: 27px;
+}
+
+.menu-ddp .ui-selectonemenu-label {
+    box-shadow: none!important;
+    height: 27px!important;
 }
 
 textarea.form-control {
@@ -126,7 +142,7 @@ textarea.form-control {
 }
 
 .ui-datatable table{
-    min-width: 1350px!important;
+    /*min-width: 1350px!important;*/
 }
 
 .section-lbl-input-po{
@@ -134,11 +150,12 @@ textarea.form-control {
 }
 
 .section-text-area-po{
-    width: 370px!important; position: relative;
+    width: 405px!important; position: relative;
     min-height: 1px;
-    margin-left: 60px;
+    margin-left: 70px;
     padding-right: 0px;
     padding-left: 15px; float: left;
+    height: 29px!important;
 }
 
 .inputText-general-po{
@@ -148,15 +165,106 @@ textarea.form-control {
     padding-left: 15px; float: left;
 }
 
+.inputText-general-poi{
+    width: 405px!important; position: relative;
+    min-height: 1px;
+    padding-right: 0px;
+    padding-left: 15px; float: left;
+}
+
+.incoTerm-unit-totalPrice-IncoTerms-poi{
+    width: 155px!important;
+    float: left!important;
+    padding-left: 15px!important;
+    padding-right: 10px!important;
+}
+.incoTerm-textArea-poi{
+    width: 250px!important; float: left; padding-left: 10px;
+}
+
+.unitPrice-currency-label-poi{
+    width: 66px!important;
+    float: left;
+    padding-right: 10px;!important;
+    margin-left: 44px!important;
+    margin-right: 10px!important;
+}
+
+.unitPrice-currency-text-poi{
+    width: 130px!important;
+    float: left;
+    margin-right: 15px;
+}
+
+.source-section-date-poi{
+    width: 145px!important;
+    float: left;
+    padding-left: 15px;
+}
+
+.source-forecastExWorkDate{
+    float: left;
+    margin-left: 340px;
+    width: 220px!important;
+}
+
+.source-btn-save-cancel{
+    width: 875px;
+}
+
+.destination-block-lead-time{
+    width: 270px;
+    float: left;
+    margin-left: 40px;
+}
+.destination-block-lead-time-text{
+    background-color: #fff; background-image: none;
+    border: 1px solid #ccc; border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555; height: 30px; width: 130px;
+    line-height: 1.42857; padding: 6px 12px; margin-bottom: 10px;!important
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+.destination-block-forecast-site-date{
+    float: left;
+    margin-left: 33px;
+    width: 250px!important;
+}
+
+.destination-block-forecast-site-date-calendar{
+    width: 130px!important; float: left; margin-bottom: 10px;
+}
+
+.destination-block-actual-site-date{
+    float: left;
+    margin-left: 9px;
+    width: 130px!important;
+}
+
+.tdp-data-table-poi{
+    width: 1082px!important;
+}
+
+.data-table-po-sc{
+    padding-left: 0px!important;
+}
+
+.source-actualExWorkDate{
+    margin-left: 40px;
+    width: 130px!important;
+    float: left;
+}
+
 .calendar-general-po{
-    width: 160px!important; position: relative;
+    width: 190px!important; position: relative;
     min-height: 1px;
     padding-right: 0px;
     padding-left: 15px; float: left;
 }
 
 .label-general-po{
-    width: 225px!important; position: relative;
+    width: 232px!important; position: relative;
     min-height: 1px;
     padding-right: 5px;
     padding-left: 15px; float: left;
@@ -176,6 +284,8 @@ textarea.form-control {
 
 .form-control{
     font-size: 12px;
+    height: 29px;
+    padding-left: 6px;
 }
 
 .text-lbl-ltr{
@@ -259,6 +369,16 @@ textarea.form-control {
     position: relative;
 }
 
+.orginal-delivery-date .ui-column-title {
+    display: inline-block;
+    width: 40px!important;
+}
+
+.forecast-ex-work-date .ui-column-title{
+    display: inline-block;
+    width: 60px!important;
+}
+
 .orginal-delivery-date .ui-sortable-column-icon {
     position: absolute;
     top: 6px;
@@ -274,8 +394,17 @@ textarea.form-control {
     top: 6px;
     right: 18px;
 }
+
+.select-onemenu-po{
+    height: 29px!important;
+    min-width: 100px!important;
+}
+.inputfield .select-onemenu-po{
+    height: 29px!important;
+}
+
 .input-general-po{
-    margin-right: -60px!important;
+    margin-right: -70px!important;
 }
 
 .ui-datatable thead th .ui-datatable tbody td .ui-datatable tfoot td .tblDescScPu{
@@ -287,4 +416,19 @@ textarea.form-control {
         padding-left: 50px!important;
         padding-right: 50px!important;
     }*/
+}
+
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev{
+    height: 22px;
+}
+.ui-paginator .ui-paginator-current, .ui-paginator .ui-paginator-rpp-options {
+    height: 22px;
+    padding-top: 15px;
+}
+
+
+.ui-chkbox-icon.ui-icon {
+    overflow: visible;
+    margin-top: -8px;
+    margin-left: -6px;
 }

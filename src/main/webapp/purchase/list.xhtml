@@ -90,6 +90,7 @@
         <br/>
         <h:form id="purchaseListForm" styleClass="fq-form-table">
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
+                         styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">

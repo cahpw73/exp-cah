@@ -6,7 +6,9 @@
 
     <h4 class="sub-header fq-sub-header">#{msgs['po.supply.scope.title']}</h4>
     <div class="fq-form-table">
-        <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderEdit.activeScopeSupplies}" rowKey="#{_index+1}"
+        <p:dataTable id="scopeSupplyList" var="_scopeSupply"
+                     styleClass="data-table-po-sc"
+                     value="#{purchaseOrderEdit.activeScopeSupplies}" rowKey="#{_index+1}"
                      rowIndexVar="_index">
             <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="70"
                       sortFunction="#{sortBean.sortItemNumber}">
@@ -31,31 +33,25 @@
             <p:column sortBy="#{_scopeSupply.deliveryDate}" width="110"
                       sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
                 <f:facet name="header">
-                    <div style="width: 40px;">
                     #{msgs['po.supply.scope.column.original.delivery.date']}
-                    </div>
                 </f:facet>
                  #{util.toLocal(_scopeSupply.deliveryDate)}
             </p:column>
             <p:column sortBy="#{_scopeSupply.exWorkDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
                 <f:facet name="header">
-                    <div style="width: 60px;">
-                        #{msgs['po.supply.scope.column.forecast.ex.works.date']}
-                    </div>
+                    #{msgs['po.supply.scope.column.forecast.ex.works.date']}
                 </f:facet>
                 #{util.toLocal(_scopeSupply.exWorkDate)}
             </p:column>
             <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
                 <f:facet name="header">
-                    <div style="width: 60px;">
-                        #{msgs['po.supply.scope.column.actual']}
-                        <br/>
-                        #{msgs['po.supply.scope.column.actual.ex.works']}
-                        <br/>
-                        #{msgs['po.supply.scope.column.actual.date']}
-                    </div>
+                    #{msgs['po.supply.scope.column.actual']}
+                    <br/>
+                    #{msgs['po.supply.scope.column.actual.ex.works']}
+                    <br/>
+                    #{msgs['po.supply.scope.column.actual.date']}
                 </f:facet>
                 #{util.toLocal(_scopeSupply.actualExWorkDate)}
             </p:column>
@@ -68,29 +64,23 @@
             <p:column sortBy="#{_scopeSupply.siteDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
                 <f:facet name="header">
-                    <div style="width: 60px;">
-                        #{msgs['po.supply.scope.column.forecast.site.date']}
-                    </div>
+                    #{msgs['po.supply.scope.column.forecast.site.date']}
                 </f:facet>
                 #{util.toLocal(_scopeSupply.siteDate)}
             </p:column>
             <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
                 <f:facet name="header">
-                    <div style="width: 60px;">
-                        #{msgs['po.supply.scope.column.required.site.date']}
-                    </div>
+                    #{msgs['po.supply.scope.column.required.site.date']}
                 </f:facet>
                 #{util.toLocal(_scopeSupply.requiredSiteDate)}
             </p:column>
             <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
                 <f:facet name="header">
-                    <div style="width: 60px;">
-                        #{msgs['po.supply.scope.column.actual.site']}
-                        <br/>
-                        #{msgs['po.supply.scope.column.site.date']}
-                    </div>
+                    #{msgs['po.supply.scope.column.actual.site']}
+                    <br/>
+                    #{msgs['po.supply.scope.column.site.date']}
                 </f:facet>
                 #{util.toLocal(_scopeSupply.actualSiteDate)}
             </p:column>
@@ -121,6 +111,20 @@
             <div class="pull-right">
                 <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.scope.supply']}"
                                  action="#{purchaseOrderEdit.cleanScopeSupply}">
+                </h:commandButton>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            <div class="pull-right">
+                <h:commandButton id="save001" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
+                                 action="#{purchaseOrderEdit.doUpdate}"
+                                 type='submit'/>
+                &#160;
+                <h:commandButton id="cancelCreateBtn001"
+                                 value="#{msgs['lbl.cancel']}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax process="@this"
+                            oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
                 </h:commandButton>
             </div>
         </div>

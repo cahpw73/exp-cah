@@ -60,7 +60,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 //upgrading tdps
                 List<TransitDeliveryPointEntity>list=tdpService.getActives(scopeSupplyEntity.getTdpList());
                 Date date=calculateForecastDeliveryDateForTdp(scopeSupplyEntity,true, null, list.get(0));
-                if(list.get(0).getIsForecastSiteDateManual()){
+                if(!list.get(0).getIsForecastSiteDateManual()){
                     list.get(0).setForecastDeliveryDate(date);
                 }
 
@@ -147,7 +147,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
             int index=tdpService.getIndexById(tdp.getId(),tdpService.getActives(ss.getTdpList()));
             for(int i=index+1;i<ss.getTdpList().size();i++){
                 TransitDeliveryPointEntity current=tdpService.clone(ss.getTdpList().get(i));
-                if(current.getIsForecastSiteDateManual()){
+                if(!current.getIsForecastSiteDateManual()){
                     Date d=calculateDate(previous,current);
                     ss.getTdpList().get(i).setForecastDeliveryDate(d);
                 }

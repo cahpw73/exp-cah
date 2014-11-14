@@ -14,6 +14,7 @@
             <h2 class="sub-header">#{msgs['user.list.title']}</h2>
             <p:dataTable value="#{userListBean.list}" var="_user"
                          paginator="true" rows="5" lazy="true"
+                         styleClass="data-table-po-sc"
                          rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['user.list.column.username']}">
                     #{_user.username}

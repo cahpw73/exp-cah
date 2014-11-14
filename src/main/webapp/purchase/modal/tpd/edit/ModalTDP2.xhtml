@@ -19,14 +19,14 @@
             <div class="col-sm-6" style="padding-right: 0px;">
                 <h:inputText class="form-control" value="#{purchaseOrderEdit.newTdp.leadTime}"
                              style="min-width: 80px;"
+                             onkeypress="return isNumberKey(event);"
                              jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}">
                     <f:ajax event="change" execute="@this" listener="#{purchaseOrderEdit.calulateForecasteDateForTdpCreation1}" render="forecastDeliveryDateTdp2" />
                  </h:inputText>
             </div>
             <div class="col-sm-6" style="padding-left: 5px;">
                 <h:selectOneMenu value="#{purchaseOrderEdit.newTdp.measurementTime}"
-                                 style="min-width: 90px;"
-                                 styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                                 styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all select-onemenu-po">
                     <f:selectItems value="#{allTimeMeasurement}"/>
                     <f:ajax event="change" execute="@this" listener="#{purchaseOrderEdit.calulateForecasteDateForTdpCreation1}" render="forecastDeliveryDateTdp2" />
                 </h:selectOneMenu>
@@ -45,13 +45,16 @@
                         disabled="#{not purchaseOrderEdit.newTdp.isForecastSiteDateManual}"
                         pattern="#{configuration.formatDate}"
                         converterMessage="#{msgs['validator.date.invalid']}"
-                        jsf:placeholder="#{configuration.formatDate}"/>
-            <div class="col-sm-5" style="padding-left: 0px; padding-top: 9px;">
-            <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.newTdp.isForecastSiteDateManual}"
-                                      style="margin-left: 5px; margin-right: 5px;">
+                        jsf:placeholder="#{configuration.formatDate}">
+                <p:ajax event="dateSelect" process="@this"/>
+                    </p:calendar>
+            <div>
+                &#160;
+            <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.newTdp.isForecastSiteDateManual}">
                 <p:ajax event="change" update=":TDP:forecastDeliveryDateTdp2"
                         listener="#{purchaseOrderEdit.switchModeForecastSiteDateForTdp(false)}"/>
             </p:selectBooleanCheckbox>
+                &#160;
             <h:outputText value="#{msgs['lbl.manual']}"/>
             </div>
         </div>
@@ -69,7 +72,7 @@
         <div style="margin-top: 15px;">
             <label class="col-sm-2 control-label">#{msgs['tdp.lbl.comments']}</label>
             <div class="col-sm-10">
-                <p:inputTextarea maxlength="500"
+                <p:inputTextarea maxlength="450"
                                  style="height: 61px;"
                                  styleClass="form-control" jsf:placeholder="#{msgs['ph.description']}" value="#{purchaseOrderEdit.newTdp.comment}"/>
             </div>

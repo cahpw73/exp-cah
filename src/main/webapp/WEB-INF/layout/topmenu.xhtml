@@ -54,8 +54,9 @@
                                data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><h:link style="font-size: 12px;" value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
+                                <li><h:link style="font-size: 12px; padding-left: 15px!important;" value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
                                 <li><p:commandLink value="#{msgs['user.change.password']}"
+                                                   style="padding-left: 15px!important"
                                                    action="#{userChangePassBean.loadUserSelected()}"
                                                    oncomplete="PF('changePassDlg').show();"
                                                    update=":changePassDlgId">
@@ -64,6 +65,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <p:commandLink id="logout" value="#{msgs['close.session']}"
+                                                   style="padding-left: 15px!important"
                                                    actionListener="#{identity.logout}" process="@this"
                                                    action="/login?faces-redirect=true" rendered="#{identity.loggedIn}">
                                         <f:param name="nocid" value="true"/>

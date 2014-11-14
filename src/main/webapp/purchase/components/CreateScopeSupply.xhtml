@@ -6,7 +6,9 @@
 
     <h4 class="sub-header fq-sub-header">#{msgs['po.supply.scope.title']}</h4>
     <div class="fq-form-table">
-        <p:dataTable id="scopeSupplyList" var="_scopeSupply" value="#{purchaseOrderCreate.scopeSupplies}" rowKey="#{_index+1}"
+        <p:dataTable id="scopeSupplyList" var="_scopeSupply"
+                     styleClass="data-table-po-sc"
+                     value="#{purchaseOrderCreate.scopeSupplies}" rowKey="#{_index+1}"
                      rowIndexVar="_index">
         <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="80"
                   sortFunction="#{sortBean.sortItemNumber}">
@@ -24,38 +26,32 @@
                   sortFunction="#{sortBean.sortStrings}" styleClass="tblDescScPu" style="min-width: 130px!important;">
                 #{_scopeSupply.description}
             </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}"  sortBy="#{_scopeSupply.spIncoTer+2}" width="100"
+        <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}"  sortBy="#{_scopeSupply.spIncoTerm}" width="100"
                   sortFunction="#{sortBean.sortStrings}" >
                 #{_scopeSupply.spIncoTerm}
             </p:column>
         <p:column  sortBy="#{_scopeSupply.deliveryDate}"  width="110"
                   sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
             <f:facet name="header">
-                <div style="width: 40px;">
-                    #{msgs['po.supply.scope.column.original.delivery.date']}
-                </div>
+                #{msgs['po.supply.scope.column.original.delivery.date']}
             </f:facet>
                 #{util.toLocal(_scopeSupply.deliveryDate)}
             </p:column>
         <p:column sortBy="#{_scopeSupply.exWorkDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
-                    #{msgs['po.supply.scope.column.forecast.ex.works.date']}
-                </div>
+                #{msgs['po.supply.scope.column.forecast.ex.works.date']}
             </f:facet>
                 #{util.toLocal(_scopeSupply.exWorkDate)}
             </p:column>
         <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.actual']}
                     <br/>
                     #{msgs['po.supply.scope.column.actual.ex.works']}
                     <br/>
                     #{msgs['po.supply.scope.column.actual.date']}
-                </div>
             </f:facet>
                 #{util.toLocal(_scopeSupply.actualExWorkDate)}
             </p:column>
@@ -68,29 +64,23 @@
         <p:column sortBy="#{_scopeSupply.siteDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
-                    #{msgs['po.supply.scope.column.forecast.site.date']}
-                </div>
+                #{msgs['po.supply.scope.column.forecast.site.date']}
             </f:facet>
                 #{util.toLocal(_scopeSupply.siteDate)}
             </p:column>
         <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
-                    #{msgs['po.supply.scope.column.required.site.date']}
-                </div>
+                #{msgs['po.supply.scope.column.required.site.date']}
             </f:facet>
                 #{util.toLocal(_scopeSupply.requiredSiteDate)}
             </p:column>
         <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
-                <div style="width: 60px;">
                     #{msgs['po.supply.scope.column.actual.site']}
                     <br/>
                     #{msgs['po.supply.scope.column.site.date']}
-                </div>
             </f:facet>
                 #{util.toLocal(_scopeSupply.actualSiteDate)}
             </p:column>
@@ -113,6 +103,22 @@
                 <h:commandButton styleClass="btn btn-primary btn-sm component-left"
                                  action="#{purchaseOrderCreate.cleanScopeSupply}"
                                  value="#{msgs['lbl.add.scope.supply']}"/>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            <div class="pull-right">
+                <h:commandButton id="save01" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                                 action="#{purchaseOrderCreate.doSave}"/>
+                &#160;
+                <h:commandButton id="add01" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                                 action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+                &#160;
+                <h:commandButton id="cancelCreateBtn01"
+                                 value="#{msgs['lbl.cancel']}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax process="@this"
+                            oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf?faces-redirect=true'"/>
+                </h:commandButton>
             </div>
         </div>
 
