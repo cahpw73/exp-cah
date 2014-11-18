@@ -71,8 +71,6 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 }else if(lastTdp.getForecastDeliveryDate()!=null){
                     computedDate=calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),lastTdp.getForecastDeliveryDate());
                 }
-
-
             }
         }
         log.info("computeDate "+computedDate);
@@ -123,13 +121,6 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                     date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),tdpPrevious.getForecastDeliveryDate());
                 }
             }
-        if(tdpCurrent.getId()!=null){
-            TransitDeliveryPointEntity tdpe= tdpService.clone(tdpCurrent);
-            if(!tdpe.getIsForecastSiteDateManual()){
-                tdpe.setForecastDeliveryDate(date);
-            }
-            doUpdateTdpPost(ss, tdpCurrent, tdpe);
-        }
         log.info(String.format("Date calculated [%s]",date));
         return date;
     }

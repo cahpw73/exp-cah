@@ -5,7 +5,7 @@
 
     <h4 class="sub-header">#{msgs['po.supply.scope.title']}</h4>
     <p:dataTable id="scopeSupplyList" var="_scopeSupply"
-                 styleClass="data-table-po-sc"
+                 styleClass="data-table-po-sc data-table-po-lists"
                  value="#{purchaseOrderView.scopeSupplies}" rowKey="#{_index+1}"
                  rowIndexVar="_index">
         <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="70"
@@ -66,13 +66,6 @@
             </f:facet>
             #{util.toLocal(_scopeSupply.siteDate)}
         </p:column>
-        <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="95"
-                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
-            <f:facet name="header">
-                    #{msgs['po.supply.scope.column.required.site.date']}
-            </f:facet>
-            #{util.toLocal(_scopeSupply.requiredSiteDate)}
-        </p:column>
         <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="95"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
@@ -81,6 +74,13 @@
                     #{msgs['po.supply.scope.column.site.date']}
             </f:facet>
             #{util.toLocal(_scopeSupply.actualSiteDate)}
+        </p:column>
+        <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="95"
+                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+            <f:facet name="header">
+                #{msgs['po.supply.scope.column.required.site.date']}
+            </f:facet>
+            #{util.toLocal(_scopeSupply.requiredSiteDate)}
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}"
                   sortBy="#{_scopeSupply.responsibleExpediting}" width="100"

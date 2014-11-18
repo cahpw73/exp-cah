@@ -1,0 +1,5 @@
+
+--@author Alvaro Cardozo
+
+
+ALTER TABLE SCOPE_SUPPLY ADD COLUMN ORDERED INTEGER;

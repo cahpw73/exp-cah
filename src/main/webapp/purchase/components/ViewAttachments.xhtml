@@ -5,7 +5,7 @@
 
     <h4 class="sub-header">#{msgs['po.attachments.title']}</h4>
     <p:dataTable id="commentList" value="#{purchaseOrderView.comments}"
-                 styleClass="data-table-po-sc"
+                 styleClass="data-table-po-sc data-table-po-lists"
                  rowIndexVar="_index" var="_comment">
         <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
             #{util.toLocalDateGMT(_comment.lastUpdate)}

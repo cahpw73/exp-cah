@@ -9,6 +9,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public class PurchaseOrderViewTbl extends LazyDataModel<VPurchaseOrder> {
 
     @Override
     public List<VPurchaseOrder> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        log.info("loading data... "+sortField);
+      //  log.info("loading data... "+sortField);
         List<VPurchaseOrder> purchaseOrderEntityList=new ArrayList<>();
         if(sortField!=null){
             purchaseOrderEntityList= dao.findByPage(first, pageSize,filter,sortField,sortOrder.ordinal()==SortOrder.ASCENDING.ordinal());
@@ -51,6 +52,12 @@ public class PurchaseOrderViewTbl extends LazyDataModel<VPurchaseOrder> {
             this.total=total;
         }
         this.setPageSize(pageSize);
+        if(sortField!=null&&sortField.equals("po")){
+            Collections.sort(purchaseOrderEntityList);
+            if(sortOrder.ordinal()==SortOrder.DESCENDING.ordinal()){
+                Collections.reverse(purchaseOrderEntityList);
+            }
+        }
         return purchaseOrderEntityList;
     }
 

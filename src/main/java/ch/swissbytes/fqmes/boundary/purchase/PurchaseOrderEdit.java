@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.SupplierDao;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.types.StatusEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -246,6 +247,8 @@ public class PurchaseOrderEdit implements Serializable {
                 }
             }
         }
+        int order =1;
+        sortScopeSupply.sortScopeSupplyEntity(scopeSupplies);
         for (final ScopeSupplyEntity scopeSupply : scopeSupplies) {
             if (scopeSupply.getId() <= 0) {
                 scopeSupply.setId(null);
@@ -255,6 +258,12 @@ public class PurchaseOrderEdit implements Serializable {
                 if (!oldScopeSupply.equals(scopeSupply)) {
                     scopeSupply.setLastUpdate(now);
                 }
+            }
+            if(scopeSupply.getStatus().getId().intValue()!= StatusEnum.DELETED.ordinal()){
+                scopeSupply.setOrdered(order);
+                order++;
+            }else{
+                scopeSupply.setOrdered(null);
             }
         }
     }

@@ -102,7 +102,17 @@
                         </div>
                     </div>
                     <!-- Text input-->
-
+                <div class="row">
+                    <div class="section-lbl-input-po">
+                        <div class="form-group input-general-po">
+                            <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
+                            <div class="inputText-general-po">
+                                <h:inputText jsf:placeholder="#{msgs['po.ph.supplier']}"  maxlength="50"
+                                             value="#{purchaseOrderEdit.supplierEdit.supplier}" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     <div class="row"><!---->
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -121,17 +131,7 @@
                                                  jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
                             </div>
                     </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        <div class="form-group input-general-po">
-                            <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
-                            <div class="inputText-general-po">
-                                <h:inputText jsf:placeholder="#{msgs['po.ph.supplier']}"  maxlength="50"
-                                             value="#{purchaseOrderEdit.supplierEdit.supplier}" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">

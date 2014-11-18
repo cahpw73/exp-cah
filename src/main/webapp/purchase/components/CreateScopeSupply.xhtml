@@ -7,7 +7,7 @@
     <h4 class="sub-header fq-sub-header">#{msgs['po.supply.scope.title']}</h4>
     <div class="fq-form-table">
         <p:dataTable id="scopeSupplyList" var="_scopeSupply"
-                     styleClass="data-table-po-sc"
+                     styleClass="data-table-po-sc data-table-po-lists"
                      value="#{purchaseOrderCreate.scopeSupplies}" rowKey="#{_index+1}"
                      rowIndexVar="_index">
         <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="80"
@@ -23,7 +23,7 @@
                 #{_scopeSupply.unit}
             </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}"
-                  sortFunction="#{sortBean.sortStrings}" styleClass="tblDescScPu" style="min-width: 130px!important;">
+                  sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.description}
             </p:column>
         <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}"  sortBy="#{_scopeSupply.spIncoTerm}" width="100"
@@ -68,13 +68,7 @@
             </f:facet>
                 #{util.toLocal(_scopeSupply.siteDate)}
             </p:column>
-        <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="90"
-                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
-            <f:facet name="header">
-                #{msgs['po.supply.scope.column.required.site.date']}
-            </f:facet>
-                #{util.toLocal(_scopeSupply.requiredSiteDate)}
-            </p:column>
+
         <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
@@ -83,6 +77,13 @@
                     #{msgs['po.supply.scope.column.site.date']}
             </f:facet>
                 #{util.toLocal(_scopeSupply.actualSiteDate)}
+            </p:column>
+            <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    #{msgs['po.supply.scope.column.required.site.date']}
+                </f:facet>
+                #{util.toLocal(_scopeSupply.requiredSiteDate)}
             </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="70"
                   sortFunction="#{sortBean.sortStrings}">

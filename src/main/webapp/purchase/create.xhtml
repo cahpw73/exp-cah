@@ -109,8 +109,21 @@
             </div>
         </div>
     </div>
-    <!-- Text input-->
+    <div class="row">
+        <div class="section-lbl-input-po">
+            <div class="form-group input-general-po">
+                <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
 
+                <div class="inputText-general-po">
+                    <h:inputText id="supplier" type="text" maxlength="50"
+                                 value="#{purchaseOrderCreate.newSupplier.supplier}"
+                                 jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
+                    <p:message for="supplier" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Text input-->
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -130,20 +143,6 @@
                              style="height: 90px;" class="form-control"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
             <p:message for="addressDescription"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            <div class="form-group input-general-po">
-                <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
-
-                <div class="inputText-general-po">
-                    <h:inputText id="supplier" type="text" maxlength="50"
-                                 value="#{purchaseOrderCreate.newSupplier.supplier}"
-                                 jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
-                    <p:message for="supplier" />
-                </div>
-            </div>
         </div>
     </div>
     <div class="row">

@@ -6,7 +6,7 @@
     <h4 class="sub-header fq-sub-header">#{msgs['po.attachments.title']}</h4>
     <div class="fq-form-table">
         <p:dataTable id="commentList" value="#{purchaseOrderEdit.activeComments}"
-                     styleClass="data-table-po-sc"
+                     styleClass="data-table-po-sc data-table-po-lists"
                      rowIndexVar="_index" var="_comment">
             <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
                 #{util.toLocalDateGMT(_comment.lastUpdate)}

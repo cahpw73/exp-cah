@@ -52,7 +52,7 @@ public class PurchaseOrderCreate implements Serializable {
     private ScopeSupplyBean scopeSupplyBean;
 
     @Inject
-    private SortBean sortScopeSupply;
+    private SortBean sortBean;
 
     private PurchaseOrderEntity newPurchaseOrder;
 
@@ -99,7 +99,7 @@ public class PurchaseOrderCreate implements Serializable {
     public void load(){
         log.info("void load()");
         if(scopeSupplies != null && !scopeSupplies.isEmpty()){
-            sortScopeSupply.sortScopeSupplyEntity(scopeSupplies);
+            sortBean.sortScopeSupplyEntity(scopeSupplies);
         }
     }
 
@@ -150,9 +150,16 @@ public class PurchaseOrderCreate implements Serializable {
         newPurchaseOrder.setLastUpdate(now);
         newSupplier.setStatus(enabled);
         newSupplier.setLastUpdate(now);
-        for(ScopeSupplyEntity scopeSupplyEntity:getScopeSupplies()){
+
+        sortBean.sortScopeSupplyEntity(scopeSupplies);
+        int ordered =1;
+        System.out.println("ordering...");
+        for(ScopeSupplyEntity scopeSupplyEntity:scopeSupplies){
             scopeSupplyEntity.setStatus(enabled);
+            System.out.println("ordered "+ordered);
+            scopeSupplyEntity.setOrdered(ordered);
             scopeSupplyEntity.setLastUpdate(now);
+            ordered++;
         }
     }
 

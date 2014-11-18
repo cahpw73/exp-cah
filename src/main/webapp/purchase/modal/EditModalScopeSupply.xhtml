@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="form-group input-general-po">
-                <p:outputLabel for="scopeSupplyQuantity" class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
+                <h:outputLabel for="scopeSupplyQuantity" class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
 
                 <div class="incoTerm-unit-totalPrice-IncoTerms-poi">
                     <h:inputText id="scopeSupplyQuantity" type="text"
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="form-group input-general-po">
-                <p:outputLabel for="scopeSupplyCost" class="text-lbl-ltr label-general-po control-label"
+                <h:outputLabel for="scopeSupplyCost" class="text-lbl-ltr label-general-po control-label"
                                value="#{msgs['po.supply.scope.column.cost']}"/>
 
                 <div class="incoTerm-unit-totalPrice-IncoTerms-poi">
@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="form-group input-general-po">
-                <p:outputLabel for="totalPriceTxt" class="label-general-po control-label text-lbl-ltr"
+                <h:outputLabel for="totalPriceTxt" class="label-general-po control-label text-lbl-ltr"
                                value="#{msgs['po.supply.scope.column.total.price']}"/>
 
                 <div class="incoTerm-unit-totalPrice-IncoTerms-poi">
@@ -245,27 +245,29 @@
             <div class="source-actualExWorkDate">
                 <div class="form-horizontal">
                     <h:outputLabel  value="#{msgs['supply.scope.lbl.actual.ex.works.date']}" style="margin-bottom: 10px;"/>
-                    <p:calendar styleClass="p-calendar"
-                                mask="#{configuration.mask}"
-                                navigator="true"
-                                pattern="#{configuration.formatDate}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                timeZone="#{configuration.timeZone}"
-                                converter="#{dateConverter}"
-                                value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();">
-                        <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                listener="#{purchaseOrderEdit.calculateDate}"/>
-                        <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                listener="#{purchaseOrderEdit.calculateDate}"/>
-                    </p:calendar>
-                    <p:inputTextarea maxlength="950" type="text"
-                                     style="margin-top: 10px; height: 29px;"
-                                     id="actualExWorkDateObs"
-                                     value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDateObs}"
-                                     jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
-                                     class="form-control"/>
-                    <p:message for="actualExWorkDateObs"/>
+                    <div class="source-actualExWorkDate-input">
+                        <p:calendar styleClass="p-calendar"
+                                    mask="#{configuration.mask}"
+                                    navigator="true"
+                                    pattern="#{configuration.formatDate}"
+                                    jsf:placeholder="#{configuration.formatDate}"
+                                    timeZone="#{configuration.timeZone}"
+                                    converter="#{dateConverter}"
+                                    value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDate}"
+                                    onselect="calendarChanges();" onchange="calendarChanges();">
+                            <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
+                                    listener="#{purchaseOrderEdit.calculateDate}"/>
+                            <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
+                                    listener="#{purchaseOrderEdit.calculateDate}"/>
+                        </p:calendar>
+                        <p:inputTextarea maxlength="950" type="text"
+                                         style="margin-top: 10px; height: 29px;"
+                                         id="actualExWorkDateObs"
+                                         value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDateObs}"
+                                         jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
+                                         class="form-control"/>
+                        <p:message for="actualExWorkDateObs"/>
+                    </div>
                 </div>
             </div>
         </div>

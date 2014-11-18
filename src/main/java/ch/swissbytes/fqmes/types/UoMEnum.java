@@ -7,6 +7,6 @@ import java.io.Serializable;
  */
 public enum UoMEnum implements Serializable {
 
-    EACH,KG,L,M
+    EACH,KG,L,M,ONLY
 
 }

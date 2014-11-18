@@ -59,11 +59,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private void loadParamJobSummary() {
-        addParameters("itemLbl", "Item");
+        addParameters("itemLbl", "Item No");
         addParameters("qtyLbl", "Qty");
-        addParameters("uomLbl", "UoM");
+        addParameters("uomLbl", "Unit");
         addParameters("titleLbl", "Title");
-        addParameters("equipmentLbl", "Equipment Tag Number");
+        addParameters("equipmentLbl", "Equipment Tag");
         addParameters("incoTermLbl", "INCO term");
         addParameters("deliveryDateLbl", "Delivery Date");
         addParameters("forecastExWorksDateLbl", "Forecast Ex Works Date");
@@ -72,6 +72,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("forecastSiteDateLbl", "Forecast Site Date");
         addParameters("actualSiteDateLbl", "Actual Site Date");
         addParameters("requiredOnSiteDateLbl", "Required on Site Date");
+        addParameters("TIME_ZONE",configuration.getTimeZone());
     }
 
     @Override

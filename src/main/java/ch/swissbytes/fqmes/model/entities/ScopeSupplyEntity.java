@@ -52,6 +52,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String spIncoTermDescription;
     private String responsibleExpediting;
     private String responsibleExpeditingObservation;
+    private Integer ordered;
 
 
     private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
@@ -357,6 +358,15 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public String getCustomLeadTime(){
         return Integer.toString(deliveryLeadTimeQt!=null?deliveryLeadTimeQt.intValue():0)+"-"+Integer.toString(deliveryLeadTimeMs.ordinal());
 
+    }
+
+    @Column(name="ORDERED")
+    public Integer getOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(Integer ordered) {
+        this.ordered = ordered;
     }
 
     @Override

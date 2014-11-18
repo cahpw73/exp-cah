@@ -1,5 +1,7 @@
 package ch.swissbytes.fqmes.model.entities;
 
+import org.apache.commons.lang.math.NumberUtils;
+
 import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import java.io.Serializable;
 @Named
 @Entity
 @Table(name = "v_purchase_order")
-public class VPurchaseOrder implements Serializable {
+public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private Long id;
 
@@ -102,4 +104,24 @@ public class VPurchaseOrder implements Serializable {
     public void setResponsibleExpediting(String responsibleExpediting) {
         this.responsibleExpediting = responsibleExpediting;
     }
+
+    @Override
+    public int compareTo(VPurchaseOrder o) {
+        if(o!=null){
+            boolean targetAIsNumber=NumberUtils.isNumber(this.getPo()!=null?this.getPo().trim():"");
+            boolean targetBIsNumber=NumberUtils.isNumber(o.getPo()!=null?o.getPo().trim():"");
+            if(targetAIsNumber&&targetBIsNumber){
+                return Double.parseDouble(this.getPo().trim())>Double.parseDouble(o.getPo().trim())?1:-1;
+            }else{
+                if((!targetAIsNumber&&!targetBIsNumber)){
+                    return this.getPo().trim().toLowerCase().compareTo(o.getPo().trim().toLowerCase());
+                }else{
+                    return targetAIsNumber?-1:1;
+                }
+            }
+        }
+        return 0;
+    }
+
+
 }

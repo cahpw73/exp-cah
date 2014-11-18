@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.util;
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 import javax.enterprise.context.RequestScoped;
@@ -38,7 +39,7 @@ public class SortBean implements Serializable {
 
     public boolean matchRegex(String code) {
         System.out.println("matchRegex(String code[" + code + "])");
-        Pattern pattern = Pattern.compile("^[0-9]+(\\.[0-9]+)+$");
+        Pattern pattern = Pattern.compile("^[0-9]+(\\.[0-9]+)*$");
         Matcher matcher = pattern.matcher(code);
         boolean matchFound = matcher.find();
         System.out.println("matchRegex: " + matchFound);
@@ -79,6 +80,20 @@ public class SortBean implements Serializable {
         }
     }
 
+    public int sortPoNumber(Object val1, Object val2){
+            boolean targetAIsNumber= NumberUtils.isNumber(val1 != null ? val1.toString() : "");
+            boolean targetBIsNumber=NumberUtils.isNumber(val2 != null ? val2.toString().trim() : "");
+            if(targetAIsNumber&&targetBIsNumber){
+                return Double.parseDouble(val1.toString().trim())>Double.parseDouble(val2.toString().trim())?1:-1;
+            }else{
+                if((!targetAIsNumber&&!targetBIsNumber)){
+                    return val1.toString().trim().toLowerCase().compareTo(val2.toString().trim().toLowerCase());
+                }else{
+                    return targetAIsNumber?-1:1;
+                }
+            }
+    }
+
     public int sortIntegers(Object val1, Object val2) {
         Integer quantity = Integer.parseInt(val1.toString());
         Integer quantity2 = Integer.parseInt(val2.toString());
@@ -87,8 +102,6 @@ public class SortBean implements Serializable {
 
 
     public int sortStrings(Object val1, Object val2) {
-        System.out.println("val1 "+val1.toString());
-        System.out.println("val2 "+val2.toString());
         String desc1 = val1.toString();
         String desc2 = val2.toString();
         return desc1.toLowerCase().compareTo(desc2.toLowerCase());

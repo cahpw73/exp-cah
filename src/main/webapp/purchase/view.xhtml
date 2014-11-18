@@ -62,7 +62,16 @@
                         </div>
                     </div>
                     <!-- Text input-->
-
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.supplier']}"/>
+                                <div class="inputText-general-po">
+                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.supplier}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row"><!---->
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -82,16 +91,7 @@
                                              value="#{purchaseOrderView.supplierView.addresDescription}"/>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.supplier']}"/>
-                                <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.supplier}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">

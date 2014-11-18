@@ -246,14 +246,21 @@ textarea.form-control {
     width: 1082px!important;
 }
 
+.data-table-po-lists{
+    min-width: 1380px !important
+}
+
 .data-table-po-sc{
     padding-left: 0px!important;
 }
 
 .source-actualExWorkDate{
     margin-left: 40px;
-    width: 130px!important;
     float: left;
+}
+
+.source-actualExWorkDate-input{
+    width: 130px!important;
 }
 
 .calendar-general-po{
@@ -271,7 +278,7 @@ textarea.form-control {
 }
 
 .action-button-po{
-    min-width: 1350px!important;
+    min-width: 1380px!important;
 }
 
 .ui-paginator,
@@ -343,6 +350,7 @@ textarea.form-control {
 .fq-form-table{
     padding-left:15px!important;
     padding-right: 15px!important;
+
 }
 
 .fq-section-row{

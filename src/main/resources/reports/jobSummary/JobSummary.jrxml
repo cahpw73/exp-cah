@@ -22,11 +22,12 @@
 	<parameter name="forecastSiteDateLbl" class="java.lang.String"/>
 	<parameter name="actualSiteDateLbl" class="java.lang.String"/>
 	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select id,project,po
 from purchase_order
 WHERE  $X{IN, id, purchaseID} and status_id=1
-order by id DESC;]]>
+order by CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="project" class="java.lang.String"/>
@@ -35,21 +36,21 @@ order by id DESC;]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="67" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b" x="701" y="0" width="100" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial"/>
+				<reportElement uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b" x="684" y="0" width="117" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="7"/>
 					<paragraph rightIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal(new java.util.Date().getTime())):null]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="290" y="10" width="261" height="42"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="17" isBold="true"/>
+				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="290" y="7" width="261" height="42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Job Summary]]></text>
+				<text><![CDATA[<style size="18" isBold="true" pdfFontName="Helvetica-Bold">Job Summary Report</style>]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -78,6 +79,9 @@ order by id DESC;]]>
 				<subreportParameter name="requiredOnSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{requiredOnSiteDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="forecastSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{forecastSiteDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -99,11 +103,11 @@ order by id DESC;]]>
 				<subreportParameter name="forecastExWorksDateLbl">
 					<subreportParameterExpression><![CDATA[$P{forecastExWorksDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="TIME_MEASURE_LIST">
-					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="incoTermLbl">
 					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_MEASURE_LIST">
+					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="actualSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{actualSiteDateLbl}]]></subreportParameterExpression>
