@@ -76,91 +76,91 @@ order by ss.ordered]]>
 			</line>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="74c839c4-46ea-412b-ab4e-5d98a82cec07" x="634" y="5" width="50" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{requiredOnSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="d2892c90-611a-47dd-affa-43b3414060cc" x="582" y="5" width="50" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{actualSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="cac7118f-f78c-47f5-8e88-fa998677c2cc" x="530" y="5" width="50" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{forecastSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="eeef4060-3490-489e-80c4-bda9534e3a72" x="472" y="5" width="55" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{leadTimeLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="8a871349-28b3-47c3-ab87-e1e8468015d7" x="420" y="5" width="50" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{actualExWorksDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="53a8f1cf-c9d2-4f44-8e79-ace44c057f8b" x="368" y="5" width="50" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{forecastExWorksDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="e5bc3548-dd32-44d3-af8d-d07ce251a300" x="316" y="5" width="50" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="7f0322db-0695-45d6-9f66-f42438f540fd" x="244" y="5" width="70" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{incoTermLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="e9077965-1a13-4a98-8b54-78376fdc6bb1" x="190" y="5" width="53" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{equipmentLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="e0a671f8-5c85-4f96-af28-7713af834521" x="113" y="5" width="75" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{titleLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="7b19ac98-936a-4916-9995-080517369119" x="75" y="5" width="35" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{uomLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="648093fb-0161-425b-9171-5db80c553cc6" x="46" y="5" width="27" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{qtyLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="ebdd62ac-1b21-44eb-a251-934df5630c20" x="0" y="5" width="45" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{itemLbl}+"</style>"]]></textFieldExpression>
@@ -176,7 +176,7 @@ order by ss.ordered]]>
 			</line>
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="26082d43-e23b-4f91-b303-18718a1b90db" x="686" y="5" width="115" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryCommentLbl}+"</style>"]]></textFieldExpression>
