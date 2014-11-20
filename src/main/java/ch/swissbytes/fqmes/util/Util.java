@@ -63,5 +63,22 @@ public class Util {
         }
         return "";
     }
+    public static String toLocal(Date date,String timeZone,String formatDate){
+        DateTimeZone dtz= DateTimeZone.getDefault();
+        Date utcDate=convertUTC(date,dtz.toTimeZone().getID());
+        if(utcDate!=null){
+            DateTimeZone zone = DateTimeZone.forID(timeZone);
+            long local = zone.convertUTCToLocal(utcDate.getTime());
+            //return new Date(local);
+            SimpleDateFormat sdf=new SimpleDateFormat(formatDate,new Locale("en"));
+            return sdf.format(new Date(local));
+        }
+        return "";
+    }
+
+    public static void main(String[] args) {
+        //SimpleDateFormat sdf=;
+        System.out.println(new SimpleDateFormat("MMMMM").format(new Date()));
+    }
 
 }

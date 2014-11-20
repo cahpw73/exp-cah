@@ -72,6 +72,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("forecastSiteDateLbl", "Forecast Site Date");
         addParameters("actualSiteDateLbl", "Actual Site Date");
         addParameters("requiredOnSiteDateLbl", "Required on Site Date");
+        addParameters("deliveryCommentLbl", "Delivery Comment");
         addParameters("TIME_ZONE",configuration.getTimeZone());
     }
 

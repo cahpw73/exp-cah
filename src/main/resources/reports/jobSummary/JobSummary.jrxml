@@ -23,11 +23,12 @@
 	<parameter name="actualSiteDateLbl" class="java.lang.String"/>
 	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="deliveryCommentLbl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select id,project,po
 from purchase_order
 WHERE  $X{IN, id, purchaseID} and status_id=1
-order by CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
+order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="project" class="java.lang.String"/>
@@ -43,7 +44,7 @@ order by CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 					<font fontName="Arial" size="7"/>
 					<paragraph rightIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal(new java.util.Date().getTime())):null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.toLocal(new Date(),$P{TIME_ZONE},$P{FORMAT_DATE})]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="290" y="7" width="261" height="42"/>
@@ -85,6 +86,9 @@ order by CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<subreportParameter name="forecastSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{forecastSiteDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="deliveryCommentLbl">
+					<subreportParameterExpression><![CDATA[$P{deliveryCommentLbl}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="itemLbl">
 					<subreportParameterExpression><![CDATA[$P{itemLbl}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -103,11 +107,11 @@ order by CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<subreportParameter name="forecastExWorksDateLbl">
 					<subreportParameterExpression><![CDATA[$P{forecastExWorksDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="incoTermLbl">
-					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="TIME_MEASURE_LIST">
 					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="incoTermLbl">
+					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="actualSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{actualSiteDateLbl}]]></subreportParameterExpression>
