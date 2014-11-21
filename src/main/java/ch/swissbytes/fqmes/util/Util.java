@@ -76,9 +76,4 @@ public class Util {
         return "";
     }
 
-    public static void main(String[] args) {
-        //SimpleDateFormat sdf=;
-        System.out.println(new SimpleDateFormat("MMMMM").format(new Date()));
-    }
-
 }
