@@ -66,7 +66,7 @@ order by ss.ordered]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{project}+" "+$F{po}+" "+($F{variation}!=null?$F{variation}:"")+" "+($F{po_title}!=null?$F{po_title}:"")+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{project})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{variation})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po_title})+"</style>"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="1c1f0691-5fed-4608-9ea8-747a635689dc" positionType="Float" x="0" y="3" width="801" height="1"/>

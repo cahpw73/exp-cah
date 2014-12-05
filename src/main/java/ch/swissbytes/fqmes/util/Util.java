@@ -75,5 +75,10 @@ public class Util {
         }
         return "";
     }
+    public static String removeSpecialCharactersForJasperReport(String target){
+        String value=target!=null?target:"";
+        value=value.replaceAll("&\\s+", "&amp; ");
+        return value;
+    }
 
 }
