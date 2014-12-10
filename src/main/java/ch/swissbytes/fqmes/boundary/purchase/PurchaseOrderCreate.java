@@ -234,6 +234,7 @@ public class PurchaseOrderCreate implements Serializable {
     public void handleCommentUpload(FileUploadEvent event){
         UploadedFile uf=event.getFile();
         log.info(uf.getFileName());
+        log.info("size [ "+uf.getSize()+"]");
         if(indexCommentEditing!=null&& indexCommentEditing>=0){
             try{
                 editComment.setFile(IOUtils.toByteArray(uf.getInputstream()));

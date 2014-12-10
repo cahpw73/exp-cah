@@ -302,6 +302,7 @@ public class PurchaseOrderEdit implements Serializable {
     public void handleCommentUpload(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
         log.info(uf.getFileName());
+        log.info("size ["+uf.getSize()+"]");
         if (commentIndexSelected != null && commentIndexSelected >= 0) {
             try {
                 editingComment.setJustLoaded(true);

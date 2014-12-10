@@ -91,6 +91,8 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
     }
+
+    @Basic(fetch=FetchType.LAZY)
     @Column(name="file_attached")
     public byte[]  getFile() {
         return file;

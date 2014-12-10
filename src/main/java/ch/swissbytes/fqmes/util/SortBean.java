@@ -1,10 +1,8 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.lang.time.DateUtils;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -38,11 +36,9 @@ public class SortBean implements Serializable {
     }
 
     public boolean matchRegex(String code) {
-        System.out.println("matchRegex(String code[" + code + "])");
         Pattern pattern = Pattern.compile("^[0-9]+(\\.[0-9]+)*$");
         Matcher matcher = pattern.matcher(code);
         boolean matchFound = matcher.find();
-        System.out.println("matchRegex: " + matchFound);
         return matchFound;
     }
 
@@ -53,7 +49,6 @@ public class SortBean implements Serializable {
 
 
     public int sortItemNumber(Object val1, Object val2) {
-        System.out.println("sortItemNumber(Object val1[" + val1 + "], Object val2[" + val2 + "])");
         if (val1.toString().equals("") || val2.toString().equals("")) {
             if (val1.toString().equals("")) {
                 return 1;

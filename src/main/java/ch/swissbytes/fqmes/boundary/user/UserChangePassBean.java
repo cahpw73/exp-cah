@@ -12,6 +12,7 @@ import org.picketlink.idm.model.basic.User;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +27,7 @@ import java.util.logging.Logger;
  * Created by christian on 19/09/14.
  */
 @Named
-@ViewScoped
+@RequestScoped
 public class UserChangePassBean implements Serializable {
     private static final Logger log = Logger.getLogger(UserChangePassBean.class.getName());
 
@@ -39,18 +40,18 @@ public class UserChangePassBean implements Serializable {
 
     private UserEntity userSelected;
     private Integer userId;
-    private String password;
+    private String oldPassword;
     private String newPassword;
 
 
     @PostConstruct
     public void init(){
-        log.info("create UserDeleteBean");
+        log.info("create UserChangePassBean");
     }
 
     @PreDestroy
     public void destroy(){
-        log.info("destroy UserDeleteBean");
+        log.info("destroy UserChangePassBean");
     }
 
     public void loadUserSelected(){
@@ -62,10 +63,8 @@ public class UserChangePassBean implements Serializable {
 
     public String doSave(){
         log.info("trying change password user");
-        log.info("userSelected.getPassword(): " + userSelected.getPassword());
-        log.info("old pass: " + password);
-        log.info("new pass: " + newPassword);
-        if(getEncodePass(password).equals(userSelected.getPassword())){
+        loadUserSelected();
+        if(getEncodePass(oldPassword).equals(userSelected.getPassword())){
             userSelected.setPassword(getEncodePass(newPassword));
             userService.doUpdate(userSelected);
             Messages.addGlobalInfo("Password was changed!");
@@ -110,15 +109,19 @@ public class UserChangePassBean implements Serializable {
         this.userId = userId;
     }
 
-    public String getPassword() {
-        return password;
+    @RequestScoped
+    @Named
+    public String getOldPassword() {
+        return oldPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setOldPassword(String password) {
+        this.oldPassword = password;
     }
 
-    @Size(min = 6, message = "Length must be greater than or equal to 6")
+    @RequestScoped
+    @Named
+    @Size(min = 6, message = "Length must be greater or equal than  6")
     public String getNewPassword() {
         return newPassword;
     }
