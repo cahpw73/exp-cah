@@ -73,6 +73,18 @@
                 </div>
             </div>
             <div class="form-group input-general-po">
+                <h:outputLabel class="control-label text-lbl-ltr label-general-po"
+                               value="#{msgs['po.supply.scope.column.tag.number']}"/>
+
+                <div class="inputText-general-poi">
+                    <p:inputText  id="tagNoId" maxlength="50"
+                                  styleClass="form-control"
+                                  jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
+                                  value="#{purchaseOrderEdit.scopeSupplyEdit.tagNo}"/>
+                    <p:message for="tagNoId"/>
+                </div>
+            </div>
+            <div class="form-group input-general-po">
                 <h:outputLabel for="scopeSupplyCost" class="text-lbl-ltr label-general-po control-label"
                                value="#{msgs['po.supply.scope.column.cost']}"/>
 

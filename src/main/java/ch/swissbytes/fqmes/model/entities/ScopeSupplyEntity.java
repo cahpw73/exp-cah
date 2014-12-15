@@ -53,6 +53,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String responsibleExpediting;
     private String responsibleExpeditingObservation;
     private Integer ordered;
+    private String tagNo;
 
 
     private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
@@ -367,6 +368,16 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
     public void setOrdered(Integer ordered) {
         this.ordered = ordered;
+    }
+
+    @Size(max = 50)
+    @Column(name="TAG_NO", length = 50)
+    public String getTagNo() {
+        return tagNo;
+    }
+
+    public void setTagNo(String tagNo) {
+        this.tagNo = tagNo;
     }
 
     @Override

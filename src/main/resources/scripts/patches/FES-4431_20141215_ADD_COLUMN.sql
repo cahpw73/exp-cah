@@ -1,0 +1,4 @@
+
+--@author Christian Alba
+
+ALTER TABLE SCOPE_SUPPLY ADD COLUMN TAG_NO VARCHAR(50);
