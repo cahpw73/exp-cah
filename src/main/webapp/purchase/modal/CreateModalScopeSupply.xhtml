@@ -64,7 +64,7 @@
                                value="#{msgs['po.supply.scope.column.description']}"/>
 
                 <div class="inputText-general-poi">
-                    <p:inputTextarea maxlength="450" style="height: 75px" autoResize="false"
+                    <p:inputTextarea maxlength="950" style="height: 75px" autoResize="false"
                                      id="description"
                                      styleClass="form-control"
                                      jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
@@ -78,10 +78,10 @@
                                value="#{msgs['po.supply.scope.column.tag.number']}"/>
 
                 <div class="inputText-general-poi">
-                <p:inputText  id="tagNoId" maxlength="50"
-                              styleClass="form-control"
-                              jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
-                              value="#{scopeSupplyBean.newScopeSupply.tagNo}"/>
+                <p:inputTextarea  id="tagNoId" maxlength="950" autoResize="false"
+                                  styleClass="form-control" style="height: 75px"
+                                  jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
+                                  value="#{scopeSupplyBean.newScopeSupply.tagNo}"/>
                     <p:message for="tagNoId"/>
                 </div>
             </div>

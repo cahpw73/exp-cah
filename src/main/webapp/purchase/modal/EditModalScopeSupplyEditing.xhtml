@@ -71,7 +71,7 @@
                        value="#{msgs['po.supply.scope.column.description']}"/>
 
         <div class="inputText-general-poi">
-            <p:inputTextarea id="description" maxlength="450" style="height: 75px" autoResize="false"
+            <p:inputTextarea id="description" maxlength="950" style="height: 75px" autoResize="false"
                              jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
                              styleClass="form-control"
                              value="#{purchaseOrderEdit.scopeSupplyEditing.description}"/>
@@ -84,10 +84,10 @@
                        value="#{msgs['po.supply.scope.column.tag.number']}"/>
 
         <div class="inputText-general-poi">
-            <p:inputText  id="tagNoId" maxlength="50"
-                          styleClass="form-control"
-                          jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
-                          value="#{purchaseOrderEdit.scopeSupplyEditing.tagNo}"/>
+            <p:inputTextarea  id="tagNoId" maxlength="950"
+                              styleClass="form-control" style="height: 75px" autoResize="false"
+                              jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
+                              value="#{purchaseOrderEdit.scopeSupplyEditing.tagNo}"/>
             <p:message for="tagNoId"/>
         </div>
     </div>

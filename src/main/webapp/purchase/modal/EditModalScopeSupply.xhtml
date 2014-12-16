@@ -77,10 +77,10 @@
                                value="#{msgs['po.supply.scope.column.tag.number']}"/>
 
                 <div class="inputText-general-poi">
-                    <p:inputText  id="tagNoId" maxlength="50"
-                                  styleClass="form-control"
-                                  jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
-                                  value="#{purchaseOrderEdit.scopeSupplyEdit.tagNo}"/>
+                    <p:inputTextarea  id="tagNoId" maxlength="950"
+                                      styleClass="form-control" style="height: 75px" autoResize="false"
+                                      jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
+                                      value="#{purchaseOrderEdit.scopeSupplyEdit.tagNo}"/>
                     <p:message for="tagNoId"/>
                 </div>
             </div>

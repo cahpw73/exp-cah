@@ -370,8 +370,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.ordered = ordered;
     }
 
-    @Size(max = 50)
-    @Column(name="TAG_NO", length = 50)
+    @Size(max = 1000)
+    @Column(name="TAG_NO", length = 1000)
     public String getTagNo() {
         return tagNo;
     }
