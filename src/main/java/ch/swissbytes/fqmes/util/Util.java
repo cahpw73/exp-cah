@@ -26,10 +26,10 @@ public class Util {
     }
 
     public static Date convertUTC(Date date, String timeZone){
-        System.out.println("convertUTC(Date date="+date+", String timeZone="+timeZone+")");
+      //  System.out.println("convertUTC(Date date="+date+", String timeZone="+timeZone+")");
         DateTimeZone zone = DateTimeZone.forID(timeZone);
         long utc = zone.convertLocalToUTC(date.getTime(), false);
-        System.out.println("converted "+new Date(utc));
+      //  System.out.println("converted "+new Date(utc));
         return new Date(utc);
     }
 

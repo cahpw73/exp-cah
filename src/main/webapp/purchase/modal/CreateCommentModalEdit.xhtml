@@ -48,6 +48,7 @@
         <div class="col-sm-12" style="margin-bottom: 10px;">
             <p:fileUpload  styleClass="col-sm-4 col-lg-4 col-md-4" fileUploadListener="#{purchaseOrderCreate.handleCommentUpload}" mode="advanced"
                            update="fileEditNameDivId"
+                           sizeLimit="#{configuration.maxFileSize}"
                           dragDropSupport="false" auto="true">
             </p:fileUpload>
             <h:panelGroup id="fileEditNameDivId">

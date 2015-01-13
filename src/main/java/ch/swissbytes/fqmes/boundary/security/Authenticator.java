@@ -38,7 +38,7 @@ public class Authenticator extends BaseAuthenticator{
     public void authenticate(){
         log.log(Level.INFO,"trying to authenticate");
         final  String passwordHashed= Encode.encode(credentials.getPassword());
-        log.log(Level.INFO,String.format("password hashed [%s]",passwordHashed));
+        //log.log(Level.INFO,String.format("password hashed [%s]",passwordHashed));
         if(userCtrl.canAccess(credentials.getUserId(),passwordHashed)){
             UserEntity userEntity = getUserEntity(credentials.getUserId(),passwordHashed);
             ArrayList<String> roleList = new ArrayList<String>();

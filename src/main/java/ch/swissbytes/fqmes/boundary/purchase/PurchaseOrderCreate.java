@@ -10,6 +10,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.io.IOUtils;
+import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -238,36 +239,28 @@ public class PurchaseOrderCreate implements Serializable {
         if(indexCommentEditing!=null&& indexCommentEditing>=0){
             try{
                 editComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
+                editComment.setFileName(uf.getFileName());
+                editComment.setMimeType(uf.getContentType());
             }catch (IOException ioe){
+                log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
                 ioe.printStackTrace();
+                Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
             }
-            editComment.setFileName(uf.getFileName());
-            editComment.setMimeType(uf.getContentType());
+
         }else{
             try{
                 newComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
+                newComment.setFileName(uf.getFileName());
+                newComment.setMimeType(uf.getContentType());
             }catch (IOException ioe){
+                log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
                 ioe.printStackTrace();
+                Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
             }
-            newComment.setFileName(uf.getFileName());
-            newComment.setMimeType(uf.getContentType());
+
         }
 
     }
-/*
-    public void handleAttachmentUpload(FileUploadEvent event){
-        UploadedFile uf=event.getFile();
-        log.info(uf.getFileName());
-        AttachmentEntity attachment=new AttachmentEntity();
-        try{
-            attachment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-        }catch (IOException ioe){
-        }
-        attachment.setFileName(uf.getFileName());
-        attachment.setName(attachment.getFileName());
-        attachment.setMimeType(uf.getContentType());
-        getAtachmentEntities().add(attachment);
-    }*/
 
     @PreDestroy
     public void destroy(){

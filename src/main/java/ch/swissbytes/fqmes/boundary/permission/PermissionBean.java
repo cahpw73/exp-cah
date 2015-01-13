@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * @author Christian
  */
 @Named
-@Stateful
+//@Stateful
 @ViewScoped
 public class PermissionBean implements Serializable {
 

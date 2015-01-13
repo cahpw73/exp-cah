@@ -307,18 +307,26 @@ public class PurchaseOrderEdit implements Serializable {
             try {
                 editingComment.setJustLoaded(true);
                 editingComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
+                editingComment.setFileName(uf.getFileName());
+                editingComment.setMimeType(uf.getContentType());
             } catch (IOException ioe) {
+                log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
+                ioe.printStackTrace();
+                Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
             }
-            editingComment.setFileName(uf.getFileName());
-            editingComment.setMimeType(uf.getContentType());
+
         } else {
             try {
                 commentEdit.setJustLoaded(true);
                 commentEdit.setFile(IOUtils.toByteArray(uf.getInputstream()));
+                commentEdit.setFileName(uf.getFileName());
+                commentEdit.setMimeType(uf.getContentType());
             } catch (IOException ioe) {
+                log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
+                ioe.printStackTrace();
+                Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
             }
-            commentEdit.setFileName(uf.getFileName());
-            commentEdit.setMimeType(uf.getContentType());
+
         }
 
 

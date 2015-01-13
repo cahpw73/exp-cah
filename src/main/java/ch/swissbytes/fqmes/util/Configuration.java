@@ -110,9 +110,6 @@ public class Configuration implements Serializable {
     }
 
     public Boolean getMask(){
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpServletRequest request=(HttpServletRequest)facesContext.getExternalContext().getRequest();
-
         return false;
     }
 
@@ -127,6 +124,10 @@ public class Configuration implements Serializable {
 
     public String getMessage(final String key){
         return  bundle.getString(key);
+    }
+
+    public Long getMaxFileSize(){
+        return 104857600L;
     }
 
 }
