@@ -17,6 +17,11 @@
             <artifactId>picketlink-api</artifactId>
             <version>2.6.1.Final</version>
         </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.5</version>
+        </dependency>
 
         <!-- Import the PicketLink implementation, we deploy this as library with the application,
              but can't compile against it -->
@@ -42,6 +47,11 @@
             <version>3.3.2</version>
         </dependency>
         <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>5.0</version>
@@ -56,7 +66,10 @@
             <artifactId>jasperreports</artifactId>
             <version>5.0.4</version>
         </dependency>
+
     </dependencies>
+
+
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
