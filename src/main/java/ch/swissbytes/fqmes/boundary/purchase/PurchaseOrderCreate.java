@@ -245,6 +245,12 @@ public class PurchaseOrderCreate implements Serializable {
                 log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
                 ioe.printStackTrace();
                 Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
+            }finally{
+                try{
+                    IOUtils.closeQuietly(uf.getInputstream());
+                }catch(IOException ioe){
+                    ioe.printStackTrace();;
+                }
             }
 
         }else{
@@ -256,6 +262,12 @@ public class PurchaseOrderCreate implements Serializable {
                 log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
                 ioe.printStackTrace();
                 Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
+            }finally{
+                try{
+                    IOUtils.closeQuietly(uf.getInputstream());
+                }catch(IOException ioe){
+                    ioe.printStackTrace();;
+                }
             }
 
         }

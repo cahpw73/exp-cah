@@ -15,7 +15,7 @@ import java.util.Date;
 @Named
 @Entity
 @Table(name = "comments")
-public class CommentEntity implements Serializable, EntityTbl{
+public class CommentEntity implements Serializable, EntityTbl {
 
     private Long id;
     private String name;
@@ -23,13 +23,18 @@ public class CommentEntity implements Serializable, EntityTbl{
     private String description;
     private String fileName;
     private String mimeType;
-    private byte[]  file;
+    private byte[] file;
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
 
-    private Boolean justLoaded=false;
 
+    private Boolean justLoaded = false;
+
+
+    private Boolean fileWasChanged = false;
+
+    private int previousHascode=0;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -42,8 +47,9 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setId(Long id) {
         this.id = id;
     }
+
     @Size(max = 50)
-    @Column(name="name", nullable=false, length=50)
+    @Column(name = "name", nullable = false, length = 50)
     public String getName() {
         return name;
     }
@@ -51,8 +57,9 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setName(String name) {
         this.name = name;
     }
+
     @Size(max = 50)
-    @Column(name="reason", nullable=false, length=50)
+    @Column(name = "reason", nullable = false, length = 50)
     public String getReason() {
         return reason;
     }
@@ -62,7 +69,7 @@ public class CommentEntity implements Serializable, EntityTbl{
     }
 
     @Size(max = 1000)
-    @Column(name="description", length=1000)
+    @Column(name = "description", length = 1000)
     public String getDescription() {
         return description;
     }
@@ -72,7 +79,7 @@ public class CommentEntity implements Serializable, EntityTbl{
     }
 
     @Size(max = 255)
-    @Column(name="f_name",  length=255)
+    @Column(name = "f_name", length = 255)
     public String getFileName() {
         return fileName;
     }
@@ -83,7 +90,7 @@ public class CommentEntity implements Serializable, EntityTbl{
 
 
     @Size(max = 255)
-    @Column(name="mime_type",  length=255)
+    @Column(name = "mime_type", length = 255)
     public String getMimeType() {
         return mimeType;
     }
@@ -92,17 +99,18 @@ public class CommentEntity implements Serializable, EntityTbl{
         this.mimeType = mimeType;
     }
 
-    @Basic(fetch=FetchType.LAZY)
-    @Column(name="file_attached")
-    public byte[]  getFile() {
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "file_attached")
+    public byte[] getFile() {
         return file;
     }
 
-    public void setFile(byte[]  file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="purchase_order_id")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "purchase_order_id")
     public PurchaseOrderEntity getPurchaseOrder() {
         return purchaseOrder;
     }
@@ -111,7 +119,7 @@ public class CommentEntity implements Serializable, EntityTbl{
         this.purchaseOrder = purchaseOrder;
     }
 
-    @Column(name="LAST_UPDATE", nullable=false)
+    @Column(name = "LAST_UPDATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
         return lastUpdate;
@@ -120,8 +128,9 @@ public class CommentEntity implements Serializable, EntityTbl{
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="status_id", nullable=false)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "status_id", nullable = false)
     public StatusEntity getStatus() {
         return status;
     }
@@ -137,7 +146,7 @@ public class CommentEntity implements Serializable, EntityTbl{
 
         CommentEntity that = (CommentEntity) o;
 
-      return that.hashCode()==this.hashCode();
+        return that.hashCode() == this.hashCode();
     }
 
     @Transient
@@ -150,8 +159,26 @@ public class CommentEntity implements Serializable, EntityTbl{
     }
 
     @Transient
-    public Boolean canDownload(){
-        return id.intValue()>0&& StringUtils.isNotEmpty(getFileName())&&!justLoaded;
+    public Boolean canDownload() {
+        return id.intValue() > 0 && StringUtils.isNotEmpty(getFileName()) && !justLoaded;
+    }
+
+    @Transient
+    public Boolean getFileWasChanged() {
+        return fileWasChanged;
+    }
+
+    public void setFileWasChanged(Boolean fileWasChanged) {
+        this.fileWasChanged = fileWasChanged;
+    }
+
+    @Transient
+    public int getPreviousHascode() {
+        return previousHascode;
+    }
+
+    public void setPreviousHascode(int previousHascode) {
+        this.previousHascode = previousHascode;
     }
 
     @Override
@@ -162,8 +189,8 @@ public class CommentEntity implements Serializable, EntityTbl{
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
         result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
-        result = 31 * result + (file != null ? Arrays.hashCode(file) : 0);
-        result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        //result = 31 * result + (file != null ? Arrays.hashCode(file) : 0);
+        //result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (purchaseOrder != null ? purchaseOrder.getId().hashCode() : 0);
         result = 31 * result + (status != null ? status.getId().hashCode() : 0);
         return result;

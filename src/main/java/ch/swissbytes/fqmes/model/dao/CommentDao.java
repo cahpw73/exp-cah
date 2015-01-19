@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by alvaro on 9/10/14.
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class CommentDao  extends GenericDao<CommentEntity> implements Serializable {
 
+    private static final Logger log = Logger.getLogger(CommentDao.class.getName());
 
     public CommentEntity persist(CommentEntity commentEntity){
         super.save(commentEntity);
@@ -38,17 +40,6 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     }
 
     public List<CommentEntity> findByPurchaseOrder(final Long purchaseOrderId){
-
-      /*  private String name;
-        private String reason;
-        private String description;
-        private String fileName;
-        private String mimeType;
-        private byte[]  file;
-        private Date lastUpdate;
-        private PurchaseOrderEntity purchaseOrder;
-        private StatusEntity status;*/
-
         String hql = "SELECT cs.id,cs.name,cs.reason,cs.description,cs.fileName,cs.mimeType,cs.lastUpdate,cs.purchaseOrder,cs.status FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
         Query query = this.entityManager.createQuery( hql);
         query.setParameter("purchase_id", purchaseOrderId);
@@ -59,14 +50,15 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
             Object []values=(Object [])record;
             CommentEntity entity=new CommentEntity();
             entity.setId((Long)values[0]);
-            entity.setName((String)values[1]);
-            entity.setReason((String)values[2]);
-            entity.setDescription((String)values[3]);
-            entity.setFileName((String)values[4]);
-            entity.setMimeType((String)values[5]);
-            entity.setLastUpdate((Date)values[6]);
-            entity.setPurchaseOrder((PurchaseOrderEntity)values[7]);
-            entity.setStatus((StatusEntity)values[8]);
+            entity.setName((String) values[1]);
+            entity.setReason((String) values[2]);
+            entity.setDescription((String) values[3]);
+            entity.setFileName((String) values[4]);
+            entity.setMimeType((String) values[5]);
+            entity.setLastUpdate((Date) values[6]);
+            entity.setPurchaseOrder((PurchaseOrderEntity) values[7]);
+            entity.setStatus((StatusEntity) values[8]);
+            entity.setPreviousHascode(entity.hashCode());
             comments.add(entity);
         }
        return comments;
@@ -76,13 +68,29 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
         for(CommentEntity commentEntity:commentEntities){
             if(commentEntity.getId()==null){//new one{
                 commentEntity.setPurchaseOrder(purchaseOrderEntity);
+                log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ commentEntity.getFile().length+"]");
                 super.save(commentEntity);
             }else{
-                super.update(commentEntity);
+                log.info("value "+commentEntity.getPreviousHascode());
+                log.info("new value "+commentEntity.hashCode());
+                if(commentEntity.getPreviousHascode()!=commentEntity.hashCode()||commentEntity.getFileWasChanged()){
+                    CommentEntity temporary=null;
+                    if(!commentEntity.getFileWasChanged()){
+
+                        List<CommentEntity>list=this.findById(CommentEntity.class,commentEntity.getId());
+                        temporary= !list.isEmpty()?list.get(0):null;
+                        log.info("getting content of file from db ["+ commentEntity.getFileName()+"]");
+                        commentEntity.setFile(temporary.getFile());
+                    }else{
+                        log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ commentEntity.getFile().length+"]");
+                    }
+                    super.update(commentEntity);
+                }
             }
 
         }
     }
+
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {

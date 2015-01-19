@@ -301,7 +301,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void handleCommentUpload(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
-        log.info(uf.getFileName());
+        log.info("uploading file ["+uf.getFileName()+"]");
         log.info("size ["+uf.getSize()+"]");
         if (commentIndexSelected != null && commentIndexSelected >= 0) {
             try {
@@ -309,10 +309,17 @@ public class PurchaseOrderEdit implements Serializable {
                 editingComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
                 editingComment.setFileName(uf.getFileName());
                 editingComment.setMimeType(uf.getContentType());
+                editingComment.setFileWasChanged(true);
             } catch (IOException ioe) {
                 log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
                 ioe.printStackTrace();
                 Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
+            }finally{
+                try{
+                    IOUtils.closeQuietly(uf.getInputstream());
+                }catch(IOException ioe){
+                    ioe.printStackTrace();;
+                }
             }
 
         } else {
@@ -321,10 +328,17 @@ public class PurchaseOrderEdit implements Serializable {
                 commentEdit.setFile(IOUtils.toByteArray(uf.getInputstream()));
                 commentEdit.setFileName(uf.getFileName());
                 commentEdit.setMimeType(uf.getContentType());
+                commentEdit.setFileWasChanged(true);
             } catch (IOException ioe) {
                 log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
                 ioe.printStackTrace();
                 Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
+            }finally{
+                try{
+                    IOUtils.closeQuietly(uf.getInputstream());
+                }catch(IOException ioe){
+                    ioe.printStackTrace();;
+                }
             }
 
         }
