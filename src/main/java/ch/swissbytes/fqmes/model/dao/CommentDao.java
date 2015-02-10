@@ -68,7 +68,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
         for(CommentEntity commentEntity:commentEntities){
             if(commentEntity.getId()==null){//new one{
                 commentEntity.setPurchaseOrder(purchaseOrderEntity);
-                log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ commentEntity.getFile().length+"]");
+                log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ (commentEntity.getFile()!=null?commentEntity.getFile().length:"0")+"]");
                 super.save(commentEntity);
             }else{
                 log.info("value "+commentEntity.getPreviousHascode());
@@ -82,7 +82,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
                         log.info("getting content of file from db ["+ commentEntity.getFileName()+"]");
                         commentEntity.setFile(temporary.getFile());
                     }else{
-                        log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ commentEntity.getFile().length+"]");
+                        log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ (commentEntity.getFile()!=null?commentEntity.getFile().length:"0")+"]");
                     }
                     super.update(commentEntity);
                 }
