@@ -35,7 +35,7 @@ public class AttachmentService extends Service<AttachmentEntity> implements Seri
 
     public void download(final Long id){
         AttachmentEntity at=load(id);
-        downloadFile.downloadAttachmentFile(at);
+      //  downloadFile.downloadAttachmentFile(at);
     }
 
 }

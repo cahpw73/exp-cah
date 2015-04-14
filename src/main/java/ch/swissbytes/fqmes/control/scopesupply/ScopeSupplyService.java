@@ -24,6 +24,9 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
     @Inject
     private TransitDeliveryPointService tdpService;
 
+    @Inject
+    private AttachmentScopeSupplyService attachmentService;
+
     private static final Logger log = Logger.getLogger(ScopeSupplyService.class.getName());
 
     public ScopeSupplyService() {
@@ -38,6 +41,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         List<ScopeSupplyEntity> list=dao.findByPurchaseOrder(purchaseOrderId);
         for(ScopeSupplyEntity sse:list){
            sse.getTdpList().addAll(tdpService.findByScopeSupply(sse.getId()));
+            sse.getAttachments().addAll(attachmentService.findByScopeSupplyLazy(sse.getId()));
         }
         return list;
     }

@@ -2,6 +2,7 @@ package ch.swissbytes.fqmes.control.comment;
 
 import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.model.dao.CommentDao;
+import ch.swissbytes.fqmes.model.entities.AttachmentComment;
 import ch.swissbytes.fqmes.model.entities.CommentEntity;
 import ch.swissbytes.fqmes.util.DownloadFile;
 
@@ -20,6 +21,9 @@ public class CommentService extends Service<CommentEntity> implements Serializab
     @Inject
     private DownloadFile downloadFile;
 
+    @Inject
+    private  AttachmentCommentService service;
+
     public CommentService(){
         super.initialize(dao);
     }
@@ -29,12 +33,13 @@ public class CommentService extends Service<CommentEntity> implements Serializab
     }
 
     public List<CommentEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        return dao.findByPurchaseOrder(purchaseOrderId);
+        List<CommentEntity> comments=dao.findByPurchaseOrder(purchaseOrderId);
+        for(CommentEntity comment:comments){
+            List<AttachmentComment>attachments=service.findByCommentLazy(comment.getId());
+            comment.getAttachments().addAll(attachments);
+        }
+        return comments;
 
     }
 
-    public void download(final Long id){
-        CommentEntity commentEntity=load(id);
-        downloadFile.downloadAttachedFileOnComment(commentEntity);
-    }
 }

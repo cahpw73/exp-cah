@@ -8,9 +8,9 @@ import java.util.Date;
 /**
  * Created by alvaro on 9/9/14.
  */
-@Named
-@Entity
-@Table(name = "attachment")
+//@Named
+//@Entity
+//@Table(name = "attachment")
 public class AttachmentEntity implements Serializable, EntityTbl {
 
     private Long id;

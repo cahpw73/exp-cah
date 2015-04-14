@@ -1,7 +1,14 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
-
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.intro.email.sent.comment']}
+        </div>
+    </div>
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -14,10 +21,17 @@
         </div>
         <div class="section-text-area-po">
             <h:inputTextarea readonly="true" styleClass="form-control"
-                             value="#{purchaseOrderView.purchaseOrder.introEmailDescription}"/>
+                             value="#{purchaseOrderView.purchaseOrder.introEmailSentComment}"/>
         </div>
     </div>
-
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.required.site.date.comment']}
+        </div>
+    </div>
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -30,7 +44,15 @@
         </div>
         <div class="section-text-area-po">
             <h:inputTextarea readonly="true" styleClass="form-control"
-                             value="#{purchaseOrderView.purchaseOrder.requiredDateDescription}"/>
+                             value="#{purchaseOrderView.purchaseOrder.requiredSiteDateComment}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.actual.site.date.comment']}
         </div>
     </div>
     <div class="row">
@@ -45,7 +67,7 @@
         </div>
         <div class="section-text-area-po">
             <h:inputTextarea readonly="true" styleClass="form-control"
-                             value="#{purchaseOrderView.purchaseOrder.actualDateDescription}"/>
+                             value="#{purchaseOrderView.purchaseOrder.actualSiteDateComment}"/>
         </div>
     </div>
 

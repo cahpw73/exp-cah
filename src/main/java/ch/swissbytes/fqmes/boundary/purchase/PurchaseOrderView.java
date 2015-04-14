@@ -1,8 +1,10 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.fqmes.control.attachment.AttachmentService;
+import ch.swissbytes.fqmes.control.comment.AttachmentCommentService;
 import ch.swissbytes.fqmes.control.comment.CommentService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
+import ch.swissbytes.fqmes.control.scopesupply.AttachmentScopeSupplyService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.dao.*;
 import ch.swissbytes.fqmes.model.entities.*;
@@ -14,6 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,10 +41,13 @@ public class PurchaseOrderView implements Serializable{
     private ScopeSupplyService scopeSupplyService;
 
     @Inject
-    private AttachmentService attachmentService;
+    private SortBean sortScopeSupply;
 
     @Inject
-    private SortBean sortScopeSupply;
+    private AttachmentCommentService attachmentCommentService;
+
+    @Inject
+    private AttachmentScopeSupplyService attachmentScopeSuplyService;
 
     private String purchaseOrderId;
 
@@ -51,9 +57,9 @@ public class PurchaseOrderView implements Serializable{
 
     private List<CommentEntity> comments;
 
-    private List<AttachmentEntity>attachmentEntities;
-
     private List<ScopeSupplyEntity>scopeSupplies;
+
+    private Long currentSelected=-1L;
 
     private static final Logger log = Logger.getLogger(PurchaseOrderView.class.getName());
 
@@ -73,7 +79,6 @@ public class PurchaseOrderView implements Serializable{
             supplierView=supplierDao.findByPurchaseOrder(purchaseOrder.getId());
             comments=commentService.findByPurchaseOrder(purchaseOrder.getId());
             scopeSupplies=scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
-            attachmentEntities=attachmentService.findByPurchaseOrder(purchaseOrder.getId());
             if(scopeSupplies != null && !scopeSupplies.isEmpty()){
                 sortScopeSupply.sortScopeSupplyEntity(scopeSupplies);
             }
@@ -106,10 +111,34 @@ public class PurchaseOrderView implements Serializable{
         return scopeSupplies;
     }
 
-    public void downloadAttachedFileOnComment(final long id){
-        log.info("public void downloadAttachedFileOnComment(final long id)");
-        commentService.download(id);
+    public void downloadAttachedFileOnComment(final long attachmentId){
+        attachmentCommentService.download(attachmentId);
+    }
+    public void downloadAttachedFileOnScopeSupply(final long attachmentId){
+        attachmentScopeSuplyService.download(attachmentId);
     }
 
+    public List<AttachmentScopeSupply> getAttachmentsScopeSupply(){
+        int index=scopeSupplyService.getIndexById(currentSelected,scopeSupplies);
+        if(index>=0){
+            return scopeSupplies.get(index).getAttachments();
+        }
+        return new ArrayList<>();
+    }
 
+    public List<AttachmentComment> getAttachmentsComment(){
+        int index=commentService.getIndexById(currentSelected,comments);
+        if(index>=0){
+            return comments.get(index).getAttachments();
+        }
+        return new ArrayList<>();
+    }
+
+    public Long getCurrentSelected() {
+        return currentSelected;
+    }
+
+    public void setCurrentSelected(Long currentSelected) {
+        this.currentSelected = currentSelected;
+    }
 }

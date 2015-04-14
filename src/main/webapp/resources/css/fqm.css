@@ -28,3 +28,10 @@ footer {
 .cLink-color-scope-supply{
     color: #ffffff!important;
 }
+
+
+.ui-fileupload-buttonbar .ui-button{
+    background: #428bca!important;
+    color: #ffffff!important;
+    font-size: 11px!important;
+}

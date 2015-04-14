@@ -119,7 +119,7 @@ public class ScopeSupplyBean implements Serializable {
         newScopeSupply.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
         newScopeSupply.setResponsibleExpediting(purchaseOrder !=null&&purchaseOrder.getResponsibleExpediting()!=null? purchaseOrder.getResponsibleExpediting().toString():null);
         newScopeSupply.setRequiredSiteDate(purchaseOrder.getRequiredDate());
-        newScopeSupply.setDeliveryDate(purchaseOrder.getPoDeliveryDate());
+        newScopeSupply.setDeliveryDate(purchaseOrder.getDeliveryDate());
     }
 
     public void setDeliveryDate(Date date){

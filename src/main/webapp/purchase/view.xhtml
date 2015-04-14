@@ -2,6 +2,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui"
                 template="/WEB-INF/layout/template.xhtml">
 
@@ -28,6 +29,14 @@
                     <br/>
                     <div class="row">
                         <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.project.name.comment']}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
                             <!-- Text input-->
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.project.type.required']}"/>
@@ -38,7 +47,7 @@
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
-                                             value="#{purchaseOrderView.purchaseOrder.description}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.projectNameComment}"/>
                         </div>
                     </div>
                     <div class="row">
@@ -62,6 +71,7 @@
                         </div>
                     </div>
                     <!-- Text input-->
+
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -70,6 +80,14 @@
                                     <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.supplier}"/>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.contact.detail']}
                         </div>
                     </div>
                     <div class="row"><!---->
@@ -88,10 +106,17 @@
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
                                              style="height: 90px;"
-                                             value="#{purchaseOrderView.supplierView.addresDescription}"/>
+                                             value="#{purchaseOrderView.supplierView.contactDetail}"/>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.email.address.comment']}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -105,7 +130,15 @@
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true"  styleClass="form-control"
-                                             value="#{purchaseOrderView.supplierView.contactNameDescription}"/>
+                                             value="#{purchaseOrderView.supplierView.emailAddress}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.delivery.date.comment']}
                         </div>
                     </div>
                     <div class="row">
@@ -115,29 +148,36 @@
                                                value="#{msgs['po.lbl.po.delivery.date']}"/>
 
                                 <div class="calendar-general-po">
-                                   <h:inputText readonly="true" styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.poDeliveryDate)}"/>
+                                   <h:inputText readonly="true" styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.deliveryDate)}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
-                                             value="#{purchaseOrderView.purchaseOrder.poDeliveryDateDescription}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.deliveryDateComment}"/>
                         </div>
                     </div>
-                    <!-- Text input-->
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.full.inco.term']}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
                                 <div class="calendar-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poIncoTerm}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.incoTerm}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
-                                             value="#{purchaseOrderView.purchaseOrder.poIncoTermDescription}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.fullIncoTerms}"/>
                         </div>
                     </div>
 
@@ -154,6 +194,14 @@
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.rfe.comment']}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
@@ -164,7 +212,7 @@
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
-                                             value="#{purchaseOrderView.purchaseOrder.responsibleExpeditingObservation}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.rfeComment}"/>
                         </div>
                     </div>
                     <ui:include src="components/ViewAdditionalData.xhtml"/>
@@ -206,5 +254,11 @@
             <!-- /.col-lg-12 -->
         </div>
 
+<p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupplyModal" resizable="false"  height="250" width="500">
+    <ui:include src="modal/attachment/attachmentScopeSupplyView.xhtml"/>
+</p:dialog>
+    <p:dialog id="attachmentCommentId" header="#{msgs['attachment.title.comment']}" widgetVar="attachmentCommentModal" resizable="false"  height="250" width="500">
+        <ui:include src="modal/attachment/attachmentCommentView.xhtml"/>
+    </p:dialog>
 </ui:define>
 </ui:composition>

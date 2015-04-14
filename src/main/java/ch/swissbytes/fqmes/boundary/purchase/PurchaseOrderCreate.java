@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -77,6 +76,8 @@ public class PurchaseOrderCreate implements Serializable {
 
     private Integer indexScopeSupplyEditing;
 
+    private Integer indexAttachment;
+
     private static final Logger log = Logger.getLogger(PurchaseOrderCreate.class.getName());
 
     @Inject
@@ -87,90 +88,92 @@ public class PurchaseOrderCreate implements Serializable {
 
 
     @PostConstruct
-    public void create(){
-        log.log(Level.INFO,String.format("creating bean [%s]",this.getClass().toString()));
+    public void create() {
+        log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
         reset();
-        if(conversation.isTransient()){
+        if (conversation.isTransient()) {
             conversation.begin();
             conversation.setTimeout(configuration.getTimeOutConversation());
-            log.info(String.format("conversation started [%s]",conversation.getTimeout()));
+            log.info(String.format("conversation started [%s]", conversation.getTimeout()));
         }
     }
 
-    public void load(){
+    public void load() {
         log.info("void load()");
-        if(scopeSupplies != null && !scopeSupplies.isEmpty()){
+        if (scopeSupplies != null && !scopeSupplies.isEmpty()) {
             sortBean.sortScopeSupplyEntity(scopeSupplies);
         }
     }
 
-    private void reset(){
-        newPurchaseOrder =new PurchaseOrderEntity();
-        newSupplier =new SupplierEntity();
-        commentEntities=new ArrayList<>();
-        newComment=new CommentEntity();
+    private void reset() {
+        newPurchaseOrder = new PurchaseOrderEntity();
+        newSupplier = new SupplierEntity();
+        commentEntities = new ArrayList<>();
+        newComment = new CommentEntity();
         //atachmentEntities =new ArrayList<>();
-        scopeSupplies=new ArrayList<>();
-        newScopeSupply=new ScopeSupplyEntity();
+        scopeSupplies = new ArrayList<>();
+        newScopeSupply = new ScopeSupplyEntity();
     }
 
-    public void cleanComment(){
-        log.log(Level.INFO,"cleaning comments");
-        indexCommentEditing=-1;
-        newComment =new CommentEntity();
+    public void cleanComment() {
+        log.log(Level.INFO, "cleaning comments");
+        indexCommentEditing = -1;
+        newComment = new CommentEntity();
     }
 
-    public String doSave(){
+    public String doSave() {
         savePurchase();
-        if(!conversation.isTransient()){
+        if (!conversation.isTransient()) {
             conversation.end();
         }
-        return "view?faces-redirect=true&poId="+newPurchaseOrder.getId();
+        return "view?faces-redirect=true&poId=" + newPurchaseOrder.getId();
     }
 
 
-    public String doSaveAndAdd(){
+    public String doSaveAndAdd() {
         savePurchase();
         reset();
-        if(!conversation.isTransient()){
+        if (!conversation.isTransient()) {
             conversation.end();
         }
         return "create?faces-redirect=true";
     }
 
-    private void savePurchase(){
+    private void savePurchase() {
         log.log(Level.INFO, String.format("trying to save purchase order"));
         initializeStatusesAndLastUpdate();
         service.doSave(newPurchaseOrder, getCommentEntities(), scopeSupplies, newSupplier);
     }
 
-    private void initializeStatusesAndLastUpdate(){
-        Date now=new Date();
-        StatusEntity enabled=enumService.getStatusEnumEnable();
+    private void initializeStatusesAndLastUpdate() {
+        Date now = new Date();
+        StatusEntity enabled = enumService.getStatusEnumEnable();
         newPurchaseOrder.setStatus(enabled);
         newPurchaseOrder.setLastUpdate(now);
         newSupplier.setStatus(enabled);
         newSupplier.setLastUpdate(now);
 
         sortBean.sortScopeSupplyEntity(scopeSupplies);
-        int ordered =1;
-        System.out.println("ordering...");
-        for(ScopeSupplyEntity scopeSupplyEntity:scopeSupplies){
+        int ordered = 1;
+        for (ScopeSupplyEntity scopeSupplyEntity : scopeSupplies) {
             scopeSupplyEntity.setStatus(enabled);
-            System.out.println("ordered "+ordered);
             scopeSupplyEntity.setOrdered(ordered);
             scopeSupplyEntity.setLastUpdate(now);
+            for (AttachmentScopeSupply attachment : scopeSupplyEntity.getAttachments()) {
+                attachment.setLastUpdate(now);
+                attachment.setStatus(enabled);
+            }
             ordered++;
         }
     }
 
-    public String addComment(){
-        log.log(Level.INFO,"COMMENT NAME    "+newComment.getName());
-        log.log(Level.INFO,"size    "+commentEntities.size());
-        CommentEntity commentEntity=new CommentEntity();
-        try{
-                commentEntity=(CommentEntity)org.apache.commons.beanutils.BeanUtils.cloneBean(newComment);
-        }catch (Exception ex){
+    public String addComment() {
+        log.log(Level.INFO, "COMMENT NAME    " + newComment.getName());
+        log.log(Level.INFO, "size    " + commentEntities.size());
+        CommentEntity commentEntity = new CommentEntity();
+        try {
+            commentEntity = (CommentEntity) org.apache.commons.beanutils.BeanUtils.cloneBean(newComment);
+        } catch (Exception ex) {
 
         }
         commentEntity.setLastUpdate(new Date());
@@ -180,102 +183,148 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
 
-
-    public void doUpdateScopeSupply(){
-        if(indexScopeSupplyEditing>=0){
-            scopeSupplies.set(indexScopeSupplyEditing,scopeSupplyService.clone(editScopeSupply));
+    public void doUpdateScopeSupply() {
+        if (indexScopeSupplyEditing >= 0) {
+            scopeSupplies.set(indexScopeSupplyEditing, scopeSupplyService.clone(editScopeSupply));
         }
     }
-    public String addScopeSupplyAndAdd(){
+
+    public String addScopeSupplyAndAdd() {
         registerScopeSupply();
         cleanScopeSupply();
         return "";
     }
-    private void registerScopeSupply(){
+
+    private void registerScopeSupply() {
         log.log(Level.INFO, "SCOPE CODE    " + newScopeSupply.getCode());
-        ScopeSupplyEntity scopeSupplyEntity=new ScopeSupplyEntity();
-        try{
-            scopeSupplyEntity=(ScopeSupplyEntity)org.apache.commons.beanutils.BeanUtils.cloneBean(newScopeSupply);
-        }catch (Exception ex){
+        ScopeSupplyEntity scopeSupplyEntity = new ScopeSupplyEntity();
+        try {
+            scopeSupplyEntity = (ScopeSupplyEntity) org.apache.commons.beanutils.BeanUtils.cloneBean(newScopeSupply);
+        } catch (Exception ex) {
         }
         scopeSupplies.add(scopeSupplyEntity);
     }
-    public void deleteComment(final int index){
-        if(index>=0 && index < commentEntities.size()){
+
+    public void deleteComment(final int index) {
+        if (index >= 0 && index < commentEntities.size()) {
             commentEntities.remove(index);
         }
     }
-    public void editComment(final int index){
-        log.info("editComment(index["+index+"])");
-        indexCommentEditing=-1;
+
+    public void editComment(final int index) {
+        log.info("editComment(index[" + index + "])");
+        indexCommentEditing = -1;
         log.info("commentEntities.size(): " + commentEntities.size());
-        if(index>=0 && index < commentEntities.size()){
-            editComment=commentService.clone(commentEntities.get(index));
+        if (index >= 0 && index < commentEntities.size()) {
+            editComment = commentService.clone(commentEntities.get(index));
             editComment.setLastUpdate(new Date());
-            indexCommentEditing=index;
+            indexCommentEditing = index;
         }
     }
-    public void updateComment(){
-        if(indexCommentEditing>=0&&indexCommentEditing<commentEntities.size()){
+
+    public void updateComment() {
+        if (indexCommentEditing >= 0 && indexCommentEditing < commentEntities.size()) {
             commentEntities.set(indexCommentEditing, editComment);
         }
     }
 
 
-    public void deleteScopeSupply(final int index){
-        if(index>=0 && index < scopeSupplies.size()){
+    public void deleteScopeSupply(final int index) {
+        if (index >= 0 && index < scopeSupplies.size()) {
             scopeSupplies.remove(index);
         }
     }
 
-    public PurchaseOrderEntity getNewPurchaseOrder(){
+    public void selectingForAttachment(final int index) {
+        log.info("selecting..................");
+        if (index >= 0 && index < commentEntities.size()) {
+            indexAttachment = index;
+        } else {
+            indexAttachment = -1;
+        }
+        log.info("indexAttachment "+indexAttachment);
+    }
+
+    public List<AttachmentComment>getAttachmentsForComment(){
+        return indexAttachment!=null&&indexAttachment.intValue()>=0?commentEntities.get(indexAttachment).getAttachments():new ArrayList<AttachmentComment>();
+    }
+
+    public PurchaseOrderEntity getNewPurchaseOrder() {
         return newPurchaseOrder;
     }
 
-    public void handleCommentUpload(FileUploadEvent event){
-        UploadedFile uf=event.getFile();
+    public void handleCommentUpload(FileUploadEvent event) {
+        UploadedFile uf = event.getFile();
+
         log.info(uf.getFileName());
-        log.info("size [ "+uf.getSize()+"]");
-        if(indexCommentEditing!=null&& indexCommentEditing>=0){
-            try{
-                editComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-                editComment.setFileName(uf.getFileName());
-                editComment.setMimeType(uf.getContentType());
-            }catch (IOException ioe){
-                log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
-                ioe.printStackTrace();
-                Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
-            }finally{
-                try{
+        log.info("size [ " + uf.getSize() + "]");
+        log.info("indexFileAttachment[ " + indexAttachment + "]");
+        if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
+            AttachmentComment attachmentComment = new AttachmentComment();
+            try {
+                attachmentComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
+                attachmentComment.setMimeType(uf.getContentType());
+                attachmentComment.setFileName(uf.getFileName());
+                commentEntities.get(indexAttachment).getAttachments().add(attachmentComment);
+            } catch (IOException io) {
+                io.printStackTrace();
+            } finally {
+                try {
                     IOUtils.closeQuietly(uf.getInputstream());
-                }catch(IOException ioe){
-                    ioe.printStackTrace();;
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                    ;
                 }
             }
-
-        }else{
-            try{
-                newComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-                newComment.setFileName(uf.getFileName());
-                newComment.setMimeType(uf.getContentType());
-            }catch (IOException ioe){
-                log.log(Level.SEVERE,"Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
-                ioe.printStackTrace();
-                Messages.addGlobalError("Error uploading file :"+uf.getFileName() +" of "+ uf.getSize()+" byte(s)");
-            }finally{
-                try{
-                    IOUtils.closeQuietly(uf.getInputstream());
-                }catch(IOException ioe){
-                    ioe.printStackTrace();;
-                }
-            }
-
         }
+    }
 
+    public List<AttachmentScopeSupply> getScopeSupplyAttachments() {
+        return (indexAttachment != null && indexAttachment >= 0 && indexAttachment < scopeSupplies.size()) ? scopeSupplies.get(indexAttachment).getAttachments() : new ArrayList<AttachmentScopeSupply>();
+    }
+
+    public void deleteAttachmentScopeSupply(int index) {
+        if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < scopeSupplies.size()) {
+            if (index >= 0 && index < scopeSupplies.size()) {
+                scopeSupplies.get(indexAttachment).getAttachments().remove(index);
+            }
+        }
+    }
+
+    public void deleteAttachmentComment(int index) {
+        if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
+            if (index >= 0 && index < commentEntities.size()) {
+                commentEntities.get(indexAttachment).getAttachments().remove(index);
+            }
+        }
+    }
+
+    public void handleScopeSupplyUpload(FileUploadEvent event) {
+        UploadedFile uf = event.getFile();
+        if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < scopeSupplies.size()) {
+            try {
+                AttachmentScopeSupply attachment = new AttachmentScopeSupply();
+                attachment.setFileName(uf.getFileName());
+                attachment.setMimeType(uf.getContentType());
+                attachment.setFile(IOUtils.toByteArray(uf.getInputstream()));
+                scopeSupplies.get(indexAttachment).getAttachments().add(attachment);
+            } catch (IOException ioe) {
+                log.log(Level.SEVERE, "Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
+                ioe.printStackTrace();
+                Messages.addGlobalError("Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
+            } finally {
+                try {
+                    IOUtils.closeQuietly(uf.getInputstream());
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                    ;
+                }
+            }
+        }
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.log(Level.INFO, String.format("bean destroyed [%s]", this.getClass().toString()));
     }
 
@@ -294,32 +343,31 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
 
-    public String cleanScopeSupply(){
+    public String cleanScopeSupply() {
         log.info("cleaning scope supply");
 
-        String cid=conversation.getId();
-        return "/purchase/modal/CreateModalScopeSupply?faces-redirect=true&cid="+cid;
+        String cid = conversation.getId();
+        return "/purchase/modal/CreateModalScopeSupply?faces-redirect=true&cid=" + cid;
     }
 
-    public String selectForEditingScopeSuppply(Integer index){
+    public String selectForEditingScopeSuppply(Integer index) {
         log.info("selectForEditingScopeSupply.................");
         /*if(conversation.isTransient()){
             conversation.begin();
             log.info(String.format("conversation started [%s]",conversation.getTimeout()));
         }*/
-        String cid=conversation.getId();
-        return  "/purchase/modal/CreateModalScopeSupplyEditing?faces-redirect=true&index="+index+"&cid="+cid;
+        String cid = conversation.getId();
+        return "/purchase/modal/CreateModalScopeSupplyEditing?faces-redirect=true&index=" + index + "&cid=" + cid;
     }
 
-    public String cancelCreatePurchaseOrder(){
-        if(!conversation.isTransient()){
+    public String cancelCreatePurchaseOrder() {
+        if (!conversation.isTransient()) {
             log.info("Finish conversation...");
 
             conversation.end();
         }
-        return"/purchase/list?faces-redirect=true";
+        return "/purchase/list?faces-redirect=true";
     }
-
 
 
     public CommentEntity getEditComment() {
@@ -357,10 +405,9 @@ public class PurchaseOrderCreate implements Serializable {
     @ConversationScoped
     @Named
     @Produces
-    public PurchaseOrderEntity getPurchaseOrder(){
-        return (PurchaseOrderEntity)service.clone(newPurchaseOrder);
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return (PurchaseOrderEntity) service.clone(newPurchaseOrder);
     }
-
 
 
 }

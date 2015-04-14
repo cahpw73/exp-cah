@@ -90,6 +90,16 @@
                 #{_scopeSupply.responsibleExpediting}
                 </div>
             </p:column>
+            <p:column headerText="Var"  width="45">
+                10000
+            </p:column>
+            <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="90" >
+                <p:commandLink oncomplete="PF('attachmentScopeSupplyModal').show()"
+                               action="#{purchaseOrderEdit.selectingForAttachment(_scopeSupply.id)}"
+                               update=":attachmentScopeSupplyId">
+                    <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+                </p:commandLink>
+            </p:column>
             <p:column headerText="#{msgs['lbl.action']}" width="243">
                 <div class="pull-right">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"  value="#{msgs['lbl.edit']}"

@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
     <h4 class="sub-header fq-sub-header">#{msgs['po.attachments.title']}</h4>
@@ -20,8 +21,11 @@
         <p:column headerText="#{msgs['po.attach.tbl.column.observations']}"  sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.description}
             </p:column>
-        <p:column headerText="#{msgs['lbl.attachment']}" width="210" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
-            <h:outputText value="#{_comment.fileName}"/>
+        <p:column headerText="#{msgs['lbl.attachment']}" width="210">
+            <h:commandLink action="#{purchaseOrderCreate.selectingForAttachment(_index)}"  onclick="PF('attachmentComment').show()">
+                <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+                <f:ajax render="attachmentCMT" execute="@this" />
+            </h:commandLink>
         </p:column>
         <p:column headerText="#{msgs['lbl.action']}" width="150">
             <div class="pull-right">
@@ -40,8 +44,9 @@
         <div class="action-button-po">
             <div class="pull-right">
                 <h:commandButton type="button" styleClass="btn btn-primary btn-sm component-left"
+                                    onclick="PF('commentModal').show();"
                                  action="#{purchaseOrderCreate.cleanComment}" value="#{msgs['lbl.add.comment']}">
-                    <p:ajax update=":commentModalId" oncomplete="PF('commentModal').show();" immediate="true"/>
+                    <f:ajax render="commentFormId"/>
                 </h:commandButton>
             </div>
         </div>

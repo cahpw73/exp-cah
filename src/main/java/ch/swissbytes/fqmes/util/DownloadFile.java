@@ -1,8 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
 
-import ch.swissbytes.fqmes.model.entities.AttachmentEntity;
-import ch.swissbytes.fqmes.model.entities.CommentEntity;
+import ch.swissbytes.fqmes.model.entities.*;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
@@ -18,17 +17,15 @@ public class DownloadFile implements Serializable {
 
     private static final Logger log = Logger.getLogger(DownloadFile.class.getName());
 
-
-    public void downloadAttachmentFile(final AttachmentEntity attachmentEntity) {
-       log.info("public void downloadAttachmentFile(Long id="+attachmentEntity.getId()+")");
-        if(attachmentEntity!=null){
-            download(attachmentEntity.getMimeType(),attachmentEntity.getFileName(),attachmentEntity.getFile());
+    public void downloadAttachedFileOnComment(final AttachmentComment attachmentComment){
+        if(attachmentComment!=null){
+            download(attachmentComment.getMimeType(),attachmentComment.getFileName(),attachmentComment.getFile());
         }
     }
 
-    public void downloadAttachedFileOnComment(final CommentEntity commentEntity){
-        if(commentEntity!=null){
-            download(commentEntity.getMimeType(),commentEntity.getFileName(),commentEntity.getFile());
+    public void downloadAttachedFileOnScopeSupplly(final AttachmentScopeSupply attachmentScopeSupply){
+        if(attachmentScopeSupply!=null){
+            download(attachmentScopeSupply.getMimeType(), attachmentScopeSupply.getFileName(), attachmentScopeSupply.getFile());
         }
     }
 

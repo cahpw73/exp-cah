@@ -89,6 +89,16 @@
                   sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.responsibleExpediting}
             </p:column>
+            <p:column headerText="Var"  width="45">
+                10000
+            </p:column>
+            <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="90">
+                <p:commandLink oncomplete="PF('attachmentScopeSupply').show()"
+                               action="#{purchaseOrderCreate.selectingForAttachment(_index)}"
+                               update=":attachmentscopeSupplyId">
+                    <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+                </p:commandLink>
+            </p:column>
         <p:column headerText="#{msgs['lbl.action']}" width="137">
             <div class="center-button">
                 <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>

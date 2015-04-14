@@ -2,6 +2,7 @@ package ch.swissbytes.fqmes.model.dao;
 
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.Filter;
+import ch.swissbytes.fqmes.model.entities.AttachmentScopeSupply;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
@@ -10,6 +11,7 @@ import ch.swissbytes.fqmes.types.StatusEnum;
 import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +22,8 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
 
     @Inject
     private TransitDeliveryPointService tdpService;
+    @Inject
+    private AttachmentScopeSupplyDao attachmentDao;
 
     public void persist(List<ScopeSupplyEntity> list,PurchaseOrderEntity purchaseOrderEntity){
         for(ScopeSupplyEntity sse: list){
@@ -29,6 +33,11 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
                 tdp.setId(null);
                 tdp.setScopeSupply(sse);
                 tdpService.save(tdp);
+            }
+            for (AttachmentScopeSupply attachment: sse.getAttachments()){
+                attachment.setId(null);
+                attachment.setScopeSupply(sse);
+                attachmentDao.save(attachment);
             }
         }
     }
@@ -57,6 +66,12 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
                     tdp.setScopeSupply(scopeSupplyEntity);
                     tdpService.save(tdp);
                 }
+                for (AttachmentScopeSupply attachment: scopeSupplyEntity.getAttachments()){
+                    attachment.setId(null);
+                    attachment.setScopeSupply(scopeSupplyEntity);
+                    attachment.setLastUpdate(new Date());
+                    attachmentDao.save(attachment);
+                }
             }else{
                 List<TransitDeliveryPointEntity> tdps=scopeSupplyEntity.getTdpList();
                 super.update(scopeSupplyEntity);
@@ -67,6 +82,20 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
                         tdpService.save(tdp);
                     }else{
                         tdpService.update(tdp);
+                    }
+                }
+                for (AttachmentScopeSupply attachment: scopeSupplyEntity.getAttachments()){
+                    attachment.setLastUpdate(new Date());
+                    attachment.setScopeSupply(scopeSupplyEntity);
+                    if(attachment.getId()==null||attachment.getId().longValue()<=0){
+                        attachment.setId(null);
+                        attachmentDao.save(attachment);
+                    }else{
+                        if(StatusEnum.DELETED.getId().intValue()==attachment.getStatus().getId().intValue()){
+                            AttachmentScopeSupply at=attachmentDao.load(attachment.getId());
+                            at.setStatus(attachment.getStatus());
+                            attachmentDao.update(attachment);
+                        }
                     }
                 }
             }

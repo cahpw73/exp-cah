@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
     <h4 class="sub-header fq-sub-header">#{msgs['po.attachments.title']}</h4>
@@ -20,8 +21,16 @@
             <p:column headerText="#{msgs['po.attach.tbl.column.observations']}"  sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.description}
             </p:column>
-            <p:column headerText="#{msgs['lbl.attachment']}" width="210" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
-                <h:commandLink styleClass="#{not _comment.canDownload()?'disabled':'link-download'}" action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_comment.id)}"  disabled="#{not _comment.canDownload()}" value="#{_comment.fileName}"/>
+            <p:column headerText="#{msgs['lbl.attachment']}" width="210">
+                <!--<h:commandLink styleClass="# {not _comment.canDownload()?'disabled':'link-download'}" action=" # {purchaseOrderEdit.downloadAttachedFileOnComment(_comment.id)}"  disabled="# { not _comment.canDownload()}" value="# {_comment.fileName}"/>-->
+
+
+                <p:commandLink oncomplete="PF('attachmentCommentModal').show()"
+                               action="#{purchaseOrderEdit.selectingForAttachment(_comment.id)}"
+                               update=":formAttachmentComment">
+                    <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+                </p:commandLink>
+
             </p:column>
             <p:column headerText="#{msgs['lbl.action']}" width="150">
                 <div class="pull-right">

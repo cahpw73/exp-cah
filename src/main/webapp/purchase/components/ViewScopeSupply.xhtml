@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h4 class="sub-header">#{msgs['po.supply.scope.title']}</h4>
@@ -86,6 +87,16 @@
                   sortBy="#{_scopeSupply.responsibleExpediting}" width="100"
                   sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.responsibleExpediting}
+        </p:column>
+        <p:column headerText="Var"  width="45">
+            10000
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="90">
+            <p:commandLink oncomplete="PF('attachmentScopeSupplyModal').show()"
+                           action="#{purchaseOrderView.setCurrentSelected(_scopeSupply.id)}"
+                           update=":attachmentScopeSupplyId">
+                <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+            </p:commandLink>
         </p:column>
     </p:dataTable>
 </ui:composition>

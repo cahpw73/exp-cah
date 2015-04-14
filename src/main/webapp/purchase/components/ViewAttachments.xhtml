@@ -21,10 +21,11 @@
         </p:column>
 
         <p:column  headerText="#{msgs['lbl.attachment']}" width="210" sortBy="#{_comment.fileName}" sortFunction="#{sortBean.sortStrings}">
-            <h:form>
-           <h:commandLink styleClass="link-download" action="#{purchaseOrderView.downloadAttachedFileOnComment(_comment.id)}"
-                          rendered="#{not empty _comment.fileName}" value="#{_comment.fileName}"/>
-            </h:form>
+            <p:commandLink oncomplete="PF('attachmentCommentModal').show()"
+                           action="#{purchaseOrderView.setCurrentSelected(_comment.id)}"
+                           update=":attachmentCommentId">
+                <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+            </p:commandLink>
         </p:column>
 
     </p:dataTable>

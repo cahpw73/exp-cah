@@ -19,22 +19,22 @@ public class PurchaseOrderEntity implements Serializable{
     private String project;
     private String po;
     private String variation;
-    private String description;
+    private String projectNameComment;
     private String poTitle;
-    private String poIncoTerm;
-    private String poIncoTermDescription;
-    private Date poDeliveryDate;
-    private String poDeliveryDateDescription;
+    private String incoTerm;
+    private String fullIncoTerms;
+    private Date deliveryDate;
+    private String deliveryDateComment;
     private String responsibleExpediting;
     private Date introEmail;
-    private String introEmailDescription;
+    private String introEmailSentComment;
     private Date requiredDate;
-    private String requiredDateDescription;
+    private String requiredSiteDateComment;
     private Date actualDate;
-    private String actualDateDescription;
+    private String actualSiteDateComment;
     private Date lastUpdate;
     private StatusEntity status;
-    private String responsibleExpeditingObservation;
+    private String rfeComment;
 
 
     private String poReference;
@@ -83,13 +83,13 @@ public class PurchaseOrderEntity implements Serializable{
     }
 
     @Size(max = 1000)
-    @Column(name="description", length=1000)
-    public String getDescription() {
-        return description;
+    @Column(name="PROJECT_NAME_COMMENT", length=1000)
+    public String getProjectNameComment() {
+        return projectNameComment;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProjectNameComment(String projectNameComment) {
+        this.projectNameComment = projectNameComment;
     }
     @Size(max = 50)
     @Column(name= "po_title", length=50)
@@ -102,42 +102,42 @@ public class PurchaseOrderEntity implements Serializable{
     }
     @Size(max = 50)
     @Column(name="po_inco_term",length=50)
-    public String getPoIncoTerm() {
-        return poIncoTerm;
+    public String getIncoTerm() {
+        return incoTerm;
     }
 
-    public void setPoIncoTerm(String poIncoTerm) {
-        this.poIncoTerm = poIncoTerm;
+    public void setIncoTerm(String incoTerm) {
+        this.incoTerm = incoTerm;
     }
 
     @Size(max = 1000)
-    @Column(name="po_inco_term_description", length=1000)
-    public String getPoIncoTermDescription() {
-        return poIncoTermDescription;
+    @Column(name="FULL_INCO_TERM", length=1000)
+    public String getFullIncoTerms() {
+        return fullIncoTerms;
     }
 
-    public void setPoIncoTermDescription(String poIncoTermDescription) {
-        this.poIncoTermDescription = poIncoTermDescription;
+    public void setFullIncoTerms(String fullIncoTerms) {
+        this.fullIncoTerms = fullIncoTerms;
     }
 
 
     @Column(name="po_delivery_date")
-    public Date getPoDeliveryDate() {
-        return poDeliveryDate;
+    public Date getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setPoDeliveryDate(Date poDeliveryDate) {
-        this.poDeliveryDate = poDeliveryDate;
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     @Size(max = 1000)
-    @Column(name="po_delivery_date_description",  length=1000)
-    public String getPoDeliveryDateDescription() {
-        return poDeliveryDateDescription;
+    @Column(name="DELIVERY_DATE_COMMENT",  length=1000)
+    public String getDeliveryDateComment() {
+        return deliveryDateComment;
     }
 
-    public void setPoDeliveryDateDescription(String poDeliveryDateDescription) {
-        this.poDeliveryDateDescription = poDeliveryDateDescription;
+    public void setDeliveryDateComment(String deliveryDateComment) {
+        this.deliveryDateComment = deliveryDateComment;
     }
 
     @Size(max = 100)
@@ -161,13 +161,13 @@ public class PurchaseOrderEntity implements Serializable{
     }
 
     @Size(max = 1000)
-    @Column(name="intro_email_sent_description", length=1000)
-    public String getIntroEmailDescription() {
-        return introEmailDescription;
+    @Column(name="INTRO_EMAIL_SENT_COMMENT", length=1000)
+    public String getIntroEmailSentComment() {
+        return introEmailSentComment;
     }
 
-    public void setIntroEmailDescription(String introEmailDescription) {
-        this.introEmailDescription = introEmailDescription;
+    public void setIntroEmailSentComment(String introEmailSentComment) {
+        this.introEmailSentComment = introEmailSentComment;
     }
 
     @Column(name="required_date")
@@ -180,13 +180,13 @@ public class PurchaseOrderEntity implements Serializable{
     }
 
     @Size(max = 1000)
-    @Column(name="required_date_description", length=1000)
-    public String getRequiredDateDescription() {
-        return requiredDateDescription;
+    @Column(name="REQUIRED_SITE_DATE_COMMENT", length=1000)
+    public String getRequiredSiteDateComment() {
+        return requiredSiteDateComment;
     }
 
-    public void setRequiredDateDescription(String requiredDateDescription) {
-        this.requiredDateDescription = requiredDateDescription;
+    public void setRequiredSiteDateComment(String requiredSiteDateComment) {
+        this.requiredSiteDateComment = requiredSiteDateComment;
     }
 
     @Column(name="actual_date")
@@ -199,13 +199,13 @@ public class PurchaseOrderEntity implements Serializable{
     }
 
     @Size(max = 1000)
-    @Column(name="actual_date_description", length=1000)
-    public String getActualDateDescription() {
-        return actualDateDescription;
+    @Column(name="ACTUAL_SITE_DATE_COMMENT", length=1000)
+    public String getActualSiteDateComment() {
+        return actualSiteDateComment;
     }
 
-    public void setActualDateDescription(String actualDateDescription) {
-        this.actualDateDescription = actualDateDescription;
+    public void setActualSiteDateComment(String actualSiteDateComment) {
+        this.actualSiteDateComment = actualSiteDateComment;
     }
     @Column(name="LAST_UPDATE", nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -245,13 +245,13 @@ public class PurchaseOrderEntity implements Serializable{
         return that.hashCode()==this.hashCode();
     }
     @Size(max = 1000)
-    @Column(name="RESPONSIBLE_EXPEDITING_OBSERVATION")
-    public String getResponsibleExpeditingObservation() {
-        return responsibleExpeditingObservation;
+    @Column(name="RFE_COMMENT")
+    public String getRfeComment() {
+        return rfeComment;
     }
 
-    public void setResponsibleExpeditingObservation(String responsibleExpeditingObservation) {
-        this.responsibleExpeditingObservation = responsibleExpeditingObservation;
+    public void setRfeComment(String rfeComment) {
+        this.rfeComment = rfeComment;
     }
 
     @Override
@@ -260,22 +260,22 @@ public class PurchaseOrderEntity implements Serializable{
         result = 31 * result + (project != null ? project.hashCode() : 0);
         result = 31 * result + (po != null ? po.hashCode() : 0);
         result = 31 * result + (variation != null ? variation.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (projectNameComment != null ? projectNameComment.hashCode() : 0);
         result = 31 * result + (poTitle != null ? poTitle.hashCode() : 0);
-        result = 31 * result + (poIncoTerm != null ? poIncoTerm.hashCode() : 0);
-        result = 31 * result + (poIncoTermDescription != null ? poIncoTermDescription.hashCode() : 0);
-        result = 31 * result + (poDeliveryDate != null ? poDeliveryDate.hashCode() : 0);
-        result = 31 * result + (poDeliveryDateDescription != null ? poDeliveryDateDescription.hashCode() : 0);
+        result = 31 * result + (incoTerm != null ? incoTerm.hashCode() : 0);
+        result = 31 * result + (fullIncoTerms != null ? fullIncoTerms.hashCode() : 0);
+        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
+        result = 31 * result + (deliveryDateComment != null ? deliveryDateComment.hashCode() : 0);
         result = 31 * result + (responsibleExpediting != null ? responsibleExpediting.hashCode() : 0);
         result = 31 * result + (introEmail != null ? introEmail.hashCode() : 0);
-        result = 31 * result + (introEmailDescription != null ? introEmailDescription.hashCode() : 0);
+        result = 31 * result + (introEmailSentComment != null ? introEmailSentComment.hashCode() : 0);
         result = 31 * result + (requiredDate != null ? requiredDate.hashCode() : 0);
-        result = 31 * result + (requiredDateDescription != null ? requiredDateDescription.hashCode() : 0);
+        result = 31 * result + (requiredSiteDateComment != null ? requiredSiteDateComment.hashCode() : 0);
         result = 31 * result + (actualDate != null ? actualDate.hashCode() : 0);
-        result = 31 * result + (actualDateDescription != null ? actualDateDescription.hashCode() : 0);
+        result = 31 * result + (actualSiteDateComment != null ? actualSiteDateComment.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (status != null ? status.getId().hashCode() : 0);
-        result = 31 * result + (responsibleExpeditingObservation != null ? responsibleExpeditingObservation.hashCode() : 0);
+        result = 31 * result + (rfeComment != null ? rfeComment.hashCode() : 0);
         return result;
     }
 }

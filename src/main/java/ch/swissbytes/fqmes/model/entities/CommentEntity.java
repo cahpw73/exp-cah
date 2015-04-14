@@ -6,8 +6,10 @@ import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alvaro on 9/9/14.
@@ -27,7 +29,7 @@ public class CommentEntity implements Serializable, EntityTbl {
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
-
+    private List<AttachmentComment> attachments=new ArrayList<>();
 
     private Boolean justLoaded = false;
 
@@ -180,6 +182,11 @@ public class CommentEntity implements Serializable, EntityTbl {
     public void setPreviousHascode(int previousHascode) {
         this.previousHascode = previousHascode;
     }
+
+    @Transient
+     public List<AttachmentComment> getAttachments(){
+         return attachments;
+     }
 
     @Override
     public int hashCode() {

@@ -19,9 +19,9 @@ public class SupplierEntity implements Serializable{
     private StatusEntity status;
     private String supplier;
     private String address;
-    private String addresDescription;
+    private String contactDetail;
     private String contactName;
-    private String contactNameDescription;
+    private String emailAddress;
     private PurchaseOrderEntity purchaseOrder;
     private Date lastUpdate;
 
@@ -45,13 +45,13 @@ public class SupplierEntity implements Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
-    @Column(name="address_description",length=1000)
-    public String getAddresDescription() {
-        return addresDescription;
+    @Column(name="CONTACT_DETAIL",length=1000)
+    public String getContactDetail() {
+        return contactDetail;
     }
 
-    public void setAddresDescription(String addresDescription) {
-        this.addresDescription = addresDescription;
+    public void setContactDetail(String contactDetail) {
+        this.contactDetail = contactDetail;
     }
 
     @Size(max=100)
@@ -65,13 +65,13 @@ public class SupplierEntity implements Serializable{
     }
 
     @Size(max=1000)
-    @Column(name="contact_name_description", length=1000)
-    public String getContactNameDescription() {
-        return contactNameDescription;
+    @Column(name="EMAIL_ADDRESS", length=1000)
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setContactNameDescription(String contactNameDescription) {
-        this.contactNameDescription = contactNameDescription;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -127,9 +127,9 @@ public class SupplierEntity implements Serializable{
         result = 31 * result + (status != null ? status.getId().hashCode() : 0);
         result = 31 * result + (supplier != null ? supplier.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (addresDescription != null ? addresDescription.hashCode() : 0);
+        result = 31 * result + (contactDetail != null ? contactDetail.hashCode() : 0);
         result = 31 * result + (contactName != null ? contactName.hashCode() : 0);
-        result = 31 * result + (contactNameDescription != null ? contactNameDescription.hashCode() : 0);
+        result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
         result = 31 * result + (purchaseOrder != null ? purchaseOrder.getId().hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         return result;

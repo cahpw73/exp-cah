@@ -57,6 +57,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
 
     private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
+    private List<AttachmentScopeSupply> attachments=new ArrayList<>();
 
 
 
@@ -309,6 +310,11 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         return tdpList;
     }
 
+    @Transient
+    public List<AttachmentScopeSupply> getAttachments() {
+        return attachments;
+    }
+
     @Size(max = 5, message = "currency at most need 5 characters")
     @Column(name="CURRENCY",length = 5)
     public String getCurrency() {
@@ -379,6 +385,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setTagNo(String tagNo) {
         this.tagNo = tagNo;
     }
+
 
     @Override
     public int hashCode() {

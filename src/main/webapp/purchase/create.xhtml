@@ -54,6 +54,14 @@
     <br/>
     <div class="row">
         <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.project.name.comment']}
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
             <!-- Text input-->
             <div class="form-group input-general-po">
                 <h:outputLabel for="projectName" styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.project.type.required']}"/>
@@ -70,14 +78,15 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea type="text" class="form-control" id="description"
+            <p:inputTextarea type="text" class="form-control" id="projectNameComment"
                              style="max-height:34px;"
                              maxlength="950"
-                             value="#{purchaseOrderCreate.newPurchaseOrder.description}"
-                             jsf:placeholder="#{msgs['po.ph.description']}"/>
-            <p:message for="description" />
+                             value="#{purchaseOrderCreate.newPurchaseOrder.projectNameComment}"
+                             jsf:placeholder="#{msgs['po.ph.projectNameComment']}"/>
+            <p:message for="projectNameComment" />
         </div>
     </div>
+
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -109,6 +118,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -126,6 +136,14 @@
     <!-- Text input-->
     <div class="row">
         <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.contact.detail']}
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
                 <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.address']}"/>
 
@@ -139,10 +157,18 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newSupplier.addresDescription}"
+            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newSupplier.contactDetail}"
                              style="height: 90px;" class="form-control"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
             <p:message for="addressDescription"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.email.address.comment']}
         </div>
     </div>
     <div class="row">
@@ -163,10 +189,18 @@
         <div class="section-text-area-po">
             <p:inputTextarea maxlength="950" type="text" id="cnDescription"
                              style="max-height: 29px;"
-                             value="#{purchaseOrderCreate.newSupplier.contactNameDescription}"
+                             value="#{purchaseOrderCreate.newSupplier.emailAddress}"
                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                              class="form-control"/>
             <p:message for="cnDescription"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.delivery.date.comment']}
         </div>
     </div>
     <div class="row">
@@ -182,7 +216,7 @@
                                 converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                value="#{purchaseOrderCreate.newPurchaseOrder.deliveryDate}"
                                 timeZone="#{configuration.timeZone}"
                                 onselect="calendarChanges();" onchange="calendarChanges();" >
                         <p:ajax process="@this" event="dateSelect" />
@@ -192,14 +226,21 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 29px;" id="poDeliveryDateDescription"
+            <p:inputTextarea style="max-height: 29px;" id="deliveryDateComment"
                              maxlength="950" type="text"
-                             value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDateDescription}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.deliveryDateComment}"
                              jsf:placeholder="#{msgs['po.ph.delivery.date']}" class="form-control"/>
-            <p:message for="poDeliveryDateDescription"/>
+            <p:message for="deliveryDateComment"/>
         </div>
     </div>
-    <!-- Text input-->
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.full.inco.term']}
+        </div>
+    </div>
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -207,7 +248,7 @@
                                value="#{msgs['po.lbl.po.inco.term']}"/>
 
                 <div class="calendar-general-po">
-                    <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTerm}"
+                    <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderCreate.newPurchaseOrder.incoTerm}"
                                      effect="fold" editable="true" styleClass="menu-ddp"
                                      maxlength="50"  style="width: 100%">
                         <f:selectItems value="#{incoTerms}"/>
@@ -219,7 +260,7 @@
         <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 29px;" id="incoTermDescription"
                              maxlength="950" type="text"
-                             value="#{purchaseOrderCreate.newPurchaseOrder.poIncoTermDescription}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.fullIncoTerms}"
                              jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
             <p:message for="incoTermDescription"/>
         </div>
@@ -241,6 +282,14 @@
     </div>
     <div class="row">
         <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.rfe.comment']}
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
                 <h:outputLabel styleClass="label-general-po control-label text-lbl-ltr"
                                value="#{msgs['po.lbl.responsible']}"/>
@@ -258,14 +307,14 @@
         </div>
         <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 29px;"
-                             id="responsibleExpeditingObservation"
+                             id="rfeComment"
                              maxlength="950" type="text"
-                             value="#{purchaseOrderCreate.newPurchaseOrder.responsibleExpeditingObservation}"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.rfeComment}"
                              jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
-            <p:message for="responsibleExpeditingObservation"/>
+            <p:message for="rfeComment"/>
         </div>
     </div>
-    <ui:include src="components/CreateAdditionalData.xhtml"/>
+    <ui:include src="components/additionalDataCreate.xhtml"/>
     <div class="clearfix"></div>
     <br/>
     <div style="width: 940px;">
@@ -286,11 +335,11 @@
     </div>
     <br/>
     <div class="row">
-        <ui:include src="components/CreateScopeSupply.xhtml"/>
+        <ui:include src="components/scopeSupplyCreate.xhtml"/>
     </div>
     <br/>
     <div class="row">
-        <ui:include src="components/CreateAttachments.xhtml"/>
+        <ui:include src="components/commentsCreate.xhtml"/>
     </div>
     <br/>
     <br/>
@@ -351,6 +400,14 @@
     <p:dialog id="commentModalEditId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentEditModal"
               resizable="false" height="250" width="500">
         <ui:include src="modal/CreateCommentModalEdit.xhtml"/>
+    </p:dialog>
+    <p:dialog id="attachmentscopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupply"
+              resizable="false" height="250" width="500">
+        <ui:include src="modal/attachment/attachmentScopeSupply.xhtml"/>
+    </p:dialog>
+    <p:dialog id="attachmentCommentId" header="#{msgs['attachment.title.comment']}" widgetVar="attachmentComment"
+              resizable="false" height="250" width="500">
+        <ui:include src="modal/attachment/attachmentComment.xhtml"/>
     </p:dialog>
     </ui:define>
 </ui:composition>

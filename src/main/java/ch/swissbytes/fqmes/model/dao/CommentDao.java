@@ -1,11 +1,14 @@
 package ch.swissbytes.fqmes.model.dao;
 
+import ch.swissbytes.fqmes.control.comment.AttachmentCommentService;
 import ch.swissbytes.fqmes.model.Filter;
+import ch.swissbytes.fqmes.model.entities.AttachmentComment;
 import ch.swissbytes.fqmes.model.entities.CommentEntity;
 import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.model.entities.StatusEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 
+import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ import java.util.logging.Logger;
 public class CommentDao  extends GenericDao<CommentEntity> implements Serializable {
 
     private static final Logger log = Logger.getLogger(CommentDao.class.getName());
+
+    @Inject
+    private AttachmentCommentDao attachmentDao;
 
     public CommentEntity persist(CommentEntity commentEntity){
         super.save(commentEntity);
@@ -65,6 +71,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     }
 
     public void update(List<CommentEntity>commentEntities,PurchaseOrderEntity purchaseOrderEntity){
+        Date now =new Date();
         for(CommentEntity commentEntity:commentEntities){
             if(commentEntity.getId()==null){//new one{
                 commentEntity.setPurchaseOrder(purchaseOrderEntity);
@@ -73,21 +80,20 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
             }else{
                 log.info("value "+commentEntity.getPreviousHascode());
                 log.info("new value "+commentEntity.hashCode());
-                if(commentEntity.getPreviousHascode()!=commentEntity.hashCode()||commentEntity.getFileWasChanged()){
-                    CommentEntity temporary=null;
-                    if(!commentEntity.getFileWasChanged()){
-
-                        List<CommentEntity>list=this.findById(CommentEntity.class,commentEntity.getId());
-                        temporary= !list.isEmpty()?list.get(0):null;
-                        log.info("getting content of file from db ["+ commentEntity.getFileName()+"]");
-                        commentEntity.setFile(temporary.getFile());
-                    }else{
-                        log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ (commentEntity.getFile()!=null?commentEntity.getFile().length:"0")+"]");
+                super.update(commentEntity);
+            }
+            for(AttachmentComment ac:commentEntity.getAttachments()){
+                ac.setComment(commentEntity);
+                ac.setLastUpdate(now);
+                if(ac.getId()!=null&&ac.getId()>0&&ac.getStatus().getId().intValue()==StatusEnum.DELETED.getId().intValue()){
+                        attachmentDao.update(ac);
+                }else{
+                    if(ac.getId()==null||(ac.getId()!=null&&ac.getId()<0)){
+                        ac.setId(null);
+                        attachmentDao.save(ac);
                     }
-                    super.update(commentEntity);
                 }
             }
-
         }
     }
 

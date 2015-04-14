@@ -130,4 +130,8 @@ public class Configuration implements Serializable {
         return 104857600L;
     }
 
+    public Integer getMaxQuantityFile(){
+        return 100;
+    }
+
 }

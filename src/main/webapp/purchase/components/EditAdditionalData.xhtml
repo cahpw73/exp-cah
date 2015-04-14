@@ -4,8 +4,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-
-
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.intro.email.sent.comment']}
+        </div>
+    </div>
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -28,8 +34,16 @@
         <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 29px;"
                               maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.introEmailDescription}"
+                             value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
                              jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.required.site.date.comment']}
         </div>
     </div>
     <div class="row">
@@ -54,8 +68,16 @@
         <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 29px;"
                              maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.requiredDateDescription}"
+                             value="#{purchaseOrderEdit.poEdit.requiredSiteDateComment}"
                              jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['lbl.actual.site.date.comment']}
         </div>
     </div>
     <div class="row">
@@ -80,7 +102,7 @@
         <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 29px;"
                              maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.actualDateDescription}"
+                             value="#{purchaseOrderEdit.poEdit.actualSiteDateComment}"
                              jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
         </div>
     </div>

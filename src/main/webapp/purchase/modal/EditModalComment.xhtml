@@ -46,19 +46,6 @@
         </div>
     </div>
     <div class="col-lg-12">
-        <p:fileUpload  styleClass="col-sm-3 col-lg-4 col-md-4" fileUploadListener="#{purchaseOrderEdit.handleCommentUpload}" mode="advanced"
-                       update="fileNameDivId"
-                       id="idUploadFile"
-                       sizeLimit="#{configuration.maxFileSize}"
-                       dragDropSupport="false" auto="true">
-        </p:fileUpload>
-        <h:panelGroup id="fileNameDivId">
-            <div class="col-sm-8">
-                #{purchaseOrderEdit.commentEdit.fileName}
-            </div>
-        </h:panelGroup>
-    </div>
-    <div class="col-lg-12">
         <div class="pull-right">
             <h:commandButton id="addComment" value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm">
                 <p:ajax onsuccess="PF('commentEditModal').hide();" update=":empForm:commentList"

@@ -41,19 +41,6 @@
                          value="#{purchaseOrderCreate.newComment.description}"/>
         </div>
     </div>
-
-    <div class="col-sm-12" style="margin-bottom: 10px;">
-        <p:fileUpload  styleClass="col-sm-4 col-lg-4 col-md-4" fileUploadListener="#{purchaseOrderCreate.handleCommentUpload}" mode="advanced"
-                       update="fileNameDivId"
-                       sizeLimit="#{configuration.maxFileSize}"
-                      dragDropSupport="false" auto="true">
-        </p:fileUpload>
-        <h:panelGroup id="fileNameDivId">
-            <div class="col-sm-8">
-                #{purchaseOrderCreate.newComment.fileName}
-            </div>
-        </h:panelGroup>
-    </div>
     <div class="col-sm-12" style="padding-right: 30px;">
         <div class="pull-right">
             <h:commandButton id="addComment" value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm">
