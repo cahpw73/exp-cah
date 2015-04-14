@@ -215,7 +215,7 @@
                                              value="#{purchaseOrderView.purchaseOrder.rfeComment}"/>
                         </div>
                     </div>
-                    <ui:include src="components/ViewAdditionalData.xhtml"/>
+                    <ui:include src="components/additionalDataView.xhtml"/>
                     <div style="width: 940px;">
                         <div class="pull-right">
                             <div class="pull-right">
@@ -227,7 +227,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <br/>
-                    <ui:include src="components/ViewScopeSupply.xhtml"/>
+                    <ui:include src="components/scopeSupplyView.xhtml"/>
                     <br/>
                     <div class="clearfix"></div>
                     <div class="action-button-po">
@@ -238,7 +238,7 @@
                         </div>
                     </div>
                     <br/>
-                    <ui:include src="components/ViewAttachments.xhtml"/>
+                    <ui:include src="components/commentsView.xhtml"/>
                     <div class="action-button-po">
                         <div class="pull-right">
                             <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
