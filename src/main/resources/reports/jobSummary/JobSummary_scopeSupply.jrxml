@@ -53,7 +53,7 @@ order by ss.ordered]]>
 	<field name="fullincoterm" class="java.lang.String"/>
 	<field name="incoterm" class="java.lang.String"/>
 	<field name="sp_inco_term" class="java.lang.String"/>
-	<field name="variance" class="java.lang.Double"/>
+	<field name="variance" class="java.lang.Integer"/>
 	<group name="purchase_order_id">
 		<groupExpression><![CDATA[$F{purchase_order_id}]]></groupExpression>
 	</group>
@@ -320,10 +320,10 @@ order by ss.ordered]]>
 			</textField>
 			<textField>
 				<reportElement uuid="83338183-c927-4f80-b0c1-ee72cfb7aa8a" x="669" y="1" width="22" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{variance} == null ? "-999":$F{variance}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{variance} == null?"":($F{variance}<0)?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{variance}+"</style>":$F{variance}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
