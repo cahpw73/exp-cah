@@ -81,11 +81,9 @@ public abstract class ReportView implements Serializable {
 
 
     protected void runReport() throws Exception {
-        System.out.println("runReport()");
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Connection connection = null;
-
         try {
             connection = getDataSource().getConnection();
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();

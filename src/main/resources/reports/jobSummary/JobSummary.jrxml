@@ -24,6 +24,8 @@
 	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="deliveryCommentLbl" class="java.lang.String"/>
+	<parameter name="fullIncoTermLbl" class="java.lang.String"/>
+	<parameter name="varLbl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select id,project,po
 from purchase_order
@@ -104,14 +106,20 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<subreportParameter name="deliveryDateLbl">
 					<subreportParameterExpression><![CDATA[$P{deliveryDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="fullIncoTermLbl">
+					<subreportParameterExpression><![CDATA[$P{fullIncoTermLbl}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="forecastExWorksDateLbl">
 					<subreportParameterExpression><![CDATA[$P{forecastExWorksDateLbl}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="incoTermLbl">
+					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="TIME_MEASURE_LIST">
 					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="incoTermLbl">
-					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
+				<subreportParameter name="varLbl">
+					<subreportParameterExpression><![CDATA[$P{varLbl}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="actualSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{actualSiteDateLbl}]]></subreportParameterExpression>
