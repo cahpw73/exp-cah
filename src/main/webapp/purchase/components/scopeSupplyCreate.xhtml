@@ -89,8 +89,8 @@
                   sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.responsibleExpediting}
             </p:column>
-            <p:column headerText="Var"  width="45">
-                10000
+            <p:column headerText="#{msgs['po.supply.scope.column.var']}"  width="45">
+                <h:outputText value="#{util.calculateVariance(_scopeSupply)}" style="color:#{util.calculateVariance(_scopeSupply).startsWith('-')?'red':'black'}"/>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="90">
                 <p:commandLink oncomplete="PF('attachmentScopeSupply').show()"

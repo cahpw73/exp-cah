@@ -10,21 +10,22 @@
             #{msgs['attachment.title']}
         </label>
         <br/>
-        <h:panelGroup id="attachmentSS"  >
-            <h:dataTable value="#{purchaseOrderEdit.getActiveAttachmentsForScopeSupply()}"  binding="#{attachmentSS}" var="_attachment">
-                <h:column>
+        <h:panelGroup id="attachmentSS" >
+            <p:dataTable id="idModalSS" value="#{purchaseOrderEdit.getActiveAttachmentsForScopeSupply()}"
+                         styleClass="data-table-po-sc" var="_attachment">
+                <p:column>
                     <h:outputText rendered="#{_attachment.id le 0}" value="#{_attachment.fileName}"/>
                     <h:commandLink styleClass="link-download" action="#{purchaseOrderEdit.downloadAttachedFileOnScopeSupply(_attachment.id)}"
                                    rendered="#{_attachment.id gt 0}" value="#{_attachment.fileName}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column width="10">
                         <h:commandButton value="#{msgs['lbl.delete']}"
                                          styleClass="btn btn-primary btn-sm"
                                          action="#{purchaseOrderEdit.deleteAttachmentScopeSupply(_attachment.id)}"  >
                             <f:ajax render="attachmentSS" execute="@this"/>
                         </h:commandButton>
-                </h:column>
-            </h:dataTable>
+                </p:column>
+            </p:dataTable>
         </h:panelGroup>
         <p:fileUpload mode="advanced"
                       label="#{msgs['attachment.btn.add']}"
@@ -35,7 +36,9 @@
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">
         </p:fileUpload>
+        <div class="pull-right">
         <button  type="button" class="btn btn-primary btn-sm"
                  onclick="PF('attachmentScopeSupplyModal').hide();">#{msgs['lbl.accept']}</button>
+        </div>
     </h:form>
 </ui:composition>

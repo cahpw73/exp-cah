@@ -1,10 +1,12 @@
 package ch.swissbytes.fqmes.util;
 
+import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
 import org.joda.time.DateTimeZone;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -79,6 +81,21 @@ public class Util {
         String value=target!=null?target:"";
         value=value.replaceAll("&\\s+", "&amp; ");
         return value;
+    }
+
+    public String calculateVariance(ScopeSupplyEntity scopeSupply){
+        if(scopeSupply!=null&&scopeSupply.getRequiredSiteDate()!=null&&scopeSupply.getSiteDate()!=null){
+            Calendar with = Calendar.getInstance();
+            with.setTime(scopeSupply.getSiteDate());
+            Calendar to = Calendar.getInstance();
+            to.setTime(scopeSupply.getRequiredSiteDate());
+            to.set(Calendar.YEAR, with.get(Calendar.YEAR));
+            int withDAY = with.get(Calendar.DAY_OF_YEAR);
+            int toDAY = to.get(Calendar.DAY_OF_YEAR);
+            int diffDay =  toDAY  - withDAY;
+            return Integer.toString(diffDay);
+        }
+        return "";
     }
 
 

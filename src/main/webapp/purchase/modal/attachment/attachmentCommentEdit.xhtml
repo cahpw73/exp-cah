@@ -12,21 +12,23 @@
         </label>
         <br/>
         <h:panelGroup id="attachmentCMT">
-            <h:dataTable value="#{purchaseOrderEdit.getAttachmentActives()}" binding="#{attachmentCMT}"
+            <p:dataTable id="idCommentModal" value="#{purchaseOrderEdit.getAttachmentActives()}"
                          var="_attachment">
-                <h:column>
+                <p:column  style="background-color:#ffffff!important;">
                     <h:outputText rendered="#{_attachment.id le 0}" value="#{_attachment.fileName}"/>
                     <h:commandLink styleClass="link-download" action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_attachment.id)}"
                                    rendered="#{_attachment.id gt 0}" value="#{_attachment.fileName}"/>
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column  style="background-color:#ffffff!important;">
+                    <div class="pull-right">
                     <h:commandButton value="#{msgs['lbl.delete']}"
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{purchaseOrderEdit.deleteAttachmentComment(_attachment.id)}">
                         <f:ajax render="attachmentCMT" execute="@this"/>
                     </h:commandButton>
-                </h:column>
-            </h:dataTable>
+                    </div>
+                </p:column>
+            </p:dataTable>
         </h:panelGroup>
         <p:fileUpload mode="advanced"
                       label="#{msgs['attachment.btn.add']}"
