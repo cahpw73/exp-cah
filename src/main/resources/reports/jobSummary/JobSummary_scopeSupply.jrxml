@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JobSummary_scopeSupply" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b9465e6-4f0c-45d0-a4df-9c93b428fda1">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="761"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PURCHASE_ORDER_ID" class="java.lang.Long"/>
 	<parameter name="TIME_MEASURE_LIST" class="java.util.Map"/>
@@ -25,7 +25,7 @@
 	<parameter name="varLbl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ss.description as title,ss.actual_site_date,po.po_inco_term,ss.quantity,ss.ex_work_date,ss.purchase_order_id,po.project,po.po,ss.delivery_date,ss.ex_work_date,ss.delivery_lead_time_qt,ss.delivery_lead_time_ms,ss.required_site_date,ss.unit
-,ss.actual_ex_work_date,ss.site_date,ss.code,ss.ordered,po.variation,po.po_title,ss.tag_no,ss.sp_inco_term_description as fullIncoTerm,ss.sp_inco_term as incoTerm, ss.sp_inco_term,DATE_PART('day',ss.required_site_date- ss.site_date ) AS Variance
+,ss.actual_ex_work_date,ss.site_date,ss.code,ss.ordered,po.variation,po.po_title,ss.tag_no,ss.sp_inco_term_description as fullIncoTerm,ss.sp_inco_term as incoTerm, ss.sp_inco_term,DATE_PART('day',ss.required_site_date- ss.site_date ) AS Variance,DATE_PART('day',ss.actual_site_date-ss.required_site_date) AS overdueDays
 from scope_supply ss inner join purchase_order po on ss.purchase_order_id=po.id
 where ss.purchase_order_id=$P{PURCHASE_ORDER_ID} and  ss.status_id=1
 order by ss.ordered]]>
@@ -53,7 +53,8 @@ order by ss.ordered]]>
 	<field name="fullincoterm" class="java.lang.String"/>
 	<field name="incoterm" class="java.lang.String"/>
 	<field name="sp_inco_term" class="java.lang.String"/>
-	<field name="variance" class="java.lang.Integer"/>
+	<field name="variance" class="java.lang.Double"/>
+	<field name="overduedays" class="java.lang.Double"/>
 	<group name="purchase_order_id">
 		<groupExpression><![CDATA[$F{purchase_order_id}]]></groupExpression>
 	</group>
@@ -211,7 +212,7 @@ order by ss.ordered]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{quantity}+"</style>":$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" x="326" y="1" width="42" height="12"/>
@@ -246,7 +247,7 @@ order by ss.ordered]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{unit}+"</style>":$F{unit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" x="568" y="1" width="50" height="12"/>
@@ -261,7 +262,7 @@ order by ss.ordered]]>
 					<font fontName="Arial" size="6"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{title}+"</style>":$F{title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" x="619" y="1" width="50" height="12"/>
@@ -289,7 +290,7 @@ order by ss.ordered]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{code}+"</style>":$F{code}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="5124e59b-7f18-4513-bddb-6fa9cba347e9" positionType="Float" x="0" y="15" width="801" height="1"/>
@@ -299,24 +300,24 @@ order by ss.ordered]]>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="e2e1d922-e22d-4f6f-859c-0f3bc4353515" x="190" y="1" width="45" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tag_no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{tag_no}+"</style>":$F{tag_no}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="f6327052-35fc-4f91-8095-382844dbc39d" x="237" y="1" width="30" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{incoterm}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{incoterm}+"</style>":$F{incoterm}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="85ce674b-b744-4678-b53a-d5a78df85afa" x="268" y="1" width="58" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fullincoterm}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{fullincoterm}+"</style>":$F{fullincoterm}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="83338183-c927-4f80-b0c1-ee72cfb7aa8a" x="669" y="1" width="22" height="12"/>

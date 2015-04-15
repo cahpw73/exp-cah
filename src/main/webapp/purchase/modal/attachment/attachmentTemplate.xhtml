@@ -3,40 +3,23 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:form role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
-            styleClass="form-horizontal">
-
-        <label>
-            #{msgs['attachment.title']}
-        </label>
-        <br/>
-
-        <div style="height: 100px;">
-            <h:panelGroup id="attachmentCMT#{_NUMBER}">
-                <h:dataTable value="#{attachments}" binding="#{attachmentCMT}" var="_attachment">
-                    <h:column>
-                        #{_attachment.fileName}
-                    </h:column>
-                    <h:column >
-                        <h:commandButton value="#{msgs['lbl.delete']}"
-                                         action="#{purchaseOrderCreate.deleteAttachmentComment(attachmentCMT.rowIndex)}">
-                            <f:ajax render="attachmentCMT" execute="@this"/>
-                        </h:commandButton>
-                    </h:column>
-                </h:dataTable>
-            </h:panelGroup>
-            <p:fileUpload mode="advanced"
-                          label="#{msgs['attachment.btn.add']}"
-                          fileLimit="#{configuration.maxQuantityFile}"
-                          multiple="true"
-                          update="attachmentCMT#{_NUMBER}"
-                          fileUploadListener="#{purchaseOrderCreate.handleCommentUpload}"
-                          sizeLimit="#{configuration.maxFileSize}"
-                          dragDropSupport="false" auto="true">
-            </p:fileUpload>
-        <div class="pull-right  ">
-        <button type="button" class="btn btn-primary btn-sm"
-                onclick="PF('attachmentComment').hide();">#{msgs['lbl.accept']}</button>
-        </div>
-    </h:form>
+    <h:panelGroup id="attachmentCMT">
+        <p:dataTable id="idCommentModal" value="#{purchaseOrderEdit.getAttachmentActives()}"
+                     var="_attachment">
+            <p:column  style="background-color:#ffffff!important;">
+                <h:outputText rendered="#{_attachment.id le 0}" value="#{_attachment.fileName}"/>
+                <h:commandLink styleClass="link-download" action="#{purchaseOrderEdit.downloadAttachedFileOnComment(_attachment.id)}"
+                               rendered="#{_attachment.id gt 0}" value="#{_attachment.fileName}"/>
+            </p:column>
+            <p:column  style="background-color:#ffffff!important;">
+                <div class="pull-right">
+                    <h:commandButton value="#{msgs['lbl.delete']}"
+                                     styleClass="btn btn-primary btn-sm"
+                                     action="#{purchaseOrderEdit.deleteAttachmentComment(_attachment.id)}">
+                        <f:ajax render="attachmentCMT" execute="@this"/>
+                    </h:commandButton>
+                </div>
+            </p:column>
+        </p:dataTable>
+    </h:panelGroup>
 </ui:composition>
