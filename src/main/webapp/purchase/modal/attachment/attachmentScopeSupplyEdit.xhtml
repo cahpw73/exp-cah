@@ -13,12 +13,12 @@
         <h:panelGroup id="attachmentSS" >
             <p:dataTable id="idModalSS" value="#{purchaseOrderEdit.getActiveAttachmentsForScopeSupply()}"
                          styleClass="data-table-po-sc" var="_attachment">
-                <p:column>
+                <p:column width="300" style="background-color:#ffffff!important;">
                     <h:outputText rendered="#{_attachment.id le 0}" value="#{_attachment.fileName}"/>
                     <h:commandLink styleClass="link-download" action="#{purchaseOrderEdit.downloadAttachedFileOnScopeSupply(_attachment.id)}"
                                    rendered="#{_attachment.id gt 0}" value="#{_attachment.fileName}"/>
                 </p:column>
-                <p:column width="10">
+                <p:column style="background-color:#ffffff!important;">
                         <h:commandButton value="#{msgs['lbl.delete']}"
                                          styleClass="btn btn-primary btn-sm"
                                          action="#{purchaseOrderEdit.deleteAttachmentScopeSupply(_attachment.id)}"  >
