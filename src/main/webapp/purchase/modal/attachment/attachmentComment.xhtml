@@ -10,17 +10,20 @@
             #{msgs['attachment.title']}
         </label>
         <br/>
-        <h:panelGroup id="attachmentCMT"  >
-            <h:dataTable value="#{purchaseOrderCreate.attachmentsForComment}"  binding="#{attachmentCMT}" var="_attachment">
-                <h:column>
+        <h:panelGroup id="attachmentCMT">
+            <p:dataTable value="#{purchaseOrderCreate.attachmentsForComment}" binding="#{attachmentCMT}"
+                         var="_attachment">
+                <p:column style="background-color:#ffffff!important;">
                     #{_attachment.fileName}
-                </h:column>
-                <h:column>
-                    <h:commandButton value="#{msgs['lbl.delete']}" action="#{purchaseOrderCreate.deleteAttachmentComment(attachmentCMT.rowIndex)}"  >
+                </p:column>
+                <p:column style="background-color:#ffffff!important;">
+                    <h:commandButton value="#{msgs['lbl.delete']}"
+                                     class="btn btn-primary btn-sm"
+                                     action="#{purchaseOrderCreate.deleteAttachmentComment(attachmentCMT.rowIndex)}">
                         <f:ajax render="attachmentCMT" execute="@this"/>
                     </h:commandButton>
-                </h:column>
-            </h:dataTable>
+                </p:column>
+            </p:dataTable>
         </h:panelGroup>
         <p:fileUpload mode="advanced"
                       label="#{msgs['attachment.btn.add']}"
@@ -31,7 +34,10 @@
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">
         </p:fileUpload>
-        <button  type="button" class="btn btn-primary btn-sm"
-                 onclick="PF('attachmentComment').hide();">#{msgs['lbl.accept']}</button>
+
+        <div class="pull-right">
+            <button type="button" class="btn btn-primary btn-sm"
+                    onclick="PF('attachmentComment').hide();">#{msgs['lbl.accept']}</button>
+        </div>
     </h:form>
 </ui:composition>

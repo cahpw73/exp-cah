@@ -39,7 +39,9 @@
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">
         </p:fileUpload>
+        <div class="pull-right">
         <button  type="button" class="btn btn-primary btn-sm"
                  onclick="PF('attachmentCommentModal').hide();">#{msgs['lbl.accept']}</button>
+        </div>
     </h:form>
 </ui:composition>
