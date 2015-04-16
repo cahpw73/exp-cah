@@ -217,6 +217,7 @@ public class PurchaseOrderCreate implements Serializable {
         log.info("commentEntities.size(): " + commentEntities.size());
         if (index >= 0 && index < commentEntities.size()) {
             editComment = commentService.clone(commentEntities.get(index));
+            editComment.getAttachments().addAll(commentEntities.get(index).getAttachments());
             editComment.setLastUpdate(new Date());
             indexCommentEditing = index;
         }

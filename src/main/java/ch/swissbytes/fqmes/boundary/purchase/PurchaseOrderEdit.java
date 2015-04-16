@@ -504,6 +504,7 @@ public class PurchaseOrderEdit implements Serializable {
         if (index >= 0) {
             commentIndexSelected = index;
             editingComment = commentService.clone(comments.get(index));
+            editingComment.getAttachments().addAll(comments.get(index).getAttachments());
         }
     }
 
