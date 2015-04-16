@@ -11,16 +11,16 @@
         </label>
         <br/>
         <h:panelGroup id="attachmentSS"  >
-            <h:dataTable value="#{purchaseOrderCreate.scopeSupplyAttachments}"  binding="#{attachmentSS}" var="_attachment">
-                <h:column>
+            <p:dataTable value="#{purchaseOrderCreate.scopeSupplyAttachments}"  binding="#{attachmentSS}" var="_attachment">
+                <p:column style="background-color:#ffffff!important;">
                     #{_attachment.fileName}
-                </h:column>
-                <h:column>
+                </p:column>
+                <p:column style="background-color:#ffffff!important;">
                         <h:commandButton value="#{msgs['lbl.delete']}" action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex )}"  >
                             <f:ajax render="attachmentSS" execute="@this"/>
                         </h:commandButton>
-                </h:column>
-            </h:dataTable>
+                </p:column>
+            </p:dataTable>
         </h:panelGroup>
         <p:fileUpload mode="advanced"
                       label="#{msgs['attachment.btn.add']}"
@@ -31,7 +31,9 @@
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">
         </p:fileUpload>
+        <div class="pull-right">
         <button  type="button" class="btn btn-primary btn-sm"
                  onclick="PF('attachmentScopeSupply').hide();">#{msgs['lbl.accept']}</button>
+        </div>
     </h:form>
 </ui:composition>

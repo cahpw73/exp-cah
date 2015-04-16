@@ -237,11 +237,11 @@ public class PurchaseOrderCreate implements Serializable {
 
     public void selectingForAttachment(final int index) {
         log.info("selecting..................");
-        if (index >= 0 && index < commentEntities.size()) {
+       // if (index >= 0 && index < commentEntities.size()) {
             indexAttachment = index;
-        } else {
-            indexAttachment = -1;
-        }
+        //} else {
+          //  indexAttachment = -1;
+        ///}
         log.info("indexAttachment "+indexAttachment);
     }
 
