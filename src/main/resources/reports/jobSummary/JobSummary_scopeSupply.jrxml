@@ -3,6 +3,12 @@
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="overdue" markup="styled" fontSize="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{overduedays}!=null && $F{overduedays}>0]]></conditionExpression>
+			<style forecolor="#FF0033" markup="styled"/>
+		</conditionalStyle>
+	</style>
 	<parameter name="PURCHASE_ORDER_ID" class="java.lang.Long"/>
 	<parameter name="TIME_MEASURE_LIST" class="java.util.Map"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -208,89 +214,82 @@ order by ss.ordered]]>
 	<detail>
 		<band height="19" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="529ca5fc-ea0f-49e1-9b50-f60da82d6d37" x="46" y="1" width="27" height="12"/>
+				<reportElement uuid="529ca5fc-ea0f-49e1-9b50-f60da82d6d37" style="overdue" x="46" y="1" width="27" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{quantity}+"</style>":$F{quantity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" x="326" y="1" width="42" height="12"/>
+				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" style="overdue" x="326" y="1" width="42" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{delivery_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="3b0c7f29-741d-4d16-8f99-87e438e3fc03" x="368" y="1" width="50" height="12"/>
+				<reportElement uuid="3b0c7f29-741d-4d16-8f99-87e438e3fc03" style="overdue" x="368" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ex_work_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{ex_work_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="d92191fd-41d2-45c0-88d6-cefb6e8e0e3d" x="462" y="1" width="45" height="12"/>
+				<reportElement uuid="d92191fd-41d2-45c0-88d6-cefb6e8e0e3d" style="overdue" x="462" y="1" width="45" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{delivery_lead_time_qt} != null ? "+"+$F{delivery_lead_time_qt}:""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b21151a6-e6d9-411c-b4f5-3934792cd69c" x="506" y="1" width="5" height="12"/>
+				<reportElement uuid="b21151a6-e6d9-411c-b4f5-3934792cd69c" style="overdue" x="506" y="1" width="5" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{delivery_lead_time_qt} != null ? org.apache.commons.lang.StringUtils.substring($P{TIME_MEASURE_LIST}.get($F{delivery_lead_time_ms}).toString(),0,1):""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ba804b03-72a2-4bf2-bbcf-c869572a2e95" x="75" y="1" width="35" height="12"/>
+				<reportElement uuid="ba804b03-72a2-4bf2-bbcf-c869572a2e95" style="overdue" x="75" y="1" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{unit}+"</style>":$F{unit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" x="568" y="1" width="50" height="12"/>
+				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" style="overdue" x="568" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{actual_site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{actual_site_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9dce046c-aebc-44d4-99fe-50b7558092a1" x="112" y="1" width="75" height="12"/>
+				<reportElement uuid="9dce046c-aebc-44d4-99fe-50b7558092a1" style="overdue" x="112" y="1" width="75" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{title}+"</style>":$F{title}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" x="619" y="1" width="50" height="12"/>
+				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" style="overdue" x="619" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{required_site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{required_site_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="b4cdf750-ee11-4560-bb14-9b7147f91af5" x="420" y="1" width="40" height="12"/>
+				<reportElement uuid="b4cdf750-ee11-4560-bb14-9b7147f91af5" style="overdue" x="420" y="1" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{actual_ex_work_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{actual_ex_work_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="e878a736-7554-40d3-9d3f-1f1642457a97" x="515" y="1" width="50" height="12"/>
+				<reportElement uuid="e878a736-7554-40d3-9d3f-1f1642457a97" style="overdue" x="515" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{site_date}.getTime())):null]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="af9320c0-baa6-411d-ae93-2abf4ad2eabe" x="0" y="1" width="45" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{code}+"</style>":$F{code}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="5124e59b-7f18-4513-bddb-6fa9cba347e9" positionType="Float" x="0" y="15" width="801" height="1"/>
@@ -299,32 +298,39 @@ order by ss.ordered]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e2e1d922-e22d-4f6f-859c-0f3bc4353515" x="190" y="1" width="45" height="12"/>
+				<reportElement uuid="e2e1d922-e22d-4f6f-859c-0f3bc4353515" style="overdue" x="190" y="1" width="45" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{tag_no}+"</style>":$F{tag_no}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tag_no}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f6327052-35fc-4f91-8095-382844dbc39d" x="237" y="1" width="30" height="12"/>
+				<reportElement uuid="f6327052-35fc-4f91-8095-382844dbc39d" style="overdue" x="237" y="1" width="30" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{incoterm}+"</style>":$F{incoterm}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{incoterm}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="85ce674b-b744-4678-b53a-d5a78df85afa" x="268" y="1" width="58" height="12"/>
+				<reportElement uuid="85ce674b-b744-4678-b53a-d5a78df85afa" style="overdue" x="268" y="1" width="58" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{overduedays}!=null&&$F{overduedays}>0?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{fullincoterm}+"</style>":$F{fullincoterm}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fullincoterm}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="83338183-c927-4f80-b0c1-ee72cfb7aa8a" x="669" y="1" width="22" height="12"/>
+				<reportElement uuid="83338183-c927-4f80-b0c1-ee72cfb7aa8a" style="overdue" x="669" y="1" width="22" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variance} == null?"":($F{variance}<0)?"<style size='6' forecolor='#ff2135' pdfFontName='Helvetica-Bold'>"+$F{variance}+"</style>":$F{variance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="059ad244-1f31-4062-82c1-6c38f96109cb" style="overdue" x="0" y="1" width="30" height="12"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
