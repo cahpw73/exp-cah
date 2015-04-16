@@ -16,7 +16,9 @@
                     #{_attachment.fileName}
                 </p:column>
                 <p:column style="background-color:#ffffff!important;">
-                        <h:commandButton value="#{msgs['lbl.delete']}" action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex )}"  >
+                        <h:commandButton value="#{msgs['lbl.delete']}"
+                                         class="btn btn-primary btn-sm"
+                                         action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex )}"  >
                             <f:ajax render="attachmentSS" execute="@this"/>
                         </h:commandButton>
                 </p:column>

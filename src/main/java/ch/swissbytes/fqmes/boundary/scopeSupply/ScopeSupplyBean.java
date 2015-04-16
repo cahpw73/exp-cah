@@ -68,6 +68,8 @@ public class ScopeSupplyBean implements Serializable {
             editScopeSupply=scopeSupplyService.clone(scopeSupplies.get(indexScopeSupplyEditing));
             editScopeSupply.getTdpList().clear();
             editScopeSupply.getTdpList().addAll(scopeSupplies.get(indexScopeSupplyEditing).getTdpList());
+            editScopeSupply.getAttachments().clear();
+            editScopeSupply.getAttachments().addAll(scopeSupplies.get(indexScopeSupplyEditing).getAttachments());
         }else{
             log.info("index invalid");
         }
@@ -80,6 +82,8 @@ public class ScopeSupplyBean implements Serializable {
                 ScopeSupplyEntity ss=scopeSupplyService.clone(editScopeSupply);
                 ss.getTdpList().clear();
                 ss.getTdpList().addAll(editScopeSupply.getTdpList());
+                ss.getAttachments().clear();
+                ss.getAttachments().addAll(editScopeSupply.getAttachments());
                 scopeSupplies.set(indexScopeSupplyEditing,ss);
             }
             return "/purchase/create?faces-redirect=true";

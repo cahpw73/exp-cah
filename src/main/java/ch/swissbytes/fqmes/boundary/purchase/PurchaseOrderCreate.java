@@ -241,7 +241,7 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
     public List<AttachmentComment>getAttachmentsForComment(){
-        return indexAttachment!=null&&indexAttachment.intValue()>=0?commentEntities.get(indexAttachment).getAttachments():new ArrayList<AttachmentComment>();
+        return indexAttachment!=null&&indexAttachment.intValue()>=0&&indexAttachment<commentEntities.size()?commentEntities.get(indexAttachment).getAttachments():new ArrayList<AttachmentComment>();
     }
 
     public PurchaseOrderEntity getNewPurchaseOrder() {
@@ -250,7 +250,6 @@ public class PurchaseOrderCreate implements Serializable {
 
     public void handleCommentUpload(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
-
         log.info(uf.getFileName());
         log.info("size [ " + uf.getSize() + "]");
         log.info("indexFileAttachment[ " + indexAttachment + "]");
@@ -268,7 +267,6 @@ public class PurchaseOrderCreate implements Serializable {
                     IOUtils.closeQuietly(uf.getInputstream());
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
-                    ;
                 }
             }
         }
@@ -347,10 +345,6 @@ public class PurchaseOrderCreate implements Serializable {
 
     public String selectForEditingScopeSuppply(Integer index) {
         log.info("selectForEditingScopeSupply.................");
-        /*if(conversation.isTransient()){
-            conversation.begin();
-            log.info(String.format("conversation started [%s]",conversation.getTimeout()));
-        }*/
         String cid = conversation.getId();
         return "/purchase/modal/CreateModalScopeSupplyEditing?faces-redirect=true&index=" + index + "&cid=" + cid;
     }
