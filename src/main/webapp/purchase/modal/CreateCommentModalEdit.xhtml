@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 <h:form id="commentEditFormId" role="form"  prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
@@ -43,6 +44,30 @@
                              value="#{purchaseOrderCreate.editComment.description}"/>
             </div>
         </div>
+    <h:panelGroup id="attachmentCMT2">
+        <p:dataTable value="#{purchaseOrderCreate.attachmentsForComment}" binding="#{attachmentCMT2}"
+                     var="_attachment">
+            <p:column style="background-color:#ffffff!important;">
+                #{_attachment.fileName}
+            </p:column>
+            <p:column style="background-color:#ffffff!important;">
+                <h:commandButton value="#{msgs['lbl.delete']}"
+                                 class="btn btn-primary btn-sm"
+                                 action="#{purchaseOrderCreate.deleteAttachmentComment(attachmentCMT2.rowIndex)}">
+                    <f:ajax render="attachmentCMT2" execute="@this"/>
+                </h:commandButton>
+            </p:column>
+        </p:dataTable>
+    </h:panelGroup>
+    <p:fileUpload mode="advanced"
+                  label="#{msgs['attachment.btn.add']}"
+                  fileLimit="#{configuration.maxQuantityFile}"
+                  multiple="true"
+                  update="attachmentCMT2"
+                  fileUploadListener="#{purchaseOrderCreate.handleCommentUpload}"
+                  sizeLimit="#{configuration.maxFileSize}"
+                  dragDropSupport="false" auto="true">
+    </p:fileUpload>
     <div class="col-sm-12" style="padding-right: 30px;">
         <div class="pull-right">
             <h:commandButton id="addEditComment" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm">

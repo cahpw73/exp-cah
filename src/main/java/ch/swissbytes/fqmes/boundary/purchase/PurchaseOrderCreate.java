@@ -173,6 +173,7 @@ public class PurchaseOrderCreate implements Serializable {
         CommentEntity commentEntity = new CommentEntity();
         try {
             commentEntity = (CommentEntity) org.apache.commons.beanutils.BeanUtils.cloneBean(newComment);
+            commentEntity.getAttachments().addAll(newComment.getAttachments());
         } catch (Exception ex) {
 
         }
@@ -242,7 +243,14 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
     public List<AttachmentComment>getAttachmentsForComment(){
-        return indexAttachment!=null&&indexAttachment.intValue()>=0&&indexAttachment<commentEntities.size()?commentEntities.get(indexAttachment).getAttachments():new ArrayList<AttachmentComment>();
+        //return indexAttachment!=null&&indexAttachment.intValue()>=0&&indexAttachment<commentEntities.size()?commentEntities.get(indexAttachment).getAttachments():new ArrayList<AttachmentComment>();
+        List<AttachmentComment> list=new ArrayList<AttachmentComment>();
+        if(indexCommentEditing!=null&&indexCommentEditing==-1&&newComment!=null){
+            list=newComment.getAttachments();
+        }else if(indexCommentEditing!=null&&indexCommentEditing!=-1&&editComment!=null){
+            list=editComment.getAttachments();
+        }
+        return list;
     }
 
     public PurchaseOrderEntity getNewPurchaseOrder() {
@@ -254,14 +262,20 @@ public class PurchaseOrderCreate implements Serializable {
         log.info(uf.getFileName());
         log.info("size [ " + uf.getSize() + "]");
         log.info("indexFileAttachment[ " + indexAttachment + "]");
-        if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
+      //  if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
+
             AttachmentComment attachmentComment = new AttachmentComment();
             try {
                 attachmentComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
                 attachmentComment.setMimeType(uf.getContentType());
                 attachmentComment.setFileName(uf.getFileName());
                 attachmentComment.setStatus(enumService.getStatusEnumEnable());
-                commentEntities.get(indexAttachment).getAttachments().add(attachmentComment);
+                //commentEntities.get(indexAttachment).getAttachments().add(attachmentComment);
+                if(indexCommentEditing==-1){
+                    newComment.getAttachments().add(attachmentComment);
+                }else{
+                    editComment.getAttachments().add(attachmentComment);
+                }
             } catch (IOException io) {
                 io.printStackTrace();
             } finally {
@@ -271,7 +285,7 @@ public class PurchaseOrderCreate implements Serializable {
                     ioe.printStackTrace();
                 }
             }
-        }
+        //}
     }
 
     public List<AttachmentScopeSupply> getScopeSupplyAttachments() {
@@ -287,10 +301,15 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
     public void deleteAttachmentComment(int index) {
-        if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
+        /*if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
             if (index >= 0 && index < commentEntities.get(indexAttachment).getAttachments().size()) {
                 commentEntities.get(indexAttachment).getAttachments().remove(index);
             }
+        }*/
+        if(indexCommentEditing==-1){
+            newComment.getAttachments().remove(index);
+        }else{
+            editComment.getAttachments().remove(index);
         }
     }
 
