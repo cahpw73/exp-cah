@@ -345,7 +345,9 @@
     <br/>
     <div class="action-button-po">
         <div class="pull-right">
-            <h:commandButton id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+            <!--<h:commandButton id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                             action="# {purchaseOrderCreate.doSave}"/>-->
+            <p:commandLink id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
                              action="#{purchaseOrderCreate.doSave}"/>
             &#160;
             <h:commandButton id="add" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"

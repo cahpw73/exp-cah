@@ -260,6 +260,7 @@ public class PurchaseOrderCreate implements Serializable {
                 attachmentComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
                 attachmentComment.setMimeType(uf.getContentType());
                 attachmentComment.setFileName(uf.getFileName());
+                attachmentComment.setStatus(enumService.getStatusEnumEnable());
                 commentEntities.get(indexAttachment).getAttachments().add(attachmentComment);
             } catch (IOException io) {
                 io.printStackTrace();

@@ -41,7 +41,12 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     public void persist(List<CommentEntity>comments,PurchaseOrderEntity purchaseOrderEntity){
         for(CommentEntity comment:comments){
             comment.setPurchaseOrder(purchaseOrderEntity);
-            persist(comment);
+            comment= persist(comment);
+            for(AttachmentComment ac:comment.getAttachments()){
+                ac.setLastUpdate(new Date());
+                ac.setComment(comment);
+                attachmentDao.save(ac);
+            }
         }
     }
 
