@@ -280,7 +280,7 @@ public class PurchaseOrderCreate implements Serializable {
 
     public void deleteAttachmentScopeSupply(int index) {
         if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < scopeSupplies.size()) {
-            if (index >= 0 && index < scopeSupplies.size()) {
+            if (index >= 0 && index < scopeSupplies.get(indexAttachment).getAttachments().size()) {
                 scopeSupplies.get(indexAttachment).getAttachments().remove(index);
             }
         }
@@ -288,13 +288,13 @@ public class PurchaseOrderCreate implements Serializable {
 
     public void deleteAttachmentComment(int index) {
         if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
-            if (index >= 0 && index < commentEntities.size()) {
+            if (index >= 0 && index < commentEntities.get(indexAttachment).getAttachments().size()) {
                 commentEntities.get(indexAttachment).getAttachments().remove(index);
             }
         }
     }
 
-    public void handleScopeSupplyUpload(FileUploadEvent event) {
+    public void handleAttachmentScopeSupply(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
         if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < scopeSupplies.size()) {
             try {
