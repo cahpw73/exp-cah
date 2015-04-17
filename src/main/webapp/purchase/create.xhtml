@@ -319,11 +319,13 @@
     <br/>
     <div style="width: 940px;">
         <div class="pull-right">
-            <h:commandButton id="save0" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
-                             action="#{purchaseOrderCreate.doSave}"/>
+            <p:commandLink id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                           style="padding: 0px!important;"
+                           action="#{purchaseOrderCreate.doSave}"/>
             &#160;
-            <h:commandButton id="add0" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
-                             action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+            <p:commandLink id="add" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                           style="padding-left: 7px!important;padding-top: 0px!important;width: 100px;"
+                           action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
             &#160;
             <h:commandButton id="cancelCreateBtn0"
                              value="#{msgs['lbl.cancel']}"
@@ -343,14 +345,16 @@
     </div>
     <br/>
     <br/>
+
     <div class="action-button-po">
         <div class="pull-right">
-            <!--<h:commandButton id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
-                             action="# {purchaseOrderCreate.doSave}"/>-->
-            <p:commandLink id="save" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+            <p:commandLink id="save02" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                           style="padding: 0px!important;"
                              action="#{purchaseOrderCreate.doSave}"/>
+
             &#160;
-            <h:commandButton id="add" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+            <p:commandLink id="add02" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                             style="padding-left: 7px!important;padding-top: 0px!important;width: 100px;"
                              action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
             &#160;
             <h:commandButton id="cancelCreateBtn"

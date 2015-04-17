@@ -118,11 +118,14 @@
             <div class="clearfix"></div>
             <br/>
             <div class="pull-right">
-                <h:commandButton id="save01" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderCreate.doSave}"/>
+                <p:commandLink id="save01" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
+                               style="padding: 0px!important;"
+                               action="#{purchaseOrderCreate.doSave}"/>
                 &#160;
-                <h:commandButton id="add01" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
+
+                <p:commandLink id="add01" value="#{msgs['lbl.save.add']}" styleClass="btn btn-primary btn-sm"
+                               style="padding-left: 7px!important;padding-top: 0px!important;width: 100px;"
+                               action="#{purchaseOrderCreate.doSaveAndAdd()}"/>
                 &#160;
                 <h:commandButton id="cancelCreateBtn01"
                                  value="#{msgs['lbl.cancel']}"
