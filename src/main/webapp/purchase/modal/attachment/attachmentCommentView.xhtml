@@ -12,7 +12,7 @@
         <h:panelGroup>
             <p:dataTable value="#{purchaseOrderView.attachmentsComment}" var="_attachment">
                 <p:column style="background-color:#ffffff!important;">
-                    <p:commandLink styleClass="link-download" action="#{purchaseOrderView.downloadAttachedFileOnComment(_attachment.id)}"
+                    <h:commandLink styleClass="link-download" action="#{purchaseOrderView.downloadAttachedFileOnComment(_attachment.id)}"
                                    value="#{_attachment.fileName}"/>
                 </p:column>
             </p:dataTable>

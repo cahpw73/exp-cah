@@ -14,7 +14,6 @@ import ch.swissbytes.fqmes.types.StatusEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
-import com.sun.xml.internal.ws.api.message.Attachment;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
