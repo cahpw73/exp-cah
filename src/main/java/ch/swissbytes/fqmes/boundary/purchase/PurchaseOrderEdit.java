@@ -14,6 +14,7 @@ import ch.swissbytes.fqmes.types.StatusEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
+import com.sun.xml.internal.ws.api.message.Attachment;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -146,9 +147,15 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<AttachmentComment> getAttachmentActives() {
-        if (idForAttachment != null) {
+       /* if (idForAttachment != null) {
             final int index=new CommentService().getIndexById(idForAttachment,comments);
             return (index>=0)?new AttachmentCommentService().getActives(comments.get(index).getAttachments()):new ArrayList<AttachmentComment>();
+        }
+        return new ArrayList<AttachmentComment>();*/
+        if(commentIndexSelected!=null&&commentEdit!=null&&commentIndexSelected==-1){
+            return new AttachmentCommentService().getActives(commentEdit.getAttachments());
+        }else if(commentIndexSelected!=null&&editingComment!=null&&commentIndexSelected!=-1){
+            return new AttachmentCommentService().getActives(editingComment.getAttachments());
         }
         return new ArrayList<AttachmentComment>();
     }
@@ -292,6 +299,7 @@ public class PurchaseOrderEdit implements Serializable {
         CommentEntity commentEntity = new CommentEntity();
         try {
             commentEntity = (CommentEntity) org.apache.commons.beanutils.BeanUtils.cloneBean(commentEdit);
+            commentEntity.getAttachments().addAll(commentEdit.getAttachments());
             relativeCurrentCommentId--;
             commentEntity.setId(relativeCurrentCommentId);
         } catch (Exception ex) {
@@ -334,8 +342,13 @@ public class PurchaseOrderEdit implements Serializable {
             ac.setId(temporaryId);
             temporaryId--;
             //commentEdit.setFileWasChanged(true);
-            final int index = idForAttachment != null ? commentService.getIndexById(idForAttachment, comments ) : -1;
-            if(index>=0)comments.get(index).getAttachments().add(ac);
+           // final int index = idForAttachment != null ? commentService.getIndexById(idForAttachment, comments ) : -1;
+            //if(index>=0)comments.get(index).getAttachments().add(ac);
+            if(commentIndexSelected==-1){
+                commentEdit.getAttachments().add(ac);
+            }else{
+                editingComment.getAttachments().add(ac);
+            }
         } catch (IOException ioe) {
             log.log(Level.SEVERE, "Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
             ioe.printStackTrace();
@@ -542,15 +555,24 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<AttachmentComment> getActiveAttachmentsForComment() {
-        final int index = idForAttachment != null ? scopeSupplyService.getIndexById(idForAttachment, comments) : -1;
+       /* final int index = idForAttachment != null ? scopeSupplyService.getIndexById(idForAttachment, comments) : -1;
         if (index >= 0) {
             return new AttachmentCommentService().getActives(comments.get(index).getAttachments());
         }
-        return new ArrayList<>();
+        return new ArrayList<>();*/
+        List<AttachmentComment>list=new ArrayList<AttachmentComment>();
+        if(commentIndexSelected!=null&&commentIndexSelected==-1&&commentEdit!=null){
+            list=commentEdit.getAttachments();
+        }else if(commentIndexSelected!=null&&commentIndexSelected!=-1&&editingComment!=null){
+            list=editingComment.getAttachments();
+        }
+
+
+            return list;
     }
 
     public void deleteAttachmentComment(Long id) {
-        final int index = idForAttachment != null ? commentService.getIndexById(idForAttachment, comments ) : -1;
+       /* final int index = idForAttachment != null ? commentService.getIndexById(idForAttachment, comments ) : -1;
         if (index >= 0) {
             int index2 = new AttachmentScopeSupplyService().getIndexById(id, comments.get(index).getAttachments());
             if (index2 >= 0) {
@@ -560,6 +582,19 @@ public class PurchaseOrderEdit implements Serializable {
                     comments.get(index).getAttachments().remove(index2);
                 }
             }
+        }*/
+        if(commentIndexSelected==-1){
+            int index = new AttachmentScopeSupplyService().getIndexById(id, commentEdit.getAttachments());
+            commentEdit.getAttachments().remove(index);
+        }else{
+            int index = new AttachmentScopeSupplyService().getIndexById(id,editingComment.getAttachments());
+            if(editingComment.getAttachments().get(index).getId()==null||(editingComment.getAttachments().get(index).getId()!=null&&editingComment.getAttachments().get(index).getId().intValue()<0)){
+                editingComment.getAttachments().remove(index);
+            }else if(editingComment.getAttachments().get(index).getId()!=null&&editingComment.getAttachments().get(index).getId().intValue()>0){
+                editingComment.getAttachments().get(index).setStatus(enumService.getStatusEnumDeleted());
+            }
+
+
         }
 
     }
