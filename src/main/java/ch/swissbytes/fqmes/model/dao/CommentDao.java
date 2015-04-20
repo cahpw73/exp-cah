@@ -51,7 +51,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     }
 
     public List<CommentEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        String hql = "SELECT cs.id,cs.name,cs.reason,cs.description,cs.fileName,cs.mimeType,cs.lastUpdate,cs.purchaseOrder,cs.status FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
+        String hql = "SELECT cs.id,cs.name,cs.reason,cs.description,cs.lastUpdate,cs.purchaseOrder,cs.status FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
         Query query = this.entityManager.createQuery( hql);
         query.setParameter("purchase_id", purchaseOrderId);
         query.setParameter("DELETED", StatusEnum.DELETED.getId());
@@ -64,11 +64,9 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
             entity.setName((String) values[1]);
             entity.setReason((String) values[2]);
             entity.setDescription((String) values[3]);
-            entity.setFileName((String) values[4]);
-            entity.setMimeType((String) values[5]);
-            entity.setLastUpdate((Date) values[6]);
-            entity.setPurchaseOrder((PurchaseOrderEntity) values[7]);
-            entity.setStatus((StatusEntity) values[8]);
+            entity.setLastUpdate((Date) values[4]);
+            entity.setPurchaseOrder((PurchaseOrderEntity) values[5]);
+            entity.setStatus((StatusEntity) values[6]);
             entity.setPreviousHascode(entity.hashCode());
             comments.add(entity);
         }
@@ -80,7 +78,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
         for(CommentEntity commentEntity:commentEntities){
             if(commentEntity.getId()==null){//new one{
                 commentEntity.setPurchaseOrder(purchaseOrderEntity);
-                log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ (commentEntity.getFile()!=null?commentEntity.getFile().length:"0")+"]");
+               // log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ (commentEntity.getFile()!=null?commentEntity.getFile().length:"0")+"]");
                 super.save(commentEntity);
             }else{
                 log.info("value "+commentEntity.getPreviousHascode());

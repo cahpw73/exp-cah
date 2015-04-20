@@ -1,11 +1,8 @@
 package ch.swissbytes.fqmes.report;
 
-import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
-import ch.swissbytes.fqmes.model.dao.PurchaseOrderDao;
 import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
 import org.primefaces.model.LazyDataModel;
 
@@ -30,7 +27,7 @@ public class ReportListBean implements Serializable {
 
     private PurchaseOrderViewTbl tbl;
 
-    private SearchPurchase searchPurchase;
+    private SearchPurchase searchPurchase=new SearchPurchase();
 
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
 
@@ -40,7 +37,7 @@ public class ReportListBean implements Serializable {
         log.info("creating bean purchase list");
         log.log(Level.FINER,"FINER log");
         tbl=new PurchaseOrderViewTbl(dao,searchPurchase);
-        searchPurchase=new SearchPurchase();
+       // searchPurchase=new SearchPurchase();
     }
 
     private void  search(){

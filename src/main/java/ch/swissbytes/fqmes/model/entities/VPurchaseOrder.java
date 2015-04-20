@@ -33,6 +33,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private String responsibleExpediting;
 
+    private String incoTerm;
+
     @Id
     public Long getId() {
         return id;
@@ -103,6 +105,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setResponsibleExpediting(String responsibleExpediting) {
         this.responsibleExpediting = responsibleExpediting;
+    }
+
+    @Column(name="po_inco_term",updatable = false, insertable = false, nullable = true)
+    public String getIncoTerm() {
+        return incoTerm;
+    }
+
+    public void setIncoTerm(String incoTerm) {
+        this.incoTerm = incoTerm;
     }
 
     @Override

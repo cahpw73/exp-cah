@@ -15,6 +15,7 @@ public class SearchPurchase implements Filter {
     private String supplier;
     private String poTitle;
     private String responsibleExpediting;
+    private String incoTerm;
 
     public String getProject() {
         return project;
@@ -64,6 +65,14 @@ public class SearchPurchase implements Filter {
         this.responsibleExpediting = responsibleExpediting;
     }
 
+    public String getIncoTerm() {
+        return incoTerm;
+    }
+
+    public void setIncoTerm(String incoTerm) {
+        this.incoTerm = incoTerm;
+    }
+
     @Override
     public void clean(){
         po=null;
@@ -72,5 +81,6 @@ public class SearchPurchase implements Filter {
         supplier=null;
         poTitle=null;
         responsibleExpediting=null;
+        incoTerm=null;
     }
 }

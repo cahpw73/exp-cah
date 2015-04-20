@@ -23,9 +23,6 @@ public class CommentEntity implements Serializable, EntityTbl {
     private String name;
     private String reason;
     private String description;
-    private String fileName;
-    private String mimeType;
-    private byte[] file;
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
@@ -80,36 +77,7 @@ public class CommentEntity implements Serializable, EntityTbl {
         this.description = description;
     }
 
-    @Size(max = 255)
-    @Column(name = "f_name", length = 255)
-    public String getFileName() {
-        return fileName;
-    }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-
-    @Size(max = 255)
-    @Column(name = "mime_type", length = 255)
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
-
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "file_attached")
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchase_order_id")
@@ -160,10 +128,6 @@ public class CommentEntity implements Serializable, EntityTbl {
         this.justLoaded = justLoaded;
     }
 
-    @Transient
-    public Boolean canDownload() {
-        return id.intValue() > 0 && StringUtils.isNotEmpty(getFileName()) && !justLoaded;
-    }
 
     @Transient
     public Boolean getFileWasChanged() {
@@ -194,8 +158,6 @@ public class CommentEntity implements Serializable, EntityTbl {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (reason != null ? reason.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
-        result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
         //result = 31 * result + (file != null ? Arrays.hashCode(file) : 0);
         //result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (purchaseOrder != null ? purchaseOrder.getId().hashCode() : 0);

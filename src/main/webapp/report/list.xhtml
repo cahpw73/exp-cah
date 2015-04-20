@@ -41,16 +41,6 @@
                                      type='text'/>
                     </div>
             </div>
-            <ui:remove>
-            <div class="col-md-4">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.location']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.location']}"
-                                     value="#{reportListBean.searchPurchase.location}" class='form-control'
-                                     type='text'/>
-                    </div>
-            </div>
-            </ui:remove>
             <div class="col-md-4">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
@@ -74,6 +64,13 @@
                                      value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
                                      size='4' type='text'/>
                     </div>
+            </div>
+            <div class="col-md-4">
+                <div class='form-group card'>
+                    <label class='control-label'>#{msgs['po.supply.scope.column.inco.term']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.inco.term']}"
+                                 value="#{reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>
+                </div>
             </div>
             <div class="pull-right">
                 <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
