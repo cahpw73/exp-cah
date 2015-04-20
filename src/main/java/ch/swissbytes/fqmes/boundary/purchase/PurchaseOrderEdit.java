@@ -707,6 +707,7 @@ public class PurchaseOrderEdit implements Serializable {
             if (index >= 0 && index < scopeSupplies.size()) {
                 ScopeSupplyEntity sse = scopeSupplyService.clone(selectedScopeSupply);
                 sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
+                sse.getAttachments().addAll(selectedScopeSupply.getAttachments());
                 scopeSupplies.set(index, sse);
             }
             scopeActives.clear();
