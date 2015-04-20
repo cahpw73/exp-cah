@@ -687,12 +687,20 @@ public class PurchaseOrderEdit implements Serializable {
             scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
             ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
             ss.getTdpList().clear();
+            ss.getAttachments().clear();
 
             for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
                 currentIndexForTdp--;
                 TransitDeliveryPointEntity tdp = tdpService.clone(tdpe);
                 tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
                 ss.getTdpList().add(tdp);
+            }
+            for(AttachmentScopeSupply acs:selectedScopeSupply.getAttachments()){
+                temporaryId--;
+                AttachmentScopeSupply attachmentScopeSupply=new AttachmentScopeSupplyService().clone(acs);
+                attachmentScopeSupply.setId(temporaryId);
+                attachmentScopeSupply.setLastUpdate(new Date());
+                ss.getAttachments().add(attachmentScopeSupply);
             }
             scopeSupplies.add(ss);
             final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
@@ -704,7 +712,7 @@ public class PurchaseOrderEdit implements Serializable {
             scopeActives.clear();
             scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
         } else {
-            Messages.addGlobalError("You are not able to make a split with these values");
+            Messages.addGlobalError("You are not able to split with these values");
             url = "";
         }
         return url;
@@ -742,6 +750,8 @@ public class PurchaseOrderEdit implements Serializable {
             scopeSupplySplit = scopeSupplyService.clone(scopeSupplies.get(index));
             selectedScopeSupply.getTdpList().clear();
             selectedScopeSupply.getTdpList().addAll(scopeSupplies.get(index).getTdpList());
+            selectedScopeSupply.getAttachments().clear();
+            selectedScopeSupply.getAttachments().addAll(scopeSupplies.get(index).getAttachments());
             if (selectedScopeSupply.getActualSiteDate() == null) {
                 selectedScopeSupply.setActualSiteDate(new Date());
             }

@@ -65,6 +65,7 @@
                                      size='4' type='text'/>
                     </div>
             </div>
+            <ui:remove>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['po.supply.scope.column.inco.term']}</label>
@@ -72,6 +73,7 @@
                                  value="#{reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>
                 </div>
             </div>
+            </ui:remove>
             <div class="pull-right">
                 <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
                                  type="submit" class="btn btn-primary btn-sm" style="margin-top: 25px;"/>

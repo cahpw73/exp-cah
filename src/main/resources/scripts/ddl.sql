@@ -360,6 +360,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION po_sorting(ponumber text)
+  RETURNS text AS
+$BODY$
+    declare
+     target text;
+    begin
+    if(not isnumeric(poNumber)) then
+	target='a'||poNumber;
+    else
+	target = '0' || poNumber;
+    end if;
+  return target;
+  end;
+
 
 CREATE OR REPLACE FUNCTION isnumeric(v_input text)
   RETURNS boolean AS

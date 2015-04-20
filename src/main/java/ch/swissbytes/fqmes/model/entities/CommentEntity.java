@@ -158,8 +158,6 @@ public class CommentEntity implements Serializable, EntityTbl {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (reason != null ? reason.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        //result = 31 * result + (file != null ? Arrays.hashCode(file) : 0);
-        //result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (purchaseOrder != null ? purchaseOrder.getId().hashCode() : 0);
         result = 31 * result + (status != null ? status.getId().hashCode() : 0);
         return result;

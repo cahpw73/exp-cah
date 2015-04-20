@@ -46,7 +46,7 @@ public class AttachmentComment implements Serializable,EntityTbl{
 
 
 
-    @Column(name="file_name", nullable=false, length=255)
+    @Column(name="file_name", nullable=false, length=500)
     public String getFileName() {
         return fileName;
     }
@@ -62,7 +62,7 @@ public class AttachmentComment implements Serializable,EntityTbl{
     public void setPath(String path) {
         this.path = path;
     }
-    @Column(name="MIME_TYPE", nullable=false, length=255)
+    @Column(name="MIME_TYPE", nullable=false, length=500)
     public String getMimeType() {
         return mimeType;
     }

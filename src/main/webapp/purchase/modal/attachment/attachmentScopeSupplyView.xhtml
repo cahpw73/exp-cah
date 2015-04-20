@@ -9,8 +9,8 @@
             #{msgs['attachment.title']}
         </label>
         <br/>
-        <h:panelGroup id="attachmentSS">
-            <p:dataTable value="#{purchaseOrderView.attachmentsScopeSupply}" binding="#{attachmentSS}"
+        <h:panelGroup>
+            <p:dataTable value="#{purchaseOrderView.attachmentsScopeSupply}"
                          var="_attachment">
                 <p:column style="background-color:#ffffff!important;">
                     <h:commandLink styleClass="link-download"
@@ -19,7 +19,7 @@
                 </p:column>
             </p:dataTable>
         </h:panelGroup>
-
+<br/>
         <div class="pull-right">
             <button type="button" class="btn btn-primary btn-sm"
                     onclick="PF('attachmentScopeSupplyModal').hide();">#{msgs['lbl.accept']}</button>

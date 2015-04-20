@@ -53,7 +53,7 @@ public class AttachmentScopeSupply implements Serializable,EntityTbl{
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
-    @Column(name="path", length=255)
+    @Column(name="path", length=500)
     public String getPath() {
         return path;
     }
@@ -61,7 +61,7 @@ public class AttachmentScopeSupply implements Serializable,EntityTbl{
     public void setPath(String path) {
         this.path = path;
     }
-    @Column(name="MIME_TYPE", nullable=false, length=255)
+    @Column(name="MIME_TYPE", nullable=false, length=500)
     public String getMimeType() {
         return mimeType;
     }
