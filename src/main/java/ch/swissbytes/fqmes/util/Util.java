@@ -119,6 +119,17 @@ public class Util {
         return difference;
     }
 
+    public Date addDays(Date date, Integer days){
+        Date newDate=null;
+        if(date!=null&& days!=null){
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.DAY_OF_YEAR, days);
+            newDate=calendar.getTime();
+        }
+        return newDate;
+    }
+
     public void enterFile(UploadedFile uf,ManageFile entity){
         try{
             entity.setFile(IOUtils.toByteArray(uf.getInputstream()));

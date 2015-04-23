@@ -38,6 +38,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private Date deliveryDate;
 
+    private Date requiredDate;
+
     @Id
     public Long getId() {
         return id;
@@ -127,6 +129,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = deliveryDate;
+    }
+
+    @Column(name="REQUIRED_DATE",updatable = false, insertable = false, nullable = true)
+    public Date getRequiredDate() {
+        return requiredDate;
+    }
+
+    public void setRequiredDate(Date requiredDate) {
+        this.requiredDate = requiredDate;
     }
 
     @Override

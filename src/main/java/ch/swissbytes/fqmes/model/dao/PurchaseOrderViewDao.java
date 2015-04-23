@@ -3,10 +3,13 @@ package ch.swissbytes.fqmes.model.dao;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.fqmes.model.Filter;
 import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
+import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -54,6 +57,11 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(filter.getDeliveryDateEnd()!=null){
                 query.setParameter("END_DELIVERY_DATE",filter.getDeliveryDateEnd());
             }
+            if(filter.getDueIn()!=null&&filter.getDueIn().intValue()>=0){
+                Date startDueInDate=new Date();
+                query.setParameter("START_DUE_DATE_IN",startDueInDate);
+                query.setParameter("END_DUE_DATE_IN",new Util().addDays(startDueInDate,filter.getDueIn()*7));
+            }
             prepareValueSubquery(query,filter);
         }else{
             log.info("filter is null");
@@ -97,6 +105,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if(filter.getDeliveryDateEnd()!=null){
                 sb.append(" AND x.deliveryDate<=:END_DELIVERY_DATE ");
+            }
+            if(filter.getDueIn()!=null){
+                sb.append(" AND (x.requiredDate>=:START_DUE_DATE_IN AND x.requiredDate<=:END_DUE_DATE_IN)");
             }
            sb.append(prepareSubquery(filter));
         }else{
