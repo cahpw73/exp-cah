@@ -97,7 +97,7 @@
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-                        <h:inputText styleClass="form-control" />
+                        <h:inputText styleClass="form-control" value="#{reportListBean.searchPurchase.forecastDueDate}"/>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
             <div class="col-md-4">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.variance']}</label>
-                        <h:inputText style="width: 40%" value="#{reportListBean.searchPurchase.variance}" styleClass="form-control"/>
+                        <h:inputText style="width: 30%" value="#{reportListBean.searchPurchase.variance}" styleClass="form-control"/>
                     </div>
             </div>
             <div class="col-md-4">

@@ -131,7 +131,7 @@ public class SearchPurchase implements Filter {
     }
 
     public boolean hasAnyValueForScopeSupplyActive(){
-        return variance!=null||leadTime!=null;
+        return variance!=null||leadTime!=null||forecastDueDate!=null;
     }
 
     @Override
