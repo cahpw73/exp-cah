@@ -2,9 +2,7 @@ package ch.swissbytes.fqmes.model.dao;
 
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
-import ch.swissbytes.fqmes.types.StatusEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
@@ -47,11 +45,16 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(StringUtils.isNotBlank(filter.getResponsibleExpediting())&&StringUtils.isNotEmpty(filter.getResponsibleExpediting())){
                 query.setParameter("RESPONSIBLE_EXPEDITING","%"+filter.getResponsibleExpediting().trim()+"%");
             }
-            System.out.println("INCOTERM 1 ["+filter.getIncoTerm()+"]");
             if(StringUtils.isNotEmpty(filter.getIncoTerm())&&StringUtils.isNotBlank(filter.getIncoTerm())){
-                System.out.println("entering 1");
                 query.setParameter("INCO_TERM","%"+filter.getIncoTerm().trim()+"%");
             }
+            if(filter.getDeliveryDateStart()!=null){
+                query.setParameter("START_DELIVERY_DATE",filter.getDeliveryDateStart());
+            }
+            if(filter.getDeliveryDateEnd()!=null){
+                query.setParameter("END_DELIVERY_DATE",filter.getDeliveryDateEnd());
+            }
+            prepareValueSubquery(query,filter);
         }else{
             log.info("filter is null");
         }
@@ -86,17 +89,49 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(StringUtils.isNotBlank(filter.getResponsibleExpediting())&&StringUtils.isNotEmpty(filter.getResponsibleExpediting())){
                 sb.append(" AND lower(x.responsibleExpediting) like lower(:RESPONSIBLE_EXPEDITING)");
             }
-            System.out.println("INCOTERM  2 ["+filter.getIncoTerm()+"]");
-            System.out.println("IS NOT EMPTY  2 ["+StringUtils.isNotEmpty(filter.getIncoTerm())+"]");
-            System.out.println("IS NOT BLANK  2 ["+StringUtils.isNotBlank(filter.getIncoTerm())+"]");
             if(StringUtils.isNotEmpty(filter.getIncoTerm())&&StringUtils.isNotBlank(filter.getIncoTerm())){
-                System.out.println("entering 2...");
                 sb.append(" AND lower(x.incoTerm) like lower(:INCO_TERM)");
             }
+            if(filter.getDeliveryDateStart()!=null){
+                sb.append(" AND x.deliveryDate>=:START_DELIVERY_DATE");
+            }
+            if(filter.getDeliveryDateEnd()!=null){
+                sb.append(" AND x.deliveryDate<=:END_DELIVERY_DATE ");
+            }
+           sb.append(prepareSubquery(filter));
         }else{
             log.info("filter is null");
         }
+        System.out.println("query ============================ ["+sb.toString()+"]");
         return sb.toString();
+    }
+    private String prepareSubquery(SearchPurchase filter){
+        StringBuilder subQuery=new StringBuilder();
+        if(filter.hasAnyValueForScopeSupplyActive()){
+            subQuery.append(" AND x.poId IN ( ");
+            subQuery.append(" SELECT ss.purchaseOrder.id ");
+            subQuery.append(" FROM VScopeSupply ss ");
+            subQuery.append(" WHERE 1=1 ");
+            if(filter.getLeadTime()!=null &&filter.getLeadTime().intValue()>=0 && filter.getLeadTime().intValue()<=20){
+                subQuery.append(" AND (ss.leadTimeDays<=:LEAD_TIME)");
+            }
+            if(filter.getVariance()!=null){
+                subQuery.append(" AND ss.variance=:VARIANCE");
+            }
+            subQuery.append(" ) ");
+        }
+        return subQuery.toString();
+    }
+
+    private void prepareValueSubquery(Query query, SearchPurchase filter){
+        if(filter.getLeadTime()!=null){
+            //System.out.println("LEAD_TIME  "+filter.getLeadTime()*7);
+            query.setParameter("LEAD_TIME",filter.getLeadTime()*7);
+        }
+        if(filter.getVariance()!=null){
+            query.setParameter("VARIANCE",filter.getVariance());
+        }
+
     }
 
     @Override

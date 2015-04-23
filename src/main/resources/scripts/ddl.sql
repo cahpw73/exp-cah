@@ -339,13 +339,13 @@ ALTER TABLE VERIFICATION_TOKEN ADD CONSTRAINT FK_VERIFICATION_TOKEN_USERS
 
 
 
-DROP VIEW v_purchase_order;
-CREATE OR REPLACE VIEW v_purchase_order AS
-SELECT row_number() OVER () as id, po.id as po_id,
-	po.project, po.po, po.variation, po.po_title, s.supplier,po.responsible_expediting
-   FROM purchase_order  po inner join supplier s on po.id=s.purchase_order_id
-   WHERE po.status_id<>3
-   ORDER BY CASE WHEN isnumeric(po) THEN lpad(po.po, 50, '0') ELSE po.po END;
+DROP VIEW V_PURCHASE_ORDER;
+CREATE OR REPLACE VIEW V_PURCHASE_ORDER AS
+SELECT ROW_NUMBER() OVER () AS ID, PO.ID AS PO_ID,
+	PO.PROJECT, PO.PO, PO.VARIATION, PO.PO_TITLE, S.SUPPLIER,PO.RESPONSIBLE_EXPEDITING, PO.PO_INCO_TERM, PO.PO_DELIVERY_DATE
+   FROM PURCHASE_ORDER  PO INNER JOIN SUPPLIER S ON PO.ID=S.PURCHASE_ORDER_ID
+   WHERE PO.STATUS_ID<>3
+   ORDER BY CASE WHEN ISNUMERIC(PO) THEN LPAD(PO.PO, 50, '0') ELSE PO.PO END;
 
 CREATE OR REPLACE FUNCTION isnumeric(v_input text)
 RETURNS boolean AS $$

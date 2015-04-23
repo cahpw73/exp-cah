@@ -138,7 +138,7 @@
                          value="" disabled="true"
                          class="form-control totalPriceTxt">
                 <f:convertNumber locale="#{configuration.langLocalDecimal}" pattern="#{configuration.patternDecimal}"/>
-                <f:ajax event="keyup" render="@this" execute="@this"/>
+                <f:ajax event="keyup" render="@this" execute="@this" delay="500"/>
             </h:inputText>
             <p:message for="totalPriceTxt"/>
         </div>
@@ -220,8 +220,12 @@
                         onselect="calendarChanges();" onchange="calendarChanges();">
                 <p:ajax event="dateSelect"
                         update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
+                        async="false"
+                        delay="500"
                         listener="#{purchaseOrderEdit.calculateDate}"/>
                 <p:ajax event="change"
+                        async="false"
+                        delay="500"
                         update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
                         listener="#{purchaseOrderEdit.calculateDate}"/>
             </p:calendar>
@@ -253,6 +257,8 @@
                             update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
                             listener="#{purchaseOrderEdit.calculateDate}"/>
                     <p:ajax event="change"
+                            async="false"
+                            delay="true"
                             update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
                             listener="#{purchaseOrderEdit.calculateDate}"/>
                 </p:calendar>
@@ -281,9 +287,13 @@
                             onselect="calendarChanges();" onchange="calendarChanges();">
                     <p:ajax event="dateSelect"
                             update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
+                            async="false"
+                            delay="500"
                             listener="#{purchaseOrderEdit.calculateDate}"/>
                     <p:ajax event="change"
                             update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
+                            async="false"
+                            delay="500"
                             listener="#{purchaseOrderEdit.calculateDate}"/>
                 </p:calendar>
                 <p:inputTextarea maxlength="950" type="text"
@@ -353,6 +363,7 @@
                     <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply"
                                    value="#{msgs['lbl.delete']}">
                         <p:ajax update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forescastSiteDateEditing"
+                                async="false" delay="500"
                                 listener="#{purchaseOrderEdit.deleteTdpOnEdition(_tdp.id)}"/>
                     </h:commandLink>
                 </div>
@@ -367,6 +378,7 @@
     <div class="pull-right">
         <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['tdp.btn.add']}">
             <p:ajax oncomplete="PF('tdp').show();" update=":TDP"
+                    async="false" delay="500"
                     listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"></p:ajax>
         </h:commandButton>
     </div>
@@ -430,7 +442,8 @@
                                  requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                  validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                  converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
-                        <p:ajax process="@this" event="change" update="forescastSiteDateEditing"
+                        <p:ajax process="@this" event="change" update="forescastSiteDateEditing" async="false"
+                                delay="500"
                                 listener="#{purchaseOrderEdit.calculateDate}"/>
                     </h:inputText>
                     <p:message for="deliveryLeadTimeQtId"/>
@@ -439,6 +452,7 @@
                                  value="#{purchaseOrderEdit.scopeSupplyEditing.deliveryLeadTimeMs}">
                     <f:selectItems value="#{allTimeMeasurement}"/>
                     <p:ajax event="change" process="@this" update="forescastSiteDateEditing"
+                            delay="500" async="false"
                             listener="#{purchaseOrderEdit.calculateDate}"/>
                 </h:selectOneMenu>
             </h:panelGroup>
@@ -467,14 +481,15 @@
                                 value="#{purchaseOrderEdit.scopeSupplyEditing.siteDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"
                                 styleClass="forecastSiteDate">
-                        <p:ajax event="dateSelect"/>
-                        <p:ajax event="change"/>
+                        <p:ajax event="dateSelect" delay="500" async="false"/>
+                        <p:ajax event="change" delay="500" async="false"/>
                     </p:calendar>
                 </div>
                 <div style="float: left;">
                     <p:selectBooleanCheckbox value="#{purchaseOrderEdit.scopeSupplyEditing.isForecastSiteDateManual}"
                                              style="margin-left: 12px;">
                         <p:ajax update=":scopeSupplyEditFormId:forescastSiteDateEditing"
+                                async="false" delay="500"
                                 listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}"/>
                     </p:selectBooleanCheckbox>
                     &#160;

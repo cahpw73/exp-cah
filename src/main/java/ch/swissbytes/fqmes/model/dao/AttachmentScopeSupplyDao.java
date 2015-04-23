@@ -59,7 +59,7 @@ public class AttachmentScopeSupplyDao extends GenericDao<AttachmentScopeSupply> 
     protected  void applyCriteriaValues(Query query,Filter filter){
     }
     protected String getEntity(){
-        return AttachmentEntity.class.getSimpleName();
+        return AttachmentScopeSupply.class.getSimpleName();
     }
 
     protected  String addCriteria(Filter filter){

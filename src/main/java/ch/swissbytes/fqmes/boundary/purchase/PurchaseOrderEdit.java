@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
-import ch.swissbytes.fqmes.control.attachment.AttachmentService;
+
 import ch.swissbytes.fqmes.control.comment.AttachmentCommentService;
 import ch.swissbytes.fqmes.control.comment.CommentService;
 import ch.swissbytes.fqmes.control.enumService.EnumService;
@@ -55,10 +55,8 @@ public class PurchaseOrderEdit implements Serializable {
     private PurchaseOrderService service;
 
     @Inject
-    private AttachmentService attachmentService;
-
-    @Inject
     private EnumService enumService;
+
     @Inject
     private Conversation conversation;
 

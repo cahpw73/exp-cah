@@ -9,6 +9,7 @@ import ch.swissbytes.fqmes.model.entities.*;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
+import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -110,7 +111,6 @@ public class PurchaseOrderCreate implements Serializable {
         newSupplier = new SupplierEntity();
         commentEntities = new ArrayList<>();
         newComment = new CommentEntity();
-        //atachmentEntities =new ArrayList<>();
         scopeSupplies = new ArrayList<>();
         newScopeSupply = new ScopeSupplyEntity();
     }
@@ -243,7 +243,6 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
     public List<AttachmentComment>getAttachmentsForComment(){
-        //return indexAttachment!=null&&indexAttachment.intValue()>=0&&indexAttachment<commentEntities.size()?commentEntities.get(indexAttachment).getAttachments():new ArrayList<AttachmentComment>();
         List<AttachmentComment> list=new ArrayList<AttachmentComment>();
         if(indexCommentEditing!=null&&indexCommentEditing==-1&&newComment!=null){
             list=newComment.getAttachments();
@@ -262,30 +261,15 @@ public class PurchaseOrderCreate implements Serializable {
         log.info(uf.getFileName());
         log.info("size [ " + uf.getSize() + "]");
         log.info("indexFileAttachment[ " + indexAttachment + "]");
-      //  if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
+        AttachmentComment attachmentComment = new AttachmentComment();
+        new Util().enterFile(uf, attachmentComment);
+        attachmentComment.setStatus(enumService.getStatusEnumEnable());
+        if (indexCommentEditing == -1) {
+            newComment.getAttachments().add(attachmentComment);
+        } else {
+            editComment.getAttachments().add(attachmentComment);
+        }
 
-            AttachmentComment attachmentComment = new AttachmentComment();
-            try {
-                attachmentComment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-                attachmentComment.setMimeType(uf.getContentType());
-                attachmentComment.setFileName(uf.getFileName());
-                attachmentComment.setStatus(enumService.getStatusEnumEnable());
-                //commentEntities.get(indexAttachment).getAttachments().add(attachmentComment);
-                if(indexCommentEditing==-1){
-                    newComment.getAttachments().add(attachmentComment);
-                }else{
-                    editComment.getAttachments().add(attachmentComment);
-                }
-            } catch (IOException io) {
-                io.printStackTrace();
-            } finally {
-                try {
-                    IOUtils.closeQuietly(uf.getInputstream());
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
-            }
-        //}
     }
 
     public List<AttachmentScopeSupply> getScopeSupplyAttachments() {
@@ -301,11 +285,6 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
     public void deleteAttachmentComment(int index) {
-        /*if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < commentEntities.size()) {
-            if (index >= 0 && index < commentEntities.get(indexAttachment).getAttachments().size()) {
-                commentEntities.get(indexAttachment).getAttachments().remove(index);
-            }
-        }*/
         if(indexCommentEditing==-1){
             newComment.getAttachments().remove(index);
         }else{
@@ -316,24 +295,9 @@ public class PurchaseOrderCreate implements Serializable {
     public void handleAttachmentScopeSupply(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
         if (indexAttachment != null && indexAttachment >= 0 && indexAttachment < scopeSupplies.size()) {
-            try {
-                AttachmentScopeSupply attachment = new AttachmentScopeSupply();
-                attachment.setFileName(uf.getFileName());
-                attachment.setMimeType(uf.getContentType());
-                attachment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-                scopeSupplies.get(indexAttachment).getAttachments().add(attachment);
-            } catch (IOException ioe) {
-                log.log(Level.SEVERE, "Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
-                ioe.printStackTrace();
-                Messages.addGlobalError("Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
-            } finally {
-                try {
-                    IOUtils.closeQuietly(uf.getInputstream());
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                    ;
-                }
-            }
+            AttachmentScopeSupply attachment = new AttachmentScopeSupply();
+            new Util().enterFile(uf, attachment);
+            scopeSupplies.get(indexAttachment).getAttachments().add(attachment);
         }
     }
 
@@ -373,7 +337,6 @@ public class PurchaseOrderCreate implements Serializable {
     public String cancelCreatePurchaseOrder() {
         if (!conversation.isTransient()) {
             log.info("Finish conversation...");
-
             conversation.end();
         }
         return "/purchase/list?faces-redirect=true";

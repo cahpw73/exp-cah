@@ -1,14 +1,21 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.fqmes.model.interfaces.ManageFile;
+import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTimeZone;
+import org.primefaces.model.UploadedFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by alvaro on 10/31/14.
@@ -19,6 +26,8 @@ public class Util {
     @Inject
     private Configuration configuration;
 
+    private static final Logger log = Logger.getLogger(Util.class.getName());
+
     public static String cutIfAny(String str, Integer length){
         String target=str;
         if(str!=null){
@@ -28,10 +37,8 @@ public class Util {
     }
 
     public static Date convertUTC(Date date, String timeZone){
-      //  System.out.println("convertUTC(Date date="+date+", String timeZone="+timeZone+")");
         DateTimeZone zone = DateTimeZone.forID(timeZone);
         long utc = zone.convertLocalToUTC(date.getTime(), false);
-      //  System.out.println("converted "+new Date(utc));
         return new Date(utc);
     }
 
@@ -97,7 +104,39 @@ public class Util {
         }
         return "";
     }
+    public Integer calculateDifference(Date dateA,Date dateB){
+        Integer difference=null;
+        if(dateA!=null&&dateB!=null){
+            Calendar with = Calendar.getInstance();
+            with.setTime(dateB);
+            Calendar to = Calendar.getInstance();
+            to.setTime(dateA);
+            to.set(Calendar.YEAR, with.get(Calendar.YEAR));
+            int withDAY = with.get(Calendar.DAY_OF_YEAR);
+            int toDAY = to.get(Calendar.DAY_OF_YEAR);
+            difference =toDAY  - withDAY;
+        }
+        return difference;
+    }
 
-
+    public void enterFile(UploadedFile uf,ManageFile entity){
+        try{
+            entity.setFile(IOUtils.toByteArray(uf.getInputstream()));
+            entity.setMimeType(uf.getContentType());
+            entity.setFileName(uf.getFileName());
+        }catch (IOException ioe){
+            log.log(Level.SEVERE,String.format("problems with file ["+uf.getFileName()+"]"));
+            log.log(Level.SEVERE,ioe.getMessage());
+        }catch (Exception ex){
+            log.log(Level.SEVERE,String.format("problems with file ["+uf.getFileName()+"]"));
+            log.log(Level.SEVERE,ex.getMessage());
+        }finally {
+            try{
+                uf.getInputstream().close();
+            }catch (IOException ioe){
+                log.log(Level.SEVERE,ioe.getMessage());
+            }
+        }
+    }
 
 }

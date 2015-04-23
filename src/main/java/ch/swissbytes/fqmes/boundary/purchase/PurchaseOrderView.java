@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
-import ch.swissbytes.fqmes.control.attachment.AttachmentService;
+
 import ch.swissbytes.fqmes.control.comment.AttachmentCommentService;
 import ch.swissbytes.fqmes.control.comment.CommentService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;

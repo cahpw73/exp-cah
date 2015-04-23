@@ -4,13 +4,9 @@ import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 
 import javax.inject.Named;
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +16,8 @@ import java.util.List;
 
 @Named
 @Entity
-@Table(name = "scope_supply")
-public class ScopeSupplyEntity implements Serializable, EntityTbl{
+@Table(name = "v_scope_supply")
+public class VScopeSupply implements Serializable{
 
     private Long id;
     private BigDecimal cost;
@@ -55,9 +51,10 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String responsibleExpeditingObservation;
     private Integer ordered;
     private String tagNo;
+    private Integer leadTimeDays;
 
 
-
+    private Integer variance;
     private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
     private List<AttachmentScopeSupply> attachments=new ArrayList<>();
 
@@ -65,8 +62,6 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "SCOPE_SUPPLY_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }
@@ -74,8 +69,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setId(Long id) {
         this.id = id;
     }
-    @Column(name="cost", precision=18, scale=5)
-    @DecimalMin(value = "0",message = "just positive values")
+    @Column(name="cost",updatable = false, insertable = false)
     public BigDecimal getCost() {
         return cost;
     }
@@ -83,8 +77,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
-@Size(max = 50)
-    @Column(name="code", length = 50)
+
+    @Column(name="code", updatable = false, insertable = false)
     public String getCode() {
         return code;
     }
@@ -99,8 +93,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         return quantity;
     }
 
-    @Size(max = 50)
-    @Column(name="unit", length = 50)
+
+    @Column(name="unit",updatable = false, insertable = false)
     public String getUnit() {
         return unit;
     }
@@ -113,8 +107,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.quantity = quantity;
     }
 
-    @Size(max = 1000)
-    @Column(name="description",length = 1000)
+
+    @Column(name="description",updatable = false, insertable = false)
     public String getDescription() {
         return description;
     }
@@ -123,7 +117,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.description = description;
     }
 
-    @Column(name="EX_WORK_DATE", nullable = false)
+    @Column(name="EX_WORK_DATE", updatable = false, insertable = false)
     public Date getExWorkDate() {
         return exWorkDate;
     }
@@ -132,8 +126,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.exWorkDate = exWorkDate;
     }
 
-    @Size(max = 1000)
-    @Column(name="EX_WORK_DATE_DESCRIPTION", length = 1000)
+
+    @Column(name="EX_WORK_DATE_DESCRIPTION", updatable = false, insertable = false)
     public String getExWorkDateDescription() {
         return exWorkDateDescription;
     }
@@ -141,7 +135,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setExWorkDateDescription(String exWorkDateDescription) {
         this.exWorkDateDescription = exWorkDateDescription;
     }
-    @Column(name="DELIVERY_LEAD_TIME_QT", nullable = false)
+    @Column(name="DELIVERY_LEAD_TIME_QT",updatable = false, insertable = false)
     public Integer getDeliveryLeadTimeQt() {
         return deliveryLeadTimeQt;
     }
@@ -151,7 +145,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     }
 
 
-    @Column(name="DELIVERY_LEAD_TIME_MS")
+    @Column(name="DELIVERY_LEAD_TIME_MS",updatable = false, insertable = false)
     @Enumerated(EnumType.ORDINAL)
     public TimeMeasurementEnum getDeliveryLeadTimeMs() {
         return deliveryLeadTimeMs;
@@ -160,7 +154,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setDeliveryLeadTimeMs(TimeMeasurementEnum deliveryLeadTimeMs) {
         this.deliveryLeadTimeMs = deliveryLeadTimeMs;
     }
-    @Column(name="DELIVERY_LEAD_TIME_DESCRIPTION", length = 1000)
+    @Column(name="DELIVERY_LEAD_TIME_DESCRIPTION", updatable = false, insertable = false)
     public String getGetDeliveryLeadTimeDescription() {
         return getDeliveryLeadTimeDescription;
     }
@@ -168,7 +162,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setGetDeliveryLeadTimeDescription(String getDeliveryLeadTimeDescription) {
         this.getDeliveryLeadTimeDescription = getDeliveryLeadTimeDescription;
     }
-    @Column(name="SITE_DATE", nullable = false)
+    @Column(name="SITE_DATE", updatable = false, insertable = false)
     public Date getSiteDate() {
         return siteDate;
     }
@@ -177,8 +171,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.siteDate = siteDate;
     }
 
-    @Size(max = 1000)
-    @Column(name="SITE_DATE_DESCRIPTION", length = 1000)
+
+    @Column(name="SITE_DATE_DESCRIPTION",updatable = false, insertable = false)
     public String getSiteDateDescription() {
         return siteDateDescription;
     }
@@ -195,7 +189,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
     }
-    @Column(name="LAST_UPDATE", nullable=false)
+    @Column(name="LAST_UPDATE",updatable = false, insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
         return lastUpdate;
@@ -205,27 +199,27 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.lastUpdate = lastUpdate;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="status_id", nullable=false)
+
+    /*@JoinColumn(name="status_id", updatable = false, insertable = false)
     public StatusEntity getStatus() {
         return status;
-    }
+    }*/
 
-    public void setStatus(StatusEntity status) {
-        this.status = status;
-    }
+  //  public void setStatus(StatusEntity status) {
+    //    this.status = status;
+    //}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ScopeSupplyEntity)) return false;
+        if (!(o instanceof VScopeSupply)) return false;
 
-        ScopeSupplyEntity that = (ScopeSupplyEntity) o;
+        VScopeSupply that = (VScopeSupply) o;
         return that.hashCode()==this.hashCode();
     }
 
 
-    @Column(name="DELIVERY_DATE")
+    @Column(name="DELIVERY_DATE",updatable = false, insertable = false)
     public Date getDeliveryDate() {
         return deliveryDate;
     }
@@ -234,7 +228,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.deliveryDate = deliveryDate;
     }
 
-    @Column(name="ACTUAL_EX_WORK_DATE")
+    @Column(name="ACTUAL_EX_WORK_DATE",updatable = false, insertable = false)
     public Date getActualExWorkDate() {
         return actualExWorkDate;
     }
@@ -244,7 +238,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     }
 
 
-    @Column(name="REQUIRED_SITE_DATE")
+    @Column(name="REQUIRED_SITE_DATE",updatable = false, insertable = false)
     public Date getRequiredSiteDate() {
         return requiredSiteDate;
     }
@@ -253,7 +247,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.requiredSiteDate = requiredSiteDate;
     }
 
-    @Column(name="ACTUAL_SITE_DATE")
+    @Column(name="ACTUAL_SITE_DATE",updatable = false, insertable = false)
     public Date getActualSiteDate() {
         return actualSiteDate;
     }
@@ -263,7 +257,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     }
 
 
-    @Column(name="DELIVERY_DATE_OBS",length = 1000)
+    @Column(name="DELIVERY_DATE_OBS",updatable = false, insertable = false)
     public String getDeliveryDateObs() {
         return deliveryDateObs;
     }
@@ -272,7 +266,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.deliveryDateObs = deliveryDateObs;
     }
 
-    @Column(name="ACTUAL_EX_WORK_DATE_OBS",length = 1000)
+    @Column(name="ACTUAL_EX_WORK_DATE_OBS",updatable = false, insertable = false)
     public String getActualExWorkDateObs() {
         return actualExWorkDateObs;
     }
@@ -280,7 +274,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setActualExWorkDateObs(String actualExWorkDateObs) {
         this.actualExWorkDateObs = actualExWorkDateObs;
     }
-    @Column(name="REQUIRED_SITE_DATE_OBS",length = 1000)
+    @Column(name="REQUIRED_SITE_DATE_OBS",updatable = false, insertable = false)
     public String getRequiredSiteDateObs() {
         return requiredSiteDateObs;
     }
@@ -288,7 +282,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setRequiredSiteDateObs(String requiredSiteDateObs) {
         this.requiredSiteDateObs = requiredSiteDateObs;
     }
-    @Column(name="ACTUAL_SITE_DATE_OBS",length = 1000)
+    @Column(name="ACTUAL_SITE_DATE_OBS",updatable = false, insertable = false)
     public String getActualSiteDateObs() {
         return actualSiteDateObs;
     }
@@ -297,8 +291,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.actualSiteDateObs = actualSiteDateObs;
     }
 
-    @NotNull
-    @Column(name="IS_FORECAST_SITE_DATE_MANUAL",nullable = false)
+
+    @Column(name="IS_FORECAST_SITE_DATE_MANUAL",updatable = false, insertable = false)
     public Boolean getIsForecastSiteDateManual() {
         return isForecastSiteDateManual;
     }
@@ -317,8 +311,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         return attachments;
     }
 
-    @Size(max = 5, message = "currency at most need 5 characters")
-    @Column(name="CURRENCY",length = 5)
+
+    @Column(name="CURRENCY",updatable = false, insertable = false)
     public String getCurrency() {
         return currency;
     }
@@ -327,7 +321,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.currency = currency;
     }
 
-    @Column(name="sp_inco_term",length=50)
+    @Column(name="sp_inco_term",updatable = false, insertable = false)
     public String getSpIncoTerm() {
         return spIncoTerm;
     }
@@ -335,7 +329,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setSpIncoTerm(String spIncoTerm) {
         this.spIncoTerm = spIncoTerm;
     }
-    @Column(name="sp_inco_term_description", length=1000)
+    @Column(name="sp_inco_term_description",updatable = false, insertable = false)
     public String getSpIncoTermDescription() {
         return spIncoTermDescription;
     }
@@ -344,7 +338,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.spIncoTermDescription = spIncoTermDescription;
     }
 
-    @Column(name="RESPONSIBLE_EXPEDITING",length=100)
+    @Column(name="RESPONSIBLE_EXPEDITING",updatable = false, insertable = false)
     public String getResponsibleExpediting() {
         return responsibleExpediting;
     }
@@ -354,7 +348,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.responsibleExpediting = responsibleExpediting;
     }
 
-    @Column(name="RESPONSIBLE_EXPEDITING_OBSERVATION",length=1000)
+    @Column(name="RESPONSIBLE_EXPEDITING_OBSERVATION",length=1000,updatable = false, insertable = false)
     public String getResponsibleExpeditingObservation() {
         return responsibleExpeditingObservation;
     }
@@ -369,7 +363,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
     }
 
-    @Column(name="ORDERED")
+    @Column(name="ORDERED",updatable = false, insertable = false)
     public Integer getOrdered() {
         return ordered;
     }
@@ -378,8 +372,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.ordered = ordered;
     }
 
-    @Size(max = 1000)
-    @Column(name="TAG_NO", length = 1000)
+    @Column(name="TAG_NO",updatable = false, insertable = false)
     public String getTagNo() {
         return tagNo;
     }
@@ -388,40 +381,32 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.tagNo = tagNo;
     }
 
+    @Column(name="VARIANCE",updatable = false, insertable = false)
+    public Integer getVariance(){
+       // Integer difference=10;
+     /*   if(requiredSiteDate!=null&&siteDate!=null){
+            Calendar with = Calendar.getInstance();
+            with.setTime(siteDate);
+            Calendar to = Calendar.getInstance();
+            to.setTime(requiredSiteDate);
+            to.set(Calendar.YEAR, with.get(Calendar.YEAR));
+            int withDAY = with.get(Calendar.DAY_OF_YEAR);
+            int toDAY = to.get(Calendar.DAY_OF_YEAR);
+            difference =toDAY  - withDAY;
+        }*/
+        return variance;
+    }
 
+    public void setVariance(Integer variance) {
+        this.variance = variance;
+    }
 
+    @Column(name="LEADTIMEDAYS",updatable = false, insertable = false)
+    public Integer getLeadTimeDays() {
+        return leadTimeDays;
+    }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (cost != null ? cost.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-        result = 31 * result + (unit != null ? unit.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (exWorkDate != null ? exWorkDate.hashCode() : 0);
-        result = 31 * result + (exWorkDateDescription != null ? exWorkDateDescription.hashCode() : 0);
-        result = 31 * result + (deliveryLeadTimeQt != null ? deliveryLeadTimeQt.hashCode() : 0);
-        result = 31 * result + (deliveryLeadTimeMs != null ? deliveryLeadTimeMs.hashCode() : 0);
-        result = 31 * result + (getDeliveryLeadTimeDescription != null ? getDeliveryLeadTimeDescription.hashCode() : 0);
-        result = 31 * result + (siteDate != null ? siteDate.hashCode() : 0);
-        result = 31 * result + (siteDateDescription != null ? siteDateDescription.hashCode() : 0);
-        result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
-        result = 31 * result + (purchaseOrder != null ? purchaseOrder.hashCode() : 0);
-        result = 31 * result + (status != null ? status.getId() : 0);
-        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
-        result = 31 * result + (actualExWorkDate != null ? actualExWorkDate.hashCode() : 0);
-        result = 31 * result + (requiredSiteDate != null ? requiredSiteDate.hashCode() : 0);
-        result = 31 * result + (actualSiteDate != null ? actualSiteDate.hashCode() : 0);
-        result = 31 * result + (deliveryDateObs != null ? deliveryDateObs.hashCode() : 0);
-        result = 31 * result + (actualExWorkDateObs != null ? actualExWorkDateObs.hashCode() : 0);
-        result = 31 * result + (requiredSiteDateObs != null ? requiredSiteDateObs.hashCode() : 0);
-        result = 31 * result + (actualSiteDateObs != null ? actualSiteDateObs.hashCode() : 0);
-        result = 31 * result + (isForecastSiteDateManual != null ? isForecastSiteDateManual.hashCode() : 0);
-        result = 31 * result + (spIncoTerm != null ? spIncoTerm.hashCode() : 0);
-        result = 31 * result + (spIncoTermDescription != null ? spIncoTermDescription.hashCode() : 0);
-        result = 31 * result + (responsibleExpediting != null ? responsibleExpediting.hashCode() : 0);
-        result = 31 * result + (responsibleExpeditingObservation != null ? responsibleExpeditingObservation.hashCode() : 0);
-        return result;
+    public void setLeadTimeDays(Integer leadTimeDays) {
+        this.leadTimeDays = leadTimeDays;
     }
 }

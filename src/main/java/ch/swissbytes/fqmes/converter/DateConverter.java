@@ -55,7 +55,6 @@ public class DateConverter extends DateTimeConverter {
             date = sdf.parse(value);
         } catch (ParseException pe) {
             log.log(Level.SEVERE,"error parsing ["+value+"]");
-           // pe.printStackTrace();
 
         }
         return date;

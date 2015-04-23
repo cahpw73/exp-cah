@@ -2,6 +2,9 @@ package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.fqmes.model.Filter;
 
+import javax.inject.Inject;
+import java.util.Date;
+
 /**
  * Created by alvaro on 9/25/14.
  */
@@ -16,6 +19,12 @@ public class SearchPurchase implements Filter {
     private String poTitle;
     private String responsibleExpediting;
     private String incoTerm;
+    private Date deliveryDateStart;
+    private Date deliveryDateEnd;
+    private Integer variance;
+    private Integer leadTime;
+    private Integer dueIn;
+    private Integer forecastDueDate;
 
     public String getProject() {
         return project;
@@ -73,6 +82,58 @@ public class SearchPurchase implements Filter {
         this.incoTerm = incoTerm;
     }
 
+    public Date getDeliveryDateStart() {
+        return deliveryDateStart;
+    }
+
+    public void setDeliveryDateStart(Date deliveryDateStart) {
+        this.deliveryDateStart = deliveryDateStart;
+    }
+
+    public Date getDeliveryDateEnd() {
+        return deliveryDateEnd;
+    }
+
+    public void setDeliveryDateEnd(Date deliveryDateEnd) {
+        this.deliveryDateEnd = deliveryDateEnd;
+    }
+
+    public Integer getForecastDueDate() {
+        return forecastDueDate;
+    }
+
+    public void setForecastDueDate(Integer forecastDueDate) {
+        this.forecastDueDate = forecastDueDate;
+    }
+
+    public Integer getDueIn() {
+        return dueIn;
+    }
+
+    public void setDueIn(Integer dueIn) {
+        this.dueIn = dueIn;
+    }
+
+    public Integer getLeadTime() {
+        return leadTime;
+    }
+
+    public void setLeadTime(Integer leadTime) {
+        this.leadTime = leadTime;
+    }
+
+    public Integer getVariance() {
+        return variance;
+    }
+
+    public void setVariance(Integer variance) {
+        this.variance = variance;
+    }
+
+    public boolean hasAnyValueForScopeSupplyActive(){
+        return variance!=null||leadTime!=null;
+    }
+
     @Override
     public void clean(){
         po=null;
@@ -82,5 +143,11 @@ public class SearchPurchase implements Filter {
         poTitle=null;
         responsibleExpediting=null;
         incoTerm=null;
+        deliveryDateEnd=null;
+        deliveryDateStart=null;
+        variance=null;
+        leadTime=null;
+        dueIn=null;
+        forecastDueDate=null;
     }
 }

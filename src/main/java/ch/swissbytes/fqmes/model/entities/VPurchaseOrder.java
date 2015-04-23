@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by christian on 23/10/14.
@@ -34,6 +35,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
     private String responsibleExpediting;
 
     private String incoTerm;
+
+    private Date deliveryDate;
 
     @Id
     public Long getId() {
@@ -114,6 +117,16 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setIncoTerm(String incoTerm) {
         this.incoTerm = incoTerm;
+    }
+
+
+    @Column(name="PO_DELIVERY_DATE",updatable = false, insertable = false, nullable = true)
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     @Override

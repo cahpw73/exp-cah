@@ -265,14 +265,8 @@ public abstract class GenericDao<T> {
     }
     protected String createQuery(final boolean count,Filter filter){
         StringBuilder query=new StringBuilder();
-        if(count){
-            query.append("SELECT COUNT(x) ");
-        }else{
-            query.append("SELECT x ");
-        }
-        query.append(" FROM ");
-        query.append(getEntity());
-        query.append(" x ");
+        query.append(select(count));
+        query.append(from());
         query.append(" WHERE 1=1 ");
         String prepositions=addCriteria(filter);
         if(prepositions!=null&&!prepositions.isEmpty()){
@@ -284,17 +278,27 @@ public abstract class GenericDao<T> {
         }
         return query.toString();
     }
+    protected String select(boolean count){
+        String select;
+        if(count){
+            select="SELECT COUNT(x) ";
+        }else{
+            select="SELECT x ";
+        }
+        return select;
+    }
+    protected String from(){
+        StringBuilder sb=new StringBuilder();
+        sb.append(" FROM ");
+        sb.append(getEntity());
+        sb.append(" x ");
+        return sb.toString();
+    }
 
     protected String createQuery(final boolean count,Filter filter,String sortBy,boolean ascending){
         StringBuilder query=new StringBuilder();
-        if(count){
-            query.append("SELECT COUNT(x) ");
-        }else{
-            query.append("SELECT x ");
-        }
-        query.append(" FROM ");
-        query.append(getEntity());
-        query.append(" x ");
+        query.append(select(count));
+        query.append(from());
         query.append(" WHERE 1=1 ");
         String prepositions=addCriteria(filter);
         if(prepositions!=null&&!prepositions.isEmpty()){
@@ -306,6 +310,7 @@ public abstract class GenericDao<T> {
         }
         return query.toString();
     }
+
 
     protected abstract void applyCriteriaValues(Query query,Filter filter);
 

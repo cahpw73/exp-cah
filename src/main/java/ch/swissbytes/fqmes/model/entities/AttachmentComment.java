@@ -1,17 +1,11 @@
 package ch.swissbytes.fqmes.model.entities;
 
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.fqmes.model.interfaces.ManageFile;
 
 import javax.inject.Named;
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by alvaro on 9/10/14.
@@ -20,7 +14,7 @@ import java.util.List;
 @Named
 @Entity
 @Table(name = "ATTACHMENT_COMMENT")
-public class AttachmentComment implements Serializable,EntityTbl{
+public class AttachmentComment implements Serializable,EntityTbl,ManageFile{
 
     private Long id;
     private String fileName;
