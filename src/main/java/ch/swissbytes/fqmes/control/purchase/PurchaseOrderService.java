@@ -4,7 +4,9 @@ import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.*;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Purchase;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -46,6 +48,8 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier) {
+        //TODO do not forget remove this @alvaro
+        newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.INCOMPLETE);
         dao.save(newPurchaseOrder);
         supplier.setPurchaseOrder(newPurchaseOrder);
         supplierDao.persist(supplier);

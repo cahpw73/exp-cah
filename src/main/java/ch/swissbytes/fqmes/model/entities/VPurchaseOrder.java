@@ -1,12 +1,10 @@
 package ch.swissbytes.fqmes.model.entities;
 
+import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import org.apache.commons.lang.math.NumberUtils;
 
 import javax.inject.Named;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -39,6 +37,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
     private Date deliveryDate;
 
     private Date requiredDate;
+
+    private PurchaseOrderStatusEnum purchaseOrderStatus;
 
     @Id
     public Long getId() {
@@ -138,6 +138,16 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name="PURCHASE_ORDER_STATUS", nullable=false)
+    public PurchaseOrderStatusEnum getPurchaseOrderStatus() {
+        return purchaseOrderStatus;
+    }
+
+    public void setPurchaseOrderStatus(PurchaseOrderStatusEnum purchaseOrderStatus) {
+        this.purchaseOrderStatus = purchaseOrderStatus;
     }
 
     @Override

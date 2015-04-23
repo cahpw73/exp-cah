@@ -25,6 +25,7 @@ public class SearchPurchase implements Filter {
     private Integer leadTime;
     private Integer dueIn;
     private Integer forecastDueDate;
+    private String statuses;
 
     public String getProject() {
         return project;
@@ -128,6 +129,14 @@ public class SearchPurchase implements Filter {
 
     public void setVariance(Integer variance) {
         this.variance = variance;
+    }
+
+    public String getStatuses() {
+        return statuses;
+    }
+
+    public void setStatuses(String statuses) {
+        this.statuses = statuses;
     }
 
     public boolean hasAnyValueForScopeSupplyActive(){

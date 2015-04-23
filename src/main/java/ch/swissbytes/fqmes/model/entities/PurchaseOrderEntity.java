@@ -4,6 +4,8 @@ package ch.swissbytes.fqmes.model.entities;
  * Created by alvaro on 9/8/14.
  */
 
+import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
+
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -35,6 +37,7 @@ public class PurchaseOrderEntity implements Serializable{
     private Date lastUpdate;
     private StatusEntity status;
     private String rfeComment;
+    private PurchaseOrderStatusEnum purchaseOrderStatus;
 
 
     private String poReference;
@@ -236,6 +239,15 @@ public class PurchaseOrderEntity implements Serializable{
         return variationNumber;
     }
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name="PURCHASE_ORDER_STATUS", nullable=false)
+    public PurchaseOrderStatusEnum getPurchaseOrderStatus() {
+        return purchaseOrderStatus;
+    }
+
+    public void setPurchaseOrderStatus(PurchaseOrderStatusEnum purchaseOrderStatus) {
+        this.purchaseOrderStatus = purchaseOrderStatus;
+    }
 
     @Override
     public boolean equals(Object o) {
