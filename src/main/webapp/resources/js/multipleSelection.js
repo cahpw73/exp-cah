@@ -11,14 +11,17 @@ $(document).ready(function () {
                 if (checked) {
                     selectedValues[selectedValues.length] = option.val();
                 } else {
-                    found = -1;
-                    console.log("option " + option.val());
                     index=selectedValues.indexOf(option.val());
-
                     selectedValues.splice(index,1);
                 }
                 $('#poStatusesHidenId').val(selectedValues.toString());
             }
+
         }
     );
+    function addSelectedValue(elementId){
+        selectedValues[selectedValues.length] = elementId;
+    }
 });
+
+

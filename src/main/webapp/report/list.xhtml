@@ -84,11 +84,17 @@
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
 
-                        <h:inputHidden id="poStatusesHidenId" value="#{reportListBean.searchPurchase.statuses}"/>
+                        <h:inputHidden id="poStatusesHidenId"  value="#{reportListBean.searchPurchase.statuses}"/>
 
-                        <select id="poStatuses" multiple="multiple">
+                        <select id="poStatuses" multiple="multiple" class="algo">
                             <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                                <option onclick="alert('click on me');" value="#{poStatuses.get(x)}">#{x}</option>
+                                <h:panelGroup rendered="#{reportListBean.searchPurchase.isStatusSelected(poStatuses.get(x))}">
+                                    <option selected="selected" value="#{poStatuses.get(x)}">#{x}</option>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not reportListBean.searchPurchase.isStatusSelected(poStatuses.get(x))}">
+                                    <option  value="#{poStatuses.get(x)}">#{x}</option>
+                                </h:panelGroup>
+
                             </ui:repeat>
                         </select>
 

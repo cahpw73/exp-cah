@@ -27,8 +27,6 @@ public class ReportListBean implements Serializable {
     @Inject
     private PurchaseOrderViewDao dao;
 
-    @Inject
-    private LookupValueFactory lookupValueFactory;
 
     private PurchaseOrderViewTbl tbl;
 
@@ -36,14 +34,13 @@ public class ReportListBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
 
-    private Map<String,Integer> statuses;
+
 
 
     @PostConstruct
     public void create(){
         log.info("creating bean purchase list");
-        log.log(Level.FINER,"FINER log");
-        statuses=lookupValueFactory.purchaseOrderStatuses();
+        log.log(Level.FINER, "FINER log");
         tbl=new PurchaseOrderViewTbl(dao,searchPurchase);
 
     }
@@ -72,5 +69,6 @@ public class ReportListBean implements Serializable {
     }
     public SearchPurchase getSearchPurchase() {
         return searchPurchase;
-    }
+    } 
+
 }

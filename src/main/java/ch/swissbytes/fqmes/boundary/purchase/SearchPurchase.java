@@ -143,6 +143,10 @@ public class SearchPurchase implements Filter {
         return variance!=null||leadTime!=null||forecastDueDate!=null;
     }
 
+    public boolean isStatusSelected(String statusId){
+        return statuses==null?false:statuses.contains(statusId);
+    }
+
     @Override
     public void clean(){
         po=null;
@@ -158,5 +162,6 @@ public class SearchPurchase implements Filter {
         leadTime=null;
         dueIn=null;
         forecastDueDate=null;
+        statuses=null;
     }
 }
