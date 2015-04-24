@@ -9,8 +9,13 @@
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{permissionBean.canAccess(200)}"/>
+
     </f:metadata>
+
+
     <ui:define name="body">
+
+    <h:outputScript name="js/multipleSelection.js"/>
         <h:form prependId="false">
             <div class="title-page">
                 <h4 class="page-header">#{msgs['report.purchase.order.filter.title.page']}</h4>
@@ -73,17 +78,27 @@
                                  value="#{reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
-                        <h:inputText styleClass="form-control" value="#{reportListBean.searchPurchase.statuses}"/>
+
+                        <h:inputHidden id="poStatusesHidenId" value="#{reportListBean.searchPurchase.statuses}"/>
+
+                        <select id="poStatuses" multiple="multiple">
+                            <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                                <option onclick="alert('click on me');" value="#{poStatuses.get(x)}">#{x}</option>
+                            </ui:repeat>
+                        </select>
+
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.due']}</label>
-                        <h:inputText styleClass="form-control" value="#{reportListBean.searchPurchase.dueIn}"/>
+
+                        <p:spinner max="20" min="0" value="#{reportListBean.searchPurchase.dueIn}"/>
                     </div>
                 </div>
             </div>
@@ -91,13 +106,15 @@
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.lead.time']}</label>
-                        <h:inputText styleClass="form-control" value="#{reportListBean.searchPurchase.leadTime}"/>
+
+                        <p:spinner max="20" min="0" value="#{reportListBean.searchPurchase.leadTime}"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-                        <h:inputText styleClass="form-control" value="#{reportListBean.searchPurchase.forecastDueDate}"/>
+
+                        <p:spinner max="20" min="0" value="#{reportListBean.searchPurchase.forecastDueDate}"/>
                     </div>
                 </div>
             </div>
@@ -105,7 +122,8 @@
             <div class="col-md-4">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.variance']}</label>
-                        <h:inputText style="width: 30%" value="#{reportListBean.searchPurchase.variance}" styleClass="form-control"/>
+                        <h:inputText style="width: 30%" maxlength="5" value="#{reportListBean.searchPurchase.variance}" styleClass="form-control"/>
+
                     </div>
             </div>
             <div class="col-md-4">

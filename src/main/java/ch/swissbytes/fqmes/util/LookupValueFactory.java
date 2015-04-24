@@ -1,6 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.fqmes.types.IncoTermsEnum;
+import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.types.UoMEnum;
 
@@ -61,6 +62,17 @@ public class LookupValueFactory implements Serializable {
             result.put(incoTerms.name(),incoTerms);
         }
         return result;
+    }
+
+    @Produces
+    @SessionScoped
+    @Named("poStatuses")
+    public Map<String,Integer> purchaseOrderStatuses(){
+        Map<String,Integer> map=new TreeMap<>();
+        for(PurchaseOrderStatusEnum poEnum:PurchaseOrderStatusEnum.values()){
+            map.put(bundle.getString("postatus." + poEnum.name()), poEnum.ordinal());
+        }
+        return map;
     }
 
 }

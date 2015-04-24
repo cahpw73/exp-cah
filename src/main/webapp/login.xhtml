@@ -25,9 +25,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>#{msgs['login.title']}</title>
-        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js"/>-->
+        <h:outputScript name="js/jquery-2.1.3.min.js"/>
+
         <h:outputStylesheet name="css/bootstrap.css"/>
         <h:outputStylesheet name="css/bootstrap-theme.css"/>
+        <h:outputStylesheet name="css/bootstrap-multiselect.css"/>
+
 
 
     </h:head>
@@ -35,7 +39,6 @@
         <div class="page-header">
 
         </div>
-
 
         <div class="container" />
         <p:messages id="glbMsgs" globalOnly="true" errorClass="alert alert-error"
@@ -76,6 +79,7 @@
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jstz.min.js"/>
         <h:outputScript name="js/localeLanguage.js"/>
+        <h:outputScript name="js/bootstrap-multiselect.js"/>
     </h:body>
 </f:view>
 </html>

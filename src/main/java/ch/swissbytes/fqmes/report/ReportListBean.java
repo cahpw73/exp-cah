@@ -4,6 +4,7 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
 import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
+import ch.swissbytes.fqmes.util.LookupValueFactory;
 import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,19 +27,25 @@ public class ReportListBean implements Serializable {
     @Inject
     private PurchaseOrderViewDao dao;
 
+    @Inject
+    private LookupValueFactory lookupValueFactory;
+
     private PurchaseOrderViewTbl tbl;
 
     private SearchPurchase searchPurchase=new SearchPurchase();
 
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
 
+    private Map<String,Integer> statuses;
+
 
     @PostConstruct
     public void create(){
         log.info("creating bean purchase list");
         log.log(Level.FINER,"FINER log");
+        statuses=lookupValueFactory.purchaseOrderStatuses();
         tbl=new PurchaseOrderViewTbl(dao,searchPurchase);
-       // searchPurchase=new SearchPurchase();
+
     }
 
     private void  search(){

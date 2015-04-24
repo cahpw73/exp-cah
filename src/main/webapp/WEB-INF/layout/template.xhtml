@@ -16,13 +16,14 @@
         <title>#{msgs['main.title']}</title>
         <meta name="generator" content="Bootply"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
         <h:outputStylesheet name="css/bootstrap.css"/>
         <h:outputStylesheet name="css/main-theme.css"/>
         <h:outputStylesheet name="css/top-menu.css"/>
         <h:outputStylesheet name="css/sub-top-menu.css"/>
         <h:outputStylesheet name="css/footer.css"/>
         <h:outputStylesheet name="css/fqm.css"/>
+        <h:outputStylesheet name="css/bootstrap-multiselect.css"/>
+
 
     </h:head>
 
@@ -44,10 +45,13 @@
         </div>
 
         <ui:include src="footer.xhtml"/>
+
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/verifyChanges.js"/>
         <h:outputScript name="js/respond.min.js"/>
         <h:outputScript name="js/positiveNumber.js"/>
+        <h:outputScript name="js/bootstrap-multiselect.js"/>
+
      </h:body>
  </f:view>
  </html>

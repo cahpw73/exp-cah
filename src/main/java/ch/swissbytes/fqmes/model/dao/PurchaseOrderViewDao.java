@@ -66,7 +66,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
                 query.setParameter("END_DUE_DATE_IN",new Util().addDays(startDueInDate,filter.getDueIn()*7));
             }
             if(StringUtils.isNotEmpty(filter.getStatuses())&&StringUtils.isNotBlank(filter.getStatuses())){
-                String []statuses=filter.getStatuses().split("-");
+                String []statuses=filter.getStatuses().split(",");
                 List<PurchaseOrderStatusEnum> list=new ArrayList<PurchaseOrderStatusEnum>();
                 for(String status:statuses){
                     try{
