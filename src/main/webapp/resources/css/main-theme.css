@@ -63,6 +63,12 @@ td, th {
     font-family:FqDejaVuSans!important;
 }
 
+.calendar-filter
+.ui-inputfield {
+    width: 80%!important;
+    padding-left: 15px;
+}
+
 
 .ui-datatable-data
 .ui-widget-content  {
