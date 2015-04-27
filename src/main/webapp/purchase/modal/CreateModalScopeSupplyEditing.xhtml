@@ -186,7 +186,7 @@
                 <h:commandButton onclick="PF('confCancelDlg').show();"
                                  value="#{msgs['lbl.cancel']}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"/>
+                    <p:ajax process="@this" async="false" delay="500"/>
                 </h:commandButton>
             </div>
         </div>
@@ -207,8 +207,11 @@
                                  value="#{scopeSupplyBean.editScopeSupply.deliveryDate}"
                                  onselect="calendarChanges();" onchange="calendarChanges();">
                         <p:ajax event="dateSelect" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
-                                listener="#{scopeSupplyBean.calculateDate}"/>
+                                listener="#{scopeSupplyBean.calculateDate}"
+                                async="false" delay="500"
+                                />
                         <p:ajax event="change" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
+                                async="false" delay="500"
                                 listener="#{scopeSupplyBean.calculateDate}"/>
                     </p:calendar>
                     <p:message for="deliveryDateId" id="msgDeliveryDate"/>
@@ -234,9 +237,11 @@
                                     value="#{scopeSupplyBean.editScopeSupply.exWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
-                                    listener="#{scopeSupplyBean.calculateDate}"/>
+                                    listener="#{scopeSupplyBean.calculateDate}"
+                                    async="false" delay="500"/>
                             <p:ajax event="change" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
-                                    listener="#{scopeSupplyBean.calculateDate}"/>
+                                    listener="#{scopeSupplyBean.calculateDate}"
+                                    async="false" delay="500"/>
                         </p:calendar>
                     </div>
                     <p:inputTextarea maxlength="950" type="text"
@@ -260,9 +265,11 @@
                                     value="#{scopeSupplyBean.editScopeSupply.actualExWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
-                                    listener="#{scopeSupplyBean.calculateDate}"/>
+                                    listener="#{scopeSupplyBean.calculateDate}"
+                                    async="false" delay="500"/>
                             <p:ajax event="change" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
-                                    listener="#{scopeSupplyBean.calculateDate}"/>
+                                    listener="#{scopeSupplyBean.calculateDate}"
+                                    async="false" delay="500"/>
                         </p:calendar>
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
                                      value="#{scopeSupplyBean.editScopeSupply.actualExWorkDateObs}"
@@ -285,7 +292,8 @@
                 <h:commandButton onclick="PF('confCancelDlg').show();"
                                  value="#{msgs['lbl.cancel']}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"/>
+                    <p:ajax process="@this"
+                            async="false" delay="500"/>
                 </h:commandButton>
             </div>
         </div>
@@ -319,6 +327,7 @@
                         <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply" value="#{msgs['lbl.edit']}">
                             <p:ajax listener="#{scopeSupplyBean.selectTransitDeliveryPointOnEdition(_index)}"
                                     update=":TDPEdit"
+                                    async="false" delay="500"
                                     onsuccess="PF('edittdp').show();"/>
                         </h:commandLink>
                         &#160;
@@ -335,6 +344,7 @@
             <div class="pull-right">
             <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['tdp.btn.add']}">
                 <p:ajax oncomplete="PF('tdp').show();" listener="#{scopeSupplyBean.cleanTransitDeliveryPoint()}"
+                        async="false" delay="500"
                         update=":TDP"></p:ajax>
             </h:commandButton>
             </div>
@@ -348,7 +358,7 @@
                 <h:commandButton onclick="PF('confCancelDlg').show();"
                                  value="#{msgs['lbl.cancel']}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"/>
+                    <p:ajax process="@this" async="false" delay="500"/>
                 </h:commandButton>
             </div>
         </div>
@@ -393,6 +403,7 @@
                                          validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
                                 <p:ajax event="change" update="forecastSiteDateEdit" process="@this"
+                                        async="false" delay="500"
                                         listener="#{scopeSupplyBean.calculateDate}"/>
                             </h:inputText>
                             <p:message for="deliveryLeadTimeQtId"/>
@@ -402,6 +413,7 @@
                             <f:selectItems value="#{allTimeMeasurement}"/>
                             <p:ajax event="change" process="measurementUnitEdit, deliveryLeadTimeGrpId"
                                     update="forecastSiteDateEdit, deliveryLeadTimeGrpId"
+                                    async="false" delay="500"
                                     listener="#{scopeSupplyBean.calculateDate}"/>
                         </h:selectOneMenu>
                     </h:panelGroup>
@@ -428,13 +440,14 @@
                                     value="#{scopeSupplyBean.editScopeSupply.siteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();"
                                     styleClass="forecastSiteDate">
-                            <p:ajax event="dateSelect"/>
+                            <p:ajax event="dateSelect" async="false" delay="500"/>
                         </p:calendar>
                         </div>
                         <div style="float: left;">
                         <p:selectBooleanCheckbox  value="#{scopeSupplyBean.editScopeSupply.isForecastSiteDateManual}"
                                                   style="margin-left: 12px;">
                             <p:ajax update=":scopeSupplyEditFormId:forecastSiteDateEdit"
+                                    async="false" delay="500"
                                     listener="#{scopeSupplyBean.switchModeForecastSiteDate()}" />
                         </p:selectBooleanCheckbox>
                             &#160;
@@ -483,7 +496,7 @@
                 <h:commandButton onclick="PF('confCancelDlg').show();"
                                  value="#{msgs['lbl.cancel']}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"/>
+                    <p:ajax process="@this" async="false" delay="500"/>
                 </h:commandButton>
             </div>
         </div>

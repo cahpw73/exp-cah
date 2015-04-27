@@ -188,7 +188,7 @@
                         <h:commandButton onclick="PF('confCancelDlg').show();"
                                          value="#{msgs['lbl.cancel']}"
                                          styleClass="btn btn-primary btn-sm">
-                            <p:ajax process="@this"/>
+                            <p:ajax process="@this" async="false" delay="500"/>
                         </h:commandButton>
                     </div>
                 </div>
@@ -212,9 +212,11 @@
                                 converter="#{dateConverter}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                         <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                listener="#{purchaseOrderEdit.calculateDate}"/>
+                                listener="#{purchaseOrderEdit.calculateDate}"
+                                async="false" delay="500"/>
                         <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                listener="#{purchaseOrderEdit.calculateDate}"/>
+                                listener="#{purchaseOrderEdit.calculateDate}"
+                                async="false" delay="500"/>
                     </p:calendar>
                     <p:message for="deliveryDateId" id="msgDeliveryDate"/>
                     <p:inputTextarea maxlength="950" type="text"
@@ -240,9 +242,11 @@
                                     value="#{purchaseOrderEdit.scopeSupplyEdit.exWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
+                                    listener="#{purchaseOrderEdit.calculateDate}"
+                                    async="false" delay="500"/>
                             <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
+                                    listener="#{purchaseOrderEdit.calculateDate}"
+                                    async="false" delay="500"/>
                         </p:calendar>
                         </div>
                     <p:inputTextarea maxlength="950" type="text"
@@ -268,9 +272,11 @@
                                     value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
+                                    listener="#{purchaseOrderEdit.calculateDate}"
+                                    async="false" delay="500"/>
                             <p:ajax event="change" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
+                                    listener="#{purchaseOrderEdit.calculateDate}"
+                                    async="false" delay="500"/>
                         </p:calendar>
                         <p:inputTextarea maxlength="950" type="text"
                                          style="margin-top: 10px; height: 29px;"
@@ -299,7 +305,8 @@
                 <h:commandButton onclick="PF('confCancelDlg').show();"
                                  value="#{msgs['lbl.cancel']}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"/>
+                    <p:ajax process="@this"
+                            async="false" delay="500"/>
                 </h:commandButton>
             </div>
         </div>
@@ -334,11 +341,13 @@
                         <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply" value="#{msgs['lbl.edit']}">
                             <p:ajax listener="#{purchaseOrderEdit.selectTdp(_tdp.id)}"
                                     update=":TDPEdit"
+                                    async="false" delay="500"
                                     onsuccess="PF('edittdp').show();"/>
                         </h:commandLink>
                         &#160;
                         <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply" value="#{msgs['lbl.delete']}">
-                            <p:ajax update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit" listener="#{purchaseOrderEdit.deleteTdp(_tdp.id)}"/>
+                            <p:ajax update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit" listener="#{purchaseOrderEdit.deleteTdp(_tdp.id)}"
+                                    async="false" delay="500"/>
                         </h:commandLink>
                     </div>
                 </p:column>
@@ -349,7 +358,8 @@
     <div style="width: 1065px;">
     <div class="pull-right">
         <h:commandButton styleClass="btn btn-primary btn-sm"  value="#{msgs['tdp.btn.add']}">
-            <p:ajax oncomplete="PF('tdp').show();" update=":TDP"  listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"/>
+            <p:ajax oncomplete="PF('tdp').show();" update=":TDP"  listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"
+                    async="false" delay="500"/>
         </h:commandButton>
     </div>
     </div>
@@ -370,7 +380,8 @@
             <h:commandButton onclick="PF('confCancelDlg').show();"
                              value="#{msgs['lbl.cancel']}"
                              styleClass="btn btn-primary btn-sm">
-                <p:ajax process="@this"/>
+                <p:ajax process="@this"
+                        async="false" delay="500"/>
             </h:commandButton>
             </div>
         </div>
@@ -415,6 +426,7 @@
                                          validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
                                 <p:ajax  process="@this" event="change" update="forescastSiteDateEdit"
+                                         async="false" delay="500"
                                         listener="#{purchaseOrderEdit.calculateDate}"/>
                             </h:inputText>
                             <p:message for="deliveryLeadTimeQtId"/>
@@ -423,6 +435,7 @@
                                          value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeMs}">
                             <f:selectItems value="#{allTimeMeasurement}"/>
                             <p:ajax event="change" process="@this"
+                                    async="false" delay="500"
                                     listener="#{purchaseOrderEdit.calculateDate}"
                                     update="deliveryLeadTimeGrpId, forescastSiteDateEdit"/>
                         </h:selectOneMenu>
@@ -453,8 +466,9 @@
                                         value="#{purchaseOrderEdit.scopeSupplyEdit.siteDate}"
                                         onselect="calendarChanges();" onchange="calendarChanges();"
                                         styleClass="forecastSiteDate">
-                                <p:ajax event="dateSelect"/>
-                                <p:ajax event="change"/>
+                                <p:ajax event="dateSelect"
+                                        async="false" delay="500"/>
+                                <p:ajax event="change" async="false" delay="500"/>
                             </p:calendar>
                         </div>
                         <div style="float: left;">
