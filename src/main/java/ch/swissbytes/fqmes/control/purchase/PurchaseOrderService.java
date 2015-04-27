@@ -48,8 +48,6 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier) {
-        //TODO do not forget remove this @alvaro
-        newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.INCOMPLETE);
         dao.save(newPurchaseOrder);
         supplier.setPurchaseOrder(newPurchaseOrder);
         supplierDao.persist(supplier);
