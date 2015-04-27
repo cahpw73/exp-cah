@@ -455,3 +455,10 @@ textarea.form-control {
 {
     height: 29px!important;
 }
+
+
+.ui-spinner-up{
+    height: 10px!important;
+    top: 6px!important;
+}
+

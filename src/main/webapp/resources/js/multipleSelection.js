@@ -1,9 +1,13 @@
 /**
- * Created by Christian on 9/3/14.
+ * Created by Alvaro on 24/4/15.
  */
 
 $(document).ready(function () {
     selectedValues = [];
+    $('#poStatuses').multiselect({
+            numberDisplayed: 2
+        }
+    );
     $('#poStatuses').multiselect(
         {
             onChange: function (option, checked, select) {
