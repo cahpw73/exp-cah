@@ -60,11 +60,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(filter.getDeliveryDateEnd()!=null){
                 query.setParameter("END_DELIVERY_DATE",filter.getDeliveryDateEnd());
             }
-            if(filter.getDueIn()!=null&&filter.getDueIn().intValue()>=0){
-                Date startDueInDate=new Date();
-                query.setParameter("START_DUE_DATE_IN",startDueInDate);
-                query.setParameter("END_DUE_DATE_IN",new Util().addDays(startDueInDate,filter.getDueIn()*7));
-            }
+
             if(StringUtils.isNotEmpty(filter.getStatuses())&&StringUtils.isNotBlank(filter.getStatuses())){
                 String []statuses=filter.getStatuses().split(",");
                 List<PurchaseOrderStatusEnum> list=new ArrayList<PurchaseOrderStatusEnum>();
@@ -121,9 +117,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(filter.getDeliveryDateEnd()!=null){
                 sb.append(" AND x.deliveryDate<=:END_DELIVERY_DATE ");
             }
-            if(filter.getDueIn()!=null){
-                sb.append(" AND (x.requiredDate>=:START_DUE_DATE_IN AND x.requiredDate<=:END_DUE_DATE_IN)");
-            }
+
             if(StringUtils.isNotEmpty(filter.getStatuses())&&StringUtils.isNotBlank(filter.getStatuses())){
                 sb.append(" AND  x.purchaseOrderStatus IN(:PURCHASE_ORDER_STATUS_LIST)");
             }
@@ -149,6 +143,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(filter.getForecastDueDate()!=null&&filter.getForecastDueDate().intValue()>=0){
                 subQuery.append(" AND (ss.siteDate>=:START_FORECAST_DUE_DATE_IN AND ss.siteDate<=:END_FORECAST_DUE_DATE_IN)");
             }
+            if(filter.getDueIn()!=null){
+                subQuery.append(" AND (ss.exWorkDate>=:START_DUE_DATE_IN AND ss.exWorkDate<=:END_DUE_DATE_IN)");
+            }
             subQuery.append(" ) ");
         }
         return subQuery.toString();
@@ -165,6 +162,11 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             Date startForecastDueDate=new Date();
             query.setParameter("START_FORECAST_DUE_DATE_IN",startForecastDueDate);
             query.setParameter("END_FORECAST_DUE_DATE_IN",new Util().addDays(startForecastDueDate,filter.getForecastDueDate()*7));
+        }
+        if(filter.getDueIn()!=null&&filter.getDueIn().intValue()>=0){
+            Date startDueInDate=new Date();
+            query.setParameter("START_DUE_DATE_IN",startDueInDate);
+            query.setParameter("END_DUE_DATE_IN",new Util().addDays(startDueInDate,filter.getDueIn()*7));
         }
 
     }
