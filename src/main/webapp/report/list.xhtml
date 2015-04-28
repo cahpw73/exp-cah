@@ -198,6 +198,9 @@
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
                 </p:column>
+                <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.supplier}">
+                    #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
+                </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
                           sortBy="#{_purchase.responsibleExpediting}" width="220">
                     #{_purchase.responsibleExpediting}

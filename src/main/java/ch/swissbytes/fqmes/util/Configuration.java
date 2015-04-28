@@ -1,5 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
+import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTimeZone;
@@ -55,6 +56,10 @@ public class Configuration implements Serializable {
 
     public String getTimeMeasurement(TimeMeasurementEnum time){
         return time!=null? bundle.getString("measurement.time."+time.name().toLowerCase()):"";
+    }
+
+    public String getPOStatus(PurchaseOrderStatusEnum status){
+        return status!=null? bundle.getString("postatus."+status.name().toUpperCase()):"";
     }
 
     public Long getTimeOutConversation(){
