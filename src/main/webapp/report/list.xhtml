@@ -153,17 +153,15 @@
             </div>
             <div class="clearfix"/>
             <div class="pull-right">
-
-                <p:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
-                                 type="submit" class="btn btn-primary btn-sm" style="margin-top: 25px;height: 18px;">
+                <p:commandLink id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
+                                 class="btn btn-primary btn-sm">
                     <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=" :purchaseList :filterReport" />
-                </p:commandButton>
+                </p:commandLink>
                 &#160;
-                <p:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
-                                 type="submit" class="btn btn-primary btn-sm"
-                                 style="margin-top: 25px;height: 18px; margin-right: 15px;">
+                <p:commandLink id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
+                                 class="btn btn-primary btn-sm" >
                     <p:ajax oncomplete="console.log('end')" async="false" process="@form" update=":purchaseList"/>
-                </p:commandButton>
+                </p:commandLink>
             </div>
             <div class="clearfix"></div>
             <br/>
