@@ -109,7 +109,7 @@
             &#160;
         </div>
         <div class="section-text-area-po" style="height: 12px!important;">
-            Status
+            #{msgs['po.lbl.status']}
         </div>
     </div>
     <div class="row">
@@ -127,7 +127,7 @@
         </div>
         <div class="section-text-area-po">
             <p:selectOneMenu value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderStatus}" >
-                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItem itemLabel="#{msgs['lbl.select']}" itemValue="" />
                 <f:selectItems value="#{poStatuses2}"/>
             </p:selectOneMenu>
         </div>

@@ -98,6 +98,14 @@
                             </div>
                         </div>
                     </div>
+                <div class="row">
+                    <div class="section-lbl-input-po">
+                        &#160;
+                    </div>
+                    <div class="section-text-area-po" style="height: 12px!important;">
+                        #{msgs['po.lbl.status']}
+                    </div>
+                </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -107,6 +115,12 @@
                                                  value="#{purchaseOrderEdit.poEdit.variation}" class="form-control" />
                                 </div>
                             </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <p:selectOneMenu value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}" >
+                                <f:selectItem itemLabel="#{msgs['lbl.select']}" itemValue="" />
+                                <f:selectItems value="#{poStatuses2}"/>
+                            </p:selectOneMenu>
                         </div>
                     </div>
                     <!-- Text input-->
