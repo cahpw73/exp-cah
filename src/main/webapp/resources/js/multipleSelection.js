@@ -1,13 +1,13 @@
 /**
  * Created by Alvaro on 24/4/15.
  */
-
+selectedValues = [];
 $(document).ready(function () {
+    initializeMultiselection();
+});
+
+function initializeMultiselection(){
     selectedValues = [];
-    $('#poStatuses').multiselect({
-            numberDisplayed: 2
-        }
-    );
     $('#poStatuses').multiselect(
         {
             onChange: function (option, checked, select) {
@@ -23,9 +23,6 @@ $(document).ready(function () {
 
         }
     );
-    function addSelectedValue(elementId){
-        selectedValues[selectedValues.length] = elementId;
-    }
-});
+}
 
 

@@ -56,6 +56,7 @@ public class ReportListBean implements Serializable {
     }
 
     public LazyDataModel<VPurchaseOrder> getList(){
+        log.info("getting tbl");
         return tbl;
     }
 

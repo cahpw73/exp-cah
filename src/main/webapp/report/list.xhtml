@@ -13,10 +13,10 @@
     </f:metadata>
 
 
-    <ui:define name="body">
+    <ui:define name="body" >
 
     <h:outputScript name="js/multipleSelection.js"/>
-        <h:form prependId="false">
+        <h:form id="filterReport" prependId="false">
             <div class="title-page">
                 <h4 class="page-header">#{msgs['report.purchase.order.filter.title.page']}</h4>
             </div>
@@ -83,21 +83,12 @@
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
-
                         <h:inputHidden id="poStatusesHidenId"  value="#{reportListBean.searchPurchase.statuses}"/>
-
                         <select id="poStatuses" multiple="multiple" class="algo">
                             <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                                <h:panelGroup rendered="#{reportListBean.searchPurchase.isStatusSelected(poStatuses.get(x))}">
-                                    <option selected="selected" value="#{poStatuses.get(x)}">#{x}</option>
-                                </h:panelGroup>
-                                <h:panelGroup rendered="#{not reportListBean.searchPurchase.isStatusSelected(poStatuses.get(x))}">
-                                    <option  value="#{poStatuses.get(x)}">#{x}</option>
-                                </h:panelGroup>
-
+                                    <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
                             </ui:repeat>
                         </select>
-
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -111,14 +102,12 @@
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.lead.time']}</label>
-
                         <p:spinner max="20" min="0" maxlength="2" value="#{reportListBean.searchPurchase.leadTime}"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-
                         <p:spinner max="20" min="0" maxlength="2" value="#{reportListBean.searchPurchase.forecastDueDate}"/>
                     </div>
                 </div>
@@ -128,7 +117,6 @@
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.variance']}</label>
                         <h:inputText style="width: 30%" maxlength="5" value="#{reportListBean.searchPurchase.variance}" styleClass="form-control"/>
-
                     </div>
             </div>
             <div class="col-md-4">
@@ -165,12 +153,17 @@
             </div>
             <div class="clearfix"/>
             <div class="pull-right">
-                <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
-                                 type="submit" class="btn btn-primary btn-sm" style="margin-top: 25px;"/>
+
+                <p:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
+                                 type="submit" class="btn btn-primary btn-sm" style="margin-top: 25px;height: 18px;">
+                    <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=" :purchaseList :filterReport" />
+                </p:commandButton>
                 &#160;
-                <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
+                <p:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
                                  type="submit" class="btn btn-primary btn-sm"
-                                 style="margin-top: 25px; margin-right: 15px;"/>
+                                 style="margin-top: 25px;height: 18px; margin-right: 15px;">
+                    <p:ajax oncomplete="console.log('end')" async="false" process="@form" update=":purchaseList"/>
+                </p:commandButton>
             </div>
             <div class="clearfix"></div>
             <br/>
