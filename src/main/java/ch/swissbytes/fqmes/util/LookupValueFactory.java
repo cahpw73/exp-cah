@@ -75,4 +75,15 @@ public class LookupValueFactory implements Serializable {
         return map;
     }
 
+
+    @Produces
+    @SessionScoped
+    @Named("poStatuses2")
+    public Map<String,PurchaseOrderStatusEnum> purchaseOrderStatuses2(){
+        Map<String,PurchaseOrderStatusEnum> map=new TreeMap<>();
+        for(PurchaseOrderStatusEnum poEnum:PurchaseOrderStatusEnum.values()){
+            map.put(bundle.getString("postatus." + poEnum.name()), poEnum);
+        }
+        return map;
+    }
 }

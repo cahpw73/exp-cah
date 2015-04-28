@@ -141,7 +141,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
     }
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name="PURCHASE_ORDER_STATUS", nullable=false)
+    @Column(name="PURCHASE_ORDER_STATUS")
     public PurchaseOrderStatusEnum getPurchaseOrderStatus() {
         return purchaseOrderStatus;
     }

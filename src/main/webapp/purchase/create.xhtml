@@ -106,6 +106,14 @@
     </div>
     <div class="row">
         <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            Status
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
                 <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.variation']}"/>
 
@@ -116,6 +124,12 @@
                     <p:message for="variation" />
                 </div>
             </div>
+        </div>
+        <div class="section-text-area-po">
+            <p:selectOneMenu value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderStatus}" >
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{poStatuses2}"/>
+            </p:selectOneMenu>
         </div>
     </div>
 
