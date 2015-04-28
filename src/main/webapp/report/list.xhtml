@@ -155,7 +155,7 @@
             <div class="pull-right">
                 <p:commandLink id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
                                  class="btn btn-primary btn-sm">
-                    <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=" :purchaseList :filterReport" />
+                    <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=" :purchaseList :resultPurchaseList" />
                 </p:commandLink>
                 &#160;
                 <p:commandLink id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
@@ -170,7 +170,7 @@
         <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
         <h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
-            <p:dataTable value="#{reportListBean.list}" var="_purchase"
+            <p:dataTable id="resultPurchaseList" value="#{reportListBean.list}" var="_purchase"
                          styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.pagesSize}" paginatorPosition="bottom">
