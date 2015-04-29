@@ -138,6 +138,12 @@ public class Configuration implements Serializable {
     public Integer getMaxQuantityFile(){
         return 100;
     }
-
+    public List<Integer> getAvailableWeeks(){
+        List<Integer> weeks=new ArrayList<Integer>();
+        for(int i=0;i<21;i++){
+            weeks.add(i);
+        }
+        return weeks;
+    }
 
 }

@@ -94,7 +94,9 @@
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label' style="margin: 0px;">#{msgs['po.supply.scope.column.due']}</label>
-                        <p:spinner  max="20" min="0"  maxlength="2" value="#{reportListBean.searchPurchase.dueIn}"/>
+                        <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}">
+                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
+                        </p:selectOneMenu>
                     </div>
                 </div>
             </div>
@@ -102,13 +104,17 @@
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.lead.time']}</label>
-                        <p:spinner max="20" min="0" maxlength="2" value="#{reportListBean.searchPurchase.leadTime}"/>
+                        <p:selectOneMenu  style="width: 80%" value="#{reportListBean.searchPurchase.leadTime}">
+                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
+                        </p:selectOneMenu>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-                        <p:spinner max="20" min="0" maxlength="2" value="#{reportListBean.searchPurchase.forecastDueDate}"/>
+                        <p:selectOneMenu style="width: 80%" value="#{reportListBean.searchPurchase.forecastDueDate}">
+                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
+                        </p:selectOneMenu>
                     </div>
                 </div>
             </div>
@@ -155,12 +161,12 @@
             <div class="pull-right">
                 <p:commandLink id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
                                  class="btn btn-primary btn-sm">
-                    <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=":purchaseList :filterReport" />
+                    <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=":purchaseList:resultList :filterReport" />
                 </p:commandLink>
                 &#160;
                 <p:commandLink id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
                                  class="btn btn-primary btn-sm" >
-                    <p:ajax oncomplete="console.log('end')" async="false" process="@form" update=":purchaseList"/>
+                    <p:ajax async="false" process="@form" update=":purchaseList"/>
                 </p:commandLink>
             </div>
             <div class="clearfix"></div>
@@ -170,7 +176,7 @@
         <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
         <h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
-            <p:dataTable value="#{reportListBean.list}" var="_purchase"
+            <p:dataTable id="resultList" value="#{reportListBean.list}" var="_purchase"
                          styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.pagesSize}" paginatorPosition="bottom">
