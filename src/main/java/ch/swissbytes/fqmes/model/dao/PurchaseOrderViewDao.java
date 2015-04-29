@@ -137,8 +137,14 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(filter.getLeadTime()!=null &&filter.getLeadTime().intValue()>=0 && filter.getLeadTime().intValue()<=20){
                 subQuery.append(" AND (ss.leadTimeDays<=:LEAD_TIME)");
             }
-            if(filter.getVariance()!=null){
-                subQuery.append(" AND ss.variance=:VARIANCE");
+            if(filter.getVariance()!=null&&!filter.getVariance().equals("all")){
+                if(filter.getVariance().equalsIgnoreCase("+ve")){
+                    subQuery.append(" AND ss.variance>=0");
+                }else if(filter.getVariance().equalsIgnoreCase("-ve")){
+                    subQuery.append(" AND ss.variance<0");
+                }
+
+
             }
             if(filter.getForecastDueDate()!=null&&filter.getForecastDueDate().intValue()>=0){
                 subQuery.append(" AND (ss.siteDate>=:START_FORECAST_DUE_DATE_IN AND ss.siteDate<=:END_FORECAST_DUE_DATE_IN)");
@@ -155,9 +161,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
         if(filter.getLeadTime()!=null){
             query.setParameter("LEAD_TIME",filter.getLeadTime()*7);
         }
-        if(filter.getVariance()!=null){
-            query.setParameter("VARIANCE",filter.getVariance());
-        }
+        //if(filter.getVariance()!=null&&!filter.getVariance().equalsIgnoreCase("all")){
+        //    query.setParameter("VARIANCE",filter.getVariance());
+       // }
         if(filter.getForecastDueDate()!=null&&filter.getForecastDueDate().intValue()>=0){
             Date startForecastDueDate=new Date();
             query.setParameter("START_FORECAST_DUE_DATE_IN",startForecastDueDate);

@@ -145,5 +145,12 @@ public class Configuration implements Serializable {
         }
         return weeks;
     }
+    public List<String>getVarianceOptions(){
+        List<String>variances=new ArrayList<>();
+        variances.add("all");
+        variances.add("+ve");
+        variances.add("-ve");
+        return variances;
+    }
 
 }

@@ -95,6 +95,7 @@
                     <div class='form-group card'>
                         <label class='control-label' style="margin: 0px;">#{msgs['po.supply.scope.column.due']}</label>
                         <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}">
+                            <f:selectItem itemLabel="" itemValue="" />
                             <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
                         </p:selectOneMenu>
                     </div>
@@ -105,6 +106,7 @@
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.lead.time']}</label>
                         <p:selectOneMenu  style="width: 80%" value="#{reportListBean.searchPurchase.leadTime}">
+                            <f:selectItem itemLabel="" itemValue="" />
                             <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
                         </p:selectOneMenu>
                     </div>
@@ -113,6 +115,7 @@
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
                         <p:selectOneMenu style="width: 80%" value="#{reportListBean.searchPurchase.forecastDueDate}">
+                            <f:selectItem itemLabel="" itemValue="" />
                             <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
                         </p:selectOneMenu>
                     </div>
@@ -121,9 +124,13 @@
 
             <div class="col-md-4">
                     <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.variance']}</label>
-                        <h:inputText style="width: 30%" maxlength="5" value="#{reportListBean.searchPurchase.variance}" styleClass="form-control"/>
+                        <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.variance']}</label>
+                        <p:selectOneMenu style="width: 40%" value="#{reportListBean.searchPurchase.variance}">
+
+                            <f:selectItems value="#{configuration.getVarianceOptions()}"/>
+                        </p:selectOneMenu>
                     </div>
+
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>

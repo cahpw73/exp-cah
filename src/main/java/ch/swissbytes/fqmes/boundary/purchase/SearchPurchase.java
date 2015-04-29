@@ -21,7 +21,7 @@ public class SearchPurchase implements Filter {
     private String incoTerm;
     private Date deliveryDateStart;
     private Date deliveryDateEnd;
-    private Integer variance;
+    private String variance="all";
     private Integer leadTime;
     private Integer dueIn;
     private Integer forecastDueDate;
@@ -123,11 +123,11 @@ public class SearchPurchase implements Filter {
         this.leadTime = leadTime;
     }
 
-    public Integer getVariance() {
+    public String getVariance() {
         return variance;
     }
 
-    public void setVariance(Integer variance) {
+    public void setVariance(String variance) {
         this.variance = variance;
     }
 
@@ -158,7 +158,7 @@ public class SearchPurchase implements Filter {
         incoTerm=null;
         deliveryDateEnd=null;
         deliveryDateStart=null;
-        variance=null;
+        variance="all";
         leadTime=null;
         dueIn=null;
         forecastDueDate=null;
