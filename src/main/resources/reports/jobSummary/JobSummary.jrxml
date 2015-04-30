@@ -56,11 +56,6 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				</textElement>
 				<text><![CDATA[<style size="18" isBold="true" pdfFontName="Helvetica-Bold">Job Summary Report</style>]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="b5bf1172-d330-484c-9d74-52d020241379" x="111" y="15" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{CURRENT_DATE}]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<pageHeader>

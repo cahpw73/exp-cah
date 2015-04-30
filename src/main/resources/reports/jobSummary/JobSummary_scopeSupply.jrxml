@@ -210,11 +210,6 @@ order by ss.ordered]]>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{varLbl}+"</style>"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="414a8960-248d-4d35-bc72-abf50c9441cc" x="461" y="34" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{CURRENT_DATE}]]></textFieldExpression>
-			</textField>
 		</band>
 	</columnHeader>
 	<detail>
