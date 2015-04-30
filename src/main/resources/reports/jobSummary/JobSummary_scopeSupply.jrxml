@@ -31,7 +31,7 @@
 	<parameter name="varLbl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ss.description as title,ss.actual_site_date,po.po_inco_term,ss.quantity,ss.ex_work_date,ss.purchase_order_id,po.project,po.po,ss.delivery_date,ss.ex_work_date,ss.delivery_lead_time_qt,ss.delivery_lead_time_ms,ss.required_site_date,ss.unit
-,ss.actual_ex_work_date,ss.site_date,ss.code,ss.ordered,po.variation,po.po_title,ss.tag_no,ss.sp_inco_term_description as fullIncoTerm,ss.sp_inco_term as incoTerm, ss.sp_inco_term,DATE_PART('day',ss.required_site_date- ss.site_date ) AS Variance,DATE_PART('day',ss.actual_site_date-ss.required_site_date) AS overdueDays
+,ss.actual_ex_work_date,ss.site_date,ss.code,ss.ordered,po.variation,po.po_title,ss.tag_no,ss.sp_inco_term_description as fullIncoTerm,ss.sp_inco_term as incoTerm, ss.sp_inco_term,DATE_PART('day',ss.required_site_date- CURRENT_DATE ) AS Variance,DATE_PART('day',ss.actual_site_date-ss.required_site_date) AS overdueDays
 from scope_supply ss inner join purchase_order po on ss.purchase_order_id=po.id
 where ss.purchase_order_id=$P{PURCHASE_ORDER_ID} and  ss.status_id=1
 order by ss.ordered]]>

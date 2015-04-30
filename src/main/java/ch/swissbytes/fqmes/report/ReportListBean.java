@@ -35,8 +35,6 @@ public class ReportListBean implements Serializable {
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
 
 
-
-
     @PostConstruct
     public void create(){
         log.info("creating bean purchase list");

@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -113,6 +114,7 @@ public class PurchaseOrderCreate implements Serializable {
         newComment = new CommentEntity();
         scopeSupplies = new ArrayList<>();
         newScopeSupply = new ScopeSupplyEntity();
+        newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
     }
 
     public void cleanComment() {

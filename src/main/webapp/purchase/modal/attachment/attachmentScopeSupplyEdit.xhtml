@@ -1,9 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:form role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
+    <h:form id ="atachmentScopeSupplyModal" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
             styleClass="form-horizontal">
 
         <label>
@@ -19,11 +18,10 @@
                                    rendered="#{_attachment.id gt 0}" value="#{_attachment.fileName}"/>
                 </p:column>
                 <p:column style="background-color:#ffffff!important;">
-                        <h:commandButton value="#{msgs['lbl.delete']}"
-                                         styleClass="btn btn-primary btn-sm"
-                                         action="#{purchaseOrderEdit.deleteAttachmentScopeSupply(_attachment.id)}"  >
-                            <f:ajax render="attachmentSS" execute="@this"/>
-                        </h:commandButton>
+                    <p:commandLink styleClass="btn btn-sm" action="#{purchaseOrderEdit.deleteAttachmentScopeSupply(_attachment.id)}" process="@this" update=":atachmentScopeSupplyModal:attachmentSS" value="eliminar">
+                        <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
+                    </p:commandLink>
+
                 </p:column>
             </p:dataTable>
         </h:panelGroup>

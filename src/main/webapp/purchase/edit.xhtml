@@ -118,7 +118,6 @@
                         </div>
                         <div class="section-text-area-po">
                             <p:selectOneMenu value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}" >
-                                <f:selectItem itemLabel="#{msgs['lbl.select']}" itemValue="" />
                                 <f:selectItems value="#{poStatuses}"/>
                             </p:selectOneMenu>
                         </div>
@@ -372,8 +371,11 @@
         <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupplyModal" resizable="false"  height="250" width="400">
             <ui:include src="modal/attachment/attachmentScopeSupplyEdit.xhtml"/>
         </p:dialog>
-      <!--  <p:dialog id="attachmentCommentId" header="#{msgs['attachment.title.comment']}" widgetVar="attachmentCommentModal" resizable="false"  height="250" width="400">
-            <ui:include src="modal/attachment/attachmentCommentEdit.xhtml"/>
-        </p:dialog>-->
+        <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+            <div class="pull-right">
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </div>
+        </p:confirmDialog>
 </ui:define>
 </ui:composition>

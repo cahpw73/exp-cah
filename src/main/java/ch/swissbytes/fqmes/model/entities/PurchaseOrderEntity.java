@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 
 import javax.inject.Named;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -239,8 +240,9 @@ public class PurchaseOrderEntity implements Serializable{
         return variationNumber;
     }
 
+    @NotNull
     @Enumerated(EnumType.ORDINAL)
-    @Column(name="PURCHASE_ORDER_STATUS")
+    @Column(name="PURCHASE_ORDER_STATUS",nullable = false)
     public PurchaseOrderStatusEnum getPurchaseOrderStatus() {
         return purchaseOrderStatus;
     }
