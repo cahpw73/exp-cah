@@ -57,11 +57,12 @@
             </p:column>
             <p:column  style="background-color:#ffffff!important;">
                 <div class="pull-right">
-                    <h:commandButton value="#{msgs['lbl.delete']}"
-                                     styleClass="btn btn-primary btn-sm"
-                                     action="#{purchaseOrderEdit.deleteAttachmentComment(_attachment.id)}">
-                        <f:ajax render="attachmentCMT" execute="@this"/>
-                    </h:commandButton>
+                    <p:commandLink styleClass="btn btn-primary btn-sm"
+                                   style="color: #ffffff;"
+                                   action="#{purchaseOrderEdit.deleteAttachmentComment(_attachment.id)}"
+                                   process="@this" update=":commentEditFormId:attachmentCMT" value="#{msgs['lbl.delete']}">
+                        <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
+                    </p:commandLink>
                 </div>
             </p:column>
         </p:dataTable>

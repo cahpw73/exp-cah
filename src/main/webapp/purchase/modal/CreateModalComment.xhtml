@@ -49,11 +49,12 @@
                 #{_attachment.fileName}
             </p:column>
             <p:column style="background-color:#ffffff!important;">
-                <h:commandButton value="#{msgs['lbl.delete']}"
-                                 class="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderCreate.deleteAttachmentComment(attachmentCMT1.rowIndex)}">
-                    <f:ajax render="attachmentCMT1" execute="@this"/>
-                </h:commandButton>
+                <p:commandLink styleClass="btn btn-primary btn-sm"
+                               style="color: #ffffff;"
+                               action="#{purchaseOrderCreate.deleteAttachmentComment(attachmentCMT1.rowIndex)}"
+                               process="@this" update=":commentFormId:attachmentCMT1" value="#{msgs['lbl.delete']}">
+                    <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
+                </p:commandLink>
             </p:column>
         </p:dataTable>
     </h:panelGroup>
