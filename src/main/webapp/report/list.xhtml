@@ -211,11 +211,11 @@
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="223">
                     <div class="center-button">
-                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                        <p:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                                        value="#{msgs['report.purchase.order.link.add']}">
                             <p:ajax update=":purchaseList:listSelected"
                                     listener="#{reportBean.addPurchaseOrder(_purchase.poId)}"></p:ajax>
-                        </h:commandLink>
+                        </p:commandLink>
                     </div>
                 </p:column>
             </p:dataTable>
