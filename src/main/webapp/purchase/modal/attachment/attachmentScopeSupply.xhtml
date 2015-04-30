@@ -15,7 +15,10 @@
                     #{_attachment.fileName}
                 </p:column>
                 <p:column style="background-color:#ffffff!important;">
-                    <p:commandLink styleClass="btn btn-sm" action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex)}" process="@this" update=":atachmentScopeSupplyModal:attachmentSS" value="eliminar">
+                    <p:commandLink styleClass="btn btn-primary btn-sm"
+                                   style="color: #ffffff;"
+                                   action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex)}"
+                                   process="@this" update=":atachmentScopeSupplyModal:attachmentSS" value="#{msgs['lbl.delete']}">
                         <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
                     </p:commandLink>
                 </p:column>
