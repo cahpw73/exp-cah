@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
+import ch.swissbytes.fqmes.util.Util;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -76,6 +77,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("fullIncoTermLbl", "Full Inco Term");
         addParameters("varLbl", "Var");
         addParameters("TIME_ZONE",configuration.getTimeZone());
+        Date now=new Date();
+        now.setHours(23);
+        now.setMinutes(59);
+        now.setSeconds(59);
+        System.out.println("UTC CURRENT DATE "+Util.convertUTC(now, TimeZone.getDefault().getID()));
+        addParameters("CURRENT_DATE", Util.convertUTC(now, TimeZone.getDefault().getID()));
     }
 
     @Override
