@@ -311,7 +311,7 @@ order by ss.ordered]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{incoterm}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement uuid="85ce674b-b744-4678-b53a-d5a78df85afa" style="overdue" x="268" y="1" width="58" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
