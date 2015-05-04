@@ -6,7 +6,10 @@ $(document).ready(function () {
     initializeMultiselection();
 });
 
-function initializeMultiselection(){
+function initializeMultiselection(idsSelected){
+    var array=[];
+    console.log('selected first print '+idsSelected);
+
     selectedValues = [];
     $('#poStatuses').multiselect(
         {
@@ -19,10 +22,15 @@ function initializeMultiselection(){
                     selectedValues.splice(index,1);
                 }
                 $('#poStatusesHidenId').val(selectedValues.toString());
-            }
-
+            },
+            numberDisplayed:2
         }
     );
+    if(idsSelected){
+        array = JSON.parse("[" + idsSelected + "]");
+        console.log('second print selected '+array);
+        $('#poStatuses').multiselect('select',array);
+    }
 }
 
 

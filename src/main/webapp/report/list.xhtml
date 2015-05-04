@@ -166,19 +166,14 @@
             </div>
             <div class="clearfix"/>
             <div class="pull-right">
-                <p:commandLink id="clear" value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean()}"
-                                 class="btn btn-primary btn-sm">
-                    <p:ajax oncomplete="initializeMultiselection();" async="false" process="@this" update=":purchaseList:resultList :filterReport" />
-                </p:commandLink>
+                <h:commandButton value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean}" class="btn btn-primary btn-sm"></h:commandButton>
                 &#160;
-                <p:commandLink id="srch" value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
-                                 class="btn btn-primary btn-sm" >
-                    <p:ajax async="false" process="@form" update=":purchaseList"/>
-                </p:commandLink>
+                <h:commandButton value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}" class="btn btn-primary btn-sm"></h:commandButton>
             </div>
             <div class="clearfix"></div>
             <br/>
             <br/>
+            <p:remoteCommand  name="onload" oncomplete="initializeMultiselection('#{reportListBean.searchPurchase.statuses} ');" autoRun="true"></p:remoteCommand>
         </h:form>
         <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
@@ -211,11 +206,12 @@
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="223">
                     <div class="center-button">
-                        <p:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                       action="#{reportBean.addPurchaseOrder(_purchase.poId)}"
+
                                        value="#{msgs['report.purchase.order.link.add']}">
-                            <p:ajax update=":purchaseList:listSelected"
-                                    listener="#{reportBean.addPurchaseOrder(_purchase.poId)}"></p:ajax>
-                        </p:commandLink>
+                            <f:ajax execute="@this" render="listSelected"/>
+                        </h:commandLink>
                     </div>
                 </p:column>
             </p:dataTable>
@@ -248,6 +244,7 @@
                     <p:ajax update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
                 </h:commandLink>
             </div>
+
         </h:form>
 
         <div class="clearfix"></div>
