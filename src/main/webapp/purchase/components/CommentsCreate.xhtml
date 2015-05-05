@@ -21,12 +21,9 @@
         <p:column headerText="#{msgs['po.attach.tbl.column.observations']}"  sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.description}
             </p:column>
-        <!--<p:column headerText="# {msgs['lbl.attachment']}" width="210">
-            <h:commandLink action="# {purchaseOrderCreate.selectingForAttachment(_index)}"  onclick="PF('attachmentComment').show()">
-                <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
-                <f:ajax render="attachmentCMT" execute="@this" />
-            </h:commandLink>
-        </p:column>-->
+            <p:column>
+                <h:graphicImage rendered="#{_comment.attachments.size() gt 0}" url="/resources/img/full-folder-only-view.png" width="20" height="20"/>
+            </p:column>
         <p:column headerText="#{msgs['lbl.action']}" width="150">
             <div class="pull-right">
                 <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.edit']}">
