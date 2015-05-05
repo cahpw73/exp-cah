@@ -21,7 +21,7 @@
                     <p:commandLink styleClass="btn btn-primary btn-sm"
                                    style="color: #ffffff;"
                                    action="#{purchaseOrderEdit.deleteAttachmentScopeSupply(_attachment.id)}"
-                                   process="@this" update=":atachmentScopeSupplyModal:attachmentSS" value="#{msgs['lbl.delete']}">
+                                   process="@this" update=":atachmentScopeSupplyModal:attachmentSS, :empForm:scopeSupplyList" value="#{msgs['lbl.delete']}">
                         <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
                     </p:commandLink>
 
@@ -32,7 +32,7 @@
                       label="#{msgs['attachment.btn.add']}"
                       fileLimit="#{configuration.maxQuantityFile}"
                       multiple="true"
-                      update="attachmentSS"
+                      update="attachmentSS, :empForm:scopeSupplyList"
                       fileUploadListener="#{purchaseOrderEdit.handleAttachmentScopeSupply}"
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">

@@ -96,7 +96,7 @@
                 <p:commandLink oncomplete="PF('attachmentScopeSupply').show()"
                                action="#{purchaseOrderCreate.selectingForAttachment(_index)}"
                                update=":attachmentscopeSupplyId">
-                    <h:graphicImage url="/resources/img/folder.png" width="15" height="15"/>
+                    <h:graphicImage url="#{_scopeSupply.attachments.size() gt 0?'/resources/img/full-folder2.png':'/resources/img/folder.png'}" width="15" height="15"/>
                 </p:commandLink>
             </p:column>
         <p:column headerText="#{msgs['lbl.action']}" width="137">

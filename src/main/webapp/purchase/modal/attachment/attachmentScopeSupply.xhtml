@@ -9,7 +9,7 @@
             #{msgs['attachment.title']}
         </label>
         <br/>
-        <h:panelGroup id="attachmentSS"  >
+        <h:panelGroup id="attachmentSS">
             <p:dataTable value="#{purchaseOrderCreate.scopeSupplyAttachments}"  binding="#{attachmentSS}" var="_attachment">
                 <p:column style="background-color:#ffffff!important;">
                     #{_attachment.fileName}
@@ -18,7 +18,7 @@
                     <p:commandLink styleClass="btn btn-primary btn-sm"
                                    style="color: #ffffff;"
                                    action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex)}"
-                                   process="@this" update=":atachmentScopeSupplyModal:attachmentSS" value="#{msgs['lbl.delete']}">
+                                   process="@this" update=":atachmentScopeSupplyModal:attachmentSS, :empForm:scopeSupplyList" value="#{msgs['lbl.delete']}">
                         <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
                     </p:commandLink>
                 </p:column>
@@ -28,7 +28,7 @@
                       label="#{msgs['attachment.btn.add']}"
                       fileLimit="#{configuration.maxQuantityFile}"
                       multiple="true"
-                      update="attachmentSS"
+                      update="attachmentSS, :empForm:scopeSupplyList"
                       fileUploadListener="#{purchaseOrderCreate.handleAttachmentScopeSupply}"
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">
