@@ -73,9 +73,14 @@
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
-                    <label class='control-label'>#{msgs['po.supply.scope.column.inco.term']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.inco.term']}"
-                                 value="#{reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>
+                    <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.inco.term']}</label>
+                    <!--<h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.inco.term']}"
+                                 value="# {reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>-->
+                    <p:selectOneMenu id="incoTermSelectOne" value="#{reportListBean.searchPurchase.incoTerm}"
+                                     effect="fold" editable="true" styleClass="menu-ddp"
+                                     maxlength="50"  style="width: 40%">
+                        <f:selectItems value="#{incoTerms}"/>
+                    </p:selectOneMenu>
                 </div>
             </div>
 
@@ -93,8 +98,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class='form-group card'>
-                        <label class='control-label' style="margin: 0px;">#{msgs['po.supply.scope.column.due']}</label>
-                        <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}">
+                        <label class='control-label'>#{msgs['po.supply.scope.column.due']}</label>
+                        <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}"
+                                         effect="fold" styleClass="menu-ddp">
                             <f:selectItem itemLabel="" itemValue="" />
                             <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
                         </p:selectOneMenu>
@@ -105,7 +111,9 @@
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.lead.time']}</label>
-                        <p:selectOneMenu  style="width: 80%" value="#{reportListBean.searchPurchase.leadTime}">
+                        <p:selectOneMenu  style="width: 80%"
+                                          effect="fold" styleClass="menu-ddp"
+                                          value="#{reportListBean.searchPurchase.leadTime}">
                             <f:selectItem itemLabel="" itemValue="" />
                             <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
                         </p:selectOneMenu>
@@ -114,7 +122,9 @@
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-                        <p:selectOneMenu style="width: 80%" value="#{reportListBean.searchPurchase.forecastDueDate}">
+                        <p:selectOneMenu style="width: 80%"
+                                         effect="fold" styleClass="menu-ddp"
+                                         value="#{reportListBean.searchPurchase.forecastDueDate}">
                             <f:selectItem itemLabel="" itemValue="" />
                             <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
                         </p:selectOneMenu>
@@ -125,8 +135,9 @@
             <div class="col-md-4">
                     <div class='form-group card'>
                         <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.variance']}</label>
-                        <p:selectOneMenu style="width: 40%" value="#{reportListBean.searchPurchase.variance}">
-
+                        <p:selectOneMenu style="width: 40%"
+                                         effect="fold"  styleClass="menu-ddp"
+                                         value="#{reportListBean.searchPurchase.variance}">
                             <f:selectItems value="#{configuration.getVarianceOptions()}"/>
                         </p:selectOneMenu>
                     </div>
@@ -164,6 +175,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="clearfix"/>
             <div class="pull-right">
                 <h:commandButton value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean}" class="btn btn-primary btn-sm"></h:commandButton>

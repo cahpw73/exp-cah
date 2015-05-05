@@ -150,7 +150,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
                 subQuery.append(" AND (ss.siteDate>=:START_FORECAST_DUE_DATE_IN AND ss.siteDate<=:END_FORECAST_DUE_DATE_IN)");
             }
             if(filter.getDueIn()!=null){
-                subQuery.append(" AND (ss.exWorkDate>=:START_DUE_DATE_IN AND ss.exWorkDate<=:END_DUE_DATE_IN)");
+                subQuery.append(" AND (ss.requiredSiteDate>=:START_DUE_DATE_IN AND ss.requiredSiteDate<=:END_DUE_DATE_IN)");
             }
             subQuery.append(" ) ");
         }
@@ -161,9 +161,6 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
         if(filter.getLeadTime()!=null){
             query.setParameter("LEAD_TIME",filter.getLeadTime()*7);
         }
-        //if(filter.getVariance()!=null&&!filter.getVariance().equalsIgnoreCase("all")){
-        //    query.setParameter("VARIANCE",filter.getVariance());
-       // }
         if(filter.getForecastDueDate()!=null&&filter.getForecastDueDate().intValue()>=0){
             Date startForecastDueDate=new Date();
             query.setParameter("START_FORECAST_DUE_DATE_IN",startForecastDueDate);
