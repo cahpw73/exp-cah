@@ -462,3 +462,10 @@ textarea.form-control {
     top: 6px!important;
 }
 
+span.multiselect-selected-text {
+    font-size:12px;
+
+}
+label.checkbox{
+    font-size:12px;
+}

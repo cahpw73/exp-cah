@@ -14,7 +14,6 @@
 
 
     <ui:define name="body" >
-
     <h:outputScript name="js/multipleSelection.js"/>
         <h:form id="filterReport" prependId="false">
             <div class="title-page">
@@ -110,7 +109,7 @@
             <div class="col-md-4">
                 <div class="col-md-6" style="padding-left: 0px;">
                     <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.lead.time']}</label>
+                        <label class='control-label'>#{msgs['po.supply.scope.supply.lead.time']}</label>
                         <p:selectOneMenu  style="width: 80%"
                                           effect="fold" styleClass="menu-ddp"
                                           value="#{reportListBean.searchPurchase.leadTime}">

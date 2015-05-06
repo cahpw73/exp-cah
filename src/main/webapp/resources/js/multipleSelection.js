@@ -9,7 +9,6 @@ $(document).ready(function () {
 function initializeMultiselection(idsSelected){
     var array=[];
     console.log('selected first print '+idsSelected);
-
     selectedValues = [];
     $('#poStatuses').multiselect(
         {
