@@ -207,7 +207,7 @@
                                 pattern="#{configuration.formatDate}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 timeZone="#{configuration.timeZone}"
-                                value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryDate}"
+                                value="#{purchaseOrderEdit.scopeSupplyEdit.poDeliveryDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 converter="#{dateConverter}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
@@ -239,7 +239,7 @@
                                     jsf:placeholder="#{configuration.formatDate}"
                                     timeZone="#{configuration.timeZone}"
                                     converter="#{dateConverter}"
-                                    value="#{purchaseOrderEdit.scopeSupplyEdit.exWorkDate}"
+                                    value="#{purchaseOrderEdit.scopeSupplyEdit.forecastExWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyFormId:forescastSiteDateEdit :scopeSupplyFormId:tdpCreate"
                                     listener="#{purchaseOrderEdit.calculateDate}"
@@ -463,7 +463,7 @@
                                         jsf:placeholder="#{configuration.formatDate}"
                                         timeZone="#{configuration.timeZone}"
                                         converter="#{dateConverter}"
-                                        value="#{purchaseOrderEdit.scopeSupplyEdit.siteDate}"
+                                        value="#{purchaseOrderEdit.scopeSupplyEdit.forecastSiteDate}"
                                         onselect="calendarChanges();" onchange="calendarChanges();"
                                         styleClass="forecastSiteDate">
                                 <p:ajax event="dateSelect"

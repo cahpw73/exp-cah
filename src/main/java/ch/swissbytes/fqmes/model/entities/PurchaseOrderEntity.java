@@ -26,7 +26,7 @@ public class PurchaseOrderEntity implements Serializable{
     private String poTitle;
     private String incoTerm;
     private String fullIncoTerms;
-    private Date deliveryDate;
+    private Date poDeliveryDate;
     private String deliveryDateComment;
     private String responsibleExpediting;
     private Date introEmail;
@@ -126,12 +126,12 @@ public class PurchaseOrderEntity implements Serializable{
 
 
     @Column(name="po_delivery_date")
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getPoDeliveryDate() {
+        return poDeliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setPoDeliveryDate(Date poDeliveryDate) {
+        this.poDeliveryDate = poDeliveryDate;
     }
 
     @Size(max = 1000)
@@ -278,7 +278,7 @@ public class PurchaseOrderEntity implements Serializable{
         result = 31 * result + (poTitle != null ? poTitle.hashCode() : 0);
         result = 31 * result + (incoTerm != null ? incoTerm.hashCode() : 0);
         result = 31 * result + (fullIncoTerms != null ? fullIncoTerms.hashCode() : 0);
-        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
+        result = 31 * result + (poDeliveryDate != null ? poDeliveryDate.hashCode() : 0);
         result = 31 * result + (deliveryDateComment != null ? deliveryDateComment.hashCode() : 0);
         result = 31 * result + (responsibleExpediting != null ? responsibleExpediting.hashCode() : 0);
         result = 31 * result + (introEmail != null ? introEmail.hashCode() : 0);

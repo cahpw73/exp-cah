@@ -34,7 +34,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private String incoTerm;
 
-    private Date deliveryDate;
+    private Date poDeliveryDate;
 
     private Date requiredDate;
 
@@ -123,12 +123,12 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
 
     @Column(name="PO_DELIVERY_DATE",updatable = false, insertable = false, nullable = true)
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getPoDeliveryDate() {
+        return poDeliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setPoDeliveryDate(Date poDeliveryDate) {
+        this.poDeliveryDate = poDeliveryDate;
     }
 
     @Column(name="REQUIRED_DATE",updatable = false, insertable = false, nullable = true)

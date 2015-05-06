@@ -147,10 +147,10 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
 
             }
             if(filter.getForecastDueDate()!=null&&filter.getForecastDueDate().intValue()>=0){
-                subQuery.append(" AND (ss.siteDate>=:START_FORECAST_DUE_DATE_IN AND ss.siteDate<=:END_FORECAST_DUE_DATE_IN)");
+                subQuery.append(" AND (ss.forecastExWorkDate>=:START_FORECAST_DUE_DATE_IN AND ss.forecastExWorkDate<=:END_FORECAST_DUE_DATE_IN)");
             }
             if(filter.getDueIn()!=null){
-                subQuery.append(" AND (ss.requiredSiteDate>=:START_DUE_DATE_IN AND ss.requiredSiteDate<=:END_DUE_DATE_IN)");
+                subQuery.append(" AND (ss.poDeliveryDate>=:START_DUE_DATE_IN AND ss.poDeliveryDate<=:END_DUE_DATE_IN)");
             }
             subQuery.append(" ) ");
         }

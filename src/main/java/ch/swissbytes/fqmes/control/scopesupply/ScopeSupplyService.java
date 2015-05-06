@@ -51,13 +51,13 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         Date computedDate = null;
         if (scopeSupplyEntity != null) {
             if(tdpService.getActives(scopeSupplyEntity.getTdpList()).size()==0){//there is no any tdp added.
-                if(scopeSupplyEntity.getDeliveryDate()!=null&&scopeSupplyEntity.getDeliveryLeadTimeMs()!=null&&scopeSupplyEntity.getDeliveryLeadTimeQt()!=null){
+                if(scopeSupplyEntity.getPoDeliveryDate()!=null&&scopeSupplyEntity.getDeliveryLeadTimeMs()!=null&&scopeSupplyEntity.getDeliveryLeadTimeQt()!=null){
                     if(scopeSupplyEntity.getActualExWorkDate()!=null){
                         computedDate= calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getActualExWorkDate());
-                    }else if (scopeSupplyEntity.getExWorkDate() != null) {
-                        computedDate= calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getExWorkDate());
-                    }else if(scopeSupplyEntity.getDeliveryDate()!=null){
-                        computedDate=calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getDeliveryDate());
+                    }else if (scopeSupplyEntity.getForecastExWorkDate() != null) {
+                        computedDate= calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getForecastExWorkDate());
+                    }else if(scopeSupplyEntity.getPoDeliveryDate()!=null){
+                        computedDate=calculateDate(scopeSupplyEntity.getDeliveryLeadTimeMs(),scopeSupplyEntity.getDeliveryLeadTimeQt(),scopeSupplyEntity.getPoDeliveryDate());
                     }
                 }
             }else {
@@ -109,13 +109,13 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         Date date=null;
             if(isFirstTdp){
                 log.info("calculating for first tdp");
-                if(ss.getDeliveryDate()!=null){
+                if(ss.getPoDeliveryDate()!=null){
                     if(ss.getActualExWorkDate()!=null){//delivery date !=null
                         date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),ss.getActualExWorkDate());
-                    }else if(ss.getExWorkDate()!=null){//delivery date !=null
-                        date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),ss.getExWorkDate());
-                    }else if(ss.getDeliveryDate()!=null){
-                        date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),ss.getDeliveryDate());
+                    }else if(ss.getForecastExWorkDate()!=null){//delivery date !=null
+                        date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),ss.getForecastExWorkDate());
+                    }else if(ss.getPoDeliveryDate()!=null){
+                        date=calculateDate(tdpCurrent.getMeasurementTime(),tdpCurrent.getLeadTime(),ss.getPoDeliveryDate());
                     }
                 }
             }else{

@@ -29,19 +29,19 @@
                   sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.spIncoTerm}
         </p:column>
-        <p:column sortBy="#{_scopeSupply.deliveryDate}" width="110"
+        <p:column sortBy="#{_scopeSupply.poDeliveryDate}" width="110"
                   sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
             <f:facet name="header">
                     #{msgs['po.supply.scope.column.original.delivery.date']}
             </f:facet>
-            #{util.toLocal(_scopeSupply.deliveryDate)}
+            #{util.toLocal(_scopeSupply.poDeliveryDate)}
         </p:column>
-        <p:column sortBy="#{_scopeSupply.exWorkDate}" width="90"
+        <p:column sortBy="#{_scopeSupply.forecastExWorkDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
                     #{msgs['po.supply.scope.column.forecast.ex.works.date']}
             </f:facet>
-            #{util.toLocal(_scopeSupply.exWorkDate)}
+            #{util.toLocal(_scopeSupply.forecastExWorkDate)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
@@ -60,12 +60,12 @@
             &#160;
             #{configuration.getTimeMeasurement(_scopeSupply.deliveryLeadTimeMs)}
         </p:column>
-        <p:column sortBy="#{_scopeSupply.siteDate}" width="95"
+        <p:column sortBy="#{_scopeSupply.forecastSiteDate}" width="95"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
             <f:facet name="header">
                     #{msgs['po.supply.scope.column.forecast.site.date']}
             </f:facet>
-            #{util.toLocal(_scopeSupply.siteDate)}
+            #{util.toLocal(_scopeSupply.forecastSiteDate)}
         </p:column>
         <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="95"
                   sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">

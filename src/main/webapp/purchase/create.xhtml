@@ -229,7 +229,7 @@
                                 converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.deliveryDate}"
+                                value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
                                 timeZone="#{configuration.timeZone}"
                                 onselect="calendarChanges();" onchange="calendarChanges();" >
                         <p:ajax process="@this" event="dateSelect" />

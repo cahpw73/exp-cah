@@ -216,7 +216,7 @@
                         timeZone="#{configuration.timeZone}"
                         jsf:placeholder="#{configuration.formatDate}"
                         converter="#{dateConverter}"
-                        value="#{purchaseOrderEdit.scopeSupplyEditing.deliveryDate}"
+                        value="#{purchaseOrderEdit.scopeSupplyEditing.poDeliveryDate}"
                         onselect="calendarChanges();" onchange="calendarChanges();">
                 <p:ajax event="dateSelect"
                         update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
@@ -251,7 +251,7 @@
                             jsf:placeholder="#{configuration.formatDate}"
                             timeZone="#{configuration.timeZone}"
                             converter="#{dateConverter}"
-                            value="#{purchaseOrderEdit.scopeSupplyEditing.exWorkDate}"
+                            value="#{purchaseOrderEdit.scopeSupplyEditing.forecastExWorkDate}"
                             onselect="calendarChanges();" onchange="calendarChanges();">
                     <p:ajax event="dateSelect"
                             update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
@@ -478,7 +478,7 @@
                                 jsf:placeholder="#{configuration.formatDate}"
                                 timeZone="#{configuration.timeZone}"
                                 converter="#{dateConverter}"
-                                value="#{purchaseOrderEdit.scopeSupplyEditing.siteDate}"
+                                value="#{purchaseOrderEdit.scopeSupplyEditing.forecastSiteDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"
                                 styleClass="forecastSiteDate">
                         <p:ajax event="dateSelect" delay="500" async="false"/>

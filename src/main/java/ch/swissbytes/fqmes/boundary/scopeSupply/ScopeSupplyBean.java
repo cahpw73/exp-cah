@@ -123,11 +123,11 @@ public class ScopeSupplyBean implements Serializable {
         newScopeSupply.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
         newScopeSupply.setResponsibleExpediting(purchaseOrder !=null&&purchaseOrder.getResponsibleExpediting()!=null? purchaseOrder.getResponsibleExpediting().toString():null);
         newScopeSupply.setRequiredSiteDate(purchaseOrder.getRequiredDate());
-        newScopeSupply.setDeliveryDate(purchaseOrder.getDeliveryDate());
+        newScopeSupply.setPoDeliveryDate(purchaseOrder.getPoDeliveryDate());
     }
 
     public void setDeliveryDate(Date date){
-        newScopeSupply.setDeliveryDate(date);
+        newScopeSupply.setPoDeliveryDate(date);
     }
 
     public void cleanTransitDeliveryPoint(){
@@ -159,12 +159,12 @@ public class ScopeSupplyBean implements Serializable {
             if (!newScopeSupply.getIsForecastSiteDateManual()) {
                 calculateDate();
             }else{
-                newScopeSupply.setSiteDate(null);
+                newScopeSupply.setForecastSiteDate(null);
             }
         } else if (!editScopeSupply.getIsForecastSiteDateManual()) {
             calculateDate();
         }else{
-            editScopeSupply.setSiteDate(null);
+            editScopeSupply.setForecastSiteDate(null);
         }
     }
     public void switchModeForecastSiteDateForTdp(boolean editing){
@@ -261,12 +261,12 @@ public class ScopeSupplyBean implements Serializable {
             if(indexScopeSupplyEditing>=0){
                 if(!editScopeSupply.getIsForecastSiteDateManual()){
                     date=scopeSupplyService.calculateForecastSiteDate(editScopeSupply);
-                    editScopeSupply.setSiteDate(date);
+                    editScopeSupply.setForecastSiteDate(date);
                 }
             }else{
                 if(!newScopeSupply.getIsForecastSiteDateManual()){
                     date=scopeSupplyService.calculateForecastSiteDate(newScopeSupply);
-                    newScopeSupply.setSiteDate(date);
+                    newScopeSupply.setForecastSiteDate(date);
                 }
             }
 

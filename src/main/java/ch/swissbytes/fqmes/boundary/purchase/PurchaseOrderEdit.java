@@ -370,7 +370,7 @@ public class PurchaseOrderEdit implements Serializable {
     public String cleanScopeSupply() {
         currentOperation = CREATE;//CREATING...
         scopeSupplyEdit = new ScopeSupplyEntity();
-        scopeSupplyEdit.setDeliveryDate(poEdit.getDeliveryDate());
+        scopeSupplyEdit.setPoDeliveryDate(poEdit.getPoDeliveryDate());
         scopeSupplyEdit.setResponsibleExpediting(poEdit.getResponsibleExpediting());
         scopeSupplyEdit.setRequiredSiteDate(poEdit.getRequiredDate());
         scopeSupplyEdit.setIsForecastSiteDateManual(false);
@@ -812,19 +812,19 @@ public class PurchaseOrderEdit implements Serializable {
             case 0://CREATING
                 if (!scopeSupplyEdit.getIsForecastSiteDateManual()) {
                     date = scopeSupplyService.calculateForecastSiteDate(scopeSupplyEdit);
-                    scopeSupplyEdit.setSiteDate(date);
+                    scopeSupplyEdit.setForecastSiteDate(date);
                 }
                 break;
             case 1://EDITING
                 if (!scopeSupplyEditing.getIsForecastSiteDateManual()) {
                     date = scopeSupplyService.calculateForecastSiteDate(scopeSupplyEditing);
-                    scopeSupplyEditing.setSiteDate(date);
+                    scopeSupplyEditing.setForecastSiteDate(date);
                 }
                 break;
             case 2://SPLITING
                 if (!getScopeSupplySplit().getIsForecastSiteDateManual()) {
                     date = scopeSupplyService.calculateForecastSiteDate(getScopeSupplySplit());
-                    getScopeSupplySplit().setSiteDate(date);
+                    getScopeSupplySplit().setForecastSiteDate(date);
                 }
                 break;
             default:
@@ -840,19 +840,19 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("public void switchModeForecastSiteDate()");
         switch (currentOperation) {
             case 0://CREATING
-                scopeSupplyEdit.setSiteDate(null);
+                scopeSupplyEdit.setForecastSiteDate(null);
                 if (!scopeSupplyEdit.getIsForecastSiteDateManual()) {
                     calculateDate();
                 }
                 break;
             case 1://EDITING
-                scopeSupplyEditing.setSiteDate(null);
+                scopeSupplyEditing.setForecastSiteDate(null);
                 if (!scopeSupplyEditing.getIsForecastSiteDateManual()) {
                     calculateDate();
                 }
                 break;
             case 2://SPLITING
-                getScopeSupplySplit().setSiteDate(null);
+                getScopeSupplySplit().setForecastSiteDate(null);
                 if (!getScopeSupplySplit().getIsForecastSiteDateManual()) {
                     calculateDate();
                 }

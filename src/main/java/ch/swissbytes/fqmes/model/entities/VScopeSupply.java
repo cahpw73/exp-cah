@@ -26,17 +26,17 @@ public class VScopeSupply implements Serializable{
     private Integer quantity;
     private String unit;
     private String description;
-    private Date exWorkDate;
+    private Date forecastExWorkDate;
     private String exWorkDateDescription;
     private Integer deliveryLeadTimeQt;
     private TimeMeasurementEnum deliveryLeadTimeMs;
     private String getDeliveryLeadTimeDescription;
-    private Date siteDate;
+    private Date forecastSiteDate;
     private String siteDateDescription;
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
-    private Date deliveryDate;
+    private Date poDeliveryDate;
     private Date actualExWorkDate;
     private Date requiredSiteDate;
     private Date actualSiteDate;
@@ -118,12 +118,12 @@ public class VScopeSupply implements Serializable{
     }
 
     @Column(name="EX_WORK_DATE", updatable = false, insertable = false)
-    public Date getExWorkDate() {
-        return exWorkDate;
+    public Date getForecastExWorkDate() {
+        return forecastExWorkDate;
     }
 
-    public void setExWorkDate(Date exWorkDate) {
-        this.exWorkDate = exWorkDate;
+    public void setForecastExWorkDate(Date forecastExWorkDate) {
+        this.forecastExWorkDate = forecastExWorkDate;
     }
 
 
@@ -163,12 +163,12 @@ public class VScopeSupply implements Serializable{
         this.getDeliveryLeadTimeDescription = getDeliveryLeadTimeDescription;
     }
     @Column(name="SITE_DATE", updatable = false, insertable = false)
-    public Date getSiteDate() {
-        return siteDate;
+    public Date getForecastSiteDate() {
+        return forecastSiteDate;
     }
 
-    public void setSiteDate(Date siteDate) {
-        this.siteDate = siteDate;
+    public void setForecastSiteDate(Date forecastSiteDate) {
+        this.forecastSiteDate = forecastSiteDate;
     }
 
 
@@ -220,12 +220,12 @@ public class VScopeSupply implements Serializable{
 
 
     @Column(name="DELIVERY_DATE",updatable = false, insertable = false)
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getPoDeliveryDate() {
+        return poDeliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setPoDeliveryDate(Date poDeliveryDate) {
+        this.poDeliveryDate = poDeliveryDate;
     }
 
     @Column(name="ACTUAL_EX_WORK_DATE",updatable = false, insertable = false)
@@ -384,9 +384,9 @@ public class VScopeSupply implements Serializable{
     @Column(name="VARIANCE",updatable = false, insertable = false)
     public Integer getVariance(){
        // Integer difference=10;
-     /*   if(requiredSiteDate!=null&&siteDate!=null){
+     /*   if(requiredSiteDate!=null&&forecastSiteDate!=null){
             Calendar with = Calendar.getInstance();
-            with.setTime(siteDate);
+            with.setTime(forecastSiteDate);
             Calendar to = Calendar.getInstance();
             to.setTime(requiredSiteDate);
             to.set(Calendar.YEAR, with.get(Calendar.YEAR));

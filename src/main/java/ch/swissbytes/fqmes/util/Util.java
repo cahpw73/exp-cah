@@ -9,7 +9,6 @@ import org.primefaces.model.UploadedFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -91,9 +90,9 @@ public class Util {
     }
 
     public String calculateVariance(ScopeSupplyEntity scopeSupply){
-        if(scopeSupply!=null&&scopeSupply.getRequiredSiteDate()!=null&&scopeSupply.getSiteDate()!=null){
+        if(scopeSupply!=null&&scopeSupply.getRequiredSiteDate()!=null&&scopeSupply.getForecastSiteDate()!=null){
             Calendar with = Calendar.getInstance();
-            with.setTime(scopeSupply.getSiteDate());
+            with.setTime(scopeSupply.getForecastSiteDate());
             Calendar to = Calendar.getInstance();
             to.setTime(scopeSupply.getRequiredSiteDate());
             to.set(Calendar.YEAR, with.get(Calendar.YEAR));

@@ -204,7 +204,7 @@
                                  converter="#{dateConverter}"
                                  converterMessage="#{msgs['validator.date.invalid']}"
                                  jsf:placeholder="#{configuration.formatDate}"
-                                 value="#{scopeSupplyBean.editScopeSupply.deliveryDate}"
+                                 value="#{scopeSupplyBean.editScopeSupply.poDeliveryDate}"
                                  onselect="calendarChanges();" onchange="calendarChanges();">
                         <p:ajax event="dateSelect" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
                                 listener="#{scopeSupplyBean.calculateDate}"
@@ -234,7 +234,7 @@
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     converter="#{dateConverter}"
                                     jsf:placeholder="#{configuration.formatDate}"
-                                    value="#{scopeSupplyBean.editScopeSupply.exWorkDate}"
+                                    value="#{scopeSupplyBean.editScopeSupply.forecastExWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplyEditFormId:forecastSiteDateEdit :scopeSupplyEditFormId:tdpCreate"
                                     listener="#{scopeSupplyBean.calculateDate}"
@@ -437,7 +437,7 @@
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     converter="#{dateConverter}"
                                     jsf:placeholder="#{configuration.formatDate}"
-                                    value="#{scopeSupplyBean.editScopeSupply.siteDate}"
+                                    value="#{scopeSupplyBean.editScopeSupply.forecastSiteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();"
                                     styleClass="forecastSiteDate">
                             <p:ajax event="dateSelect" async="false" delay="500"/>

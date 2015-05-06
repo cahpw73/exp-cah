@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,17 +29,17 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private Integer quantity;
     private String unit;
     private String description;
-    private Date exWorkDate;
+    private Date forecastExWorkDate;
     private String exWorkDateDescription;
     private Integer deliveryLeadTimeQt;
     private TimeMeasurementEnum deliveryLeadTimeMs;
     private String getDeliveryLeadTimeDescription;
-    private Date siteDate;
+    private Date forecastSiteDate;
     private String siteDateDescription;
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
-    private Date deliveryDate;
+    private Date poDeliveryDate;
     private Date actualExWorkDate;
     private Date requiredSiteDate;
     private Date actualSiteDate;
@@ -124,12 +123,12 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     }
 
     @Column(name="EX_WORK_DATE", nullable = false)
-    public Date getExWorkDate() {
-        return exWorkDate;
+    public Date getForecastExWorkDate() {
+        return forecastExWorkDate;
     }
 
-    public void setExWorkDate(Date exWorkDate) {
-        this.exWorkDate = exWorkDate;
+    public void setForecastExWorkDate(Date forecastExWorkDate) {
+        this.forecastExWorkDate = forecastExWorkDate;
     }
 
     @Size(max = 1000)
@@ -169,12 +168,12 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.getDeliveryLeadTimeDescription = getDeliveryLeadTimeDescription;
     }
     @Column(name="SITE_DATE", nullable = false)
-    public Date getSiteDate() {
-        return siteDate;
+    public Date getForecastSiteDate() {
+        return forecastSiteDate;
     }
 
-    public void setSiteDate(Date siteDate) {
-        this.siteDate = siteDate;
+    public void setForecastSiteDate(Date forecastSiteDate) {
+        this.forecastSiteDate = forecastSiteDate;
     }
 
     @Size(max = 1000)
@@ -226,12 +225,12 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
 
     @Column(name="DELIVERY_DATE")
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getPoDeliveryDate() {
+        return poDeliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setPoDeliveryDate(Date poDeliveryDate) {
+        this.poDeliveryDate = poDeliveryDate;
     }
 
     @Column(name="ACTUAL_EX_WORK_DATE")
@@ -399,17 +398,17 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (exWorkDate != null ? exWorkDate.hashCode() : 0);
+        result = 31 * result + (forecastExWorkDate != null ? forecastExWorkDate.hashCode() : 0);
         result = 31 * result + (exWorkDateDescription != null ? exWorkDateDescription.hashCode() : 0);
         result = 31 * result + (deliveryLeadTimeQt != null ? deliveryLeadTimeQt.hashCode() : 0);
         result = 31 * result + (deliveryLeadTimeMs != null ? deliveryLeadTimeMs.hashCode() : 0);
         result = 31 * result + (getDeliveryLeadTimeDescription != null ? getDeliveryLeadTimeDescription.hashCode() : 0);
-        result = 31 * result + (siteDate != null ? siteDate.hashCode() : 0);
+        result = 31 * result + (forecastSiteDate != null ? forecastSiteDate.hashCode() : 0);
         result = 31 * result + (siteDateDescription != null ? siteDateDescription.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (purchaseOrder != null ? purchaseOrder.hashCode() : 0);
         result = 31 * result + (status != null ? status.getId() : 0);
-        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
+        result = 31 * result + (poDeliveryDate != null ? poDeliveryDate.hashCode() : 0);
         result = 31 * result + (actualExWorkDate != null ? actualExWorkDate.hashCode() : 0);
         result = 31 * result + (requiredSiteDate != null ? requiredSiteDate.hashCode() : 0);
         result = 31 * result + (actualSiteDate != null ? actualSiteDate.hashCode() : 0);
