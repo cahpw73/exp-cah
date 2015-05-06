@@ -192,7 +192,7 @@
             <p:dataTable id="resultList" value="#{reportListBean.list}" var="_purchase"
                          styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
-                         rowsPerPageTemplate="#{configuration.pagesSize}" paginatorPosition="bottom">
+                         rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
                     #{_purchase.project}
                 </p:column>
