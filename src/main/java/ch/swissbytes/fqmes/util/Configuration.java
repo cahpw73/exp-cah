@@ -41,6 +41,7 @@ public class Configuration implements Serializable {
 
 
     public String getPagesSize(Long total){
+        System.out.println("TOTALLLLLLL "+total);
         String sizes="";
         for(int i=0;i<this.sizes.length;i++){
             sizes +=this.sizes[i]+" ";

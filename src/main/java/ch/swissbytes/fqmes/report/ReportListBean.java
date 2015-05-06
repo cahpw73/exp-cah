@@ -53,7 +53,7 @@ public class ReportListBean implements Serializable {
         log.info("destroying bean");
     }
 
-    public LazyDataModel<VPurchaseOrder> getList(){
+    public PurchaseOrderViewTbl getList(){
         log.info("getting tbl");
         return tbl;
     }
