@@ -49,3 +49,7 @@ function calendarChanges(){
     console.log("calendar create or edit");
     hasChanges=true;
 }
+function doChange(){
+    console.log('something was changed!');
+    hasChanges=true;
+}

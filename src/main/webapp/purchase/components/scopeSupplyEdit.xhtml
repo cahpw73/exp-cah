@@ -95,6 +95,7 @@
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="90" >
                 <p:commandLink oncomplete="PF('attachmentScopeSupplyModal').show()"
+                               onclick="doChange();"
                                action="#{purchaseOrderEdit.selectingForAttachment(_scopeSupply.id)}"
                                update=":attachmentScopeSupplyId">
                     <h:graphicImage url="#{_scopeSupply.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}" width="20" height="20"/>
