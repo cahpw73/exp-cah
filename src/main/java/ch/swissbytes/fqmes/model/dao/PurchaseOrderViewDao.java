@@ -54,12 +54,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(StringUtils.isNotEmpty(filter.getIncoTerm())&&StringUtils.isNotBlank(filter.getIncoTerm())){
                 query.setParameter("INCO_TERM","%"+filter.getIncoTerm().trim()+"%");
             }
-            if(filter.getDeliveryDateStart()!=null){
-                query.setParameter("START_DELIVERY_DATE",filter.getDeliveryDateStart());
-            }
-            if(filter.getDeliveryDateEnd()!=null){
-                query.setParameter("END_DELIVERY_DATE",filter.getDeliveryDateEnd());
-            }
+
 
             if(StringUtils.isNotEmpty(filter.getStatuses())&&StringUtils.isNotBlank(filter.getStatuses())){
                 String []statuses=filter.getStatuses().split(",");
@@ -111,13 +106,6 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if(StringUtils.isNotEmpty(filter.getIncoTerm())&&StringUtils.isNotBlank(filter.getIncoTerm())){
                 sb.append(" AND lower(x.incoTerm) like lower(:INCO_TERM)");
             }
-            if(filter.getDeliveryDateStart()!=null){
-                sb.append(" AND x.deliveryDate>=:START_DELIVERY_DATE");
-            }
-            if(filter.getDeliveryDateEnd()!=null){
-                sb.append(" AND x.deliveryDate<=:END_DELIVERY_DATE ");
-            }
-
             if(StringUtils.isNotEmpty(filter.getStatuses())&&StringUtils.isNotBlank(filter.getStatuses())){
                 sb.append(" AND  x.purchaseOrderStatus IN(:PURCHASE_ORDER_STATUS_LIST)");
             }
@@ -143,14 +131,18 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
                 }else if(filter.getVariance().equalsIgnoreCase("-ve")){
                     subQuery.append(" AND ss.variance<0");
                 }
-
-
             }
             if(filter.getForecastDueDate()!=null&&filter.getForecastDueDate().intValue()>=0){
                 subQuery.append(" AND (ss.forecastExWorkDate>=:START_FORECAST_DUE_DATE_IN AND ss.forecastExWorkDate<=:END_FORECAST_DUE_DATE_IN)");
             }
             if(filter.getDueIn()!=null){
                 subQuery.append(" AND (ss.poDeliveryDate>=:START_DUE_DATE_IN AND ss.poDeliveryDate<=:END_DUE_DATE_IN)");
+            }
+            if(filter.getDeliveryDateStart()!=null){
+                subQuery.append(" AND ss.forecastExWorkDate>=:START_DELIVERY_DATE");
+            }
+            if(filter.getDeliveryDateEnd()!=null){
+                subQuery.append(" AND ss.forecastExWorkDate<=:END_DELIVERY_DATE ");
             }
             subQuery.append(" ) ");
         }
@@ -171,7 +163,12 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             query.setParameter("START_DUE_DATE_IN",startDueInDate);
             query.setParameter("END_DUE_DATE_IN",new Util().addDays(startDueInDate,filter.getDueIn()*7));
         }
-
+        if(filter.getDeliveryDateStart()!=null){
+            query.setParameter("START_DELIVERY_DATE",filter.getDeliveryDateStart());
+        }
+        if(filter.getDeliveryDateEnd()!=null){
+            query.setParameter("END_DELIVERY_DATE",filter.getDeliveryDateEnd());
+        }
     }
 
     @Override
