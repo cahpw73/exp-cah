@@ -1,13 +1,10 @@
 package ch.swissbytes.fqmes.model.entities;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +18,8 @@ public class CommentEntity implements Serializable, EntityTbl {
 
     private Long id;
     private String name;
-    private String reason;
+    private String subject;
+    private String to;
     private String description;
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
@@ -57,14 +55,24 @@ public class CommentEntity implements Serializable, EntityTbl {
         this.name = name;
     }
 
-    @Size(max = 50)
-    @Column(name = "reason", nullable = false, length = 50)
-    public String getReason() {
-        return reason;
+    @Size(max = 100)
+    @Column(name = "TO_CMT", nullable = false, length = 100)
+    public String getTo() {
+        return to;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    @Size(max = 50)
+    @Column(name = "reason", nullable = false, length = 50)
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     @Size(max = 1000)
@@ -156,10 +164,11 @@ public class CommentEntity implements Serializable, EntityTbl {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (reason != null ? reason.hashCode() : 0);
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (purchaseOrder != null ? purchaseOrder.getId().hashCode() : 0);
         result = 31 * result + (status != null ? status.getId().hashCode() : 0);
+        result = 31 * result + (to != null ? to.hashCode() : 0);
         return result;
     }
 }

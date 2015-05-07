@@ -54,6 +54,10 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String responsibleExpeditingObservation;
     private Integer ordered;
     private String tagNo;
+    private String from;
+    private String to;
+    private Date date;
+    private String descriptionAttachment;
 
 
 
@@ -387,8 +391,43 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.tagNo = tagNo;
     }
 
+    @Size(max = 100)
+    @Column(name = "TO_SS",  length = 100)
+    public String getTo() {
+        return to;
+    }
 
+    public void setTo(String to) {
+        this.to = to;
+    }
+    @Size(max = 100)
+    @Column(name = "FROM_SS", length = 100)
+    public String getFrom() {
+        return from;
+    }
 
+    public void setFrom(String from) {
+        this.from = from;
+    }
+    @Column(name = "DATE_SS", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Size(max = 950)
+    @Column(name = "DESCRIPTION_ATTACHMENT", length = 1000)
+    public String getDescriptionAttachment() {
+        return descriptionAttachment;
+    }
+
+    public void setDescriptionAttachment(String descriptionAttachment) {
+        this.descriptionAttachment = descriptionAttachment;
+    }
 
     @Override
     public int hashCode() {

@@ -140,7 +140,7 @@ public class SearchPurchase implements Filter {
     }
 
     public boolean hasAnyValueForScopeSupplyActive(){
-        return variance!=null||leadTime!=null||forecastDueDate!=null||dueIn!=null||deliveryDateStart!=null||deliveryDateEnd!=null;
+        return (variance!=null&&!variance.equalsIgnoreCase("all"))||leadTime!=null||forecastDueDate!=null||dueIn!=null||deliveryDateStart!=null||deliveryDateEnd!=null;
     }
 
     public boolean isStatusSelected(String statusId){

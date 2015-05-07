@@ -1,6 +1,5 @@
 package ch.swissbytes.fqmes.model.dao;
 
-import ch.swissbytes.fqmes.control.comment.AttachmentCommentService;
 import ch.swissbytes.fqmes.model.Filter;
 import ch.swissbytes.fqmes.model.entities.AttachmentComment;
 import ch.swissbytes.fqmes.model.entities.CommentEntity;
@@ -51,7 +50,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     }
 
     public List<CommentEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        String hql = "SELECT cs.id,cs.name,cs.reason,cs.description,cs.lastUpdate,cs.purchaseOrder,cs.status FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
+        String hql = "SELECT cs.id,cs.name,cs.subject,cs.description,cs.lastUpdate,cs.purchaseOrder,cs.status FROM CommentEntity cs where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
         Query query = this.entityManager.createQuery( hql);
         query.setParameter("purchase_id", purchaseOrderId);
         query.setParameter("DELETED", StatusEnum.DELETED.getId());
@@ -62,7 +61,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
             CommentEntity entity=new CommentEntity();
             entity.setId((Long)values[0]);
             entity.setName((String) values[1]);
-            entity.setReason((String) values[2]);
+            entity.setSubject((String) values[2]);
             entity.setDescription((String) values[3]);
             entity.setLastUpdate((Date) values[4]);
             entity.setPurchaseOrder((PurchaseOrderEntity) values[5]);

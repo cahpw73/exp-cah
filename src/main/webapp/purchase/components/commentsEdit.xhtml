@@ -15,8 +15,8 @@
             <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300"  sortBy="#{_comment.name}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.name}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.reason}"  sortFunction="#{sortBean.sortStrings}">
-                #{_comment.reason}
+            <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.subject}"  sortFunction="#{sortBean.sortStrings}">
+                #{_comment.subject}
             </p:column>
             <p:column headerText="#{msgs['po.attach.tbl.column.observations']}"  sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
                 #{_comment.description}
