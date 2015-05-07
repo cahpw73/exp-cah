@@ -84,7 +84,10 @@ public class PurchaseOrderView implements Serializable{
             }
         }
     }
-
+    public ScopeSupplyEntity currentScopeSupplyForAttachment(){
+        Integer index=currentSelected!=null?scopeSupplyService.getIndexById(currentSelected,scopeSupplies):-1;
+        return index>=0?scopeSupplies.get(index):null;
+    }
 
     public PurchaseOrderEntity getPurchaseOrder() {
         return purchaseOrder;

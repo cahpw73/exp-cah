@@ -143,6 +143,11 @@ public class PurchaseOrderEdit implements Serializable {
         idForAttachment = id;
     }
 
+    public ScopeSupplyEntity currentScopeSupplyForAttachment(){
+        Integer index=idForAttachment!=null?scopeSupplyService.getIndexById(idForAttachment,scopeActives):-1;
+        return index>=0?scopeActives.get(index):null;
+    }
+
     public List<AttachmentComment> getAttachmentActives() {
        /* if (idForAttachment != null) {
             final int index=new CommentService().getIndexById(idForAttachment,comments);
