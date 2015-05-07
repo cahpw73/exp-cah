@@ -244,6 +244,10 @@ public class PurchaseOrderCreate implements Serializable {
         log.info("indexAttachment "+indexAttachment);
     }
 
+    public ScopeSupplyEntity currentScopeSupplyForAttachment(){
+        return indexAttachment!=null?scopeSupplies.get(indexAttachment):null;
+    }
+
     public List<AttachmentComment>getAttachmentsForComment(){
         List<AttachmentComment> list=new ArrayList<AttachmentComment>();
         if(indexCommentEditing!=null&&indexCommentEditing==-1&&newComment!=null){
