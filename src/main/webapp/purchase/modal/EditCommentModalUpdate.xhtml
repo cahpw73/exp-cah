@@ -2,7 +2,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 <h:form id="commentEditFormId" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
         styleClass="form-horizontal">
@@ -18,6 +17,20 @@
                              class="form-control"
                              value="#{purchaseOrderEdit.editingComment.name}"/>
             </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+    <div class="form-group">
+        <h:outputLabel class="col-sm-3 control-label"
+                       value="#{msgs['po.attach.tbl.column.to']}"/>
+        <div class="col-sm-9">
+            <h:inputText type="text"
+                         id="fieldTo"
+                         maxlength="50"
+                         jsf:placeholder="#{msgs['po.attach.tbl.column.to']}"
+                         class="form-control"
+                         value="#{purchaseOrderEdit.editingComment.to}"/>
+        </div>
         </div>
     </div>
     <div class="col-lg-12">
@@ -81,7 +94,7 @@
             <h:commandButton id="addEditComment" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm">
                 <p:ajax onsuccess="PF('commentUpdateModal').hide();" update=":empForm:commentList"
                         listener="#{purchaseOrderEdit.doUpdateComment()}"
-                        process="nameEditComment, descriptionEditComment, reasonEditComment, addEditComment"/>
+                        process="nameEditComment, descriptionEditComment, reasonEditComment, addEditComment, fieldTo"/>
             </h:commandButton>
             <button type="button" onclick="PF('commentUpdateModal').hide();" class="btn btn-primary btn-sm">
                #{msgs['lbl.cancel']}
