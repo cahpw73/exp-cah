@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../WEB-INF/layout/template-prmt.xhtml">
+
+    <ui:define name="title">Home</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#projects" role="tab" data-toggle="tab">Projects</a></li>
+            <li><a href="#reports" role="tab" data-toggle="tab">Reports</a></li>
+            <li><a href="#admin" role="tab" data-toggle="tab">Admin</a></li>
+            <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="projects">
+                projects
+                <ui:insert name="ui-project">Contenido por defecto</ui:insert>
+            </div>
+            <div class="tab-pane" id="reports">
+                reports
+                <ui:insert name="ui-report">Contenido por defecto</ui:insert>
+            </div>
+            <div class="tab-pane" id="admin">
+                admin
+                <ui:insert name="ui-admin">Contenido por defecto</ui:insert>
+            </div>
+            <div class="tab-pane" id="profile">
+                profile
+                <ui:insert name="ui-profile">Contenido por defecto</ui:insert>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

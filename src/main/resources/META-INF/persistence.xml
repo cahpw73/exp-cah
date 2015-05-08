@@ -8,7 +8,7 @@
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
-            <property name="hibernate.connection.datasource" value="java:/fqm/fqmesDS"/>
+            <property name="hibernate.connection.datasource" value="java:/fqm/procurementDS"/>
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.jdbc.use_streams_for_binary" value="true" />
             <property name="hibernate.search.default.directory_provider" value="filesystem" />
