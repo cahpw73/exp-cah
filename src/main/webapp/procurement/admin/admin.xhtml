@@ -2,8 +2,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
@@ -13,21 +11,21 @@
     <ui:define name="body">
         <h:form>
             <div style="margin-top: 20px;">
-                <a href="#">Supplier</a>
+                <a href="#">#{msgs['lbl.admin.supplier']}</a>
                 <br/>
-                <a href="#">Users</a>
+                <a href="#">#{msgs['lbl.admin.user']}</a>
                 <br/>
-                <a href="#">Currencies</a>
+                <a href="#">#{msgs['lbl.admin.currency']}</a>
                 <br/>
                 <h:link
-                        outcome="/procurement/admin/brands/brands">Brands
+                        outcome="/procurement/admin/brands/brands">#{msgs['lbl.admin.brand']}
                 </h:link>
                 <br/>
-                <a href="#">Categories</a>
+                <a href="#">#{msgs['lbl.admin.currency']}</a>
                 <br/>
-                <a href="#">Standard Text</a>
+                <a href="#">#{msgs['lbl.admin.standard.text']}</a>
                 <br/>
-                <a href="#">Logos</a>
+                <a href="#">#{msgs['lbl.admin.logo']}</a>
             </div>
         </h:form>
     </ui:define>
