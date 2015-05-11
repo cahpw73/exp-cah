@@ -40,28 +40,27 @@
                                 warnClass="alert"
                                 infoClass="alert alert-info"/>
                 </div>
-                <div>
-                    <span>
-                        <h:link
-                                outcome="/procurement/project/project">#{msgs['lbl.project']}
-                        </h:link>
-                    </span>
-                    <span>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><h:link
+                            outcome="/procurement/project/project">#{msgs['lbl.project']}
+                    </h:link>
+                    </li>
+                    <li role="presentation">
                         <h:link
                                 outcome="/procurement/report/report">#{msgs['lbl.report']}
                         </h:link>
-                    </span>
-                    <span>
+                    </li>
+                    <li role="presentation">
                         <h:link
                                 outcome="/procurement/admin/admin">#{msgs['lbl.admin']}
                         </h:link>
-                    </span>
-                   <span>
+                    </li>
+                    <li role="presentation">
                         <h:link
                                 outcome="/procurement/profile/profile">#{msgs['lbl.profile']}
                         </h:link>
-                    </span>
-                </div>
+                    </li>
+                </ul>
                 <ui:insert name="body">Default content</ui:insert>
             </div>
         </div>
