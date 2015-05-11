@@ -9,24 +9,32 @@
     </f:metadata>
 
     <ui:define name="body">
-        <h:form>
             <div style="margin-top: 20px;">
-                <a href="#">#{msgs['lbl.admin.supplier']}</a>
-                <br/>
-                <a href="#">#{msgs['lbl.admin.user']}</a>
-                <br/>
-                <a href="#">#{msgs['lbl.admin.currency']}</a>
-                <br/>
-                <h:link
-                        outcome="/procurement/admin/brands/brands">#{msgs['lbl.admin.brand']}
-                </h:link>
-                <br/>
-                <a href="#">#{msgs['lbl.admin.currency']}</a>
-                <br/>
-                <a href="#">#{msgs['lbl.admin.standard.text']}</a>
-                <br/>
-                <a href="#">#{msgs['lbl.admin.logo']}</a>
+                <ul style="list-style-type: none;">
+                    <li>
+                        <a href="#">#{msgs['lbl.admin.supplier']}</a>
+                    </li>
+                    <li>
+                        <a href="#">#{msgs['lbl.admin.user']}</a>
+                    </li>
+                    <li>
+                        <a href="#">#{msgs['lbl.admin.currency']}</a>
+                    </li>
+                    <li>
+                        <h:link
+                                outcome="/procurement/admin/brands/brands">#{msgs['lbl.admin.brand']}
+                        </h:link>
+                    </li>
+                    <li>
+                        <a href="#">#{msgs['lbl.admin.currency']}</a>
+                    </li>
+                    <li>
+                        <a href="#">#{msgs['lbl.admin.standard.text']}</a>
+                    </li>
+                    <li>
+                        <a href="#">#{msgs['lbl.admin.logo']}</a>
+                    </li>
+                </ul>
             </div>
-        </h:form>
     </ui:define>
 </ui:composition>
