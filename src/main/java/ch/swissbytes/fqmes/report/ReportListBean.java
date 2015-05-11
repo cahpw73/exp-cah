@@ -3,9 +3,6 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
-import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
-import ch.swissbytes.fqmes.util.LookupValueFactory;
-import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -13,7 +10,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.model.dao;
 
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;

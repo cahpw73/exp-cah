@@ -9,11 +9,12 @@ import ch.swissbytes.fqmes.control.scopesupply.AttachmentScopeSupplyService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.SupplierDao;
-import ch.swissbytes.fqmes.model.entities.*;
-import ch.swissbytes.fqmes.types.StatusEnum;
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.repository.entities.*;
+import ch.swissbytes.domain.repository.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
+import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.io.IOUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
@@ -334,37 +335,16 @@ public class PurchaseOrderEdit implements Serializable {
         UploadedFile uf = event.getFile();
         log.info("uploading file [" + uf.getFileName() + "]");
         log.info("size [" + uf.getSize() + "]");
-        try {
             AttachmentComment ac=new AttachmentComment();
-            //commentEdit.setJustLoaded(true);
-            ac.setFile(IOUtils.toByteArray(uf.getInputstream()));
-            ac.setFileName(uf.getFileName());
-            ac.setMimeType(uf.getContentType());
+            new Util().enterFile(uf, ac);
             ac.setStatus(enumService.getStatusEnumEnable());
             ac.setId(temporaryId);
             temporaryId--;
-            //commentEdit.setFileWasChanged(true);
-           // final int index = idForAttachment != null ? commentService.getIndexById(idForAttachment, comments ) : -1;
-            //if(index>=0)comments.get(index).getAttachments().add(ac);
             if(commentIndexSelected==-1){
                 commentEdit.getAttachments().add(ac);
             }else{
                 editingComment.getAttachments().add(ac);
             }
-        } catch (IOException ioe) {
-            log.log(Level.SEVERE, "Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
-            ioe.printStackTrace();
-            Messages.addGlobalError("Error uploading file :" + uf.getFileName() + " of " + uf.getSize() + " byte(s)");
-        } finally {
-            try {
-                IOUtils.closeQuietly(uf.getInputstream());
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-                ;
-            }
-        }
-
-
     }
 
     public void cleanComment() {
@@ -557,11 +537,6 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<AttachmentComment> getActiveAttachmentsForComment() {
-       /* final int index = idForAttachment != null ? scopeSupplyService.getIndexById(idForAttachment, comments) : -1;
-        if (index >= 0) {
-            return new AttachmentCommentService().getActives(comments.get(index).getAttachments());
-        }
-        return new ArrayList<>();*/
         List<AttachmentComment>list=new ArrayList<AttachmentComment>();
         if(commentIndexSelected!=null&&commentIndexSelected==-1&&commentEdit!=null){
             list=commentEdit.getAttachments();
@@ -574,17 +549,6 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void deleteAttachmentComment(Long id) {
-       /* final int index = idForAttachment != null ? commentService.getIndexById(idForAttachment, comments ) : -1;
-        if (index >= 0) {
-            int index2 = new AttachmentScopeSupplyService().getIndexById(id, comments.get(index).getAttachments());
-            if (index2 >= 0) {
-                if (comments.get(index).getAttachments().get(index2).getId() > 0) {
-                    comments.get(index).getAttachments().get(index2).setStatus(enumService.getStatusEnumDeleted());
-                } else {
-                    comments.get(index).getAttachments().remove(index2);
-                }
-            }
-        }*/
         if(commentIndexSelected==-1){
             int index = new AttachmentScopeSupplyService().getIndexById(id, commentEdit.getAttachments());
             commentEdit.getAttachments().remove(index);
@@ -595,8 +559,6 @@ public class PurchaseOrderEdit implements Serializable {
             }else if(editingComment.getAttachments().get(index).getId()!=null&&editingComment.getAttachments().get(index).getId().intValue()>0){
                 editingComment.getAttachments().get(index).setStatus(enumService.getStatusEnumDeleted());
             }
-
-
         }
 
     }
@@ -631,25 +593,11 @@ public class PurchaseOrderEdit implements Serializable {
             final int index = idForAttachment != null ? scopeSupplyService.getIndexById(idForAttachment, scopeSupplies) : -1;
             if (index >= 0) {
                 AttachmentScopeSupply attachment = new AttachmentScopeSupply();
-                try {
-                    //editingComment.setJustLoaded(true);
-                    attachment.setFile(IOUtils.toByteArray(uf.getInputstream()));
-                    attachment.setFileName(uf.getFileName());
-                    attachment.setMimeType(uf.getContentType());
+                    new Util().enterFile(uf, attachment);
                     attachment.setStatus(enumService.getStatusEnumEnable());
-                    //editingComment.setFileWasChanged(true);
                     attachment.setId(temporaryId);
                     temporaryId--;
                     scopeSupplies.get(index).getAttachments().add(attachment);
-                } catch (IOException io) {
-                    io.printStackTrace();
-                } finally {
-                    try {
-                        IOUtils.closeQuietly(uf.getInputstream());
-                    } catch (IOException io) {
-                        io.printStackTrace();
-                    }
-                }
             }
         }
     }
@@ -981,7 +929,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpCreation() {
         log.info("calulateForecasteDateForTdpCreation....");
-        //  newTdp.setForecastDeliveryDate(null);
         if (!newTdp.getIsForecastSiteDateManual()) {
             List<TransitDeliveryPointEntity> list = scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious = list.size() > 0 ? list.get(list.size() - 1) : null;
@@ -991,7 +938,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpEdition() {
         log.info("calulateForecasteDateForTdpEdition....");
-        //  tdpEdit.setForecastDeliveryDate(null);
         if (!tdpEdit.getIsForecastSiteDateManual()) {
             List<TransitDeliveryPointEntity> list = scopeSupplyEdit.getTdpList();
             TransitDeliveryPointEntity tdpPrevious = list.size() > 1 && currentIndexForTdp > 0 ? list.get(currentIndexForTdp - 1) : null;
@@ -1001,7 +947,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpCreation1() {
         log.info("calulateForecasteDateForTdpCreation1....");
-        //  newTdp.setForecastDeliveryDate(null);
         if (!newTdp.getIsForecastSiteDateManual()) {
             List<TransitDeliveryPointEntity> list = scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious = list.size() > 0 ? list.get(list.size() - 1) : null;
@@ -1011,7 +956,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void calulateForecasteDateForTdpEdition1() {
         log.info("calulateForecasteDateForTdpEdition1....");
-        // tdpEdit.setForecastDeliveryDate(null);
         if (!tdpEdit.getIsForecastSiteDateManual()) {
             List<TransitDeliveryPointEntity> list = scopeSupplyEditing.getTdpList();
             TransitDeliveryPointEntity tdpPrevious = list.size() > 1 && currentIndexForTdp > 0 ? list.get(currentIndexForTdp - 1) : null;

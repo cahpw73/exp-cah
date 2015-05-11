@@ -1,19 +1,12 @@
 package ch.swissbytes.fqmes.control.scopesupply;
 
 import ch.swissbytes.fqmes.control.Service;
-import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.AttachmentScopeSupplyDao;
-import ch.swissbytes.fqmes.model.dao.ScopeSupplyDao;
-import ch.swissbytes.fqmes.model.entities.AttachmentScopeSupply;
-import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.repository.entities.AttachmentScopeSupply;
 import ch.swissbytes.fqmes.util.DownloadFile;
-import org.apache.commons.lang3.time.DateUtils;
 
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 

@@ -2,7 +2,7 @@ package ch.swissbytes.fqmes.control.tdp;
 
 import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.model.dao.TransitDeliveryPointDao;
-import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
+import ch.swissbytes.domain.repository.entities.TransitDeliveryPointEntity;
 
 import javax.inject.Inject;
 import java.io.Serializable;

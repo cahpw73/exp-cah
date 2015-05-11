@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.repository.entities.ScopeSupplyEntity;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 

@@ -1,12 +1,13 @@
 package ch.swissbytes.fqmes.model.dao;
 
+import ch.swissbytes.domain.repository.GenericDao;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.AttachmentScopeSupply;
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.AttachmentScopeSupply;
+import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.repository.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.repository.entities.TransitDeliveryPointEntity;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.persistence.*;

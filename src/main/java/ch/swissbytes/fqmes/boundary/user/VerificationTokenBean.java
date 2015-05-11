@@ -2,8 +2,8 @@ package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.fqmes.control.user.VerificationTokenService;
 import ch.swissbytes.fqmes.control.user.UserService;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
-import ch.swissbytes.fqmes.model.entities.VerificationTokenEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.VerificationTokenEntity;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.EmailSender;
 import com.sun.mail.util.SocketConnectException;

@@ -22,7 +22,10 @@
                 #{_comment.description}
             </p:column>
             <p:column>
-                <h:graphicImage rendered="#{_comment.attachments.size() gt 0}" url="/resources/img/full-folder.png" width="20" height="20"/>
+                <h:commandLink>
+                    <h:graphicImage url="#{_comment.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}" width="20" height="20"/>
+                    <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId" process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
+                </h:commandLink>
             </p:column>
             <p:column headerText="#{msgs['lbl.action']}" width="150">
                 <div class="pull-right">

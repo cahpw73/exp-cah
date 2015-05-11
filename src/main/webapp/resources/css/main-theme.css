@@ -469,3 +469,6 @@ span.multiselect-selected-text {
 label.checkbox{
     font-size:12px;
 }
+.ui-state-default{
+    background: #ffffff;
+}

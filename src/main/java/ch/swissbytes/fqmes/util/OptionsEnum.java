@@ -3,7 +3,7 @@ package ch.swissbytes.fqmes.util;
 import java.util.EnumSet;
 
 
-import ch.swissbytes.fqmes.model.entities.OptionsEntity;
+import ch.swissbytes.domain.repository.entities.OptionsEntity;
 import org.apache.commons.lang3.ObjectUtils;
 
 

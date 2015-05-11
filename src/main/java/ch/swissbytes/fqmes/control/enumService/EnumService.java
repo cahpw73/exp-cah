@@ -1,8 +1,8 @@
 package ch.swissbytes.fqmes.control.enumService;
 
 import ch.swissbytes.fqmes.model.dao.EntityEnumDao;
-import ch.swissbytes.fqmes.model.entities.RoleEntity;
-import ch.swissbytes.fqmes.model.entities.StatusEntity;
+import ch.swissbytes.domain.repository.entities.RoleEntity;
+import ch.swissbytes.domain.repository.entities.StatusEntity;
 
 import javax.inject.Inject;
 import java.io.Serializable;

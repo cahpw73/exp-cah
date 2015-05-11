@@ -2,17 +2,14 @@ package ch.swissbytes.fqmes.report;
 
 
 
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.*;
 import java.util.logging.Logger;
 

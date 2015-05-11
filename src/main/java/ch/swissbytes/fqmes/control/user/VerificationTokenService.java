@@ -1,8 +1,8 @@
 package ch.swissbytes.fqmes.control.user;
 
 import ch.swissbytes.fqmes.model.dao.VerificationTokenDao;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
-import ch.swissbytes.fqmes.model.entities.VerificationTokenEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.VerificationTokenEntity;
 import org.omnifaces.util.Messages;
 
 import javax.inject.Inject;

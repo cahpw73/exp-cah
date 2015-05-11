@@ -1,8 +1,9 @@
 package ch.swissbytes.fqmes.model.dao;
 
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.SupplierEntity;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.GenericDao;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.SupplierEntity;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;

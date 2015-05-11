@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
 
-import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.domain.repository.entities.*;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;

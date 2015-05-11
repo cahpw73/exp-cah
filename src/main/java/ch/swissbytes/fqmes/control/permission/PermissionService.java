@@ -2,9 +2,9 @@ package ch.swissbytes.fqmes.control.permission;
 
 import ch.swissbytes.fqmes.model.dao.PermissionDao;
 import ch.swissbytes.fqmes.model.dao.UserDao;
-import ch.swissbytes.fqmes.model.entities.PermissionGrantedEntity;
-import ch.swissbytes.fqmes.model.entities.RoleEntity;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.PermissionGrantedEntity;
+import ch.swissbytes.domain.repository.entities.RoleEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
 
 import javax.inject.Inject;
 import java.io.Serializable;

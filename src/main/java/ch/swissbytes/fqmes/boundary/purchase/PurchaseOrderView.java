@@ -7,7 +7,7 @@ import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.AttachmentScopeSupplyService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.model.dao.*;
-import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.domain.repository.entities.*;
 import ch.swissbytes.fqmes.util.SortBean;
 
 import javax.annotation.PostConstruct;

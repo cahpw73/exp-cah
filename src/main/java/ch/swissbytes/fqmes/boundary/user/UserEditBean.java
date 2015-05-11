@@ -2,11 +2,11 @@ package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.user.UserService;
-import ch.swissbytes.fqmes.model.entities.RoleEntity;
-import ch.swissbytes.fqmes.model.entities.StatusEntity;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
-import ch.swissbytes.fqmes.types.RoleEnum;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.entities.RoleEntity;
+import ch.swissbytes.domain.repository.entities.StatusEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
+import ch.swissbytes.domain.repository.types.RoleEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
 
