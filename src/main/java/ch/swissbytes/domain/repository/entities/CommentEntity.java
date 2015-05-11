@@ -26,11 +26,6 @@ public class CommentEntity implements Serializable, EntityTbl {
     private StatusEntity status;
     private List<AttachmentComment> attachments=new ArrayList<>();
 
-    private Boolean justLoaded = false;
-
-
-    private Boolean fileWasChanged = false;
-
     private int previousHascode=0;
 
     @Id
@@ -125,25 +120,6 @@ public class CommentEntity implements Serializable, EntityTbl {
         CommentEntity that = (CommentEntity) o;
 
         return that.hashCode() == this.hashCode();
-    }
-
-    @Transient
-    public Boolean getJustLoaded() {
-        return justLoaded;
-    }
-
-    public void setJustLoaded(Boolean justLoaded) {
-        this.justLoaded = justLoaded;
-    }
-
-
-    @Transient
-    public Boolean getFileWasChanged() {
-        return fileWasChanged;
-    }
-
-    public void setFileWasChanged(Boolean fileWasChanged) {
-        this.fileWasChanged = fileWasChanged;
     }
 
     @Transient
