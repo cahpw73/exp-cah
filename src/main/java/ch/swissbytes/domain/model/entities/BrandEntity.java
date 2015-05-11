@@ -1,10 +1,11 @@
-package ch.swissbytes.domain.repository.entities;
+package ch.swissbytes.domain.model.entities;
 
 /**
  * Created by alvaro on 9/8/14.
  */
 
-import ch.swissbytes.domain.repository.types.StatusEnum;
+
+import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Named;
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 @Named
 @Entity
-@Table(name = "supplier")
+@Table(name = "brand")
 public class BrandEntity implements Serializable{
 
     private Long id;
