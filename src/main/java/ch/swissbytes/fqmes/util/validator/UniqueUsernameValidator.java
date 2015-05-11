@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.util.validator;
 
-import ch.swissbytes.fqmes.control.user.UserService;
+import ch.swissbytes.Service.business.user.UserService;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;

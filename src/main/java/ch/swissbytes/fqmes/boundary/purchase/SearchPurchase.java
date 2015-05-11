@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
-import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.Service.infrastructure.Filter;
 
 import java.util.Date;
 

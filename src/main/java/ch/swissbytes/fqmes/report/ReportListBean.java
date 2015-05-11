@@ -2,7 +2,7 @@ package ch.swissbytes.fqmes.report;
 
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
-import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

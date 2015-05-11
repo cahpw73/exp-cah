@@ -1,12 +1,12 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
-import ch.swissbytes.fqmes.control.comment.CommentService;
-import ch.swissbytes.fqmes.control.enumService.EnumService;
-import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
-import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
-import ch.swissbytes.domain.repository.entities.*;
-import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.Service.business.comment.CommentService;
+import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
+import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;

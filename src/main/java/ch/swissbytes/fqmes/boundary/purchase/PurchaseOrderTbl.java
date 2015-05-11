@@ -1,8 +1,8 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
-import ch.swissbytes.domain.repository.Filter;
-import ch.swissbytes.fqmes.model.dao.PurchaseOrderDao;
-import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
+import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 

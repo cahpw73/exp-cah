@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
-import ch.swissbytes.domain.repository.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTimeZone;
 import org.picketlink.common.util.StringUtil;

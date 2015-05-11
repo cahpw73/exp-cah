@@ -1,9 +1,9 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.domain.repository.types.IncoTermsEnum;
-import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
-import ch.swissbytes.domain.repository.types.TimeMeasurementEnum;
-import ch.swissbytes.domain.repository.types.UoMEnum;
+import ch.swissbytes.domain.types.IncoTermsEnum;
+import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.types.UoMEnum;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
