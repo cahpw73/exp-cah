@@ -1,9 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
@@ -11,28 +8,45 @@
     </f:metadata>
 
     <ui:define name="body">
-        <h:form>
-            <div style="margin-top: 20px;">
-                <a href="#">Deliverables</a>
-                <br/>
-                <a href="#">Expediting</a>
-                <br/>
-                <a href="#">Bidders List</a>
-                <br/>
-                <a href="#">Project Procurement Report</a>
-                <br/>
-                <a href="#">Detailed Procurement Report</a>
-                <br/>
-                <a href="#">Summary Purchase Order Report</a>
-                <br/>
-                <a href="#">Project Supplier Contacts</a>
-                <br/>
-                <a href="#">Required Retentions Report</a>
-                <br/>
-                <a href="#">Committed Currencies Report</a>
-                <br/>
-                <a href="#">Materials Requisition Report </a>
-            </div>
-        </h:form>
+        <div style="margin-top: 20px;">
+            <ul style="list-style-type: none;">
+                <li>
+                    <a href="#">#{msgs['lbl.report.deliverable']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.expediting']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.bidder.list']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.project.procurement']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.detailed.procurement']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.summary.purchase.order']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.project.supplier.contact']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.required.retention']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.commited.currency']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.material.requisition']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.uncommited.data']}</a>
+                </li>
+                <li>
+                    <a href="#">#{msgs['lbl.report.detailed.supplier']}</a>
+                </li>
+            </ul>
+        </div>
     </ui:define>
 </ui:composition>
