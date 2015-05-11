@@ -1,10 +1,8 @@
 package ch.swissbytes.fqmes.boundary.security;
 
 import ch.swissbytes.fqmes.control.user.UserService;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
 import ch.swissbytes.fqmes.util.Encode;
-import ch.swissbytes.fqmes.util.LanguagePreference;
-import ch.swissbytes.fqmes.util.LookupValueFactory;
 import org.omnifaces.util.Messages;
 import org.picketlink.annotations.PicketLink;
 import org.picketlink.authentication.BaseAuthenticator;
@@ -12,7 +10,6 @@ import org.picketlink.credential.DefaultLoginCredentials;
 import org.picketlink.idm.model.Attribute;
 import org.picketlink.idm.model.basic.User;
 
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;

@@ -1,8 +1,9 @@
 package ch.swissbytes.fqmes.model.dao;
 
+import ch.swissbytes.domain.repository.GenericDao;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.VPurchaseOrder;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.VPurchaseOrder;
 import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;

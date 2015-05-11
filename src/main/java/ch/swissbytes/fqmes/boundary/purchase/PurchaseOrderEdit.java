@@ -9,7 +9,7 @@ import ch.swissbytes.fqmes.control.scopesupply.AttachmentScopeSupplyService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.SupplierDao;
-import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.domain.repository.entities.*;
 import ch.swissbytes.fqmes.types.StatusEnum;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;

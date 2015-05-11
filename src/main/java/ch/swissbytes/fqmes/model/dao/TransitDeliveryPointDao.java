@@ -1,8 +1,8 @@
 package ch.swissbytes.fqmes.model.dao;
 
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity;
+import ch.swissbytes.domain.repository.GenericDao;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.TransitDeliveryPointEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
 
@@ -28,7 +28,7 @@ public class TransitDeliveryPointDao extends GenericDao<TransitDeliveryPointEnti
 
   @Override
   public <TransitDeliveryPointEntity>  void save(final TransitDeliveryPointEntity entity) {
-      ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity transitDeliveryPointEntity = (ch.swissbytes.fqmes.model.entities.TransitDeliveryPointEntity) entity;
+      ch.swissbytes.domain.repository.entities.TransitDeliveryPointEntity transitDeliveryPointEntity = (ch.swissbytes.domain.repository.entities.TransitDeliveryPointEntity) entity;
       transitDeliveryPointEntity.setLocation(Util.cutIfAny(transitDeliveryPointEntity.getLocation(),50));
       transitDeliveryPointEntity.setComment(Util.cutIfAny(transitDeliveryPointEntity.getLocation(),1000));
       if(transitDeliveryPointEntity.getLeadTime() == null){

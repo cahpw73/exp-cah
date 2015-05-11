@@ -4,7 +4,7 @@ package ch.swissbytes.fqmes.boundary.scopeSupply;
 import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
-import ch.swissbytes.fqmes.model.entities.*;
+import ch.swissbytes.domain.repository.entities.*;
 import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Purchase;
 import org.omnifaces.util.Messages;

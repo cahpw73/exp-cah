@@ -1,10 +1,11 @@
 package ch.swissbytes.fqmes.model.dao;
 
 
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.PermissionGrantedEntity;
+import ch.swissbytes.domain.repository.GenericDao;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.PermissionGrantedEntity;
 
-import ch.swissbytes.fqmes.model.entities.RoleEntity;
+import ch.swissbytes.domain.repository.entities.RoleEntity;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.List;

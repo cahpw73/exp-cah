@@ -3,15 +3,12 @@ package ch.swissbytes.fqmes.control.purchase;
 import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.*;
-import ch.swissbytes.fqmes.model.entities.*;
-import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.repository.entities.*;
 import ch.swissbytes.fqmes.types.StatusEnum;
-import ch.swissbytes.fqmes.util.Purchase;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**

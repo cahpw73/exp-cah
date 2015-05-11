@@ -2,7 +2,7 @@ package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.user.UserService;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
 import ch.swissbytes.fqmes.types.RoleEnum;
 import ch.swissbytes.fqmes.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
@@ -13,7 +13,6 @@ import org.picketlink.idm.model.basic.User;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Size;

@@ -1,4 +1,4 @@
-package ch.swissbytes.fqmes.model.entities;
+package ch.swissbytes.domain.repository.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package ch.swissbytes.fqmes.model.entities;
+package ch.swissbytes.domain.repository.entities;
 // Generated 07-feb-2014 10:48:37 by Hibernate Tools 3.2.0.CR1
 
 

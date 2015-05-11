@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.types;
 
-import ch.swissbytes.fqmes.model.entities.RoleEntity;
+import ch.swissbytes.domain.repository.entities.RoleEntity;
 
 import java.io.Serializable;
 

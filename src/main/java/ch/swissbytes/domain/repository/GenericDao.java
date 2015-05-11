@@ -1,7 +1,6 @@
-package ch.swissbytes.fqmes.model.dao;
+package ch.swissbytes.domain.repository;
 
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.Optional;
+import ch.swissbytes.fqmes.model.dao.Specification;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

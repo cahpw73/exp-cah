@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.fqmes.control.user.UserService;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
 import org.omnifaces.util.Messages;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;

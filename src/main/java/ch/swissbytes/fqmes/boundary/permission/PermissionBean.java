@@ -5,15 +5,13 @@ package ch.swissbytes.fqmes.boundary.permission;
 
 import ch.swissbytes.fqmes.control.permission.PermissionService;
 import ch.swissbytes.fqmes.model.dao.PermissionDao;
-import ch.swissbytes.fqmes.model.entities.PermissionGrantedEntity;
-import ch.swissbytes.fqmes.model.entities.RoleEntity;
+import ch.swissbytes.domain.repository.entities.PermissionGrantedEntity;
+import ch.swissbytes.domain.repository.entities.RoleEntity;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.Stateful;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

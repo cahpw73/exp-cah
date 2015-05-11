@@ -1,10 +1,8 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
-import ch.swissbytes.fqmes.model.dao.PurchaseOrderDao;
 import ch.swissbytes.fqmes.model.dao.PurchaseOrderViewDao;
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
-import org.primefaces.model.LazyDataModel;
+import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

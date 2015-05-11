@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.fqmes.model.dao.UserDao;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.UserEntity;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 

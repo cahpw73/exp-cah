@@ -2,8 +2,8 @@ package ch.swissbytes.fqmes.control.comment;
 
 import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.model.dao.CommentDao;
-import ch.swissbytes.fqmes.model.entities.AttachmentComment;
-import ch.swissbytes.fqmes.model.entities.CommentEntity;
+import ch.swissbytes.domain.repository.entities.AttachmentComment;
+import ch.swissbytes.domain.repository.entities.CommentEntity;
 import ch.swissbytes.fqmes.util.DownloadFile;
 
 import javax.inject.Inject;

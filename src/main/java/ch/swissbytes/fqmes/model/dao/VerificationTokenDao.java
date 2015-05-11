@@ -1,9 +1,10 @@
 package ch.swissbytes.fqmes.model.dao;
 
 
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.UserEntity;
-import ch.swissbytes.fqmes.model.entities.VerificationTokenEntity;
+import ch.swissbytes.domain.repository.GenericDao;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.UserEntity;
+import ch.swissbytes.domain.repository.entities.VerificationTokenEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 
 import javax.persistence.Query;

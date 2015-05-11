@@ -1,10 +1,11 @@
 package ch.swissbytes.fqmes.model.dao;
 
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.AttachmentComment;
-import ch.swissbytes.fqmes.model.entities.CommentEntity;
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.fqmes.model.entities.StatusEntity;
+import ch.swissbytes.domain.repository.GenericDao;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.AttachmentComment;
+import ch.swissbytes.domain.repository.entities.CommentEntity;
+import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.repository.entities.StatusEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 
 import javax.inject.Inject;

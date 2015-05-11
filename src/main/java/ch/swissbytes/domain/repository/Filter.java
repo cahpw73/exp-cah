@@ -1,4 +1,4 @@
-package ch.swissbytes.fqmes.model;
+package ch.swissbytes.domain.repository;
 
 /**
  * Created by alvaro on 9/15/14.

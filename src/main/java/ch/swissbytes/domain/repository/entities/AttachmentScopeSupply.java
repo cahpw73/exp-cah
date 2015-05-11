@@ -1,6 +1,6 @@
-package ch.swissbytes.fqmes.model.entities;
+package ch.swissbytes.domain.repository.entities;
 
-import ch.swissbytes.fqmes.model.interfaces.ManageFile;
+import ch.swissbytes.domain.repository.interfaces.ManageFile;
 
 import javax.inject.Named;
 import javax.persistence.*;

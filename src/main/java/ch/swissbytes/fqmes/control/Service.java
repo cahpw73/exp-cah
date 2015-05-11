@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.control;
 
-import ch.swissbytes.fqmes.model.dao.GenericDao;
-import ch.swissbytes.fqmes.model.entities.EntityTbl;
+import ch.swissbytes.domain.repository.GenericDao;
+import ch.swissbytes.domain.repository.entities.EntityTbl;
 import ch.swissbytes.fqmes.types.StatusEnum;
 import org.apache.commons.beanutils.BeanUtils;
 

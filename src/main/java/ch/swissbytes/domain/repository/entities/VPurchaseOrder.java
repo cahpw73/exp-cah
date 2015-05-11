@@ -1,4 +1,4 @@
-package ch.swissbytes.fqmes.model.entities;
+package ch.swissbytes.domain.repository.entities;
 
 import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
 import org.apache.commons.lang.math.NumberUtils;

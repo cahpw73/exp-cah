@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.types;
 
-import ch.swissbytes.fqmes.model.entities.StatusEntity;
+import ch.swissbytes.domain.repository.entities.StatusEntity;
 
 import java.io.Serializable;
 

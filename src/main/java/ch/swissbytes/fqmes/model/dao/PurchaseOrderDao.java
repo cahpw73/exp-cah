@@ -1,8 +1,9 @@
 package ch.swissbytes.fqmes.model.dao;
 
+import ch.swissbytes.domain.repository.GenericDao;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
-import ch.swissbytes.fqmes.model.Filter;
-import ch.swissbytes.fqmes.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.types.StatusEnum;
 import org.apache.commons.lang3.StringUtils;
 
