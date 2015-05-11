@@ -3,10 +3,10 @@ package ch.swissbytes.fqmes.boundary.permission;
 
 
 
-import ch.swissbytes.fqmes.control.permission.PermissionService;
-import ch.swissbytes.fqmes.model.dao.PermissionDao;
-import ch.swissbytes.domain.repository.entities.PermissionGrantedEntity;
-import ch.swissbytes.domain.repository.entities.RoleEntity;
+import ch.swissbytes.Service.business.permission.PermissionService;
+import ch.swissbytes.Service.business.permission.PermissionDao;
+import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
+import ch.swissbytes.domain.model.entities.RoleEntity;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 

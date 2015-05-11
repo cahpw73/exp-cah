@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.boundary.security;
 
-import ch.swissbytes.fqmes.control.user.UserService;
-import ch.swissbytes.domain.repository.entities.UserEntity;
+import ch.swissbytes.Service.business.user.UserService;
+import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
 import org.picketlink.annotations.PicketLink;

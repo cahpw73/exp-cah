@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
-import ch.swissbytes.domain.repository.Filter;
+import ch.swissbytes.Service.infrastructure.Filter;
 
 /**
  * Created by alvaro on 9/25/14.

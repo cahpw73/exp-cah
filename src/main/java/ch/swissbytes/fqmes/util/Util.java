@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.domain.repository.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.repository.interfaces.ManageFile;
+import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.interfaces.ManageFile;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTimeZone;
 import org.primefaces.model.UploadedFile;

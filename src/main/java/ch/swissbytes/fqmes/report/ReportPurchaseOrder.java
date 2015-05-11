@@ -2,7 +2,7 @@ package ch.swissbytes.fqmes.report;
 
 
 
-import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;

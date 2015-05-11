@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.boundary.user;
 
-import ch.swissbytes.fqmes.model.dao.UserDao;
-import ch.swissbytes.domain.repository.entities.UserEntity;
+import ch.swissbytes.Service.business.user.UserDao;
+import ch.swissbytes.domain.model.entities.UserEntity;
 import org.primefaces.model.LazyDataModel;
 
 import javax.annotation.PostConstruct;

@@ -1,13 +1,13 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 
-import ch.swissbytes.fqmes.control.comment.AttachmentCommentService;
-import ch.swissbytes.fqmes.control.comment.CommentService;
-import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
-import ch.swissbytes.fqmes.control.scopesupply.AttachmentScopeSupplyService;
-import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
-import ch.swissbytes.fqmes.model.dao.*;
-import ch.swissbytes.domain.repository.entities.*;
+import ch.swissbytes.Service.business.AttachmentComment.AttachmentCommentService;
+import ch.swissbytes.Service.business.comment.CommentService;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
+import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
+import ch.swissbytes.Service.business.scopesupply.SupplierDao;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.util.SortBean;
 
 import javax.annotation.PostConstruct;
