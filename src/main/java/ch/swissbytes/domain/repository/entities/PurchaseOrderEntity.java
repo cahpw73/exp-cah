@@ -4,7 +4,7 @@ package ch.swissbytes.domain.repository.entities;
  * Created by alvaro on 9/8/14.
  */
 
-import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
 
 import javax.inject.Named;
 import javax.persistence.*;

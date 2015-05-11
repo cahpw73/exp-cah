@@ -1,6 +1,6 @@
 package ch.swissbytes.domain.repository.entities;
 
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.repository.types.TimeMeasurementEnum;
 
 import javax.inject.Named;
 import javax.persistence.*;

@@ -4,7 +4,7 @@ import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.ScopeSupplyDao;
 import ch.swissbytes.domain.repository.entities.*;
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.repository.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.inject.Inject;

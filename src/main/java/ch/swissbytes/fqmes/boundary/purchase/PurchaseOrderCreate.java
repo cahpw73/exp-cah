@@ -6,7 +6,7 @@ import ch.swissbytes.fqmes.control.enumService.EnumService;
 import ch.swissbytes.fqmes.control.purchase.PurchaseOrderService;
 import ch.swissbytes.fqmes.control.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.repository.entities.*;
-import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;

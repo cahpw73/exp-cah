@@ -4,7 +4,7 @@ import ch.swissbytes.domain.repository.GenericDao;
 import ch.swissbytes.domain.repository.Filter;
 import ch.swissbytes.domain.repository.entities.RoleEntity;
 import ch.swissbytes.domain.repository.entities.StatusEntity;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.persistence.Query;
 import java.io.Serializable;

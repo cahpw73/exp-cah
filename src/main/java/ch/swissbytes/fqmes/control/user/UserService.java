@@ -3,7 +3,7 @@ package ch.swissbytes.fqmes.control.user;
 import ch.swissbytes.fqmes.model.dao.UserDao;
 import ch.swissbytes.domain.repository.entities.RoleEntity;
 import ch.swissbytes.domain.repository.entities.UserEntity;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;

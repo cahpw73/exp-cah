@@ -7,7 +7,7 @@ import ch.swissbytes.domain.repository.entities.AttachmentScopeSupply;
 import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.repository.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.repository.entities.TransitDeliveryPointEntity;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.persistence.*;

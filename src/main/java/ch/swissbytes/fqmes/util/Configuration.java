@@ -1,18 +1,14 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
-import ch.swissbytes.fqmes.types.TimeMeasurementEnum;
+import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.repository.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTimeZone;
 import org.picketlink.common.util.StringUtil;
-import sun.util.logging.resources.logging;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.text.*;
 import java.util.*;
 import java.util.logging.Level;

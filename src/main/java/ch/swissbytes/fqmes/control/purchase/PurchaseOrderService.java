@@ -4,7 +4,7 @@ import ch.swissbytes.fqmes.control.Service;
 import ch.swissbytes.fqmes.control.tdp.TransitDeliveryPointService;
 import ch.swissbytes.fqmes.model.dao.*;
 import ch.swissbytes.domain.repository.entities.*;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;

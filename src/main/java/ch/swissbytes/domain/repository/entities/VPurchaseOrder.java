@@ -1,6 +1,6 @@
 package ch.swissbytes.domain.repository.entities;
 
-import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
 import org.apache.commons.lang.math.NumberUtils;
 
 import javax.inject.Named;

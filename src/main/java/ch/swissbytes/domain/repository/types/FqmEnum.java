@@ -1,4 +1,4 @@
-package ch.swissbytes.fqmes.types;
+package ch.swissbytes.domain.repository.types;
 
 /**
  * Created by christian on 16/09/14.

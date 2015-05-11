@@ -4,7 +4,7 @@ import ch.swissbytes.domain.repository.GenericDao;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.domain.repository.Filter;
 import ch.swissbytes.domain.repository.entities.VPurchaseOrder;
-import ch.swissbytes.fqmes.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.repository.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
 

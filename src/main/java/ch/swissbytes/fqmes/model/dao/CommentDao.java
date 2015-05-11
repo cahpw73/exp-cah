@@ -6,7 +6,7 @@ import ch.swissbytes.domain.repository.entities.AttachmentComment;
 import ch.swissbytes.domain.repository.entities.CommentEntity;
 import ch.swissbytes.domain.repository.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.repository.entities.StatusEntity;
-import ch.swissbytes.fqmes.types.StatusEnum;
+import ch.swissbytes.domain.repository.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.persistence.*;
