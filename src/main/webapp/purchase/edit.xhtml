@@ -362,13 +362,13 @@
             <!-- /.col-lg-12 -->
         </div>
 
-    <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentEditModal" resizable="false" height="250" width="500">
+    <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentEditModal" resizable="false" height="400" width="500">
         <ui:include src="modal/EditModalComment.xhtml"/>
     </p:dialog>
-    <p:dialog id="commentEditModalId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentUpdateModal" resizable="false"  height="250" width="500">
+    <p:dialog id="commentEditModalId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentUpdateModal" resizable="false"  height="400" width="500">
         <ui:include src="modal/EditCommentModalUpdate.xhtml"/>
     </p:dialog>
-        <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupplyModal" resizable="false"  height="250" width="400">
+        <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupplyModal" resizable="false"  height="380" width="400">
             <ui:include src="modal/attachment/attachmentScopeSupplyEdit.xhtml"/>
         </p:dialog>
         <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
