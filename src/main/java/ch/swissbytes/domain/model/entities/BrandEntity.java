@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
-@Named
 @Entity
 @Table(name = "brand")
 public class BrandEntity implements Serializable{
