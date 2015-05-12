@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.EntityTbl;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.beanutils.BeanUtils;
 
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,11 @@ public class Service<T> implements Serializable {
   public void initialize(GenericDao dao){
       this.dao=dao;
   }
-
+@Transactional
     public void doSave(T entity){
         dao.save(entity);
     }
-
+@Transactional
     public void doUpdate(T entity){
         dao.update(entity);
     }

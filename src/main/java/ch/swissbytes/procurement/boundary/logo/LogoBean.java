@@ -1,18 +1,14 @@
 package ch.swissbytes.procurement.boundary.logo;
 
-import ch.swissbytes.Service.business.brand.BrandService;
-import ch.swissbytes.domain.model.entities.BrandEntity;
+import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.domain.model.entities.LogoEntity;
-import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -32,16 +28,31 @@ public class LogoBean implements Serializable {
 
     private List<LogoEntity> logos;
 
+    @Inject
+    private LogoService service;
+
     @PostConstruct
     public void create(){
         log.info("created LogoBean");
+        initialize();
     }
 
     private void initialize(){
         logo=new LogoEntity();
-        logos=new ArrayList<>();
+        logos= service.getLogoList();
+
     }
 
+
+    public void doSave(){
+        logo.setDescription("new file "+new Date().getTime());
+        service.doSave(logo);
+        log.info(String.format("logo has been saved [%s]",logo.getDescription()));
+    }
+
+    public void doDelete(){
+        log.info(String.format("logo has been removed [%s]",logo.getDescription()));
+    }
 
     public LogoEntity getLogo() {
         return logo;

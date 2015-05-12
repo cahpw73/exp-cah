@@ -7,6 +7,7 @@
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form>
@@ -16,41 +17,19 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <h:inputText value="" styleClass="form-control"></h:inputText>
-                            </div>
-                        </div>
-                        <br/>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ui:remove>
-                                    <h:selectOneListbox value="#{user.favYear1}">
-                                        <f:selectItem itemValue="2000" itemLabel="Year1holaaaa"/>
-                                        <f:selectItem itemValue="2010" itemLabel="Year2"/>
-                                        <f:selectItem itemValue="2020" itemLabel="Year3"/>
-                                        <f:selectItem itemValue="2000" itemLabel="Year4"/>
-                                        <f:selectItem itemValue="2010" itemLabel="Year5"/>
-                                        <f:selectItem itemValue="2020" itemLabel="Year6"/>
-                                        <f:selectItem itemValue="2000" itemLabel="Year7"/>
-                                        <f:selectItem itemValue="2010" itemLabel="Year8"/>
-                                        <f:selectItem itemValue="2020" itemLabel="Year9"/>
-                                    </h:selectOneListbox>
-                                </ui:remove>
-                                <h:dataTable>
+                                <h:dataTable value="#{logoBean.logos}" var="_logo">
                                     <h:column>
 
                                     </h:column>
                                     <h:column>
-
+                                        #{_logo.description}
                                     </h:column>
                                 </h:dataTable>
                             </div>
                             <div class="col-md-6">
                                 New Logo
                                 <br/>
-                                <h:inputText value=""></h:inputText>
-                                <br/>
-                                <p:commandLink value="#{msgs['lbl.add']}"/>
+                                <p:commandLink value="#{msgs['lbl.add']}" action="#{logoBean.doSave()}"/>
                                 <p:commandLink value="#{msgs['lbl.delete']}"/>
                             </div>
                         </div>

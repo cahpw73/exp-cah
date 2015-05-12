@@ -4,6 +4,7 @@ package ch.swissbytes.Service.business.logo;
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.domain.model.entities.LogoEntity;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -21,6 +22,11 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
     private LogoDao dao;
 
     public LogoService(){
+        //super.initialize(dao);
+    }
+
+    @PostConstruct
+    public void create(){
         super.initialize(dao);
     }
 
@@ -39,14 +45,8 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
 
     public List<LogoEntity> getLogoList(){
         log.info("getBrandList");
-        return dao.getBrandList();
+        return dao.getLogoList();
     }
 
-    public List<LogoEntity> findByName(final String name){
-        log.info("findByName");
-        String brandName = name != null ? name : "";
-        //return dao.findByName(brandName);
-        return null;
-    }
 
 }

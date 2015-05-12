@@ -3,11 +3,11 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form>

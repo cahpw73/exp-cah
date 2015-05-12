@@ -4,6 +4,7 @@ import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.LogoEntity;
+import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
 import java.io.Serializable;
@@ -29,8 +30,14 @@ public class LogoDao extends GenericDao<LogoEntity> implements Serializable {
        super.update(detachedEntity);
     }
 
-    public List<LogoEntity> getBrandList(){
-        return super.findAll(LogoEntity.class);
+    public List<LogoEntity> getLogoList(){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM LogoEntity x ");
+        sb.append("WHERE x.status=:ENABLED");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),map);
     }
 
    /* public List<BrandEntity> findByName(final String name){
