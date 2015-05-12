@@ -7,7 +7,6 @@ package ch.swissbytes.domain.model.entities;
 
 import ch.swissbytes.domain.types.StatusEnum;
 
-import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;

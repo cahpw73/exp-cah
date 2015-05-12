@@ -20,6 +20,8 @@ public class BrandService  extends Service<BrandEntity> implements Serializable{
     @Inject
     private BrandDao brandDao;
 
+
+
     @Transactional
     public void doSave(BrandEntity brandEntity){
         log.info("doSave");
