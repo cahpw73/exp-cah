@@ -41,21 +41,21 @@
                                 infoClass="alert alert-info"/>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><h:link
+                    <li role="presentation" class="#{mainMenuBean.isSelected(0)?'active':''}"><h:link
                             outcome="/procurement/project/project">#{msgs['lbl.project']}
                     </h:link>
                     </li>
-                    <li role="presentation">
+                    <li role="presentation" class="#{mainMenuBean.isSelected(1)?'active':''}">
                         <h:link
                                 outcome="/procurement/report/report">#{msgs['lbl.report']}
                         </h:link>
                     </li>
-                    <li role="presentation">
+                    <li role="presentation" class="#{mainMenuBean.isSelected(2)?'active':''}">
                         <h:link
                                 outcome="/procurement/admin/admin">#{msgs['lbl.admin']}
                         </h:link>
                     </li>
-                    <li role="presentation">
+                    <li role="presentation" class="#{mainMenuBean.isSelected(3)?'active':''}">
                         <h:link
                                 outcome="/procurement/profile/profile">#{msgs['lbl.profile']}
                         </h:link>
