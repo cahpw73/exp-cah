@@ -12,8 +12,8 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
-/*@Entity
-@Table(name = "logo")*/
+@Entity
+@Table(name = "logo")
 public class LogoEntity implements Serializable{
 
     private Long id;
