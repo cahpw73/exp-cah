@@ -79,6 +79,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <build>
-        <finalName>procurement</finalName>
+        <finalName>fqmes</finalName>
     </build>
 </project>
