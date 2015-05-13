@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
@@ -39,10 +40,7 @@
                                             width="250"
                                             style="border: solid;"
                                             height="250"/>
-                            <!--<p:graphicImage rendered=" # { logoBean.logo.file!=null}"  value="# {logoBean.getLogoImage(logoBean.logo.file)}" width="250"
-                                            height="250">
-                                <f:param name="id" value="1"/>
-                            </p:graphicImage>-->
+                            <o:graphicImage rendered="#{logoBean.logo.file!=null}" dataURI="true" value="#{logoBean.logo.file}" width="250" height="250"/>
                         </h:panelGroup>
                     </div>
                     <div class="col-md-6">
@@ -54,9 +52,9 @@
                 <br/>
 
                 <div class="col-md-6">
-                    <p:commandLink value="#{msgs['lbl.save']}" styleClass="btn btn-sm btn-primary" action="#{logoBean.doSave}" ajax="false">
-                    </p:commandLink>
-                    <p:commandLink styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.cancel']}"/>
+                    <h:commandLink value="#{msgs['lbl.save']}" styleClass="btn btn-sm btn-primary" action="#{logoBean.doSave}" ajax="false">
+                    </h:commandLink>
+                    <h:link styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.cancel']}" outcome="logo"/>
                 </div>
             </div>
         </h:form>

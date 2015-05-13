@@ -31,10 +31,12 @@ public class LogoConverter implements Converter {
             return null;
         }
         log.info("value "+value);
-        List<LogoEntity> list = logoService.getLogoList();
         LogoEntity logo = null;
-        if(!list.isEmpty()){
-            logo = list.get(0);
+        for(LogoEntity logoEntity:logoService.getLogoList()){
+          if(logoEntity.getId().intValue()==Integer.parseInt(value)){
+              logo=logoEntity;
+              break;
+          }
         }
         return logo;
     }
@@ -44,7 +46,7 @@ public class LogoConverter implements Converter {
                               Object value) {
         String string = null;
         if (value instanceof LogoEntity) {
-            string = ((LogoEntity) value).getFileName();
+            string = ((LogoEntity) value).getId().toString();
         }
         log.info("vale returned "+string);
         return string;

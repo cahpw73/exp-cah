@@ -72,31 +72,12 @@ public class LogoBean implements Serializable {
     }
 
     public void doDelete() {
-        log.info(String.format("logo has been removed [%s]", logo.getDescription()));
-    }
-
-    public StreamedContent getLogoImage(LogoEntity logo){
-        log.info("converting to streaming "+logo.getFile());
-    /*    InputStream is = new ByteArrayInputStream(logo.getFile());
-        log.info("is "+is);
-        StreamedContent st=  new DefaultStreamedContent(is);
-        log.info("already converted "+st);*/
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
-            log.info("render response....");
-            return new DefaultStreamedContent();
+        log.info("removing component");
+        if(logoSelected!=null){
+            service.delete(logoSelected);
+            log.info(String.format("logo has been removed [%s]", logo.getDescription()));
         }
-        else {
-            // So, browser is requesting the image. Get ID value from actual request param.
-            //String id = context.getExternalContext().getRequestParameterMap().get("id");
-            //Image image = service.find(Long.valueOf(id));
-            log.info("requesting image");
-            return new DefaultStreamedContent(new ByteArrayInputStream(logo.getFile()));
-        }
-     //   return st;
+
     }
 
     public LogoEntity getLogo() {
@@ -112,6 +93,7 @@ public class LogoBean implements Serializable {
     }
 
     public void setLogoSelected(LogoEntity logoSelected) {
+        log.info("setting logo");
         this.logoSelected = logoSelected;
     }
 

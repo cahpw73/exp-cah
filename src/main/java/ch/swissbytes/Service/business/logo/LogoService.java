@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.logo;
 
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.domain.model.entities.LogoEntity;
+import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -21,17 +22,18 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
     @Inject
     private LogoDao dao;
 
-    public LogoService(){
-        //super.initialize(dao);
-    }
-
     @PostConstruct
     public void create(){
         super.initialize(dao);
     }
 
+    public void delete(LogoEntity logo){
+        logo.setStatus(StatusEnum.DELETED);
+        dao.update(logo);
+    }
+
     public List<LogoEntity> getLogoList(){
-        log.info("getBrandList");
+        log.info("getLogoList");
         return dao.getLogoList();
     }
 

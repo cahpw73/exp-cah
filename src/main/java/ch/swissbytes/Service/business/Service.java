@@ -30,6 +30,8 @@ public class Service<T> implements Serializable {
         dao.update(entity);
     }
 
+
+
     public List<T> getActives(List<T> entities){
         List<T>list=new ArrayList<>();
         if(entities!=null){
