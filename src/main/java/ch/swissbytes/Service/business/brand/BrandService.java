@@ -28,6 +28,7 @@ public class BrandService  extends Service<BrandEntity> implements Serializable{
         brandDao.doSave(brandEntity);
     }
 
+    @Transactional
     public void doUpdate(BrandEntity detachedEntity){
         log.info("doUpdate");
         brandDao.doUpdate(detachedEntity);

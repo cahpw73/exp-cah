@@ -16,26 +16,30 @@
                     <!-- Default panel contents -->
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h:inputText styleClass="form-control"></h:inputText>
                             </div>
 
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-6">
-                                <h:selectOneListbox value="#{brandBean.selectedBrand}" converter="brandConverter">
+                            <div class="col-md-5">
+                                <h:selectOneListbox value="#{brandBean.selectedBrand}" converter="brandConverter"
+                                                    styleClass="form-control">
                                     <f:selectItems value="#{brandBean.brandList}" var="_brand"
                                                    itemLabel="#{_brand.name}" itemValue="#{_brand}"/>
                                 </h:selectOneListbox>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 New Brand
                                 <br/>
-                                <h:inputText value="#{brandBean.brandName}"></h:inputText>
+                                <h:inputText value="#{brandBean.brandName}" styleClass="form-control"/>
                                     <br/>
-                                <p:commandLink value="Add" action="#{brandBean.doSaveBrand}" ajax="false" type="submit"/>
-                                <p:commandLink value="Delete"/>
+                                <p:commandLink value="Add" action="#{brandBean.doSaveBrand}" ajax="false"
+                                               type="submit" styleClass="btn btn-primary btn-sm"/>
+                                &#160;
+                                <p:commandLink value="Delete" action="#{brandBean.doDeleteBrand}" ajax="false"
+                                               type="submit" styleClass="btn btn-primary btn-sm"/>
 
                             </div>
                         </div>

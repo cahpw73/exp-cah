@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.boundary.brand;
 import ch.swissbytes.Service.business.brand.BrandService;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -26,8 +27,6 @@ public class BrandBean implements Serializable {
     @Inject
     private BrandService brandService;
 
-    private BrandEntity currentBrand;
-
     private BrandEntity selectedBrand;
 
     private String brandName;
@@ -39,7 +38,6 @@ public class BrandBean implements Serializable {
     public void create(){
         log.info("created BrandBean");
         selectedBrand = new BrandEntity();
-        currentBrand = new BrandEntity();
         loadBrands();
     }
 
@@ -53,19 +51,23 @@ public class BrandBean implements Serializable {
     }
 
     public void doSaveBrand(){
-        currentBrand.setName(brandName);
-        currentBrand.setLastUpdate(new Date());
-        currentBrand.setStatus(StatusEnum.ENABLE);
-        brandService.doSave(currentBrand);
+        if(StringUtils.isNotEmpty(brandName) && StringUtils.isNotBlank(brandName)){
+            BrandEntity currentBrand = new BrandEntity();
+            currentBrand.setName(brandName);
+            currentBrand.setLastUpdate(new Date());
+            currentBrand.setStatus(StatusEnum.ENABLE);
+            brandService.doSave(currentBrand);
+            loadBrands();
+            brandName = "";
+        }else{
+
+        }
+    }
+
+    public void doDeleteBrand(){
+        selectedBrand.setStatus(StatusEnum.DELETED);
+        brandService.doUpdate(selectedBrand);
         loadBrands();
-    }
-
-    public BrandEntity getCurrentBrand() {
-        return currentBrand;
-    }
-
-    public void setCurrentBrand(BrandEntity currentBrand) {
-        this.currentBrand = currentBrand;
     }
 
     public List<BrandEntity> getBrandList() {
