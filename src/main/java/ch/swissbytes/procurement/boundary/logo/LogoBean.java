@@ -12,6 +12,8 @@ import org.primefaces.model.UploadedFile;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -73,10 +75,28 @@ public class LogoBean implements Serializable {
         log.info(String.format("logo has been removed [%s]", logo.getDescription()));
     }
 
-    public StreamedContent getLogoImage(byte []data){
-        InputStream is = new ByteArrayInputStream(data);
-        StreamedContent  content = new DefaultStreamedContent(is, logo.getMimeType());
-        return content;
+    public StreamedContent getLogoImage(LogoEntity logo){
+        log.info("converting to streaming "+logo.getFile());
+    /*    InputStream is = new ByteArrayInputStream(logo.getFile());
+        log.info("is "+is);
+        StreamedContent st=  new DefaultStreamedContent(is);
+        log.info("already converted "+st);*/
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            log.info("render response....");
+            return new DefaultStreamedContent();
+        }
+        else {
+            // So, browser is requesting the image. Get ID value from actual request param.
+            //String id = context.getExternalContext().getRequestParameterMap().get("id");
+            //Image image = service.find(Long.valueOf(id));
+            log.info("requesting image");
+            return new DefaultStreamedContent(new ByteArrayInputStream(logo.getFile()));
+        }
+     //   return st;
     }
 
     public LogoEntity getLogo() {

@@ -18,16 +18,25 @@
                         <div class="row">
                             <div class="col-md-6">
 
-                                <h:dataTable value="#{logoBean.logos}"
+                               <!-- <h:dataTable value="# {logoBean.logos}"
                                              var="_logo">
                                     <h:column>
-                                        #{_logo.fileName}
+                                        # {_logo.fileName}
                                     </h:column>
                                     <h:column>
 
-                                        #{_logo.description}
+                                        # {_logo.description}
                                     </h:column>
-                                </h:dataTable>
+                                </h:dataTable>-->
+                                <p:selectOneListbox id="advanced" value="#{logoBean.logoSelected}" converter="logoConverter" var="l">
+                                    <f:selectItems value="#{logoBean.logos}" var="_logo" itemValue="#{_logo}" itemLabel="#{_logo.fileName}"/>
+                                    <p:column>
+                                        <p:graphicImage  value="#{logoBean.getLogoImage(l)}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{l.fileName}" />
+                                    </p:column>
+                                </p:selectOneListbox>
                             </div>
                             <div class="col-md-6">
                                 New Logo
@@ -39,7 +48,6 @@
                     </div>
                 </div>
             </div>
-
         </h:form>
     </ui:define>
 </ui:composition>
