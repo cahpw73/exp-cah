@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.brand.BrandService;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -31,6 +32,8 @@ public class BrandBean implements Serializable {
 
     private String brandName;
 
+    private String searchNameBrand;
+
     private List<BrandEntity> brandList;
 
 
@@ -52,22 +55,41 @@ public class BrandBean implements Serializable {
 
     public void doSaveBrand(){
         if(StringUtils.isNotEmpty(brandName) && StringUtils.isNotBlank(brandName)){
-            BrandEntity currentBrand = new BrandEntity();
-            currentBrand.setName(brandName);
-            currentBrand.setLastUpdate(new Date());
-            currentBrand.setStatus(StatusEnum.ENABLE);
-            brandService.doSave(currentBrand);
-            loadBrands();
-            brandName = "";
+            if(isValidBrand(brandName)) {
+                BrandEntity currentBrand = new BrandEntity();
+                currentBrand.setName(brandName);
+                currentBrand.setLastUpdate(new Date());
+                currentBrand.setStatus(StatusEnum.ENABLE);
+                brandService.doSave(currentBrand);
+                loadBrands();
+                brandName = "";
+            }else{
+                Messages.addFlashError("nameBrand","Brand name already exists");
+            }
         }else{
-
+            Messages.addFlashError("nameBrand","Brand name is required");
         }
+    }
+
+    private boolean isValidBrand(String brandName) {
+        List<BrandEntity> brandList = brandService.findByName(brandName);
+        return brandList.isEmpty();
     }
 
     public void doDeleteBrand(){
         selectedBrand.setStatus(StatusEnum.DELETED);
         brandService.doUpdate(selectedBrand);
         loadBrands();
+    }
+
+    public void searchBrand(){
+        log.info("searchBrand : " + searchNameBrand);
+        if(StringUtils.isNotEmpty(searchNameBrand) && StringUtils.isNotBlank(searchNameBrand)){
+            brandList.clear();
+            brandList = brandService.findByLikeName(searchNameBrand);
+        }else{
+            brandList = brandService.getBrandList();
+        }
     }
 
     public List<BrandEntity> getBrandList() {
@@ -88,5 +110,13 @@ public class BrandBean implements Serializable {
 
     public void setSelectedBrand(BrandEntity selectedBrand) {
         this.selectedBrand = selectedBrand;
+    }
+
+    public String getSearchNameBrand() {
+        return searchNameBrand;
+    }
+
+    public void setSearchNameBrand(String searchNameBrand) {
+        this.searchNameBrand = searchNameBrand;
     }
 }

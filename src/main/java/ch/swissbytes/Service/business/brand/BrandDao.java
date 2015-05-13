@@ -43,9 +43,24 @@ public class BrandDao extends GenericDao<BrandEntity> implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT b ");
         sb.append(" FROM BrandEntity b ");
+        sb.append(" WHERE LOWER(b.name) = :NAME ");
+        sb.append(" AND b.status = :ENABLE ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("NAME", name.toLowerCase().trim());
+        params.put("ENABLE", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),params);
+    }
+
+    public List<BrandEntity> findByLikeName(final String name){
+        log.info("findByName: " + name);
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT b ");
+        sb.append(" FROM BrandEntity b ");
         sb.append(" WHERE LOWER(b.name) like :NAME ");
+        sb.append(" AND b.status = :ENABLE ");
         Map<String,Object> params = new HashMap<>();
         params.put("NAME", "%"+name.toLowerCase().trim()+"%");
+        params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
     }
 
