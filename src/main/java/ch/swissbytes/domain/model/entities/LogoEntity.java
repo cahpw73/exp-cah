@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.interfaces.ManageFile;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -14,12 +15,12 @@ import java.util.Date;
 
 @Entity
 @Table(name = "logo")
-public class LogoEntity implements Serializable{
+public class LogoEntity implements Serializable,ManageFile{
 
     private Long id;
     private String fileName;
     private String mimeType;
-    private byte []logo;
+    private byte [] file;
     private String path;
     private String description;
 
@@ -81,12 +82,12 @@ public class LogoEntity implements Serializable{
 
     @Column(name="logo", nullable=false, length = 10485760)
     @Basic(fetch = FetchType.LAZY)
-    public byte[] getLogo() {
-        return logo;
+    public byte[] getFile() {
+        return file;
     }
 
-    public void setLogo(byte[] logo) {
-        this.logo = logo;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 
 

@@ -30,19 +30,6 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
         super.initialize(dao);
     }
 
-   /* ;
-
-    @Transactional
-    public void doSave(LogoEntity logo){
-        log.info("doSave");
-        dao.doSave(logo);
-    }
-
-    public void doUpdate(LogoEntity detachedEntity){
-        log.info("doUpdate");
-        dao.doUpdate(detachedEntity);
-    }*/
-
     public List<LogoEntity> getLogoList(){
         log.info("getBrandList");
         return dao.getLogoList();
