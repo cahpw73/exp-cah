@@ -57,6 +57,7 @@ public class BrandBean implements Serializable {
         currentBrand.setLastUpdate(new Date());
         currentBrand.setStatus(StatusEnum.ENABLE);
         brandService.doSave(currentBrand);
+        loadBrands();
     }
 
     public BrandEntity getCurrentBrand() {
