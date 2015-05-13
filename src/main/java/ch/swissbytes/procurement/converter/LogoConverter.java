@@ -38,6 +38,7 @@ public class LogoConverter implements Converter {
               break;
           }
         }
+        log.info("returning "+logo);
         return logo;
     }
 

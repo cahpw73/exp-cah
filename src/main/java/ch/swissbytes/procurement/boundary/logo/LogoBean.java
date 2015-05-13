@@ -37,6 +37,8 @@ public class LogoBean implements Serializable {
 
     private LogoEntity logoSelected;
 
+    private Long selected;
+
     private List<LogoEntity> logos;
 
     @Inject
@@ -111,4 +113,11 @@ public class LogoBean implements Serializable {
         log.info("destroying LogoBean");
     }
 
+    public Long getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Long selected) {
+        this.selected = selected;
+    }
 }

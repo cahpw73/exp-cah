@@ -16,7 +16,8 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <p:selectOneListbox id="advanced" value="#{logoBean.logoSelected}"
+                                <p:selectOneListbox id="advanced"
+                                                    value="#{logoBean.logoSelected}"
                                                     converter="logoConverter"
                                                     var="l">
                                     <f:selectItems value="#{logoBean.logos}" var="_logo" itemValue="#{_logo}"
@@ -24,6 +25,7 @@
                                     <p:column>
                                         <h:outputText value="#{l.description}"/>
                                     </p:column>
+
                                 </p:selectOneListbox>
                                 <p:message for="advanced"/>
                             </div>
