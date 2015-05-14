@@ -33,7 +33,7 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
     }
 
     public List<LogoEntity> getLogoList(){
-        log.info("getLogoList");
+        log.info("getCurrencyList");
         return dao.getLogoList();
     }
 

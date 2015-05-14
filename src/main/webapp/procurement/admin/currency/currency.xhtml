@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-body">
+                    <div class="row">
+                        <h:dataTable value="#{currencyBean.list}" var="_currency">
+                            <h:column>
+                                #{_currency.name}
+                            </h:column>
+                            <h:column>
+                                #{_currency.code}
+                            </h:column>
+                            <h:column>
+                                <h:form prependId="false">
+                                    <h:commandLink value="#{msgs['lbl.edit']}" action="#{currencyBean.edit(_currency.id)}">
+                                        <p:ajax update=":currencyForm" process="@this" async="false"/>
+                                    </h:commandLink>
+                                    <p:commandLink value="#{msgs['lbl.delete']}" action="#{currencyBean.doDelete(_currency.id)}">
+                                        <p:confirm header="Delete currency" message="Are you sure delete this Currency?" />
+                                     </p:commandLink>
+
+
+                                </h:form>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                    <h:form prependId="false" id="currencyForm">
+                        <div class="row">
+                            <div class="section-lbl-input-po">
+                                <div class="form-group input-general-po">
+                                    <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
+                                                   value="Name"/>
+
+                                    <div class="inputText-general-po">
+                                        <h:inputText maxlength="50" type="text"
+                                                     value="#{currencyBean.currency.name}"
+                                                     class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="section-lbl-input-po">
+                                <div class="form-group input-general-po">
+                                    <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
+                                                   value="Code"/>
+
+                                    <div class="inputText-general-po">
+                                        <h:inputText maxlength="50" type="text"
+                                                     value="#{currencyBean.currency.code}"
+                                                     class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h:commandButton value="add currency" rendered="#{currencyBean.isCreating()}"
+                                             styleClass="btn btn-primary btn-sm"
+                                             action="#{currencyBean.doSave()}"></h:commandButton>
+                            <h:commandButton value="update currency" rendered="#{currencyBean.isEditing()}"
+                                             styleClass="btn btn-primary btn-sm"
+                                             action="#{currencyBean.doUpdate()}"></h:commandButton>
+                            <h:link value="cancel" styleClass="btn btn-primary btn-sm"
+                                    outcome="currency"/>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+            <div class="pull-right">
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </div>
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>
