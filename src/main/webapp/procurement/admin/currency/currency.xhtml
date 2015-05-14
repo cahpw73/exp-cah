@@ -23,14 +23,13 @@
                         <p:column headerText="#{msgs['lbl.action']}">
                             <h:form prependId="false">
                                 <h:commandButton value="#{msgs['lbl.edit']}"
-
-                                               styleClass="btn btn-primary btn-sm"
-                                               action="#{currencyBean.edit(_currency.id)}">
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 action="#{currencyBean.edit(_currency.id)}">
                                     <p:ajax update=":currencyForm" process="@this" async="false"/>
                                 </h:commandButton>
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.delete']}"
-
+                                               style="color: #ffffff;"
                                                styleClass="btn btn-primary btn-sm"
                                                action="#{currencyBean.doDelete(_currency.id)}">
                                     <p:confirm header="Delete currency"
@@ -44,39 +43,30 @@
                         <fieldset>
                             <legend>#{currencyBean.creating?msgs['lbl.new.currency']:msgs['lbl.update.currency']}</legend>
                             <div class="row">
-                                <div class="section-lbl-input-po">
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
-                                                       value="#{msgs['lbl.column.name']}"/>
-
-                                        <div class="inputText-general-po">
-                                            <h:inputText maxlength="50" type="text"
-                                                         required="true"
-                                                         id="currencyName"
-                                                         requiredMessage="Enter valid Name"
-                                                         value="#{currencyBean.currency.name}"
-                                                         class="form-control"/>
-                                            <p:message for="currencyName"/>
-                                        </div>
-                                    </div>
+                                <div class="form-inline">
+                                    <h:outputLabel styleClass="control-label col-sm-1"
+                                                   value="#{msgs['lbl.column.name']}"/>
+                                    <h:inputText maxlength="50" type="text"
+                                                 required="true"
+                                                 id="currencyName"
+                                                 requiredMessage="Enter valid Name"
+                                                 value="#{currencyBean.currency.name}"
+                                                 class="form-control"/>
+                                    <p:message for="currencyName"/>
                                 </div>
                             </div>
+                            <br/>
                             <div class="row">
-                                <div class="section-lbl-input-po">
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
-                                                       value="#{msgs['lbl.column.code']}"/>
-
-                                        <div class="inputText-general-po">
-                                            <h:inputText maxlength="50" type="text"
-                                                         id="currencyCode"
-                                                         required="true"
-                                                         requiredMessage="Enter Valid Code"
-                                                         value="#{currencyBean.currency.code}"
-                                                         class="form-control"/>
-                                            <p:message for="currencyCode"/>
-                                        </div>
-                                    </div>
+                                <div class="form-inline">
+                                    <h:outputLabel styleClass="control-label col-sm-1"
+                                                   value="#{msgs['lbl.column.code']}"/>
+                                    <h:inputText maxlength="50" type="text"
+                                                 id="currencyCode"
+                                                 required="true"
+                                                 requiredMessage="Enter Valid Code"
+                                                 value="#{currencyBean.currency.code}"
+                                                 class="form-control"/>
+                                    <p:message for="currencyCode"/>
                                 </div>
                             </div>
                             <br/>
