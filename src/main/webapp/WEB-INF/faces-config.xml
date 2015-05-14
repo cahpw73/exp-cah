@@ -45,12 +45,12 @@
             <to-view-id>/procurement/home.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <navigation-rule>
+  <!--  <navigation-rule>
         <from-view-id>/procurement/*</from-view-id>
         <navigation-case>
             <to-view-id>/home.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
+    </navigation-rule>-->
     <factory>
         <exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory>
     </factory>
