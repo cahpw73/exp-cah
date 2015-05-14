@@ -78,10 +78,16 @@ public class CategoryBean implements Serializable {
     }
 
     public void doDeleteCategory(){
-        selectedCategory.setStatus(StatusEnum.DELETED);
-        selectedCategory.setLastUpdate(new Date());
-        categoryService.doUpdate(selectedCategory);
-        loadCategories();
+        if(selectedCategory != null) {
+            selectedCategory.setStatus(StatusEnum.DELETED);
+            selectedCategory.setLastUpdate(new Date());
+            categoryService.doUpdate(selectedCategory);
+            loadCategories();
+            selectedCategory = null;
+        }else{
+            Messages.addFlashError("categoryList","Select a category first");
+        }
+
     }
 
     public void searchCategory(){

@@ -34,9 +34,10 @@
                             <div class="col-md-5">
                                 <h:selectOneListbox id="brandList" value="#{brandBean.selectedBrand}" converter="brandConverter"
                                                     styleClass="form-control" style="max-height: 150px; height: 150px;" >
-                                    <f:selectItems value="#{brandBean.brandList}" var="_brand"
+                                    <f:selectItems value="#{brandBean.brandList}" var="_brand" noSelectionValue="true"
                                                    itemLabel="#{_brand.name}" itemValue="#{_brand}"/>
                                 </h:selectOneListbox>
+                                <p:message for="brandList" id="msgBrandList"/>
                             </div>
                             <div class="col-md-4">
                                 <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>

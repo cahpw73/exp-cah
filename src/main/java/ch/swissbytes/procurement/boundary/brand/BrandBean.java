@@ -40,7 +40,6 @@ public class BrandBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("created BrandBean");
-        selectedBrand = new BrandEntity();
         loadBrands();
     }
 
@@ -77,10 +76,15 @@ public class BrandBean implements Serializable {
     }
 
     public void doDeleteBrand(){
-        selectedBrand.setStatus(StatusEnum.DELETED);
-        selectedBrand.setLastUpdate(new Date());
-        brandService.doUpdate(selectedBrand);
-        loadBrands();
+        if(selectedBrand != null) {
+            selectedBrand.setStatus(StatusEnum.DELETED);
+            selectedBrand.setLastUpdate(new Date());
+            brandService.doUpdate(selectedBrand);
+            loadBrands();
+            selectedBrand = null;
+        }else{
+            Messages.addFlashError("brandList","Select a brand first");
+        }
     }
 
     public void searchBrand(){
