@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.currency.CurrencyService;
 import ch.swissbytes.domain.model.entities.CurrencyEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -32,37 +33,60 @@ public class CurrencyBean implements Serializable {
     private ModeOperationEnum mode;
 
     @PostConstruct
-    public void create(){
+    public void create() {
         log.info("creating currency bean");
         loadList();
-        mode=ModeOperationEnum.NEW;
-        currency=new CurrencyEntity();
+        mode = ModeOperationEnum.NEW;
+        currency = new CurrencyEntity();
         currency.setStatus(StatusEnum.ENABLE);
     }
-    public void edit(Long currencyId){
-        currency=service.findById(currencyId);
-        mode=ModeOperationEnum.UPDATE;
+
+    public void edit(Long currencyId) {
+        currency = service.findById(currencyId);
+        mode = ModeOperationEnum.UPDATE;
     }
-    public String doSave(){
+
+    public String doSave() {
+        if (!validate()) {
+            return "";
+        }
+
         currency.setLastUpdate(new Date());
         service.doSave(currency);
         return "currency?faces-redirect=true";
     }
 
-    public String doUpdate(){
+    private boolean validate() {
+        boolean valid = true;
+        if (service.isCodeDuplicated(currency.getId(), currency.getCode())) {
+            Messages.addFlashError("currencyCode", String.format("Code [%s] is duplicated ", currency.getCode()));
+            valid = false;
+        }
+        if (service.isNameDuplicated(currency.getId(), currency.getName())){
+            Messages.addFlashError("currencyName", String.format("Code [%s] is duplicated ", currency.getName()));
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    public String doUpdate() {
+        if (!validate()) {
+            return "";
+        }
         currency.setLastUpdate(new Date());
         service.doUpdate(currency);
         return "currency?faces-redirect=true";
     }
 
-    public String doDelete(Long id){
-        currency=service.findById(id);
+    public String doDelete(Long id) {
+        currency = service.findById(id);
         service.delete(currency);
         return "currency?faces-redirect=true";
     }
 
-    private void loadList(){
-        list=service.getCurrencyList();
+    private void loadList() {
+        list = service.getCurrencyList();
     }
 
     public List<CurrencyEntity> getList() {
@@ -78,15 +102,16 @@ public class CurrencyBean implements Serializable {
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("destroying currency bean");
     }
 
-    public boolean isEditing(){
-     return mode.ordinal()==ModeOperationEnum.UPDATE.ordinal();
+    public boolean isEditing() {
+        return mode.ordinal() == ModeOperationEnum.UPDATE.ordinal();
     }
-    public boolean isCreating(){
-        return mode.ordinal()==ModeOperationEnum.NEW.ordinal();
+
+    public boolean isCreating() {
+        return mode.ordinal() == ModeOperationEnum.NEW.ordinal();
     }
 
 }
