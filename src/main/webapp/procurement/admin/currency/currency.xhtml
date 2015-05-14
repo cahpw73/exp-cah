@@ -22,15 +22,15 @@
                         </p:column>
                         <p:column headerText="#{msgs['lbl.action']}">
                             <h:form prependId="false">
-                                <h:commandLink value="#{msgs['lbl.edit']}"
-                                               style="color: #ffffff"
+                                <h:commandButton value="#{msgs['lbl.edit']}"
+
                                                styleClass="btn btn-primary btn-sm"
                                                action="#{currencyBean.edit(_currency.id)}">
                                     <p:ajax update=":currencyForm" process="@this" async="false"/>
-                                </h:commandLink>
+                                </h:commandButton>
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.delete']}"
-                                               style="height: 19px!important; color: #ffffff;"
+
                                                styleClass="btn btn-primary btn-sm"
                                                action="#{currencyBean.doDelete(_currency.id)}">
                                     <p:confirm header="Delete currency"
@@ -41,46 +41,61 @@
                     </p:dataTable>
                     <br/>
                     <h:form prependId="false" id="currencyForm" styleClass="form-inline">
-                         #{currencyBean.creating?msgs['lbl.new.currency']:msgs['lbl.update.currency']}
-                        <div class="row">
-                            <div class="section-lbl-input-po">
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
-                                                   value="#{msgs['lbl.column.name']}"/>
-                                    <div class="inputText-general-po">
-                                        <h:inputText maxlength="50" type="text"
-                                                     value="#{currencyBean.currency.name}"
-                                                     class="form-control"/>
+                        <fieldset>
+                            <legend>#{currencyBean.creating?msgs['lbl.new.currency']:msgs['lbl.update.currency']}</legend>
+                            <div class="row">
+                                <div class="section-lbl-input-po">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
+                                                       value="#{msgs['lbl.column.name']}"/>
+
+                                        <div class="inputText-general-po">
+                                            <h:inputText maxlength="50" type="text"
+                                                         required="true"
+                                                         id="currencyName"
+                                                         requiredMessage="Enter valid Name"
+                                                         value="#{currencyBean.currency.name}"
+                                                         class="form-control"/>
+                                            <p:message for="currencyName"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="section-lbl-input-po">
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
-                                                   value="#{msgs['lbl.column.code']}"/>
-                                    <div class="inputText-general-po">
-                                        <h:inputText maxlength="50" type="text"
-                                                     value="#{currencyBean.currency.code}"
-                                                     class="form-control"/>
+                            <div class="row">
+                                <div class="section-lbl-input-po">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
+                                                       value="#{msgs['lbl.column.code']}"/>
+
+                                        <div class="inputText-general-po">
+                                            <h:inputText maxlength="50" type="text"
+                                                         id="currencyCode"
+                                                         required="true"
+                                                         requiredMessage="Enter Valid Code"
+                                                         value="#{currencyBean.currency.code}"
+                                                         class="form-control"/>
+                                            <p:message for="currencyCode"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="pull-left">
-                            <h:commandButton value="#{msgs['btn.currency.add']}" rendered="#{currencyBean.isCreating()}"
-                                             styleClass="btn btn-primary btn-sm"
-                                             action="#{currencyBean.doSave()}"/>
-                            <h:commandButton value="#{msgs['btn.currency.update']}"
-                                             rendered="#{currencyBean.isEditing()}"
-                                             styleClass="btn btn-primary btn-sm"
-                                             action="#{currencyBean.doUpdate()}"/>
-                            &#160;
-                            <h:link value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm"
-                                    outcome="currency"/>
-                        </div>
+                            <br/>
+
+                            <div class="pull-left">
+                                <h:commandButton value="#{msgs['btn.currency.add']}"
+                                                 rendered="#{currencyBean.isCreating()}"
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 action="#{currencyBean.doSave()}"/>
+                                <h:commandButton value="#{msgs['btn.currency.update']}"
+                                                 rendered="#{currencyBean.isEditing()}"
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 action="#{currencyBean.doUpdate()}"/>
+                                &#160;
+                                <h:link value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm"
+                                        rendered="#{currencyBean.isEditing()}"
+                                        outcome="currency"/>
+                            </div>
+                        </fieldset>
                     </h:form>
                 </div>
             </div>

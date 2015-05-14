@@ -41,6 +41,32 @@ public class CurrencyDao extends GenericDao<CurrencyEntity> implements Serializa
         return super.findBy(sb.toString(),map);
     }
 
+    public List<CurrencyEntity> findByNameButWithNoId(String name, Long id){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM CurrencyEntity x ");
+        sb.append("WHERE x.status=:ENABLED ");
+        sb.append("AND trim(lower(x.name))=:NAME ");
+        sb.append("AND NOT x.id=:CURRENCY_ID ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("NAME", name.toLowerCase().trim());
+        map.put("CURRENCY_ID", id!=null?id:0L);
+        return super.findBy(sb.toString(),map);
+    }
+    public List<CurrencyEntity> findByCodeButWithNoId(String code, Long id){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM CurrencyEntity x ");
+        sb.append("WHERE x.status=:ENABLED ");
+        sb.append("AND trim(lower(x.code))=:CODE ");
+        sb.append("AND NOT x.id=:CURRENCY_ID ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("CODE", code.toLowerCase().trim());
+        map.put("CURRENCY_ID", id!=null?id:0L);
+        return super.findBy(sb.toString(),map);
+    }
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
