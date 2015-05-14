@@ -12,37 +12,41 @@
     <ui:define name="body">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <!-- Default panel contents -->
                 <div class="panel-body">
-                    <div class="row">
-                        <h:dataTable value="#{currencyBean.list}" var="_currency">
-                            <h:column>
-                                #{_currency.name}
-                            </h:column>
-                            <h:column>
-                                #{_currency.code}
-                            </h:column>
-                            <h:column>
-                                <h:form prependId="false">
-                                    <h:commandLink value="#{msgs['lbl.edit']}" action="#{currencyBean.edit(_currency.id)}">
-                                        <p:ajax update=":currencyForm" process="@this" async="false"/>
-                                    </h:commandLink>
-                                    <p:commandLink value="#{msgs['lbl.delete']}" action="#{currencyBean.doDelete(_currency.id)}">
-                                        <p:confirm header="Delete currency" message="Are you sure delete this Currency?" />
-                                     </p:commandLink>
-
-
-                                </h:form>
-                            </h:column>
-                        </h:dataTable>
-                    </div>
-                    <h:form prependId="false" id="currencyForm">
+                    <p:dataTable value="#{currencyBean.list}" var="_currency">
+                        <p:column headerText="#{msgs['lbl.column.name']}" sortBy="#{_currency.name}">
+                            #{_currency.name}
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.column.code']}" sortBy="#{_currency.code}">
+                            #{_currency.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.action']}">
+                            <h:form prependId="false">
+                                <h:commandLink value="#{msgs['lbl.edit']}"
+                                               style="color: #ffffff"
+                                               styleClass="btn btn-primary btn-sm"
+                                               action="#{currencyBean.edit(_currency.id)}">
+                                    <p:ajax update=":currencyForm" process="@this" async="false"/>
+                                </h:commandLink>
+                                &#160;
+                                <p:commandLink value="#{msgs['lbl.delete']}"
+                                               style="height: 19px!important; color: #ffffff;"
+                                               styleClass="btn btn-primary btn-sm"
+                                               action="#{currencyBean.doDelete(_currency.id)}">
+                                    <p:confirm header="Delete currency"
+                                               message="Are you sure delete this Currency?"/>
+                                </p:commandLink>
+                            </h:form>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <h:form prependId="false" id="currencyForm" styleClass="form-inline">
+                         #{currencyBean.creating?msgs['lbl.new.currency']:msgs['lbl.update.currency']}
                         <div class="row">
                             <div class="section-lbl-input-po">
-                                <div class="form-group input-general-po">
+                                <div class="form-group">
                                     <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
-                                                   value="Name"/>
-
+                                                   value="#{msgs['lbl.column.name']}"/>
                                     <div class="inputText-general-po">
                                         <h:inputText maxlength="50" type="text"
                                                      value="#{currencyBean.currency.name}"
@@ -53,10 +57,9 @@
                         </div>
                         <div class="row">
                             <div class="section-lbl-input-po">
-                                <div class="form-group input-general-po">
+                                <div class="form-group">
                                     <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label"
-                                                   value="Code"/>
-
+                                                   value="#{msgs['lbl.column.code']}"/>
                                     <div class="inputText-general-po">
                                         <h:inputText maxlength="50" type="text"
                                                      value="#{currencyBean.currency.code}"
@@ -65,14 +68,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <h:commandButton value="add currency" rendered="#{currencyBean.isCreating()}"
+                        <br/>
+                        <div class="pull-left">
+                            <h:commandButton value="#{msgs['btn.currency.add']}" rendered="#{currencyBean.isCreating()}"
                                              styleClass="btn btn-primary btn-sm"
-                                             action="#{currencyBean.doSave()}"></h:commandButton>
-                            <h:commandButton value="update currency" rendered="#{currencyBean.isEditing()}"
+                                             action="#{currencyBean.doSave()}"/>
+                            <h:commandButton value="#{msgs['btn.currency.update']}"
+                                             rendered="#{currencyBean.isEditing()}"
                                              styleClass="btn btn-primary btn-sm"
-                                             action="#{currencyBean.doUpdate()}"></h:commandButton>
-                            <h:link value="cancel" styleClass="btn btn-primary btn-sm"
+                                             action="#{currencyBean.doUpdate()}"/>
+                            &#160;
+                            <h:link value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm"
                                     outcome="currency"/>
                         </div>
                     </h:form>
@@ -81,8 +87,9 @@
         </div>
         <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
             <div class="pull-right">
-                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                &#160;
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
             </div>
         </p:confirmDialog>
     </ui:define>
