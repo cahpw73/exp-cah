@@ -22,7 +22,8 @@ function initializeMultiselection(idsSelected){
                 }
                 $('#poStatusesHidenId').val(selectedValues.toString());
             },
-            numberDisplayed:2
+            numberDisplayed:2,
+            buttonClass:'form-control multiselect-button-po'
         }
     );
     if(idsSelected){
