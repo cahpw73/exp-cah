@@ -41,7 +41,6 @@ public class CategoryBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("created CategoryBean");
-        selectedCategory = new CategoryEntity();
         loadCategories();
     }
 
