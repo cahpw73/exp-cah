@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
-    <ui:define name="title">Admin - Brand</ui:define>
+    <ui:define name="title">Admin - Category</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
@@ -20,9 +20,9 @@
                             <div class="col-md-4">
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
-                                    <h:inputText styleClass="form-control input-search" value="#{brandBean.searchNameBrand}"
+                                    <h:inputText styleClass="form-control input-search" value="#{categoryBean.searchNameCategory}"
                                                  jsf:placeholder="#{msgs['lbl.search']}" >
-                                        <p:ajax event="keyup" process="@this" update="brandList" listener="#{brandBean.searchBrand}"/>
+                                        <p:ajax event="keyup" process="@this" update="categoryList" listener="#{categoryBean.searchCategory}"/>
                                     </h:inputText>
                                 </div>
 
@@ -32,22 +32,22 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-5">
-                                <h:selectOneListbox id="brandList" value="#{brandBean.selectedBrand}" converter="brandConverter"
+                                <h:selectOneListbox id="categoryList" value="#{categoryBean.selectedCategory}" converter="categoryConverter"
                                                     styleClass="form-control" style="max-height: 150px; height: 150px;" >
-                                    <f:selectItems value="#{brandBean.brandList}" var="_brand"
-                                                   itemLabel="#{_brand.name}" itemValue="#{_brand}"/>
+                                    <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
+                                                   itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
                                 </h:selectOneListbox>
                             </div>
                             <div class="col-md-4">
-                                <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
+                                <h:outputLabel value="#{msgs['lbl.admin.category.new']}" styleClass="control-label"/>
                                 <br/>
-                                <h:inputText id="nameBrand" value="#{brandBean.brandName}" styleClass="form-control"/>
-                                <p:message for="nameBrand" id="msgnBrand"/>
+                                <h:inputText id="nameCategory" value="#{categoryBean.categoryName}" styleClass="form-control"/>
+                                <p:message for="nameCategory" id="msgnCategory"/>
                                     <br/>
-                                <p:commandLink value="#{msgs['lbl.add']}" action="#{brandBean.doSaveBrand}" ajax="false"
+                                <p:commandLink value="#{msgs['lbl.add']}" action="#{categoryBean.doSaveCategory}" ajax="false"
                                                type="submit" styleClass="btn btn-primary btn-sm"/>
                                 &#160;
-                                <p:commandLink value="#{msgs['lbl.delete']}" action="#{brandBean.doDeleteBrand}" ajax="false"
+                                <p:commandLink value="#{msgs['lbl.delete']}" action="#{categoryBean.doDeleteCategory}" ajax="false"
                                                type="submit" styleClass="btn btn-primary btn-sm" />
 
                             </div>

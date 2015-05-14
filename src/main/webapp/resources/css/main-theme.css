@@ -502,5 +502,12 @@ label.checkbox{
 
 /*Input text type search*/
 .input-search{
-    border-radius: 15px;
+    border-radius: 15px!important;
+}
+
+/*Panel tab*/
+
+.panel.panel-default.panel-tab{
+    background-color: #EEEEEE;
+    margin-top: 25px;
 }

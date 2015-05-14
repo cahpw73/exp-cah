@@ -67,7 +67,7 @@ public class BrandBean implements Serializable {
                 Messages.addFlashError("nameBrand","Brand name already exists");
             }
         }else{
-            Messages.addFlashError("nameBrand","Brand name is required");
+            Messages.addFlashError("nameBrand","Enter a valid Brand");
         }
     }
 
@@ -78,6 +78,7 @@ public class BrandBean implements Serializable {
 
     public void doDeleteBrand(){
         selectedBrand.setStatus(StatusEnum.DELETED);
+        selectedBrand.setLastUpdate(new Date());
         brandService.doUpdate(selectedBrand);
         loadBrands();
     }
@@ -87,6 +88,9 @@ public class BrandBean implements Serializable {
         if(StringUtils.isNotEmpty(searchNameBrand) && StringUtils.isNotBlank(searchNameBrand)){
             brandList.clear();
             brandList = brandService.findByLikeName(searchNameBrand);
+            if (brandList.size() == 1 ){
+                selectedBrand = brandList.get(0);
+            }
         }else{
             brandList = brandService.getBrandList();
         }
