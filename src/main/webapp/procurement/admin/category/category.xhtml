@@ -23,7 +23,8 @@
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText styleClass="form-control input-search" value="#{categoryBean.searchNameCategory}"
                                                  jsf:placeholder="#{msgs['lbl.search']}" >
-                                        <p:ajax event="keyup" process="@this" update="categoryList" listener="#{categoryBean.searchCategory}"/>
+                                        <p:ajax event="keyup" process="@this" update="categoryList"
+                                                listener="#{categoryBean.searchCategory}" async="false"/>
                                     </h:inputText>
                                 </div>
 
@@ -43,7 +44,8 @@
                             <div class="col-md-4">
                                 <h:outputLabel value="#{msgs['lbl.admin.category.new']}" styleClass="control-label"/>
                                 <br/>
-                                <h:inputText id="nameCategory" value="#{categoryBean.categoryName}" styleClass="form-control"/>
+                                <h:inputText id="nameCategory" value="#{categoryBean.categoryName}"
+                                             styleClass="form-control" maxlength="50"/>
                                 <p:message for="nameCategory" id="msgnCategory"/>
                                     <br/>
                                 <p:commandLink value="#{msgs['lbl.add']}" action="#{categoryBean.doSaveCategory}" ajax="false"

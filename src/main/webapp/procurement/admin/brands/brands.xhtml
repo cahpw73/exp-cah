@@ -23,7 +23,8 @@
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText styleClass="form-control input-search" value="#{brandBean.searchNameBrand}"
                                                  jsf:placeholder="#{msgs['lbl.search']}" >
-                                        <p:ajax event="keyup" process="@this" update="brandList" listener="#{brandBean.searchBrand}"/>
+                                        <p:ajax event="keyup" process="@this" update="brandList"
+                                                listener="#{brandBean.searchBrand}" async="false"/>
                                     </h:inputText>
                                 </div>
 
@@ -43,7 +44,8 @@
                             <div class="col-md-4">
                                 <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
                                 <br/>
-                                <h:inputText id="nameBrand" value="#{brandBean.brandName}" styleClass="form-control"/>
+                                <h:inputText id="nameBrand" value="#{brandBean.brandName}"
+                                             styleClass="form-control" maxlength="50"/>
                                 <p:message for="nameBrand" id="msgnBrand"/>
                                     <br/>
                                 <p:commandLink value="#{msgs['lbl.add']}" action="#{brandBean.doSaveBrand}" ajax="false"
