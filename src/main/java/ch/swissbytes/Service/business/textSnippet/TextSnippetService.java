@@ -50,5 +50,9 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         return !dao.findByCodeButWithNoId(code, id).isEmpty();
     }
 
+    public List<TextSnippetEntity>findByText(final String text){
+        return dao.findByText(text);
+    }
+
 
 }

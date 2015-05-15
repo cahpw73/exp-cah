@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
@@ -30,37 +31,39 @@ public class TextSnippetBean implements Serializable {
     @Inject
     private TextSnippetService service;
     private List<TextSnippetEntity> list;
-    private TextSnippetEntity textSnippetEntity;
+    private TextSnippetEntity textSnippet;
+    private TextSnippetEntity selected;
     private ModeOperationEnum mode;
+    private String criteria;
 
     @PostConstruct
     public void create() {
         log.info("creating currency bean");
         loadList();
         mode = ModeOperationEnum.NEW;
-        textSnippetEntity = new TextSnippetEntity();
-        textSnippetEntity.setStatus(StatusEnum.ENABLE);
+        textSnippet = new TextSnippetEntity();
+        textSnippet.setStatus(StatusEnum.ENABLE);
     }
 
     public void edit(Long currencyId) {
-        textSnippetEntity = service.findById(currencyId);
+        textSnippet = service.findById(currencyId);
         mode = ModeOperationEnum.UPDATE;
     }
 
     public String doSave() {
-        if (!validate()) {
+        if (!validate(textSnippet)) {
             return "";
         }
 
-        textSnippetEntity.setLastUpdate(new Date());
-        service.doSave(textSnippetEntity);
+        textSnippet.setLastUpdate(new Date());
+        service.doSave(textSnippet);
         return "currency?faces-redirect=true";
     }
 
-    private boolean validate() {
+    private boolean validate(TextSnippetEntity textSnippet) {
         boolean valid = true;
-        if (service.isCodeDuplicated(textSnippetEntity.getId(), textSnippetEntity.getCode())) {
-            Messages.addFlashError("currencyCode", String.format("Code [%s] is duplicated ", textSnippetEntity.getCode()));
+        if (service.isCodeDuplicated(textSnippet.getId(), textSnippet.getCode())) {
+            Messages.addFlashError("currencyCode", String.format("Code [%s] is duplicated ", textSnippet.getCode()));
             valid = false;
         }
 
@@ -69,18 +72,37 @@ public class TextSnippetBean implements Serializable {
     }
 
     public String doUpdate() {
-        if (!validate()) {
+        if (!validate(selected)) {
             return "";
         }
-        textSnippetEntity.setLastUpdate(new Date());
-        service.doUpdate(textSnippetEntity);
+        textSnippet.setLastUpdate(new Date());
+        service.doUpdate(textSnippet);
         return "currency?faces-redirect=true";
     }
 
     public String doDelete(Long id) {
-        textSnippetEntity = service.findById(id);
-        service.delete(textSnippetEntity);
+        textSnippet = service.findById(id);
+        service.delete(textSnippet);
         return "currency?faces-redirect=true";
+    }
+
+    public void search(){
+        log.info("criteria : " + criteria);
+       // if(StringUtils.isNotEmpty(criteria) && StringUtils.isNotBlank(criteria)){
+            list.clear();
+            list = service.findByText(criteria);
+            if (list.size() == 1 ){
+                selected = list.get(0);
+            }
+
+    }
+
+    public String getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(String criteria) {
+        this.criteria = criteria;
     }
 
     private void loadList() {
@@ -91,12 +113,20 @@ public class TextSnippetBean implements Serializable {
         return list;
     }
 
-    public TextSnippetEntity getTextSnippetEntity() {
-        return textSnippetEntity;
+    public TextSnippetEntity getTextSnippet() {
+        return textSnippet;
     }
 
-    public void setTextSnippetEntity(TextSnippetEntity currency) {
-        this.textSnippetEntity = currency;
+    public void setTextSnippet(TextSnippetEntity currency) {
+        this.textSnippet = currency;
+    }
+
+    public TextSnippetEntity getSelected() {
+        return selected;
+    }
+
+    public void setSelected(TextSnippetEntity selected) {
+        this.selected = selected;
     }
 
     @PreDestroy

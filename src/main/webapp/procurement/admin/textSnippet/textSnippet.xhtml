@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <div class="col-md-6">
+            <div class="panel panel-default panel-tab">
+                <div class="procurement-panel-header">#{msgs['lbl.standard.text.title']}</div>
+                <!-- Default panel contents -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="left-inner-addon">
+                                <i class="fa fa-search fa-lg"></i>
+                                <h:inputText styleClass="form-control input-search"
+                                             value="#{textSnippetBean.criteria}"
+                                             jsf:placeholder="#{msgs['lbl.search']}">
+                                    <p:ajax event="keyup" process="@this" update="textSnippetList"
+                                            listener="#{textSnippetBean.search()}" async="false"/>
+                                </h:inputText>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
+                                                converter="textSnippetConverter"
+                                                styleClass="form-control" style="max-height: 150px; height: 150px;"
+                                                size="2">
+                                <f:selectItems value="#{textSnippetBean.list}" var="_brand" noSelectionValue="true"
+                                               itemLabel="#{_tsb.name}" itemValue="#{_tsb}"/>
+                            </h:selectOneListbox>
+                            <p:message for="textSnippetList"/>
+                        </div>
+                        <h:form prependId="false">
+                        <div class="col-md-4">
+                            <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
+                            <br/>
+                            <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
+                                         styleClass="form-control" maxlength="50"/>
+                            <p:message for="codeTS"/>
+                            <br/>
+                            <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
+                                             styleClass="form-control" maxlength="1000"/>
+                            <p:message for="textTS"/>
+                            <br/>
+                            <h:commandLink value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
+                                           styleClass="btn btn-primary btn-sm"/>
+                        </div>
+                        </h:form>
+                        <div class="col-md-4">
+                            The following formatting options are available
+                            <br/>
+                                <pre style="display: inline-block">
+                                <code>
+                                    &lt;i&gt;- italics
+                                    &lt;b&gt;- bold
+                                    &lt;u&gt;- underline
+                                    &lt;h1&gt;- header size 1
+                                    &lt;h2&gt;- header size 2
+                                    &lt;h3&gt;- header size 3
+                                    &lt;p&gt;- paragraph
+                                </code>
+                                </pre>
+                        </div>
+                        <h:form prependId="false">
+                        <div class="col-md-4">
+
+                            <br/>
+                            <h:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
+                                         styleClass="form-control" maxlength="50"/>
+                            <p:message for="codeTS2"/>
+                            <br/>
+                            <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
+                                             styleClass="form-control" maxlength="1000"/>
+                            <p:message for="textTS2"/>
+                            <br/>
+                            <h:commandLink value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
+                                           styleClass="btn btn-primary btn-sm"/>
+                            &#160;
+                            <h:commandLink value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
+                                           styleClass="btn btn-primary btn-sm"/>
+                        </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
