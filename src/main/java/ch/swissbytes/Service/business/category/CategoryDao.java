@@ -30,11 +30,12 @@ public class CategoryDao extends GenericDao<CategoryEntity> implements Serializa
         super.saveAndFlush(entity);
     }
 
-    public List<CategoryEntity> getBrandList(){
+    public List<CategoryEntity> getCategoryList(){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT c ");
         sb.append(" FROM CategoryEntity c ");
         sb.append(" WHERE c.status = :ENABLE ");
+        sb.append(" ORDER BY c.name ");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);

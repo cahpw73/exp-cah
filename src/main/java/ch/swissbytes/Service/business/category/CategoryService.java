@@ -38,7 +38,7 @@ public class CategoryService extends Service<CategoryEntity> implements Serializ
 
     public List<CategoryEntity> getCategoryList(){
         log.info("getCategoryList");
-        return categoryDao.getBrandList();
+        return categoryDao.getCategoryList();
     }
 
     public List<CategoryEntity> findByName(final String name){

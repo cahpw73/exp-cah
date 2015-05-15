@@ -33,6 +33,7 @@ public class BrandDao extends GenericDao<BrandEntity> implements Serializable {
         sb.append(" SELECT b ");
         sb.append(" FROM BrandEntity b ");
         sb.append(" WHERE b.status = :ENABLE ");
+        sb.append(" ORDER BY b.name ");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
