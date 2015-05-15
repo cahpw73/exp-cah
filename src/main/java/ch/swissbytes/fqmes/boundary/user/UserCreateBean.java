@@ -61,7 +61,7 @@ public class UserCreateBean implements Serializable {
             RoleEntity roleEntity = enumService.getFindRoleByRoleEnumId(RoleEnum.valueOf(roleName).getId());
             StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(statusId);
             if(roleEntity != null){
-                userEntity.setRoleEntity(roleEntity);
+               // userEntity.setRoleEntity(roleEntity);
                 userEntity.setStatus(statusEntity);
                 userEntity.setPassword(getEncodePass(userEntity.getPassword()));
                 userService.doSave(userEntity);

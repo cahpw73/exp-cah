@@ -125,14 +125,12 @@ public class UserDao extends GenericDao implements Serializable {
     }
 
     public UserEntity getUser(String username, String password) {
-
         String hql = "SELECT u FROM UserEntity u " +
                 "WHERE u.username = :username and u.password = :password and u.status.id=:enabled";
         TypedQuery<UserEntity> query = this.entityManager.createQuery(hql, UserEntity.class);
         query.setParameter("username", username);
         query.setParameter("enabled", StatusEnum.ENABLE.getId());
         query.setParameter("password", password);
-
         try {
             List<UserEntity> results = query.getResultList();
             UserEntity user = null;
@@ -143,7 +141,6 @@ public class UserDao extends GenericDao implements Serializable {
         } catch (NoResultException nre) {
             log.log(Level.SEVERE, nre.getMessage(), nre.getCause());
         }
-
         return null;
     }
 
