@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by dahir on 01-07-14.
+ * Created by christian on 01-07-14.
  */
 
 
@@ -35,7 +35,12 @@ public class UserDao extends GenericDao implements Serializable {
 
 
     public void doSave(UserEntity user){
-        super.save(user);
+        super.saveAndFlush(user);
+    }
+
+    public void doUpdate(UserEntity detachedEntity){
+        UserEntity entity = (UserEntity) super.merge(detachedEntity);
+        super.saveAndFlush(entity);
     }
 
     public List<UserEntity> findUserByUserName(final String username){

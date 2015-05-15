@@ -51,3 +51,10 @@
 .panel-tab-users{
     margin-top: 25px;
 }
+
+/*Labels*/
+.procurement-text-lbl-ltr{
+    text-align:left!important;
+    direction: ltr!important;
+    padding-left: 30px!important;
+}
