@@ -52,7 +52,7 @@ public class BrandBean implements Serializable {
         brandList = brandService.getBrandList();
     }
 
-    public void doSaveBrand(){
+    public String doSaveBrand(){
         if(StringUtils.isNotEmpty(brandName) && StringUtils.isNotBlank(brandName)){
             if(isValidBrand(brandName)) {
                 BrandEntity currentBrand = new BrandEntity();
@@ -68,6 +68,7 @@ public class BrandBean implements Serializable {
         }else{
             Messages.addFlashError("nameBrand","Enter a valid Brand");
         }
+        return "brands?faces-redirect=true";
     }
 
     private boolean isValidBrand(String brandName) {
@@ -75,7 +76,7 @@ public class BrandBean implements Serializable {
         return brandList.isEmpty();
     }
 
-    public void doDeleteBrand(){
+    public String doDeleteBrand(){
         if(selectedBrand != null) {
             selectedBrand.setStatus(StatusEnum.DELETED);
             selectedBrand.setLastUpdate(new Date());
@@ -85,6 +86,7 @@ public class BrandBean implements Serializable {
         }else{
             Messages.addFlashError("brandList","Select a brand first");
         }
+        return "brands?faces-redirect=true";
     }
 
     public void searchBrand(){

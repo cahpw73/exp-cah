@@ -53,7 +53,7 @@ public class CategoryBean implements Serializable {
         categoryList = categoryService.getCategoryList();
     }
 
-    public void doSaveCategory(){
+    public String doSaveCategory(){
         if(StringUtils.isNotEmpty(categoryName) && StringUtils.isNotBlank(categoryName)){
             if(isValidCategory(categoryName)) {
                 CategoryEntity currentCategory = new CategoryEntity();
@@ -69,6 +69,7 @@ public class CategoryBean implements Serializable {
         }else{
             Messages.addFlashError("nameCategory","Enter a valid Category");
         }
+        return "category?faces-redirect=true";
     }
 
     private boolean isValidCategory(String categoryName) {
@@ -76,7 +77,7 @@ public class CategoryBean implements Serializable {
         return categoryList.isEmpty();
     }
 
-    public void doDeleteCategory(){
+    public String doDeleteCategory(){
         if(selectedCategory != null) {
             selectedCategory.setStatus(StatusEnum.DELETED);
             selectedCategory.setLastUpdate(new Date());
@@ -86,7 +87,7 @@ public class CategoryBean implements Serializable {
         }else{
             Messages.addFlashError("categoryList","Select a category first");
         }
-
+        return "category?faces-redirect=true";
     }
 
     public void searchCategory(){

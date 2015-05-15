@@ -48,10 +48,10 @@
                                              styleClass="form-control" maxlength="50"/>
                                 <p:message for="nameBrand" id="msgnBrand"/>
                                     <br/>
-                                <p:commandLink value="#{msgs['lbl.add']}" action="#{brandBean.doSaveBrand}" ajax="false"
+                                <h:commandButton value="#{msgs['lbl.add']}" action="#{brandBean.doSaveBrand}"
                                                type="submit" styleClass="btn btn-primary btn-sm"/>
                                 &#160;
-                                <p:commandLink value="#{msgs['lbl.delete']}" action="#{brandBean.doDeleteBrand}" ajax="false"
+                                <h:commandButton value="#{msgs['lbl.delete']}" action="#{brandBean.doDeleteBrand}"
                                                type="submit" styleClass="btn btn-primary btn-sm" />
 
                             </div>

@@ -12,16 +12,19 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
-                <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
-            </ul>
+            <div class="col-md-6 panel-tab-users">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#procurement" role="tab"
+                                          data-toggle="tab">#{msgs['lbl.tab.procurement.title']}</a></li>
+                    <li><a href="#expediting" role="tab" data-toggle="tab">#{msgs['lbl.tab.expediting.title']}</a></li>
+                </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="home">...</div>
-                <div class="tab-pane" id="profile">...</div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="procurement"></div>
+                    <div class="tab-pane" id="expediting"></div>
+                </div>
             </div>
         </h:form>
     </ui:define>
