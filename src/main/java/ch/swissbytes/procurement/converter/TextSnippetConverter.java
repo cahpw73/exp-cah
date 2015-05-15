@@ -29,10 +29,8 @@ public class TextSnippetConverter implements Converter {
         if (value == null) {
             return null;
         }
-       // List<TextSnippetEntity> list = service.findByText(value);
         TextSnippetEntity textSnippetEntity = null;
         for (TextSnippetEntity ts : service.getTextSnippetList()) {
-            System.out.println("comparing " + ts.getId() + "  " + value);
             if (ts.getId().intValue() == Integer.parseInt(value)) {
                 textSnippetEntity = ts;
                 break;
@@ -49,7 +47,7 @@ public class TextSnippetConverter implements Converter {
         if (value instanceof TextSnippetEntity) {
             string = ((TextSnippetEntity) value).getId().toString();
         }
-        System.out.println("getasstring "+string);
+        System.out.println("getAsString "+string);
         return string;
     }
 }

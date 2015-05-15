@@ -1,12 +1,10 @@
 package ch.swissbytes.procurement.boundary.textSnippet;
 
 
-
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.domain.types.StatusEnum;
-import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
@@ -84,14 +82,13 @@ public class TextSnippetBean implements Serializable {
         return "textSnippet?faces-redirect=true";
     }
 
-    public void search(){
+    public void search() {
         log.info("criteria : " + criteria);
-       // if(StringUtils.isNotEmpty(criteria) && StringUtils.isNotBlank(criteria)){
-            list.clear();
-            list = service.findByText(criteria);
-            if (list.size() == 1 ){
-                selected = list.get(0);
-            }
+        list.clear();
+        list = service.findByText(criteria);
+        if (list.size() == 1) {
+            selected = list.get(0);
+        }
 
     }
 
@@ -124,7 +121,7 @@ public class TextSnippetBean implements Serializable {
     }
 
     public void setSelected(TextSnippetEntity selected) {
-        log.info("seting selected "+selected);
+        log.info("seting selected " + selected);
         this.selected = selected;
     }
 

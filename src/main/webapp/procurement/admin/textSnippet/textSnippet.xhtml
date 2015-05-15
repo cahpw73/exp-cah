@@ -16,89 +16,107 @@
                 <div class="procurement-panel-header">#{msgs['lbl.standard.text.title']}</div>
                 <!-- Default panel contents -->
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">
+                    <div>
+                        <div class="col-md-6">
                             <div class="left-inner-addon">
                                 <i class="fa fa-search fa-lg"></i>
                                 <h:form prependId="false">
                                     <h:inputText styleClass="form-control input-search"
                                                  value="#{textSnippetBean.criteria}"
                                                  jsf:placeholder="#{msgs['lbl.search']}">
-                                        <p:ajax event="keyup" process="@this" update=":formList"
+                                        <p:ajax event="keyup" process="@this" update=":formSnippetList"
                                                 listener="#{textSnippetBean.search()}" async="false"/>
                                     </h:inputText>
                                 </h:form>
                             </div>
-                        </div>
-                    </div>
-                    <br/>
+                            <br/>
+                            <div>
+                                <h:form id="formSnippetList" prependId="false">
+                                    <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
+                                                        converter="textSnippetConverter"
+                                                        styleClass="form-control"
+                                                        style="min-height: 230px;"
+                                                        size="2">
+                                        <f:selectItems value="#{textSnippetBean.list}" var="_tsb"
+                                                       itemLabel="#{_tsb.textSnippet}" itemValue="#{_tsb}"/>
+                                        <f:ajax render="standardTextForm" event="blur" execute="@this"/>
+                                    </h:selectOneListbox>
 
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h:form id="formList">
-                                <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
-                                                    converter="textSnippetConverter"
-                                                    styleClass="form-control" style="max-height: 150px; height: 150px;"
-                                                    size="2">
-                                    <f:selectItems value="#{textSnippetBean.list}" var="_tsb" noSelectionValue="true"
-                                                   itemLabel="#{_tsb.textSnippet}" itemValue="#{_tsb}"/>
-                                    <p:ajax process="textSnippetList" update=":standardTextForm" async="false"/>
-                                </h:selectOneListbox>
-                                <p:message for="textSnippetList"/>
-                            </h:form>
-                        </div>
-                        <h:form prependId="false">
-                            <div class="col-md-4">
-                                <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
-                                <br/>
-                                <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
-                                             styleClass="form-control" maxlength="50"/>
-                                <p:message for="codeTS"/>
-                                <br/>
-                                <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
-                                                 styleClass="form-control" maxlength="1000"/>
-                                <p:message for="textTS"/>
-                                <br/>
-                                <h:commandButton value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
-                                                 styleClass="btn btn-primary btn-sm"/>
+                                    <p:message for="textSnippetList"/>
+                                </h:form>
                             </div>
-                        </h:form>
-
+                        </div>
                         <div class="col-md-4">
+                            <div>
+                                <h:form prependId="false">
+                                    <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
+                                                 jsf:placeholder="Enter code"
+                                                 required="true"
+                                                 requiredMessage="Enter valid code"
+                                                 styleClass="form-control" maxlength="50"/>
+                                    <p:message for="codeTS"/>
+                                    <br/>
+                                    <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
+                                                     required="true"
+                                                     requiredMessage="Enter Text Snippet"
+                                                     jsf:placeholder="Enter text snippet"
+                                                     styleClass="form-control" maxlength="1000"/>
+                                    <p:message for="textTS"/>
+                                    <br/>
+                                    <h:commandButton value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
+                                                     styleClass="btn btn-primary btn-sm"/>
+                                </h:form>
+                            </div>
+                            <br/>
+
+                            <div>
+                                <h:form id="standardTextForm">
+
+                                    <p:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
+                                                 jsf:placeholder="Enter text snippet"
+                                                 disabled="#{textSnippetBean.selected eq null}"
+                                                 styleClass="form-control" maxlength="50"/>
+                                    <p:message for="codeTS2"/>
+                                    <br/>
+                                    <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
+                                                     disabled="#{textSnippetBean.selected eq null}"
+                                                     jsf:placeholder="Enter text snippet"
+                                                     styleClass="form-control" maxlength="1000"/>
+                                    <p:message for="textTS2"/>
+                                    <br/>
+                                    <h:commandButton value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
+                                                     disabled="#{textSnippetBean.selected eq null}"
+                                                     styleClass="btn btn-primary btn-sm"/>
+                                    &#160;
+                                    <h:commandButton value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
+                                                     disabled="#{textSnippetBean.selected eq null}"
+                                                     styleClass="btn btn-primary btn-sm"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="clearfix"/>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default panel-tab">
+                            <div class="procurement-panel-header">Help</div>
                             The following formatting options are available
                             <br/>
-                                <pre style="display: inline-block">
-                                <code>
-                                    &lt;i&gt;- italics
-                                    &lt;b&gt;- bold
-                                    &lt;u&gt;- underline
-                                    &lt;h1&gt;- header size 1
-                                    &lt;h2&gt;- header size 2
-                                    &lt;h3&gt;- header size 3
-                                    &lt;p&gt;- paragraph
-                                </code>
-                                </pre>
+                            &lt;i&gt;&#160;&#160;&#160;&#160;- italics
+                            <br/>
+                            &lt;b&gt;&#160;&#160;&#160;- bold
+                            <br/>
+                            &lt;u&gt;&#160;&#160;&#160;- underline
+                            <br/>
+                            &lt;h1&gt;&#160;- header size 1
+                            <br/>
+                            &lt;h2&gt;&#160;- header size 2
+                            <br/>
+                            &lt;h3&gt;&#160;- header size 3
+                            <br/>
+                            &lt;p&gt;&#160;&#160;&#160;- paragraph
+                            <br/>
                         </div>
-                        <h:form id="standardTextForm">
-                            <div class="col-md-4">
-
-                                <br/>
-                                <p:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
-
-                                             styleClass="form-control" maxlength="50"/>
-                                <p:message for="codeTS2"/>
-                                <br/>
-                                <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
-                                                 styleClass="form-control" maxlength="1000"/>
-                                <p:message for="textTS2"/>
-                                <br/>
-                                <h:commandButton value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
-                                                 styleClass="btn btn-primary btn-sm"/>
-                                &#160;
-                                <h:commandButton value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
-                                                 styleClass="btn btn-primary btn-sm"/>
-                            </div>
-                        </h:form>
                     </div>
                 </div>
             </div>
