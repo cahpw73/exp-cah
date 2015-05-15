@@ -1,7 +1,6 @@
 package ch.swissbytes.procurement.converter;
 
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
-import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 
 import javax.faces.component.UIComponent;
@@ -26,14 +25,20 @@ public class TextSnippetConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
                               String value) {
+        System.out.println("value " + value);
         if (value == null) {
             return null;
         }
-        List<TextSnippetEntity> list = service.findByText(value);
+       // List<TextSnippetEntity> list = service.findByText(value);
         TextSnippetEntity textSnippetEntity = null;
-        if(!list.isEmpty()){
-            textSnippetEntity = service.findByText(value).get(0);
+        for (TextSnippetEntity ts : service.getTextSnippetList()) {
+            System.out.println("comparing " + ts.getId() + "  " + value);
+            if (ts.getId().intValue() == Integer.parseInt(value)) {
+                textSnippetEntity = ts;
+                break;
+            }
         }
+        System.out.println("returning " + textSnippetEntity!=null?textSnippetEntity.getTextSnippet():"nothing found");
         return textSnippetEntity;
     }
 
@@ -42,8 +47,9 @@ public class TextSnippetConverter implements Converter {
                               Object value) {
         String string = null;
         if (value instanceof TextSnippetEntity) {
-            string = ((TextSnippetEntity) value).getTextSnippet();
+            string = ((TextSnippetEntity) value).getId().toString();
         }
+        System.out.println("getasstring "+string);
         return string;
     }
 }

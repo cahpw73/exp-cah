@@ -20,12 +20,14 @@
                         <div class="col-md-4">
                             <div class="left-inner-addon">
                                 <i class="fa fa-search fa-lg"></i>
-                                <h:inputText styleClass="form-control input-search"
-                                             value="#{textSnippetBean.criteria}"
-                                             jsf:placeholder="#{msgs['lbl.search']}">
-                                    <p:ajax event="keyup" process="@this" update="textSnippetList"
-                                            listener="#{textSnippetBean.search()}" async="false"/>
-                                </h:inputText>
+                                <h:form prependId="false">
+                                    <h:inputText styleClass="form-control input-search"
+                                                 value="#{textSnippetBean.criteria}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}">
+                                        <p:ajax event="keyup" process="@this" update=":formList"
+                                                listener="#{textSnippetBean.search()}" async="false"/>
+                                    </h:inputText>
+                                </h:form>
                             </div>
                         </div>
                     </div>
@@ -33,31 +35,35 @@
 
                     <div class="row">
                         <div class="col-md-5">
-                            <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
-                                                converter="textSnippetConverter"
-                                                styleClass="form-control" style="max-height: 150px; height: 150px;"
-                                                size="2">
-                                <f:selectItems value="#{textSnippetBean.list}" var="_brand" noSelectionValue="true"
-                                               itemLabel="#{_tsb.name}" itemValue="#{_tsb}"/>
-                            </h:selectOneListbox>
-                            <p:message for="textSnippetList"/>
+                            <h:form id="formList">
+                                <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
+                                                    converter="textSnippetConverter"
+                                                    styleClass="form-control" style="max-height: 150px; height: 150px;"
+                                                    size="2">
+                                    <f:selectItems value="#{textSnippetBean.list}" var="_tsb" noSelectionValue="true"
+                                                   itemLabel="#{_tsb.textSnippet}" itemValue="#{_tsb}"/>
+                                    <p:ajax process="textSnippetList" update=":standardTextForm" async="false"/>
+                                </h:selectOneListbox>
+                                <p:message for="textSnippetList"/>
+                            </h:form>
                         </div>
                         <h:form prependId="false">
-                        <div class="col-md-4">
-                            <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
-                            <br/>
-                            <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
-                                         styleClass="form-control" maxlength="50"/>
-                            <p:message for="codeTS"/>
-                            <br/>
-                            <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
-                                             styleClass="form-control" maxlength="1000"/>
-                            <p:message for="textTS"/>
-                            <br/>
-                            <h:commandLink value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
-                                           styleClass="btn btn-primary btn-sm"/>
-                        </div>
+                            <div class="col-md-4">
+                                <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
+                                <br/>
+                                <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
+                                             styleClass="form-control" maxlength="50"/>
+                                <p:message for="codeTS"/>
+                                <br/>
+                                <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
+                                                 styleClass="form-control" maxlength="1000"/>
+                                <p:message for="textTS"/>
+                                <br/>
+                                <h:commandButton value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
+                                                 styleClass="btn btn-primary btn-sm"/>
+                            </div>
                         </h:form>
+
                         <div class="col-md-4">
                             The following formatting options are available
                             <br/>
@@ -73,24 +79,25 @@
                                 </code>
                                 </pre>
                         </div>
-                        <h:form prependId="false">
-                        <div class="col-md-4">
+                        <h:form id="standardTextForm">
+                            <div class="col-md-4">
 
-                            <br/>
-                            <h:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
-                                         styleClass="form-control" maxlength="50"/>
-                            <p:message for="codeTS2"/>
-                            <br/>
-                            <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
-                                             styleClass="form-control" maxlength="1000"/>
-                            <p:message for="textTS2"/>
-                            <br/>
-                            <h:commandLink value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
-                                           styleClass="btn btn-primary btn-sm"/>
-                            &#160;
-                            <h:commandLink value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
-                                           styleClass="btn btn-primary btn-sm"/>
-                        </div>
+                                <br/>
+                                <p:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
+
+                                             styleClass="form-control" maxlength="50"/>
+                                <p:message for="codeTS2"/>
+                                <br/>
+                                <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
+                                                 styleClass="form-control" maxlength="1000"/>
+                                <p:message for="textTS2"/>
+                                <br/>
+                                <h:commandButton value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
+                                                 styleClass="btn btn-primary btn-sm"/>
+                                &#160;
+                                <h:commandButton value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
+                                                 styleClass="btn btn-primary btn-sm"/>
+                            </div>
                         </h:form>
                     </div>
                 </div>

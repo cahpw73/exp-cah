@@ -57,7 +57,7 @@ public class TextSnippetBean implements Serializable {
 
         textSnippet.setLastUpdate(new Date());
         service.doSave(textSnippet);
-        return "currency?faces-redirect=true";
+        return "textSnippet?faces-redirect=true";
     }
 
     private boolean validate(TextSnippetEntity textSnippet) {
@@ -66,8 +66,6 @@ public class TextSnippetBean implements Serializable {
             Messages.addFlashError("currencyCode", String.format("Code [%s] is duplicated ", textSnippet.getCode()));
             valid = false;
         }
-
-
         return valid;
     }
 
@@ -77,13 +75,13 @@ public class TextSnippetBean implements Serializable {
         }
         textSnippet.setLastUpdate(new Date());
         service.doUpdate(textSnippet);
-        return "currency?faces-redirect=true";
+        return "textSnippet?faces-redirect=true";
     }
 
     public String doDelete(Long id) {
         textSnippet = service.findById(id);
         service.delete(textSnippet);
-        return "currency?faces-redirect=true";
+        return "textSnippet?faces-redirect=true";
     }
 
     public void search(){
@@ -126,6 +124,7 @@ public class TextSnippetBean implements Serializable {
     }
 
     public void setSelected(TextSnippetEntity selected) {
+        log.info("seting selected "+selected);
         this.selected = selected;
     }
 

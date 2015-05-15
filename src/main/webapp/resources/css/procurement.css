@@ -46,3 +46,19 @@
     background-color: #EEEEEE;
     margin-top: 25px;
 }
+
+.link-home{
+    list-style-type:none;
+    padding-left: 0px;
+
+}
+.link-home li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.link-disabled{
+    pointer-events: none;
+    cursor: default;
+    color: gray;
+}
