@@ -1,9 +1,8 @@
-package ch.swissbytes.Service.business.currency;
+package ch.swissbytes.Service.business.textSnippet;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
-import ch.swissbytes.domain.model.entities.CurrencyEntity;
-import ch.swissbytes.domain.model.entities.LogoEntity;
+import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -17,20 +16,20 @@ import java.util.logging.Logger;
  * Created by alvaro on 9/10/14.
  */
 
-public class CurrencyDao extends GenericDao<CurrencyEntity> implements Serializable {
+public class TextSnippetDao extends GenericDao<TextSnippetEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(CurrencyDao.class.getName());
+    private static final Logger log = Logger.getLogger(TextSnippetDao.class.getName());
 
 
-    public void doSave(CurrencyEntity brandEntity){
-        super.save(brandEntity);
+    public void doSave(TextSnippetEntity textSnippet){
+        super.save(textSnippet);
     }
 
-    public void doUpdate(CurrencyEntity detachedEntity){
-       super.update(detachedEntity);
+    public void doUpdate(TextSnippetEntity textSnippet){
+       super.update(textSnippet);
     }
 
-    public List<CurrencyEntity> getCurrencyList(){
+    public List<TextSnippetEntity> getTextSnippetList(){
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM CurrencyEntity x ");
@@ -41,30 +40,18 @@ public class CurrencyDao extends GenericDao<CurrencyEntity> implements Serializa
         return super.findBy(sb.toString(),map);
     }
 
-    public List<CurrencyEntity> findByNameButWithNoId(String name, Long id){
-        StringBuilder sb=new StringBuilder();
-        sb.append("SELECT x ");
-        sb.append("FROM CurrencyEntity x ");
-        sb.append("WHERE x.status=:ENABLED ");
-        sb.append("AND trim(lower(x.name))=:NAME ");
-        sb.append("AND NOT x.id=:CURRENCY_ID ");
-        Map<String,Object> map=new HashMap<String,Object>();
-        map.put("ENABLED", StatusEnum.ENABLE);
-        map.put("NAME", name.toLowerCase().trim());
-        map.put("CURRENCY_ID", id!=null?id:0L);
-        return super.findBy(sb.toString(),map);
-    }
-    public List<CurrencyEntity> findByCodeButWithNoId(String code, Long id){
+
+    public List<TextSnippetEntity> findByCodeButWithNoId(String code, Long id){
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM CurrencyEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
         sb.append("AND trim(lower(x.code))=:CODE ");
-        sb.append("AND NOT x.id=:CURRENCY_ID ");
+        sb.append("AND NOT x.id=:TEXT_SNIPPET_ID ");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
         map.put("CODE", code.toLowerCase().trim());
-        map.put("CURRENCY_ID", id!=null?id:0L);
+        map.put("TEXT_SNIPPET_ID", id!=null?id:0L);
         return super.findBy(sb.toString(),map);
     }
 

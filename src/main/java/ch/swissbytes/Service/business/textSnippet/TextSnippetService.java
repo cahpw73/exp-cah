@@ -1,8 +1,8 @@
-package ch.swissbytes.Service.business.currency;
+package ch.swissbytes.Service.business.textSnippet;
 
 
 import ch.swissbytes.Service.business.Service;
-import ch.swissbytes.domain.model.entities.CurrencyEntity;
+import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.annotation.PostConstruct;
@@ -16,12 +16,12 @@ import java.util.logging.Logger;
 /**
  * Created by christian  on 11/05/15.
  */
-public class CurrencyService extends Service<CurrencyEntity> implements Serializable {
+public class TextSnippetService extends Service<TextSnippetEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(CurrencyService.class.getName());
+    private static final Logger log = Logger.getLogger(TextSnippetService.class.getName());
 
     @Inject
-    private CurrencyDao dao;
+    private TextSnippetDao dao;
 
     @PostConstruct
     public void create() {
@@ -29,25 +29,22 @@ public class CurrencyService extends Service<CurrencyEntity> implements Serializ
     }
 
     @Transactional
-    public void delete(CurrencyEntity currency) {
+    public void delete(TextSnippetEntity currency) {
         currency.setStatus(StatusEnum.DELETED);
         currency.setLastUpdate(new Date());
         dao.update(currency);
     }
 
-    public CurrencyEntity findById(Long id) {
-        List<CurrencyEntity> list = dao.findById(CurrencyEntity.class, id);
+    public TextSnippetEntity findById(Long id) {
+        List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;
     }
 
-    public List<CurrencyEntity> getCurrencyList() {
-        log.info("getCurrencyList");
-        return dao.getCurrencyList();
+    public List<TextSnippetEntity> getTextSnippetList() {
+        log.info("getTextSnippetList");
+        return dao.getTextSnippetList();
     }
 
-    public boolean isNameDuplicated(Long id, String name) {
-        return !dao.findByNameButWithNoId(name, id).isEmpty();
-    }
 
     public boolean isCodeDuplicated(Long id, String code) {
         return !dao.findByCodeButWithNoId(code, id).isEmpty();
