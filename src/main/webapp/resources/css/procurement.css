@@ -53,8 +53,24 @@
 }
 
 /*Labels*/
-.procurement-text-lbl-ltr{
-    text-align:left!important;
-    direction: ltr!important;
-    padding-left: 30px!important;
+.procurement-text-lbl-ltr {
+    text-align: left !important;
+    direction: ltr !important;
+    padding-left: 30px !important;
+}
+
+.link-home{
+    list-style-type:none;
+    padding-left: 0px;
+
+}
+.link-home li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.link-disabled{
+    pointer-events: none;
+    cursor: default;
+    color: gray;
 }

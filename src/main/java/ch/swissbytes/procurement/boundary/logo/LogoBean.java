@@ -4,6 +4,8 @@ import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.domain.model.entities.LogoEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
+import org.apache.commons.lang3.StringUtils;
+import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -66,20 +68,36 @@ public class LogoBean implements Serializable {
     public String doSave() {
         log.info("trying to save new logo");
         //logo.setDescription("new file " + new Date().getTime());
+        if(!validate()){
+            return "";
+        }
         logo.setLastUpdate(new Date());
         logo.setStatus(StatusEnum.ENABLE);
         service.doSave(logo);
         log.info(String.format("logo has been saved [%s]", logo.getDescription()));
         return "logo?faces-redirect=true";
     }
+    private boolean validate(){
+        boolean valid=true;
+        if(logo.getFile()==null){
+            Messages.addFlashError("graphicId","Please choose an image");
+            valid=false;
+        }
+        if(StringUtils.isEmpty(logo.getDescription())&&StringUtils.isBlank(logo.getDescription())){
+            Messages.addFlashError("description","Please enter description");
+            valid=false;
+        }
+        return valid;
 
-    public void doDelete() {
+    }
+
+    public String doDelete() {
         log.info("removing component");
         if(logoSelected!=null){
             service.delete(logoSelected);
             log.info(String.format("logo has been removed [%s]", logo.getDescription()));
         }
-
+        return "logo?faces-redirect=true";
     }
 
     public LogoEntity getLogo() {

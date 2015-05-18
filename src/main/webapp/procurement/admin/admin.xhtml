@@ -11,9 +11,10 @@
 
     <ui:define name="body">
             <div style="margin-top: 20px;">
-                <ul style="list-style-type: none;">
+                <ul class="link-home">
                     <li>
-                        <a href="#">#{msgs['lbl.admin.supplier']}</a>
+                        <!--Remove link-disabled when this page is done-->
+                        <a href="#"  class="link-disabled">#{msgs['lbl.admin.supplier']}</a>
                     </li>
                     <li>
                         <h:link
@@ -36,7 +37,9 @@
                         </h:link>
                     </li>
                     <li>
-                        <a href="#">#{msgs['lbl.admin.standard.text']}</a>
+                        <h:link
+                                outcome="/procurement/admin/textSnippet/textSnippet">#{msgs['lbl.admin.standard.text']}
+                        </h:link>
                     </li>
                     <li>
                         <h:link

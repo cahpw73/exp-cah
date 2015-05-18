@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,14 +28,20 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
         super.initialize(dao);
     }
 
+    @Transactional
     public void delete(LogoEntity logo){
         logo.setStatus(StatusEnum.DELETED);
+        logo.setFile(null);
         dao.update(logo);
     }
 
     public List<LogoEntity> getLogoList(){
-        log.info("getCurrencyList");
-        return dao.getLogoList();
+        log.info("getLogoList");
+        Date date =new Date();
+        List<LogoEntity> list=dao.getLogoList();
+        Date end=new Date();
+        log.info(String.format("logo list takes %s ms ",Long.toString(end.getTime()-date.getTime())));
+        return list;
     }
 
 
