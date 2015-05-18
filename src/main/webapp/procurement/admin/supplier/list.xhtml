@@ -11,57 +11,57 @@
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form prependId="false">
-            <div class="col-md-6">
-                <!-- Nav tabs -->
-                <div>
+        <div class="col-md-6">
+            <!-- Nav tabs -->
+            <div>
+                <h:form prependId="false">
                     <div class="col-md-4">
                         <div class="left-inner-addon">
                             <i class="fa fa-search fa-lg"></i>
-                            <h:inputText styleClass="form-control input-search" value="#{brandBean.searchNameBrand}"
+                            <h:inputText styleClass="form-control input-search"
+                                         value="#{supplierProcList.filter.criteria}"
                                          jsf:placeholder="#{msgs['lbl.search']}">
                             </h:inputText>
                         </div>
                     </div>
-
-                        <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm"/>
+                    <h:commandButton value="#{msgs['lbl.search']}" action="#{supplierProcList.doSearch}"
+                                     styleClass="btn btn-primary btn-sm"/>
+                    &#160;
+                    <h:link value="New supplier" outcome="edit" styleClass="btn btn-primary btn-sm"/>
+                </h:form>
+            </div>
+            <p:dataTable value="#{supplierProcList.list}" var="_supplier"
+                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                         rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
+                         paginatorPosition="bottom">
+                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}">
+                    #{_supplier.supplierId}
+                </p:column>
+                <p:column headerText="#{msgs['supplier.lbl.company']}">
+                    #{_supplier.company}
+                </p:column>
+                <p:column headerText="#{msgs['supplier.lbl.state']}">
+                    #{_supplier.state}
+                </p:column>
+                <p:column headerText="#{msgs['supplier.lbl.country']}">
+                    #{_supplier.country}
+                </p:column>
+                <p:column headerText="#{msgs['lbl.actions']}">
+                    <h:form prependId="false">
+                        <h:commandButton value="#{msgs['lbl.edit']}"
+                                         styleClass="btn btn-primary btn-sm">
+                        </h:commandButton>
                         &#160;
-                        <h:commandButton value="New supplier" styleClass="btn btn-primary btn-sm"/>
+                        <p:commandLink value="#{msgs['lbl.delete']}"
+                                       style="color: #ffffff;"
+                                       styleClass="btn btn-primary btn-sm">
 
-                </div>
-                <p:dataTable value="#{currencyBean.list}" var="_currency">
-                    <p:column headerText="#{msgs['supplier.lbl.supplier.id']}">
-                    </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.company']}">
-                    </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.state']}">
-                    </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.country']}">
-                    </p:column>
-                    <p:column headerText="#{msgs['lbl.actions']}">
-                    </p:column>
-                </p:dataTable>
-
-                <div class="clearfix"/>
-                <br/>
-
-
-                <div class="clearfix"/>
-                <br/>
-
-
-
-
-                <div>
-                        <h:commandButton value="Create bidder list" styleClass="btn btn-primary btn-sm"
-                                     action="edit?faces-redirect=true"/>
-                </div>
-            </div>
-            <!-- Tab Expediting -->
-            <div class="tab-pane" id="expediting">
-
-            </div>
-
-        </h:form>
+                        </p:commandLink>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <a class="link-disabled" href="#">Create bidder list</a>
+        </div>
     </ui:define>
 </ui:composition>

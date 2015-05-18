@@ -21,7 +21,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
-        if(StringUtils.isEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
+        if(filter!=null&&StringUtils.isNotEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
             query.setParameter("CRITERIA",filter.getCriteria().trim().toLowerCase());
         }
     }
@@ -34,7 +34,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
     @Override
     protected String addCriteria(Filter filter) {
         StringBuilder query=new StringBuilder();
-        if(StringUtils.isEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
+        if(filter!=null&&StringUtils.isNotEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
             query.append(" AND (");
             query.append(" lower(x.supplierId) LIKE :CRITERIA ");
             query.append(" OR lower(x.company) LIKE :CRITERIA ");
