@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class ModuleGrantedAccessEntity {
 
     private Integer id;
-    private Boolean active;
     private Boolean moduleAccess;
     private ModuleSystemEnum moduleSystem;
     private UserEntity userEntity;
@@ -28,15 +27,6 @@ public class ModuleGrantedAccessEntity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Column(name="active",nullable = false)
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     @Column(name="module_access",nullable = false)

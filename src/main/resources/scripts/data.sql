@@ -12,6 +12,11 @@ INSERT INTO ROLE(id,name,module_system) VALUES (11,'JUNIOR',0);
 INSERT INTO ROLE(id,name,module_system) VALUES (12,'VISITOR',0);
 INSERT INTO ROLE(id,name,module_system) VALUES (13,'ADMINISTRATOR',0);
 
+INSERT INTO ROLE(id,name,module_system) VALUES (14,'FULL_WITH_COMMIT',1);
+INSERT INTO ROLE(id,name,module_system) VALUES (15,'FULL',1);
+INSERT INTO ROLE(id,name,module_system) VALUES (16,'RESTRICTED',1);
+INSERT INTO ROLE(id,name,module_system) VALUES (17,'READ_ONLY',1);
+
 INSERT INTO STATUS(id,name) VALUES(1,'ACTIVE');
 INSERT INTO STATUS(id,name) VALUES(2,'DISABLED');
 INSERT INTO STATUS(id,name) VALUES(3,'REMOVED');
