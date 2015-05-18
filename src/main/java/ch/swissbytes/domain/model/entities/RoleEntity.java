@@ -1,9 +1,8 @@
 package ch.swissbytes.domain.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
+
+import javax.persistence.*;
 
 /**
  * Created by christian on 12/09/14.
@@ -14,6 +13,7 @@ public class RoleEntity {
 
     private Integer id;
     private String name;
+    private ModuleSystemEnum moduleSystem;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -32,5 +32,15 @@ public class RoleEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Column (name = "module_system",nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    public ModuleSystemEnum getModuleSystem() {
+        return moduleSystem;
+    }
+
+    public void setModuleSystem(ModuleSystemEnum moduleSystem) {
+        this.moduleSystem = moduleSystem;
     }
 }

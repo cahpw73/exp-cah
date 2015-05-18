@@ -62,7 +62,7 @@ public class UserEditBean implements Serializable {
             password = userSelected.getPassword();
             statusId = userSelected.getStatus().getId();
             statusEnum = StatusEnum.valueOf(userSelected.getStatus().getId());
-            roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
+            //roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
         }else{
             return "list.jsf?faces-redirect=true";
         }
@@ -75,7 +75,7 @@ public class UserEditBean implements Serializable {
             RoleEntity roleEntity = enumService.getFindRoleByRoleEnumId(roleEnum.getId());
             StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(statusEnum.getId());
             if(roleEntity != null || statusEntity != null){
-                userSelected.setRoleEntity(roleEntity);
+                //userSelected.setRoleEntity(roleEntity);
                 userSelected.setStatus(statusEntity);
                 if(!password.equals(userSelected.getPassword())){
                     userSelected.setPassword(getEncodePass(userSelected.getPassword()));

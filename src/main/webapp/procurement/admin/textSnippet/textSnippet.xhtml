@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <div class="col-md-6">
+            <div class="panel panel-default panel-tab">
+                <div class="procurement-panel-header">#{msgs['lbl.standard.text.title']}</div>
+                <!-- Default panel contents -->
+                <div class="panel-body">
+                    <div>
+                        <div class="col-md-6">
+                            <div class="left-inner-addon">
+                                <i class="fa fa-search fa-lg"></i>
+                                <h:form prependId="false">
+                                    <h:inputText styleClass="form-control input-search"
+                                                 value="#{textSnippetBean.criteria}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}">
+                                        <p:ajax event="keyup" process="@this" update=":formSnippetList"
+                                                listener="#{textSnippetBean.search()}" async="false"/>
+                                    </h:inputText>
+                                </h:form>
+                            </div>
+                            <br/>
+
+                            <div>
+                                <h:form id="formSnippetList" prependId="false">
+                                    <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
+                                                        converter="textSnippetConverter"
+                                                        styleClass="form-control"
+                                                        style="min-height: 230px;"
+
+                                                        size="2">
+                                        <f:selectItems value="#{textSnippetBean.list}" var="_tsb"
+                                                       itemLabel="#{_tsb.textSnippet}" itemValue="#{_tsb}"/>
+                                        <f:ajax render="standardTextForm" execute="@this"/>
+                                    </h:selectOneListbox>
+
+                                    <p:message for="textSnippetList"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <h:form prependId="false">
+                                    <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
+                                                 jsf:placeholder="Enter code"
+                                                 required="true"
+                                                 requiredMessage="Enter valid code"
+                                                 styleClass="form-control" maxlength="50"/>
+                                    <p:message for="codeTS"/>
+                                    <br/>
+                                    <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
+                                                     required="true"
+                                                     requiredMessage="Enter Text Snippet"
+                                                     jsf:placeholder="Enter text snippet"
+                                                     styleClass="form-control" maxlength="1000"/>
+                                    <p:message for="textTS"/>
+                                    <br/>
+                                    <h:commandButton value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
+                                                     styleClass="btn btn-primary btn-sm"/>
+                                </h:form>
+                            </div>
+                            <br/>
+
+                            <div>
+                                <h:form id="standardTextForm">
+
+                                    <p:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
+                                                 jsf:placeholder="Enter text snippet"
+                                                 disabled="#{textSnippetBean.selected eq null}"
+                                                 styleClass="form-control" maxlength="50"/>
+                                    <p:message for="codeTS2"/>
+                                    <br/>
+                                    <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
+                                                     disabled="#{textSnippetBean.selected eq null}"
+                                                     jsf:placeholder="Enter text snippet"
+                                                     styleClass="form-control" maxlength="1000"/>
+                                    <p:message for="textTS2"/>
+                                    <br/>
+                                    <h:commandButton value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
+                                                     disabled="#{textSnippetBean.selected eq null}"
+                                                     styleClass="btn btn-primary btn-sm"/>
+                                    &#160;
+                                    <p:commandLink value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
+                                                   disabled="#{textSnippetBean.selected eq null}"
+                                                   styleClass="btn btn-primary btn-sm">
+                                        <p:confirm header="Delete Standard Text"
+                                                   message="Are you sure delete this Standard Text?"/>
+                                    </p:commandLink>
+                                    &#160;
+                                    <h:link value="#{msgs['lbl.cancel']}"
+                                            disabled="#{textSnippetBean.selected eq null}"
+                                            styleClass="btn btn-primary btn-sm"
+                                            outcome="textSnippet"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="clearfix"/>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default panel-tab">
+                            <div class="procurement-panel-header">Help</div>
+                            The following formatting options are available
+                            <br/>
+                            &lt;i&gt;&#160;&#160;&#160;&#160;- italics
+                            <br/>
+                            &lt;b&gt;&#160;&#160;&#160;- bold
+                            <br/>
+                            &lt;u&gt;&#160;&#160;&#160;- underline
+                            <br/>
+                            &lt;h1&gt;&#160;- header size 1
+                            <br/>
+                            &lt;h2&gt;&#160;- header size 2
+                            <br/>
+                            &lt;h3&gt;&#160;- header size 3
+                            <br/>
+                            &lt;p&gt;&#160;&#160;&#160;- paragraph
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+            <div class="pull-right">
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                &#160;
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </div>
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>

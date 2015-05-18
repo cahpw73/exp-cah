@@ -28,6 +28,7 @@ public class BrandService  extends Service<BrandEntity> implements Serializable{
         brandDao.doSave(brandEntity);
     }
 
+    @Transactional
     public void doUpdate(BrandEntity detachedEntity){
         log.info("doUpdate");
         brandDao.doUpdate(detachedEntity);
@@ -42,6 +43,12 @@ public class BrandService  extends Service<BrandEntity> implements Serializable{
         log.info("findByName");
         String brandName = name != null ? name : "";
         return brandDao.findByName(brandName);
+    }
+
+    public List<BrandEntity> findByLikeName(final String name){
+        log.info("findByLikeName");
+        String brandName = name != null ? name : "";
+        return brandDao.findByLikeName(brandName);
     }
 
 }

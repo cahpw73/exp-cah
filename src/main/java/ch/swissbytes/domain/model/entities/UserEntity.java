@@ -23,7 +23,6 @@ public class UserEntity implements Serializable {
     private String email;
     private StatusEntity status;
     private Date lastUpdate;
-    private RoleEntity roleEntity;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -85,16 +84,6 @@ public class UserEntity implements Serializable {
 
     public void setStatus(StatusEntity status) {
         this.status = status;
-    }
-
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="role_id", nullable=false)
-    public RoleEntity getRoleEntity() {
-        return roleEntity;
-    }
-
-    public void setRoleEntity(RoleEntity roleEntity) {
-        this.roleEntity = roleEntity;
     }
 
     @Override

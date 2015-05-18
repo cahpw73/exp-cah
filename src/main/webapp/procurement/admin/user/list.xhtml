@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Users</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-6 panel-tab-users">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#procurement" role="tab"
+                                          data-toggle="tab">#{msgs['lbl.tab.procurement.title']}</a></li>
+                    <li><a href="#expediting" role="tab" data-toggle="tab">#{msgs['lbl.tab.expediting.title']}</a></li>
+                </ul>
+
+                <!-- Tab Users -->
+                <div class="tab-content">
+                    <!-- Tab Procurement -->
+                    <div class="tab-pane active" id="procurement">
+                        <p:dataTable value="#{currencyBean.list}" var="_currency">
+                            <p:column headerText="#{msgs['lbl.dt.column.active']}" >
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}" >
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}">
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.email']}" >
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" >
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}">
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}">
+                            </p:column>
+                        </p:dataTable>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <div class="col-md-4">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText styleClass="form-control input-search" value="#{brandBean.searchNameBrand}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" >
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm"/>
+                            </div>
+                        </div>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <h:selectBooleanCheckbox/> Show Active Users Only
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <h:commandButton value="#{msgs['lbl.button.new.user']}" styleClass="btn btn-primary btn-sm" action="edit?faces-redirect=true"/>
+                        </div>
+                    </div>
+                    <!-- Tab Expediting -->
+                    <div class="tab-pane" id="expediting">
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
