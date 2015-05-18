@@ -58,6 +58,7 @@ public class TextSnippetBean implements Serializable {
         return "textSnippet?faces-redirect=true";
     }
 
+
     private boolean validate(TextSnippetEntity textSnippet) {
         boolean valid = true;
         if (service.isCodeDuplicated(textSnippet.getId(), textSnippet.getCode())) {
@@ -71,14 +72,13 @@ public class TextSnippetBean implements Serializable {
         if (!validate(selected)) {
             return "";
         }
-        textSnippet.setLastUpdate(new Date());
-        service.doUpdate(textSnippet);
+        selected.setLastUpdate(new Date());
+        service.doUpdate(selected);
         return "textSnippet?faces-redirect=true";
     }
 
-    public String doDelete(Long id) {
-        textSnippet = service.findById(id);
-        service.delete(textSnippet);
+    public String doDelete() {
+        service.delete(selected);
         return "textSnippet?faces-redirect=true";
     }
 
@@ -121,7 +121,7 @@ public class TextSnippetBean implements Serializable {
     }
 
     public void setSelected(TextSnippetEntity selected) {
-        log.info("seting selected " + selected);
+        log.info("setting selected " + selected);
         this.selected = selected;
     }
 

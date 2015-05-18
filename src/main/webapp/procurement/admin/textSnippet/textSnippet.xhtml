@@ -30,16 +30,18 @@
                                 </h:form>
                             </div>
                             <br/>
+
                             <div>
                                 <h:form id="formSnippetList" prependId="false">
                                     <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
                                                         converter="textSnippetConverter"
                                                         styleClass="form-control"
                                                         style="min-height: 230px;"
+
                                                         size="2">
                                         <f:selectItems value="#{textSnippetBean.list}" var="_tsb"
                                                        itemLabel="#{_tsb.textSnippet}" itemValue="#{_tsb}"/>
-                                        <f:ajax render="standardTextForm" event="blur" execute="@this"/>
+                                        <f:ajax render="standardTextForm" execute="@this"/>
                                     </h:selectOneListbox>
 
                                     <p:message for="textSnippetList"/>
@@ -88,9 +90,17 @@
                                                      disabled="#{textSnippetBean.selected eq null}"
                                                      styleClass="btn btn-primary btn-sm"/>
                                     &#160;
-                                    <h:commandButton value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
-                                                     disabled="#{textSnippetBean.selected eq null}"
-                                                     styleClass="btn btn-primary btn-sm"/>
+                                    <p:commandLink value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
+                                                   disabled="#{textSnippetBean.selected eq null}"
+                                                   styleClass="btn btn-primary btn-sm">
+                                        <p:confirm header="Delete Standard Text"
+                                                   message="Are you sure delete this Standard Text?"/>
+                                    </p:commandLink>
+                                    &#160;
+                                    <h:link value="#{msgs['lbl.cancel']}"
+                                            disabled="#{textSnippetBean.selected eq null}"
+                                            styleClass="btn btn-primary btn-sm"
+                                            outcome="textSnippet"/>
                                 </h:form>
                             </div>
                         </div>
@@ -121,5 +131,12 @@
                 </div>
             </div>
         </div>
+        <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+            <div class="pull-right">
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                &#160;
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </div>
+        </p:confirmDialog>
     </ui:define>
 </ui:composition>
