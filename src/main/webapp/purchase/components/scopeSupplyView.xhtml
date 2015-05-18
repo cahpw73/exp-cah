@@ -91,12 +91,14 @@
         <p:column headerText="#{msgs['po.supply.scope.column.var']}"  width="45">
             <h:outputText value="#{util.calculateVariance(_scopeSupply)}" style="color:#{util.calculateVariance(_scopeSupply).startsWith('-')?'red':'black'}"/>
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="90">
-            <p:commandLink rendered="#{_scopeSupply.attachments.size() gt 0}" oncomplete="PF('attachmentScopeSupplyModal').show()"
-                           action="#{purchaseOrderView.setCurrentSelected(_scopeSupply.id)}"
-                           update=":attachmentScopeSupplyId">
-                <h:graphicImage url="/resources/img/full-folder.png" width="20" height="20"/>
-            </p:commandLink>
+        <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="95">
+            <div>
+                <p:commandLink rendered="#{_scopeSupply.attachments.size() gt 0}" oncomplete="PF('attachmentScopeSupplyModal').show()"
+                               action="#{purchaseOrderView.setCurrentSelected(_scopeSupply.id)}"
+                               update=":attachmentScopeSupplyId">
+                    <h:graphicImage styleClass="icon-attahcment" url="/resources/img/full-folder.png" width="20" height="20"/>
+                </p:commandLink>
+            </div>
         </p:column>
     </p:dataTable>
 </ui:composition>

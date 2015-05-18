@@ -482,3 +482,21 @@ label.checkbox{
 .ui-state-default{
     background: #ffffff;
 }
+
+.icon-attahcment{
+    position: relative;
+    left: 30%;
+}
+
+.ui-selectonemenu-label
+.ui-inputfield
+.ui-corner-all{
+    box-shadow: none!important;
+    background-color: #000000;
+}
+
+.menu-po-status
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+    box-shadow: none!important;
+
+}

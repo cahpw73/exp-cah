@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by alvaro on 9/25/14.
  */
 
-public class SearchPurchase implements Filter {
+public class SearchPurchase extends Filter {
 
 
     private String project;

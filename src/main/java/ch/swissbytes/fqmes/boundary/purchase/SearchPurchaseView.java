@@ -6,7 +6,7 @@ import ch.swissbytes.Service.infrastructure.Filter;
  * Created by alvaro on 9/25/14.
  */
 
-public class SearchPurchaseView implements Filter {
+public class SearchPurchaseView extends Filter {
 
 
     private String project;

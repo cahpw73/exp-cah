@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Suppliers</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <div class="col-md-6">
+            <!-- Nav tabs -->
+            <div>
+                <h:form prependId="false">
+                    <div class="col-md-4">
+                        <div class="left-inner-addon">
+                            <i class="fa fa-search fa-lg"></i>
+                            <h:inputText styleClass="form-control input-search"
+                                         value="#{supplierProcList.filter.criteria}"
+                                         jsf:placeholder="#{msgs['lbl.search']}">
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <h:commandButton value="#{msgs['lbl.search']}" action="#{supplierProcList.doSearch}"
+                                     styleClass="btn btn-primary btn-sm"/>
+                    &#160;
+                    <h:link value="New supplier" outcome="edit" styleClass="btn btn-primary btn-sm"/>
+                </h:form>
+            </div>
+            <p:dataTable value="#{supplierProcList.list}" var="_supplier"
+                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                         rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
+                         paginatorPosition="bottom">
+                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}">
+                    #{_supplier.supplierId}
+                </p:column>
+                <p:column headerText="#{msgs['supplier.lbl.company']}">
+                    #{_supplier.company}
+                </p:column>
+                <p:column headerText="#{msgs['supplier.lbl.state']}">
+                    #{_supplier.state}
+                </p:column>
+                <p:column headerText="#{msgs['supplier.lbl.country']}">
+                    #{_supplier.country}
+                </p:column>
+                <p:column headerText="#{msgs['lbl.actions']}">
+                    <h:form prependId="false">
+                        <h:commandButton value="#{msgs['lbl.edit']}"
+                                         styleClass="btn btn-primary btn-sm">
+                        </h:commandButton>
+                        &#160;
+                        <p:commandLink value="#{msgs['lbl.delete']}"
+                                       style="color: #ffffff;"
+                                       styleClass="btn btn-primary btn-sm">
+
+                        </p:commandLink>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
+            <br/>
+            <a class="link-disabled" href="#">Create bidder list</a>
+        </div>
+    </ui:define>
+</ui:composition>
