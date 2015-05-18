@@ -482,3 +482,8 @@ label.checkbox{
 .ui-state-default{
     background: #ffffff;
 }
+
+.icon-attahcment{
+    position: relative;
+    left: 30%;
+}

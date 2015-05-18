@@ -7,24 +7,30 @@
     <p:dataTable id="commentList" value="#{purchaseOrderView.comments}"
                  styleClass="data-table-po-sc data-table-po-lists"
                  rowIndexVar="_index" var="_comment">
-        <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
+        <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"
+                  sortFunction="#{sortBean.sortDate}">
             #{util.toLocalDateGMT(_comment.lastUpdate)}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300" sortBy="#{_comment.name}" sortFunction="#{sortBean.sortStrings}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300" sortBy="#{_comment.name}"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_comment.name}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.subject}" sortFunction="#{sortBean.sortStrings}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.subject}"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_comment.subject}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
+        <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}"
+                  sortFunction="#{sortBean.sortStrings}">
             #{_comment.description}
         </p:column>
-        <p:column  headerText="#{msgs['lbl.attachment']}" width="210">
-            <p:commandLink oncomplete="PF('attachmentCommentModal').show()"
-                           action="#{purchaseOrderView.setCurrentSelected(_comment.id)}"
-                           update=":attachmentCommentId">
-                <h:graphicImage url="/resources/img/full-folder.png" width="20" height="20"/>
-            </p:commandLink>
+        <p:column headerText="#{msgs['lbl.attachment']}" width="95">
+            <div>
+                <p:commandLink oncomplete="PF('attachmentCommentModal').show()"
+                               action="#{purchaseOrderView.setCurrentSelected(_comment.id)}"
+                               update=":attachmentCommentId">
+                    <h:graphicImage styleClass="icon-attahcment" url="/resources/img/full-folder.png" width="20" height="20"/>
+                </p:commandLink>
+            </div>
         </p:column>
 
     </p:dataTable>

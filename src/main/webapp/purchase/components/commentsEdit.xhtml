@@ -1,47 +1,63 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
     <h4 class="sub-header fq-sub-header">#{msgs['po.attachments.title']}</h4>
+
     <div class="fq-form-table">
         <p:dataTable id="commentList" value="#{purchaseOrderEdit.activeComments}"
                      styleClass="data-table-po-sc data-table-po-lists"
                      rowIndexVar="_index" var="_comment">
-            <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"  sortFunction="#{sortBean.sortDate}" >
+            <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"
+                      sortFunction="#{sortBean.sortDate}">
                 #{util.toLocalDateGMT(_comment.lastUpdate)}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300"  sortBy="#{_comment.name}" sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300" sortBy="#{_comment.name}"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_comment.name}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.subject}"  sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.subject}"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_comment.subject}
             </p:column>
-            <p:column headerText="#{msgs['po.attach.tbl.column.observations']}"  sortBy="#{_comment.description}" sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_comment.description}
             </p:column>
-            <p:column>
-                <h:commandLink>
-                    <h:graphicImage url="#{_comment.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}" width="20" height="20"/>
-                    <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId" process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
-                </h:commandLink>
+            <p:column headerText="#{msgs['lbl.attachment']}" width="95">
+                <div>
+                    <h:commandLink>
+                        <h:graphicImage
+                                styleClass="icon-attahcment"
+                                url="#{_comment.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}"
+                                width="20" height="20"/>
+                        <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
+                                process="@this"
+                                listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
+                    </h:commandLink>
+                </div>
             </p:column>
             <p:column headerText="#{msgs['lbl.action']}" width="150">
                 <div class="pull-right">
                     <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table">
-                        <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId" process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
+                        <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
+                                process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
                     </h:commandLink>
                     &#160;
-                    <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table">
-                        <p:ajax update="commentList" process="@this" listener="#{purchaseOrderEdit.deleteComment(_comment.id)}"/>
+                    <h:commandLink value="#{msgs['lbl.delete']}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table">
+                        <p:ajax update="commentList" process="@this"
+                                listener="#{purchaseOrderEdit.deleteComment(_comment.id)}"/>
                     </h:commandLink>
                 </div>
             </p:column>
         </p:dataTable>
+
         <div class="action-button-po">
             <div class="pull-right">
-                <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right" value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}" >
+                <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right"
+                                 value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}">
                     <p:ajax update=":commentModalId" oncomplete="PF('commentEditModal').show();"/>
                 </h:commandButton>
             </div>
