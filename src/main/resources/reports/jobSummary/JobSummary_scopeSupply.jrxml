@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JobSummary_scopeSupply" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b9465e6-4f0c-45d0-a4df-9c93b428fda1">
-	<property name="ireport.zoom" value="4.0"/>
-	<property name="ireport.x" value="1437"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="62"/>
 	<property name="ireport.y" value="0"/>
 	<style name="overdue" markup="styled" fontSize="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
 		<conditionalStyle>
@@ -90,49 +90,49 @@ order by ss.ordered]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="74c839c4-46ea-412b-ab4e-5d98a82cec07" x="619" y="5" width="50" height="12"/>
+				<reportElement uuid="74c839c4-46ea-412b-ab4e-5d98a82cec07" x="701" y="5" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{requiredOnSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="d2892c90-611a-47dd-affa-43b3414060cc" x="568" y="5" width="50" height="12"/>
+				<reportElement uuid="d2892c90-611a-47dd-affa-43b3414060cc" x="641" y="5" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{actualSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="cac7118f-f78c-47f5-8e88-fa998677c2cc" x="515" y="5" width="50" height="12"/>
+				<reportElement uuid="cac7118f-f78c-47f5-8e88-fa998677c2cc" x="585" y="5" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{forecastSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="eeef4060-3490-489e-80c4-bda9534e3a72" x="462" y="5" width="46" height="12"/>
+				<reportElement uuid="eeef4060-3490-489e-80c4-bda9534e3a72" x="530" y="5" width="46" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{leadTimeLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="8a871349-28b3-47c3-ab87-e1e8468015d7" x="420" y="5" width="40" height="12"/>
+				<reportElement uuid="8a871349-28b3-47c3-ab87-e1e8468015d7" x="480" y="5" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{actualExWorksDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="53a8f1cf-c9d2-4f44-8e79-ace44c057f8b" x="368" y="5" width="50" height="12"/>
+				<reportElement uuid="53a8f1cf-c9d2-4f44-8e79-ace44c057f8b" x="420" y="5" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{forecastExWorksDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="e5bc3548-dd32-44d3-af8d-d07ce251a300" x="326" y="5" width="40" height="12"/>
+				<reportElement uuid="e5bc3548-dd32-44d3-af8d-d07ce251a300" x="370" y="5" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -153,28 +153,28 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{equipmentLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="e0a671f8-5c85-4f96-af28-7713af834521" x="113" y="5" width="75" height="12"/>
+				<reportElement uuid="e0a671f8-5c85-4f96-af28-7713af834521" x="90" y="5" width="93" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{titleLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="7b19ac98-936a-4916-9995-080517369119" x="75" y="5" width="35" height="12"/>
+				<reportElement uuid="7b19ac98-936a-4916-9995-080517369119" x="51" y="5" width="35" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{uomLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="648093fb-0161-425b-9171-5db80c553cc6" x="46" y="5" width="27" height="12"/>
+				<reportElement uuid="648093fb-0161-425b-9171-5db80c553cc6" x="31" y="5" width="17" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{qtyLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="ebdd62ac-1b21-44eb-a251-934df5630c20" x="0" y="5" width="45" height="12"/>
+				<reportElement uuid="ebdd62ac-1b21-44eb-a251-934df5630c20" x="0" y="5" width="30" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -190,21 +190,14 @@ order by ss.ordered]]>
 				<reportElement uuid="6a7484fc-470a-4dd0-a6dd-b9bb07def002" positionType="Float" x="0" y="24" width="801" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="26082d43-e23b-4f91-b303-18718a1b90db" x="695" y="5" width="105" height="12"/>
-				<textElement verticalAlignment="Top" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryCommentLbl}+"</style>"]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="67cbdce6-117c-4c02-8220-fde8047d370d" x="268" y="5" width="58" height="12"/>
+				<reportElement uuid="67cbdce6-117c-4c02-8220-fde8047d370d" x="278" y="5" width="88" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{fullIncoTermLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="56082f19-bbf0-420f-8695-0e4b3c32ccd4" x="669" y="5" width="22" height="12"/>
+				<reportElement uuid="56082f19-bbf0-420f-8695-0e4b3c32ccd4" x="767" y="5" width="22" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -215,56 +208,56 @@ order by ss.ordered]]>
 	<detail>
 		<band height="19" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="529ca5fc-ea0f-49e1-9b50-f60da82d6d37" style="overdue" x="46" y="1" width="27" height="12"/>
+				<reportElement uuid="529ca5fc-ea0f-49e1-9b50-f60da82d6d37" style="overdue" x="31" y="1" width="17" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" style="overdue" x="326" y="1" width="42" height="12"/>
+				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" style="overdue" x="370" y="1" width="42" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{delivery_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="3b0c7f29-741d-4d16-8f99-87e438e3fc03" style="overdue" x="368" y="1" width="50" height="12"/>
+				<reportElement uuid="3b0c7f29-741d-4d16-8f99-87e438e3fc03" style="overdue" x="420" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ex_work_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{ex_work_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="d92191fd-41d2-45c0-88d6-cefb6e8e0e3d" style="overdue" x="462" y="1" width="45" height="12"/>
+				<reportElement uuid="d92191fd-41d2-45c0-88d6-cefb6e8e0e3d" style="overdue" x="530" y="1" width="45" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{delivery_lead_time_qt} != null ? "+"+$F{delivery_lead_time_qt}:""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b21151a6-e6d9-411c-b4f5-3934792cd69c" style="overdue" x="506" y="1" width="5" height="12"/>
+				<reportElement uuid="b21151a6-e6d9-411c-b4f5-3934792cd69c" style="overdue" x="575" y="1" width="5" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{delivery_lead_time_qt} != null ? org.apache.commons.lang.StringUtils.substring($P{TIME_MEASURE_LIST}.get($F{delivery_lead_time_ms}).toString(),0,1):""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ba804b03-72a2-4bf2-bbcf-c869572a2e95" style="overdue" x="75" y="1" width="35" height="12"/>
+				<reportElement uuid="ba804b03-72a2-4bf2-bbcf-c869572a2e95" style="overdue" x="51" y="1" width="35" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" style="overdue" x="568" y="1" width="50" height="12"/>
+				<reportElement uuid="ae731f2f-0844-4c40-a079-7a4cccb03e4b" style="overdue" x="641" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{actual_site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{actual_site_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9dce046c-aebc-44d4-99fe-50b7558092a1" style="overdue" x="112" y="1" width="75" height="12"/>
+				<reportElement uuid="9dce046c-aebc-44d4-99fe-50b7558092a1" style="overdue" x="90" y="1" width="93" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 					<paragraph leftIndent="3" rightIndent="3"/>
@@ -272,21 +265,21 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" style="overdue" x="619" y="1" width="50" height="12"/>
+				<reportElement uuid="dbaf3033-8c31-46b6-aaaa-68be33a9503c" style="overdue" x="701" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{required_site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{required_site_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="b4cdf750-ee11-4560-bb14-9b7147f91af5" style="overdue" x="420" y="1" width="40" height="12"/>
+				<reportElement uuid="b4cdf750-ee11-4560-bb14-9b7147f91af5" style="overdue" x="480" y="1" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{actual_ex_work_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{actual_ex_work_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="e878a736-7554-40d3-9d3f-1f1642457a97" style="overdue" x="515" y="1" width="50" height="12"/>
+				<reportElement uuid="e878a736-7554-40d3-9d3f-1f1642457a97" style="overdue" x="585" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
@@ -313,14 +306,14 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA[$F{incoterm}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="85ce674b-b744-4678-b53a-d5a78df85afa" style="overdue" x="268" y="1" width="58" height="12"/>
+				<reportElement uuid="85ce674b-b744-4678-b53a-d5a78df85afa" style="overdue" x="278" y="1" width="88" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fullincoterm}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="83338183-c927-4f80-b0c1-ee72cfb7aa8a" style="overdue" x="669" y="1" width="22" height="12"/>
+				<reportElement uuid="83338183-c927-4f80-b0c1-ee72cfb7aa8a" style="overdue" x="767" y="1" width="22" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="6"/>
 				</textElement>
