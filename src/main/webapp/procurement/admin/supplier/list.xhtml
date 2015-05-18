@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Suppliers</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-6">
+                <!-- Nav tabs -->
+                <div>
+                    <div class="col-md-4">
+                        <div class="left-inner-addon">
+                            <i class="fa fa-search fa-lg"></i>
+                            <h:inputText styleClass="form-control input-search" value="#{brandBean.searchNameBrand}"
+                                         jsf:placeholder="#{msgs['lbl.search']}">
+                            </h:inputText>
+                        </div>
+                    </div>
+
+                        <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm"/>
+                        &#160;
+                        <h:commandButton value="New supplier" styleClass="btn btn-primary btn-sm"/>
+
+                </div>
+                <p:dataTable value="#{currencyBean.list}" var="_currency">
+                    <p:column headerText="#{msgs['supplier.lbl.supplier.id']}">
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.company']}">
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.state']}">
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.country']}">
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.actions']}">
+                    </p:column>
+                </p:dataTable>
+
+                <div class="clearfix"/>
+                <br/>
+
+
+                <div class="clearfix"/>
+                <br/>
+
+
+
+
+                <div>
+                        <h:commandButton value="Create bidder list" styleClass="btn btn-primary btn-sm"
+                                     action="edit?faces-redirect=true"/>
+                </div>
+            </div>
+            <!-- Tab Expediting -->
+            <div class="tab-pane" id="expediting">
+
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
