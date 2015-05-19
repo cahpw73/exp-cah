@@ -49,7 +49,7 @@ public class UserRoleEntity {
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="role_id")
+    @JoinColumn(name="role_id", nullable = true)
     public RoleEntity getRole() {
         return role;
     }

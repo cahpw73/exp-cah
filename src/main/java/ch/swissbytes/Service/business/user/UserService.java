@@ -60,6 +60,20 @@ public class UserService implements Serializable {
         }
     }
 
+    @Transactional
+    public void doUpdateUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList){
+        if(user != null){
+            user.setLastUpdate(new Date());
+            userDao.doUpdate(user);
+            for(ModuleGrantedAccessEntity mga : moduleGrAcList){
+                moduleGrantedAccessService.doUpdate(mga);
+            }
+            for(UserRoleEntity ure : userRoleList){
+                userRoleService.doUpdate(ure);
+            }
+        }
+    }
+
 
     public List<UserEntity> findUserByEmail(final String email){
         return userDao.findUserByEmail(email);
@@ -147,5 +161,9 @@ public class UserService implements Serializable {
 
     public List<UserEntity> findAllUser() {
         return userDao.findAllUser();
+    }
+
+    public List<UserEntity> doSearch(final String searchTerm, final StatusEnum userStatus) {
+        return userDao.findBySearchTerm(searchTerm, userStatus);
     }
 }

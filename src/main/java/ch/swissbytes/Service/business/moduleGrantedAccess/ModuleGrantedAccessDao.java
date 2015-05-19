@@ -47,7 +47,7 @@ public class ModuleGrantedAccessDao extends GenericDao<ModuleGrantedAccessEntity
         return null;
     }
 
-    public List<ModuleGrantedAccessEntity> findByUserId(final Long userId, final ModuleSystemEnum moduleSystem) {
+    public List<ModuleGrantedAccessEntity> findByUserIAndModuleSystem(final Long userId, final ModuleSystemEnum moduleSystem) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT md ");
         sb.append(" FROM ModuleGrantedAccessEntity md ");
@@ -56,6 +56,17 @@ public class ModuleGrantedAccessDao extends GenericDao<ModuleGrantedAccessEntity
         Map<String,Object> parameters = new HashMap<>();
         parameters.put("USER_ID",userId);
         parameters.put("MODULE_SYSTEM",moduleSystem);
+        return super.findBy(sb.toString(),parameters);
+    }
+
+    public List<ModuleGrantedAccessEntity> findByUserId(Long userId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT md ");
+        sb.append(" FROM ModuleGrantedAccessEntity md ");
+        sb.append(" WHERE md.userEntity.id = :USER_ID ");
+        sb.append(" ORDER BY md.userEntity.id ASC ");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("USER_ID",userId);
         return super.findBy(sb.toString(),parameters);
     }
 }

@@ -29,7 +29,7 @@ public class ModuleGrantedAccessEntity {
         this.id = id;
     }
 
-    @Column(name="module_access",nullable = false)
+    @Column(name="module_access",nullable = true)
     public Boolean getModuleAccess() {
         return moduleAccess;
     }

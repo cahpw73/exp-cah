@@ -34,13 +34,17 @@ public class UserRoleService extends Service<UserRoleEntity> implements Serializ
         userRoleDao.doUpdate(detachedEntity);
     }
 
-    public UserRoleEntity findByUserId(final Long userId, final ModuleSystemEnum moduleSystem){
-        List<UserRoleEntity> userRoleList =  userRoleDao.findByUserId(userId, moduleSystem);
-        UserRoleEntity userRole = null;
+    public UserRoleEntity findByUserIdAndModuleSystem(final Long userId, final ModuleSystemEnum moduleSystem){
+        List<UserRoleEntity> userRoleList =  userRoleDao.findByUserIdAndModuleSystem(userId, moduleSystem);
+        UserRoleEntity userRole = new UserRoleEntity();
         if(!userRoleList.isEmpty()){
             userRole = userRoleList.get(0);
         }
         return userRole;
     }
 
+    public List<UserRoleEntity> findListByUserId(Long userId) {
+        List<UserRoleEntity> userRoleList =  userRoleDao.findByUserId(userId);
+        return userRoleList;
+    }
 }

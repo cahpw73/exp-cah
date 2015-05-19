@@ -31,7 +31,6 @@ public class RoleConverter implements Converter {
         if (value == null) {
             return null;
         }
-        log.info("Role value: " + value);
         List<RoleEntity> list = roleDao.findByName(value);
         RoleEntity roleEntity = null;
         if(!list.isEmpty()){
@@ -47,7 +46,6 @@ public class RoleConverter implements Converter {
         if (value instanceof RoleEntity) {
             string = ((RoleEntity) value).getName();
         }
-        log.info("String "+string);
         return string;
     }
 }

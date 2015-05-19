@@ -47,7 +47,7 @@ public class UserRoleDao extends GenericDao<UserRoleEntity> implements Serializa
         return null;
     }
 
-    public List<UserRoleEntity> findByUserId(final Long userId, final ModuleSystemEnum moduleSystem) {
+    public List<UserRoleEntity> findByUserIdAndModuleSystem(final Long userId, final ModuleSystemEnum moduleSystem) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT ur ");
         sb.append(" FROM UserRoleEntity ur ");
@@ -56,6 +56,17 @@ public class UserRoleDao extends GenericDao<UserRoleEntity> implements Serializa
         Map<String,Object> parameters = new HashMap<>();
         parameters.put("USER_ID",userId);
         parameters.put("MODULE_SYSTEM",moduleSystem);
+        return super.findBy(sb.toString(),parameters);
+    }
+
+    public List<UserRoleEntity> findByUserId(Long userId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT ur ");
+        sb.append(" FROM UserRoleEntity ur ");
+        sb.append(" WHERE ur.user.id = :USER_ID ");
+        sb.append(" ORDER BY ur.user.id ASC ");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("USER_ID",userId);
         return super.findBy(sb.toString(),parameters);
     }
 }

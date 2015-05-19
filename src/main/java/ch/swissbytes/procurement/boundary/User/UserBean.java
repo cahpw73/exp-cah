@@ -1,8 +1,10 @@
 package ch.swissbytes.procurement.boundary.User;
 
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
 import ch.swissbytes.Service.business.role.RoleDao;
 import ch.swissbytes.Service.business.user.UserService;
+import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
@@ -10,6 +12,8 @@ import ch.swissbytes.domain.model.entities.UserRoleEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Encode;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -40,6 +44,12 @@ public class UserBean implements Serializable {
     @Inject
     private RoleDao roleDao;
 
+    @Inject
+    private ModuleGrantedAccessService moduleGrantedAccessService;
+
+    @Inject
+    private UserRoleService userRoleService;
+
     private UserEntity userEntity;
 
     private UserEntity editUser;
@@ -51,6 +61,14 @@ public class UserBean implements Serializable {
     private boolean isCreateUser;
 
     private boolean userActive;
+
+    private Long userId;
+
+    private String oldPassword;
+
+    private RoleEntity roleExpediting;
+
+    private RoleEntity roleProcurement;
 
 
     @PostConstruct
@@ -68,7 +86,6 @@ public class UserBean implements Serializable {
 
     public void loadActionCrud(){
         log.info("load action crud");
-        log.info("parameter isCreateUser: " + isCreateUser);
         if(isCreateUser){
             ModuleGrantedAccessEntity moduleExpediting = new ModuleGrantedAccessEntity();
             ModuleGrantedAccessEntity moduleProcurement = new ModuleGrantedAccessEntity();
@@ -79,25 +96,64 @@ public class UserBean implements Serializable {
             userRoleList.add(userExpediting);
             userRoleList.add(userProcurement);
         }else{
+            userEntity = userService.findUserById(userId);
+            oldPassword = userEntity.getPassword();
+            moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
+            userRoleList = userRoleService.findListByUserId(userId);
+            roleExpediting =  userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getRole();
+            roleProcurement = userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getRole();
+            log.info("module access size" + moduleGrantedAccessList.size());
+            log.info("user role size: " + userRoleList.size());
 
+            if(StatusEnum.ENABLE.getId().intValue() == userEntity.getStatus().getId().intValue())
+                userActive = true;
+            else
+                userActive = false;
         }
     }
 
     public String doSave(){
         log.info("do save");
-        userEntity.setFirstName("");
-        if(isUserActive())
-            userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.ENABLE.getId()));
-        else if (!isUserActive())
-            userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.DISABLED.getId()));
+        if(dataValidate()) {
+            userEntity.setFirstName("");
+            if (isUserActive())
+                userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.ENABLE.getId()));
+            else if (!isUserActive())
+                userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.DISABLED.getId()));
 
-        getModuleProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
-        getModuleExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
-        getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
-        getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
+            userEntity.setPassword(getEncodePass(userEntity.getPassword()));
 
-        userService.doSaveUser(userEntity,moduleGrantedAccessList,userRoleList);
-        return "list?faces-redirect=true";
+            getModuleProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+            getModuleExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
+
+            getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+            getUserProcurement().setRole(roleProcurement);
+            getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
+            getUserExpediting().setRole(roleExpediting);
+
+            userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
+            return "list?faces-redirect=true";
+        }
+        return "";
+    }
+
+    public String doUpdate(){
+        log.info("do update");
+        if(dataValidateToUpdate()) {
+            if (isUserActive())
+                userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.ENABLE.getId()));
+            else if (!isUserActive())
+                userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.DISABLED.getId()));
+
+            if(!oldPassword.equals(userEntity.getPassword())){
+                userEntity.setPassword(getEncodePass(userEntity.getPassword()));
+            }
+            getUserProcurement().setRole(roleProcurement);
+            getUserExpediting().setRole(roleExpediting);
+            userService.doUpdateUser(userEntity,moduleGrantedAccessList,userRoleList);
+            return "list?faces-redirect=true";
+        }
+        return "";
     }
 
     public List<RoleEntity> getProcurementRoles() {
@@ -144,6 +200,36 @@ public class UserBean implements Serializable {
         return expeditingRoles;
     }
 
+    private boolean dataValidate() {
+        boolean result = true;
+        if(userService.existsEmail(userEntity.getEmail())){
+            Messages.addFlashError("email", "Email was already registered!");
+            result = false;
+        }
+        if(userService.existsUsername(userEntity.getUsername())){
+            Messages.addFlashError("username", "Username was already registered!");
+            result = false;
+        }
+        return result;
+    }
+
+    private boolean dataValidateToUpdate() {
+        boolean result = true;
+        if(userService.validateDuplicityEmail(userEntity.getEmail(),userEntity.getId())){
+            Messages.addError("email", "Email was already registered!");
+            result = false;
+        }
+        if(userService.validateDuplicityUsername(userEntity.getUsername(),userEntity.getId())){
+            Messages.addError("username", "Username was already registered!");
+            result = false;
+        }
+        return result;
+    }
+
+    private String getEncodePass(String pass){
+        return Encode.encode(pass);
+    }
+
     public String getRoleName(final Integer roleId){
         return RoleEnum.valueOf(roleId).name();
     }
@@ -186,5 +272,29 @@ public class UserBean implements Serializable {
 
     public void setUserActive(boolean userActive) {
         this.userActive = userActive;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public RoleEntity getRoleExpediting() {
+        return roleExpediting;
+    }
+
+    public void setRoleExpediting(RoleEntity roleExpediting) {
+        this.roleExpediting = roleExpediting;
+    }
+
+    public RoleEntity getRoleProcurement() {
+        return roleProcurement;
+    }
+
+    public void setRoleProcurement(RoleEntity roleProcurement) {
+        this.roleProcurement = roleProcurement;
     }
 }

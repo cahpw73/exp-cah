@@ -33,8 +33,8 @@ public class ModuleGrantedAccessService extends Service<ModuleGrantedAccessEntit
         moduleGrantedAccessDao.doUpdate(detachedEntity);
     }
 
-    public ModuleGrantedAccessEntity findByUserId(final Long userId, final ModuleSystemEnum moduleSystemEnum){
-        List<ModuleGrantedAccessEntity> moduleGrantedAccessEntities = moduleGrantedAccessDao.findByUserId(userId, moduleSystemEnum);
+    public ModuleGrantedAccessEntity findByUserIdAndModuleSystem(final Long userId, final ModuleSystemEnum moduleSystemEnum){
+        List<ModuleGrantedAccessEntity> moduleGrantedAccessEntities = moduleGrantedAccessDao.findByUserIAndModuleSystem(userId, moduleSystemEnum);
         ModuleGrantedAccessEntity entity = null;
         if(!moduleGrantedAccessEntities.isEmpty()){
             entity = moduleGrantedAccessEntities.get(0);
@@ -42,4 +42,8 @@ public class ModuleGrantedAccessService extends Service<ModuleGrantedAccessEntit
         return entity;
     }
 
+    public List<ModuleGrantedAccessEntity> findListByUserId(Long userId) {
+        List<ModuleGrantedAccessEntity> moduleGrantedAccessEntities = moduleGrantedAccessDao.findByUserId(userId);
+        return moduleGrantedAccessEntities;
+    }
 }
