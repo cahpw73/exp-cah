@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="categoryList">Categories</label>
+
+            <div>
+                <div class="col-sm-10" style="padding-left: 0px;">
+                    <h:selectOneListbox id="categoryList" value="#{brandBean.selectedBrand}" converter="brandConverter"
+                                        styleClass="form-control" style="max-height: 200px; height: 200px;" size="2">
+                    </h:selectOneListbox>
+                </div>
+                <h:commandButton value="+" styleClass="col-sm-2" action="#{supplierProcBean.putModeCategory}">
+                    <p:ajax update=""/>
+                </h:commandButton>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="brandList">Brands</label>
+            <div>
+                <div class="col-sm-10" style="padding-left: 0px;">
+                    <h:selectOneListbox id="brandList" value="#{brandBean.selectedBrand}" converter="brandConverter"
+                                        styleClass="form-control " style="max-height: 200px; height: 200px;" size="2">
+                    </h:selectOneListbox>
+                </div>
+                <h:commandButton value="+" styleClass="col-sm-2" action="#{supplierProcBean.putModeBrand}">
+                </h:commandButton>
+            </div>
+        </div>
+
+    </div>
+</ui:composition>

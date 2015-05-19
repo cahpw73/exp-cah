@@ -13,9 +13,10 @@
             <div class="col-md-8">
                 <!-- Nav tabs -->
                 <br/>
-                <div class="col-sm-8">
+
+                <div class="col-sm-9">
                     <div class="form-group">
-                        <h:outputLabel class="control-label col-sm-2" value="Supplier ID"/>
+                        <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.supplier.id']}"/>
 
                         <div class="col-sm-8">
                             <h:inputText maxlength="50"
@@ -25,15 +26,17 @@
                     </div>
                 </div>
                 <br/>
-                <div class="col-sm-4">
+
+                <div class="col-sm-3">
                     <h:commandButton value="#{msgs['lbl.save']}"
                                      action="#{supplierProcBean.doSave}"
                                      styleClass="btn btn-primary btn-sm"/>
                 </div>
                 <br/>
-                <div class="col-sm-8">
+
+                <div class="col-sm-9">
                     <div class="form-group">
-                        <h:outputLabel class="control-label col-sm-2" value="Company"/>
+                        <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']}"/>
 
                         <div class="col-sm-8">
                             <h:inputText maxlength="50"
@@ -43,34 +46,47 @@
                     </div>
                 </div>
                 <br/>
-                <div class="col-sm-4">
+
+                <div class="col-sm-3">
                     <h:link value="#{msgs['lbl.cancel']}" outcome="list" styleClass="btn btn-primary btn-sm"/>
                 </div>
                 <br/>
+                <h:panelGroup rendered="#{not (supplierProcBean.addingCategory and supplierProcBean.addingBrand)}">
+                    <div class="col-sm-9">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#supplier" role="tab"
+                                                  data-toggle="tab">#{msgs['supplier.tab.supplier']}</a></li>
+                            <li><a href="#categories" role="tab"
+                                   data-toggle="tab">#{msgs['supplier.tab.categories']}</a>
+                            </li>
+                            <li><a href="#contacts" role="tab" data-toggle="tab">#{msgs['supplier.tab.contact']}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Tab Supplier -->
+                            <div class="tab-pane active" id="supplier">
+                                <ui:include src="components/supplierTab.xhtml"/>
+                            </div>
+                            <!-- Tab Categories -->
+                            <div class="tab-pane" id="categories">
+                                <br/>
+                                <ui:include src="components/categorieBrandTab.xhtml"/>
+                            </div>
+                            <!-- Tab Contacts -->
+                            <div class="tab-pane" id="contacts">
 
-                <div class="col-sm-9">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#supplier" role="tab"
-                                              data-toggle="tab">Supplier</a></li>
-                        <li><a href="#categories" role="tab" data-toggle="tab">Categories/Brands</a></li>
-                        <li><a href="#contacts" role="tab" data-toggle="tab">Contacts</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <!-- Tab Supplier -->
-                        <div class="tab-pane active" id="supplier">
-                            <ui:include src="components/supplierTab.xhtml"/>
-                        </div>
-                        <!-- Tab Categories -->
-                        <div class="tab-pane" id="categories">
-
-                        </div>
-                        <!-- Tab Contacts -->
-                        <div class="tab-pane" id="contacts">
-
+                            </div>
                         </div>
                     </div>
-
-                </div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{supplierProcBean.addingCategory or supplierProcBean.addingBrand}">
+                    <h:panelGroup rendered="#{supplierProcBean.addingCategory}">
+                        Adding category
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{supplierProcBean.addingBrand}">
+                        Adding brand
+                    </h:panelGroup>
+                </h:panelGroup>
             </div>
         </h:form>
     </ui:define>

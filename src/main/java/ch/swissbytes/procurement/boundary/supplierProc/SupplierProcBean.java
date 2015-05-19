@@ -29,6 +29,9 @@ public class SupplierProcBean implements Serializable {
 
     private String supplierId;
 
+    private boolean addingCategory =false;
+    private boolean addingBrand =false;
+
     @PostConstruct
     public void create(){
         log.info("SupplierProcBean bean created");
@@ -54,6 +57,19 @@ public class SupplierProcBean implements Serializable {
         return "";
     }
 
+    public void putModeCategory(){
+        addingCategory =true;
+    }
+    public void putModeBrand(){
+        addingBrand =true;
+    }
+    public void putModeSupplier(){
+        addingCategory =false;
+        addingBrand =false;
+    }
+
+
+
     @PreDestroy
     public void destroy(){
         log.info("SupplierProcBean bean destroyed");
@@ -61,5 +77,14 @@ public class SupplierProcBean implements Serializable {
 
     public SupplierProcEntity getSupplier() {
         return supplier;
+    }
+
+    public boolean isAddingCategory() {
+        return addingCategory;
+    }
+
+
+    public boolean isAddingBrand() {
+        return addingBrand;
     }
 }
