@@ -64,7 +64,7 @@ public class UserBean implements Serializable {
 
     private boolean isCreateUser;
 
-    private boolean userActive;
+    private boolean userActive=true;
 
     private Long userId;
 
@@ -171,11 +171,11 @@ public class UserBean implements Serializable {
             }
 
             getModuleProcurement().setModuleAccess(moduleAccessProcurement);
-            getModuleProcurement().setModuleAccess(moduleAccessExpediting);
+            getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
             getUserProcurement().setRole(roleProcurement);
             getUserExpediting().setRole(roleExpediting);
-            userService.doUpdateUser(userEntity,moduleGrantedAccessList,userRoleList);
+            userService.doUpdateUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(2);
@@ -241,15 +241,19 @@ public class UserBean implements Serializable {
 
     private boolean dataValidateToUpdate() {
         boolean result = true;
-        if(userService.validateDuplicityEmail(userEntity.getEmail(),userEntity.getId())){
+        if(userService.validateDuplicityEmail(userEntity.getEmail(), userEntity.getId())){
             Messages.addError("email", "Email was already registered!");
             result = false;
         }
-        if(userService.validateDuplicityUsername(userEntity.getUsername(),userEntity.getId())){
+        if(userService.validateDuplicityUsername(userEntity.getUsername(), userEntity.getId())){
             Messages.addError("username", "Username was already registered!");
             result = false;
         }
         return result;
+    }
+
+    public String roleName(final Integer roleId){
+        return RoleEnum.valueOf(roleId).getLabel();
     }
 
     private String getEncodePass(String pass){

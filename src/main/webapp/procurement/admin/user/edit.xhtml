@@ -113,7 +113,7 @@
                                                 <f:selectItems value="#{userBean.procurementRoles}"
                                                                var="_pr"
                                                                itemValue="#{_pr}"
-                                                               itemLabel="#{_pr.name}"/>
+                                                               itemLabel="#{userBean.roleName(_pr.id)}"/>
                                             </h:selectOneMenu>
                                             <h:message for="roleProcurement"/>
                                         </div>
@@ -126,7 +126,7 @@
                                                 <f:selectItems value="#{userBean.expeditingRoles}"
                                                                var="_er"
                                                                itemValue="#{_er}"
-                                                               itemLabel="#{_er.name}"/>
+                                                               itemLabel="#{userBean.roleName(_er.id)}"/>
                                             </h:selectOneMenu>
                                             <h:message for="roleExpediting"/>
                                         </div>
