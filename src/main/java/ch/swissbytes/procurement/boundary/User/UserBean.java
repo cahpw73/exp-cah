@@ -13,6 +13,7 @@ import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
+import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
@@ -50,6 +51,9 @@ public class UserBean implements Serializable {
     @Inject
     private UserRoleService userRoleService;
 
+    @Inject
+    private MainMenuBean mainMenuBean;
+
     private UserEntity userEntity;
 
     private UserEntity editUser;
@@ -69,6 +73,10 @@ public class UserBean implements Serializable {
     private RoleEntity roleExpediting;
 
     private RoleEntity roleProcurement;
+
+    private boolean moduleAccessProcurement;
+
+    private boolean moduleAccessExpediting;
 
 
     @PostConstruct
@@ -98,12 +106,19 @@ public class UserBean implements Serializable {
         }else{
             userEntity = userService.findUserById(userId);
             oldPassword = userEntity.getPassword();
+
             moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
             userRoleList = userRoleService.findListByUserId(userId);
+
+            if(moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getModuleAccess() != null){
+                moduleAccessExpediting =  moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getModuleAccess();
+            }
+            if(moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getModuleAccess() != null){
+                moduleAccessProcurement = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getModuleAccess();
+            }
+
             roleExpediting =  userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getRole();
             roleProcurement = userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getRole();
-            log.info("module access size" + moduleGrantedAccessList.size());
-            log.info("user role size: " + userRoleList.size());
 
             if(StatusEnum.ENABLE.getId().intValue() == userEntity.getStatus().getId().intValue())
                 userActive = true;
@@ -126,14 +141,20 @@ public class UserBean implements Serializable {
             getModuleProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
             getModuleExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
 
+            getModuleProcurement().setModuleAccess(moduleAccessProcurement);
+            getModuleExpediting().setModuleAccess(moduleAccessExpediting);
+
+
             getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
-            getUserProcurement().setRole(roleProcurement);
             getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
+            
+            getUserProcurement().setRole(roleProcurement);
             getUserExpediting().setRole(roleExpediting);
 
             userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
+        mainMenuBean.select(2);
         return "";
     }
 
@@ -148,11 +169,16 @@ public class UserBean implements Serializable {
             if(!oldPassword.equals(userEntity.getPassword())){
                 userEntity.setPassword(getEncodePass(userEntity.getPassword()));
             }
+
+            getModuleProcurement().setModuleAccess(moduleAccessProcurement);
+            getModuleProcurement().setModuleAccess(moduleAccessExpediting);
+
             getUserProcurement().setRole(roleProcurement);
             getUserExpediting().setRole(roleExpediting);
             userService.doUpdateUser(userEntity,moduleGrantedAccessList,userRoleList);
             return "list?faces-redirect=true";
         }
+        mainMenuBean.select(2);
         return "";
     }
 
@@ -296,5 +322,21 @@ public class UserBean implements Serializable {
 
     public void setRoleProcurement(RoleEntity roleProcurement) {
         this.roleProcurement = roleProcurement;
+    }
+
+    public boolean isModuleAccessProcurement() {
+        return moduleAccessProcurement;
+    }
+
+    public void setModuleAccessProcurement(boolean moduleAccessProcurement) {
+        this.moduleAccessProcurement = moduleAccessProcurement;
+    }
+
+    public boolean isModuleAccessExpediting() {
+        return moduleAccessExpediting;
+    }
+
+    public void setModuleAccessExpediting(boolean moduleAccessExpediting) {
+        this.moduleAccessExpediting = moduleAccessExpediting;
     }
 }

@@ -94,7 +94,7 @@ public class UsersBean implements Serializable {
     public boolean getAccessModuleProcurement(final Long userId){
         ModuleGrantedAccessEntity moduleProcurement = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.PROCUREMENT);
         boolean hasAccess = false;
-        if(moduleProcurement != null){
+        if(moduleProcurement != null && moduleProcurement.getModuleAccess() != null){
             hasAccess = moduleProcurement.getModuleAccess();
         }
         return hasAccess;
@@ -103,7 +103,7 @@ public class UsersBean implements Serializable {
     public boolean getAccessModuleExpediting(final Long userId){
         ModuleGrantedAccessEntity moduleProcurement = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING);
         boolean hasAccess = false;
-        if(moduleProcurement != null){
+        if(moduleProcurement != null && moduleProcurement.getModuleAccess() != null){
             hasAccess = moduleProcurement.getModuleAccess();
         }
         return hasAccess;

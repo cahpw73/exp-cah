@@ -84,7 +84,7 @@
                                 #{usersBean.getAccessLevelExpediting(_u.id)}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="75">
-                                <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit">
+                                <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit">
                                     <f:param name="isCreateUser" value="false"/>
                                     <f:param name="userId" value="#{_u.id}"/>
                                 </h:link>
