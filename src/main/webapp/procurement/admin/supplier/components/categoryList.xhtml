@@ -1,14 +1,16 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
-    Category List
+
 
     <div class="col-sm-3">
         <div class="form-group">
-            <label for="categoryListGlobal">Global Brands</label>
+            <label for="categoryListGlobal">Global Categories</label>
             <h:selectOneListbox id="categoryListGlobal"
                                 styleClass="form-control " style="max-height: 200px; height: 200px;" size="2">
+                <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
+                               itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
             </h:selectOneListbox>
         </div>
     </div>
@@ -17,7 +19,7 @@
     </div>
     <div class="col-sm-3">
         <div class="form-group">
-            <label for="categoryListSupplier">Supplier Brands</label>
+            <label for="categoryListSupplier">Supplier Categories</label>
             <h:selectOneListbox id="categoryListSupplier"
                                 styleClass="form-control " style="max-height: 200px; height: 200px;" size="2">
             </h:selectOneListbox>
