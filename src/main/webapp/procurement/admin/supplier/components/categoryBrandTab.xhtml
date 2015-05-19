@@ -8,12 +8,12 @@
 
             <div>
                 <div class="col-sm-10" style="padding-left: 0px;">
-                    <h:selectOneListbox id="categoryList" value="#{brandBean.selectedBrand}" converter="brandConverter"
+                    <h:selectOneListbox id="categoryList"
                                         styleClass="form-control" style="max-height: 200px; height: 200px;" size="2">
                     </h:selectOneListbox>
                 </div>
-                <h:commandButton value="+" styleClass="col-sm-2" action="#{supplierProcBean.putModeCategory}">
-                    <p:ajax update=""/>
+                <h:commandButton value="#{msgs['lbl.plus']}" styleClass="col-sm-2">
+                    <p:ajax update="bodySupplier" process="@this" immediate="true" listener="#{supplierProcBean.putModeCategory}"/>
                 </h:commandButton>
             </div>
         </div>
@@ -21,16 +21,18 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label for="brandList">Brands</label>
+
             <div>
                 <div class="col-sm-10" style="padding-left: 0px;">
-                    <h:selectOneListbox id="brandList" value="#{brandBean.selectedBrand}" converter="brandConverter"
+                    <h:selectOneListbox id="brandList"
                                         styleClass="form-control " style="max-height: 200px; height: 200px;" size="2">
                     </h:selectOneListbox>
                 </div>
-                <h:commandButton value="+" styleClass="col-sm-2" action="#{supplierProcBean.putModeBrand}">
+                <h:commandButton value="#{msgs['lbl.plus']}" styleClass="col-sm-2"
+                                 action="#{supplierProcBean.putModeBrand}">
+                    <p:ajax update="bodySupplier" process="@this" immediate="true"/>
                 </h:commandButton>
             </div>
         </div>
-
     </div>
 </ui:composition>
