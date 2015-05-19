@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:form prependId="false">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <div class="col-sm-7">
+                <div class="form-inline">
+                    <h:outputLabel class="control-label col-sm-3" value="Street"/>
+                    <h:inputText maxlength="50"
+                                 value="#{supplierProcBean.supplier.street}"
+                                 class="form-control col-sm-9" required="true"/>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="form-inline">
+                    <h:outputLabel class="control-label col-sm-3" value="Suburb"/>
+                    <h:inputText maxlength="50"
+                                 value="#{supplierProcBean.supplier.suburb}"
+                                 class="form-control col-sm-9" required="true"/>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="form-inline">
+                    <h:outputLabel class="control-label col-sm-3" value="State"/>
+                    <h:inputText maxlength="50"
+                                 value="#{supplierProcBean.supplier.state}"
+                                 class="form-control col-sm-9" required="true"/>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="col-sm-6">
+                    <div class="form-inline">
+                        <h:outputLabel class="control-label col-sm-3" value="Postcode"/>
+                        <h:inputText maxlength="50"
+                                     value="#{supplierProcBean.supplier.postCode}"
+                                     class="form-control col-sm-9" required="true"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-inline">
+                        <h:outputLabel class="control-label col-sm-3" value="Country"/>
+                        <h:inputText maxlength="50"
+                                     value="#{supplierProcBean.supplier.country}"
+                                     class="form-control col-sm-9" required="true"/>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </h:form>
+</ui:composition>

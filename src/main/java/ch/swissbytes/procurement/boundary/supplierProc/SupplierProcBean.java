@@ -6,7 +6,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -21,7 +21,9 @@ import java.util.logging.Logger;
 public class SupplierProcBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(SupplierProcBean.class.getName());
-    private SupplierProcEntity supplier;
+
+    private SupplierProcEntity supplier=new SupplierProcEntity();
+
     @Inject
     private SupplierProcService service;
 
@@ -30,7 +32,7 @@ public class SupplierProcBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("SupplierProcBean bean created");
-        supplier=new SupplierProcEntity();
+
         supplier.setStatus(StatusEnum.ENABLE);
     }
     public void load(){
@@ -40,7 +42,7 @@ public class SupplierProcBean implements Serializable {
     public String doSave(){
         supplier.setLastUpdate(new Date());
         service.doSave(supplier);
-        return "";
+        return "list?faces-redirect=true";
     }
     public String doUpdate(){
         supplier.setLastUpdate(new Date());
