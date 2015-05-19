@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.brand.BrandDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.UserRoleEntity;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -31,6 +32,15 @@ public class UserRoleService extends Service<UserRoleEntity> implements Serializ
     public void doUpdate(UserRoleEntity detachedEntity){
         log.info("doUpdate");
         userRoleDao.doUpdate(detachedEntity);
+    }
+
+    public UserRoleEntity findByUserId(final Long userId, final ModuleSystemEnum moduleSystem){
+        List<UserRoleEntity> userRoleList =  userRoleDao.findByUserId(userId, moduleSystem);
+        UserRoleEntity userRole = null;
+        if(!userRoleList.isEmpty()){
+            userRole = userRoleList.get(0);
+        }
+        return userRole;
     }
 
 }

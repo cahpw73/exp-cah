@@ -4,6 +4,7 @@ import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -44,5 +45,17 @@ public class ModuleGrantedAccessDao extends GenericDao<ModuleGrantedAccessEntity
     @Override
     protected String addCriteria(Filter filter) {
         return null;
+    }
+
+    public List<ModuleGrantedAccessEntity> findByUserId(final Long userId, final ModuleSystemEnum moduleSystem) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT md ");
+        sb.append(" FROM ModuleGrantedAccessEntity md ");
+        sb.append(" WHERE md.userEntity.id = :USER_ID ");
+        sb.append(" AND md.moduleSystem = :MODULE_SYSTEM ");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("USER_ID",userId);
+        parameters.put("MODULE_SYSTEM",moduleSystem);
+        return super.findBy(sb.toString(),parameters);
     }
 }

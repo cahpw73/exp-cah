@@ -183,5 +183,13 @@ public class UserDao extends GenericDao implements Serializable {
     }
 
 
-
+    public List<UserEntity> findAllUser() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT u ");
+        sb.append(" FROM UserEntity u ");
+        sb.append(" WHERE u.status.id = :ENABLE ");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("ENABLE",StatusEnum.ENABLE.getId());
+        return super.findBy(sb.toString(),parameters);
+    }
 }

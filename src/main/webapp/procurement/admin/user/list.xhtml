@@ -12,7 +12,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
-            <div class="col-md-6 panel-tab-users">
+            <div class="col-md-7 panel-tab-users">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#procurement" role="tab"
@@ -24,20 +24,33 @@
                 <div class="tab-content">
                     <!-- Tab Procurement -->
                     <div class="tab-pane active" id="procurement">
-                        <p:dataTable value="#{currencyBean.list}" var="_currency">
-                            <p:column headerText="#{msgs['lbl.dt.column.active']}" >
+                        <p:dataTable value="#{usersBean.userList}" var="_u">
+                            <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
+                                <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
+                                                         disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.username']}" >
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}" width="100">
+                                #{_u.username}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.name']}">
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}" width="100">
+                                #{_u.name}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.email']}" >
+                            <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">
+                                #{_u.email}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" >
+                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" width="70" style="text-align: center;">
+                                <h:selectBooleanCheckbox value="#{usersBean.getAccessModuleProcurement(_u.id)}"
+                                                         disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}">
+                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100" >
+                                #{usersBean.getAccessLevelProcurement(_u.id)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="75">
+                                <h:commandLink value="#{msgs['lbl.edit']}"
+                                                 action="edit?faces-redirect=true&amp;isCreateUser=true"/>
+                                &#160;
+                                <h:commandLink value="#{msgs['lbl.reset']}"
+                                                 action="edit?faces-redirect=true&amp;isCreateUser=true"/>
                             </p:column>
                         </p:dataTable>
                         <div class="clearfix"/>

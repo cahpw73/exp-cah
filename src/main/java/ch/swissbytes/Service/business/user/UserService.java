@@ -144,4 +144,8 @@ public class UserService implements Serializable {
     public UserEntity getUserEntity(String username, String pass) {
         return userDao.getUser(username,pass);
     }
+
+    public List<UserEntity> findAllUser() {
+        return userDao.findAllUser();
+    }
 }
