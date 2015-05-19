@@ -6,7 +6,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -21,16 +21,21 @@ import java.util.logging.Logger;
 public class SupplierProcBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(SupplierProcBean.class.getName());
-    private SupplierProcEntity supplier;
+
+    private SupplierProcEntity supplier=new SupplierProcEntity();
+
     @Inject
     private SupplierProcService service;
 
     private String supplierId;
 
+    private boolean addingCategory =false;
+    private boolean addingBrand =false;
+
     @PostConstruct
     public void create(){
         log.info("SupplierProcBean bean created");
-        supplier=new SupplierProcEntity();
+
         supplier.setStatus(StatusEnum.ENABLE);
     }
     public void load(){
@@ -40,7 +45,7 @@ public class SupplierProcBean implements Serializable {
     public String doSave(){
         supplier.setLastUpdate(new Date());
         service.doSave(supplier);
-        return "";
+        return "list?faces-redirect=true";
     }
     public String doUpdate(){
         supplier.setLastUpdate(new Date());
@@ -52,6 +57,19 @@ public class SupplierProcBean implements Serializable {
         return "";
     }
 
+    public void putModeCategory(){
+        addingCategory =true;
+    }
+    public void putModeBrand(){
+        addingBrand =true;
+    }
+    public void putModeSupplier(){
+        addingCategory =false;
+        addingBrand =false;
+    }
+
+
+
     @PreDestroy
     public void destroy(){
         log.info("SupplierProcBean bean destroyed");
@@ -59,5 +77,14 @@ public class SupplierProcBean implements Serializable {
 
     public SupplierProcEntity getSupplier() {
         return supplier;
+    }
+
+    public boolean isAddingCategory() {
+        return addingCategory;
+    }
+
+
+    public boolean isAddingBrand() {
+        return addingBrand;
     }
 }
