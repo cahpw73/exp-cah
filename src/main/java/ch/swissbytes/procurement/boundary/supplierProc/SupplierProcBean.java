@@ -60,6 +60,10 @@ public class SupplierProcBean implements Serializable {
     public void putModeCategory(){
         addingCategory =true;
     }
+
+    public boolean isSupplierMode(){
+        return !addingBrand&&!addingCategory;
+    }
     public void putModeBrand(){
         addingBrand =true;
     }

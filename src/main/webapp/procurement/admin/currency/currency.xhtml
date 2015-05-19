@@ -40,52 +40,56 @@
                     </p:dataTable>
                     <br/>
                     <h:form prependId="false" id="currencyForm" styleClass="form-inline">
-                        <fieldset>
-                            <legend>#{currencyBean.creating?msgs['lbl.new.currency']:msgs['lbl.update.currency']}</legend>
-                            <div class="row">
-                                <div class="form-inline">
-                                    <h:outputLabel styleClass="control-label col-sm-1"
-                                                   value="#{msgs['lbl.column.name']}"/>
-                                    <h:inputText maxlength="50" type="text"
-                                                 required="true"
-                                                 id="currencyName"
-                                                 requiredMessage="Enter valid Name"
-                                                 value="#{currencyBean.currency.name}"
-                                                 class="form-control"/>
-                                    <p:message for="currencyName"/>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="form-inline">
-                                    <h:outputLabel styleClass="control-label col-sm-1"
-                                                   value="#{msgs['lbl.column.code']}"/>
-                                    <h:inputText maxlength="50" type="text"
-                                                 id="currencyCode"
-                                                 required="true"
-                                                 requiredMessage="Enter Valid Code"
-                                                 value="#{currencyBean.currency.code}"
-                                                 class="form-control"/>
-                                    <p:message for="currencyCode"/>
-                                </div>
-                            </div>
-                            <br/>
 
-                            <div class="pull-left">
-                                <h:commandButton value="#{msgs['btn.currency.add']}"
-                                                 rendered="#{currencyBean.isCreating()}"
-                                                 styleClass="btn btn-primary btn-sm"
-                                                 action="#{currencyBean.doSave()}"/>
-                                <h:commandButton value="#{msgs['btn.currency.update']}"
-                                                 rendered="#{currencyBean.isEditing()}"
-                                                 styleClass="btn btn-primary btn-sm"
-                                                 action="#{currencyBean.doUpdate()}"/>
-                                &#160;
-                                <h:link value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm"
-                                        rendered="#{currencyBean.isEditing()}"
-                                        outcome="currency"/>
+                        <div class="panel panel-default panel-tab">
+                            <div class="procurement-panel-header">#{currencyBean.creating?msgs['lbl.new.currency']:msgs['lbl.update.currency']}</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="form-inline">
+                                        <h:outputLabel styleClass="control-label col-sm-1"
+                                                       value="#{msgs['lbl.column.name']}"/>
+                                        <h:inputText maxlength="50" type="text"
+                                                     required="true"
+                                                     id="currencyName"
+                                                     requiredMessage="Enter valid Name"
+                                                     value="#{currencyBean.currency.name}"
+                                                     class="form-control"/>
+                                        <p:message for="currencyName"/>
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+                                    <div class="form-inline">
+                                        <h:outputLabel styleClass="control-label col-sm-1"
+                                                       value="#{msgs['lbl.column.code']}"/>
+                                        <h:inputText maxlength="50" type="text"
+                                                     id="currencyCode"
+                                                     required="true"
+                                                     requiredMessage="Enter Valid Code"
+                                                     value="#{currencyBean.currency.code}"
+                                                     class="form-control"/>
+                                        <p:message for="currencyCode"/>
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="pull-left">
+                                    <h:commandButton value="#{msgs['btn.currency.add']}"
+                                                     rendered="#{currencyBean.isCreating()}"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     action="#{currencyBean.doSave()}"/>
+                                    <h:commandButton value="#{msgs['btn.currency.update']}"
+                                                     rendered="#{currencyBean.isEditing()}"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     action="#{currencyBean.doUpdate()}"/>
+                                    &#160;
+                                    <h:link value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm"
+                                            rendered="#{currencyBean.isEditing()}"
+                                            outcome="currency"/>
+                                </div>
                             </div>
-                        </fieldset>
+                        </div>
                     </h:form>
                 </div>
             </div>
