@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.brand.BrandDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -32,5 +33,17 @@ public class ModuleGrantedAccessService extends Service<ModuleGrantedAccessEntit
         moduleGrantedAccessDao.doUpdate(detachedEntity);
     }
 
+    public ModuleGrantedAccessEntity findByUserIdAndModuleSystem(final Long userId, final ModuleSystemEnum moduleSystemEnum){
+        List<ModuleGrantedAccessEntity> moduleGrantedAccessEntities = moduleGrantedAccessDao.findByUserIAndModuleSystem(userId, moduleSystemEnum);
+        ModuleGrantedAccessEntity entity = null;
+        if(!moduleGrantedAccessEntities.isEmpty()){
+            entity = moduleGrantedAccessEntities.get(0);
+        }
+        return entity;
+    }
 
+    public List<ModuleGrantedAccessEntity> findListByUserId(Long userId) {
+        List<ModuleGrantedAccessEntity> moduleGrantedAccessEntities = moduleGrantedAccessDao.findByUserId(userId);
+        return moduleGrantedAccessEntities;
+    }
 }

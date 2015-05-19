@@ -6,6 +6,7 @@ import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
 import org.picketlink.idm.IdentityManager;
 
 import javax.inject.Inject;
@@ -183,5 +184,40 @@ public class UserDao extends GenericDao implements Serializable {
     }
 
 
+    public List<UserEntity> findAllUser() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT u ");
+        sb.append(" FROM UserEntity u ");
+        sb.append(" WHERE NOT u.status.id = :DELETED ");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("DELETED", StatusEnum.DELETED.getId());
+        return super.findBy(sb.toString(),parameters);
+    }
 
+    public List<UserEntity> findBySearchTerm(final String searchTerm, final StatusEnum userStatus) {
+        log.info("Search Term: " + searchTerm);
+        log.info("User status: " + (userStatus != null? userStatus.getLabel() : "null"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT u ");
+        sb.append(" FROM UserEntity u ");
+        sb.append(" WHERE NOT u.status.id = :DELETED ");
+
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("DELETED",StatusEnum.DELETED.getId());
+
+        if(userStatus != null && (userStatus.getId().intValue() == StatusEnum.ENABLE.getId().intValue())) {
+            sb.append(" AND u.status.id = :ENABLE ");
+            parameters.put("ENABLE", userStatus.getId());
+        }
+        if(StringUtils.isNotEmpty(searchTerm) && StringUtils.isNotBlank(searchTerm)) {
+            sb.append(" AND ( LOWER(u.username) like :USERNAME ");
+            sb.append(" OR LOWER(u.name) like :NAME ");
+            sb.append(" OR LOWER(u.email) like :EMAIL ) ");
+
+            parameters.put("USERNAME", "%" + searchTerm.toLowerCase().trim() + "%");
+            parameters.put("NAME", "%" + searchTerm.toLowerCase().trim() + "%");
+            parameters.put("EMAIL", "%" + searchTerm.toLowerCase().trim() + "%");
+        }
+        return super.findBy(sb.toString(),parameters);
+    }
 }
