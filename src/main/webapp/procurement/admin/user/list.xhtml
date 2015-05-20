@@ -24,9 +24,9 @@
                 <div class="tab-content">
                     <!-- Tab Procurement -->
                     <div class="tab-pane active" id="procurement">
-                        <p:dataTable id="procuremetListId" value="#{usersBean.userList}" var="_u"
+                        <p:dataTable id="procuremetListId" value="#{usersBean.userProcurementList}" var="_u"
                                      paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
-                                     rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userList.size())}" paginatorPosition="bottom">
+                                     rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userProcurementList.size())}" paginatorPosition="bottom">
                             <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
@@ -57,6 +57,38 @@
                                                  action="edit?faces-redirect=true&amp;isCreateUser=true"/>
                             </p:column>
                         </p:dataTable>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <div class="col-md-4">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText id="searchProcTermId" styleClass="form-control input-search" value="#{usersBean.searchProcurementTerm}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm" >
+                                    <p:ajax process="@this,searchProcTermId," update="procuremetListId" listener="#{usersBean.doSearchProcurement}"/>
+                                </h:commandButton>
+                                &#160;
+                                <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm" >
+                                    <p:ajax process="@this,searchProcTermId" update="procuremetListId,searchProcTermId,activeProcUserId" listener="#{usersBean.doProcurementClean}"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <h:selectBooleanCheckbox id="activeProcUserId" value="#{usersBean.searchProcurementActiveUsers}">
+                                        <p:ajax process="@this" update="procuremetListId,searchProcTermId" listener="#{usersBean.doSearchProcurement}"/>
+                                    </h:selectBooleanCheckbox> Show Active Users Only
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <!-- Tab Expediting -->
                     <div class="tab-pane" id="expediting">
@@ -93,39 +125,40 @@
                                                action="edit?faces-redirect=true&amp;isCreateUser=true"/>
                             </p:column>
                         </p:dataTable>
-                    </div>
-                    <div class="clearfix"/>
-                    <br/>
-                    <div>
-                        <div class="col-md-4">
-                            <div class="left-inner-addon">
-                                <i class="fa fa-search fa-lg"></i>
-                                <h:inputText id="searchTermId" styleClass="form-control input-search" value="#{usersBean.searchTerm}"
-                                             jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
-                                </h:inputText>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <div class="col-md-4">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText id="searchTermId" styleClass="form-control input-search" value="#{usersBean.searchTerm}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm" >
+                                    <p:ajax process="@this,searchTermId," update="procuremetListId,expeditingListId" listener="#{usersBean.doSearch}"/>
+                                </h:commandButton>
+                                &#160;
+                                <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm" >
+                                    <p:ajax process="@this,searchTermId" update="procuremetListId,expeditingListId,searchTermId,activeUserId" listener="#{usersBean.doClean}"/>
+                                </h:commandButton>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm" >
-                                <p:ajax process="@this,searchTermId," update="procuremetListId,expeditingListId" listener="#{usersBean.doSearch}"/>
-                            </h:commandButton>
-                            &#160;
-                            <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm" >
-                                <p:ajax process="@this,searchTermId" update="procuremetListId,expeditingListId,searchTermId,activeUserId" listener="#{usersBean.doClean}"/>
-                            </h:commandButton>
+                        <div class="clearfix"/>
+                        <br/>
+                        <div>
+                            <div class="checkbox">
+                                <label>
+                                    <h:selectBooleanCheckbox id="activeUserId" value="#{usersBean.searchActiveUsers}">
+                                        <p:ajax process="@this" update="expeditingListId,searchTermId" listener="#{usersBean.doSearch}"/>
+                                    </h:selectBooleanCheckbox> Show Active Users Only
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="clearfix"/>
-                    <br/>
-                    <div>
-                        <div class="checkbox">
-                            <label>
-                                <h:selectBooleanCheckbox id="activeUserId" value="#{usersBean.searchActiveUsers}">
-                                    <p:ajax process="@this" update="procuremetListId,expeditingListId,searchTermId" listener="#{usersBean.doSearch}"/>
-                                </h:selectBooleanCheckbox> Show Active Users Only
-                            </label>
-                        </div>
-                    </div>
+
                     <div class="clearfix"/>
                     <br/>
                     <div>

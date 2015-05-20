@@ -43,18 +43,26 @@ public class UsersBean implements Serializable {
     @Inject
     private EnumService enumService;
 
-    private List<UserEntity> userList;
+    private List<UserEntity> userList;//expediting
+
+    private List<UserEntity> userProcurementList;
 
     private String searchTerm;
 
+    private String searchProcurementTerm;
+
     private boolean searchActiveUsers;
+
+    private boolean searchProcurementActiveUsers;
 
     @PostConstruct
     public void init (){
         log.info("UserListBean was created");
         userList = new ArrayList<>();
+        userProcurementList = new ArrayList<>();
         loadUsers();
         searchActiveUsers = false;
+        searchProcurementActiveUsers = false;
     }
 
     @PreDestroy
@@ -64,9 +72,10 @@ public class UsersBean implements Serializable {
 
     public void loadUsers(){
         userList = userService.findAllUser();
+        userProcurementList = userService.findAllUser();
     }
 
-    public void doSearch(){
+    public void doSearch(){//expediting
         StatusEnum userStatus = null;
         userList.clear();
         if(searchActiveUsers){
@@ -74,8 +83,23 @@ public class UsersBean implements Serializable {
         }
         userList = userService.doSearch(searchTerm,userStatus);
     }
+    public void doSearchProcurement(){//procurement
+        StatusEnum userStatus = null;
+        userProcurementList.clear();
+        if(searchProcurementActiveUsers){
+            userStatus = StatusEnum.ENABLE;
+        }
+        userProcurementList = userService.doSearch(searchProcurementTerm,userStatus);
+    }
 
     public void doClean(){
+        userList.clear();
+        loadUsers();
+        searchTerm = "";
+        searchActiveUsers = false;
+    }
+
+    public void doProcurementClean(){
         userList.clear();
         loadUsers();
         searchTerm = "";
@@ -147,5 +171,26 @@ public class UsersBean implements Serializable {
 
     public void setSearchActiveUsers(boolean searchActiveUsers) {
         this.searchActiveUsers = searchActiveUsers;
+    }
+
+    public List<UserEntity> getUserProcurementList() {
+        return userProcurementList;
+    }
+
+
+    public String getSearchProcurementTerm() {
+        return searchProcurementTerm;
+    }
+
+    public void setSearchProcurementTerm(String searchProcurementTerm) {
+        this.searchProcurementTerm = searchProcurementTerm;
+    }
+
+    public boolean isSearchProcurementActiveUsers() {
+        return searchProcurementActiveUsers;
+    }
+
+    public void setSearchProcurementActiveUsers(boolean searchProcurementActiveUsers) {
+        this.searchProcurementActiveUsers = searchProcurementActiveUsers;
     }
 }
