@@ -227,7 +227,13 @@ public class UserBean implements Serializable {
     }
 
     public void resetRoleProcurement(){
-        roleProcurement = null;
+        if(!moduleAccessProcurement)
+            roleProcurement = null;
+    }
+
+    public void resetRoleExpediting(){
+        if(!moduleAccessExpediting)
+            roleExpediting = null;
     }
 
     private boolean dataValidate() {

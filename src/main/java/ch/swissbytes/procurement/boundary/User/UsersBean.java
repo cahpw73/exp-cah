@@ -11,6 +11,7 @@ import ch.swissbytes.domain.model.entities.UserRoleEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.boundary.user.VerificationTokenBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -42,6 +43,9 @@ public class UsersBean implements Serializable {
 
     @Inject
     private EnumService enumService;
+
+    @Inject
+    private VerificationTokenBean verificationTokenBean;
 
     private List<UserEntity> userList;//expediting
 
@@ -106,9 +110,8 @@ public class UsersBean implements Serializable {
         searchActiveUsers = false;
     }
 
-    public String doEdit(final Long userId){
-        log.info("do edit");
-        return  "edit?faces-redirect=true&amp;isCreateUser=false&amp;userId="+userId+"";
+    public void resetPassword(final String email){
+        verificationTokenBean.sendLostPasswordToken(email);
     }
 
     public boolean getActiveUser(final StatusEntity status){

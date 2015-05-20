@@ -96,7 +96,7 @@
                                         <div class="checkbox">
                                             <label>
                                                 <h:selectBooleanCheckbox value="#{userBean.moduleAccessExpediting}">
-                                                    <p:ajax process="@this" update="roleExpediting" async="false"/>
+                                                    <p:ajax process="@this" update="roleExpediting" async="false" listener="#{userBean.resetRoleExpediting}"/>
                                                 </h:selectBooleanCheckbox> #{msgs['lbl.crud.user.expediting']}
                                             </label>
                                         </div>

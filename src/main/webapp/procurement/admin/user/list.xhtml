@@ -12,7 +12,8 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
-            <div class="col-md-7 panel-tab-users">
+
+            <div class="col-md-8 panel-tab-users">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#procurement" role="tab"
@@ -47,14 +48,20 @@
                             <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100" >
                                 #{usersBean.getAccessLevelProcurement(_u.id)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="75">
-                                <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                                <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                     <f:param name="isCreateUser" value="false"/>
                                     <f:param name="userId" value="#{_u.id}"/>
                                 </h:link>
                                 &#160;
-                                <h:commandLink value="#{msgs['lbl.reset']}"
-                                                 action="edit?faces-redirect=true&amp;isCreateUser=true"/>
+                                <h:commandButton value="#{msgs['lbl.reset']}" action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}"
+                                            styleClass="btn btn-link btn-sm"
+                                            style="float: left!important; color: #428BCA ; padding-left: 0px!important; padding-right: 0px!important;">
+                                    <p:ajax  process="@this" update=":glbMsgs"
+                                             onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
+                                    <p:ajax process="@this"  event="change" update=":glbMsgs"/>
+                                </h:commandButton>
                             </p:column>
                         </p:dataTable>
                         <div class="clearfix"/>
@@ -115,14 +122,20 @@
                             <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100" >
                                 #{usersBean.getAccessLevelExpediting(_u.id)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="75">
-                                <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                                <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                     <f:param name="isCreateUser" value="false"/>
                                     <f:param name="userId" value="#{_u.id}"/>
                                 </h:link>
                                 &#160;
-                                <h:commandLink value="#{msgs['lbl.reset']}"
-                                               action="edit?faces-redirect=true&amp;isCreateUser=true"/>
+                                <h:commandButton value="#{msgs['lbl.reset']}" action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}"
+                                                 styleClass="btn btn-link btn-sm"
+                                                 style="float: left!important; color: #428BCA ; padding-left: 0px!important; padding-right: 0px!important;">
+                                    <p:ajax  process="@this" update=":glbMsgs"
+                                             onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
+                                    <p:ajax process="@this"  event="change" update=":glbMsgs"/>
+                                </h:commandButton>
                             </p:column>
                         </p:dataTable>
                         <div class="clearfix"/>
@@ -167,6 +180,12 @@
                     </div>
                 </div>
             </div>
+            <p:confirmDialog id="waitingDlgId" widgetVar="waitingDlg" closable="false" showEffect="fade" message="An email is being sent ...">
+                <div style="margin: 0 auto; align-content: center; text-align: center">
+                    <i class="fa fa-spinner fa-spin fa-5x"></i>
+                </div>
+            </p:confirmDialog>
+            <h:outputScript name="js/bootstrap.min.js"/>
         </h:form>
     </ui:define>
 </ui:composition>
