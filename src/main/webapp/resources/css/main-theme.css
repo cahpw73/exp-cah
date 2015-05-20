@@ -483,9 +483,12 @@ label.checkbox{
     background: #ffffff;
 }
 
-.icon-attahcment{
-    position: relative;
-    left: 30%;
+.icon-container-attachment{
+    text-align: center;
+}
+.icon-attachment{
+    display: inline-block;
+    padding: 0px!important;
 }
 
 .ui-selectonemenu-label
