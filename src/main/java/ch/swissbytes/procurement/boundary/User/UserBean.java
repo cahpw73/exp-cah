@@ -226,6 +226,10 @@ public class UserBean implements Serializable {
         return expeditingRoles;
     }
 
+    public void resetRoleProcurement(){
+        roleProcurement = null;
+    }
+
     private boolean dataValidate() {
         boolean result = true;
         if(userService.existsEmail(userEntity.getEmail())){
@@ -234,6 +238,14 @@ public class UserBean implements Serializable {
         }
         if(userService.existsUsername(userEntity.getUsername())){
             Messages.addFlashError("username", "Username was already registered!");
+            result = false;
+        }
+        if(moduleAccessProcurement && roleProcurement == null){
+            Messages.addFlashError("roleProcurement", "Select one");
+            result = false;
+        }
+        if(moduleAccessExpediting && roleExpediting == null){
+            Messages.addFlashError("roleExpediting", "Select one");
             result = false;
         }
         return result;
@@ -247,6 +259,14 @@ public class UserBean implements Serializable {
         }
         if(userService.validateDuplicityUsername(userEntity.getUsername(), userEntity.getId())){
             Messages.addError("username", "Username was already registered!");
+            result = false;
+        }
+        if(moduleAccessProcurement && roleProcurement == null){
+            Messages.addFlashError("roleProcurement", "Select one");
+            result = false;
+        }
+        if(moduleAccessExpediting && roleExpediting == null){
+            Messages.addFlashError("roleExpediting", "Select one");
             result = false;
         }
         return result;
