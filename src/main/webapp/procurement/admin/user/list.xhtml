@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Users</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-7 panel-tab-users">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#procurement" role="tab"
+                                          data-toggle="tab">#{msgs['lbl.tab.procurement.title']}</a></li>
+                    <li><a href="#expediting" role="tab" data-toggle="tab">#{msgs['lbl.tab.expediting.title']}</a></li>
+                </ul>
+
+                <!-- Tab Users -->
+                <div class="tab-content">
+                    <!-- Tab Procurement -->
+                    <div class="tab-pane active" id="procurement">
+                        <p:dataTable id="procuremetListId" value="#{usersBean.userList}" var="_u"
+                                     paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                                     rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userList.size())}" paginatorPosition="bottom">
+                            <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
+                                <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
+                                                         disabled="true" styleClass="disabled"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}"  width="100">
+                                #{_u.username}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}"  width="100">
+                                #{_u.name}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">
+                                #{_u.email}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" width="70" style="text-align: center;">
+                                <h:selectBooleanCheckbox value="#{usersBean.getAccessModuleProcurement(_u.id)}"
+                                                         disabled="true" styleClass="disabled"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100" >
+                                #{usersBean.getAccessLevelProcurement(_u.id)}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="75">
+                                <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit">
+                                    <f:param name="isCreateUser" value="false"/>
+                                    <f:param name="userId" value="#{_u.id}"/>
+                                </h:link>
+                                &#160;
+                                <h:commandLink value="#{msgs['lbl.reset']}"
+                                                 action="edit?faces-redirect=true&amp;isCreateUser=true"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    <!-- Tab Expediting -->
+                    <div class="tab-pane" id="expediting">
+                        <p:dataTable id="expeditingListId" value="#{usersBean.userList}" var="_u"
+                                     paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                                     rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userList.size())}" paginatorPosition="bottom">
+                            <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
+                                <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
+                                                         disabled="true" styleClass="disabled"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}"  width="100">
+                                #{_u.username}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}"  width="100">
+                                #{_u.name}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">
+                                #{_u.email}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" width="70" style="text-align: center;">
+                                <h:selectBooleanCheckbox value="#{usersBean.getAccessModuleExpediting(_u.id)}"
+                                                         disabled="true" styleClass="disabled"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100" >
+                                #{usersBean.getAccessLevelExpediting(_u.id)}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="75">
+                                <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit">
+                                    <f:param name="isCreateUser" value="false"/>
+                                    <f:param name="userId" value="#{_u.id}"/>
+                                </h:link>
+                                &#160;
+                                <h:commandLink value="#{msgs['lbl.reset']}"
+                                               action="edit?faces-redirect=true&amp;isCreateUser=true"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    <div class="clearfix"/>
+                    <br/>
+                    <div>
+                        <div class="col-md-4">
+                            <div class="left-inner-addon">
+                                <i class="fa fa-search fa-lg"></i>
+                                <h:inputText id="searchTermId" styleClass="form-control input-search" value="#{usersBean.searchTerm}"
+                                             jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm" >
+                                <p:ajax process="@this,searchTermId," update="procuremetListId,expeditingListId" listener="#{usersBean.doSearch}"/>
+                            </h:commandButton>
+                            &#160;
+                            <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm" >
+                                <p:ajax process="@this,searchTermId" update="procuremetListId,expeditingListId,searchTermId,activeUserId" listener="#{usersBean.doClean}"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                    <div class="clearfix"/>
+                    <br/>
+                    <div>
+                        <div class="checkbox">
+                            <label>
+                                <h:selectBooleanCheckbox id="activeUserId" value="#{usersBean.searchActiveUsers}">
+                                    <p:ajax process="@this" update="procuremetListId,expeditingListId,searchTermId" listener="#{usersBean.doSearch}"/>
+                                </h:selectBooleanCheckbox> Show Active Users Only
+                            </label>
+                        </div>
+                    </div>
+                    <div class="clearfix"/>
+                    <br/>
+                    <div>
+                        <h:commandButton value="#{msgs['lbl.button.new.user']}" styleClass="btn btn-primary btn-sm"
+                                         action="edit?faces-redirect=true&amp;isCreateUser=true"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -33,6 +33,7 @@ public class MainMenuBean implements Serializable {
     }
 
     public void select(Integer menu){
+        log.info("menu number :" + menu);
         selected=MenuProcurementEnum.getEnum(menu);
     }
 

@@ -3,9 +3,9 @@ package ch.swissbytes.Service.business.permission;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
 
-import ch.swissbytes.domain.model.entities.RoleEntity;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.List;

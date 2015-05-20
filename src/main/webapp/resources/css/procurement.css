@@ -1,0 +1,76 @@
+
+/*Panel header*/
+.procurement-panel-header {
+    margin-top: -12px!important;
+    margin-left: 14px!important;
+    font-size: 11pt!important;
+    display: table!important;
+    background-color: #eeeeee!important;
+}
+
+/*Styles to input type search*/
+
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+/*Input text type search*/
+.input-search{
+    border-radius: 15px!important;
+}
+
+/*Panel tab*/
+
+.panel.panel-default.panel-tab{
+    background-color: #EEEEEE;
+    margin-top: 25px;
+}
+
+/*Panel tab users*/
+.panel-tab-users{
+    margin-top: 25px;
+}
+
+/*Labels*/
+.procurement-text-lbl-ltr {
+    text-align: left !important;
+    direction: ltr !important;
+    padding-left: 30px !important;
+}
+
+.link-home{
+    list-style-type:none;
+    padding-left: 0px;
+
+}
+.link-home li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.link-disabled{
+    pointer-events: none;
+    cursor: default;
+    color: gray;
+}

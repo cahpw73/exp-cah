@@ -1,8 +1,8 @@
 package ch.swissbytes.Service.business.permission;
 
 import ch.swissbytes.Service.business.user.UserDao;
-import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
 import ch.swissbytes.domain.model.entities.RoleEntity;
+import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
 
 import javax.inject.Inject;

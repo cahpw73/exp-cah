@@ -6,6 +6,7 @@ import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
 import org.picketlink.idm.IdentityManager;
 
 import javax.inject.Inject;
@@ -18,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by dahir on 01-07-14.
+ * Created by christian on 01-07-14.
  */
 
 
@@ -35,7 +36,12 @@ public class UserDao extends GenericDao implements Serializable {
 
 
     public void doSave(UserEntity user){
-        super.save(user);
+        super.saveAndFlush(user);
+    }
+
+    public void doUpdate(UserEntity detachedEntity){
+        UserEntity entity = (UserEntity) super.merge(detachedEntity);
+        super.saveAndFlush(entity);
     }
 
     public List<UserEntity> findUserByUserName(final String username){
@@ -125,14 +131,12 @@ public class UserDao extends GenericDao implements Serializable {
     }
 
     public UserEntity getUser(String username, String password) {
-
         String hql = "SELECT u FROM UserEntity u " +
                 "WHERE u.username = :username and u.password = :password and u.status.id=:enabled";
         TypedQuery<UserEntity> query = this.entityManager.createQuery(hql, UserEntity.class);
         query.setParameter("username", username);
         query.setParameter("enabled", StatusEnum.ENABLE.getId());
         query.setParameter("password", password);
-
         try {
             List<UserEntity> results = query.getResultList();
             UserEntity user = null;
@@ -143,7 +147,6 @@ public class UserDao extends GenericDao implements Serializable {
         } catch (NoResultException nre) {
             log.log(Level.SEVERE, nre.getMessage(), nre.getCause());
         }
-
         return null;
     }
 
@@ -181,5 +184,40 @@ public class UserDao extends GenericDao implements Serializable {
     }
 
 
+    public List<UserEntity> findAllUser() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT u ");
+        sb.append(" FROM UserEntity u ");
+        sb.append(" WHERE NOT u.status.id = :DELETED ");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("DELETED", StatusEnum.DELETED.getId());
+        return super.findBy(sb.toString(),parameters);
+    }
 
+    public List<UserEntity> findBySearchTerm(final String searchTerm, final StatusEnum userStatus) {
+        log.info("Search Term: " + searchTerm);
+        log.info("User status: " + (userStatus != null? userStatus.getLabel() : "null"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT u ");
+        sb.append(" FROM UserEntity u ");
+        sb.append(" WHERE NOT u.status.id = :DELETED ");
+
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("DELETED",StatusEnum.DELETED.getId());
+
+        if(userStatus != null && (userStatus.getId().intValue() == StatusEnum.ENABLE.getId().intValue())) {
+            sb.append(" AND u.status.id = :ENABLE ");
+            parameters.put("ENABLE", userStatus.getId());
+        }
+        if(StringUtils.isNotEmpty(searchTerm) && StringUtils.isNotBlank(searchTerm)) {
+            sb.append(" AND ( LOWER(u.username) like :USERNAME ");
+            sb.append(" OR LOWER(u.name) like :NAME ");
+            sb.append(" OR LOWER(u.email) like :EMAIL ) ");
+
+            parameters.put("USERNAME", "%" + searchTerm.toLowerCase().trim() + "%");
+            parameters.put("NAME", "%" + searchTerm.toLowerCase().trim() + "%");
+            parameters.put("EMAIL", "%" + searchTerm.toLowerCase().trim() + "%");
+        }
+        return super.findBy(sb.toString(),parameters);
+    }
 }

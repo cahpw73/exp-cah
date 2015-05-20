@@ -61,7 +61,7 @@ public class UserDeleteBean implements Serializable {
         password = userSelected.getPassword();
         userId = userSelected.getStatus().getId();
         statusEnum = StatusEnum.valueOf(userSelected.getStatus().getId());
-        roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
+        //roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
         log.info("UserSelected: " + userSelected.getFirstName());
     }
 
@@ -71,7 +71,7 @@ public class UserDeleteBean implements Serializable {
             RoleEntity roleEntity = enumService.getFindRoleByRoleEnumId(roleEnum.getId());
             StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(StatusEnum.DELETED.getId());
             if(roleEntity != null || statusEntity != null){
-                userSelected.setRoleEntity(roleEntity);
+                //userSelected.setRoleEntity(roleEntity);
                 userSelected.setStatus(statusEntity);
                 if(!password.equals(userSelected.getPassword())){
                     userSelected.setPassword(getEncodePass(userSelected.getPassword()));

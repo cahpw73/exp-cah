@@ -39,7 +39,7 @@ public class Authenticator extends BaseAuthenticator{
         if(userCtrl.canAccess(credentials.getUserId(),passwordHashed)){
             UserEntity userEntity = getUserEntity(credentials.getUserId(),passwordHashed);
             ArrayList<String> roleList = new ArrayList<String>();
-            roleList.add(userEntity.getRoleEntity().getName());
+            //roleList.add(userEntity.getRoleEntity().getName());
             setStatus(AuthenticationStatus.SUCCESS);
             User user = new User(credentials.getUserId());
             user.setFirstName(userEntity.getFirstName());

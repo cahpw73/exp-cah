@@ -9,6 +9,7 @@ import org.primefaces.model.UploadedFile;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -130,22 +131,19 @@ public class Util {
     }
 
     public void enterFile(UploadedFile uf,ManageFile entity){
+
         try{
-            entity.setFile(IOUtils.toByteArray(uf.getInputstream()));
+            InputStream is=uf.getInputstream();
+            entity.setFile(IOUtils.toByteArray(is));
             entity.setMimeType(uf.getContentType());
             entity.setFileName(uf.getFileName());
+            is.close();
         }catch (IOException ioe){
             log.log(Level.SEVERE,String.format("problems with file ["+uf.getFileName()+"]"));
             log.log(Level.SEVERE,ioe.getMessage());
         }catch (Exception ex){
             log.log(Level.SEVERE,String.format("problems with file ["+uf.getFileName()+"]"));
             log.log(Level.SEVERE,ex.getMessage());
-        }finally {
-            try{
-                uf.getInputstream().close();
-            }catch (IOException ioe){
-                log.log(Level.SEVERE,ioe.getMessage());
-            }
         }
     }
 

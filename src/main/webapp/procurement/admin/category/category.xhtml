@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Category</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-6">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['lbl.admin.category.title']}</div>
+                    <!-- Default panel contents -->
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText styleClass="form-control input-search" value="#{categoryBean.searchNameCategory}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" >
+                                        <p:ajax event="keyup" process="@this" update="categoryList"
+                                                listener="#{categoryBean.searchCategory}" async="false"/>
+                                    </h:inputText>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h:selectOneListbox id="categoryList" value="#{categoryBean.selectedCategory}" converter="categoryConverter"
+                                                    styleClass="form-control" style="max-height: 150px; height: 150px;" size="2">
+                                    <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
+                                                   itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
+                                </h:selectOneListbox>
+                                <p:message for="categoryList" id="msgCategoryList"/>
+                            </div>
+                            <div class="col-md-4">
+                                <h:outputLabel value="#{msgs['lbl.admin.category.new']}" styleClass="control-label"/>
+                                <br/>
+                                <h:inputText id="nameCategory" value="#{categoryBean.categoryName}"
+                                             styleClass="form-control" maxlength="50"/>
+                                <p:message for="nameCategory" id="msgnCategory"/>
+                                    <br/>
+                                <p:commandLink value="#{msgs['lbl.add']}" action="#{categoryBean.doSaveCategory}" ajax="false"
+                                               type="submit" styleClass="btn btn-primary btn-sm"/>
+                                &#160;
+                                <p:commandLink value="#{msgs['lbl.delete']}" action="#{categoryBean.doDeleteCategory}" ajax="false"
+                                               type="submit" styleClass="btn btn-primary btn-sm" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

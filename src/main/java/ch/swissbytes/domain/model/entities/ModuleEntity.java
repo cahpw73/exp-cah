@@ -1,6 +1,8 @@
 package ch.swissbytes.domain.model.entities;
 
 
+import ch.swissbytes.domain.types.ModuleSystemEnum;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class ModuleEntity implements java.io.Serializable {
 
     private Integer id;
     private String name;
+    private ModuleSystemEnum moduleSystem;
 
     public ModuleEntity() {
     }
@@ -38,6 +41,16 @@ public class ModuleEntity implements java.io.Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Column (name = "module_system",nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    public ModuleSystemEnum getModuleSystem() {
+        return moduleSystem;
+    }
+
+    public void setModuleSystem(ModuleSystemEnum moduleSystem) {
+        this.moduleSystem = moduleSystem;
     }
 }
 

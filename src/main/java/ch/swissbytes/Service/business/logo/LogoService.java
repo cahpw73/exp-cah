@@ -3,10 +3,13 @@ package ch.swissbytes.Service.business.logo;
 
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.domain.model.entities.LogoEntity;
+import ch.swissbytes.domain.types.StatusEnum;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,33 +23,26 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
     @Inject
     private LogoDao dao;
 
-    public LogoService(){
+    @PostConstruct
+    public void create(){
         super.initialize(dao);
     }
 
-   /* ;
-
     @Transactional
-    public void doSave(LogoEntity logo){
-        log.info("doSave");
-        dao.doSave(logo);
+    public void delete(LogoEntity logo){
+        logo.setStatus(StatusEnum.DELETED);
+        logo.setFile(null);
+        dao.update(logo);
     }
-
-    public void doUpdate(LogoEntity detachedEntity){
-        log.info("doUpdate");
-        dao.doUpdate(detachedEntity);
-    }*/
 
     public List<LogoEntity> getLogoList(){
-        log.info("getBrandList");
-        return dao.getBrandList();
+        log.info("getLogoList");
+        Date date =new Date();
+        List<LogoEntity> list=dao.getLogoList();
+        Date end=new Date();
+        log.info(String.format("logo list takes %s ms ",Long.toString(end.getTime()-date.getTime())));
+        return list;
     }
 
-    public List<LogoEntity> findByName(final String name){
-        log.info("findByName");
-        String brandName = name != null ? name : "";
-        //return dao.findByName(brandName);
-        return null;
-    }
 
 }

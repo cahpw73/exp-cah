@@ -22,6 +22,10 @@ public class EnumService implements Serializable {
         return entityEnumDao.getStatusEntityByEnumId(id).get(0);
     }
 
+    public StatusEntity getStatusEntityByStatusEnumId(final Integer id){
+        return entityEnumDao.getStatusEntityByEnumId(id).get(0);
+    }
+
     public StatusEntity getStatusEnumEnable() {
         return entityEnumDao.getStatusEntityEnable().get(0);
     }

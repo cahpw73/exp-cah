@@ -12,7 +12,11 @@ public enum RoleEnum implements Serializable {
     /**/SENIOR(10,"Senior"),
     /**/JUNIOR(11,"Junior"),
     /**/VISITOR(12,"Visitor"),
-    /**/ADMINISTRATOR(13,"Administrator");
+    /**/ADMINISTRATOR(13,"Administrator"),
+    /**/FULL_WITH_COMMIT(14,"Full with Commit"),
+    /**/FULL(15,"Full"),
+    /**/RESTRICTED(16,"Restricted"),
+    /**/READ_ONLY(17,"Read Only");
 
     private final String label;
     private final Integer id;
@@ -56,6 +60,6 @@ public enum RoleEnum implements Serializable {
                 }
             }
         }
-        throw new IllegalArgumentException("Client Role Id invalid : [" + id + "]");
+        throw new IllegalArgumentException("User Role Id invalid : [" + id + "]");
     }
 }
