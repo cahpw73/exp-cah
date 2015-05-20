@@ -94,12 +94,13 @@
                 <h:outputText value="#{util.calculateVariance(_scopeSupply)}" style="color:#{util.calculateVariance(_scopeSupply).startsWith('-')?'red':'black'}"/>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="95" >
-                <div>
+                <div class="icon-container-attachment">
                     <p:commandLink oncomplete="PF('attachmentScopeSupplyModal').show()"
+                                   styleClass="icon-attahcment"
                                    onclick="doChange();"
                                    action="#{purchaseOrderEdit.selectingForAttachment(_scopeSupply.id)}"
                                    update=":attachmentScopeSupplyId">
-                        <h:graphicImage styleClass="icon-attahcment" url="#{_scopeSupply.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}" width="20" height="20"/>
+                        <h:graphicImage  url="#{_scopeSupply.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}" width="20" height="20"/>
                     </p:commandLink>
                 </div>
             </p:column>
