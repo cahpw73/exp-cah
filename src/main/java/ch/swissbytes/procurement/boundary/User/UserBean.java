@@ -78,6 +78,8 @@ public class UserBean implements Serializable {
 
     private boolean moduleAccessExpediting;
 
+    private String confirmPass;
+
 
     @PostConstruct
     public void init (){
@@ -106,6 +108,7 @@ public class UserBean implements Serializable {
         }else{
             userEntity = userService.findUserById(userId);
             oldPassword = userEntity.getPassword();
+            confirmPass = userEntity.getPassword();
 
             moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
             userRoleList = userRoleService.findListByUserId(userId);
@@ -254,6 +257,12 @@ public class UserBean implements Serializable {
             Messages.addFlashError("roleExpediting", "Select one");
             result = false;
         }
+
+        if(!userEntity.getPassword().equals(confirmPass)){
+            Messages.addFlashError("pwd1", "Password should match with Confirm Password.");
+            result = false;
+        }
+
         return result;
     }
 
@@ -273,6 +282,11 @@ public class UserBean implements Serializable {
         }
         if(moduleAccessExpediting && roleExpediting == null){
             Messages.addFlashError("roleExpediting", "Select one");
+            result = false;
+        }
+
+        if(!userEntity.getPassword().equals(confirmPass)){
+            Messages.addFlashError("pwd1", "Password should match with Confirm Password.");
             result = false;
         }
         return result;
@@ -368,5 +382,13 @@ public class UserBean implements Serializable {
 
     public void setModuleAccessExpediting(boolean moduleAccessExpediting) {
         this.moduleAccessExpediting = moduleAccessExpediting;
+    }
+
+    public String getConfirmPass() {
+        return confirmPass;
+    }
+
+    public void setConfirmPass(String confirmPass) {
+        this.confirmPass = confirmPass;
     }
 }
