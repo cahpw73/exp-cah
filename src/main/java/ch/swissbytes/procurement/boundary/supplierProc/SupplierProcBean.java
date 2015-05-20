@@ -1,6 +1,8 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
+import ch.swissbytes.domain.model.entities.BrandEntity;
+import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -10,7 +12,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -26,6 +30,11 @@ public class SupplierProcBean implements Serializable {
 
     @Inject
     private SupplierProcService service;
+    @Inject
+    private CategoryBrandBean categoryBrandBean;
+
+    private List<CategoryEntity> categories;
+    private List<BrandEntity> brands;
 
     private String supplierId;
 
@@ -35,8 +44,9 @@ public class SupplierProcBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("SupplierProcBean bean created");
-
         supplier.setStatus(StatusEnum.ENABLE);
+        categories=new ArrayList<>();
+        brands=new ArrayList<>();
     }
     public void load(){
         //supplier=service.findById(//supplierId);
@@ -59,6 +69,8 @@ public class SupplierProcBean implements Serializable {
 
     public void putModeCategory(){
         addingCategory =true;
+        categoryBrandBean.addlistLoaded(categories,brands);
+
     }
 
     public boolean isSupplierMode(){
@@ -66,13 +78,32 @@ public class SupplierProcBean implements Serializable {
     }
     public void putModeBrand(){
         addingBrand =true;
+        categoryBrandBean.addlistLoaded(categories,brands);
     }
     public void putModeSupplier(){
         addingCategory =false;
         addingBrand =false;
     }
 
+    public void addCategoryBrand(){
+        if(addingCategory){
+            categories.clear();
+            categories.addAll(categoryBrandBean.getCategories().getTarget());
+        }
+        if(addingBrand){
+            brands.clear();
+            brands.addAll(categoryBrandBean.getBrands().getTarget());
+        }
+        addingCategory=addingBrand=false;
+    }
 
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public List<BrandEntity> getBrands() {
+        return brands;
+    }
 
     @PreDestroy
     public void destroy(){

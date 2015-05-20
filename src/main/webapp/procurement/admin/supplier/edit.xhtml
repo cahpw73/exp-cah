@@ -37,7 +37,12 @@
                                          styleClass="btn btn-primary btn-sm"/>
                         <h:commandButton value="#{msgs['lbl.save']}"
                                          rendered="#{not supplierProcBean.supplierMode}"
-                                         styleClass="btn btn-primary btn-sm"/>
+                                         styleClass="btn btn-primary btn-sm">
+                            <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"
+                                    async="false"
+                                    process="@form"
+                                    update="idBtnSave idBtnCancel bodySupplier"/>
+                        </h:commandButton>
                     </h:panelGroup>
                 </div>
                 <br/>
