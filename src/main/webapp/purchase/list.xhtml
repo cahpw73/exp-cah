@@ -81,11 +81,12 @@
         <br/>
         <h:form id="purchaseListForm" styleClass="fq-form-table">
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
+
                          styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">
-                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
+                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100" >
                     #{_purchase.project}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="120">
@@ -100,11 +101,15 @@
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.supplier}">
+                <p:column headerText="#{msgs['po.lbl.po.status']}"  width="100">
+                    <div>
                     #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
+                    </div>
                 </p:column>
-                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="220">
+                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="150">
+                    <div>
                     #{_purchase.responsibleExpediting}
+                    </div>
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="209">
                     <div class="center-button">

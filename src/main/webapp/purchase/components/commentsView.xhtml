@@ -11,9 +11,13 @@
                   sortFunction="#{sortBean.sortDate}">
             #{util.toLocalDateGMT(_comment.lastUpdate)}
         </p:column>
-        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="300" sortBy="#{_comment.name}"
+        <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="200" sortBy="#{_comment.name}"
                   sortFunction="#{sortBean.sortStrings}">
             #{_comment.name}
+        </p:column>
+        <p:column headerText="#{msgs['po.attach.tbl.column.to']}" width="200" sortBy="#{_comment.to}"
+                  sortFunction="#{sortBean.sortStrings}">
+            #{_comment.to}
         </p:column>
         <p:column headerText="#{msgs['po.attach.tbl.column.reason']}" width="350" sortBy="#{_comment.subject}"
                   sortFunction="#{sortBean.sortStrings}">

@@ -208,14 +208,18 @@
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.supplier}">
+                <p:column headerText="#{msgs['po.lbl.po.status']}"  width="100" >
+                    <div>
                     #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
+                    </div>
                 </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
-                          sortBy="#{_purchase.responsibleExpediting}" width="220">
+                          sortBy="#{_purchase.responsibleExpediting}" width="150">
+                    <div>
                     #{_purchase.responsibleExpediting}
+                    </div>
                 </p:column>
-                <p:column headerText="#{msgs['lbl.action']}" width="223">
+                <p:column headerText="#{msgs['lbl.action']}" width="223" styleClass="pull-left">
                     <div class="center-button">
                         <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                                        action="#{reportBean.addPurchaseOrder(_purchase.poId)}"
