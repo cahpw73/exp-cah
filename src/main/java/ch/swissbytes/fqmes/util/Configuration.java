@@ -149,4 +149,8 @@ public class Configuration implements Serializable {
         return variances;
     }
 
+    public String getTitle(){
+        return System.getProperties().getProperty("fqm-title-page")==null?bundle.getString("main.title"):System.getProperties().getProperty("fqm-title-page");
+    }
+
 }
