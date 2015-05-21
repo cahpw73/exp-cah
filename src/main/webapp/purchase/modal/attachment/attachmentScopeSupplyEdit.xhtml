@@ -30,7 +30,7 @@
             <h:outputLabel class="col-sm-3 control-label" value="#{msgs['lbl.date']}"/>
             <div class="col-sm-9">
                 <p:calendar mask="#{configuration.mask}" styleClass="col-sm-7"
-                            style="padding-left: 0px; min-width: 95px; padding-right: 0px;"
+                            style="padding-left: 0px; min-width: 95px; padding-right: 0px;width: 169px;"
                             navigator="true"
                             value="#{purchaseOrderEdit.currentScopeSupplyForAttachment().date}"
                             pattern="#{configuration.formatDate}"
@@ -47,7 +47,7 @@
             <h:outputLabel class="col-sm-3 control-label"
                            value="#{msgs['lbl.comment']}"/>
             <div class="col-sm-9">
-                <p:inputTextarea style="max-height: 29px;"
+                <p:inputTextarea style="max-height: 29px;max-width: 169px;"
                                  maxlength="950" type="text"
                                  value="#{purchaseOrderEdit.currentScopeSupplyForAttachment().descriptionAttachment}"
                                  class="form-control">
