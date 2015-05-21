@@ -18,60 +18,63 @@
             </div>
             <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.filter.title']}</h4>
             <br/>
+
             <div class="col-md-4">
-                    <div class="form-group">
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
-                                     value="#{ purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"/>
-                    </div>
+                <div class="form-group">
+                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
+                                 value="#{ purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"/>
+                </div>
             </div>
             <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">#{msgs['purchase.order.filter.lbl.po']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.po}" class="form-control"
-                                     type='text'/>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.po']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.po}" class="form-control"
+                                 type='text'/>
+                </div>
             </div>
             <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">#{msgs['purchase.order.filter.lbl.variation']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.variation}" class="form-control"
-                                     type='text'/>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.variation']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.variation}" class="form-control"
+                                 type='text'/>
+                </div>
             </div>
             <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.poTitle}" class="form-control"
-                                     type='text'/>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.poTitle}" class="form-control"
+                                 type='text'/>
+                </div>
             </div>
             <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">#{msgs['purchase.order.filter.lbl.supplier']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.supplier}" class="form-control"
-                                     type="text"/>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.supplier']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.supplier}" class="form-control"
+                                 type="text"/>
+                </div>
             </div>
 
             <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">#{msgs['po.supply.scope.column.r.expediting']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
-                                     value="#{purchaseOrderListBean.searchPurchase.responsibleExpediting}" class="form-control"
-                                     type="text"/>
-                    </div>
+                <div class="form-group">
+                    <label class="control-label">#{msgs['po.supply.scope.column.r.expediting']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.responsibleExpediting}"
+                                 class="form-control"
+                                 type="text"/>
+                </div>
             </div>
             <div class="pull-right ">
                 <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
                                  type="submit" styleClass="btn btn-primary btn-sm" style="margin-top: 25px; "/>
                 &#160;
                 <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{purchaseOrderListBean.doSearch}"
-                                 type="submit" styleClass="btn btn-primary btn-sm" style="margin-top: 25px; margin-right: 15px;"/>
+                                 type="submit" styleClass="btn btn-primary btn-sm"
+                                 style="margin-top: 25px; margin-right: 15px;"/>
             </div>
             <div class="clearfix"/>
             <br/>
@@ -86,7 +89,7 @@
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">
-                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100" >
+                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
                     #{_purchase.project}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="120">
@@ -101,28 +104,33 @@
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.status']}"  width="100">
-                    <div>
-                    #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
+                <p:column headerText="#{msgs['po.lbl.po.status']}" width="100"
+                          styleClass="column-list-header-po">
+                    <div class="column-list-po">
+                        #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
                     </div>
                 </p:column>
-                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}" sortBy="#{_purchase.responsibleExpediting}" width="150">
-                    <div>
-                    #{_purchase.responsibleExpediting}
+                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
+                          sortBy="#{_purchase.responsibleExpediting}" width="150" styleClass="column-list-header-po">
+                    <div class="column-list-po">
+                        #{_purchase.responsibleExpediting}
                     </div>
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="209">
                     <div class="center-button">
-                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" rendered="#{permissionBean.hasPermission(102)}"
+                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                rendered="#{permissionBean.hasPermission(102)}"
                                 value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
                             <f:param name="poId" value="#{_purchase.poId}"/>
                         </h:link>
                         &#160;
-                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.view']}" rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
+                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.view']}"
+                                rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
                             <f:param name="poId" value="#{_purchase.poId}"/>
                         </h:link>
                         &#160;
-                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.delete']}">
+                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                       value="#{msgs['lbl.delete']}">
                             <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
                                     oncomplete="PF('deleteDlg').show();"
                                     update=":purchaseListForm:deleteDlgId"/>
@@ -133,6 +141,7 @@
 
             <div class="clearfix"/>
             <br/>
+
             <div>
                 <div class="pull-right">
                     <h:commandButton rendered="#{permissionBean.hasPermission(101)}" value="Create Purchase Order"
@@ -143,7 +152,7 @@
             <div class="clearfix"/>
             <br/>
 
-            <p:confirmDialog id="deleteDlgId" header="Delete Purchase Order" widgetVar="deleteDlg" >
+            <p:confirmDialog id="deleteDlgId" header="Delete Purchase Order" widgetVar="deleteDlg">
                 <f:facet name="message">
                     Are you sure to delete Purchase Order?
                     <div class="form-group">
@@ -154,20 +163,21 @@
                     <div class="form-group">
                         <label for="poDlgId">PO Reference</label>
                         &#160;
-                        <h:outputText id="poDlgId"  value="#{purchaseOrderListBean.purchaseOrderSelected.po}"/>
+                        <h:outputText id="poDlgId" value="#{purchaseOrderListBean.purchaseOrderSelected.po}"/>
                     </div>
                 </f:facet>
+
                 <div class="pull-right">
-                    <h:commandButton  value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm"
-                                      actionListener="#{purchaseOrderListBean.doDeletePurchaseOrder}">
+                    <h:commandButton value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm"
+                                     actionListener="#{purchaseOrderListBean.doDeletePurchaseOrder}">
                         <p:ajax onsuccess="PF('deleteDlg').hide();"
                                 process="deleteDlgId"
                                 update=":purchaseListForm"/>
                     </h:commandButton>
-                        &#160;
+                    &#160;
                     <button class="btn btn-primary btn-sm" type="button"
                             onclick="PF('deleteDlg').hide();">
-                            #{msgs['lbl.cancel']}</button>
+                        #{msgs['lbl.cancel']}</button>
                 </div>
             </p:confirmDialog>
         </h:form>

@@ -5,264 +5,268 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/layout/template.xhtml">
-    <ui:define name="title">Home</ui:define>
-    <f:metadata>
-        <f:viewAction action="#{identity.isLoggedIn()}"/>
-        <f:viewAction action="#{permissionBean.canAccess(200)}"/>
+<ui:define name="title">Home</ui:define>
+<f:metadata>
+    <f:viewAction action="#{identity.isLoggedIn()}"/>
+    <f:viewAction action="#{permissionBean.canAccess(200)}"/>
 
-    </f:metadata>
+</f:metadata>
 
 
-    <ui:define name="body" >
-    <h:outputScript name="js/multipleSelection.js"/>
-        <h:form id="filterReport" prependId="false">
-            <div class="title-page">
-                <h4 class="page-header">#{msgs['report.purchase.order.filter.title.page']}</h4>
-            </div>
-            <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.filter.title']}</h4>
-            <br/>
+<ui:define name="body">
+<h:outputScript name="js/multipleSelection.js"/>
+<h:form id="filterReport" prependId="false">
+    <div class="title-page">
+        <h4 class="page-header">#{msgs['report.purchase.order.filter.title.page']}</h4>
+    </div>
+    <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.filter.title']}</h4>
+    <br/>
 
-            <div class="col-md-4">
-                <div class='form-group'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
-                                 value="#{reportListBean.searchPurchase.project}" styleClass="form-control">
-                    </h:inputText>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
-                                 value="#{reportListBean.searchPurchase.po}" class='form-control'
-                                 type='text'/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
-                                 value="#{reportListBean.searchPurchase.variation}" class='form-control'
-                                 type='text'/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                 value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
-                                 type='text'/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
-                                 value="#{reportListBean.searchPurchase.supplier}" class='form-control'
-                                 type='text'/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['po.supply.scope.column.r.expediting']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
-                                 value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
-                                 size='4' type='text'/>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.inco.term']}</label>
-                    <!--<h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.inco.term']}"
-                                 value="# {reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>-->
-                    <p:selectOneMenu id="incoTermSelectOne" value="#{reportListBean.searchPurchase.incoTerm}"
-                                     effect="fold" editable="true" styleClass="menu-ddp"
-                                     maxlength="50"  style="width: 40%">
-                        <f:selectItems value="#{incoTerms}"/>
-                    </p:selectOneMenu>
-                </div>
-            </div>
+    <div class="col-md-4">
+        <div class='form-group'>
+            <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
+            <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
+                         value="#{reportListBean.searchPurchase.project}" styleClass="form-control">
+            </h:inputText>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
+            <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
+                         value="#{reportListBean.searchPurchase.po}" class='form-control'
+                         type='text'/>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
+            <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
+                         value="#{reportListBean.searchPurchase.variation}" class='form-control'
+                         type='text'/>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+            <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                         value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                         type='text'/>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
+            <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
+                         value="#{reportListBean.searchPurchase.supplier}" class='form-control'
+                         type='text'/>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label'>#{msgs['po.supply.scope.column.r.expediting']}</label>
+            <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
+                         value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
+                         size='4' type='text'/>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.inco.term']}</label>
+            <!--<h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.inco.term']}"
+                         value="# {reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>-->
+            <p:selectOneMenu id="incoTermSelectOne" value="#{reportListBean.searchPurchase.incoTerm}"
+                             effect="fold" editable="true" styleClass="menu-ddp"
+                             maxlength="50" style="width: 40%">
+                <f:selectItems value="#{incoTerms}"/>
+            </p:selectOneMenu>
+        </div>
+    </div>
 
-            <div class="col-md-4">
+    <div class="col-md-4">
+        <div class="col-md-6" style="padding-left: 0px;">
+            <div class='form-group card'>
+                <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
+                <h:inputHidden id="poStatusesHidenId" value="#{reportListBean.searchPurchase.statuses}"/>
+                <select id="poStatuses" multiple="multiple" class="algo">
+                    <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                        <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                    </ui:repeat>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class='form-group card'>
+                <label class='control-label'>#{msgs['po.supply.scope.column.due']}</label>
+                <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}"
+                                 effect="fold" styleClass="menu-ddp">
+                    <f:selectItem itemLabel="" itemValue=""/>
+                    <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
+                </p:selectOneMenu>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="col-md-6" style="padding-left: 0px;">
+            <div class='form-group card'>
+                <label class='control-label'>#{msgs['po.supply.scope.supply.lead.time']}</label>
+                <p:selectOneMenu style="width: 80%"
+                                 effect="fold" styleClass="menu-ddp"
+                                 value="#{reportListBean.searchPurchase.leadTime}">
+                    <f:selectItem itemLabel="" itemValue=""/>
+                    <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
+                </p:selectOneMenu>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class='form-group card'>
+                <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
+                <p:selectOneMenu style="width: 80%"
+                                 effect="fold" styleClass="menu-ddp"
+                                 value="#{reportListBean.searchPurchase.forecastDueDate}">
+                    <f:selectItem itemLabel="" itemValue=""/>
+                    <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
+                </p:selectOneMenu>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.variance']}</label>
+            <p:selectOneMenu style="width: 40%"
+                             effect="fold" styleClass="menu-ddp"
+                             value="#{reportListBean.searchPurchase.variance}">
+                <f:selectItems value="#{configuration.getVarianceOptions()}"/>
+            </p:selectOneMenu>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class='form-group card'>
+            <label class='control-label'>#{msgs['po.supply.scope.column.forecast.delivery.date']}</label>
+
+            <div>
                 <div class="col-md-6" style="padding-left: 0px;">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
-                        <h:inputHidden id="poStatusesHidenId"  value="#{reportListBean.searchPurchase.statuses}"/>
-                        <select id="poStatuses" multiple="multiple" class="algo">
-                            <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                                    <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
-                            </ui:repeat>
-                        </select>
+                    <div>
+                        <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
+
+                        <p:calendar value="#{reportListBean.searchPurchase.deliveryDateStart}"
+                                    navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                    styleClass="calendar-filter"
+                                    pattern="#{configuration.formatDate}"
+                                    converter="#{dateConverter}"
+                                    timeZone="#{configuration.timeZone2}">
+                        </p:calendar>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.due']}</label>
-                        <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}"
-                                         effect="fold" styleClass="menu-ddp">
-                            <f:selectItem itemLabel="" itemValue="" />
-                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-md-6" style="padding-left: 0px;">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.supply.lead.time']}</label>
-                        <p:selectOneMenu  style="width: 80%"
-                                          effect="fold" styleClass="menu-ddp"
-                                          value="#{reportListBean.searchPurchase.leadTime}">
-                            <f:selectItem itemLabel="" itemValue="" />
-                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-                        <p:selectOneMenu style="width: 80%"
-                                         effect="fold" styleClass="menu-ddp"
-                                         value="#{reportListBean.searchPurchase.forecastDueDate}">
-                            <f:selectItem itemLabel="" itemValue="" />
-                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                    <div class='form-group card'>
-                        <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.variance']}</label>
-                        <p:selectOneMenu style="width: 40%"
-                                         effect="fold"  styleClass="menu-ddp"
-                                         value="#{reportListBean.searchPurchase.variance}">
-                            <f:selectItems value="#{configuration.getVarianceOptions()}"/>
-                        </p:selectOneMenu>
-                    </div>
-
-            </div>
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['po.supply.scope.column.forecast.delivery.date']}</label>
                     <div>
-                        <div class="col-md-6" style="padding-left: 0px;">
-                            <div>
-                                <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
-
-                                <p:calendar value="#{reportListBean.searchPurchase.deliveryDateStart}"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            styleClass="calendar-filter"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
-                                <p:calendar value="#{reportListBean.searchPurchase.deliveryDateEnd}"
-                                            styleClass="calendar-filter"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
-                            </div>
-                        </div>
+                        <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                        <p:calendar value="#{reportListBean.searchPurchase.deliveryDateEnd}"
+                                    styleClass="calendar-filter"
+                                    navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                    pattern="#{configuration.formatDate}"
+                                    converter="#{dateConverter}"
+                                    timeZone="#{configuration.timeZone2}">
+                        </p:calendar>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="clearfix"/>
-            <div class="pull-right">
-                <h:commandButton value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean}" class="btn btn-primary btn-sm"></h:commandButton>
-                &#160;
-                <h:commandButton value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}" class="btn btn-primary btn-sm"></h:commandButton>
+    <div class="clearfix"/>
+    <div class="pull-right">
+        <h:commandButton value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean}"
+                         class="btn btn-primary btn-sm"></h:commandButton>
+        &#160;
+        <h:commandButton value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
+                         class="btn btn-primary btn-sm"></h:commandButton>
+    </div>
+    <div class="clearfix"></div>
+    <br/>
+    <br/>
+    <p:remoteCommand name="onload" oncomplete="initializeMultiselection('#{reportListBean.searchPurchase.statuses} ');"
+                     autoRun="true"></p:remoteCommand>
+</h:form>
+<h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
+<br/>
+<h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
+    <p:dataTable id="resultList" value="#{reportListBean.list}" var="_purchase"
+                 styleClass="data-table-po-sc"
+                 paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                 rowsPerPageTemplate="#{configuration.getPagesSize(reportListBean.list.total)}"
+                 paginatorPosition="bottom">
+        <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
+            #{_purchase.project}
+        </p:column>
+        <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="120">
+            #{_purchase.po}
+        </p:column>
+        <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
+            #{_purchase.variation}
+        </p:column>
+        <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
+            #{_purchase.poTitle}
+        </p:column>
+        <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
+            #{_purchase.supplier}
+        </p:column>
+        <p:column headerText="#{msgs['po.lbl.po.status']}" styleClass="column-list-header-po"
+                  width="100">
+            <div class="column-list-po">
+                #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
             </div>
-            <div class="clearfix"></div>
-            <br/>
-            <br/>
-            <p:remoteCommand  name="onload" oncomplete="initializeMultiselection('#{reportListBean.searchPurchase.statuses} ');" autoRun="true"></p:remoteCommand>
-        </h:form>
-        <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
-        <br/>
-        <h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
-            <p:dataTable id="resultList" value="#{reportListBean.list}" var="_purchase"
-                         styleClass="data-table-po-sc"
-                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
-                         rowsPerPageTemplate="#{configuration.getPagesSize(reportListBean.list.total)}" paginatorPosition="bottom">
-                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
-                    #{_purchase.project}
-                </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="120">
-                    #{_purchase.po}
-                </p:column>
-                <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
-                    #{_purchase.variation}
-                </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
-                    #{_purchase.poTitle}
-                </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
-                    #{_purchase.supplier}
-                </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.status']}"  width="100" >
-                    <div>
-                    #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
-                    </div>
-                </p:column>
-                <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
-                          sortBy="#{_purchase.responsibleExpediting}" width="150">
-                    <div>
-                    #{_purchase.responsibleExpediting}
-                    </div>
-                </p:column>
-                <p:column headerText="#{msgs['lbl.action']}" width="223" styleClass="pull-left">
-                    <div class="center-button">
-                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
-                                       action="#{reportBean.addPurchaseOrder(_purchase.poId)}"
-
-                                       value="#{msgs['report.purchase.order.link.add']}">
-                            <f:ajax execute="@this" render="listSelected"/>
-                        </h:commandLink>
-                    </div>
-                </p:column>
-            </p:dataTable>
-            <br/>
-            <p:dataTable id="listSelected"
-                         styleClass="data-table-po-sc"
-                         value="#{reportBean.selected}" var="_po">
-                <p:column headerText="#{msgs['po.lbl.project']}">
-                    #{_po.project}
-                </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}">
-                    #{_po.po}
-                </p:column>
-            </p:dataTable>
-            <br/>
-
-            <div class="pull-right">
-                <h:commandLink styleClass="btn btn-primary btn-sm"
-                               value="#{msgs['report.purchase.order.btn.get.scope.supply.report']}"
-                               action="#{reportBean.printReportReceivableManifest()}"
-                               target="_blank"/>
-                &#160;
-                <h:commandLink styleClass="btn btn-primary btn-sm"
-                               value="#{msgs['report.purchase.order.btn.get.job.summary.report']}"
-                               action="#{reportBean.printReportJobSummary()}"
-                               target="_blank"/>
-                &#160;
-                <h:commandLink styleClass="btn btn-primary btn-sm"
-                               value="#{msgs['report.purchase.order.btn.clear.selection.for.report']}">
-                    <p:ajax update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
-                </h:commandLink>
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
+                  sortBy="#{_purchase.responsibleExpediting}" styleClass="column-list-header-po" width="150">
+            <div class="column-list-po">
+                #{_purchase.responsibleExpediting}
             </div>
+        </p:column>
+        <p:column headerText="#{msgs['lbl.action']}" width="100" styleClass="column-list-po">
+            <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                           action="#{reportBean.addPurchaseOrder(_purchase.poId)}"
+                           value="#{msgs['report.purchase.order.link.add']}">
+                <f:ajax execute="@this" render="listSelected"/>
+            </h:commandLink>
 
-        </h:form>
+        </p:column>
+    </p:dataTable>
+    <br/>
+    <p:dataTable id="listSelected"
+                 styleClass="data-table-po-sc"
+                 value="#{reportBean.selected}" var="_po">
+        <p:column headerText="#{msgs['po.lbl.project']}">
+            #{_po.project}
+        </p:column>
+        <p:column headerText="#{msgs['po.lbl.po']}">
+            #{_po.po}
+        </p:column>
+    </p:dataTable>
+    <br/>
 
-        <div class="clearfix"></div>
-        <br/>
-    </ui:define>
+    <div class="pull-right">
+        <h:commandLink styleClass="btn btn-primary btn-sm"
+                       value="#{msgs['report.purchase.order.btn.get.scope.supply.report']}"
+                       action="#{reportBean.printReportReceivableManifest()}"
+                       target="_blank"/>
+        &#160;
+        <h:commandLink styleClass="btn btn-primary btn-sm"
+                       value="#{msgs['report.purchase.order.btn.get.job.summary.report']}"
+                       action="#{reportBean.printReportJobSummary()}"
+                       target="_blank"/>
+        &#160;
+        <h:commandLink styleClass="btn btn-primary btn-sm"
+                       value="#{msgs['report.purchase.order.btn.clear.selection.for.report']}">
+            <p:ajax update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
+        </h:commandLink>
+    </div>
+
+</h:form>
+
+<div class="clearfix"></div>
+<br/>
+</ui:define>
 </ui:composition>

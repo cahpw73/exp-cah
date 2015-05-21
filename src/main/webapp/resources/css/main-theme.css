@@ -484,8 +484,22 @@ label.checkbox{
 }
 
 .icon-container-attachment{
-    text-align: center;
+    text-align: right!important;
 }
+
+.column-list-po{
+    margin-right: 40px!important;
+}
+
+
+.column-list-po2{
+    margin-right: 190px!important;
+}
+
+.column-list-header-po {
+    text-align: right!important;
+}
+
 .icon-attachment{
     display: inline-block;
     padding: 0px!important;
