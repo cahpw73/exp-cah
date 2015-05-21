@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Named
 @Entity
-@Table(name = "supplier_category")
+@Table(name = "supplier_brand")
 public class SupplierBrand implements Serializable{
 
     private Long id;

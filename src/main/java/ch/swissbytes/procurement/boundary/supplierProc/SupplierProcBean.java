@@ -45,12 +45,21 @@ public class SupplierProcBean implements Serializable {
     public void create(){
         log.info("SupplierProcBean bean created");
         supplier.setStatus(StatusEnum.ENABLE);
-        categories=new ArrayList<>();
-        brands=new ArrayList<>();
+
     }
     public void load(){
-        //supplier=service.findById(//supplierId);
+        Long id=null;
+        if(supplierId!=null){
+            try{
+                id=Long.parseLong(supplierId);
+            }catch (NumberFormatException nfe){
+            }
+        }
+        categories=service.getCategories(id);
+        brands=service.getBrands(id);
     }
+
+
 
     public String doSave(){
         supplier.setLastUpdate(new Date());
@@ -121,5 +130,13 @@ public class SupplierProcBean implements Serializable {
 
     public boolean isAddingBrand() {
         return addingBrand;
+    }
+
+    public String getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(String supplierId) {
+        this.supplierId = supplierId;
     }
 }

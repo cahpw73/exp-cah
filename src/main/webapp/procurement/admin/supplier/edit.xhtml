@@ -6,8 +6,10 @@
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Supplier</ui:define>
     <f:metadata>
+        <f:viewParam name="supplierId" value="#{supplierProcBean.supplierId}"/>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
+        <f:viewAction action="#{supplierProcBean.load}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
