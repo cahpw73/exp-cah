@@ -5,37 +5,54 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
-    <ui:define name="title">Inicio</ui:define>
+    <ui:define name="title">Admin - Brand</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form>
+        <h:form prependId="false">
             <div class="col-md-6">
-                <div class="panel panel-default">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['lbl.admin.brand.title']}</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h:inputText styleClass="form-control"></h:inputText>
+                            <div class="col-md-4">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText styleClass="form-control input-search" value="#{brandBean.searchNameBrand}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" >
+                                        <p:ajax event="keyup" process="@this" update="brandList"
+                                                listener="#{brandBean.searchBrand}" async="false"/>
+                                    </h:inputText>
+                                </div>
+
                             </div>
 
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-6">
-                                <h:selectOneListbox value="#{brandBean.selectedBrand}" converter="brandConverter">
-                                    <f:selectItems value="#{brandBean.brandList}" var="_brand"
+                            <div class="col-md-5">
+                                <h:selectOneListbox id="brandList" value="#{brandBean.selectedBrand}" converter="brandConverter"
+                                                    styleClass="form-control" style="max-height: 150px; height: 150px;" size="2">
+                                    <f:selectItems value="#{brandBean.brandList}" var="_brand" noSelectionValue="true"
                                                    itemLabel="#{_brand.name}" itemValue="#{_brand}"/>
                                 </h:selectOneListbox>
+                                <p:message for="brandList" id="msgBrandList"/>
                             </div>
-                            <div class="col-md-6">
-                                New Brand
+                            <div class="col-md-4">
+                                <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
                                 <br/>
-                                <h:inputText value="#{brandBean.brandName}"></h:inputText>
+                                <h:inputText id="nameBrand" value="#{brandBean.brandName}"
+                                             styleClass="form-control" maxlength="50"/>
+                                <p:message for="nameBrand" id="msgnBrand"/>
                                     <br/>
-                                <p:commandLink value="Add" action="#{brandBean.doSaveBrand}" ajax="false" type="submit"/>
-                                <p:commandLink value="Delete"/>
+                                <h:commandButton value="#{msgs['lbl.add']}" action="#{brandBean.doSaveBrand}"
+                                               type="submit" styleClass="btn btn-primary btn-sm"/>
+                                &#160;
+                                <h:commandButton value="#{msgs['lbl.delete']}" action="#{brandBean.doDeleteBrand}"
+                                               type="submit" styleClass="btn btn-primary btn-sm" />
 
                             </div>
                         </div>

@@ -86,6 +86,43 @@ public class VerificationTokenBean implements Serializable {
         return "failed";
     }
 
+    public String sendLostPasswordToken(final String email)   {
+        log.info("Sending token to email... " + email);
+        if(isValidEmail(email)){
+            log.info("user is not null");
+            VerificationTokenEntity tokenEntity = verificationTokenService.getVerificationTokenGenerated(userEntity);
+            log.info("token is not null");
+            if (tokenEntity != null) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(getResetPasswordURL()).append("token=").append(tokenEntity.getToken());
+                ;
+                String link = String.format("<a href=%s>%s</a>", builder.toString(),configuration.getMessage("reset.link"));
+                try {
+                    MimeMultipart multipart = createMimeMultipart(link);
+                    sendMail(userEntity.getEmail(),multipart);
+                    Messages.addFlashGlobalInfo("Email was sent successfully ");
+                    log.info("Token was generated and sent to email");
+                } catch (MessagingException e) {
+                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
+                    log.log(Level.SEVERE,"Messaging has error" + e.getMessage());
+                    e.printStackTrace();
+                } catch (SocketConnectException e) {
+                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
+                    e.printStackTrace();
+                    log.log(Level.SEVERE,"Messaging has error" + e.getCause());
+                } catch (ConnectException e) {
+                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
+                    log.log(Level.SEVERE,"Messaging has error" + e.getCause());
+                    e.printStackTrace();
+                }
+                return "login?faces-redirect=true";
+            }
+        }
+        return "failed";
+    }
+
+
+
     private boolean isValidEmail(String mail) {
         log.info("boolean validateEmail(String mail["+mail+"])");
         boolean result = true;

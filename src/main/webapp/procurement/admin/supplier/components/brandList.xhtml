@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
+                addLabel="Add to Supplier"
+                removeLabel="Remove from Supplier"
+                converter="brandConverter"
+                itemLabel="#{_brand.name}" itemValue="#{_brand}">
+
+        <f:facet name="sourceCaption">
+           Global Brands
+            <h:outputLabel/>
+        </f:facet>
+        <f:facet name="targetCaption">
+            Supplier Brands
+        </f:facet>
+
+    </p:pickList>
+</ui:composition>

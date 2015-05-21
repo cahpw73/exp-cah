@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="categoryList">Categories</label>
+
+            <div>
+                <div class="col-sm-10" style="padding-left: 0px;">
+                    <h:selectOneListbox id="categoryList"
+                                        converter="categoryConverter"
+                                        styleClass="form-control" style="max-height: 200px; height: 200px;" size="2">
+                        <f:selectItems value="#{supplierProcBean.categories}" var="_ca"
+                                       itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
+                    </h:selectOneListbox>
+                </div>
+                <h:commandButton value="#{msgs['lbl.plus']}" styleClass="col-sm-2">
+                    <p:ajax update="bodySupplier idBtnSave idBtnCancel" process="@this"
+                            async="false"
+                            immediate="true" listener="#{supplierProcBean.putModeCategory}"/>
+                </h:commandButton>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="brandList">Brands</label>
+
+            <div>
+                <div class="col-sm-10" style="padding-left: 0px;">
+                    <h:selectOneListbox id="brandList"
+                                        converter="brandConverter"
+                                        styleClass="form-control " style="max-height: 200px; height: 200px;" size="2">
+                        <f:selectItems value="#{supplierProcBean.brands}" var="_br"
+                                       itemLabel="#{_br.name}" itemValue="#{_br}"/>
+                    </h:selectOneListbox>
+                </div>
+                <h:commandButton value="#{msgs['lbl.plus']}" styleClass="col-sm-2"
+                                 action="#{supplierProcBean.putModeBrand}">
+                    <p:ajax update="bodySupplier idBtnSave idBtnCancel"
+                            async="false"
+                            process="@this" immediate="true"/>
+                </h:commandButton>
+            </div>
+        </div>
+    </div>
+</ui:composition>

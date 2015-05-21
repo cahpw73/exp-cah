@@ -1,0 +1,163 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Users</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+        <f:viewParam name="isCreateUser" value="#{userBean.createUser}"/>
+        <f:viewParam name="userId" value="#{userBean.userId}"/>
+        <f:viewAction action="#{userBean.loadActionCrud}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form id="editUserForm" prependId="false" class="form-horizontal">
+            <div class="col-md-6">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['lbl.panel.user.title']}</div>
+                    <!-- Default panel contents -->
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <h:selectBooleanCheckbox value="#{userBean.userActive}"/> #{msgs['lbl.crud.user.checkbox.active']}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="username" value="#{msgs['lbl.crud.user.username']} *"/>
+                                <div class="col-sm-5">
+                                    <h:inputText id="username" value="#{userBean.userEntity.username}"
+                                                 styleClass="form-control" required="true"
+                                                 requiredMessage="#{msgs['user.lbl.user.name.required']}"/>
+                                    <p:message for="username" id="msgInputUsername"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.name']} *"/>
+                                <div class="col-sm-5">
+                                    <h:inputText id="name" value="#{userBean.userEntity.name}"
+                                                 styleClass="form-control" required="true"
+                                                 requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
+                                    <p:message for="name" id="msgname"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="email" value="#{msgs['lbl.crud.user.email']} *"/>
+                                <div class="col-sm-5">
+                                    <h:inputText id="email" value="#{userBean.userEntity.email}"
+                                                 styleClass="form-control" required="true"
+                                                 requiredMessage="#{msgs['user.lbl.email.required']}"/>
+                                    <p:message for="email" id="msgemail"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p:outputLabel class="col-sm-3 control-label procurement-text-lbl-ltr" for="pwd1" value="#{msgs['user.create.lbl.pwd.hash']}" />
+                                <div class="col-sm-5">
+                                    <p:password id="pwd1" value="#{userBean.userEntity.password}"  required="true"
+                                                autocomplete="off" redisplay="true"
+                                                jsf:placeholder="#{msgs['user.create.lbl.pwd.hash']}"
+                                                requiredMessage="#{msgs['user.lbl.password.required']}" />
+                                    <p:message id="msgPwd1" for="pwd1"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p:outputLabel class="col-sm-3 control-label procurement-text-lbl-ltr" for="pwd2" value="#{msgs['user.create.lbl.pwd.hash.confirm']}" />
+                                <div class="col-sm-5">
+                                    <p:password id="pwd2" value="#{userBean.confirmPass}" jsf:placeholder="#{msgs['user.create.lbl.pwd.hash.confirm']}"
+                                                required="true" requiredMessage="#{msgs['user.lbl.password.required']}"
+                                                autocomplete="off" redisplay="true"/>
+                                    <p:message id="msgPwd2" for="pwd2"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="panel panel-default panel-tab">
+                                    <div class="procurement-panel-header">#{msgs['lbl.crud.user.module.access']}</div>
+                                    <!-- Default panel contents -->
+                                    <div class="panel-body">
+                                        <div class="checkbox">
+                                            <label>
+                                                <h:selectBooleanCheckbox value="#{userBean.moduleAccessProcurement}">
+                                                    <p:ajax process="@this" update="roleProcurement" async="false" listener="#{userBean.resetRoleProcurement}"/>
+                                                </h:selectBooleanCheckbox> #{msgs['lbl.crud.user.procurement']}
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <h:selectBooleanCheckbox value="#{userBean.moduleAccessExpediting}">
+                                                    <p:ajax process="@this" update="roleExpediting" async="false" listener="#{userBean.resetRoleExpediting}"/>
+                                                </h:selectBooleanCheckbox> #{msgs['lbl.crud.user.expediting']}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="panel panel-default panel-tab">
+                                    <div class="procurement-panel-header">#{msgs['lbl.crud.user.module.rights']}</div>
+                                    <!-- Default panel contents -->
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <h:outputLabel value="#{msgs['lbl.crud.user.procurement']}"/>
+                                            <h:selectOneMenu id="roleProcurement" value="#{userBean.roleProcurement}"
+                                                             converter="roleConverter"
+                                                             styleClass="form-control"
+                                                             disabled="#{!userBean.moduleAccessProcurement}">
+                                                <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{userBean.procurementRoles}"
+                                                               var="_pr"
+                                                               itemValue="#{_pr}"
+                                                               itemLabel="#{userBean.roleName(_pr.id)}"/>
+                                            </h:selectOneMenu>
+                                            <p:message for="roleProcurement" id="msgRoleProc"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h:outputLabel value="#{msgs['lbl.crud.user.expediting']}"/>
+                                            <h:selectOneMenu id="roleExpediting" value="#{userBean.roleExpediting}"
+                                                             converter="roleConverter"
+                                                             styleClass="form-control"
+                                                             disabled="#{!userBean.moduleAccessExpediting}">
+                                                <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
+                                                <f:selectItems value="#{userBean.expeditingRoles}"
+                                                               var="_er"
+                                                               itemValue="#{_er}"
+                                                               itemLabel="#{userBean.roleName(_er.id)}"/>
+                                            </h:selectOneMenu>
+                                            <p:message for="roleExpediting" id="msgRoleExp"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h:commandButton value="#{msgs['lbl.save']}" rendered="#{userBean.createUser}"
+                                                 action="#{userBean.doSave}"
+                                                 styleClass="btn btn-primary btn-sm"/>
+                                <h:commandButton value="#{msgs['lbl.update']}" rendered="#{!userBean.createUser}"
+                                                 action="#{userBean.doUpdate}"
+                                                 styleClass="btn btn-primary btn-sm"/>
+                                &#160;
+                                <h:commandButton value="#{msgs['lbl.cancel']}"
+                                                 action="list?faces-redirect=true"
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 immediate="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

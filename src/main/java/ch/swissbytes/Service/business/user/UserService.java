@@ -1,7 +1,11 @@
 package ch.swissbytes.Service.business.user;
 
+import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
+import ch.swissbytes.Service.business.userRole.UserRoleService;
+import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.domain.model.entities.UserRoleEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
@@ -21,6 +25,12 @@ public class UserService implements Serializable {
     @Inject
     private UserDao userDao;
 
+    @Inject
+    private ModuleGrantedAccessService moduleGrantedAccessService;
+
+    @Inject
+    private UserRoleService userRoleService;
+
     @Transactional
     public void doSave(UserEntity user){
         if(user != null){
@@ -31,7 +41,37 @@ public class UserService implements Serializable {
 
     @Transactional
     public void doUpdate(UserEntity detachedUser) {
-        userDao.update(detachedUser);
+        userDao.doUpdate(detachedUser);
+    }
+
+    @Transactional
+    public void doSaveUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList){
+        if(user != null){
+            user.setLastUpdate(new Date());
+            userDao.doSave(user);
+            for(ModuleGrantedAccessEntity mga : moduleGrAcList){
+                mga.setUserEntity(user);
+                moduleGrantedAccessService.doSave(mga);
+            }
+            for(UserRoleEntity ure : userRoleList){
+                ure.setUser(user);
+                userRoleService.doSave(ure);
+            }
+        }
+    }
+
+    @Transactional
+    public void doUpdateUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList){
+        if(user != null){
+            user.setLastUpdate(new Date());
+            userDao.doUpdate(user);
+            for(ModuleGrantedAccessEntity mga : moduleGrAcList){
+                moduleGrantedAccessService.doUpdate(mga);
+            }
+            for(UserRoleEntity ure : userRoleList){
+                userRoleService.doUpdate(ure);
+            }
+        }
     }
 
 
@@ -117,5 +157,13 @@ public class UserService implements Serializable {
 
     public UserEntity getUserEntity(String username, String pass) {
         return userDao.getUser(username,pass);
+    }
+
+    public List<UserEntity> findAllUser() {
+        return userDao.findAllUser();
+    }
+
+    public List<UserEntity> doSearch(final String searchTerm, final StatusEnum userStatus) {
+        return userDao.findBySearchTerm(searchTerm, userStatus);
     }
 }

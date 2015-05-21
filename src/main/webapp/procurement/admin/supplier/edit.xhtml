@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Supplier</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-8">
+                <!-- Nav tabs -->
+                <br/>
+
+                <div class="col-sm-9">
+                    <div class="form-group">
+                        <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.supplier.id']}"/>
+
+                        <div class="col-sm-8">
+                            <h:inputText id="supplierID" maxlength="50"
+                                         value="#{supplierProcBean.supplier.supplierId}"
+                                         class="form-control " required="true"/>
+                            <p:message for="supplierID"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="col-sm-3">
+                    <h:panelGroup id="idBtnSave">
+                        <h:commandButton value="#{msgs['lbl.save']}"
+                                         action="#{supplierProcBean.doSave}"
+                                         rendered="#{supplierProcBean.supplierMode}"
+                                         styleClass="btn btn-primary btn-sm"/>
+                        <h:commandButton value="#{msgs['lbl.save']}"
+                                         rendered="#{not supplierProcBean.supplierMode}"
+                                         styleClass="btn btn-primary btn-sm">
+                            <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"
+                                    async="false"
+                                    process="@form"
+                                    update="idBtnSave idBtnCancel bodySupplier"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                </div>
+                <br/>
+
+                <div class="col-sm-9">
+                    <div class="form-group">
+
+                        <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']}"/>
+
+                        <div class="col-sm-8">
+                            <h:inputText maxlength="50" id="companyId"
+                                         value="#{supplierProcBean.supplier.company}"
+                                         class="form-control" required="true"/>
+                            <p:message for="companyId"/>
+                        </div>
+
+                    </div>
+                </div>
+                <br/>
+
+                <div class="col-sm-3">
+                    <h:panelGroup id="idBtnCancel">
+                        <h:link value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
+                                outcome="list" styleClass="btn btn-primary btn-sm"/>
+                        <h:commandButton value="#{msgs['lbl.cancel']}"
+                                         styleClass="btn btn-primary btn-sm"
+                                         rendered="#{not supplierProcBean.supplierMode}">
+                            <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
+                                    immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                </div>
+                <br/>
+                <h:panelGroup id="bodySupplier">
+                    <h:panelGroup rendered="#{not (supplierProcBean.addingCategory or supplierProcBean.addingBrand)}">
+                        <div class="col-sm-9">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="active"><a href="#supplier" role="tab"
+                                                      data-toggle="tab">#{msgs['supplier.tab.supplier']}</a></li>
+                                <li><a href="#categories" role="tab"
+                                       data-toggle="tab">#{msgs['supplier.tab.categories']}</a>
+                                </li>
+                                <li><a href="#contacts" role="tab" data-toggle="tab">#{msgs['supplier.tab.contact']}</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- Tab Supplier -->
+                                <div class="tab-pane active" id="supplier">
+                                    <ui:include src="components/supplierTab.xhtml"/>
+                                </div>
+                                <!-- Tab Categories -->
+                                <div class="tab-pane" id="categories">
+                                    <br/>
+                                    <ui:include src="components/categoryBrandTab.xhtml"/>
+                                </div>
+                                <!-- Tab Contacts -->
+                                <div class="tab-pane" id="contacts">
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{supplierProcBean.addingCategory or supplierProcBean.addingBrand}">
+                        <h:panelGroup rendered="#{supplierProcBean.addingCategory}">
+                            <ui:include src="components/categoryList.xhtml"/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{supplierProcBean.addingBrand}">
+                            <ui:include src="components/brandList.xhtml"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -3,6 +3,8 @@ package ch.swissbytes.procurement.boundary.brand;
 import ch.swissbytes.Service.business.brand.BrandService;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -26,11 +28,11 @@ public class BrandBean implements Serializable {
     @Inject
     private BrandService brandService;
 
-    private BrandEntity currentBrand;
-
     private BrandEntity selectedBrand;
 
     private String brandName;
+
+    private String searchNameBrand;
 
     private List<BrandEntity> brandList;
 
@@ -38,8 +40,6 @@ public class BrandBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("created BrandBean");
-        selectedBrand = new BrandEntity();
-        currentBrand = new BrandEntity();
         loadBrands();
     }
 
@@ -52,19 +52,54 @@ public class BrandBean implements Serializable {
         brandList = brandService.getBrandList();
     }
 
-    public void doSaveBrand(){
-        currentBrand.setName(brandName);
-        currentBrand.setLastUpdate(new Date());
-        currentBrand.setStatus(StatusEnum.ENABLE);
-        brandService.doSave(currentBrand);
+    public String doSaveBrand(){
+        if(StringUtils.isNotEmpty(brandName) && StringUtils.isNotBlank(brandName)){
+            if(isValidBrand(brandName)) {
+                BrandEntity currentBrand = new BrandEntity();
+                currentBrand.setName(brandName);
+                currentBrand.setLastUpdate(new Date());
+                currentBrand.setStatus(StatusEnum.ENABLE);
+                brandService.doSave(currentBrand);
+                loadBrands();
+                brandName = "";
+            }else{
+                Messages.addFlashError("nameBrand","Brand name already exists");
+            }
+        }else{
+            Messages.addFlashError("nameBrand","Enter a valid Brand");
+        }
+        return "brands?faces-redirect=true";
     }
 
-    public BrandEntity getCurrentBrand() {
-        return currentBrand;
+    private boolean isValidBrand(String brandName) {
+        List<BrandEntity> brandList = brandService.findByName(brandName);
+        return brandList.isEmpty();
     }
 
-    public void setCurrentBrand(BrandEntity currentBrand) {
-        this.currentBrand = currentBrand;
+    public String doDeleteBrand(){
+        if(selectedBrand != null) {
+            selectedBrand.setStatus(StatusEnum.DELETED);
+            selectedBrand.setLastUpdate(new Date());
+            brandService.doUpdate(selectedBrand);
+            loadBrands();
+            selectedBrand = null;
+        }else{
+            Messages.addFlashError("brandList","Select a brand first");
+        }
+        return "brands?faces-redirect=true";
+    }
+
+    public void searchBrand(){
+        log.info("searchBrand : " + searchNameBrand);
+        if(StringUtils.isNotEmpty(searchNameBrand) && StringUtils.isNotBlank(searchNameBrand)){
+            brandList.clear();
+            brandList = brandService.findByLikeName(searchNameBrand);
+            if (brandList.size() == 1 ){
+                selectedBrand = brandList.get(0);
+            }
+        }else{
+            brandList = brandService.getBrandList();
+        }
     }
 
     public List<BrandEntity> getBrandList() {
@@ -85,5 +120,13 @@ public class BrandBean implements Serializable {
 
     public void setSelectedBrand(BrandEntity selectedBrand) {
         this.selectedBrand = selectedBrand;
+    }
+
+    public String getSearchNameBrand() {
+        return searchNameBrand;
+    }
+
+    public void setSearchNameBrand(String searchNameBrand) {
+        this.searchNameBrand = searchNameBrand;
     }
 }
