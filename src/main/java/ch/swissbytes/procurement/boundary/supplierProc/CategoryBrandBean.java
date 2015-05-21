@@ -31,7 +31,6 @@ public class CategoryBrandBean implements Serializable {
     @Inject
     private BrandService brandService;
 
-
     private DualListModel<CategoryEntity> categories;
 
     private DualListModel<BrandEntity> brands;
@@ -40,8 +39,6 @@ public class CategoryBrandBean implements Serializable {
     @PostConstruct
     public void create() {
         log.info("CategoryBrandBean bean created");
-
-
     }
 
     public void addlistLoaded(List<CategoryEntity> categories, List<BrandEntity> brands) {
