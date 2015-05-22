@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Created by IntelliJ IDEA.
-  User: vladimir
-  Date: 12/03/14
-  Time: 15:36
--->
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:fc="http://xmlns.jcp.org/jsf/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
-
-
 <fc:metadata>
     <fc:viewAction action="#{identity.isLoggedIn()}"/>
 </fc:metadata>
@@ -25,21 +16,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>#{msgs['login.title']}</title>
-        <!--<h:outputScript library="primefaces" name="jquery/jquery.js"/>-->
         <h:outputScript name="primefaces/jquery/jquery.js"/>
-
         <h:outputStylesheet name="css/bootstrap.css"/>
         <h:outputStylesheet name="css/bootstrap-theme.css"/>
         <h:outputStylesheet name="css/bootstrap-multiselect.css"/>
-
-
-
     </h:head>
     <h:body styleClass="BodyLogin">
         <div class="page-header">
-
         </div>
-
         <div class="container" />
         <p:messages id="glbMsgs" globalOnly="true" errorClass="alert alert-error"
                                              warnClass="alert"
@@ -53,10 +37,12 @@
                         <h2>#{msgs['login.legend']}</h2>
                         <hr class="colorgraph" />
                         <div class="form-group">
-                            <h:inputText name="email" id="email" value="#{loginCredentials.userId}" class="form-control input-lg"   jsf:placeholder="#{msgs['login.placeholder.user']}" />
+                            <h:inputText name="email" id="email" value="#{loginCredentials.userId}" class="form-control input-lg"
+                                         jsf:placeholder="#{msgs['login.placeholder.user']}" />
                         </div>
                         <div class="form-group">
-                            <h:inputSecret type="password" name="password" id="password" value="#{loginCredentials.password}" class="form-control input-lg" jsf:placeholder="#{msgs['login.placeholder.password']}" />
+                            <h:inputSecret type="password" name="password" id="password" value="#{loginCredentials.password}"
+                                           class="form-control input-lg" jsf:placeholder="#{msgs['login.placeholder.password']}" />
                         </div>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
@@ -69,7 +55,8 @@
                         <hr class="colorgraph"> </hr>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
-                                <h:commandButton type="submit" class="btn btn-lg btn-success btn-block" value="#{msgs['login.button.label']}" action="#{identity.login}" />
+                                <p:commandButton type="submit" class="btn btn-lg btn-success btn-block"
+                                                 value="#{msgs['login.button.label']}" action="#{identity.login}" />
                             </div>
                         </div>
                     </fieldset>

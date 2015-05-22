@@ -51,15 +51,14 @@ public class PermissionDao extends GenericDao<PermissionGrantedEntity> implement
     public List<RoleEntity> getRolesAssignedBy(final Long userId){
         log.info("public List<RoleEntity> getRolesAssignedBy(final Long userId="+userId+")");
         StringBuilder sb =new StringBuilder();
-        sb.append("SELECT user.roleEntity ");
-        sb.append("FROM UserEntity user ");
-        sb.append("WHERE user.id=:USER_ID");
+        sb.append(" SELECT re ");
+        sb.append(" FROM UserEntity r, UserRoleEntity ur, RoleEntity re ");
+        sb.append(" WHERE r.id = ur.user.id");
+        sb.append(" AND ur.user.id = :USER_ID");
+        sb.append(" AND ur.role.id = re.id");
         Query query=entityManager.createQuery(sb.toString());
         query.setParameter("USER_ID",userId);
         return query.getResultList();
     }
-
-
-
 
 }

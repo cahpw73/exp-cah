@@ -26,18 +26,16 @@ import java.util.logging.Logger;
  * @author Christian
  */
 @Named
-//@Stateful
 @ViewScoped
 public class PermissionBean implements Serializable {
-
-    public static final String NAME = "permissionAction";
 
     @Inject
     private Identity identity;
 
     @Inject
     private PermissionDao dao;
-     @Inject
+
+    @Inject
     private PermissionService service;
 
     private Logger log = Logger.getLogger(PermissionBean.class.getName());
@@ -52,14 +50,10 @@ public class PermissionBean implements Serializable {
         //log.info("Permission Bean initialize...");
         initialDate=new Date();
         User user=(User)identity.getAccount();
+
         List<RoleEntity> currentRoles=service.getRolesFor(user.getLoginName());
         permissions=service.getPermissions(collectIds(currentRoles));
-        /*log.info("permission granted for "+user.getLoginName());
-        log.info("================================");
-        for(PermissionGrantedEntity pe:permissions){
-            log.info(pe.getOptions().getName());
-        }
-        log.info("===================================");*/
+
 
     }
 

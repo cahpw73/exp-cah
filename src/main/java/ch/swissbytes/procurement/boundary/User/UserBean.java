@@ -133,7 +133,6 @@ public class UserBean implements Serializable {
     public String doSave(){
         log.info("do save");
         if(dataValidate()) {
-            userEntity.setFirstName("");
             if (isUserActive())
                 userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.ENABLE.getId()));
             else if (!isUserActive())

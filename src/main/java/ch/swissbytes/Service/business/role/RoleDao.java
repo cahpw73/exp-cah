@@ -36,6 +36,19 @@ public class RoleDao extends GenericDao<BrandEntity> implements Serializable {
         return super.findBy(sb.toString(),params);
     }
 
+    public List<RoleEntity> getRolesAssignedBy(final Long userId){
+        log.info("public List<RoleEntity> getRolesAssignedBy(final Long userId="+userId+")");
+        StringBuilder sb =new StringBuilder();
+        sb.append(" SELECT re ");
+        sb.append(" FROM UserEntity r, UserRoleEntity ur, RoleEntity re ");
+        sb.append(" WHERE r.id = ur.user.id");
+        sb.append(" AND ur.user.id = :USER_ID");
+        sb.append(" AND ur.role.id = re.id");
+        Map<String,Object> params = new HashMap<>();
+        params.put("USER_ID", userId);
+        return super.findBy(sb.toString(),params);
+    }
+
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
 

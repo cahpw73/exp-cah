@@ -17,7 +17,12 @@
         <h:form id="editUserForm" prependId="false" class="form-horizontal">
             <div class="col-md-6">
                 <div class="panel panel-default panel-tab">
-                    <div class="procurement-panel-header">#{msgs['lbl.panel.user.title']}</div>
+                    <h:panelGroup rendered="#{userBean.createUser}">
+                        <div class="procurement-panel-header">#{msgs['lbl.panel.user.title']}</div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{!userBean.createUser}">
+                        <div class="procurement-panel-header">#{msgs['lbl.panel.edit.user.title']}</div>
+                    </h:panelGroup>
                     <!-- Default panel contents -->
                     <div class="panel-body">
                         <div class="row">
@@ -43,10 +48,19 @@
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.name']} *"/>
                                 <div class="col-sm-5">
-                                    <h:inputText id="name" value="#{userBean.userEntity.name}"
+                                    <h:inputText id="name" value="#{userBean.userEntity.firstName}"
                                                  styleClass="form-control" required="true"
                                                  requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                                     <p:message for="name" id="msgname"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.surname']} *"/>
+                                <div class="col-sm-5">
+                                    <h:inputText id="surname" value="#{userBean.userEntity.name}"
+                                                 styleClass="form-control" required="true"
+                                                 requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
+                                    <p:message for="surname" id="msgsurname"/>
                                 </div>
                             </div>
 

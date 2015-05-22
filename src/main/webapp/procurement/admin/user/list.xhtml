@@ -32,10 +32,13 @@
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.username']}"  width="100">
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}"  width="80">
                                 #{_u.username}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.name']}"  width="100">
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}"  width="90">
+                                #{_u.firstName}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.surname']}"  width="90">
                                 #{_u.name}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">
@@ -106,10 +109,13 @@
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.username']}"  width="100">
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}"  width="80">
                                 #{_u.username}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.name']}"  width="100">
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}"  width="90">
+                                #{_u.firstName}
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.surname']}"  width="90">
                                 #{_u.name}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">

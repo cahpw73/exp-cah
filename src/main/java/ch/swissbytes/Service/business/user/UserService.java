@@ -166,4 +166,13 @@ public class UserService implements Serializable {
     public List<UserEntity> doSearch(final String searchTerm, final StatusEnum userStatus) {
         return userDao.findBySearchTerm(searchTerm, userStatus);
     }
+
+    public UserEntity findByUsername(String username) {
+        List<UserEntity> list = userDao.findUserByUserName(username);
+        UserEntity entity = null;
+        if(!list.isEmpty()){
+            entity = list.get(0);
+        }
+        return entity;
+    }
 }
