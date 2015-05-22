@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -71,11 +72,19 @@ public class SupplierProcBean implements Serializable {
 
 
     public String doSave() {
+        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
+            Messages.addFlashError("supplierID","supplier id is already being used");
+            return "";
+        }
         service.save(supplier);
         return "list?faces-redirect=true";
     }
 
     public String doUpdate() {
+        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
+            Messages.addFlashError("supplierID","supplier id is already being used");
+            return "";
+        }
         service.update(supplier);
         return "list?faces-redirect=true";
     }

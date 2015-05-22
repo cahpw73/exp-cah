@@ -92,9 +92,11 @@
         <div class="form-inline">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company.email']}"/>
             <h:inputText maxlength="50"
+                         id="companyEmailId"
                          style="width: 70%!important;"
                          value="#{supplierProcBean.supplier.companyEmail}"
                          class="form-control col-sm-9"/>
+            <p:message for="companyEmailId"/>
         </div>
     </div>
     <br/>
