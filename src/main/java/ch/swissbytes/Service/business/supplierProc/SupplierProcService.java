@@ -48,7 +48,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         supplier = super.save(supplier);
         supplierBrandDao.doSave(supplier.getBrands(), supplier);
         supplierCategoryDao.doSave(supplier.getCategories(), supplier);
-        contactDao.doSave(supplier.getContacts(),supplier);
+        contactDao.doSave(supplier.getContacts(), supplier);
         return supplier;
     }
 
@@ -63,6 +63,10 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         return supplier;
     }
 
+    public boolean isAlreadyBeingUsed(final String supplierId, Long id) {
+        SupplierProcEntity supplier = dao.findSupplierBySupplierIdAndDistinct(supplierId, id);
+        return supplier != null;
+    }
 
     @Transactional
     public SupplierProcEntity doDelete(SupplierProcEntity supplier) {

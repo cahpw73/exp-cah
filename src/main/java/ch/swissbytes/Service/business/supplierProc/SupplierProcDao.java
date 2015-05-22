@@ -3,10 +3,14 @@ package ch.swissbytes.Service.business.supplierProc;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alvaro on 9/8/14.
@@ -16,13 +20,26 @@ import java.io.Serializable;
 public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements Serializable {
 
 
-
+    public SupplierProcEntity findSupplierBySupplierIdAndDistinct(String supplierId, Long id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT s ");
+        sb.append(" FROM SupplierProcEntity s ");
+        sb.append(" WHERE s.status = :ENABLE ");
+        sb.append(" AND NOT s.id = :ID ");
+        sb.append(" AND trim(lower(s.supplierId)) = :SUPPLIER_ID ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("SUPPLIER_ID", supplierId.trim().toLowerCase());
+        params.put("ID",id==null?0:id);
+        List<SupplierProcEntity> list=super.findBy(sb.toString(),params);
+        return list.isEmpty()?null:list.get(0);
+    }
 
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
-        if(filter!=null&&StringUtils.isNotEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
-            query.setParameter("CRITERIA","%"+filter.getCriteria().trim().toLowerCase()+"%");
+        if (filter != null && StringUtils.isNotEmpty(filter.getCriteria()) && StringUtils.isNotBlank(filter.getCriteria())) {
+            query.setParameter("CRITERIA", "%" + filter.getCriteria().trim().toLowerCase() + "%");
         }
     }
 
@@ -33,8 +50,8 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
 
     @Override
     protected String addCriteria(Filter filter) {
-        StringBuilder query=new StringBuilder();
-        if(filter!=null&&StringUtils.isNotEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
+        StringBuilder query = new StringBuilder();
+        if (filter != null && StringUtils.isNotEmpty(filter.getCriteria()) && StringUtils.isNotBlank(filter.getCriteria())) {
             query.append(" AND (");
             query.append(" lower(x.supplierId) LIKE :CRITERIA ");
             query.append(" OR lower(x.company) LIKE :CRITERIA ");
@@ -43,6 +60,11 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
             query.append(") ");
         }
         return query.toString();
+    }
+
+    @Override
+    public String orderBy(){
+        return " ORDER BY x.supplierId , x.company";
     }
 
 }

@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.interfaces.Record;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "contact")
-public class ContactEntity implements Serializable{
+public class ContactEntity extends Record implements Serializable{
 
     private Long id;
     private String firstName;
@@ -28,6 +29,7 @@ public class ContactEntity implements Serializable{
     private StatusEnum status;
     private Date lastUpdate;
     private SupplierProcEntity supplier;
+
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -169,5 +171,16 @@ public class ContactEntity implements Serializable{
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    @Transient
+    public boolean isWithNoData() {
+        return withNoData;
+    }
+
+    @Override
+    public void setWithNoData(boolean isEmpty){
+        withNoData =isEmpty;
     }
 }

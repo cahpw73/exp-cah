@@ -3,7 +3,9 @@ package ch.swissbytes.procurement.boundary.supplierProc;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
+import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,11 +29,9 @@ public class SupplierProcBean implements Serializable {
 
     @Inject
     private SupplierProcService service;
+
     @Inject
     private CategoryBrandBean categoryBrandBean;
-
-    private List<CategoryEntity> categories;
-    private List<BrandEntity> brands;
 
     private String supplierId;
 
@@ -54,8 +54,8 @@ public class SupplierProcBean implements Serializable {
             } catch (NumberFormatException nfe) {
             }
         }
-        categories = service.getCategories(id);
-        brands = service.getBrands(id);
+        ContactEntity emptyContact=new ContactEntity();
+        emptyContact.setWithNoData(true);
         if (id != null && id > 0) {
             supplier = service.findById(id);
             editing =true;
@@ -63,17 +63,28 @@ public class SupplierProcBean implements Serializable {
         if (supplier == null) {
             throw new IllegalArgumentException("Supplier not found");
         }
+
+        supplier.getBrands().addAll(service.getBrands(id));
+        supplier.getCategories().addAll(service.getCategories(id));
+        supplier.getContacts().addAll(service.getContacts(id));
+        supplier.getContacts().add(emptyContact);
     }
 
 
     public String doSave() {
-        collectData();
+        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
+            Messages.addFlashError("supplierID","supplier id is already being used");
+            return "";
+        }
         service.save(supplier);
         return "list?faces-redirect=true";
     }
 
     public String doUpdate() {
-        collectData();
+        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
+            Messages.addFlashError("supplierID","supplier id is already being used");
+            return "";
+        }
         service.update(supplier);
         return "list?faces-redirect=true";
     }
@@ -83,17 +94,9 @@ public class SupplierProcBean implements Serializable {
         return "list?faces-redirect=true";
     }
 
-    private void collectData() {
-        supplier.getCategories().clear();
-        supplier.getCategories().addAll(categories);
-        supplier.getBrands().clear();
-        supplier.getBrands().addAll(brands);
-    }
-
     public void putModeCategory() {
         addingCategory = true;
-        categoryBrandBean.addlistLoaded(categories, brands);
-
+        categoryBrandBean.addlistLoaded(supplier.getCategories(),supplier.getBrands());
     }
 
     public boolean isSupplierMode() {
@@ -102,7 +105,7 @@ public class SupplierProcBean implements Serializable {
 
     public void putModeBrand() {
         addingBrand = true;
-        categoryBrandBean.addlistLoaded(categories, brands);
+        categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
     public void putModeSupplier() {
@@ -112,23 +115,16 @@ public class SupplierProcBean implements Serializable {
 
     public void addCategoryBrand() {
         if (addingCategory) {
-            categories.clear();
-            categories.addAll(categoryBrandBean.getCategories().getTarget());
+            supplier.getCategories().clear();
+            supplier.getCategories().addAll(categoryBrandBean.getCategories().getTarget());
         }
         if (addingBrand) {
-            brands.clear();
-            brands.addAll(categoryBrandBean.getBrands().getTarget());
+            supplier.getBrands().clear();
+            supplier.getBrands().addAll(categoryBrandBean.getBrands().getTarget());
         }
         addingCategory = addingBrand = false;
     }
 
-    public List<CategoryEntity> getCategories() {
-        return categories;
-    }
-
-    public List<BrandEntity> getBrands() {
-        return brands;
-    }
 
     @PreDestroy
     public void destroy() {
@@ -156,8 +152,9 @@ public class SupplierProcBean implements Serializable {
         this.supplierId = supplierId;
     }
 
-
     public boolean isEditing() {
         return editing;
     }
+
+
 }

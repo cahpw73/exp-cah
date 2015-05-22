@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
+import org.picketlink.Identity;
 import org.picketlink.annotations.PicketLink;
 import org.picketlink.authentication.BaseAuthenticator;
 import org.picketlink.credential.DefaultLoginCredentials;
@@ -46,9 +47,11 @@ public class Authenticator extends BaseAuthenticator{
     @Inject
     private UserDao userDao;
 
+
     @Override
     public void authenticate(){
         log.log(Level.INFO,"trying to authenticate");
+
         final  String passwordHashed= Encode.encode(credentials.getPassword());
         if(userCtrl.canAccess(credentials.getUserId(),passwordHashed)){
             UserEntity userEntity = getUserEntity(credentials.getUserId(),passwordHashed);
@@ -74,6 +77,7 @@ public class Authenticator extends BaseAuthenticator{
             Messages.addGlobalError("User cannot log in");
             setStatus(AuthenticationStatus.FAILURE);
             log.log(Level.INFO, "user fail");
+
         }
     }
 

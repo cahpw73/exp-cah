@@ -10,7 +10,7 @@
                 converter="categoryConverter"
                 styleClass="algo"
                 itemLabel="#{_category.name}" itemValue="#{_category}">
-
+<ui:remove>
         <f:facet name="sourceCaption" >
             Global Categories
 
@@ -18,5 +18,6 @@
         <f:facet name="targetCaption">
             Suplier Categories
         </f:facet>
+</ui:remove>
     </p:pickList>
 </ui:composition>

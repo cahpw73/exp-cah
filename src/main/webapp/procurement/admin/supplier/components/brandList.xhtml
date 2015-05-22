@@ -5,11 +5,11 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
-                addLabel="Add to Supplier"
-                removeLabel="Remove from Supplier"
+                addLabel="Add to Brand"
+                removeLabel="Remove from Brand"
                 converter="brandConverter"
                 itemLabel="#{_brand.name}" itemValue="#{_brand}">
-
+<ui:remove>
         <f:facet name="sourceCaption">
            Global Brands
             <h:outputLabel/>
@@ -17,6 +17,6 @@
         <f:facet name="targetCaption">
             Supplier Brands
         </f:facet>
-
+</ui:remove>
     </p:pickList>
 </ui:composition>
