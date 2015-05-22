@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dataTable value="#{supplierProcBean.supplier.contacts}" var="_contact">
+        <p:column headerText="Title">
+            #{_contact.title}
+        </p:column>
+
+        <p:column headerText="#{msgs['supplier.contact.lbl.first.name']}">
+            #{_contact.firstName}
+        </p:column>
+
+        <p:column headerText="#{msgs['supplier.contact.lbl.surname']}">
+            #{_contact.surName}
+        </p:column>
+        <p:column headerText="#{msgs['supplier.contact.lbl.job.title']}">
+            #{_contact.jobTitle}
+        </p:column>
+        <p:column headerText="#{msgs['supplier.contact.lbl.phone']}">
+            #{_contact.phone}
+        </p:column>
+        <p:column headerText="#{msgs['supplier.contact.lbl.mobile']}">
+            #{_contact.mobile}
+        </p:column>
+        <p:column headerText="#{msgs['supplier.contact.lbl.fax']}">
+            #{_contact.fax}
+        </p:column>
+        <p:column headerText="#{msgs['supplier.contact.lbl.email']}">
+            #{_contact.email}
+        </p:column>
+        <p:column headerText="#{msgs['lbl.actions']}">
+            <h:form prependId="false">
+                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm" rendered="#{not _contact.withNoData}">
+                </h:commandLink>
+                &#160;
+                <p:commandLink value="#{msgs['lbl.delete']}"
+                               style="color: #ffffff;"
+                               rendered="#{not _contact.withNoData}"
+                               styleClass="btn btn-primary btn-sm">
+                </p:commandLink>
+                <h:link value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm"
+                        outcome="contactEdit"
+                        rendered="#{_contact.withNoData}"/>
+            </h:form>
+        </p:column>
+    </p:dataTable>
+</ui:composition>

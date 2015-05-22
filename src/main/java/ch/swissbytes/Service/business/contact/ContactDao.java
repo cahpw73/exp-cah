@@ -2,7 +2,6 @@ package ch.swissbytes.Service.business.contact;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
-import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -26,8 +25,10 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
 
     public void doSave(List<ContactEntity> contacts,SupplierProcEntity supplier) {
         for(ContactEntity contactEntity:contacts){
-            contactEntity.setSupplier(supplier);
-            super.save(contactEntity);
+            if(!contactEntity.isWithNoData()) {
+                contactEntity.setSupplier(supplier);
+                super.save(contactEntity);
+            }
         }
     }
 
@@ -35,6 +36,7 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         List<ContactEntity> oldContacts=findByContactsBySupplier(supplier.getId());
         Date now=new Date();
         for(ContactEntity contact:oldContacts){
+
             if(contacts.indexOf(contact)<0){
                 contact.setStatus(StatusEnum.DELETED);
                 contact.setLastUpdate(now);
@@ -43,16 +45,18 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         }
         for(ContactEntity contactEntity:contacts){
             contactEntity.setLastUpdate(now);
-            if(contactEntity.getId()==null){
-                contactEntity.setStatus(StatusEnum.ENABLE);
-                contactEntity.setSupplier(supplier);
-                super.save(contactEntity);
-            }else{
-                super.update(contactEntity);
+            if(!contacts.isEmpty()) {
+                if (contactEntity.getId() == null) {
+                    contactEntity.setStatus(StatusEnum.ENABLE);
+                    contactEntity.setSupplier(supplier);
+                    super.save(contactEntity);
+                } else {
+
+                    super.update(contactEntity);
+                }
             }
         }
     }
-
 
 
     public List<ContactEntity> findByContactsBySupplier(final Long id){
@@ -61,14 +65,12 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         sb.append(" FROM ContactEntity c ");
         sb.append(" WHERE c.status =:ENABLE ");
         sb.append(" AND c.supplier.id = :SUPPLIER_ID ");
+        sb.append(" ORDER BY c.surName, c.firstName ");
         Map<String,Object> params = new HashMap<>();
         params.put("SUPPLIER_ID", id);
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
     }
-
-
-
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
 
