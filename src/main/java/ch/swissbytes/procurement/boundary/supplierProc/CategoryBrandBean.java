@@ -42,11 +42,32 @@ public class CategoryBrandBean implements Serializable {
     }
 
     public void addlistLoaded(List<CategoryEntity> categories, List<BrandEntity> brands) {
-        this.categories = new DualListModel<CategoryEntity>(categoryService.getCategoryList(), categories != null ? categories : new ArrayList<CategoryEntity>());
-        this.brands = new DualListModel<BrandEntity>(brandService.getBrandList(), brands != null ? brands : new ArrayList<BrandEntity>());
+       /* this.categories = new DualListModel<CategoryEntity>(categoryService.getCategoryList(), categories != null ? categories : new ArrayList<CategoryEntity>());
+        this.brands = new DualListModel<BrandEntity>(brandService.getBrandList(), brands != null ? brands : new ArrayList<BrandEntity>());*/
+        List<CategoryEntity>lc= categories != null ? categories : new ArrayList<CategoryEntity>();
+        List<BrandEntity>lb= brands != null ? brands : new ArrayList<BrandEntity>();
+        this.categories = new DualListModel<CategoryEntity>(diffCategoryList(categoryService.getCategoryList(), lc),lc);
+        this.brands = new DualListModel<BrandEntity>(diffBrandList(brandService.getBrandList(),lb), lb);
     }
 
-
+    private List<CategoryEntity> diffCategoryList(List<CategoryEntity> original, List<CategoryEntity> destiny) {
+        for (CategoryEntity ce : destiny) {
+            int index=original.indexOf(ce);
+            if(index>=0){
+                original.remove(index);
+            }
+        }
+        return original;
+    }
+    private List<BrandEntity> diffBrandList(List<BrandEntity> original, List<BrandEntity> destiny) {
+        for (BrandEntity be : destiny) {
+            int index=original.indexOf(be);
+            if(index>=0){
+                original.remove(index);
+            }
+        }
+        return original;
+    }
     @PreDestroy
     public void destroy() {
         log.info("CategoryBrandBean bean destroyed");

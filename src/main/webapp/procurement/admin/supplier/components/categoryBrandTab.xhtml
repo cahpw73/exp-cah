@@ -17,7 +17,7 @@
                     </h:selectOneListbox>
                 </div>
                 <h:commandButton value="#{msgs['lbl.plus']}" styleClass="col-sm-2">
-                    <p:ajax update="bodySupplier idBtnSave idBtnCancel" process="@this"
+                    <p:ajax update="bodySupplier idBtnSave idBtnCancel" process="@form"
                             async="false"
                             listener="#{supplierProcBean.putModeCategory}"/>
                 </h:commandButton>
@@ -41,7 +41,7 @@
                                  action="#{supplierProcBean.putModeBrand}">
                     <p:ajax update="bodySupplier idBtnSave idBtnCancel"
                             async="false"
-                            process="@this"/>
+                            process="@form"/>
                 </h:commandButton>
             </div>
         </div>
