@@ -19,12 +19,14 @@ public class TransitDeliveryPointService extends Service<TransitDeliveryPointEnt
         return dao.findByScopeSupply(id);
     }
 
-    public void save(TransitDeliveryPointEntity entity){
+    public TransitDeliveryPointEntity save(TransitDeliveryPointEntity entity){
         dao.save(entity);
+        return entity;
     }
 
-    public void update(TransitDeliveryPointEntity entity){
+    public TransitDeliveryPointEntity update(TransitDeliveryPointEntity entity){
         dao.update(entity);
+        return entity;
     }
 
 }

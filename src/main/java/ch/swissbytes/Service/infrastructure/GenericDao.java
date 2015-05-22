@@ -205,7 +205,13 @@ public abstract class GenericDao<T> {
         }
         return query.getResultList();
     }
-
+    protected <T> void  executeUpdate(final String queryStr, Map<String, Object> values) {
+        Query query = entityManager.createQuery(queryStr);
+        for (Map.Entry<String, Object> entry : values.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        query.executeUpdate();
+    }
 
     /**
      * Performs a specification-based criteria unique element, it delegates the

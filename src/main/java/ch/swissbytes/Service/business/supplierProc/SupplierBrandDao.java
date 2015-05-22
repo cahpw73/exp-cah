@@ -1,10 +1,12 @@
 package ch.swissbytes.Service.business.supplierProc;
 
+import ch.swissbytes.Service.business.brand.BrandDao;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +21,9 @@ import java.util.Map;
 
 public class SupplierBrandDao extends GenericDao<SupplierBrand> implements Serializable {
 
+    @Inject
+    private BrandDao brandDao;
+
     public void doSave(List<BrandEntity> brands,SupplierProcEntity supplier) {
         Date now=new Date();
         for(BrandEntity brand:brands){
@@ -26,9 +31,24 @@ public class SupplierBrandDao extends GenericDao<SupplierBrand> implements Seria
             sc.setStatus(StatusEnum.ENABLE);
             sc.setLastUpdate(now);
             sc.setSupplier(supplier);
-            sc.setBrand(brand);
-            super.save(brand);
+            sc.setBrand(brandDao.findById(BrandEntity.class,brand.getId()).get(0));
+            super.save(sc);
         }
+    }
+
+    public void doDelete(Long id){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" UPDATE SupplierBrand SET ");
+        sb.append(" status=:DELETED ");
+        sb.append(" lastUpdate=:LAST_UPDATE ");
+        sb.append(" WHERE sb.status=:ENABLE ");
+        sb.append(" AND sb.supplier.id = :SUPPLIER_ID ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("SUPPLIER_ID", id);
+        params.put("LAST_UPDATE", new Date());
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("DELETED", StatusEnum.DELETED);
+        super.executeUpdate(sb.toString(),params);
     }
 
     public void doUpdate(List<BrandEntity> brands,SupplierProcEntity supplier){

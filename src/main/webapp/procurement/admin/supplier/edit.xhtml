@@ -35,7 +35,11 @@
                     <h:panelGroup id="idBtnSave">
                         <h:commandButton value="#{msgs['lbl.save']}"
                                          action="#{supplierProcBean.doSave}"
-                                         rendered="#{supplierProcBean.supplierMode}"
+                                         rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
+                                         styleClass="btn btn-primary btn-sm"/>
+                        <h:commandButton value="#{msgs['lbl.save']}"
+                                         action="#{supplierProcBean.doUpdate}"
+                                         rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
                                          styleClass="btn btn-primary btn-sm"/>
                         <h:commandButton value="#{msgs['lbl.save']}"
                                          rendered="#{not supplierProcBean.supplierMode}"

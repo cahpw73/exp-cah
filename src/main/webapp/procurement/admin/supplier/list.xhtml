@@ -48,9 +48,9 @@
                 </p:column>
                 <p:column headerText="#{msgs['lbl.actions']}">
                     <h:form prependId="false">
-                        <h:commandButton value="#{msgs['lbl.edit']}"
-                                         styleClass="btn btn-primary btn-sm">
-                        </h:commandButton>
+                        <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm">
+                            <f:param name="supplierId" value="#{_supplier.id}"/>
+                        </h:link>
                         &#160;
                         <p:commandLink value="#{msgs['lbl.delete']}"
                                        style="color: #ffffff;"

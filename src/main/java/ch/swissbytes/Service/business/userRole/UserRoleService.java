@@ -26,12 +26,12 @@ public class UserRoleService extends Service<UserRoleEntity> implements Serializ
 
     public void doSave(UserRoleEntity userRoleEntity){
         log.info("doSave");
-        userRoleDao.doSave(userRoleEntity);
+         userRoleDao.doSave(userRoleEntity);
     }
 
     public void doUpdate(UserRoleEntity detachedEntity){
         log.info("doUpdate");
-        userRoleDao.doUpdate(detachedEntity);
+         userRoleDao.doUpdate(detachedEntity);
     }
 
     public UserRoleEntity findByUserIdAndModuleSystem(final Long userId, final ModuleSystemEnum moduleSystem){

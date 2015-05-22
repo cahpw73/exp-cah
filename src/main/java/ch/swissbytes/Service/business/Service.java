@@ -27,12 +27,22 @@ public class Service<T> implements Serializable {
         dao.save(entity);
     }
 
+    public T save(T entity){
+        dao.save(entity);
+        return entity;
+    }
+
     @Transactional
-    public void doUpdate(T entity) {
-        dao.update(entity);
+    public  void doUpdate(T entity) {
+         dao.update(entity);
     }
 
 
+
+    public  T update(T entity) {
+        dao.update(entity);
+        return entity;
+    }
 
     public List<T> getActives(List<T> entities) {
         List<T> list = new ArrayList<>();

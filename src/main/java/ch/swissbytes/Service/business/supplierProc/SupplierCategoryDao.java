@@ -1,14 +1,14 @@
 package ch.swissbytes.Service.business.supplierProc;
 
+import ch.swissbytes.Service.business.category.CategoryDao;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
-import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierCategory;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.StatusEnum;
-import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +23,9 @@ import java.util.Map;
 
 public class SupplierCategoryDao extends GenericDao<SupplierCategory> implements Serializable {
 
+    @Inject
+    private CategoryDao categoryDao;
+
     public void doSave(List<CategoryEntity> categories,SupplierProcEntity supplier) {
         Date now=new Date();
         for(CategoryEntity category:categories){
@@ -30,8 +33,8 @@ public class SupplierCategoryDao extends GenericDao<SupplierCategory> implements
             sc.setStatus(StatusEnum.ENABLE);
             sc.setLastUpdate(now);
             sc.setSupplier(supplier);
-            sc.setCategory(category);
-            super.save(category);
+            sc.setCategory(categoryDao.findById(CategoryEntity.class,category.getId()).get(0));
+            super.save(sc);
         }
     }
 
@@ -57,7 +60,20 @@ public class SupplierCategoryDao extends GenericDao<SupplierCategory> implements
             }
         }
     }
-
+    public void doDelete(Long id){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" UPDATE SupplierCategory SET ");
+        sb.append(" status=:DELETED ");
+        sb.append(" lastUpdate=:LAST_UPDATE ");
+        sb.append(" WHERE sb.status=:ENABLE ");
+        sb.append(" AND sb.supplier.id = :SUPPLIER_ID ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("SUPPLIER_ID", id);
+        params.put("LAST_UPDATE", new Date());
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("DELETED", StatusEnum.DELETED);
+        super.executeUpdate(sb.toString(),params);
+    }
 
 
     public List<CategoryEntity> findCategoriesBySupplier(final Long id){

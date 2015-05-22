@@ -11,12 +11,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Named
 @Entity
 @Table(name = "supplier_proc")
-public class SupplierProcEntity implements Serializable{
+public class SupplierProcEntity implements Serializable {
 
     private Long id;
     private StatusEnum status;
@@ -34,6 +36,10 @@ public class SupplierProcEntity implements Serializable{
     private String comments;
     private Date lastUpdate;
 
+    private List<ContactEntity> contacts = new ArrayList<>();
+    private List<CategoryEntity> categories = new ArrayList<>();
+    private List<BrandEntity> brands = new ArrayList<>();
+
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -41,20 +47,22 @@ public class SupplierProcEntity implements Serializable{
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Column(name="LAST_UPDATE", nullable=false)
+    @Column(name = "LAST_UPDATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
         return lastUpdate;
     }
+
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
-    @Column (name = "status",nullable = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     public StatusEnum getStatus() {
         return status;
@@ -73,6 +81,7 @@ public class SupplierProcEntity implements Serializable{
     public void setComments(String comments) {
         this.comments = comments;
     }
+
     @Size(max = 250)
     @Column(name = "ABN_REG_NO", length = 250)
     public String getAbnRegNo() {
@@ -85,7 +94,7 @@ public class SupplierProcEntity implements Serializable{
 
     @NotNull
     @Size(max = 250)
-    @Column(name = "SUPPLIER_ID",  length = 250)
+    @Column(name = "SUPPLIER_ID", length = 250)
     public String getSupplierId() {
         return supplierId;
     }
@@ -123,6 +132,7 @@ public class SupplierProcEntity implements Serializable{
     public void setSuburb(String suburb) {
         this.suburb = suburb;
     }
+
     @Size(max = 250)
     @Column(name = "STATE", length = 250)
     public String getState() {
@@ -164,7 +174,7 @@ public class SupplierProcEntity implements Serializable{
     }
 
     @Size(max = 250)
-    @Column(name = "FAX",  length = 250)
+    @Column(name = "FAX", length = 250)
     public String getFax() {
         return fax;
     }
@@ -174,7 +184,7 @@ public class SupplierProcEntity implements Serializable{
     }
 
     @Size(max = 250)
-    @Column(name = "COMPANY_EMAIL",  length = 250)
+    @Column(name = "COMPANY_EMAIL", length = 250)
     public String getCompanyEmail() {
         return companyEmail;
     }
@@ -182,4 +192,21 @@ public class SupplierProcEntity implements Serializable{
     public void setCompanyEmail(String companyEmail) {
         this.companyEmail = companyEmail;
     }
+
+    @Transient
+    public List<ContactEntity> getContacts() {
+        return contacts;
+    }
+
+    @Transient
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    @Transient
+    public List<BrandEntity> getBrands() {
+        return brands;
+    }
+
+
 }
