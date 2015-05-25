@@ -8,7 +8,6 @@ import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
-import org.picketlink.Identity;
 import org.picketlink.annotations.PicketLink;
 import org.picketlink.authentication.BaseAuthenticator;
 import org.picketlink.credential.DefaultLoginCredentials;
@@ -18,11 +17,8 @@ import org.primefaces.context.RequestContext;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.management.relation.Role;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
