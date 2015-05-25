@@ -96,14 +96,14 @@
                     #{_scopeSupply.responsibleExpediting}
                 </div>
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.var']}" width="45">
+            <p:column headerText="#{msgs['po.supply.scope.column.var']}" width="41">
                 <h:outputText value="#{util.calculateVariance(_scopeSupply)}"
                               style="color:#{util.calculateVariance(_scopeSupply).startsWith('-')?'red':'black'}"/>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="95">
                 <div class="icon-container-attachment">
                     <p:commandLink oncomplete="PF('attachmentScopeSupplyModal').show()"
-                                   styleClass="icon-attahcment"
+                                   styleClass="icon-attachment"
                                    onclick="doChange();"
                                    action="#{purchaseOrderEdit.selectingForAttachment(_scopeSupply.id)}"
                                    update=":attachmentScopeSupplyId">
@@ -113,7 +113,7 @@
                     </p:commandLink>
                 </div>
             </p:column>
-            <p:column headerText="#{msgs['lbl.action']}" width="130">
+            <p:column headerText="#{msgs['lbl.action']}" width="136">
                 <div class="pull-left">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.edit']}"
                                    style="margin-top: 2px;margin-bottom: 2px;"
@@ -125,6 +125,8 @@
                         <p:ajax update="scopeSupplyList"
                                 listener="#{purchaseOrderEdit.deleteScopeSupply(_scopeSupply.id)}"/>
                     </h:commandLink>
+                </div>
+                   <div class="pull-left">
                     <h:commandLink rendered="#{permissionBean.hasPermission(105)}"
                                    style="margin-top: 2px;margin-bottom: 2px;"
                                    disabled="#{not (_scopeSupply.quantity!=null and _scopeSupply.quantity>1)}"
