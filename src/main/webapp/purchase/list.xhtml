@@ -105,6 +105,7 @@
                     #{_purchase.supplier}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po.status']}" width="100"
+                          sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po">
                     <div class="column-list-po">
                         #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
