@@ -53,10 +53,8 @@ public class Authenticator extends BaseAuthenticator{
             UserEntity userEntity = getUserEntity(credentials.getUserId(),passwordHashed);
             List<String> roleList = new ArrayList<>();
             List<RoleEntity> roleEntities = roleDao.getRolesAssignedBy(userDao.findUserByUserName(credentials.getUserId()).get(0).getId());
-            List<ModuleSystemEnum> moduleSystemList = new ArrayList<>();
             for (RoleEntity re : roleEntities){
                 roleList.add(re.getName());
-                moduleSystemList.add(re.getModuleSystem());
             }
             User user = new User(credentials.getUserId());
             user.setFirstName(userEntity.getFirstName());
@@ -64,7 +62,6 @@ public class Authenticator extends BaseAuthenticator{
             user.setEmail(userEntity.getEmail());
             List<Object> attributes=new ArrayList<>();
             attributes.add(roleList);
-            attributes.add(moduleSystemList);
             user.setAttribute(new Attribute<ArrayList>("attributes", (ArrayList) attributes));
             setAccount(user);
             setStatus(AuthenticationStatus.SUCCESS);
@@ -77,13 +74,6 @@ public class Authenticator extends BaseAuthenticator{
         }
     }
 
-    private String moduleAccess(List<RoleEntity> roleEntities){
-        if(roleEntities.size() > 1){
-            RequestContext.getCurrentInstance().execute("PF('moduleDlgId').show();");
-        }else{
-        }
-        return null;
-    }
 
 
 

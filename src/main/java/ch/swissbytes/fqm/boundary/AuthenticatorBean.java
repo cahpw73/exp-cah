@@ -2,6 +2,8 @@ package ch.swissbytes.fqm.boundary;
 
 import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
+import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 import org.primefaces.context.RequestContext;
@@ -26,58 +28,81 @@ public class AuthenticatorBean {
     @Inject
     private UserService service;
 
+    @Inject
+    private UserSession session;
 
-    private static final Logger log= Logger.getLogger(AuthenticatorBean.class.getName());
+
+    private static final Logger log = Logger.getLogger(AuthenticatorBean.class.getName());
 
 
-    public String login(){
+    public String login() {
         log.info("using another login");
-        if(!identity.isLoggedIn()){
-            identity.login();
-        }else{
-            log.log(Level.WARNING,String.format("user is already logged in"));
-        }
-        if(identity.isLoggedIn()){
-            User user=(User)identity.getAccount();
-            List<ModuleGrantedAccessEntity>systemList=service.getModulesGranted(user.getLoginName());
-            if(systemList.isEmpty()){
+        loginIfAny();
+        if (identity.isLoggedIn()) {
+            User user = (User) identity.getAccount();
+            List<ModuleGrantedAccessEntity> systemList = service.getModulesGranted(user.getLoginName());
+            if (systemList.isEmpty()) {
                 identity.logout();
-                log.log(Level.WARNING,"this user has no access any module system");
+                log.log(Level.WARNING, "this user has no access any module system");
                 return "NONE";
             }
-            if(systemList.size()==1){
+            if (systemList.size() == 1) {
+                session.setCurrentModule(systemList.get(0).getModuleSystem().name());
                 return systemList.get(0).getModuleSystem().name();
             }
             openDialogToPickModuleSystem();
         }
         return "";
     }
-
-    public String isLoggedIn(){
-        if(!identity.isLoggedIn()){
-            return "NONE";
+    private void loginIfAny(){
+        if (!identity.isLoggedIn()) {
+            identity.login();
+        } else {
+            log.log(Level.WARNING, String.format("user is already logged in"));
         }
-       // return currentModule!=null?currentModule.name():"NONE";
-        return null;
     }
 
-    public String currentUser(){
-        User user=(User)identity.getAccount();
-        return user!=null?user.getFirstName()+" "+user.getLastName():"";
+    public String currentUser() {
+        User user = (User) identity.getAccount();
+        return user != null ? user.getFirstName() + " " + user.getLastName() : "";
     }
-    public void openDialogToPickModuleSystem(){
-        log.info("openDialogToPickModuleSystem open1!!");
+
+    public void openDialogToPickModuleSystem() {
+        log.info("openDialogToPickModuleSystem !");
         RequestContext context = RequestContext.getCurrentInstance();
         RequestContext.getCurrentInstance().update("pickSystemFormId");
         context.execute("PF('pickSystemModal').show();");
-        //RequestContext.getCurrentInstance().execute("PF('moduleDlgId').show();");
     }
-    public String enterExpeditingModule(){
-      //  currentModule=ModuleSystemEnum.EXPEDITING;
+
+    public String enterExpeditingModule() {
+        session.setCurrentModule(ModuleSystemEnum.EXPEDITING.name());
         return "home?faces-redirect=true";
     }
-    public String enterProcurementModule(){
-        //currentModule=ModuleSystemEnum.PROCUREMENT;
+
+    public String enterProcurementModule() {
+        session.setCurrentModule(ModuleSystemEnum.PROCUREMENT.name());
         return "/procurement/home?faces-redirect=true";
+    }
+
+
+    public String validation(){
+        return "true";
+    }
+
+
+    public String currentHome(){
+        return "/home.xhtml";
+    }
+    public String validationLogin() {
+        if(!identity.isLoggedIn()){
+            return "";
+        }else{
+            if(StringUtils.isNotEmpty(session.getCurrentModule())&&StringUtils.isNotBlank(session.getCurrentModule())){
+                return "true";
+            }else{
+                openDialogToPickModuleSystem();
+                return "";
+            }
+        }
     }
 }

@@ -41,9 +41,26 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{authenticatorBean.validationLogin}</from-action>
+            <from-outcome>true</from-outcome>
+            <to-view-id>#{authenticatorBean.currentHome()}</to-view-id>
+            <redirect></redirect>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-action>#{identity.isLoggedIn()}</from-action>
+            <from-outcome>false</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-action>#{authenticatorBean.validation}</from-action>
             <from-outcome>false</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
         </navigation-case>
