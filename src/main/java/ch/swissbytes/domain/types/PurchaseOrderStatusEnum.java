@@ -8,14 +8,29 @@ import java.io.Serializable;
 public enum PurchaseOrderStatusEnum implements Serializable {
 
 
-    ISSUED, CANCELLED, DUE, OVERDUE, UNDER_SUPPLY, COMPLETED, INCOMPLETE, OVER_SUPPLY, STORAGE, ON_HOLD, MMR_REQUIRED,MISSING,DELETED,SHIPPED,BLANK;
+    ISSUED(0,"issued"), CANCELLED(1,"cancelled"), DUE(2,"due"), OVERDUE(3,"overdue"), UNDER_SUPPLY(4,"under supply"), COMPLETED(5,"completed"),
+    INCOMPLETE(6,"incomplete"), OVER_SUPPLY(7,"over supply"), STORAGE(8,"storage"), ON_HOLD(9,"on hold"),MMR_REQUIRED(10,"mmr required"),
+    MISSING(11,"missing"),DELETED(12,"deleted"), SHIPPED(13,"shipped"),BLANK(14,"");
 
-        public static PurchaseOrderStatusEnum getEnum(Integer ordinal){
-            for(PurchaseOrderStatusEnum poEnum:PurchaseOrderStatusEnum.values()){
-                if(poEnum.ordinal()==ordinal.intValue()){
-                    return poEnum;
-                }
-            }
-            return null;
-        }
+    private Integer id;
+    private String label;
+
+    PurchaseOrderStatusEnum(Integer id,String label) {
+        this.id = id;
+        this.label=label;
     }
+
+
+    public static PurchaseOrderStatusEnum getEnum(Integer ordinal) {
+        for (PurchaseOrderStatusEnum poEnum : PurchaseOrderStatusEnum.values()) {
+            if (poEnum.ordinal() == ordinal.intValue()) {
+                return poEnum;
+            }
+        }
+        return null;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+}
