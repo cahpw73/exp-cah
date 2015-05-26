@@ -1,6 +1,7 @@
 
 DELETE FROM ROLE_OPTION;
 DELETE FROM USER_ROLE ;
+DELETE FROM MODULE_GRANTED_ACCESS;
 DELETE FROM USERS;
 DELETE FROM ROLE;
 DELETE FROM STATUS;
@@ -22,17 +23,28 @@ INSERT INTO STATUS(id,name) VALUES(2,'DISABLED');
 INSERT INTO STATUS(id,name) VALUES(3,'REMOVED');
 
 
-INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (10,'simon.mcneal@mail.com','Simon','Mcneal','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',2,'simon',CURRENT_DATE);
+INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (10,'simon.mcneal@mail.com','Simon','Mcneal','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'simon',CURRENT_DATE);
 INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (11,'info@swissbytes.ch','Administrator','Fqmes','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'administrator',CURRENT_DATE);
 INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (12,'senior.fqmes@yopmail.com','senior','Fqmes','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'senior',CURRENT_DATE);
 INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (13,'junior.fqmes@yopmail.com','junior','Fqmes','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'junior',CURRENT_DATE);
 INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (14,'visitor.fqmes@yopmail.com','visitor','Fqmes','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'visitor',CURRENT_DATE);
+INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (15,'procurement.fqmes@yopmail.com','procurement','procurement','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'procurement',CURRENT_DATE);
+INSERT INTO USERS(id,email,first_name,name,pwd_hash,status_id,user_name,last_update) VALUES (16,'expediting.fqmes@yopmail.com','expediting','expediting','jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=',1,'expediting',CURRENT_DATE);
 
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (1,0,10,10);
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (2,0,11,13);
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (3,0,12,10);
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (4,0,13,11);
-INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (5,0,12,12);
+INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (5,0,10,12);
+INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (6,1,10,12);
+INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (7,1,10,15);
+INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (8,0,10,16);
+
+INSERT INTO MODULE_GRANTED_ACCESS (id,module_access,module_system,user_id) VALUES(1,true,0,12);
+INSERT INTO MODULE_GRANTED_ACCESS (id,module_access,module_system,user_id) VALUES(2,true,1,12);
+INSERT INTO MODULE_GRANTED_ACCESS (id,module_access,module_system,user_id) VALUES(3,true,1,15);
+INSERT INTO MODULE_GRANTED_ACCESS (id,module_access,module_system,user_id) VALUES(4,true,0,16);
+
 
 INSERT INTO MODULE_ENTITY(id,name,module_system) VALUES(1,'PURCHASE_ORDER',0);
 INSERT INTO MODULE_ENTITY(id,name,module_system) VALUES(2,'REPORT',0);
