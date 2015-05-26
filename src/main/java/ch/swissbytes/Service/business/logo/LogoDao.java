@@ -66,4 +66,27 @@ public class LogoDao extends GenericDao<LogoEntity> implements Serializable {
     protected String addCriteria(Filter filter) {
         return null;
     }
+
+
+    public List<LogoEntity> findByFileName(String fileName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT l ");
+        sb.append(" FROM LogoEntity l ");
+        sb.append(" WHERE l.status = :ENABLE ");
+        sb.append(" AND LOWER(l.fileName) = :FILE_NAME ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("FILE_NAME", fileName.trim().toLowerCase());
+        return super.findBy(sb.toString(),params);
+    }
+
+    public List<LogoEntity> findAll() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT l ");
+        sb.append(" FROM LogoEntity l ");
+        sb.append(" WHERE l.status = :ENABLE ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),params);
+    }
 }

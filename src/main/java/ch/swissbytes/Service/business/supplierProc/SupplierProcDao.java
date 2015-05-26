@@ -67,4 +67,25 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         return " ORDER BY x.supplierId , x.company";
     }
 
+    public List<SupplierProcEntity> findByCompany(String company) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT s ");
+        sb.append(" FROM SupplierProcEntity s ");
+        sb.append(" WHERE s.status = :ENABLE ");
+        sb.append(" AND LOWER(s.company) = :COMPANY ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("COMPANY", company.trim().toLowerCase());
+        return super.findBy(sb.toString(),params);
+    }
+
+    public List<SupplierProcEntity> findAll() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT s ");
+        sb.append(" FROM SupplierProcEntity s ");
+        sb.append(" WHERE s.status = :ENABLE ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),params);
+    }
 }

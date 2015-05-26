@@ -45,4 +45,11 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
     }
 
 
+    public List<LogoEntity> findByFileName(final String fileName) {
+        return dao.findByFileName(fileName);
+    }
+
+    public List<LogoEntity> findAll() {
+        return dao.findAll();
+    }
 }
