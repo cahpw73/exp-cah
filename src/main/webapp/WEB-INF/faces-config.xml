@@ -15,12 +15,22 @@
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{identity.login}</from-action>
-            <if>#{identity.loggedIn}</if>
+            <from-action>#{authenticatorBean.login}</from-action>
+            <from-outcome>PROCUREMENT</from-outcome>
             <to-view-id>/procurement/home.xhtml</to-view-id>
             <redirect></redirect>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{authenticatorBean.login}</from-action>
+            <from-outcome>EXPEDITING</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect></redirect>
+        </navigation-case>
+    </navigation-rule>
+
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>

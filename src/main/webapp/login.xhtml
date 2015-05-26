@@ -11,12 +11,12 @@
 </fc:metadata>
 <f:view>
     <h:head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title>#{msgs['login.title']}</title>
-        <h:outputScript name="primefaces/jquery/jquery.js"/>
+
         <h:outputStylesheet name="css/bootstrap.css"/>
         <h:outputStylesheet name="css/bootstrap-theme.css"/>
         <h:outputStylesheet name="css/bootstrap-multiselect.css"/>
@@ -24,10 +24,11 @@
     <h:body styleClass="BodyLogin">
         <div class="page-header">
         </div>
-        <div class="container" />
+        <div class="container"/>
         <p:messages id="glbMsgs" globalOnly="true" errorClass="alert alert-error"
-                                             warnClass="alert"
-                                             infoClass="alert alert-info"/>
+                    warnClass="alert"
+                    infoClass="alert alert-info"/>
+
         <div class="row" style="margin-top:20px">
             <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                 <h:form role="form" id="loginform">
@@ -35,38 +36,65 @@
                     <h:inputHidden id="timeZone" value="#{languagePreference.timeZone}"/>
                     <fieldset>
                         <h2>#{msgs['login.legend']}</h2>
-                        <hr class="colorgraph" />
+                        <hr class="colorgraph"/>
                         <div class="form-group">
-                            <h:inputText name="email" id="email" value="#{loginCredentials.userId}" class="form-control input-lg"
-                                         jsf:placeholder="#{msgs['login.placeholder.user']}" />
+                            <h:inputText name="email" id="email" value="#{loginCredentials.userId}"
+                                         class="form-control input-lg"
+                                         jsf:placeholder="#{msgs['login.placeholder.user']}"/>
                         </div>
                         <div class="form-group">
-                            <h:inputSecret type="password" name="password" id="password" value="#{loginCredentials.password}"
-                                           class="form-control input-lg" jsf:placeholder="#{msgs['login.placeholder.password']}" />
+                            <h:inputSecret type="password" name="password" id="password"
+                                           value="#{loginCredentials.password}"
+                                           class="form-control input-lg"
+                                           jsf:placeholder="#{msgs['login.placeholder.password']}"/>
                         </div>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
                                 <span class="button-checkbox">
-                                    <h:link styleClass="btn btn-link pull-right" value="#{msgs['login.forgot.password']}"
+                                    <h:link styleClass="btn btn-link pull-right"
+                                            value="#{msgs['login.forgot.password']}"
                                             outcome="forgotpassword?faces-redirect=true"/>
                                 </span>
                             </div>
                         </div>
-                        <hr class="colorgraph"> </hr>
+                        <hr class="colorgraph"></hr>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
                                 <p:commandButton type="submit" class="btn btn-lg btn-success btn-block"
-                                                 value="#{msgs['login.button.label']}" action="#{identity.login}" />
+                                                 action="#{authenticatorBean.login}"
+                                                 value="#{msgs['login.button.label']}">
+
+                                </p:commandButton>
                             </div>
                         </div>
                     </fieldset>
                 </h:form>
             </div>
         </div>
+
         <h:outputScript name="js/bootstrap.min.js"/>
         <h:outputScript name="js/jstz.min.js"/>
         <h:outputScript name="js/localeLanguage.js"/>
         <h:outputScript name="js/bootstrap-multiselect.js"/>
     </h:body>
+    <p:dialog id="pickSystemId" header="Select subsystem" closable="false" widgetVar="pickSystemModal"
+              resizable="false"
+              height="80" width="550">
+        <h:form id="pickSystemFormId">
+            <div>
+            Welcome #{authenticatorBean.currentUser()}, please selected which function you wish to do.
+            </div>
+            <br/>
+            <div style="text-align: center">
+                <p:commandButton type="submit"
+                                 action="#{authenticatorBean.enterProcurementModule}"
+                                 value="#{msgs['system.lbl.procurement']}"/>
+                &#160;
+                &#160;
+                <p:commandButton type="submit" action="#{authenticatorBean.enterExpeditingModule}"
+                                 value="#{msgs['system.lbl.expediting']}"/>
+            </div>
+        </h:form>
+    </p:dialog>
 </f:view>
 </html>

@@ -85,12 +85,7 @@ public class Authenticator extends BaseAuthenticator{
         return null;
     }
 
-    public void dialog(){
-        log.info("dialog open1!!");
-        RequestContext rc = RequestContext.getCurrentInstance();
-        rc.execute("PF('moduleDlgId').show();");
-        //RequestContext.getCurrentInstance().execute("PF('moduleDlgId').show();");
-    }
+
 
     private UserEntity getUserEntity(final String username, final String pass){
         return userCtrl.getUserEntity(username,pass);
