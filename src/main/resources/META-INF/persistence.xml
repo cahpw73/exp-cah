@@ -5,7 +5,7 @@
              version="2.1">
     <persistence-unit name="fqmPU" transaction-type="JTA">
         <properties>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             <property name="hibernate.connection.datasource" value="java:/fqm/procurementDS"/>

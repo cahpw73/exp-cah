@@ -1,8 +1,6 @@
 package ch.swissbytes.procurement.converter;
 
-import ch.swissbytes.Service.business.brand.BrandDao;
 import ch.swissbytes.Service.business.logo.LogoService;
-import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.LogoEntity;
 
 import javax.faces.component.UIComponent;
@@ -16,10 +14,10 @@ import java.util.logging.Logger;
 /**
  * Created by Christian on 13/01/15.
  */
-@FacesConverter("logoConverter")
-public class LogoConverter implements Converter {
+@FacesConverter("logoFileNameConverter")
+public class LogoFileNameConverter implements Converter {
 
-    public static final Logger log = Logger.getLogger(LogoConverter.class.getName());
+    public static final Logger log = Logger.getLogger(LogoFileNameConverter.class.getName());
 
     @Inject
     private LogoService logoService;
@@ -30,21 +28,12 @@ public class LogoConverter implements Converter {
         if (value == null) {
             return null;
         }
-        try {
-            log.info("value " + value);
-            LogoEntity logo = null;
-            Long.parseLong(value);
-            for (LogoEntity logoEntity : logoService.getLogoList()) {
-                if (logoEntity.getId().intValue() == Integer.parseInt(value)) {
-                    logo = logoEntity;
-                    break;
-                }
-            }
-            log.info("returning " + logo);
-            return logo;
-        } catch (NumberFormatException nfe) {
-            return null;
+        List<LogoEntity> list = logoService.findByFileName(value);
+        LogoEntity logoEntity = null;
+        if(!list.isEmpty()){
+            logoEntity = list.get(0);
         }
+        return logoEntity;
     }
 
     @Override
@@ -52,7 +41,7 @@ public class LogoConverter implements Converter {
                               Object value) {
         String string = null;
         if (value instanceof LogoEntity) {
-            string = ((LogoEntity) value).getId().toString();
+            string = ((LogoEntity) value).getFileName();
         }
         log.info("vale returned "+string);
         return string;

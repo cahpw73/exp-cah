@@ -95,4 +95,11 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         return id != null && id > 0 ? contactDao.findByContactsBySupplier(id) : new ArrayList<ContactEntity>();
     }
 
+    public List<SupplierProcEntity> findByCompany(final String company) {
+        return dao.findByCompany(company);
+    }
+
+    public List<SupplierProcEntity> findAll() {
+        return dao.findAll();
+    }
 }

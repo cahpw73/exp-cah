@@ -25,7 +25,7 @@ public class ProjectEntity implements Serializable{
     private LogoEntity defaultLogo;
     private LogoEntity defaultFooter;
     private String deliveryInstructions;
-    private SupplierEntity supplier;
+    private SupplierProcEntity supplierProcurement;
     private StatusEnum status;
     private Date lastUpdate;
 
@@ -51,7 +51,7 @@ public class ProjectEntity implements Serializable{
     }
 
     @Size(max = 255)
-    @Column(name = "title", nullable = false, length = 250)
+    @Column(name = "title", nullable = true, length = 250)
     public String getTitle() {
         return title;
     }
@@ -60,8 +60,8 @@ public class ProjectEntity implements Serializable{
         this.title = title;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="report_logo_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="report_logo_id", nullable = true)
     public LogoEntity getReportLogo() {
         return reportLogo;
     }
@@ -70,8 +70,8 @@ public class ProjectEntity implements Serializable{
         this.reportLogo = reportLogo;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="client_logo_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="client_logo_id", nullable = true)
     public LogoEntity getClientLogo() {
         return clientLogo;
     }
@@ -80,8 +80,8 @@ public class ProjectEntity implements Serializable{
         this.clientLogo = clientLogo;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="client_footer_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="client_footer_id", nullable = true)
     public LogoEntity getClientFooter() {
         return clientFooter;
     }
@@ -90,8 +90,8 @@ public class ProjectEntity implements Serializable{
         this.clientFooter = clientFooter;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="default_logo_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="default_logo_id", nullable = true)
     public LogoEntity getDefaultLogo() {
         return defaultLogo;
     }
@@ -100,8 +100,8 @@ public class ProjectEntity implements Serializable{
         this.defaultLogo = defaultLogo;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="default_footer_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="default_footer_id", nullable = true)
     public LogoEntity getDefaultFooter() {
         return defaultFooter;
     }
@@ -110,8 +110,8 @@ public class ProjectEntity implements Serializable{
         this.defaultFooter = defaultFooter;
     }
 
-    @Size(max = 255)
-    @Column(name = "delivery_instructions", nullable = false, length = 250)
+    @Size(max = 1000)
+    @Column(name = "delivery_instructions", nullable = true, length = 1000)
     public String getDeliveryInstructions() {
         return deliveryInstructions;
     }
@@ -120,14 +120,14 @@ public class ProjectEntity implements Serializable{
         this.deliveryInstructions = deliveryInstructions;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="supplier_id")
-    public SupplierEntity getSupplier() {
-        return supplier;
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="supplier_procurement_id", nullable = true)
+    public SupplierProcEntity getSupplierProcurement() {
+        return supplierProcurement;
     }
 
-    public void setSupplier(SupplierEntity supplier) {
-        this.supplier = supplier;
+    public void setSupplierProcurement(SupplierProcEntity supplier) {
+        this.supplierProcurement = supplier;
     }
 
     @Column (name = "status",nullable = false)
@@ -150,5 +150,20 @@ public class ProjectEntity implements Serializable{
         this.lastUpdate = lastUpdate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        ProjectEntity that = (ProjectEntity) o;
+
+        if (!id.equals(that.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
