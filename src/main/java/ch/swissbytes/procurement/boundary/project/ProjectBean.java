@@ -53,7 +53,11 @@ public class ProjectBean implements Serializable {
 
     private List<LogoEntity> logoList;
 
+    private List<ProjectCurrencyEntity> projectCurrencyList;
+
     private ProjectEntity projectEntity;
+
+    private ProjectCurrencyEntity projectCurrencyEntity;
 
     private boolean isCreateProject;
 
@@ -64,7 +68,9 @@ public class ProjectBean implements Serializable {
     public void init (){
         log.info("ProjectBean created");
         projectEntity = new ProjectEntity();
+        projectCurrencyEntity = new ProjectCurrencyEntity();
         supplierProcList = new ArrayList<>();
+        projectCurrencyList = new ArrayList<>();
         logoList = new ArrayList<>();
         loadSupplierProcList();
         loadLogoList();
@@ -102,6 +108,12 @@ public class ProjectBean implements Serializable {
         }
         mainMenuBean.select(0);
         return "";
+    }
+
+    public void addCurrency(){
+        log.info("add currency");
+        projectCurrencyList.add(projectCurrencyEntity);
+        projectCurrencyEntity = new ProjectCurrencyEntity();
     }
 
     private void loadSupplierProcList(){
@@ -162,4 +174,15 @@ public class ProjectBean implements Serializable {
         return logoList;
     }
 
+    public List<ProjectCurrencyEntity> getProjectCurrencyList() {
+        return projectCurrencyList;
+    }
+
+    public ProjectCurrencyEntity getProjectCurrencyEntity() {
+        return projectCurrencyEntity;
+    }
+
+    public void setProjectCurrencyEntity(ProjectCurrencyEntity projectCurrencyEntity) {
+        this.projectCurrencyEntity = projectCurrencyEntity;
+    }
 }
