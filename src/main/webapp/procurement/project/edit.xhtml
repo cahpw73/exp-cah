@@ -16,19 +16,20 @@
     <ui:define name="body">
         <h:form id="editUserForm" prependId="false" class="form-horizontal">
             <div class="col-md-8" style="margin-top: 25px;">
-                    <h:panelGroup rendered="#{projectBean.createProject}">
-                        <div class="procurement-panel-header">#{msgs['project.detail.page.title.add']}</div>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{!projectBean.createProject}">
-                        <div class="procurement-panel-header">#{msgs['project.detail.page.title.edit']}</div>
-                    </h:panelGroup>
+                <h:panelGroup rendered="#{projectBean.createProject}">
+                    <div class="procurement-panel-header">#{msgs['project.detail.page.title.add']}</div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{!projectBean.createProject}">
+                    <div class="procurement-panel-header">#{msgs['project.detail.page.title.edit']}</div>
+                </h:panelGroup>
 
                 <div class="col-md-8 panel-tab-users">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#projectDetail" role="tab"
                                               data-toggle="tab">#{msgs['project.detail.title.tab']}</a></li>
-                        <li><a href="#standardText" role="tab" data-toggle="tab">#{msgs['project.standard.text.title.tab']}</a>
+                        <li><a href="#standardText" role="tab"
+                               data-toggle="tab">#{msgs['project.standard.text.title.tab']}</a>
                         </li>
                         <li><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
                         </li>
@@ -39,18 +40,25 @@
                         <!-- Tab Project Detail -->
                         <div class="tab-pane active" id="projectDetail">
                             <br/>
+
                             <div class="row">
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="projectNumber" value="#{msgs['project.detail.project.number']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="projectNumber"
+                                                   value="#{msgs['project.detail.project.number']}"/>
+
                                     <div class="col-sm-5">
-                                        <h:inputText id="projectNumber" value="#{projectBean.projectEntity.projectNumber}"
+                                        <h:inputText id="projectNumber"
+                                                     value="#{projectBean.projectEntity.projectNumber}"
                                                      styleClass="form-control" required="true"
                                                      requiredMessage="#{msgs['project.detail.project.number.required']}"/>
                                         <p:message for="projectNumber" id="msgInputProjectNumber"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="titleId" value="#{msgs['project.detail.title']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="titleId" value="#{msgs['project.detail.title']}"/>
+
                                     <div class="col-sm-5">
                                         <h:inputText id="titleId" value="#{projectBean.projectEntity.title}"
                                                      styleClass="form-control" required="true"
@@ -59,9 +67,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="clientId" value="#{msgs['project.detail.client']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="clientId" value="#{msgs['project.detail.client']}"/>
+
                                     <div class="col-sm-5">
-                                        <h:selectOneMenu id="clientId" value="#{projectBean.projectEntity.supplierProcurement}"
+                                        <h:selectOneMenu id="clientId"
+                                                         value="#{projectBean.projectEntity.supplierProcurement}"
                                                          styleClass="form-control" converter="supplierProcurementConv">
                                             <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                                             <f:selectItems value="#{projectBean.supplierProcList}"
@@ -74,7 +85,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
+
                                     <div class="col-sm-5">
                                         <h:selectOneMenu id="reportLogo" value="#{projectBean.projectEntity.reportLogo}"
                                                          styleClass="form-control" converter="logoConverter">
@@ -89,8 +102,8 @@
                                     <div class="col-sm-2">
                                         <div class="pull-right">
                                             <h:commandLink styleClass="btn btn-primary btn-sm"
-                                                            type="button" onclick="PF('logoModal').show();"
-                                                             value="#{msgs['project.detail.btn.new.logo']}" >
+                                                           type="button" onclick="PF('logoModal').show();"
+                                                           value="#{msgs['project.detail.btn.new.logo']}">
                                                 <p:ajax process="@this"
                                                         async="false"
                                                         listener="#{logoBean.restart}"
@@ -100,7 +113,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
+
                                     <div class="col-sm-5">
                                         <h:selectOneMenu id="clientLogo" value="#{projectBean.projectEntity.clientLogo}"
                                                          styleClass="form-control" converter="logoConverter">
@@ -116,7 +131,7 @@
                                         <div class="pull-right">
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
                                                              styleClass="btn btn-primary btn-sm"
-                                                             value="#{msgs['project.detail.btn.new.logo']}" >
+                                                             value="#{msgs['project.detail.btn.new.logo']}">
                                                 <p:ajax process="@this"
                                                         async="false"
                                                         listener="#{logoBean.restart}"
@@ -126,9 +141,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="clientFooter" value="#{msgs['project.detail.client.footer']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="clientFooter" value="#{msgs['project.detail.client.footer']}"/>
+
                                     <div class="col-sm-5">
-                                        <h:selectOneMenu id="clientFooter" value="#{projectBean.projectEntity.clientFooter}"
+                                        <h:selectOneMenu id="clientFooter"
+                                                         value="#{projectBean.projectEntity.clientFooter}"
                                                          styleClass="form-control" converter="logoConverter">
                                             <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                                             <f:selectItems value="#{projectBean.logoList}"
@@ -141,7 +159,8 @@
                                     <div class="col-sm-2">
                                         <div class="pull-right">
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                             styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
+                                                             styleClass="btn btn-primary btn-sm"
+                                                             value="#{msgs['project.detail.btn.new.logo']}">
                                                 <p:ajax process="@this"
                                                         async="false"
                                                         listener="#{logoBean.restart}"
@@ -151,9 +170,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="defaultLogo" value="#{msgs['project.detail.default.logo']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="defaultLogo" value="#{msgs['project.detail.default.logo']}"/>
+
                                     <div class="col-sm-5">
-                                        <h:selectOneMenu id="defaultLogo" value="#{projectBean.projectEntity.defaultLogo}"
+                                        <h:selectOneMenu id="defaultLogo"
+                                                         value="#{projectBean.projectEntity.defaultLogo}"
                                                          styleClass="form-control" converter="logoConverter">
                                             <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                                             <f:selectItems value="#{projectBean.logoList}"
@@ -166,7 +188,8 @@
                                     <div class="col-sm-2">
                                         <div class="pull-right">
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                             styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
+                                                             styleClass="btn btn-primary btn-sm"
+                                                             value="#{msgs['project.detail.btn.new.logo']}">
                                                 <p:ajax process="@this"
                                                         async="false"
                                                         listener="#{logoBean.restart}"
@@ -176,9 +199,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="defaultFooter" value="#{msgs['project.detail.default.footer']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="defaultFooter"
+                                                   value="#{msgs['project.detail.default.footer']}"/>
+
                                     <div class="col-sm-5">
-                                        <h:selectOneMenu id="defaultFooter" value="#{projectBean.projectEntity.defaultFooter}"
+                                        <h:selectOneMenu id="defaultFooter"
+                                                         value="#{projectBean.projectEntity.defaultFooter}"
                                                          styleClass="form-control" converter="logoConverter">
                                             <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                                             <f:selectItems value="#{projectBean.logoList}"
@@ -191,7 +218,8 @@
                                     <div class="col-sm-2">
                                         <div class="pull-right">
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                             styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
+                                                             styleClass="btn btn-primary btn-sm"
+                                                             value="#{msgs['project.detail.btn.new.logo']}">
                                                 <p:ajax process="@this"
                                                         async="false"
                                                         listener="#{logoBean.restart}"
@@ -201,10 +229,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="instructions" value="#{msgs['project.detail.delivery.instruction']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="instructions"
+                                                   value="#{msgs['project.detail.delivery.instruction']}"/>
+
                                     <div class="col-sm-5">
-                                        <p:inputTextarea id="instructions" value="#{projectBean.projectEntity.deliveryInstructions}"
-                                                     styleClass="form-control" style="height: 135px!important; width: 366px!important"/>
+                                        <p:inputTextarea id="instructions"
+                                                         value="#{projectBean.projectEntity.deliveryInstructions}"
+                                                         styleClass="form-control"
+                                                         style="height: 135px!important; width: 366px!important"/>
                                         <p:message for="instructions" id="msgInstruction"/>
                                     </div>
                                 </div>
@@ -216,89 +249,91 @@
                         </div>
                         <!-- Tab Currency-->
                         <div class="tab-pane " id="currency">
+
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="panel panel-default panel-tab">
                                         <!-- Default panel contents -->
                                         <div class="panel-body">
                                             <h:panelGroup id="currencyGroup">
-                                            <div class="row">
-                                                <div class="col-sm-11" style="padding-right: 0px!important;">
-                                                    <h:selectOneMenu id="currencyId"
-                                                                     value="#{projectBean.projectCurrencyEntity.currency}"
-                                                                     styleClass="form-control" required="true"
-                                                                     converter="currencyConverter"
-                                                                     requiredMessage="#{msgs['project.currencies.required.choose.currency']}">
-                                                        <f:selectItem
-                                                                itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
-                                                                noSelectionOption="true"/>
-                                                        <f:selectItems value="#{projectBean.currencyList}"
-                                                                       var="_c"
-                                                                       itemValue="#{_c}"
-                                                                       itemLabel="#{_c.name}"/>
-                                                    </h:selectOneMenu>
-                                                </div>
-                                            </div>
-                                            <br/>
-
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <h:outputLabel
-                                                            styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                                            for="exchangeRate"
-                                                            value="#{msgs['project.currencies.lbl.exchange.rate']}"/>
-
-                                                    <div class="col-sm-7">
-                                                        <h:inputText id="exchangeRate"
-                                                                     value="#{projectBean.projectCurrencyEntity.exchangeRate}"
-                                                                     styleClass="form-control" required="true"
-                                                                     requiredMessage="#{msgs['project.currencies.required.exchange.rate']}"/>
-                                                        <p:message for="exchangeRate" id="msgExchangeRate"/>
+                                                <div class="row">
+                                                    <div class="col-sm-11" style="padding-right: 0px!important;">
+                                                        <h:selectOneMenu id="currencyId"
+                                                                         value="#{projectBean.projectCurrencyEntity.currency}"
+                                                                         styleClass="form-control" converter="currencyConverter">
+                                                            <f:selectItem
+                                                                    itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                                                    noSelectionOption="true"/>
+                                                            <f:selectItems value="#{projectBean.currencyList}"
+                                                                           var="_c"
+                                                                           itemValue="#{_c}"
+                                                                           itemLabel="#{_c.name}"/>
+                                                        </h:selectOneMenu>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <h:outputLabel
-                                                            styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                                            for="currencyFactor"
-                                                            value="#{msgs['project.currencies.lbl.currency.factor']}"/>
+                                                <br/>
 
-                                                    <div class="col-sm-7">
-                                                        <h:inputText id="currencyFactor"
-                                                                     value="#{projectBean.projectCurrencyEntity.currencyFactor}"
-                                                                     styleClass="form-control" required="true"
-                                                                     requiredMessage="#{msgs['project.currencies.required.currency.factor']}"/>
-                                                        <p:message for="currencyFactor" id="msgCurrencyFactor"/>
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <h:outputLabel
+                                                                styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                                                for="exchangeRate"
+                                                                value="#{msgs['project.currencies.lbl.exchange.rate']}"/>
+
+                                                        <div class="col-sm-7">
+                                                            <h:inputText id="exchangeRate"
+                                                                         value="#{projectBean.projectCurrencyEntity.exchangeRate}"
+                                                                         styleClass="form-control"/>
+                                                            <p:message for="exchangeRate" id="msgExchangeRate"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:outputLabel
+                                                                styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                                                for="currencyFactor"
+                                                                value="#{msgs['project.currencies.lbl.currency.factor']}"/>
+
+                                                        <div class="col-sm-7">
+                                                            <h:inputText id="currencyFactor"
+                                                                         value="#{projectBean.projectCurrencyEntity.currencyFactor}"
+                                                                         styleClass="form-control" />
+                                                            <p:message for="currencyFactor" id="msgCurrencyFactor"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:outputLabel
+                                                                styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                                                for="format"
+                                                                value="#{msgs['project.currencies.lbl.format']}"/>
+
+                                                        <div class="col-sm-7">
+                                                            <h:inputText id="format"
+                                                                         value="#{projectBean.projectCurrencyEntity.format}"
+                                                                         styleClass="form-control" />
+                                                            <p:message for="format" id="msgFormat"/>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <h:outputLabel
-                                                            styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                                            for="format"
-                                                            value="#{msgs['project.currencies.lbl.format']}"/>
+                                                <br/>
 
-                                                    <div class="col-sm-7">
-                                                        <h:inputText id="format"
-                                                                     value="#{projectBean.projectCurrencyEntity.format}"
-                                                                     styleClass="form-control" required="true"
-                                                                     requiredMessage="#{msgs['project.currencies.required.format']}"/>
-                                                        <p:message for="format" id="msgFormat"/>
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <h:commandButton value="#{msgs['lbl.add']}"
+                                                                         action="#{projectBean.addCurrency}"
+                                                                         styleClass="btn btn-primary btn-sm"
+                                                                         rendered="#{projectBean.createCurrency}">
+                                                            <p:ajax update="currencyListId,currencyGroup"
+                                                                    process="currencyGroup" async="false"/>
+                                                        </h:commandButton>
+                                                        <h:commandButton value="#{msgs['lbl.update']}"
+                                                                         action="#{projectBean.updateCurrencyList}"
+                                                                         styleClass="btn btn-primary btn-sm"
+                                                                         rendered="#{!projectBean.createCurrency}">
+                                                            <p:ajax update="currencyListId,currencyGroup"
+                                                                    process="currencyGroup" async="false"/>
+                                                        </h:commandButton>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <br/>
-
-                                            <div class="row">
-                                                <div class="col-sm-5">
-                                                    <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.addCurrency}"
-                                                                     styleClass="btn btn-primary btn-sm" rendered="#{projectBean.createCurrency}">
-                                                        <p:ajax update="currencyListId,currencyGroup" process="currencyGroup" async="false"/>
-                                                    </h:commandButton>
-                                                    <h:commandButton value="#{msgs['lbl.update']}" action="#{projectBean.updateCurrencyList}"
-                                                                     styleClass="btn btn-primary btn-sm" rendered="#{!projectBean.createCurrency}">
-                                                        <p:ajax update="currencyListId,currencyGroup" process="currencyGroup" async="false"/>
-                                                    </h:commandButton>
-                                                </div>
-                                            </div>
                                             </h:panelGroup>
                                         </div>
 
@@ -309,36 +344,53 @@
                                                  paginator="false" rows="#{configuration.defaultPageSize}" lazy="true"
                                                  rowsPerPageTemplate="#{configuration.getPagesSize(projectBean.projectCurrencyList.size())}"
                                                  paginatorPosition="bottom">
-                                        <p:column headerText="#{msgs['project.currencies.column.project.currency']}" width="180" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                        <p:column headerText="#{msgs['project.currencies.column.project.currency']}"
+                                                  width="180" rendered="#{projectBean.isCurrencyEnable(_p)}">
                                             #{_p.currency.name}
                                         </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.exchange.rate']}" width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                        <p:column headerText="#{msgs['project.currencies.column.exchange.rate']}"
+                                                  width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
                                             #{_p.exchangeRate}
                                         </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.currency.factor']}" width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                        <p:column headerText="#{msgs['project.currencies.column.currency.factor']}"
+                                                  width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
                                             #{_p.currencyFactor}
                                         </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.format.po']}" width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                        <p:column headerText="#{msgs['project.currencies.column.format.po']}" width="90"
+                                                  rendered="#{projectBean.isCurrencyEnable(_p)}">
                                             #{_p.format}
                                         </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.date.updated']}" width="120" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                        <p:column headerText="#{msgs['project.currencies.column.date.updated']}"
+                                                  width="120" rendered="#{projectBean.isCurrencyEnable(_p)}">
                                             #{util.toLocal(_p.lastUpdate)}
                                         </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.project.default']}" width="50" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            <h:selectBooleanCheckbox  value="#{projectBean.projectCurrencyEntity.projectDefault}">
-                                                <p:ajax/>
+                                        <p:column headerText="#{msgs['project.currencies.column.project.default']}"
+                                                  width="50" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                            <h:selectBooleanCheckbox
+                                                    value="#{projectBean.projectCurrencyEntity.projectDefault}">
                                             </h:selectBooleanCheckbox>
                                         </p:column>
-                                        <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            <p:commandLink value="Edit" update=":editUserForm:currencyGroup" process="@this"
-                                                           action="#{projectBean.doUpdateCurrency(_p)}" immediate="true"/>
+                                        <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140"
+                                                  rendered="#{projectBean.isCurrencyEnable(_p)}">
+                                            <p:commandLink value="Edit" update=":editUserForm:currencyGroup"
+                                                           process="@this"
+                                                           action="#{projectBean.doUpdateCurrency(_p)}"
+                                                           immediate="true"/>
                                             &#160;
-                                            <p:commandLink value="Remove" update=":editUserForm:currencyGroup,currencyListId" process="@this"
-                                                           action="#{projectBean.doDeleteCurrency(_p)}" immediate="true"/>
+                                            <p:commandLink value="Remove"
+                                                           update=":editUserForm:currencyGroup,currencyListId"
+                                                           process="@this"
+                                                           action="#{projectBean.doDeleteCurrency(_p)}"
+                                                           immediate="true">
+                                                <p:confirm header="Delete currency"
+                                                           message="Are you sure delete this Currency?"/>
+                                            </p:commandLink>
                                         </p:column>
                                     </p:dataTable>
+
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -347,11 +399,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <h:commandButton value="#{msgs['lbl.save']}" rendered="#{projectBean.createProject}"
-                                         action="#{projectBean.doSave}"
-                                         styleClass="btn btn-primary btn-sm"/>
+                                         action="#{projectBean.doSave}" styleClass="btn btn-primary btn-sm"
+                                         type="submit"/>
                         <h:commandButton value="#{msgs['lbl.update']}" rendered="#{!projectBean.createProject}"
-                                         action="#{projectBean.doUpdate}"
-                                         styleClass="btn btn-primary btn-sm"/>
+                                         action="#{projectBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
                         &#160;
                         <h:commandButton value="#{msgs['lbl.cancel']}"
                                          action="list?faces-redirect=true"
@@ -361,7 +412,7 @@
                 </div>
             </div>
         </h:form>
-        <p:dialog  header="New Logo" widgetVar="logoModal"
+        <p:dialog header="New Logo" widgetVar="logoModal"
                   resizable="false" height="400" width="600">
             <h:panelGroup id="logoModalId">
                 <div class="col-md-12">
