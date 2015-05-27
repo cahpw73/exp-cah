@@ -8,7 +8,6 @@ import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
-import org.picketlink.Identity;
 import org.picketlink.annotations.PicketLink;
 import org.picketlink.authentication.BaseAuthenticator;
 import org.picketlink.credential.DefaultLoginCredentials;
@@ -18,11 +17,8 @@ import org.primefaces.context.RequestContext;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.management.relation.Role;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,10 +53,8 @@ public class Authenticator extends BaseAuthenticator{
             UserEntity userEntity = getUserEntity(credentials.getUserId(),passwordHashed);
             List<String> roleList = new ArrayList<>();
             List<RoleEntity> roleEntities = roleDao.getRolesAssignedBy(userDao.findUserByUserName(credentials.getUserId()).get(0).getId());
-            List<ModuleSystemEnum> moduleSystemList = new ArrayList<>();
             for (RoleEntity re : roleEntities){
                 roleList.add(re.getName());
-                moduleSystemList.add(re.getModuleSystem());
             }
             User user = new User(credentials.getUserId());
             user.setFirstName(userEntity.getFirstName());
@@ -68,7 +62,6 @@ public class Authenticator extends BaseAuthenticator{
             user.setEmail(userEntity.getEmail());
             List<Object> attributes=new ArrayList<>();
             attributes.add(roleList);
-            attributes.add(moduleSystemList);
             user.setAttribute(new Attribute<ArrayList>("attributes", (ArrayList) attributes));
             setAccount(user);
             setStatus(AuthenticationStatus.SUCCESS);
@@ -81,20 +74,8 @@ public class Authenticator extends BaseAuthenticator{
         }
     }
 
-    private String moduleAccess(List<RoleEntity> roleEntities){
-        if(roleEntities.size() > 1){
-            RequestContext.getCurrentInstance().execute("PF('moduleDlgId').show();");
-        }else{
-        }
-        return null;
-    }
 
-    public void dialog(){
-        log.info("dialog open1!!");
-        RequestContext rc = RequestContext.getCurrentInstance();
-        rc.execute("PF('moduleDlgId').show();");
-        //RequestContext.getCurrentInstance().execute("PF('moduleDlgId').show();");
-    }
+
 
     private UserEntity getUserEntity(final String username, final String pass){
         return userCtrl.getUserEntity(username,pass);

@@ -74,3 +74,20 @@
     cursor: default;
     color: gray;
 }
+.logo-procurement-preview{
+    border-style:solid;
+    border-width: 1px;
+    margin-bottom: 15px;
+}
+.upload-logo{
+
+}
+.ui-widget.upload-logo{
+    padding-left: 0px!important;
+    padding-top: 0px!important;
+}
+
+.ui-fileupload-buttonbar.upload-logo{
+    padding-top: 0px!important;
+    padding-right: 0px!important;
+}

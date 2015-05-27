@@ -175,4 +175,9 @@ public class UserService implements Serializable {
         }
         return entity;
     }
+
+
+    public List<ModuleGrantedAccessEntity> getModulesGranted(final String userName){
+        return userDao.getModuleGrantedAccess(userName);
+    }
 }

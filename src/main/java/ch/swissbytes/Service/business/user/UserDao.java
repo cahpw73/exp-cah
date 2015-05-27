@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.user;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -191,7 +192,7 @@ public class UserDao extends GenericDao implements Serializable {
         sb.append(" WHERE NOT u.status.id = :DELETED ");
         Map<String,Object> parameters = new HashMap<>();
         parameters.put("DELETED", StatusEnum.DELETED.getId());
-        return super.findBy(sb.toString(),parameters);
+        return super.findBy(sb.toString(), parameters);
     }
 
     public List<UserEntity> findBySearchTerm(final String searchTerm, final StatusEnum userStatus) {
@@ -203,7 +204,7 @@ public class UserDao extends GenericDao implements Serializable {
         sb.append(" WHERE NOT u.status.id = :DELETED ");
 
         Map<String,Object> parameters = new HashMap<>();
-        parameters.put("DELETED",StatusEnum.DELETED.getId());
+        parameters.put("DELETED", StatusEnum.DELETED.getId());
 
         if(userStatus != null && (userStatus.getId().intValue() == StatusEnum.ENABLE.getId().intValue())) {
             sb.append(" AND u.status.id = :ENABLE ");
@@ -218,6 +219,19 @@ public class UserDao extends GenericDao implements Serializable {
             parameters.put("NAME", "%" + searchTerm.toLowerCase().trim() + "%");
             parameters.put("EMAIL", "%" + searchTerm.toLowerCase().trim() + "%");
         }
+        return super.findBy(sb.toString(),parameters);
+    }
+
+    public List<ModuleGrantedAccessEntity> getModuleGrantedAccess(final String userName){
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT m ");
+        sb.append(" FROM ModuleGrantedAccessEntity m ");
+        sb.append(" WHERE m.userEntity.status.id=:ENABLED ");
+        sb.append(" AND m.moduleAccess=true");
+        sb.append(" AND trim(lower(m.userEntity.username))=:USER_NAME");
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("USER_NAME", userName.trim().toLowerCase());
+        parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         return super.findBy(sb.toString(),parameters);
     }
 }

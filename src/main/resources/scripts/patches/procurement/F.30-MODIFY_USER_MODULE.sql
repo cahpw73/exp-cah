@@ -10,7 +10,7 @@ INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (1,0,10,10);
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (2,0,11,13);
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (3,0,12,10);
 INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (4,0,13,11);
-INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (5,0,14,12);
+INSERT INTO USER_ROLE(id,module_system,role_id,user_id) VALUES (5,0,10,12);
 
 --Add column module_system to role
 INSERT INTO ROLE(id,name,module_system) VALUES (14,'FULL_WITH_COMMIT',1);
