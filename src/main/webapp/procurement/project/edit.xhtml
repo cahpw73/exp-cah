@@ -93,7 +93,7 @@
                                                              value="#{msgs['project.detail.btn.new.logo']}" >
                                                 <p:ajax process="@this"
                                                         async="false"
-                                                        listener="#{logoBean.restart}"
+                                                        listener="#{projectBean.startReportLogo}"
                                                         update=":logoModalId"/>
                                             </h:commandLink>
                                         </div>
@@ -119,7 +119,7 @@
                                                              value="#{msgs['project.detail.btn.new.logo']}" >
                                                 <p:ajax process="@this"
                                                         async="false"
-                                                        listener="#{logoBean.restart}"
+                                                        listener="#{projectBean.startClientLogo}"
                                                         update=":logoModalId"/>
                                             </h:commandButton>
                                         </div>
@@ -144,7 +144,7 @@
                                                              styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
                                                 <p:ajax process="@this"
                                                         async="false"
-                                                        listener="#{logoBean.restart}"
+                                                        listener="#{projectBean.startClientFooter}"
                                                         update=":logoModalId"/>
                                             </h:commandButton>
                                         </div>
@@ -169,7 +169,7 @@
                                                              styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
                                                 <p:ajax process="@this"
                                                         async="false"
-                                                        listener="#{logoBean.restart}"
+                                                        listener="#{projectBean.startDefaultLogo}"
                                                         update=":logoModalId"/>
                                             </h:commandButton>
                                         </div>
@@ -194,7 +194,7 @@
                                                              styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
                                                 <p:ajax process="@this"
                                                         async="false"
-                                                        listener="#{logoBean.restart}"
+                                                        listener="#{projectBean.startDefaultFooter}"
                                                         update=":logoModalId"/>
                                             </h:commandButton>
                                         </div>
@@ -368,6 +368,7 @@
                     <ui:include src="../admin/logo/component/previewTemplate.xhtml">
                         <ui:param name="MODE" value="PROJECT"/>
                         <ui:param name="MODAL" value="logoModal"/>
+                        <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo"/>
                     </ui:include>
                 </div>
             </h:panelGroup>
