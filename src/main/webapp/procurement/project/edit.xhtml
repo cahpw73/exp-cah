@@ -251,13 +251,13 @@
                         <div class="tab-pane " id="currency">
 
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-8">
                                     <div class="panel panel-default panel-tab">
                                         <!-- Default panel contents -->
                                         <div class="panel-body">
                                             <h:panelGroup id="currencyGroup">
                                                 <div class="row">
-                                                    <div class="col-sm-11" style="padding-right: 0px!important;">
+                                                    <div class="col-sm-8" style="padding-right: 0px!important;">
                                                         <h:selectOneMenu id="currencyId"
                                                                          value="#{projectBean.projectCurrencyEntity.currency}"
                                                                          styleClass="form-control" converter="currencyConverter">
@@ -270,6 +270,10 @@
                                                                            itemLabel="#{_c.name}"/>
                                                         </h:selectOneMenu>
                                                     </div>
+                                                    <div class="col-sm-3">
+                                                        <h:commandButton value="#{msgs['project.currencies.lbl.btn.new.currency']}"
+                                                                         styleClass="btn btn-primary btn-sm"/>
+                                                    </div>
                                                 </div>
                                                 <br/>
 
@@ -280,7 +284,7 @@
                                                                 for="exchangeRate"
                                                                 value="#{msgs['project.currencies.lbl.exchange.rate']}"/>
 
-                                                        <div class="col-sm-7">
+                                                        <div class="col-sm-7" style="width: 268px!important;">
                                                             <h:inputText id="exchangeRate"
                                                                          value="#{projectBean.projectCurrencyEntity.exchangeRate}"
                                                                          styleClass="form-control"/>
@@ -293,7 +297,7 @@
                                                                 for="currencyFactor"
                                                                 value="#{msgs['project.currencies.lbl.currency.factor']}"/>
 
-                                                        <div class="col-sm-7">
+                                                        <div class="col-sm-7" style="width: 268px!important;">
                                                             <h:inputText id="currencyFactor"
                                                                          value="#{projectBean.projectCurrencyEntity.currencyFactor}"
                                                                          styleClass="form-control" />
@@ -306,7 +310,7 @@
                                                                 for="format"
                                                                 value="#{msgs['project.currencies.lbl.format']}"/>
 
-                                                        <div class="col-sm-7">
+                                                        <div class="col-sm-7" style="width: 268px!important;">
                                                             <h:inputText id="format"
                                                                          value="#{projectBean.projectCurrencyEntity.format}"
                                                                          styleClass="form-control" />
@@ -339,7 +343,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <p:dataTable id="currencyListId" value="#{projectBean.projectCurrencyList}" var="_p"
                                                  paginator="false" rows="#{configuration.defaultPageSize}" lazy="true"
                                                  rowsPerPageTemplate="#{configuration.getPagesSize(projectBean.projectCurrencyList.size())}"
