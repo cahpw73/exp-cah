@@ -82,4 +82,14 @@ public class CurrencyDao extends GenericDao<CurrencyEntity> implements Serializa
     protected String addCriteria(Filter filter) {
         return null;
     }
+
+    public List<CurrencyEntity> findAll() {
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM CurrencyEntity x ");
+        sb.append("WHERE x.status=:ENABLED ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),map);
+    }
 }

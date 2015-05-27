@@ -114,4 +114,27 @@ public class ProjectCurrencyEntity implements Serializable{
     public void setProject(ProjectEntity project) {
         this.project = project;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectCurrencyEntity that = (ProjectCurrencyEntity) o;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (exchangeRate != null ? exchangeRate.hashCode() : 0);
+        result = 31 * result + (currencyFactor != null ? currencyFactor.hashCode() : 0);
+        result = 31 * result + (format != null ? format.hashCode() : 0);
+        result = 31 * result + (projectDefault != null ? projectDefault.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        result = 31 * result + (currency != null ? currency.hashCode() : 0);
+        result = 31 * result + (project != null ? project.hashCode() : 0);
+        return result;
+    }
 }

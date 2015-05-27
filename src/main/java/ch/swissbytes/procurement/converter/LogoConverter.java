@@ -31,7 +31,6 @@ public class LogoConverter implements Converter {
             return null;
         }
         try {
-            log.info("value " + value);
             LogoEntity logo = null;
             Long.parseLong(value);
             for (LogoEntity logoEntity : logoService.getLogoList()) {
@@ -40,7 +39,6 @@ public class LogoConverter implements Converter {
                     break;
                 }
             }
-            log.info("returning " + logo);
             return logo;
         } catch (NumberFormatException nfe) {
             return null;
@@ -54,7 +52,6 @@ public class LogoConverter implements Converter {
         if (value instanceof LogoEntity) {
             string = ((LogoEntity) value).getId().toString();
         }
-        log.info("vale returned "+string);
         return string;
     }
 }

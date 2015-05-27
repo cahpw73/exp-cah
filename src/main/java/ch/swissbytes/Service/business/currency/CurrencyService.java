@@ -54,4 +54,7 @@ public class CurrencyService extends Service<CurrencyEntity> implements Serializ
     }
 
 
+    public List<CurrencyEntity> findAll() {
+        return dao.findAll();
+    }
 }
