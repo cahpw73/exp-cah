@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.project;
 
+import ch.swissbytes.Service.business.currency.CurrencyService;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
@@ -25,6 +26,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -49,11 +51,16 @@ public class ProjectBean implements Serializable {
     @Inject
     private LogoService logoService;
 
+    @Inject
+    private CurrencyService currencyService;
+
     private List<SupplierProcEntity> supplierProcList;
 
     private List<LogoEntity> logoList;
 
     private List<ProjectCurrencyEntity> projectCurrencyList;
+
+    private List<CurrencyEntity> currencyList;
 
     private ProjectEntity projectEntity;
 
@@ -62,6 +69,10 @@ public class ProjectBean implements Serializable {
     private boolean isCreateProject;
 
     private Long projectId;
+
+    private Boolean createCurrency = true;
+
+    private Long temporalCurrencyId = -1L;
 
 
     @PostConstruct
@@ -72,8 +83,7 @@ public class ProjectBean implements Serializable {
         supplierProcList = new ArrayList<>();
         projectCurrencyList = new ArrayList<>();
         logoList = new ArrayList<>();
-        loadSupplierProcList();
-        loadLogoList();
+        currencyList = new ArrayList<>();
     }
 
     @PreDestroy
@@ -84,7 +94,10 @@ public class ProjectBean implements Serializable {
     public void loadActionCrud(){
         log.info("load action crud");
         if(isCreateProject){
-
+            loadSupplierProcList();
+            loadLogoList();
+            loadCurrencyList();
+            loadCurrencyList();
         }else{
             projectEntity = projectService.findProjectById(projectId);
         }
@@ -112,16 +125,48 @@ public class ProjectBean implements Serializable {
 
     public void addCurrency(){
         log.info("add currency");
+        projectCurrencyEntity.setId(temporalId());
+        projectCurrencyEntity.setProjectDefault(false);
+        projectCurrencyEntity.setLastUpdate(new Date());
+        projectCurrencyEntity.setStatus(StatusEnum.ENABLE);
         projectCurrencyList.add(projectCurrencyEntity);
         projectCurrencyEntity = new ProjectCurrencyEntity();
     }
 
-    private void loadSupplierProcList(){
-        supplierProcList = supplierProcService.findAll();
+    private Long temporalId() {
+        temporalCurrencyId = temporalCurrencyId - 1;
+        return temporalCurrencyId;
     }
 
-    private void loadLogoList(){
-        logoList = logoService.findAll();
+    public void updateCurrencyList(){
+        log.info("update currency list");
+        projectCurrencyEntity.setLastUpdate(new Date());
+        for(ProjectCurrencyEntity pc : projectCurrencyList){
+            if(pc.equals(projectCurrencyEntity)){
+                pc = projectCurrencyEntity;
+            }
+        }
+        projectCurrencyEntity = new ProjectCurrencyEntity();
+        createCurrency = true;
+    }
+
+    public void doDeleteCurrency(ProjectCurrencyEntity projectCurrency){
+        int index=projectCurrencyList.indexOf(projectCurrency);
+        if(index>=0){
+            if(projectCurrencyList.get(index).getId()<0){
+                projectCurrencyList.remove(index);
+            }else{
+                projectCurrencyList.get(index).setStatus(StatusEnum.DELETED);
+                projectCurrencyList.get(index).setLastUpdate(new Date());
+            }
+        }
+        projectCurrencyEntity = new ProjectCurrencyEntity();
+        createCurrency = true;
+    }
+
+    public void doUpdateCurrency(ProjectCurrencyEntity projectCurrency){
+        projectCurrencyEntity = projectCurrency;
+        createCurrency = false;
     }
 
     private boolean dataValidate() {
@@ -140,6 +185,26 @@ public class ProjectBean implements Serializable {
             result = false;
         }
         return result;
+    }
+
+    public boolean isCurrencyEnable(ProjectCurrencyEntity projectCurrency){
+        if(projectCurrency != null) {
+            return StatusEnum.ENABLE.getId().intValue() == projectCurrency.getStatus().getId().intValue();
+        }else{
+            return true;
+        }
+    }
+
+    private void loadSupplierProcList(){
+        supplierProcList = supplierProcService.findAll();
+    }
+
+    private void loadLogoList(){
+        logoList = logoService.findAll();
+    }
+
+    private void loadCurrencyList() {
+        currencyList = currencyService.findAll();
     }
 
     public ProjectEntity getProjectEntity() {
@@ -175,6 +240,7 @@ public class ProjectBean implements Serializable {
     }
 
     public List<ProjectCurrencyEntity> getProjectCurrencyList() {
+
         return projectCurrencyList;
     }
 
@@ -184,5 +250,17 @@ public class ProjectBean implements Serializable {
 
     public void setProjectCurrencyEntity(ProjectCurrencyEntity projectCurrencyEntity) {
         this.projectCurrencyEntity = projectCurrencyEntity;
+    }
+
+    public List<CurrencyEntity> getCurrencyList() {
+        return currencyList;
+    }
+
+    public Boolean getCreateCurrency() {
+        return createCurrency;
+    }
+
+    public void setCreateCurrency(Boolean createCurrency) {
+        this.createCurrency = createCurrency;
     }
 }
