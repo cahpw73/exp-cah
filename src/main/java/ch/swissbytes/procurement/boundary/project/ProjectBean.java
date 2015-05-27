@@ -85,6 +85,9 @@ public class ProjectBean implements Serializable {
         projectCurrencyList = new ArrayList<>();
         logoList = new ArrayList<>();
         currencyList = new ArrayList<>();
+        loadSupplierProcList();
+        loadLogoList();
+        loadCurrencyList();
     }
 
     @PreDestroy
@@ -95,19 +98,17 @@ public class ProjectBean implements Serializable {
     public void loadActionCrud(){
         log.info("load action crud");
         if(isCreateProject){
-            loadSupplierProcList();
-            loadLogoList();
-            loadCurrencyList();
-            loadCurrencyList();
+
         }else{
             projectEntity = projectService.findProjectById(projectId);
+            projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
         }
     }
 
     public String doSave(){
         log.info("do save");
         if(dataValidate()) {
-            projectService.doSave(projectEntity);
+            projectService.doSave(projectEntity,projectCurrencyList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -117,7 +118,7 @@ public class ProjectBean implements Serializable {
     public String doUpdate(){
         log.info("do update");
         if(dataValidateToUpdate()) {
-            projectService.doUpdate(projectEntity);
+            projectService.doUpdate(projectEntity,projectCurrencyList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);

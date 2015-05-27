@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.business.project;
 
 import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
+import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyService;
 import ch.swissbytes.Service.business.user.UserDao;
 import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.*;
@@ -23,20 +24,37 @@ public class ProjectService implements Serializable {
     @Inject
     private ProjectDao projectDao;
 
+    @Inject
+    private ProjectCurrencyService projectCurrencyService;
+
     @Transactional
-    public void doSave(ProjectEntity entity){
+    public void doSave(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList){
         if(entity != null){
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             projectDao.doSave(entity);
+            for(ProjectCurrencyEntity pc : projectCurrencyList){
+                if(pc.getId() < 0){
+                    pc.setId(null);
+                }
+                pc.setProject(entity);
+                projectCurrencyService.doSave(pc);
+            }
         }
     }
 
     @Transactional
-    public void doUpdate(ProjectEntity entity){
+    public void doUpdate(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList){
         if(entity != null){
             entity.setLastUpdate(new Date());
             projectDao.doUpdate(entity);
+            for(ProjectCurrencyEntity pc : projectCurrencyList){
+                if(pc.getId() < 0){
+                    pc.setId(null);
+                    pc.setProject(entity);
+                }
+                projectCurrencyService.doUpdate(pc);
+            }
         }
     }
 
@@ -79,5 +97,9 @@ public class ProjectService implements Serializable {
             result = true;
         }
         return result;
+    }
+
+    public List<ProjectCurrencyEntity> findProjectCurrencyByProjectId(final Long id){
+        return projectCurrencyService.findByProjectId(id);
     }
 }

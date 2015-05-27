@@ -41,6 +41,13 @@
                     <p:messages id="glbMsgs" globalOnly="true" errorClass="alert alert-error"
                                 warnClass="alert"
                                 infoClass="alert alert-info"/>
+                    <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+                        <div class="pull-right">
+                            <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                            &#160;
+                            <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                        </div>
+                    </p:confirmDialog>
                 </div>
                 <ul class="nav nav-tabs">
                     <li role="presentation" class="#{mainMenuBean.isSelected(0)?'active':''}"><h:link
