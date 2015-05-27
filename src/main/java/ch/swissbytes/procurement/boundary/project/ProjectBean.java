@@ -13,6 +13,7 @@ import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
+import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
@@ -185,4 +186,11 @@ public class ProjectBean implements Serializable {
     public void setProjectCurrencyEntity(ProjectCurrencyEntity projectCurrencyEntity) {
         this.projectCurrencyEntity = projectCurrencyEntity;
     }
+
+
+
+    @Inject
+    private LogoBean logoBean;
+
+
 }

@@ -88,7 +88,14 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="pull-right">
-                                            <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" />
+                                            <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                            type="button" onclick="PF('logoModal').show();"
+                                                             value="#{msgs['project.detail.btn.new.logo']}" >
+                                                <p:ajax process="@this"
+                                                        async="false"
+                                                        listener="#{logoBean.restart}"
+                                                        update=":logoModalId"/>
+                                            </h:commandLink>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +114,14 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="pull-right">
-                                            <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" />
+                                            <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                             styleClass="btn btn-primary btn-sm"
+                                                             value="#{msgs['project.detail.btn.new.logo']}" >
+                                                <p:ajax process="@this"
+                                                        async="false"
+                                                        listener="#{logoBean.restart}"
+                                                        update=":logoModalId"/>
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +140,13 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="pull-right">
-                                            <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" />
+                                            <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                             styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
+                                                <p:ajax process="@this"
+                                                        async="false"
+                                                        listener="#{logoBean.restart}"
+                                                        update=":logoModalId"/>
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +165,13 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="pull-right">
-                                            <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" />
+                                            <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                             styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
+                                                <p:ajax process="@this"
+                                                        async="false"
+                                                        listener="#{logoBean.restart}"
+                                                        update=":logoModalId"/>
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +190,13 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="pull-right">
-                                            <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" />
+                                            <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                             styleClass="btn btn-primary btn-sm" value="#{msgs['project.detail.btn.new.logo']}" >
+                                                <p:ajax process="@this"
+                                                        async="false"
+                                                        listener="#{logoBean.restart}"
+                                                        update=":logoModalId"/>
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>
@@ -309,5 +341,17 @@
                 </div>
             </div>
         </h:form>
+        <p:dialog  header="New Logo" widgetVar="logoModal"
+                  resizable="false" height="400" width="600">
+            <h:panelGroup id="logoModalId">
+                <div class="col-md-12">
+                    <ui:include src="../admin/logo/component/previewTemplate.xhtml">
+                        <ui:param name="MODE" value="PROJECT"/>
+                        <ui:param name="MODAL" value="logoModal"/>
+                    </ui:include>
+                </div>
+            </h:panelGroup>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>

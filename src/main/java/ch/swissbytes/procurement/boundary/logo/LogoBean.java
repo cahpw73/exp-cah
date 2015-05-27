@@ -6,6 +6,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -55,13 +56,17 @@ public class LogoBean implements Serializable {
     private void initialize() {
         logo = new LogoEntity();
         logos = service.getLogoList();
-        log.info("size "+logos.size());
+        log.info("size " + logos.size());
     }
 
 
+    public void restart(){
+        logo=new LogoEntity();
+    }
+
     public void handleUpload(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
-        new Util().enterFile(uf,logo);
+        new Util().enterFile(uf, logo);
         //log.info("logo.data "+logo.getFile());
     }
 
@@ -71,11 +76,20 @@ public class LogoBean implements Serializable {
         if(!validate()){
             return "";
         }
-        logo.setLastUpdate(new Date());
-        logo.setStatus(StatusEnum.ENABLE);
-        service.doSave(logo);
+
+        service.save(logo);
         log.info(String.format("logo has been saved [%s]", logo.getDescription()));
         return "logo?faces-redirect=true";
+    }
+
+    public void saveForProject(){
+        if(!validate()){
+
+        }else {
+            service.save(logo);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('logoModal').hide();");
+        }
     }
     private boolean validate(){
         boolean valid=true;

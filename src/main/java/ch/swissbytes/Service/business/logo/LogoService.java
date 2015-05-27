@@ -34,6 +34,13 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
         logo.setFile(null);
         dao.update(logo);
     }
+    @Transactional
+    public LogoEntity save(LogoEntity logo){
+        logo.setLastUpdate(new Date());
+        logo.setStatus(StatusEnum.ENABLE);
+        dao.save(logo);
+        return logo;
+    }
 
     public List<LogoEntity> getLogoList(){
         log.info("getLogoList");
