@@ -31,19 +31,22 @@
             #{_contact.email}
         </p:column>
         <p:column headerText="#{msgs['lbl.actions']}">
-            <h:form prependId="false">
-                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm" rendered="#{not _contact.withNoData}">
-                </h:commandLink>
+                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm"
+                               rendered="#{not _contact.withNoData}"/>
                 &#160;
                 <p:commandLink value="#{msgs['lbl.delete']}"
                                style="color: #ffffff;"
                                rendered="#{not _contact.withNoData}"
                                styleClass="btn btn-primary btn-sm">
                 </p:commandLink>
-                <h:link value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm"
-                        outcome="contactEdit"
-                        rendered="#{_contact.withNoData}"/>
-            </h:form>
+            <p:commandLink value="#{msgs['lbl.add']}"
+                           rendered="#{_contact.withNoData}"
+                           action="#{supplierProcBean.putModeContact}"
+                           styleClass="btn btn-primary btn-sm">
+                <p:ajax update="@form"/>
+            </p:commandLink>
+
         </p:column>
     </p:dataTable>
+
 </ui:composition>

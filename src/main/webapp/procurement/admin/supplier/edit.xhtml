@@ -12,7 +12,7 @@
         <f:viewAction action="#{supplierProcBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form prependId="false">
+        <h:form id="contactEditId" prependId="false">
             <div class="col-md-8">
                 <!-- Nav tabs -->
                 <br/>
@@ -54,9 +54,7 @@
 
                 <div class="col-sm-9">
                     <div class="form-group">
-
                         <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']} *"/>
-
                         <div class="col-sm-8">
                             <h:inputText maxlength="50" id="companyId"
                                          value="#{supplierProcBean.supplier.company}"
@@ -82,7 +80,7 @@
                 </div>
                 <br/>
                 <h:panelGroup id="bodySupplier">
-                    <h:panelGroup rendered="#{not (supplierProcBean.addingCategory or supplierProcBean.addingBrand)}">
+                    <h:panelGroup rendered="#{not (supplierProcBean.addingCategory or supplierProcBean.addingBrand or supplierProcBean.addingContact)}">
                         <div class="col-sm-9">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="active"><a href="#supplier" role="tab"
@@ -110,12 +108,15 @@
                             </div>
                         </div>
                     </h:panelGroup>
-                    <h:panelGroup rendered="#{supplierProcBean.addingCategory or supplierProcBean.addingBrand}">
+                    <h:panelGroup rendered="#{supplierProcBean.addingCategory or supplierProcBean.addingBrand or supplierProcBean.addingContact}">
                         <h:panelGroup rendered="#{supplierProcBean.addingCategory}">
                             <ui:include src="components/categoryList.xhtml"/>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{supplierProcBean.addingBrand}">
                             <ui:include src="components/brandList.xhtml"/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{supplierProcBean.addingContact}">
+                            <ui:include src="components/contactEdit.xhtml"/>
                         </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>

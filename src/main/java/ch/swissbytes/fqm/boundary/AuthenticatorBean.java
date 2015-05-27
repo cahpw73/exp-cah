@@ -85,6 +85,15 @@ public class AuthenticatorBean {
     }
 
 
+    public void cancel(){
+        if(identity.isLoggedIn()){
+            identity.logout();
+        }
+        RequestContext context = RequestContext.getCurrentInstance();
+        RequestContext.getCurrentInstance().update("pickSystemFormId");
+        context.execute("PF('pickSystemModal').hide();");
+    }
+
     public String validation(){
         return "true";
     }

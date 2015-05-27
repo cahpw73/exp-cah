@@ -38,6 +38,7 @@ public class SupplierProcBean implements Serializable {
     private boolean addingCategory = false;
     private boolean addingBrand = false;
     private boolean editing =false;
+    private boolean addingContact=false;
 
     @PostConstruct
     public void create() {
@@ -96,7 +97,7 @@ public class SupplierProcBean implements Serializable {
 
     public void putModeCategory() {
         addingCategory = true;
-        categoryBrandBean.addlistLoaded(supplier.getCategories(),supplier.getBrands());
+        categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
     public boolean isSupplierMode() {
@@ -108,9 +109,14 @@ public class SupplierProcBean implements Serializable {
         categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
+    public void putModeContact(){
+        addingContact=true;
+    }
+
     public void putModeSupplier() {
         addingCategory = false;
         addingBrand = false;
+        addingContact=false;
     }
 
     public void addCategoryBrand() {
@@ -156,5 +162,11 @@ public class SupplierProcBean implements Serializable {
         return editing;
     }
 
+    public boolean isAddingContact() {
+        return addingContact;
+    }
 
+    public void setAddingContact(boolean addingContact) {
+        this.addingContact = addingContact;
+    }
 }

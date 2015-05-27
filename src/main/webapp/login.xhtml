@@ -61,8 +61,8 @@
                             <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
                                 <p:commandButton type="submit" class="btn btn-lg btn-success btn-block"
                                                  action="#{authenticatorBean.login}"
-                                                 value="#{msgs['login.button.label']}">
 
+                                                 value="#{msgs['login.button.label']}">
                                 </p:commandButton>
                             </div>
                         </div>
@@ -89,9 +89,11 @@
                                  action="#{authenticatorBean.enterProcurementModule}"
                                  value="#{msgs['system.lbl.procurement']}"/>
                 &#160;
-                &#160;
                 <p:commandButton type="submit" action="#{authenticatorBean.enterExpeditingModule}"
                                  value="#{msgs['system.lbl.expediting']}"/>
+                &#160;
+                <p:commandButton type="submit" action="#{authenticatorBean.cancel}"
+                                 value="#{msgs['lbl.cancel']}"/>
             </div>
         </h:form>
     </p:dialog>
