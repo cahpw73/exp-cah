@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.project;
 
 import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
 import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyService;
+import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.Service.business.user.UserDao;
 import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.*;
@@ -26,6 +27,8 @@ public class ProjectService implements Serializable {
 
     @Inject
     private ProjectCurrencyService projectCurrencyService;
+
+
 
     @Transactional
     public void doSave(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList){
