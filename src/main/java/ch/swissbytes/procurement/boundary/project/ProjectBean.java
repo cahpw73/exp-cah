@@ -299,19 +299,19 @@ public class ProjectBean implements Serializable {
         if(logoBean.saveForProject()) {
             switch (currentLogo) {
                 case 0://report logo
-                   // projectEntity.setReportLogo(logoBean.getLogo());
+                    projectEntity.setReportLogo(logoBean.getLogo());
                     break;
                 case 1: //client logo
-                   // projectEntity.setClientLogo(logoBean.getLogo());
+                    projectEntity.setClientLogo(logoBean.getLogo());
                     break;
                 case 2: //client footer
-                 //   projectEntity.setClientFooter(logoBean.getLogo());
+                    projectEntity.setClientFooter(logoBean.getLogo());
                     break;
                 case 3://default logo
-                   // projectEntity.setDefaultLogo(logoBean.getLogo());
+                    projectEntity.setDefaultLogo(logoBean.getLogo());
                     break;
                 case 4:// default footer
-                  //  projectEntity.setDefaultFooter(logoBean.getLogo());
+                    projectEntity.setDefaultFooter(logoBean.getLogo());
                     break;
 
             }
