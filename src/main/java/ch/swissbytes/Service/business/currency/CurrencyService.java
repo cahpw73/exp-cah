@@ -28,6 +28,14 @@ public class CurrencyService extends Service<CurrencyEntity> implements Serializ
         super.initialize(dao);
     }
 
+    @Override
+    @Transactional
+    public void doSave(CurrencyEntity currency){
+        currency.setLastUpdate(new Date());
+        currency.setStatus(StatusEnum.ENABLE);
+        dao.doSave(currency);
+    }
+
     @Transactional
     public void delete(CurrencyEntity currency) {
         currency.setStatus(StatusEnum.DELETED);
