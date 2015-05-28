@@ -52,11 +52,14 @@
                         outcome="currency"/>
             </h:panelGroup>
             <h:panelGroup rendered="#{MODE == 'PROJECT'}">
-                <p:commandButton value="#{msgs['btn.currency.add']}"
+                <h:commandButton value="#{msgs['btn.currency.add']}"
                                  styleClass="btn btn-primary btn-sm"
-                                 update="currencyForm :editUserForm:currencyId"
+
                                  action="#{projectBean.addNewCurrency}">
-                </p:commandButton>
+                    <p:ajax async="false"
+                            process="@form"
+                            update="currencyForm :editUserForm:currencyId"/>
+                </h:commandButton>
                 <button class="btn btn-primary btn-sm"
                         onclick="PF('currencyModal').hide();"
                         type="button">
