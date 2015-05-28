@@ -268,4 +268,53 @@ public class ProjectBean implements Serializable {
 
     @Inject
     private LogoBean logoBean;
+
+    private Integer currentLogo;
+
+
+
+   public void startReportLogo(){
+       currentLogo=1;
+       logoBean.restart();
+   }
+    public void startClientLogo(){
+        currentLogo=1;
+        logoBean.restart();
+    }
+    public void startClientFooter(){
+        currentLogo=1;
+        logoBean.restart();
+    }
+    public void startDefaultLogo(){
+        currentLogo=1;
+        logoBean.restart();
+    }
+    public void startDefaultFooter(){
+        currentLogo=1;
+        logoBean.restart();
+    }
+
+    public void saveLogo(){
+        log.info("saving logo......");
+        if(logoBean.saveForProject()) {
+            switch (currentLogo) {
+                case 0://report logo
+                   // projectEntity.setReportLogo(logoBean.getLogo());
+                    break;
+                case 1: //client logo
+                   // projectEntity.setClientLogo(logoBean.getLogo());
+                    break;
+                case 2: //client footer
+                 //   projectEntity.setClientFooter(logoBean.getLogo());
+                    break;
+                case 3://default logo
+                   // projectEntity.setDefaultLogo(logoBean.getLogo());
+                    break;
+                case 4:// default footer
+                  //  projectEntity.setDefaultFooter(logoBean.getLogo());
+                    break;
+
+            }
+        }
+    }
 }

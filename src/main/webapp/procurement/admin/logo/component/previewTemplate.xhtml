@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
     <br/>
-    <h:form prependId="false" enctype="multipart/form-data">
+    <h:form id="previewFormId" prependId="false" enctype="multipart/form-data">
         <div class="col-md-5">
             <h:inputText id="logoFileName" style="width: 200px;" styleClass="view-po"
                          value="#{logoBean.logo.fileName}"
@@ -55,9 +55,12 @@
             <h:link styleClass="btn btn-primary btn-sm" rendered="#{MODE == null}" value="#{msgs['lbl.cancel']}"
                     outcome="logo"/>
             <h:panelGroup rendered="#{MODE == 'PROJECT'}">
-                <h:commandLink value="#{msgs['lbl.save']}" styleClass="btn btn-sm btn-primary"
-                               action="#{logoBean.saveForProject}">
-                    <p:ajax process="@form"/>
+                <h:commandLink value="#{msgs['lbl.save']}" process="@this"
+                                 action="#{projectBean.saveLogo}"
+                                 styleClass="btn btn-sm btn-primary">
+                    <p:ajax
+                            listener="#{projectBean.saveLogo}"
+                            update="previewFormId"/>
                 </h:commandLink>
                 &#160;
                 <button onclick="PF('logoModal').hide('#{MODAL}');"

@@ -82,16 +82,21 @@ public class LogoBean implements Serializable {
         return "logo?faces-redirect=true";
     }
 
-    public void saveForProject(){
+    public boolean saveForProject(){
+        log.info("saving project");
+        boolean saved=false;
         if(!validate()){
 
         }else {
             service.save(logo);
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('logoModal').hide();");
+            saved=true;
         }
+        return saved;
     }
     private boolean validate(){
+        log.info("validating...");
         boolean valid=true;
         if(logo.getFile()==null){
             Messages.addFlashError("graphicId","Please choose an image");
