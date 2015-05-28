@@ -83,15 +83,16 @@ public class LogoBean implements Serializable {
     }
 
     public boolean saveForProject(){
-        log.info("saving project");
+        log.info("saving logo for project");
         boolean saved=false;
         if(!validate()){
 
         }else {
-            service.save(logo);
+            logo=service.save(logo);
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('logoModal').hide();");
             saved=true;
+
         }
         return saved;
     }

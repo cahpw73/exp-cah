@@ -274,7 +274,7 @@ public class ProjectBean implements Serializable {
 
 
    public void startReportLogo(){
-       currentLogo=1;
+       currentLogo=0;
        logoBean.restart();
    }
     public void startClientLogo(){
@@ -282,36 +282,37 @@ public class ProjectBean implements Serializable {
         logoBean.restart();
     }
     public void startClientFooter(){
-        currentLogo=1;
+        currentLogo=2;
         logoBean.restart();
     }
     public void startDefaultLogo(){
-        currentLogo=1;
+        currentLogo=3;
         logoBean.restart();
     }
     public void startDefaultFooter(){
-        currentLogo=1;
+        currentLogo=4;
         logoBean.restart();
     }
 
     public void saveLogo(){
         log.info("saving logo......");
         if(logoBean.saveForProject()) {
+            loadLogoList();
             switch (currentLogo) {
                 case 0://report logo
-                   // projectEntity.setReportLogo(logoBean.getLogo());
+                    projectEntity.setReportLogo(logoBean.getLogo());
                     break;
                 case 1: //client logo
-                   // projectEntity.setClientLogo(logoBean.getLogo());
+                    projectEntity.setClientLogo(logoBean.getLogo());
                     break;
                 case 2: //client footer
-                 //   projectEntity.setClientFooter(logoBean.getLogo());
+                    projectEntity.setClientFooter(logoBean.getLogo());
                     break;
                 case 3://default logo
-                   // projectEntity.setDefaultLogo(logoBean.getLogo());
+                    projectEntity.setDefaultLogo(logoBean.getLogo());
                     break;
                 case 4:// default footer
-                  //  projectEntity.setDefaultFooter(logoBean.getLogo());
+                    projectEntity.setDefaultFooter(logoBean.getLogo());
                     break;
 
             }

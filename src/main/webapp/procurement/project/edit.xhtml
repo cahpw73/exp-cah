@@ -83,7 +83,7 @@
                                         <p:message for="clientId" id="msgClientId"/>
                                     </div>
                                 </div>
-
+<h:panelGroup id="logoGroupId">
                                 <div class="form-group">
                                     <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                    for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
@@ -104,7 +104,7 @@
                                             <h:commandLink styleClass="btn btn-primary btn-sm"
                                                            type="button" onclick="PF('logoModal').show();"
                                                            value="#{msgs['project.detail.btn.new.logo']}">
-                                                <p:ajax process="@this"
+                                                <p:ajax process="logoGroupId"
                                                         async="false"
                                                         listener="#{projectBean.startReportLogo}"
                                                         update=":logoModalId"/>
@@ -132,7 +132,7 @@
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
                                                              styleClass="btn btn-primary btn-sm"
                                                              value="#{msgs['project.detail.btn.new.logo']}">
-                                                <p:ajax process="@this"
+                                                <p:ajax process="logoGroupId"
                                                         async="false"
                                                         listener="#{projectBean.startClientLogo}"
                                                         update=":logoModalId"/>
@@ -161,7 +161,7 @@
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
                                                              styleClass="btn btn-primary btn-sm"
                                                              value="#{msgs['project.detail.btn.new.logo']}">
-                                                <p:ajax process="@this"
+                                                <p:ajax process="logoGroupId"
                                                         async="false"
                                                         listener="#{projectBean.startClientFooter}"
                                                         update=":logoModalId"/>
@@ -190,7 +190,7 @@
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
                                                              styleClass="btn btn-primary btn-sm"
                                                              value="#{msgs['project.detail.btn.new.logo']}">
-                                                <p:ajax process="@this"
+                                                <p:ajax process="logoGroupId"
                                                         async="false"
                                                         listener="#{projectBean.startDefaultLogo}"
                                                         update=":logoModalId"/>
@@ -220,7 +220,7 @@
                                             <h:commandButton type="button" onclick="PF('logoModal').show();"
                                                              styleClass="btn btn-primary btn-sm"
                                                              value="#{msgs['project.detail.btn.new.logo']}">
-                                                <p:ajax process="@this"
+                                                <p:ajax process="logoGroupId"
                                                         async="false"
                                                         listener="#{projectBean.startDefaultFooter}"
                                                         update=":logoModalId"/>
@@ -228,6 +228,7 @@
                                         </div>
                                     </div>
                                 </div>
+</h:panelGroup>
                                 <div class="form-group">
                                     <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                    for="instructions"
