@@ -81,7 +81,7 @@ public class AuthenticatorBean {
 
     public String enterProcurementModule() {
         session.setCurrentModule(ModuleSystemEnum.PROCUREMENT.name());
-        return "/procurement/home?faces-redirect=true";
+        return "/procurement/project/list?faces-redirect=true";
     }
 
 
