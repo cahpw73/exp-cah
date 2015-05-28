@@ -55,8 +55,10 @@ public class ProjectsBean implements Serializable {
     }
 
     public void doSearch(){
+        log.info("do search");
         projectList.clear();
         projectList = projectService.doSearch(searchTerm);
+        log.info(" projectList size : " + projectList.size());
     }
 
     public void doClean(){
