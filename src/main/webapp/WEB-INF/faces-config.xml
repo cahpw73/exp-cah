@@ -17,7 +17,7 @@
         <navigation-case>
             <from-action>#{authenticatorBean.login}</from-action>
             <from-outcome>PROCUREMENT</from-outcome>
-            <to-view-id>/procurement/home.xhtml</to-view-id>
+            <to-view-id>/procurement/project/list.xhtml</to-view-id>
             <redirect></redirect>
         </navigation-case>
     </navigation-rule>
@@ -36,7 +36,7 @@
         <navigation-case>
             <from-action>#{identity.isLoggedIn()}</from-action>
             <from-outcome>true</from-outcome>
-            <to-view-id>/procurement/home.xhtml</to-view-id>
+            <to-view-id>/procurement/project/list.xhtml</to-view-id>
             <redirect></redirect>
         </navigation-case>
     </navigation-rule>
@@ -69,7 +69,7 @@
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>ACCESS_DENIED</from-outcome>
-            <to-view-id>/procurement/home.xhtml</to-view-id>
+            <to-view-id>/procurement/project/list.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
   <!--  <navigation-rule>
