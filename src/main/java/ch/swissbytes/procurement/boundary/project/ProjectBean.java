@@ -274,7 +274,7 @@ public class ProjectBean implements Serializable {
 
 
    public void startReportLogo(){
-       currentLogo=1;
+       currentLogo=0;
        logoBean.restart();
    }
     public void startClientLogo(){
@@ -282,21 +282,22 @@ public class ProjectBean implements Serializable {
         logoBean.restart();
     }
     public void startClientFooter(){
-        currentLogo=1;
+        currentLogo=2;
         logoBean.restart();
     }
     public void startDefaultLogo(){
-        currentLogo=1;
+        currentLogo=3;
         logoBean.restart();
     }
     public void startDefaultFooter(){
-        currentLogo=1;
+        currentLogo=4;
         logoBean.restart();
     }
 
     public void saveLogo(){
         log.info("saving logo......");
         if(logoBean.saveForProject()) {
+            loadLogoList();
             switch (currentLogo) {
                 case 0://report logo
                     projectEntity.setReportLogo(logoBean.getLogo());

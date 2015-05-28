@@ -81,7 +81,7 @@ public class LogoEntity implements Serializable,ManageFile{
         this.mimeType = mimeType;
     }
 
-    @Column(name="logo", nullable=false, length = 10485760)
+    @Column(name="logo", length = 10485760)
     @Basic(fetch = FetchType.LAZY)
     public byte[] getFile() {
         return file;
