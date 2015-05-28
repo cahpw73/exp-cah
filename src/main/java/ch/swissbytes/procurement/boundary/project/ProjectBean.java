@@ -15,6 +15,7 @@ import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
+import ch.swissbytes.procurement.boundary.currency.CurrencyBean;
 import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
 import org.apache.commons.lang.StringUtils;
@@ -368,6 +369,16 @@ public class ProjectBean implements Serializable {
                     break;
 
             }
+        }
+    }
+
+    @Inject
+    private CurrencyBean currencyBean;
+
+    public void addNewCurrency(){
+        if(currencyBean.save()) {
+            projectCurrencyEntity.setCurrency(currencyBean.getCurrency());
+            loadCurrencyList();
         }
     }
 }

@@ -22,8 +22,8 @@ public class CurrencyDao extends GenericDao<CurrencyEntity> implements Serializa
     private static final Logger log = Logger.getLogger(CurrencyDao.class.getName());
 
 
-    public void doSave(CurrencyEntity brandEntity){
-        super.save(brandEntity);
+    public void doSave(CurrencyEntity currency){
+        super.save(currency);
     }
 
     public void doUpdate(CurrencyEntity detachedEntity){

@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.CurrencyEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -38,7 +39,6 @@ public class CurrencyBean implements Serializable {
         loadList();
         mode = ModeOperationEnum.NEW;
         currency = new CurrencyEntity();
-        currency.setStatus(StatusEnum.ENABLE);
     }
 
     public void edit(Long currencyId) {
@@ -50,10 +50,19 @@ public class CurrencyBean implements Serializable {
         if (!validate()) {
             return "";
         }
-
-        currency.setLastUpdate(new Date());
         service.doSave(currency);
         return "currency?faces-redirect=true";
+    }
+
+    public boolean save(){
+        if(!validate()){
+            return false;
+        }
+        service.doSave(currency);
+        RequestContext context = RequestContext.getCurrentInstance();
+        RequestContext.getCurrentInstance().update("pickSystemFormId");
+        context.execute("PF('currencyModal').hide();");
+        return true;
     }
 
     private boolean validate() {

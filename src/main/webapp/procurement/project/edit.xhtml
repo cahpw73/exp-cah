@@ -355,7 +355,10 @@
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <h:commandButton value="#{msgs['project.currencies.lbl.btn.new.currency']}"
-                                                                         styleClass="btn btn-primary btn-sm"/>
+                                                                         onclick="PF('currencyModal').show();"
+                                                                         styleClass="btn btn-primary btn-sm">
+                                                            <p:ajax update=":currencyModalId" async="false"/>
+                                                        </h:commandButton>
                                                     </div>
                                                 </div>
                                                 <br/>
@@ -507,6 +510,16 @@
                         <ui:param name="MODE" value="PROJECT"/>
                         <ui:param name="MODAL" value="logoModal"/>
                         <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo"/>
+                    </ui:include>
+                </div>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="New Currency" widgetVar="currencyModal"
+                  resizable="false" height="200" width="300">
+            <h:panelGroup id="currencyModalId">
+                <div class="col-md-12">
+                    <ui:include src="../admin/currency/component/edit.xhtml">
+                        <ui:param name="MODE" value="PROJECT"/>
                     </ui:include>
                 </div>
             </h:panelGroup>
