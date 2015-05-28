@@ -55,4 +55,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
 
+    public List<TextSnippetEntity> findAll() {
+        return dao.findAll();
+    }
 }

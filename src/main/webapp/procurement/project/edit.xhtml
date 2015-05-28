@@ -269,49 +269,54 @@
 
                             <div class="row">
                                 <div style="width: 1000px!important;">
-                                    <div style="width: 315px!important; float: left!important; margin-left: 15px!important;">
-                                        <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
-                                        <br/>
-                                        <p:dataTable id="multipleDT" var="car" value="#{dtSelectionView.cars4}"
-                                                     selectionMode="multiple"
-                                                     selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}">
-                                            <p:column headerText="#{msgs['project.standard.text.column.code']}">
 
-                                            </p:column>
-                                            <p:column headerText="#{msgs['project.standard.text.column.description']}">
-
-                                            </p:column>
-                                        </p:dataTable>
-                                    </div>
+                                        <div style="width: 315px!important; float: left!important; margin-left: 15px!important;">
+                                            <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
+                                            <br/>
+                                            <p:dataTable id="globalTextDt" var="_gt"
+                                                         value="#{projectBean.globalStandardTextList}"
+                                                         selectionMode="multiple" scrollable="true" scrollHeight="150"
+                                                         selection="#{projectBean.selectedGlobalTexts}"
+                                                         rowKey="#{_gt.id}">
+                                                <p:column headerText="#{msgs['project.standard.text.column.code']}"
+                                                          width="50">
+                                                    #{_gt.code}
+                                                </p:column>
+                                                <p:column
+                                                        headerText="#{msgs['project.standard.text.column.description']}"
+                                                        width="60    ">
+                                                    #{_gt.textSnippet}
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
                                     <div style="width: 135px!important; float: left!important; margin-left: 46px!important; top: 100px!important; position: relative;">
                                         <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
-                                                         action="#{projectBean.addCurrency}"
+                                                         action="#{projectBean.addToProjectText}"
                                                          styleClass="btn btn-primary btn-sm"
-                                                         rendered="#{projectBean.createCurrency}"
                                                          style="margin-bottom: 20px!important;">
-                                            <p:ajax update="currencyListId,currencyGroup"
-                                                    process="currencyGroup" async="false"/>
+                                            <p:ajax update="globalTextDt,projectTextDt"
+                                                    process="@this,globalTextDt" async="false"/>
                                         </h:commandButton>
                                         <br/>
                                         <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
-                                                         action="#{projectBean.addCurrency}"
-                                                         styleClass="btn btn-primary btn-sm"
-                                                         rendered="#{projectBean.createCurrency}">
-                                            <p:ajax update="currencyListId,currencyGroup"
-                                                    process="currencyGroup" async="false"/>
+                                                         action="#{projectBean.removeFromProjectText}"
+                                                         styleClass="btn btn-primary btn-sm">
+                                            <p:ajax update="globalTextDt,projectTextDt"
+                                                    process="@this,projectTextDt" async="false"/>
                                         </h:commandButton>
                                     </div>
                                     <div style="width: 315px!important; float: left!important;">
                                         <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
                                         <br/>
-                                        <p:dataTable id="multipleDT1" var="car" value="#{dtSelectionView.cars4}"
-                                                     selectionMode="multiple"
-                                                     selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}">
+                                        <p:dataTable id="projectTextDt" var="_pt" value="#{projectBean.projectStandardTextList}"
+                                                     selectionMode="multiple" scrollable="true" scrollHeight="150"
+                                                     selection="#{projectBean.selectedGlobalTexts}"
+                                                     rowKey="#{_pt.id}">
                                             <p:column headerText="#{msgs['project.standard.text.column.code']}">
-
+                                                #{_pt.code}
                                             </p:column>
                                             <p:column headerText="#{msgs['project.standard.text.column.description']}">
-
+                                                #{_pt.textSnippet}
                                             </p:column>
                                         </p:dataTable>
                                         <br/>

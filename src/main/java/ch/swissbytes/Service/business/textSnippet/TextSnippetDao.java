@@ -86,4 +86,14 @@ public class TextSnippetDao extends GenericDao<TextSnippetEntity> implements Ser
     protected String addCriteria(Filter filter) {
         return null;
     }
+
+    public List<TextSnippetEntity> findAll() {
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM TextSnippetEntity x ");
+        sb.append("WHERE x.status=:ENABLED ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),map);
+    }
 }

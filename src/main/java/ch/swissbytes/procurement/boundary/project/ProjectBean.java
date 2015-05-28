@@ -7,6 +7,7 @@ import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessSer
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.role.RoleDao;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
+import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.*;
@@ -55,6 +56,9 @@ public class ProjectBean implements Serializable {
     @Inject
     private CurrencyService currencyService;
 
+    @Inject
+    private TextSnippetService textSnippetService;
+
     private List<SupplierProcEntity> supplierProcList;
 
     private List<LogoEntity> logoList;
@@ -62,6 +66,12 @@ public class ProjectBean implements Serializable {
     private List<ProjectCurrencyEntity> projectCurrencyList;
 
     private List<CurrencyEntity> currencyList;
+
+    private List<TextSnippetEntity> globalStandardTextList;
+
+    private List<TextSnippetEntity> selectedGlobalTexts;
+
+    private List<TextSnippetEntity> projectStandardTextList;
 
     private ProjectEntity projectEntity;
 
@@ -85,9 +95,13 @@ public class ProjectBean implements Serializable {
         projectCurrencyList = new ArrayList<>();
         logoList = new ArrayList<>();
         currencyList = new ArrayList<>();
+        globalStandardTextList = new ArrayList<>();
+        projectStandardTextList = new ArrayList<>();
+        selectedGlobalTexts = new ArrayList<>();
         loadSupplierProcList();
         loadLogoList();
         loadCurrencyList();
+        loadGlobalStandardTextList();
     }
 
     @PreDestroy
@@ -197,6 +211,24 @@ public class ProjectBean implements Serializable {
         }
     }
 
+    public void addToProjectText(){
+        log.info("add standard text to project");
+        for(TextSnippetEntity ts : selectedGlobalTexts){
+            projectStandardTextList.add(ts);
+        }
+        globalStandardTextList.removeAll(selectedGlobalTexts);
+        selectedGlobalTexts.clear();
+    }
+
+    public void removeFromProjectText(){
+        log.info("remove standard text from project text");
+        for(TextSnippetEntity ts : selectedGlobalTexts){
+            globalStandardTextList.add(ts);
+        }
+        projectStandardTextList.removeAll(selectedGlobalTexts);
+        selectedGlobalTexts.clear();
+    }
+
     private void loadSupplierProcList(){
         supplierProcList = supplierProcService.findAll();
     }
@@ -207,6 +239,10 @@ public class ProjectBean implements Serializable {
 
     private void loadCurrencyList() {
         currencyList = currencyService.findAll();
+    }
+
+    private void loadGlobalStandardTextList() {
+        globalStandardTextList = textSnippetService.findAll();
     }
 
     public ProjectEntity getProjectEntity() {
@@ -264,6 +300,22 @@ public class ProjectBean implements Serializable {
 
     public void setCreateCurrency(Boolean createCurrency) {
         this.createCurrency = createCurrency;
+    }
+
+    public List<TextSnippetEntity> getGlobalStandardTextList() {
+        return globalStandardTextList;
+    }
+
+    public List<TextSnippetEntity> getProjectStandardTextList() {
+        return projectStandardTextList;
+    }
+
+    public List<TextSnippetEntity> getSelectedGlobalTexts() {
+        return selectedGlobalTexts;
+    }
+
+    public void setSelectedGlobalTexts(List<TextSnippetEntity> selectedGlobalTexts) {
+        this.selectedGlobalTexts = selectedGlobalTexts;
     }
 
     @Inject
