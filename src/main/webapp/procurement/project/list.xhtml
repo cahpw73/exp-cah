@@ -26,7 +26,7 @@
                     <div class="col-md-3">
                         <div>
                             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this,searchTermId," update="projectListId"
+                                <p:ajax process="@this,searchTermId" update="projectListId"
                                         listener="#{projectsBean.doSearch}"/>
                             </h:commandButton>
                             &#160;

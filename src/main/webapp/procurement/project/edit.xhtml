@@ -245,11 +245,88 @@
                         </div>
                         <!-- Tab Standard Text-->
                         <div class="tab-pane " id="standardText">
+                            <br/>
 
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="left-inner-addon">
+                                        <i class="fa fa-search fa-lg"></i>
+                                        <h:inputText id="searchTermId" styleClass="form-control input-search"
+                                                     value="#{projectsBean.searchTerm}"
+                                                     jsf:placeholder="#{msgs['project.standard.text.lbl.search.global.text']}"
+                                                     type="search" maxlength="250"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
+                                        <p:ajax process="@this"
+                                                listener="#{projectsBean.doSearch}"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div style="width: 1000px!important;">
+                                    <div style="width: 315px!important; float: left!important; margin-left: 15px!important;">
+                                        <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
+                                        <br/>
+                                        <p:dataTable id="multipleDT" var="car" value="#{dtSelectionView.cars4}"
+                                                     selectionMode="multiple"
+                                                     selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}">
+                                            <p:column headerText="#{msgs['project.standard.text.column.code']}">
+
+                                            </p:column>
+                                            <p:column headerText="#{msgs['project.standard.text.column.description']}">
+
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+                                    <div style="width: 135px!important; float: left!important; margin-left: 46px!important; top: 100px!important; position: relative;">
+                                        <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
+                                                         action="#{projectBean.addCurrency}"
+                                                         styleClass="btn btn-primary btn-sm"
+                                                         rendered="#{projectBean.createCurrency}"
+                                                         style="margin-bottom: 20px!important;">
+                                            <p:ajax update="currencyListId,currencyGroup"
+                                                    process="currencyGroup" async="false"/>
+                                        </h:commandButton>
+                                        <br/>
+                                        <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
+                                                         action="#{projectBean.addCurrency}"
+                                                         styleClass="btn btn-primary btn-sm"
+                                                         rendered="#{projectBean.createCurrency}">
+                                            <p:ajax update="currencyListId,currencyGroup"
+                                                    process="currencyGroup" async="false"/>
+                                        </h:commandButton>
+                                    </div>
+                                    <div style="width: 315px!important; float: left!important;">
+                                        <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
+                                        <br/>
+                                        <p:dataTable id="multipleDT1" var="car" value="#{dtSelectionView.cars4}"
+                                                     selectionMode="multiple"
+                                                     selection="#{dtSelectionView.selectedCars}" rowKey="#{car.id}">
+                                            <p:column headerText="#{msgs['project.standard.text.column.code']}">
+
+                                            </p:column>
+                                            <p:column headerText="#{msgs['project.standard.text.column.description']}">
+
+                                            </p:column>
+                                        </p:dataTable>
+                                        <br/>
+                                        <h:commandButton
+                                                value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
+                                                action="#{projectBean.addCurrency}"
+                                                styleClass="btn btn-primary btn-sm"
+                                                rendered="#{projectBean.createCurrency}">
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="clearfix"/>
                         <!-- Tab Currency-->
                         <div class="tab-pane " id="currency">
-
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="panel panel-default panel-tab">
