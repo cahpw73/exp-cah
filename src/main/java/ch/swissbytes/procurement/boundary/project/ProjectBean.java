@@ -74,6 +74,8 @@ public class ProjectBean implements Serializable {
 
     private List<TextSnippetEntity> projectStandardTextList;
 
+    private List<ProjectTextSnippetEntity> projectTextSnippetList;
+
     private ProjectEntity projectEntity;
 
     private ProjectCurrencyEntity projectCurrencyEntity;
@@ -99,6 +101,8 @@ public class ProjectBean implements Serializable {
         globalStandardTextList = new ArrayList<>();
         projectStandardTextList = new ArrayList<>();
         selectedGlobalTexts = new ArrayList<>();
+        projectStandardTextList = new ArrayList<>();
+        projectTextSnippetList = new ArrayList<>();
         loadSupplierProcList();
         loadLogoList();
         loadCurrencyList();
@@ -117,13 +121,27 @@ public class ProjectBean implements Serializable {
         }else{
             projectEntity = projectService.findProjectById(projectId);
             projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
+            projectTextSnippetList = projectService.findProjectTextSnippetByProjectId(projectId);
+            loadAllStandardText();
         }
+    }
+
+    private void loadAllStandardText() {
+        for(ProjectTextSnippetEntity pt : projectTextSnippetList){
+            for(TextSnippetEntity ts : globalStandardTextList){
+                if(pt.getTextSnippet().getId().intValue() == ts.getId().intValue()){
+                    projectStandardTextList.add(ts);
+                }
+            }
+        }
+        globalStandardTextList.removeAll(projectStandardTextList);
     }
 
     public String doSave(){
         log.info("do save");
         if(dataValidate()) {
-            projectService.doSave(projectEntity,projectCurrencyList);
+            prepareToSaveProjectTextSnippet();
+            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -133,7 +151,8 @@ public class ProjectBean implements Serializable {
     public String doUpdate(){
         log.info("do update");
         if(dataValidateToUpdate()) {
-            projectService.doUpdate(projectEntity,projectCurrencyList);
+            prepareToUpdateProjectTextSnippet();
+            projectService.doUpdate(projectEntity,projectCurrencyList, projectTextSnippetList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -228,6 +247,40 @@ public class ProjectBean implements Serializable {
         }
         projectStandardTextList.removeAll(selectedGlobalTexts);
         selectedGlobalTexts.clear();
+    }
+
+    private void prepareToSaveProjectTextSnippet() {
+        for(TextSnippetEntity ts : projectStandardTextList){
+            ProjectTextSnippetEntity projectTextSnippet = new ProjectTextSnippetEntity();
+            projectTextSnippet.setLastUpdate(new Date());
+            projectTextSnippet.setStatus(StatusEnum.ENABLE);
+            projectTextSnippet.setTextSnippet(ts);
+            projectTextSnippetList.add(projectTextSnippet);
+        }
+    }
+
+    private void prepareToUpdateProjectTextSnippet() {
+        for(ProjectTextSnippetEntity pt : projectTextSnippetList){
+            boolean isTextDeleted = true;
+            for(TextSnippetEntity ts : projectStandardTextList){
+                if(pt.getId().intValue() == ts.getId().intValue()){
+                    isTextDeleted = false;
+                    break;
+                }
+            }
+            if(isTextDeleted){
+                pt.setLastUpdate(new Date());
+                pt.setStatus(StatusEnum.DELETED);
+            }
+        }
+        for(TextSnippetEntity ts : projectStandardTextList){
+            ProjectTextSnippetEntity projectTextSnippet = new ProjectTextSnippetEntity();
+            projectTextSnippet.setLastUpdate(new Date());
+            projectTextSnippet.setStatus(StatusEnum.ENABLE);
+            projectTextSnippet.setTextSnippet(ts);
+            projectTextSnippetList.add(projectTextSnippet);
+        }
+
     }
 
     private void loadSupplierProcList(){
