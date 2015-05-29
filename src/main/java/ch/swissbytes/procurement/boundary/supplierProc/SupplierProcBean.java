@@ -110,6 +110,7 @@ public class SupplierProcBean implements Serializable {
     }
 
     public void putModeContact(){
+        System.out.println("mode contact.......");
         addingContact=true;
     }
 

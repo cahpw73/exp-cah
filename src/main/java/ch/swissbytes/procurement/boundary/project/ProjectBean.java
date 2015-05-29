@@ -18,6 +18,7 @@ import ch.swissbytes.fqmes.util.Encode;
 import ch.swissbytes.procurement.boundary.currency.CurrencyBean;
 import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
+import ch.swissbytes.procurement.boundary.textSnippet.TextSnippetBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
@@ -88,6 +89,8 @@ public class ProjectBean implements Serializable {
 
     private Long temporalCurrencyId = -1L;
 
+    private Long temporaryId=-1L;
+
 
     @PostConstruct
     public void init (){
@@ -106,7 +109,7 @@ public class ProjectBean implements Serializable {
         loadSupplierProcList();
         loadLogoList();
         loadCurrencyList();
-        loadGlobalStandardTextList();
+
     }
 
     @PreDestroy
@@ -117,11 +120,12 @@ public class ProjectBean implements Serializable {
     public void loadActionCrud(){
         log.info("load action crud");
         if(isCreateProject){
-
+            loadGlobalStandardTextList();
         }else{
             projectEntity = projectService.findProjectById(projectId);
             projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
             projectTextSnippetList = projectService.findProjectTextSnippetByProjectId(projectId);
+            loadGlobalStandardTextList();
             loadAllStandardText();
         }
     }
@@ -140,8 +144,10 @@ public class ProjectBean implements Serializable {
     public String doSave(){
         log.info("do save");
         if(dataValidate()) {
+
             prepareToSaveProjectTextSnippet();
-            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList);
+
+            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList,globalStandardTextList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -152,7 +158,7 @@ public class ProjectBean implements Serializable {
         log.info("do update");
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
-            projectService.doUpdate(projectEntity,projectCurrencyList, projectTextSnippetList);
+            projectService.doUpdate(projectEntity,projectCurrencyList, projectTextSnippetList,globalStandardTextList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -296,7 +302,7 @@ public class ProjectBean implements Serializable {
     }
 
     private void loadGlobalStandardTextList() {
-        globalStandardTextList = textSnippetService.findAll();
+        globalStandardTextList = textSnippetService.findGlobalAndByProject(projectId);
     }
 
     public ProjectEntity getProjectEntity() {
@@ -433,5 +439,19 @@ public class ProjectBean implements Serializable {
             projectCurrencyEntity.setCurrency(currencyBean.getCurrency());
             loadCurrencyList();
         }
+    }
+
+    @Inject
+    private TextSnippetBean standartText;
+
+    public void addNewCustomText(){
+        log.info("addNewCustomText");
+        if(standartText.addProject()) {
+            TextSnippetEntity textSnippet=standartText.getTextSnippet();
+            textSnippet.setId(temporaryId--);
+            projectStandardTextList.add(textSnippet);
+            //selectedGlobalTexts.clear();
+        }
+        log.info("end..");
     }
 }

@@ -39,12 +39,12 @@
                                rendered="#{not _contact.withNoData}"
                                styleClass="btn btn-primary btn-sm">
                 </p:commandLink>
-            <p:commandLink value="#{msgs['lbl.add']}"
+            <h:commandButton value="#{msgs['lbl.add']}"
                            rendered="#{_contact.withNoData}"
                            action="#{supplierProcBean.putModeContact}"
                            styleClass="btn btn-primary btn-sm">
-                <p:ajax update="@form"/>
-            </p:commandLink>
+                <p:ajax  update=":contactEditId:idBtnSave :contactEditId:bodySupplier"/>
+            </h:commandButton>
 
         </p:column>
     </p:dataTable>

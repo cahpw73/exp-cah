@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.textSnippet;
 
 
 import ch.swissbytes.Service.business.Service;
+
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -34,6 +35,19 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         currency.setLastUpdate(new Date());
         dao.update(currency);
     }
+    @Transactional
+    public void doSave(TextSnippetEntity textSnippet){
+        textSnippet.setLastUpdate(new Date());
+        textSnippet.setStatus(StatusEnum.ENABLE);
+        super.doSave(textSnippet);
+    }
+
+    @Override
+    public TextSnippetEntity save(TextSnippetEntity textSnippetEntity){
+        textSnippetEntity.setLastUpdate(new Date());
+        textSnippetEntity.setStatus(StatusEnum.ENABLE);
+        return super.save(textSnippetEntity);
+    }
 
     public TextSnippetEntity findById(Long id) {
         List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);
@@ -55,7 +69,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
 
-    public List<TextSnippetEntity> findAll() {
-        return dao.findAll();
+    public List findGlobalAndByProject(Long id) {
+        return dao.findGlobalAndByProject(id);
     }
 }
