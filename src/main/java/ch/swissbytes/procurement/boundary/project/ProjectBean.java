@@ -18,6 +18,7 @@ import ch.swissbytes.fqmes.util.Encode;
 import ch.swissbytes.procurement.boundary.currency.CurrencyBean;
 import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
+import ch.swissbytes.procurement.boundary.textSnippet.TextSnippetBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
@@ -435,6 +436,16 @@ public class ProjectBean implements Serializable {
         if(currencyBean.save()) {
             projectCurrencyEntity.setCurrency(currencyBean.getCurrency());
             loadCurrencyList();
+        }
+    }
+
+    @Inject
+    private TextSnippetBean standartText;
+
+    public void addNewCustomText(){
+        if(standartText.addProject()) {
+            projectStandardTextList.add(standartText.getTextSnippet());
+            selectedGlobalTexts.clear();
         }
     }
 }

@@ -35,6 +35,12 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         currency.setLastUpdate(new Date());
         dao.update(currency);
     }
+    @Transactional
+    public void doSave(TextSnippetEntity textSnippet){
+        textSnippet.setLastUpdate(new Date());
+        textSnippet.setStatus(StatusEnum.ENABLE);
+        super.doSave(textSnippet);
+    }
 
     public TextSnippetEntity findById(Long id) {
         List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);

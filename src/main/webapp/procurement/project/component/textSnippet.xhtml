@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+    <div class="col-md-12">
+
+        <div class="col-md-12">
+            <div>
+                <h:form prependId="false">
+                    <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
+                                 jsf:placeholder="Enter code"
+                                 required="true"
+                                 requiredMessage="Enter valid code"
+                                 styleClass="form-control" maxlength="50"/>
+                    <p:message for="codeTS"/>
+                    <br/>
+                    <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
+                                     required="true"
+                                     requiredMessage="Enter Text Snippet"
+                                     jsf:placeholder="Enter text snippet"
+                                     styleClass="form-control" maxlength="1000"/>
+                    <p:message for="textTS"/>
+                    <br/>
+                    <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.addNewCustomText}"
+                                     styleClass="btn btn-primary btn-sm">
+                        <p:ajax async="false" process="@form" update=":editUserForm:projectTextDt"/>
+                    </h:commandButton>
+                </h:form>
+            </div>
+            <br/>
+
+        </div>
+        <div class="clearfix"/>
+
+        <div class="col-md-12">
+            <div class="panel panel-default panel-tab" style="background-color: #ffffff!important">
+                <div class="procurement-panel-header" style="background-color: #ffffff!important">Help</div>
+                The following formatting options are available
+                <br/>
+                &lt;i&gt;&#160;&#160;&#160;&#160;- italics
+                <br/>
+                &lt;b&gt;&#160;&#160;&#160;- bold
+                <br/>
+                &lt;u&gt;&#160;&#160;&#160;- underline
+                <br/>
+                &lt;h1&gt;&#160;- header size 1
+                <br/>
+                &lt;h2&gt;&#160;- header size 2
+                <br/>
+                &lt;h3&gt;&#160;- header size 3
+                <br/>
+                &lt;p&gt;&#160;&#160;&#160;- paragraph
+                <br/>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

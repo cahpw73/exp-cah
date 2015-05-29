@@ -322,9 +322,10 @@
                                         <br/>
                                         <h:commandButton
                                                 value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
-                                                action="#{projectBean.addCurrency}"
-                                                styleClass="btn btn-primary btn-sm"
-                                                rendered="#{projectBean.createCurrency}">
+                                                onclick="PF('textSnippetModal').show();"
+                                                action="#{textSnippetBean.clear}"
+                                                styleClass="btn btn-primary btn-sm">
+                                            <p:ajax async="false" update=":textSnippetModalId" process="@this"/>
                                         </h:commandButton>
                                     </div>
                                 </div>
@@ -519,6 +520,16 @@
             <h:panelGroup id="currencyModalId">
                 <div class="col-md-12">
                     <ui:include src="../admin/currency/component/edit.xhtml">
+                        <ui:param name="MODE" value="PROJECT"/>
+                    </ui:include>
+                </div>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="New Custom Text" widgetVar="textSnippetModal"
+                  resizable="false">
+            <h:panelGroup id="textSnippetModalId">
+                <div class="col-md-12">
+                    <ui:include src="component/textSnippet.xhtml">
                         <ui:param name="MODE" value="PROJECT"/>
                     </ui:include>
                 </div>

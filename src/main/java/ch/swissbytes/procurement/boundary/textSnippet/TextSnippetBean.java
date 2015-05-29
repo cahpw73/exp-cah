@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -40,7 +41,6 @@ public class TextSnippetBean implements Serializable {
         loadList();
         mode = ModeOperationEnum.NEW;
         textSnippet = new TextSnippetEntity();
-        textSnippet.setStatus(StatusEnum.ENABLE);
     }
 
     public void edit(Long currencyId) {
@@ -52,10 +52,12 @@ public class TextSnippetBean implements Serializable {
         if (!validate(textSnippet)) {
             return "";
         }
-
-        textSnippet.setLastUpdate(new Date());
         service.doSave(textSnippet);
         return "textSnippet?faces-redirect=true";
+    }
+
+    public void clear(){
+        textSnippet=new TextSnippetEntity();
     }
 
 
@@ -66,6 +68,16 @@ public class TextSnippetBean implements Serializable {
             valid = false;
         }
         return valid;
+    }
+
+    public boolean addProject(){
+        if(!validate(textSnippet)){
+            return false;
+        }
+        RequestContext context = RequestContext.getCurrentInstance();
+        RequestContext.getCurrentInstance().update("pickSystemFormId");
+        context.execute("PF('textSnippetModal').hide();");
+        return true;
     }
 
     public String doUpdate() {
