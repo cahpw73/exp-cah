@@ -89,6 +89,8 @@ public class ProjectBean implements Serializable {
 
     private Long temporalCurrencyId = -1L;
 
+    private Long temporaryId=-1L;
+
 
     @PostConstruct
     public void init (){
@@ -443,9 +445,13 @@ public class ProjectBean implements Serializable {
     private TextSnippetBean standartText;
 
     public void addNewCustomText(){
+        log.info("addNewCustomText");
         if(standartText.addProject()) {
-            projectStandardTextList.add(standartText.getTextSnippet());
-            selectedGlobalTexts.clear();
+            TextSnippetEntity textSnippet=standartText.getTextSnippet();
+            textSnippet.setId(temporaryId--);
+            projectStandardTextList.add(textSnippet);
+            //selectedGlobalTexts.clear();
         }
+        log.info("end..");
     }
 }

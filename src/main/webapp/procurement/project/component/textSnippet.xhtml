@@ -4,11 +4,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-    <div class="col-md-12">
-
         <div class="col-md-12">
             <div>
-                <h:form prependId="false">
+                <h:form id="textSnippetDlg" prependId="false">
                     <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
                                  jsf:placeholder="Enter code"
                                  required="true"
@@ -25,7 +23,7 @@
                     <br/>
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.addNewCustomText}"
                                      styleClass="btn btn-primary btn-sm">
-                        <p:ajax async="false" process="@form" update=":editUserForm:projectTextDt"/>
+                        <p:ajax async="false" process="textSnippetDlg" update=":editUserForm:projectTextDt"/>
                     </h:commandButton>
                 </h:form>
             </div>
@@ -55,6 +53,4 @@
                 <br/>
             </div>
         </div>
-    </div>
-
-</ui:composition>
+ </ui:composition>
