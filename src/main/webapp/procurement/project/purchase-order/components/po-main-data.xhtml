@@ -1,0 +1,121 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <div style="width: 1067px!important; margin-left: 15px!important; margin-right: 15px!important;">
+        <div class="col-sm-12" style="margin-bottom: 20px!important;">
+            <div class="pull-right">
+                <h:commandButton type="submit"
+                                 styleClass="btn btn-primary btn-sm"
+                                 value="#{msgs['lbl.save']}">
+                </h:commandButton>
+                &#160;
+                <h:commandButton type="submit"
+                                 styleClass="btn btn-primary btn-sm"
+                                 value="#{msgs['lbl.cancel']}">
+                </h:commandButton>
+                &#160;
+                <h:commandButton type="submit"
+                                 styleClass="btn btn-primary btn-sm"
+                                 value="#{msgs['lbl.view']}">
+                </h:commandButton>
+            </div>
+        </div>
+    </div>
+    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <div style="width: 220px!important; float: left!important;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poProject" value="#{msgs['po.main.data.lbl.project']}"/>
+
+                <div style="width: 145px; float: left;">
+                    <h:outputText id="poProject" value="3542" styleClass="form-control"
+                                  style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
+                </div>
+            </div>
+        </div>
+        <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poOrderTitle" value="#{msgs['po.main.data.lbl.order.title']}"/>
+
+                <div style="width: 145px; float: left;">
+                    <h:inputText id="poOrderTitle"
+                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 styleClass="form-control" required="true"
+                                 requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                    <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
+                </div>
+            </div>
+        </div>
+        <div style="width: 290px!important; float: left!important;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poOrderNumber" value="#{msgs['po.main.data.lbl.order.number']}"/>
+
+                <div style="width: 145px; float: left;">
+                    <h:inputText id="poOrderNumber"
+                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 styleClass="form-control" required="true"
+                                 requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                    <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 290px!important; float: left!important;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poVarNumber" value="#{msgs['po.main.data.lbl.var.number']}"/>
+
+                <div style="width: 145px; float: left;">
+                    <h:inputText id="poVarNumber"
+                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 styleClass="form-control" required="true"
+                                 requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                    <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <div style="width: 220px!important; float: left!important;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poTransNo" value="#{msgs['po.main.data.lbl.trans.no']}"/>
+
+                <div style="width: 145px; float: left;">
+                    <h:inputText id="poTransNo"
+                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 styleClass="form-control" required="true"
+                                 requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                    <p:message for="poTransNo" id="msgInputPoTransNo"/>
+                </div>
+            </div>
+        </div>
+        <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poOrderDate" value="#{msgs['po.main.data.lbl.order.date']}"/>
+
+                <div style="width: 145px; float: left;">
+                    <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                navigator="true" mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converter="#{dateConverter}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                timeZone="#{configuration.timeZone}"
+                                onselect="calendarChanges();" onchange="calendarChanges();" >
+                        <p:ajax process="@this" event="dateSelect" />
+                    </p:calendar>
+                    <p:message for="poOrderDate" id="msgInputPoOrderDate"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ui:composition>

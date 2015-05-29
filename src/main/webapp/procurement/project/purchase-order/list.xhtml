@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Project</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(0)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-8">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']}</div>
+                    <!-- Default panel contents -->
+                    <div class="panel-body">
+                        <p:dataTable id="projectListId" value="#{projectsBean.projectList}" var="_p"
+                                     paginator="false" lazy="true">
+                            <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="100">
+
+                            </p:column>
+                            <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="90">
+
+                            </p:column>
+                            <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="90">
+
+                            </p:column>
+                            <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="90">
+
+                            </p:column>
+                            <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="90">
+
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                                <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
+                                        styleClass="btn btn-link btn-sm"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                                &#160;
+                                <h:link id="posId" value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                        <h:commandButton type="submit" action="edit?faces-redirect=true"
+                                         styleClass="btn btn-primary btn-sm"
+                                         value="#{msgs['project.purchase.order.btn.new.purchase.order']}">
+                        </h:commandButton>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
