@@ -5,5 +5,245 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
+    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <div style="width: 900px!important; float: left!important;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                               for="requisitionDt" value="#{msgs['po.header.lbl.requisition']}"/>
+
+                <div style="width: 667px; float: left; margin-left:-32px!important;">
+                    <p:dataTable id="requisitionDt" var="_pt"
+                                 value="#{projectBean.projectStandardTextList}">
+                        <p:column headerText="#{msgs['po.header.column.req.no']}">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.header.column.originator']}">
+                            #{_pt.textSnippet}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.header.column.req.date']}">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}">
+                            #{_pt.textSnippet}
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <div style="margin-left: 114px!important;">
+            <h:commandButton
+                    value="#{msgs['lbl.add']}"
+                    action="#{projectBean.addCurrency}"
+                    styleClass="btn btn-primary btn-sm"
+                    rendered="#{projectBean.createCurrency}">
+            </h:commandButton>
+        </div>
+        <div class="clearfix"/>
+        <br/>
+
+        <div style="width: 900px!important; float: left!important;">
+            <div style="width: 278px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="headerProject" value="#{msgs['po.main.data.lbl.project']}"/>
+
+                    <div style="width: 145px; float: left;">
+                        <h:selectOneMenu id="headerProject"
+                                         value="#{projectBean.projectCurrencyEntity.currency}"
+                                         styleClass="form-control"
+                                         converter="currencyConverter">
+                            <f:selectItem
+                                    itemLabel="#{msgs['po.header.selection.choose.supplier']}"
+                                    noSelectionOption="true"/>
+                            <f:selectItems value="#{projectBean.currencyList}"
+                                           var="_c"
+                                           itemValue="#{_c}"
+                                           itemLabel="#{_c.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 181px!important; float: left!important; margin-left: 65px;">
+                <div class="form-group">
+                    <h:commandButton
+                            value="#{msgs['po.header.lbl.panel.delivery.add.new.supplier']}"
+                            action="#{projectBean.addCurrency}"
+                            styleClass="btn btn-primary btn-sm"
+                            rendered="#{projectBean.createCurrency}">
+                    </h:commandButton>
+                </div>
+            </div>
+            <div style="width: 290px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                   for="headerClass" value="#{msgs['po.header.lbl.class']}"/>
+
+                    <div style="width: 145px; float: left;">
+                        <h:selectOneMenu id="headerClass"
+                                         value="#{projectBean.projectCurrencyEntity.currency}"
+                                         styleClass="form-control"
+                                         converter="currencyConverter">
+                            <f:selectItem
+                                    itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                    noSelectionOption="true"/>
+                            <f:selectItems value="#{projectBean.currencyList}"
+                                           var="_c"
+                                           itemValue="#{_c}"
+                                           itemLabel="#{_c.name}"/>
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <br/>
+
+        <div class="panel panel-default panel-tab">
+            <div class="procurement-panel-header">#{msgs['po.header.lbl.panel.delivery.title']}</div>
+            <!-- Default panel contents -->
+            <div class="panel-body">
+                <div style="float: left;">
+                    <div style="width: 240px!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                           for="headerDate" value="#{msgs['po.header.lbl.panel.delivery.date']}"/>
+
+                            <div style="width: 145px; float: left;">
+                                <p:calendar id="headerDate" type="text" styleClass="calendar"
+                                            navigator="true" mask="#{configuration.mask}"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            jsf:placeholder="#{configuration.formatDate}"
+                                            converterMessage="#{msgs['validator.date.invalid']}"
+                                            value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                            timeZone="#{configuration.timeZone}"
+                                            onselect="calendarChanges();" onchange="calendarChanges();">
+                                    <p:ajax process="@this" event="dateSelect"/>
+                                </p:calendar>
+                                <p:message for="headerDate" id="msgHeaderDate"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 240px!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                           for="headerPoint" value="#{msgs['po.header.lbl.panel.delivery.point']}"/>
+
+                            <div style="width: 145px; float: left;">
+                                <h:inputText id="headerPoint"
+                                             value="#{projectBean.projectEntity.projectNumber}"
+                                             styleClass="form-control" required="true"
+                                             requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                                <p:message for="headerPoint" id="msgHeaderPoint"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="float: left;">
+                    <div style="width: 350px!important; margin-left:45px;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                           for="headerInstruction"
+                                           value="#{msgs['po.header.lbl.panel.delivery.instructions']}"/>
+
+                            <div style="width: 150px; float: left;">
+                                <p:inputTextarea id="headerInstruction" type="text" style="height: 75px;"
+                                                 maxlength="950" class="form-control"
+                                                 jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
+                                                 value="#{purchaseOrderCreate.newComment.description}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <br/>
+
+        <div>
+            <div>
+                <div style="width: 345px!important; float: left!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                       for="defaultCurrencyId" value="#{msgs['po.header.lbl.default.currency']}"/>
+
+                        <div style="width: 200px; float: left;">
+                            <h:selectOneMenu id="defaultCurrencyId"
+                                             value="#{projectBean.projectCurrencyEntity.currency}"
+                                             styleClass="form-control"
+                                             converter="currencyConverter">
+                                <f:selectItem
+                                        itemLabel="#{msgs['po.header.selection.choose.default.currency']}"
+                                        noSelectionOption="true"/>
+                                <f:selectItems value="#{projectBean.currencyList}"
+                                               var="_c"
+                                               itemValue="#{_c}"
+                                               itemLabel="#{_c.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
+                                       for="conversionRateId" value="#{msgs['po.header.lbl.conversion.rate']}"/>
+
+                        <div style="width: 145px; float: left;">
+                            <h:outputText id="conversionRateId" value="Auto" styleClass="form-control"
+                                          style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 290px!important; float: left!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                       for="orderValueId" value="#{msgs['po.header.lbl.order.value']}"/>
+
+                        <div style="width: 145px; float: left;">
+                            <h:outputText id="orderValueId" value="Auto" styleClass="form-control"
+                                          style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"/>
+            <div>
+                <div style="width: 345px!important; float: left!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                       for="headerStatusId" value="#{msgs['po.header.lbl.status']}"/>
+
+                        <div style="width: 200px; float: left;">
+                            <h:selectOneMenu id="headerStatusId"
+                                             value="#{projectBean.projectCurrencyEntity.currency}"
+                                             styleClass="form-control"
+                                             converter="currencyConverter">
+                                <f:selectItem
+                                        itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                        noSelectionOption="true"/>
+                                <f:selectItems value="#{projectBean.currencyList}"
+                                               var="_c"
+                                               itemValue="#{_c}"
+                                               itemLabel="#{_c.name}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
+                                       for="projectValueId" value="#{msgs['po.header.lbl.project.value']}"/>
+
+                        <div style="width: 145px; float: left;">
+                            <h:outputText id="projectValueId" value="Auto" styleClass="form-control"
+                                          style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </ui:composition>
