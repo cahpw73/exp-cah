@@ -76,7 +76,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" FROM ProjectEntity p LEFT JOIN p.supplierProcurement sp ");
         sb.append(" LEFT JOIN p.reportLogo rl ");
         sb.append(" LEFT JOIN p.clientLogo cl ");
-        //sb.append(" LEFT JOIN p.clientFooter cf ");
+        sb.append(" LEFT JOIN p.clientFooter cf ");
         sb.append(" WHERE NOT p.status = :DELETED ");
 
         Map<String,Object> parameters = new HashMap<>();
@@ -87,9 +87,9 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
             sb.append(" LOWER(p.projectNumber) like :PROJECT_NUMBER ");
             sb.append(" OR LOWER(p.title) like :TITLE ");
             sb.append(" OR LOWER(sp.company) like :SUPPLIER ");
-            sb.append(" OR LOWER(p.reportLogo.fileName) like :FILE_NAME ");
-            sb.append(" OR LOWER(p.clientLogo.fileName) like :FILE_NAME ");
-            sb.append(" OR LOWER(p.clientFooter.fileName) like :FILE_NAME ");
+            sb.append(" OR LOWER(rl.fileName) like :FILE_NAME ");
+            sb.append(" OR LOWER(cl.fileName) like :FILE_NAME ");
+            sb.append(" OR LOWER(cf.fileName) like :FILE_NAME ");
             sb.append(" )");
 
             parameters.put("PROJECT_NUMBER", "%" + searchTerm.toLowerCase().trim() + "%");
