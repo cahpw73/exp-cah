@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.textSnippet;
 
 
 import ch.swissbytes.Service.business.Service;
+
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -55,7 +56,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
 
-    public List<TextSnippetEntity> findAll() {
-        return dao.findAll();
+    public List findGlobalAndByProject(Long id) {
+        return dao.findGlobalAndByProject(id);
     }
 }

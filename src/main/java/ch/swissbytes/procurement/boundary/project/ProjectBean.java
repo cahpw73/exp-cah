@@ -106,7 +106,7 @@ public class ProjectBean implements Serializable {
         loadSupplierProcList();
         loadLogoList();
         loadCurrencyList();
-        loadGlobalStandardTextList();
+
     }
 
     @PreDestroy
@@ -117,11 +117,12 @@ public class ProjectBean implements Serializable {
     public void loadActionCrud(){
         log.info("load action crud");
         if(isCreateProject){
-
+            loadGlobalStandardTextList();
         }else{
             projectEntity = projectService.findProjectById(projectId);
             projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
             projectTextSnippetList = projectService.findProjectTextSnippetByProjectId(projectId);
+            loadGlobalStandardTextList();
             loadAllStandardText();
         }
     }
@@ -140,7 +141,9 @@ public class ProjectBean implements Serializable {
     public String doSave(){
         log.info("do save");
         if(dataValidate()) {
+
             prepareToSaveProjectTextSnippet();
+
             projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList);
             return "list?faces-redirect=true";
         }
@@ -296,7 +299,7 @@ public class ProjectBean implements Serializable {
     }
 
     private void loadGlobalStandardTextList() {
-        globalStandardTextList = textSnippetService.findAll();
+        globalStandardTextList = textSnippetService.findGlobalAndByProject(projectId);
     }
 
     public ProjectEntity getProjectEntity() {

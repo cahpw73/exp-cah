@@ -48,6 +48,9 @@ public class ProjectService implements Serializable {
                 projectCurrencyService.doSave(pc);
             }
             for(ProjectTextSnippetEntity pt : projectTextSnippetList){
+                if(pt.getId()==null){
+
+                }
                 pt.setProject(entity);
                 projectTextSnippetService.doSave(pt);
             }

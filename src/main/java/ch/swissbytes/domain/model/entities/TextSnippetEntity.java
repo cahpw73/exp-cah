@@ -21,6 +21,7 @@ public class TextSnippetEntity implements Serializable{
     private String code;
     private StatusEnum status;
     private Date lastUpdate;
+    private ProjectEntity project;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -72,6 +73,16 @@ public class TextSnippetEntity implements Serializable{
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="project_id")
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
     }
 
     @Override
