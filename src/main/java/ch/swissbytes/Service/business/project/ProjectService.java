@@ -32,6 +32,9 @@ public class ProjectService implements Serializable {
     @Inject
     private ProjectTextSnippetService projectTextSnippetService;
 
+    @Inject
+    private TextSnippetService textSnippetService;
+
 
 
     @Transactional
@@ -52,6 +55,12 @@ public class ProjectService implements Serializable {
 
                 }
                 pt.setProject(entity);
+                if(pt.getTextSnippet().getId()<0){
+                    pt.getTextSnippet().setId(null);
+                    pt.getTextSnippet().setProject(entity);
+                    TextSnippetEntity textSnippetEntity=textSnippetService.save(pt.getTextSnippet());
+                    pt.setTextSnippet(textSnippetEntity);
+                }
                 projectTextSnippetService.doSave(pt);
             }
         }
@@ -73,6 +82,12 @@ public class ProjectService implements Serializable {
                 if(pt.getId() == null){
                     pt.setProject(entity);
                     pt.setStatus(StatusEnum.ENABLE);
+                }
+                if(pt.getTextSnippet().getId()<0){
+                    pt.getTextSnippet().setId(null);
+                    pt.getTextSnippet().setProject(entity);
+                    TextSnippetEntity textSnippetEntity=textSnippetService.save(pt.getTextSnippet());
+                    pt.setTextSnippet(textSnippetEntity);
                 }
                 pt.setLastUpdate(new Date());
                 projectTextSnippetService.doUpdate(pt);

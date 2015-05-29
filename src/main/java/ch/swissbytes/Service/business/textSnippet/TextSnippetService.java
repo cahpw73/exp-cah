@@ -42,6 +42,13 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         super.doSave(textSnippet);
     }
 
+    @Override
+    public TextSnippetEntity save(TextSnippetEntity textSnippetEntity){
+        textSnippetEntity.setLastUpdate(new Date());
+        textSnippetEntity.setStatus(StatusEnum.ENABLE);
+        return super.save(textSnippetEntity);
+    }
+
     public TextSnippetEntity findById(Long id) {
         List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;
