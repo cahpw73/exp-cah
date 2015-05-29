@@ -147,7 +147,7 @@ public class ProjectBean implements Serializable {
 
             prepareToSaveProjectTextSnippet();
 
-            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList);
+            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList,globalStandardTextList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -158,7 +158,7 @@ public class ProjectBean implements Serializable {
         log.info("do update");
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
-            projectService.doUpdate(projectEntity,projectCurrencyList, projectTextSnippetList);
+            projectService.doUpdate(projectEntity,projectCurrencyList, projectTextSnippetList,globalStandardTextList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);

@@ -38,7 +38,7 @@ public class ProjectService implements Serializable {
 
 
     @Transactional
-    public void doSave(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList,List<ProjectTextSnippetEntity> projectTextSnippetList){
+    public void doSave(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList,List<ProjectTextSnippetEntity> projectTextSnippetList,List<TextSnippetEntity> globals){
         if(entity != null){
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
@@ -62,12 +62,19 @@ public class ProjectService implements Serializable {
                     pt.setTextSnippet(textSnippetEntity);
                 }
                 projectTextSnippetService.doSave(pt);
+                for(TextSnippetEntity ts:globals){
+                    if(ts.getId()<0){
+                        ts.setId(null);
+                        ts.setProject(entity);
+                        textSnippetService.save(ts);
+                    }
+                }
             }
         }
     }
 
     @Transactional
-    public void doUpdate(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList,List<ProjectTextSnippetEntity> projectTextSnippetList){
+    public void doUpdate(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList,List<ProjectTextSnippetEntity> projectTextSnippetList,List<TextSnippetEntity> globals){
         if(entity != null){
             entity.setLastUpdate(new Date());
             projectDao.doUpdate(entity);
@@ -91,6 +98,13 @@ public class ProjectService implements Serializable {
                 }
                 pt.setLastUpdate(new Date());
                 projectTextSnippetService.doUpdate(pt);
+            }
+            for(TextSnippetEntity ts:globals){
+                if(ts.getId()<0){
+                    ts.setId(null);
+                    ts.setProject(entity);
+                    textSnippetService.save(ts);
+                }
             }
         }
     }
