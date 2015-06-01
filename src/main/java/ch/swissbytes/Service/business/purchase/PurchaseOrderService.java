@@ -160,4 +160,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         //}
         return hashCode;
     }
+    //
+    public List<PurchaseOrderEntity> purchaseListByProject(final Long projectId){
+        return dao.findPOByProject(projectId);
+    }
 }

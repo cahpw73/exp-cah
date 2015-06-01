@@ -7,8 +7,10 @@
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Project</ui:define>
     <f:metadata>
+        <f:viewParam name="projectId" action="#{POListBean.projectId}"/>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
+        <f:viewAction action="#{POListBean.load}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
@@ -17,7 +19,7 @@
                     <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']}</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
-                        <p:dataTable id="projectListId" value="#{projectsBean.projectList}" var="_p"
+                        <p:dataTable id="projectListId" value="#{POListBean.list}" var="_p"
                                      paginator="false" lazy="true">
                             <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="100">
 

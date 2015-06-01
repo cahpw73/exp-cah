@@ -39,6 +39,8 @@ public class PurchaseOrderEntity implements Serializable{
     private StatusEntity status;
     private String rfeComment;
     private PurchaseOrderStatusEnum purchaseOrderStatus;
+    private ProjectEntity projectEntity;
+    private POEntity poEntity;
 
 
     private String poReference;
@@ -266,6 +268,26 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setRfeComment(String rfeComment) {
         this.rfeComment = rfeComment;
+    }
+
+
+    public void setProjectEntity(ProjectEntity project) {
+        this.projectEntity = project;
+    }
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="project_id", nullable=false)
+    public ProjectEntity getProjectEntity() {
+        return projectEntity;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="po_id", nullable=false)
+    public POEntity getPoEntity() {
+        return poEntity;
+    }
+
+    public void setPoEntity(POEntity poEntity) {
+        this.poEntity = poEntity;
     }
 
     @Override
