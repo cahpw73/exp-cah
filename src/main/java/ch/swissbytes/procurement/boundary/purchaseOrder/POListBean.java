@@ -36,6 +36,8 @@ public class PoListBean implements Serializable {
 
     private String projectId;
 
+    private ProjectEntity project;
+
 
     @PostConstruct
     public void create(){
@@ -70,6 +72,13 @@ public class PoListBean implements Serializable {
         return list;
     }
 
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
+    }
 
     public String getProjectId() {
         return projectId;

@@ -67,10 +67,11 @@
                             </p:column>
                         </p:dataTable>
                         <br/>
-                        <h:commandButton type="submit" action="edit?faces-redirect=true"
+                        <h:link outcome="edit"
                                          styleClass="btn btn-primary btn-sm"
                                          value="#{msgs['project.purchase.order.btn.new.purchase.order']}">
-                        </h:commandButton>
+                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                        </h:link>
                     </div>
                 </div>
             </div>
