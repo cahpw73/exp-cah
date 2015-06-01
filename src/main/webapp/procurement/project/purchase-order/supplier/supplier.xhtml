@@ -12,12 +12,12 @@
             <div class="panel-body">
                 <!--COL1-->
                 <div style="float: left;">
-                    <div style="width: 240px!important;">
+                    <div style="width: 440px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="supplierSupId" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
-                            <div style="width: 145px; float: left;">
+                            <div style="width: 200px; float: left;">
                                 <h:selectOneMenu id="supplierSupId"
                                                  value="#{projectBean.projectCurrencyEntity.currency}"
                                                  styleClass="form-control"
@@ -34,12 +34,12 @@
                             </div>
                         </div>
                     </div>
-                    <div style="width: 240px!important;">
+                    <div style="width: 440px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="abnRegNo" value="#{msgs['po.supplier.panel.lbl.abn.reg.no']}"/>
 
-                            <div style="width: 145px; float: left;">
+                            <div style="width: 200px; float: left;">
                                 <h:inputText id="abnRegNo"
                                              value="#{projectBean.projectEntity.projectNumber}"
                                              styleClass="form-control" required="true"
@@ -48,26 +48,25 @@
                             </div>
                         </div>
                     </div>
-                    <div style="width: 240px!important;">
+                    <div style="width: 440px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="streetSupId" value="#{msgs['po.supplier.panel.lbl.street']}"/>
 
-                            <div style="width: 145px; float: left;">
-                                <h:inputText id="streetSupId"
-                                             value="#{projectBean.projectEntity.projectNumber}"
-                                             styleClass="form-control" required="true"
-                                             requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                            <div style="width: 200px; float: left;">
+                                <p:inputTextarea id="streetSupId" type="text" style="height: 97px;"
+                                                 maxlength="950" class="form-control"
+                                                 jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
+                                                 value="#{purchaseOrderCreate.newComment.description}"/>
                                 <p:message for="streetSupId" id="msgStreetSupId"/>
                             </div>
                         </div>
                     </div>
-                    <div style="width: 240px!important;">
+                    <div style="width: 440px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="suburbSupId" value="#{msgs['po.supplier.panel.lbl.suburb']}"/>
-
-                            <div style="width: 145px; float: left;">
+                            <div style="width: 200px; float: left;">
                                 <h:inputText id="suburbSupId"
                                              value="#{projectBean.projectEntity.projectNumber}"
                                              styleClass="form-control" required="true"
@@ -78,12 +77,12 @@
                     </div>
                     <!--State and PostCode-->
                     <div>
-                        <div style="width: 240px!important; float: left;">
+                        <div style="width: 440px!important; float: left;">
                             <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                for="stateSupId" value="#{msgs['po.supplier.panel.lbl.state']}"/>
 
-                                <div style="width: 145px; float: left;">
+                                <div style="width: 200px; float: left;">
                                     <h:inputText id="stateSupId"
                                                  value="#{projectBean.projectEntity.projectNumber}"
                                                  styleClass="form-control" required="true"
@@ -92,12 +91,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 240px!important; float: left;">
+                        <div style="width: 240px!important; float: left; margin-left: -141px;">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                                for="postcodeSupId" value="#{msgs['po.supplier.panel.lbl.postcode']}"/>
 
-                                <div style="width: 145px; float: left;">
+                                <div style="width: 100px; float: left;">
                                     <h:inputText id="postcodeSupId"
                                                  value="#{projectBean.projectEntity.projectNumber}"
                                                  styleClass="form-control" required="true"
@@ -108,12 +107,12 @@
                         </div>
                     </div>
                     <div class="clearfix" />
-                    <div style="width: 240px!important;">
+                    <div style="width: 440px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="countrySupId" value="#{msgs['po.supplier.panel.lbl.country']}"/>
 
-                            <div style="width: 145px; float: left;">
+                            <div style="width: 200px; float: left;">
                                 <h:inputText id="countrySupId"
                                              value="#{projectBean.projectEntity.projectNumber}"
                                              styleClass="form-control" required="true"
@@ -124,8 +123,8 @@
                     </div>
                 </div>
                 <!--COL2-->
-                <div style="float: left; margin-left: -239px;">
-                    <div style="width: 350px!important; margin-left:45px;">
+                <div style="float: left; margin-left: -27px;">
+                    <div style="width: 350px!important; margin-left:30px;">
                         <div class="form-group">
                             <h:commandButton
                                     value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
@@ -135,14 +134,14 @@
                             </h:commandButton>
                         </div>
                     </div>
-                    <div style="width: 240px!important;">
+                    <div style="width: 440px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="commentSupId" value="#{msgs['po.supplier.panel.lbl.comments']}"/>
 
-                            <div style="width: 145px; float: left;">
+                            <div style="width: 250px; float: left;">
                                 <p:inputTextarea id="commentSupId" type="text" style="height: 97px;"
-                                                 maxlength="950" class="form-control"
+                                                 maxlength="950" class="form-control" disabled="true"
                                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
                                                  value="#{purchaseOrderCreate.newComment.description}"/>
                                 <p:message for="commentSupId" id="msgCommentSupId"/>
@@ -155,12 +154,12 @@
         <div class="clearfix"></div>
         <!--Contact and New Contact-->
         <div style="margin-left: 0px!important; margin-right: 15px!important;">
-            <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+            <div style="width: 440px!important; float: left!important;">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                    for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
 
-                    <div style="width: 145px; float: left;">
+                    <div style="width: 180px; float: left;">
                         <h:selectOneMenu id="conactSupId"
                                          value="#{projectBean.projectCurrencyEntity.currency}"
                                          styleClass="form-control"
@@ -177,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 290px!important; float: left!important;">
+            <div style="width: 290px!important; float: left!important; margin-left: -13px">
                 <div class="form-group">
                     <h:commandButton
                             value="#{msgs['po.supplier.lbl.btn.add.contact']}"
@@ -191,12 +190,12 @@
         <div class="clearfix"></div>
         <!--Phone and Fax-->
         <div style="margin-left: 0px!important; margin-right: 15px!important;">
-            <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+            <div style="width: 440px!important; float: left!important;">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                    for="phoneSupId" value="#{msgs['po.supplier.lbl.phone']}"/>
 
-                    <div style="width: 145px; float: left;">
+                    <div style="width: 180px; float: left;">
                         <h:inputText id="phoneSupId" disabled="true"
                                      value="#{projectBean.projectEntity.projectNumber}"
                                      styleClass="form-control" required="true"
@@ -205,12 +204,12 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 290px!important; float: left!important;">
+            <div style="width: 440px!important; float: left!important; margin-left: -43px">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    for="faxSupId" value="#{msgs['po.supplier.lbl.fax']}"/>
 
-                    <div style="width: 145px; float: left;">
+                    <div style="width: 180px; float: left;">
                         <h:inputText id="faxSupId" disabled="true"
                                      value="#{projectBean.projectEntity.projectNumber}"
                                      styleClass="form-control" required="true"
@@ -223,12 +222,12 @@
         <div class="clearfix"></div>
         <!--Project Email-->
         <div style="margin-left: 0px!important; margin-right: 15px!important;">
-            <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+            <div style="width: 440px!important; float: left!important;">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                    for="projectEmailSupId" value="#{msgs['po.supplier.lbl.projet.email']}"/>
 
-                    <div style="width: 145px; float: left;">
+                    <div style="width: 180px; float: left;">
                         <h:inputText id="projectEmailSupId" disabled="true"
                                      value="#{projectBean.projectEntity.projectNumber}"
                                      styleClass="form-control" required="true"
