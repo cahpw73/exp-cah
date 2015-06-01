@@ -3,14 +3,13 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Project</ui:define>
     <f:metadata>
-        <f:viewParam name="projectId" action="#{POListBean.projectId}"/>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
-        <f:viewAction action="#{POListBean.load}"/>
+        <f:viewParam name="projectId" value="#{poListBean.projectId}"/>
+        <f:viewAction action="#{poListBean.load}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
@@ -19,19 +18,19 @@
                     <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']}</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
-                        <p:dataTable id="projectListId" value="#{POListBean.list}" var="_p"
+                        <p:dataTable id="projectListId" value="#{poListBean.list}" var="_p"
                                      paginator="false" lazy="true">
                             <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="100">
-
+                                #{_p.po}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="90">
-
+                                #{_p.variationNumber}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="90">
 
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="90">
-
+                                #{_p.supplier.company}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="90">
 
@@ -42,7 +41,27 @@
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
-                                <h:link id="posId" value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                                &#160;
+                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                                &#160;
+                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                                &#160;
+                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                                &#160;
+                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                </h:link>
+                                &#160;
+                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                             </p:column>

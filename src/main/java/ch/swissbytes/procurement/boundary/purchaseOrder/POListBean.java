@@ -8,9 +8,10 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -20,10 +21,10 @@ import java.util.logging.Logger;
  */
 
 @Named
-@RequestScoped
-public class POListBean {
+@ViewScoped
+public class PoListBean implements Serializable {
 
-    private static final Logger log = Logger.getLogger(POListBean.class.getName());
+    private static final Logger log = Logger.getLogger(PoListBean.class.getName());
 
     private List<PurchaseOrderEntity> list;
 
@@ -49,7 +50,7 @@ public class POListBean {
             }catch (NumberFormatException nfe){
              throw   new IllegalArgumentException("project Id invalid");
             }
-            ProjectEntity projectEntity=projectService.findProjectById(Long.valueOf(projectId));
+            ProjectEntity projectEntity=projectService.findProjectById(Long.parseLong(projectId));
             if(projectEntity==null){
                 throw   new IllegalArgumentException("project Id invalid");
             }

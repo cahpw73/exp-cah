@@ -23,6 +23,7 @@ public class POEntity implements Serializable{
     private String varNumber;
     private CurrencyEntity currency;
     private String deliveryInstruction;
+    private SupplierProcEntity supplier;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -45,6 +46,8 @@ public class POEntity implements Serializable{
         this.deliveryInstruction = deliveryInstruction;
     }
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="currency_id")
     public CurrencyEntity getCurrency() {
         return currency;
     }
@@ -89,5 +92,15 @@ public class POEntity implements Serializable{
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="suppplier_id", nullable=false)
+    public SupplierProcEntity getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(SupplierProcEntity supplier) {
+        this.supplier = supplier;
     }
 }
