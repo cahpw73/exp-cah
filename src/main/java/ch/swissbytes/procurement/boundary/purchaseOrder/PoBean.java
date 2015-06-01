@@ -41,6 +41,7 @@ public class PoBean extends Bean {
                 if (projectEntity != null) {
                     purchaseOrder.setProjectEntity(projectEntity);
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
+                    putModeCreation();
                 }else{
                     throw new IllegalArgumentException(" project invalid");
                 }
@@ -48,7 +49,14 @@ public class PoBean extends Bean {
                 throw new IllegalArgumentException("parameter project invalid");
             }
         }else if(poId!=null){
-
+            try {
+                purchaseOrder=service.findById(Long.valueOf(poId));
+                if(purchaseOrder==null){
+                    throw new IllegalArgumentException("invalid purchase order Id");
+                }
+            }catch(NumberFormatException nfe){
+                throw new IllegalArgumentException("invalid purchase order Id");
+            }
         }else{
             throw new IllegalArgumentException("parameter missing");
         }

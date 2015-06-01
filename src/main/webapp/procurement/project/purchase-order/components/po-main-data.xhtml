@@ -51,7 +51,7 @@
 
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poOrderTitle"
-                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 value="#{poBean.purchaseOrder.poEntity.orderTitle}"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"/>
                     <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
@@ -65,7 +65,7 @@
 
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poOrderNumber"
-                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 value="#{poBean.purchaseOrder.poEntity.orderNumber}"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"/>
                     <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
@@ -80,7 +80,7 @@
 
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poVarNumber"
-                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 value="#{poBean.purchaseOrder.poEntity.varNumber}"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"/>
                     <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
@@ -96,7 +96,7 @@
 
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poTransNo"
-                                 value="#{projectBean.projectEntity.projectNumber}"
+                                 value="#{poBean.purchaseOrder.poEntity.transactionNumber}"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"/>
                     <p:message for="poTransNo" id="msgInputPoTransNo"/>
@@ -115,7 +115,7 @@
                                 converter="#{dateConverter}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                 timeZone="#{configuration.timeZone}"
                                 onselect="calendarChanges();" onchange="calendarChanges();" >
                         <p:ajax process="@this" event="dateSelect" />

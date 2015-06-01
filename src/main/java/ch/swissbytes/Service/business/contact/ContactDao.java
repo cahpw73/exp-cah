@@ -26,6 +26,7 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
     public void doSave(List<ContactEntity> contacts,SupplierProcEntity supplier) {
         for(ContactEntity contactEntity:contacts){
             if(!contactEntity.isWithNoData()) {
+                contactEntity.setId(null);
                 contactEntity.setSupplier(supplier);
                 super.save(contactEntity);
             }
