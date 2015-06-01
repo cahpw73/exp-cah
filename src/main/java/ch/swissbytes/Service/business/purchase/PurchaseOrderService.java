@@ -157,19 +157,26 @@ public class PurchaseOrderService extends Service implements Serializable {
                 }
 
             }
-        //}
         return hashCode;
     }
-    //
+
     public List<PurchaseOrderEntity> purchaseListByProject(final Long projectId){
         return dao.findPOByProject(projectId);
     }
 
+
+    @Transactional
     public void savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
 
     }
 
+    @Transactional
     public void updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
 
+    }
+
+    public PurchaseOrderEntity findById(Long id){
+        List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
+        return list.isEmpty()?null:list.get(0);
     }
 }

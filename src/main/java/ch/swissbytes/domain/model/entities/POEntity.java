@@ -21,6 +21,7 @@ public class POEntity implements Serializable{
     private Date orderDate;
     private String orderTitle;
     private String varNumber;
+    private String orderNumber;
     private CurrencyEntity currency;
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
@@ -102,5 +103,14 @@ public class POEntity implements Serializable{
 
     public void setSupplier(SupplierProcEntity supplier) {
         this.supplier = supplier;
+    }
+
+    @Column(name="order_number",length = 250)
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 }
