@@ -22,9 +22,9 @@ import java.util.logging.Logger;
 
 @Named
 @ViewScoped
-public class PoListBean1 implements Serializable {
+public class PoListBean implements Serializable {
 
-    private static final Logger log = Logger.getLogger(PoListBean1.class.getName());
+    private static final Logger log = Logger.getLogger(PoListBean.class.getName());
 
     private List<PurchaseOrderEntity> list;
 
