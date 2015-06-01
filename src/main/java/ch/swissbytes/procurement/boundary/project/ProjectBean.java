@@ -144,9 +144,7 @@ public class ProjectBean implements Serializable {
     public String doSave(){
         log.info("do save");
         if(dataValidate()) {
-
             prepareToSaveProjectTextSnippet();
-
             projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList,globalStandardTextList);
             return "list?faces-redirect=true";
         }

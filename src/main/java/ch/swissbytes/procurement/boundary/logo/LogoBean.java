@@ -2,28 +2,19 @@ package ch.swissbytes.procurement.boundary.logo;
 
 import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.domain.model.entities.LogoEntity;
-import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 

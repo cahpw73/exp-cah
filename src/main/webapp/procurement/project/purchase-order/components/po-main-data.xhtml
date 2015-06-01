@@ -1,6 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
@@ -9,6 +8,15 @@
             <div class="pull-right">
                 <h:commandButton type="submit"
                                  styleClass="btn btn-primary btn-sm"
+                                 action="#{poBean.doSave}"
+                                 rendered="#{poBean.beingCreated}"
+                                 value="#{msgs['lbl.save']}">
+                </h:commandButton>
+                &#160;
+                <h:commandButton type="submit"
+                                 styleClass="btn btn-primary btn-sm"
+                                 action="#{poBean.doUpdate}"
+                                 rendered="#{poBean.beingUpdated}"
                                  value="#{msgs['lbl.save']}">
                 </h:commandButton>
                 &#160;
@@ -31,7 +39,7 @@
                                for="poProject" value="#{msgs['po.main.data.lbl.project']}"/>
 
                 <div style="width: 145px; float: left;">
-                    <h:outputText id="poProject" value="3542" styleClass="form-control"
+                    <h:outputText id="poProject" value="#{poBean.purchaseOrder.projectEntity.projectNumber}" styleClass="form-control"
                                   style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
                 </div>
             </div>

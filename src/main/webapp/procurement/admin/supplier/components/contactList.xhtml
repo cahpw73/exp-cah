@@ -31,19 +31,24 @@
             #{_contact.email}
         </p:column>
         <p:column headerText="#{msgs['lbl.actions']}">
-                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm"
-                               rendered="#{not _contact.withNoData}"/>
-                &#160;
-                <p:commandLink value="#{msgs['lbl.delete']}"
-                               style="color: #ffffff;"
-                               rendered="#{not _contact.withNoData}"
-                               styleClass="btn btn-primary btn-sm">
-                </p:commandLink>
-            <h:commandButton value="#{msgs['lbl.add']}"
-                           rendered="#{_contact.withNoData}"
-                           action="#{supplierProcBean.putModeContact}"
+            <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm"
+                           action="#{supplierProcBean.putModeContact(_contact.id)}"
+                           rendered="#{not _contact.withNoData}">
+                <p:ajax async="false"
+                        update=":contactEditId:idBtnSave :contactEditId:bodySupplier :contactEditId:editContact"/>
+            </h:commandLink>
+            &#160;
+            <p:commandLink value="#{msgs['lbl.delete']}"
+                           style="color: #ffffff;"
+                           rendered="#{not _contact.withNoData}"
                            styleClass="btn btn-primary btn-sm">
-                <p:ajax  update=":contactEditId:idBtnSave :contactEditId:bodySupplier"/>
+            </p:commandLink>
+            <h:commandButton value="#{msgs['lbl.add']}"
+                             rendered="#{_contact.withNoData}"
+                             action="#{supplierProcBean.putModeContact(0)}"
+                             styleClass="btn btn-primary btn-sm">
+                <p:ajax async="false"
+                        update=":contactEditId:idBtnSave :contactEditId:bodySupplier :contactEditId:editContact"/>
             </h:commandButton>
 
         </p:column>

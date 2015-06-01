@@ -33,12 +33,17 @@ public class SupplierProcBean implements Serializable {
     @Inject
     private CategoryBrandBean categoryBrandBean;
 
+    @Inject
+    private ContactBean contactBean;
+
     private String supplierId;
 
     private boolean addingCategory = false;
     private boolean addingBrand = false;
     private boolean editing =false;
     private boolean addingContact=false;
+
+    private Long temporaryId=-1L;
 
     @PostConstruct
     public void create() {
@@ -100,6 +105,13 @@ public class SupplierProcBean implements Serializable {
         categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
+    public void saveContact(){
+        contactBean.saveContact();
+        supplier.getContacts().clear();
+        supplier.getContacts().addAll(contactBean.getContacts());
+        putModeSupplier();
+    }
+
     public boolean isSupplierMode() {
         return !addingBrand && !addingCategory;
     }
@@ -109,8 +121,17 @@ public class SupplierProcBean implements Serializable {
         categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
-    public void putModeContact(){
-        System.out.println("mode contact.......");
+    public void putModeContact(Long id){
+       // System.out.println("mode contact.......")
+        contactBean.getContacts().clear();
+        contactBean.getContacts().addAll(supplier.getContacts());
+        if(id==null||id==0){
+            contactBean.putModeCreation();
+            contactBean.setCurrentId(temporaryId--);
+        }else{
+            contactBean.putModeEdition();
+            contactBean.setCurrentId(id);
+        }
         addingContact=true;
     }
 

@@ -9,6 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -77,6 +81,16 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return sb.toString();
     }
 
+
+    public List<PurchaseOrderEntity> findPOByProject(Long projectId){
+        StringBuilder  sb=new StringBuilder();
+        sb.append("SELECT po ");
+        sb.append("FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        return super.findBy(sb.toString(),map);
+    }
     @Override
     public String orderBy(String field,boolean ascending){
         return "ORDER BY "+field;
