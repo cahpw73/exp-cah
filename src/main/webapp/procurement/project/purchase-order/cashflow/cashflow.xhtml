@@ -1,0 +1,218 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <!--Payment Terms-->
+        <div style="margin-left: 0px!important; margin-right: 15px!important;">
+            <div style="width: 440px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                   for="termCfId" value="#{msgs['po.cashflow.lbl.payment.terms']}"/>
+
+                    <div style="width: 180px; float: left;">
+                        <h:selectOneMenu id="termCfId"
+                                         value="#{projectBean.projectCurrencyEntity.currency}"
+                                         styleClass="form-control"
+                                         converter="currencyConverter">
+                            <f:selectItem
+                                    itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
+                                    noSelectionOption="true"/>
+                            <f:selectItems value="#{projectBean.currencyList}"
+                                           var="_c"
+                                           itemValue="#{_c}"
+                                           itemLabel="#{_c.name}"/>
+                        </h:selectOneMenu>
+                        <p:message for="termCfId" id="msgTermCfId"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+
+        <div class="panel panel-default panel-tab">
+            <div class="procurement-panel-header">#{msgs['po.cashflow.lbl.panel.retention.title']}</div>
+            <!-- Default panel contents -->
+            <div class="panel-body">
+                <!--COL1-->
+                <div style="float: left; margin-left: 15px;">
+                    <div style="width: 120px!important;">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <h:selectBooleanCheckbox id="retentionCf"
+                                                             value="#{usersBean.searchProcurementActiveUsers}">
+                                        <p:ajax process="@this"
+                                                listener="#{usersBean.doSearchProcurement}"/>
+                                    </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--COL2-->
+                <div style="float: left;">
+                    <div style="width: 200px!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="percentageCf" value="#{msgs['po.cashflow.lbl.retention.percentage']}"/>
+
+                            <div style="width: 100px; float: left;">
+                                <h:inputText id="percentageCf"
+                                             value="#{projectBean.projectEntity.projectNumber}"
+                                             styleClass="form-control" required="true"
+                                             requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                                <p:message for="percentageCf" id="msgPercentageCf"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--COL3-->
+                <div style="float: left; margin-left: -34px;">
+                    <div style="width: 200px!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="amtCf" value="#{msgs['po.cashflow.lbl.retention.amt']}"
+                                           style="padding-left: 17px !important;"/>
+
+                            <div style="width: 150px; float: left;">
+                                <h:inputText id="amtCf"
+                                             value="#{projectBean.projectEntity.projectNumber}"
+                                             styleClass="form-control" required="true"
+                                             requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                                <p:message for="amtCf" id="msgAmtCf"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--COL4-->
+                <div style="float: left; margin-left: 13px;">
+                    <div style="width: 270px!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="formCf" value="#{msgs['po.cashflow.lbl.retention.form']}"/>
+
+                            <div style="width: 200px; float: left;">
+                                <h:selectOneMenu id="formCf"
+                                                 value="#{projectBean.projectEntity.defaultFooter}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{projectBean.logoList}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.fileName}"/>
+                                </h:selectOneMenu>
+                                <p:message for="formCf" id="msgFormCf"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--COL5-->
+                <div style="float: left; margin-left: 25px;">
+                    <div style="width: 265px!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="expDateCf" value="#{msgs['po.cashflow.lbl.retention.form']}"/>
+
+                            <div style="width: 200px; float: left;">
+                                <p:calendar id="expDateCf" type="text" styleClass="calendar"
+                                            navigator="true" mask="#{configuration.mask}"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            jsf:placeholder="#{configuration.formatDate}"
+                                            converterMessage="#{msgs['validator.date.invalid']}"
+                                            value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                            timeZone="#{configuration.timeZone}"
+                                            onselect="calendarChanges();" onchange="calendarChanges();">
+                                    <p:ajax process="@this" event="dateSelect"/>
+                                </p:calendar>
+                                <p:message for="expDateCf" id="msgExpDateCf"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!--Forecast cashflow -->
+        <div style="margin-left: 0px!important; margin-right: 15px!important;">
+            <div style="width: 240px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
+                                   value="#{msgs['po.cashflow.lbl.forescast.cashflow']}"/>
+
+                    <div style="width: 180px; float: left;">
+
+                    </div>
+                </div>
+            </div>
+            <div style="width: 340px!important; float: left!important; margin-left: -43px">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                   for="orderValueCf" value="#{msgs['po.cashflow.lbl.order.value']}"/>
+
+                    <div style="width: 180px; float: left;">
+                        <p:inputTextarea id="orderValueCf"
+                                         value="#{projectBean.projectEntity.deliveryInstructions}"
+                                         styleClass="form-control"
+                                         style="height: 50px!important;"/>
+                        <p:message for="orderValueCf" id="msgOrderValueCf"/>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 340px!important; float: left!important; margin-left: -43px">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                   for="balanceId" value="#{msgs['po.cashflow.lbl.balance']}"/>
+
+                    <div style="width: 180px; float: left;">
+                        <p:inputTextarea id="balanceId"
+                                         value="#{projectBean.projectEntity.deliveryInstructions}"
+                                         styleClass="form-control"
+                                         style="height: 50px!important; "/>
+                        <p:message for="balanceId" id="msgBalanceId"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important;">
+            <div style="width: 1060px!important; float: left;">
+                <div class="form-group">
+                    <p:dataTable id="forecastDt" var="_pt"
+                                 value="#{projectBean.projectStandardTextList}">
+                        <p:column headerText="#{msgs['po.cashflow.column.item']}">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}">
+                            #{_pt.textSnippet}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.currency']}">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.order.amt']}">
+                            #{_pt.textSnippet}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.project.amt']}">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.claim.date']}">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.payment.date']}">
+                            #{_pt.textSnippet}
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}">
+                            #{_pt.code}
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
