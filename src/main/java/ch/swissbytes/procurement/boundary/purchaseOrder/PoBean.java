@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -41,6 +42,7 @@ public class PoBean extends Bean {
                 if (projectEntity != null) {
                     purchaseOrder.setProjectEntity(projectEntity);
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
+                    purchaseOrder.setPoEntity(new POEntity());
                     putModeCreation();
                 }else{
                     throw new IllegalArgumentException(" project invalid");

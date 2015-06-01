@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.comment.CommentDao;
+import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
@@ -11,6 +12,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +31,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ScopeSupplyDao scopeSupplyDao;
+
+    @Inject
+    private EnumService enumService;
 
 
     @Inject
@@ -167,12 +172,19 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public void savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
-
+        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+        purchaseOrderEntity.setPoEntity(po);
+        purchaseOrderEntity.setLastUpdate(new Date());
+        purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
+        dao.save(purchaseOrderEntity);
     }
 
     @Transactional
     public void updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
-
+        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+        purchaseOrderEntity.setPoEntity(po);
+        purchaseOrderEntity.setLastUpdate(new Date());
+        dao.save(purchaseOrderEntity);
     }
 
     public PurchaseOrderEntity findById(Long id){
