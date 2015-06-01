@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <div style="width: 1060px!important;">
+            <div class="form-group">
+                <p:dataTable id="itemsDt" var="_pt"
+                             value="#{projectBean.projectStandardTextList}">
+                    <p:column headerText="#{msgs['po.items.dt.column.item.no']}">
+                        #{_pt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.equip.no']}">
+                        #{_pt.textSnippet}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.qty']}">
+                        #{_pt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.unit']}">
+                        #{_pt.textSnippet}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.description']}">
+                        #{_pt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.currency']}">
+                        #{_pt.textSnippet}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}">
+                        #{_pt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.total.cost']}">
+                        #{_pt.textSnippet}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.cost.code']}">
+                        #{_pt.textSnippet}
+                    </p:column>
+                    <p:column headerText="#{msgs['po.items.dt.column.delivery.date']}">
+                        #{_pt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.actions']}">
+                        #{_pt.textSnippet}
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+
+        <div>
+            <div class="form-group">
+                <h:commandButton
+                        value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                        action="#{projectBean.addCurrency}"
+                        styleClass="btn btn-primary btn-sm"
+                        rendered="#{projectBean.createCurrency}">
+                </h:commandButton>
+                &#160;
+                <h:commandButton
+                        value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                        action="#{projectBean.addCurrency}"
+                        styleClass="btn btn-primary btn-sm"
+                        rendered="#{projectBean.createCurrency}">
+                </h:commandButton>
+            </div>
+        </div>
+    </div>
+</ui:composition>
