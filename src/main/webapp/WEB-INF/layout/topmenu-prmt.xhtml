@@ -35,13 +35,12 @@
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><h:link style="font-size: 12px; padding-left: 15px!important;" value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
-                                <li><p:commandLink value="#{msgs['user.change.password']}"
+                                <li>
+                                    <p:commandLink value="#{msgs['lbl.switch.expediting.procurement']}"
+                                                   type="submit" action="#{userSession.switchToExpediting}"
                                                    style="padding-left: 15px!important"
-                                                   action="#{userChangePassBean.loadUserSelected()}"
-                                                   oncomplete="PF('changePassDlg').show();"
-                                                   update=":changePassDlgId">
-
-                                </p:commandLink></li>
+                                                   rendered="#{userSession.hasAccessBoth}"/>
+                                </li>
                                 <li class="divider"></li>
                                 <li>
                                     <p:commandLink id="logout" value="#{msgs['close.session']}"
