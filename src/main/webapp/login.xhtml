@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:fc="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:p="http://primefaces.org/ui">
 
@@ -16,84 +16,106 @@
         <title>#{msgs['login.title']}</title>
 
         <h:outputStylesheet name="css/bootstrap.css"/>
-        <h:outputStylesheet name="css/bootstrap-theme.css"/>
+        <h:outputStylesheet name="css/main-theme.css"/>
+        <h:outputStylesheet name="css/procurement.css"/>
+        <h:outputStylesheet name="css/top-menu.css"/>
+        <h:outputStylesheet name="css/sub-top-menu.css"/>
+        <h:outputStylesheet name="css/footer.css"/>
+        <h:outputStylesheet name="css/fqm.css"/>
         <h:outputStylesheet name="css/bootstrap-multiselect.css"/>
+        <h:outputStylesheet name="css/tab-theme.css"/>
+
     </h:head>
-    <h:body styleClass="BodyLogin">
-        <div class="page-header">
-        </div>
+    <h:body>
+        <ui:include src="WEB-INF/layout/topmenu-login.xhtml"/>
+
         <div class="container"/>
         <p:messages id="glbMsgs" globalOnly="true" errorClass="alert alert-error"
                     warnClass="alert"
                     infoClass="alert alert-info"/>
 
-        <div class="row" style="margin-top:20px">
-            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                <h:form role="form" id="loginform">
-                    <p:remoteCommand name="onload" action="#{authenticatorBean.validationLogin}" autoRun="true" />
-                    <h:inputHidden id="localeLanguage" value="#{languagePreference.language}"/>
-                    <h:inputHidden id="timeZone" value="#{languagePreference.timeZone}"/>
-                    <fieldset>
-                        <h2>#{msgs['login.legend']}</h2>
-                        <hr class="colorgraph"/>
-                        <div class="form-group">
-                            <h:inputText name="email" id="email" value="#{loginCredentials.userId}"
-                                         class="form-control input-lg"
-                                         jsf:placeholder="#{msgs['login.placeholder.user']}"/>
-                        </div>
-                        <div class="form-group">
-                            <h:inputSecret type="password" name="password" id="password"
-                                           value="#{loginCredentials.password}"
-                                           class="form-control input-lg"
-                                           jsf:placeholder="#{msgs['login.placeholder.password']}"/>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
+        <div style="margin-top: 100px">
+            <div class="col-md-12">
+                <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+                    <div style="border-width: 1px;border-color: #DBDBDB; border-radius:10px;
+                                border-style: solid; padding: 15px 15px 15px 15px;">
+                        <h:form role="form" id="loginform">
+                            <p:remoteCommand name="onload" action="#{authenticatorBean.validationLogin}"
+                                             autoRun="true"/>
+                            <h:inputHidden id="localeLanguage" value="#{languagePreference.language}"/>
+                            <h:inputHidden id="timeZone" value="#{languagePreference.timeZone}"/>
+                            <fieldset>
+                                <h3>#{msgs['login.legend']}</h3>
+                                <hr class="colorgraph"/>
+                                <div class="form-group">
+                                    <h:inputText name="email" id="email" value="#{loginCredentials.userId}"
+                                                 class="form-control input-lg"
+                                                 jsf:placeholder="#{msgs['login.placeholder.user']}"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputSecret type="password" name="password" id="password"
+                                                   value="#{loginCredentials.password}"
+                                                   class="form-control input-lg"
+                                                   jsf:placeholder="#{msgs['login.placeholder.password']}"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
                                 <span class="button-checkbox">
                                     <h:link styleClass="btn btn-link pull-right"
                                             value="#{msgs['login.forgot.password']}"
                                             outcome="forgotpassword?faces-redirect=true"/>
                                 </span>
-                            </div>
-                        </div>
-                        <hr class="colorgraph"></hr>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
-                                <p:commandButton type="submit" class="btn btn-lg btn-success btn-block"
-                                                 action="#{authenticatorBean.login}"
-
-                                                 value="#{msgs['login.button.label']}">
-                                </p:commandButton>
-                            </div>
-                        </div>
-                    </fieldset>
-                </h:form>
+                                    </div>
+                                </div>
+                                <hr class="colorgraph"></hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <p:commandLink type="submit" styleClass="btn btn-primary btn-sm"
+                                                           action="#{authenticatorBean.login}"
+                                                           value="#{msgs['login.button.label']}"
+                                                           style="  width: 170px; height: 30px;">
+                                            </p:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </h:form>
+                    </div>
+                </div>
             </div>
         </div>
 
+
         <h:outputScript name="js/bootstrap.min.js"/>
+        <h:outputScript name="js/verifyChanges.js"/>
+        <h:outputScript name="js/respond.min.js"/>
+        <h:outputScript name="js/positiveNumber.js"/>
+        <h:outputScript name="js/bootstrap-multiselect.js"/>
         <h:outputScript name="js/jstz.min.js"/>
         <h:outputScript name="js/localeLanguage.js"/>
-        <h:outputScript name="js/bootstrap-multiselect.js"/>
     </h:body>
     <p:dialog id="pickSystemId" header="Select subsystem" closable="false" widgetVar="pickSystemModal"
               resizable="false"
-              height="80" width="550">
+              height="80" width="465">
         <h:form id="pickSystemFormId">
             <div>
-            Welcome #{authenticatorBean.currentUser()}, please selected which function you wish to do.
+                Welcome #{authenticatorBean.currentUser()}, please selected which function you wish to do.
             </div>
             <br/>
-            <div style="text-align: center">
-                <p:commandButton type="submit"
+
+            <div style="text-align: center; color: #ffffff;">
+                <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
                                  action="#{authenticatorBean.enterProcurementModule}"
-                                 value="#{msgs['system.lbl.procurement']}"/>
+                                 value="#{msgs['system.lbl.procurement']}" />
                 &#160;
-                <p:commandButton type="submit" action="#{authenticatorBean.enterExpeditingModule}"
-                                 value="#{msgs['system.lbl.expediting']}"/>
+                <h:commandButton type="submit" action="#{authenticatorBean.enterExpeditingModule}"
+                                 value="#{msgs['system.lbl.expediting']}"
+                                 styleClass="btn btn-primary btn-sm" />
                 &#160;
-                <p:commandButton type="submit" action="#{authenticatorBean.cancel}"
-                                 value="#{msgs['lbl.cancel']}"/>
+                <h:commandButton type="submit" action="#{authenticatorBean.cancel}"
+                                 value="#{msgs['lbl.cancel']}"
+                                 styleClass="btn btn-primary btn-sm" />
             </div>
         </h:form>
     </p:dialog>
