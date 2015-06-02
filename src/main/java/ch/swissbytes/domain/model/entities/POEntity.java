@@ -25,6 +25,7 @@ public class POEntity implements Serializable{
     private CurrencyEntity currency;
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
+    private String point;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -112,5 +113,14 @@ public class POEntity implements Serializable{
 
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    @Column(name="point",length = 250)
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
     }
 }
