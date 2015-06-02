@@ -33,7 +33,13 @@ public class PoBean extends Bean {
     @Inject
     private ProjectService projectService;
 
+    @Inject
+    private ItemBean itemBean;
 
+
+    public ItemBean getItemBean() {
+        return itemBean;
+    }
 
     public void load(){
         if(projectId!=null){

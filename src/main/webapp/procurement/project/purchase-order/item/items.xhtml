@@ -8,40 +8,103 @@
     <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
         <div style="width: 1060px!important;">
             <div class="form-group">
-                <p:dataTable id="itemsDt" var="_pt"
-                             value="#{projectBean.projectStandardTextList}">
+                <p:dataTable id="itemsDt" var="_i"
+                             value="#{poBean.itemBean.itemList}">
                     <p:column headerText="#{msgs['po.items.dt.column.item.no']}">
-                        #{_pt.code}
+                        <h:panelGroup id="viItemNo">
+                            <h:outputText value="#{_i.itemNo}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edItemNo">
+                            <h:inputText id="itemNo" value="#{_i.itemNo}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.equip.no']}">
-                        #{_pt.textSnippet}
+
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.qty']}">
-                        #{_pt.code}
+                        <h:panelGroup id="viQty">
+                            <h:outputText value="#{_i.qty}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edQty">
+                            <h:inputText id="qty" value="#{_i.qty}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.unit']}">
-                        #{_pt.textSnippet}
+                        <h:panelGroup id="viUnit">
+                            <h:outputText value="#{_i.unit}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edUnit">
+                            <h:inputText id="unitItem" value="#{_i.unit}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.description']}">
-                        #{_pt.code}
+                        <h:panelGroup id="viDescription">
+                            <p:inputTextarea value="#{_i.description}" readonly="true"
+                                             styleClass="form-control" style="max-height: 33px; width: 70%!important;"
+                                             scrollHeight="32" maxlength="500"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edDescription">
+                            <p:inputTextarea id="descripItem" value="#{_i.description}"
+                                             styleClass="form-control" style="max-height: 33px; width: 70%!important;"
+                                             scrollHeight="32" maxlength="500"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.currency']}">
-                        #{_pt.textSnippet}
+                        <h:panelGroup id="viCurrency">
+                            <h:outputText value="#{_i.currency}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edCurrency">
+                            <h:inputText id="currencyItem" value="#{_i.currency}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}">
-                        #{_pt.code}
+                        <h:panelGroup id="viUnitCost">
+                            <h:outputText value="#{_i.unitCost}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edUniCost">
+                            <h:inputText id="unitCostItem" value="#{_i.unitCost}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.total.cost']}">
-                        #{_pt.textSnippet}
+                        <h:panelGroup id="viTotalCost">
+                            <h:outputText value="#{_i.totalCost}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edTotalCost">
+                            <h:inputText id="totalCostItem" value="#{_i.totalCost}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.cost.code']}">
-                        #{_pt.textSnippet}
+                        <h:panelGroup id="viCostCode">
+                            <h:outputText value="#{_i.costCode}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="edCostCode">
+                            <h:inputText id="costCodeItem" value="#{_i.costCode}" styleClass="form-control"/>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['po.items.dt.column.delivery.date']}">
-                        #{_pt.code}
+                        <h:panelGroup id="viDeliveryDate">
+                            <h:outputText value="#{_i.deliveryDate}">
+                                <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                            </h:outputText>
+                        </h:panelGroup>
+                        <h:panelGroup id="edDeliveryDate">
+                            <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                        navigator="true" mask="#{configuration.mask}"
+                                        pattern="#{configuration.formatDate}"
+                                        converter="#{dateConverter}"
+                                        jsf:placeholder="#{configuration.formatDate}"
+                                        converterMessage="#{msgs['validator.date.invalid']}"
+                                        value="#{_i.deliveryDate}"
+                                        timeZone="#{configuration.timeZone}"
+                                        onselect="calendarChanges();" onchange="calendarChanges();">
+                                <p:ajax process="@this" event="dateSelect"/>
+                            </p:calendar>
+                        </h:panelGroup>
                     </p:column>
                     <p:column headerText="#{msgs['lbl.actions']}">
-                        #{_pt.textSnippet}
+                        <p:commandLink value="#{msgs['lbl.edit']}"/>
+                        &#160;
+                        <p:commandLink value="#{msgs['lbl.delete']}"/>
                     </p:column>
                 </p:dataTable>
             </div>
@@ -52,14 +115,14 @@
         <div>
             <div class="form-group">
                 <h:commandButton
-                        value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
-                        action="#{projectBean.addCurrency}"
-                        styleClass="btn btn-primary btn-sm"
-                        rendered="#{projectBean.createCurrency}">
+                        value="#{msgs['po.items.lbl.btn.add.item']}"
+                        action="#{poBean.itemBean.addSupplier}"
+                        styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
                 &#160;
                 <h:commandButton
-                        value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                        value="#{msgs['po.items.lbl.btn.copy.date']}"
                         action="#{projectBean.addCurrency}"
                         styleClass="btn btn-primary btn-sm"
                         rendered="#{projectBean.createCurrency}">
