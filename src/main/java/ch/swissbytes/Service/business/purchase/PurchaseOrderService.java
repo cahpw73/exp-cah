@@ -179,6 +179,19 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
+        //Requisition daos
+
+        //supplier daos
+
+        //items
+
+        //dao2
+
+        //dao3
+
+        //dao4
+
+        //dao5
         return purchaseOrderEntity;
     }
 
@@ -209,6 +222,8 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     public PurchaseOrderEntity findById(Long id){
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
+        //load items
+        //list.get(0).getPo().items.addAll()
         return list.isEmpty()?null:list.get(0);
     }
 }
