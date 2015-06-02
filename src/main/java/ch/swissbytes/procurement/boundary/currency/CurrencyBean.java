@@ -41,6 +41,10 @@ public class CurrencyBean implements Serializable {
         currency = new CurrencyEntity();
     }
 
+    public void restart(){
+        currency=new CurrencyEntity();
+    }
+
     public void edit(Long currencyId) {
         currency = service.findById(currencyId);
         mode = ModeOperationEnum.UPDATE;

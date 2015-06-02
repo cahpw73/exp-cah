@@ -22,7 +22,7 @@ public class POEntity implements Serializable{
     private String orderTitle;
     private String varNumber;
     private String orderNumber;
-    private CurrencyEntity currency;
+    private ProjectCurrencyEntity currency;
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
     private String point;
@@ -50,11 +50,11 @@ public class POEntity implements Serializable{
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="currency_id")
-    public CurrencyEntity getCurrency() {
+    public ProjectCurrencyEntity getCurrency() {
         return currency;
     }
 
-    public void setCurrency(CurrencyEntity currency) {
+    public void setCurrency(ProjectCurrencyEntity currency) {
         this.currency = currency;
     }
     @Size(max = 250)
@@ -115,6 +115,7 @@ public class POEntity implements Serializable{
         this.orderNumber = orderNumber;
     }
 
+
     @Column(name="point",length = 250)
     public String getPoint() {
         return point;
@@ -122,5 +123,17 @@ public class POEntity implements Serializable{
 
     public void setPoint(String point) {
         this.point = point;
+    }
+
+    private SupplierProcEntity supplierHeader;
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="supplier_header_id")
+    public SupplierProcEntity getSupplierHeader() {
+        return supplierHeader;
+    }
+
+    public void setSupplierHeader(SupplierProcEntity supplierHeader) {
+        this.supplierHeader = supplierHeader;
     }
 }

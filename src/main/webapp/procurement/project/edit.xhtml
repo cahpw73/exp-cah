@@ -371,6 +371,7 @@
                                                         <h:commandButton
                                                                 value="#{msgs['project.currencies.lbl.btn.new.currency']}"
                                                                 onclick="PF('currencyModal').show();"
+                                                                action="#{currencyBean.restart}"
                                                                 styleClass="btn btn-primary btn-sm">
                                                             <p:ajax update=":currencyModalId" async="false"/>
                                                         </h:commandButton>
