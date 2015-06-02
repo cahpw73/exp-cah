@@ -98,6 +98,12 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return poEntity;
     }
 
+    public POEntity updatePOEntity(POEntity poEntity){
+        POEntity entityManaged=entityManager.merge(poEntity);
+        entityManager.persist(entityManaged);
+        return entityManaged;
+    }
+
     @Override
     public String orderBy(String field,boolean ascending){
         return "ORDER BY "+field;

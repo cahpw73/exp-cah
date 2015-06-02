@@ -53,6 +53,7 @@ public class PoBean extends Bean {
         }else if(poId!=null){
             try {
                 purchaseOrder=service.findById(Long.valueOf(poId));
+                putModeEdition();
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
@@ -72,12 +73,12 @@ public class PoBean extends Bean {
 
 
     public String doSave(){
-        service.savePOOnProcurement(purchaseOrder);
-        return "list?projectId="+purchaseOrder.getProjectEntity().getId();
+        purchaseOrder=service.savePOOnProcurement(purchaseOrder);
+        return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
     public String doUpdate(){
-        service.updatePOOnProcurement(purchaseOrder);
-        return "list?projectId="+purchaseOrder.getProjectEntity().getId();
+        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
+        return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
     public String getProjectId() {

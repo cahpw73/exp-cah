@@ -9,6 +9,7 @@ import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Purchase;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -171,23 +172,24 @@ public class PurchaseOrderService extends Service implements Serializable {
 
 
     @Transactional
-    public void savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+    public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(purchaseOrderEntity.getPoEntity().getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
+        return purchaseOrderEntity;
     }
 
     @Transactional
-    public void updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
-        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+    public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
+        POEntity po=dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         //purchaseOrderEntity.setProject(pur);
         purchaseOrderEntity.setPo(po.getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
-        dao.save(purchaseOrderEntity);
+        dao.update(purchaseOrderEntity);
         //Requisition daos
 
         //supplier daos
@@ -201,6 +203,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         //dao4
 
         //dao5
+
+        return purchaseOrderEntity;
     }
 
     public PurchaseOrderEntity findById(Long id){
