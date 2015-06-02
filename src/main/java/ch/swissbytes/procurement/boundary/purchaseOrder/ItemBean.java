@@ -26,38 +26,54 @@ import java.util.logging.Logger;
 
 @Named
 @ViewScoped
-public class ItemBean extends Bean implements Serializable {
+public class ItemBean  implements Serializable {
 
     public static final Logger log = Logger.getLogger(ItemBean.class.getName());
 
     private List<ItemEntity> itemList;
 
-    @Override
+    @PostConstruct
     public void create(){
         log.info("create itemBean");
         itemList = new ArrayList<>();
     }
 
-    @Override
+    @PreDestroy
     public void destroy(){
         log.info("destroy itemBean");
     }
 
-    public void addSupplier(){
+    public void addItem(){
+        log.info("add Item");
         ItemEntity entity = new ItemEntity();
+        entity.startEditing();
         itemList.add(entity);
+    }
+
+    public void confirmItem(ItemEntity itemEntity){
+        log.info("confirm item");
+        itemEntity.stopEditing();
+    }
+
+    public void deleteItem(ItemEntity itemEntity){
+        log.info("delete item");
+        itemList.remove(itemEntity);
+    }
+
+    public void editItem(ItemEntity itemEntity){
+        log.info("edit item");
+        itemEntity.startEditing();
+        itemEntity.storeOldValue(itemEntity);
+    }
+
+    public void cancelEditionItem(ItemEntity itemEntity){
+        log.info("cancel item");
+        itemEntity.stopEditing();
+        itemEntity = (ItemEntity) itemEntity.getValueCloned();
     }
 
     public List<ItemEntity> getItemList() {
         return itemList;
-    }
-
-    public void onRowEdit(RowEditEvent event) {
-
-    }
-
-    public void onRowCancel(RowEditEvent event) {
-
     }
 
 }

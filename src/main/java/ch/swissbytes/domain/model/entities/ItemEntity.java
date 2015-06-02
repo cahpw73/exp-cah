@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "item")
-public class ItemEntity implements Serializable{
+public class ItemEntity extends RecordEditable<ItemEntity> implements Serializable{
 
     private Long id;
     private String itemNo;
@@ -28,7 +29,7 @@ public class ItemEntity implements Serializable{
     private Date deliveryDate;
     private StatusEnum status;
     private Date lastUpdate;
-    private CurrencyEntity currency;
+    private ProjectCurrencyEntity projectCurrency;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -135,12 +136,30 @@ public class ItemEntity implements Serializable{
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="currency_id")
-    public CurrencyEntity getCurrency() {
-        return currency;
+    @JoinColumn(name="project_currency_id")
+    public ProjectCurrencyEntity getProjectCurrency() {
+        return projectCurrency;
     }
 
-    public void setCurrency(CurrencyEntity currency) {
-        this.currency = currency;
+    public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
+        this.projectCurrency = projectCurrency;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ItemEntity entity = (ItemEntity) o;
+
+        if (id != null ? !id.equals(entity.id) : entity.id != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
