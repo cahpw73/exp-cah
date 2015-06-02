@@ -4,6 +4,9 @@ package ch.swissbytes.domain.model.entities;
  * Created by alvaro on 9/8/14.
  */
 
+import ch.swissbytes.domain.types.ClassEnum;
+import ch.swissbytes.domain.types.POStatusEnum;
+
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -26,6 +29,8 @@ public class POEntity implements Serializable{
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
     private String point;
+    private ClassEnum clazz;
+    private POStatusEnum poProcStatus;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -135,5 +140,23 @@ public class POEntity implements Serializable{
 
     public void setSupplierHeader(SupplierProcEntity supplierHeader) {
         this.supplierHeader = supplierHeader;
+    }
+
+    @Column(name = "po_status", nullable = false)
+    public POStatusEnum getPoProcStatus() {
+        return poProcStatus;
+    }
+
+    public void setPoProcStatus(POStatusEnum poProcStatus) {
+        this.poProcStatus = poProcStatus;
+    }
+
+    @Column(name = "class", nullable = false)
+    public ClassEnum getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(ClassEnum clazz) {
+        this.clazz = clazz;
     }
 }

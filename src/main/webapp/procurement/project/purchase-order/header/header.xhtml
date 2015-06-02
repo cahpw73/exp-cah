@@ -81,13 +81,12 @@
 
                     <div style="width: 145px; float: left;">
                         <h:selectOneMenu id="headerClass"
-                                         value="#{projectBean.projectCurrencyEntity.currency}"
-                                         styleClass="form-control"
-                                         converter="currencyConverter">
+                                         value="#{poBean.purchaseOrder.poEntity.clazz}"
+                                         styleClass="form-control">
                             <f:selectItem
-                                    itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                    itemLabel="Select one"
                                     noSelectionOption="true"/>
-                            <f:selectItems value="#{projectBean.currencyList}"
+                            <f:selectItems value="#{classes}"
                                            var="_c"
                                            itemValue="#{_c}"
                                            itemLabel="#{_c.name}"/>
@@ -116,7 +115,7 @@
                                             converter="#{dateConverter}"
                                             jsf:placeholder="#{configuration.formatDate}"
                                             converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                            value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
                                     <p:ajax process="@this" event="dateSelect"/>
@@ -174,7 +173,7 @@
                                              styleClass="form-control"
                                              converter="currencyConverter">
                                 <f:selectItem
-                                        itemLabel="#{msgs['po.header.selection.choose.default.currency']}"
+                                        itemLabel="Select one"
                                         noSelectionOption="true"/>
                                 <f:selectItems value="#{projectBean.currencyList}"
                                                var="_c"
@@ -216,17 +215,15 @@
 
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="headerStatusId"
-                                             value="#{poBean.purchaseOrder.poEntity.currency}"
-                                             styleClass="form-control"
-                                             converter="currencyConverter">
+                                             value="#{poBean.purchaseOrder.poEntity.poProcStatus}"
+                                             styleClass="form-control">
                                 <f:selectItem
-
-                                        itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                        itemLabel="Select one"
                                         noSelectionOption="true"/>
-                                <f:selectItems value="#{currencyBean.list}"
-                                               var="_c"
-                                               itemValue="#{_c}"
-                                               itemLabel="#{_c.code}"/>
+                                <f:selectItems value="#{procPoStatuses}"
+                                               var="_st"
+                                               itemValue="#{_st}"
+                                               itemLabel="#{configuration.getMessage(_st.name)}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -245,5 +242,4 @@
             </div>
         </div>
     </div>
-
 </ui:composition>

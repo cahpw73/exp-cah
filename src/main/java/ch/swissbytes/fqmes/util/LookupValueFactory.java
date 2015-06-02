@@ -1,9 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.domain.types.IncoTermsEnum;
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
-import ch.swissbytes.domain.types.TimeMeasurementEnum;
-import ch.swissbytes.domain.types.UoMEnum;
+import ch.swissbytes.domain.types.*;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
@@ -70,6 +67,28 @@ public class LookupValueFactory implements Serializable {
         Map<String,PurchaseOrderStatusEnum> map=new TreeMap<>();
         for(PurchaseOrderStatusEnum poEnum:PurchaseOrderStatusEnum.values()){
             map.put(bundle.getString("postatus." + poEnum.name()), poEnum);
+        }
+        return map;
+    }
+
+    @Produces
+    @SessionScoped
+    @Named("procPoStatuses")
+    public Map<String,POStatusEnum> poStatuses(){
+        Map<String,POStatusEnum> map=new TreeMap<>();
+        for(POStatusEnum poEnum:POStatusEnum.values()){
+            map.put(bundle.getString("popstatus." + poEnum.name()), poEnum);
+        }
+        return map;
+    }
+
+    @Produces
+    @SessionScoped
+    @Named("classes")
+    public Map<String,ClassEnum> classes(){
+        Map<String,ClassEnum> map=new TreeMap<>();
+        for(ClassEnum poEnum:ClassEnum.values()){
+            map.put(bundle.getString("class." + poEnum.name()), poEnum);
         }
         return map;
     }
