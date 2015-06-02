@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Named
 @Entity
-@Table(name = "purchase_order")
+@Table(name = "p_order")
 public class POEntity implements Serializable{
 
     private Long id;
@@ -38,7 +38,7 @@ public class POEntity implements Serializable{
     }
 
     @Size(max = 950)
-    @Column(name="delivery_instruction", nullable=false, length=1000)
+    @Column(name="delivery_instruction",length=1000)
     public String getDeliveryInstruction() {
         return deliveryInstruction;
     }
@@ -96,7 +96,7 @@ public class POEntity implements Serializable{
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="suppplier_id", nullable=false)
+    @JoinColumn(name="supplier_id")
     public SupplierProcEntity getSupplier() {
         return supplier;
     }

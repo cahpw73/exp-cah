@@ -69,16 +69,15 @@ public class PoBean extends Bean {
     protected void initialize() {
         purchaseOrder=new PurchaseOrderEntity();
     }
-    @Override
-    protected  void ending(){
-        //sub class should implement something
-    }
 
-    public void doSave(){
+
+    public String doSave(){
         service.savePOOnProcurement(purchaseOrder);
+        return "list?projectId="+purchaseOrder.getProjectEntity().getId();
     }
-    public void doUpdate(){
+    public String doUpdate(){
         service.updatePOOnProcurement(purchaseOrder);
+        return "list?projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
     public String getProjectId() {

@@ -7,6 +7,7 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
@@ -160,7 +161,6 @@ public class PurchaseOrderService extends Service implements Serializable {
                 for (TransitDeliveryPointEntity tdp: scopeSupplyEntity.getTdpList()){
                     hashCode+=tdp.hashCode();
                 }
-
             }
         return hashCode;
     }
@@ -171,11 +171,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
 
     @Transactional
-    public void savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
-        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+    public void savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
+        purchaseOrderEntity.setPo(purchaseOrderEntity.getPoEntity().getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
+        purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
     }
 
@@ -183,8 +184,23 @@ public class PurchaseOrderService extends Service implements Serializable {
     public void updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
         POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
+        //purchaseOrderEntity.setProject(pur);
+        purchaseOrderEntity.setPo(po.getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.save(purchaseOrderEntity);
+        //Requisition daos
+
+        //supplier daos
+
+        //items
+
+        //dao2
+
+        //dao3
+
+        //dao4
+
+        //dao5
     }
 
     public PurchaseOrderEntity findById(Long id){
