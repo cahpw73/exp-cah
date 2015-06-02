@@ -46,7 +46,7 @@
             <div style="width: 278px!important; float: left!important;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                   for="headerProject" value="#{msgs['po.main.data.lbl.project']}"/>
+                                   for="headerProject" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                     <div style="width: 145px; float: left;">
                         <h:selectOneMenu id="headerProject"
@@ -169,16 +169,16 @@
 
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="defaultCurrencyId"
-                                             value="#{projectBean.projectCurrencyEntity.currency}"
+                                             value="#{poBean.purchaseOrder.poEntity.currency}"
                                              styleClass="form-control"
-                                             converter="currencyConverter">
+                                             converter="projectCurrencyConverter">
                                 <f:selectItem
                                         itemLabel="Select one"
                                         noSelectionOption="true"/>
-                                <f:selectItems value="#{projectBean.currencyList}"
-                                               var="_c"
-                                               itemValue="#{_c}"
-                                               itemLabel="#{_c.name}"/>
+                                <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
+                                               var="_pc"
+                                               itemValue="#{_pc}"
+                                               itemLabel="#{_pc.currency.code}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
                 <div style="width: 280px!important; float: left!important; margin-left: 25px;">
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
-                                       for="conversionRateId" value="#{msgs['po.header.lbl.conversion.rate']}"/>
+                                       for="conversionRateId" value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"/>
 
                         <div style="width: 145px; float: left;">
                             <h:outputText id="conversionRateId" value="Auto" styleClass="form-control"
