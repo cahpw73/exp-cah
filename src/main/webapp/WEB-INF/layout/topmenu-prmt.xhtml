@@ -37,8 +37,8 @@
                                 <li><h:link style="font-size: 12px; padding-left: 15px!important;" value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
                                 <li>
                                     <p:commandLink value="#{msgs['lbl.switch.expediting.procurement']}"
-                                                   type="submit" action="#{userSession.switchToExpediting}"
-                                                   style="padding-left: 15px!important"
+                                                   type="submit" action="#{userSession.switchToModuleSelected}"
+                                                   style="padding-left: 15px!important" ajax="false"
                                                    rendered="#{userSession.hasAccessBoth}"/>
                                 </li>
                                 <li class="divider"></li>

@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 @SessionScoped
 public class UserSession implements Serializable{
 
+    public static final Logger log = Logger.getLogger(UserSession.class.getName());
 
     private String currentModule;
     private String currentHome;
@@ -34,20 +35,22 @@ public class UserSession implements Serializable{
     public boolean isProcurement() {
         if (StringUtils.isNotEmpty(currentModule) && StringUtils.isNotBlank(currentModule)) {
             boolean result = ModuleSystemEnum.PROCUREMENT.name().equalsIgnoreCase(currentModule);
-            System.out.println("Result current module : "  + result);
+            System.out.println("Result current module : " + result);
             return result;
         }
         return false;
     }
 
-    public String switchToProcurement(){
-        currentModule = ModuleSystemEnum.PROCUREMENT.name();
-        return "procurement/project/list?faces-redirect=true";
-    }
-
-    public String switchToExpediting(){
-        currentModule = ModuleSystemEnum.EXPEDITING.name();
-        return "/home?faces-redirect=true";
+    public String switchToModuleSelected(){
+        log.info("switch to module selected");
+        if(StringUtils.isNotEmpty(currentModule) && StringUtils.isNotBlank(currentModule)){
+            if(ModuleSystemEnum.PROCUREMENT.name().equalsIgnoreCase(currentModule)){
+                currentModule = ModuleSystemEnum.EXPEDITING.name();
+            }else{
+                currentModule = ModuleSystemEnum.PROCUREMENT.name();
+            }
+        }
+        return currentModule;
     }
 
     public String getCurrentModule() {
