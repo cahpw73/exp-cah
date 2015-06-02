@@ -21,12 +21,43 @@
                     <div class="pull-left main-logo">
                         <h:graphicImage name="img/FqmLogo.png"/>
                     </div>
-                    <h:link id="homeLinkId" styleClass="navbar-brand lbl-color-df" outcome="/home"> #{msgs['main.title.procurement']}</h:link>
+                    <h:link id="homeLinkId" styleClass="navbar-brand lbl-color-df"
+                            outcome="/home"> #{msgs['main.title.procurement']}</h:link>
 
                 </div>
             </div>
 
-            <div class="col-lg-8">
+            <!--Sub Top Menu-->
+            <div class="col-lg-4"
+                 style="text-align: center;align-content: center; vertical-align: middle; margin-top: 19px; position: relative">
+                <div class="navbar-header "
+                     style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
+                    <span class="link-navigation-label">
+                        <h:link styleClass="lbl-color-df"
+                                outcome="/procurement/project/list">#{msgs['lbl.project']}
+                        </h:link>
+                    </span>
+                    <span class="link-navigation-label">
+                        <h:link styleClass="lbl-color-df"
+                                outcome="/procurement/report/report">#{msgs['lbl.report']}
+                        </h:link>
+                    </span>
+                    <span class="link-navigation-label">
+                        <h:link styleClass="lbl-color-df"
+                                outcome="/procurement/admin/admin">#{msgs['lbl.admin']}
+                        </h:link>
+                    </span>
+                    <span class="link-navigation-label">
+                            <h:link styleClass="lbl-color-df"
+                                    outcome="/procurement/profile/profile">#{msgs['lbl.profile']}
+                            </h:link>
+                    </span>
+
+                </div>
+            </div>
+            <!-- End Sub Top Menu-->
+
+            <div class="col-lg-4">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -34,10 +65,11 @@
                                data-toggle="dropdown">#{identity.account.firstName} #{identity.account.lastName}<b
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><h:link style="font-size: 12px; padding-left: 15px!important;" value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
+                                <li><h:link style="font-size: 12px; padding-left: 15px!important;"
+                                            value="#{msgs['user.profile']}" outcome="/user/profile"/></li>
                                 <li>
                                     <p:commandLink value="#{msgs['lbl.switch.expediting.procurement']}"
-                                                   type="submit" action="#{userSession.switchToModuleSelected}"
+                                                   action="#{userSession.switchToExpediting}"
                                                    style="padding-left: 15px!important" ajax="false"
                                                    rendered="#{userSession.hasAccessBoth}"/>
                                 </li>

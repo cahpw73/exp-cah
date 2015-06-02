@@ -53,6 +53,18 @@ public class UserSession implements Serializable{
         return currentModule;
     }
 
+    public String switchToExpediting(){
+        log.info("switch to expediting");
+        currentModule = ModuleSystemEnum.EXPEDITING.name();
+        return currentModule;
+    }
+
+    public String switchToProcurement(){
+        log.info("switch to procurement");
+        currentModule = ModuleSystemEnum.PROCUREMENT.name();
+        return currentModule;
+    }
+
     public String getCurrentModule() {
         return currentModule;
     }
