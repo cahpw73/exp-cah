@@ -48,8 +48,10 @@ public class AuthenticatorBean {
             }
             if (systemList.size() == 1) {
                 session.setCurrentModule(systemList.get(0).getModuleSystem().name());
+                session.setHasAccessBoth(false);
                 return systemList.get(0).getModuleSystem().name();
             }
+            session.setHasAccessBoth(true);
             openDialogToPickModuleSystem();
         }
         return "";

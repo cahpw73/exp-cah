@@ -72,6 +72,19 @@
             <to-view-id>/procurement/project/list.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-action>#{userSession.switchToModuleSelected}</from-action>
+            <from-outcome>EXPEDITING</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userSession.switchToModuleSelected}</from-action>
+            <from-outcome>PROCUREMENT</from-outcome>
+            <to-view-id>/procurement/project/list.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
   <!--  <navigation-rule>
         <from-view-id>/procurement/*</from-view-id>
         <navigation-case>

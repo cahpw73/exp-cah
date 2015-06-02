@@ -11,59 +11,8 @@
         <f:viewAction action="#{profileBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:panelGroup>
-            <div>
-            </div>
-        </h:panelGroup>
-        <h2>#{msgs['user.profile.title']}</h2>
-        <h:form id="userEditForm" class="form-horizontal" role="form">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.username']}"/>
-                    <div class="col-sm-9">
-                        <h:inputText class="form-control" id="inputUsername" value="#{profile.username}"
-                                     jsf:placeholder="#{msgs['user.edit.lbl.username']}" required="true">
-                        </h:inputText>
-                        <p:message for="inputUsername" id="msgInputUsername"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.first.name']}"/>
-                    <div class="col-sm-9">
-                        <h:inputText class="form-control" id="inputFirstName" value="#{profile.firstName}"
-                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"/>
-                        <p:message for="inputFirstName" id="msgInputFirstName"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <p:outputLabel for="inputName" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.name']}"/>
-                    <div class="col-sm-9">
-                        <h:inputText class="form-control" id="inputName" value="#{profile.name}"
-                                     jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"/>
-                        <p:message for="inputName" id="msgInputName"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                     <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label" value="#{msgs['user.edit.lbl.email']}"/>
-                     <div class="col-sm-9">
-                         <h:inputText class="form-control" id="inputEmail" value="#{profile.email}"
-                                      jsf:placeholder="#{msgs['user.edit.lbl.email']}" required="true">
-                         </h:inputText>
-                         <p:message for="inputEmail" id="msgInputEmail"/>
-                     </div>
-                </div>
-
-                <div>
-                    <div class="pull-right">
-                        <h:commandButton value="#{msgs['user.edit.lbl.button.save']}" styleClass="btn btn-primary btn-sm"
-                                         action="#{profileBean.doUpdate()}"/>
-                        &#160;
-                        <h:button value="#{msgs['user.edit.lbl.button.cancel']}" outcome="/home"
-                                  styleClass="btn btn-primary btn-sm"/>
-                    </div>
-                </div>
-            </div>
-        </h:form>
+        <h3>#{msgs['user.profile.title']}</h3>
+        <br/>
+        <ui:include src="../components/data-profile.xhtml"/>
     </ui:define>
 </ui:composition>
