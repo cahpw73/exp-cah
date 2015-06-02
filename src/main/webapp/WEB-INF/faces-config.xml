@@ -75,14 +75,14 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
-            <from-action>#{userSession.switchToModuleSelected}</from-action>
+            <from-action>#{userSession.switchToExpediting}</from-action>
             <from-outcome>EXPEDITING</from-outcome>
-            <to-view-id>/home.xhtml</to-view-id>
+            <to-view-id>/home.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-action>#{userSession.switchToModuleSelected}</from-action>
+            <from-action>#{userSession.switchToProcurement}</from-action>
             <from-outcome>PROCUREMENT</from-outcome>
-            <to-view-id>/procurement/project/list.xhtml</to-view-id>
+            <to-view-id>/procurement/project/list.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
     </navigation-rule>
   <!--  <navigation-rule>
