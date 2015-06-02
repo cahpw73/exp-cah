@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.purchase;
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.comment.CommentDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
@@ -224,6 +225,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         //load items
         //list.get(0).getPo().items.addAll()
+        PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
+        if(po!=null){
+            po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
+        }
         return list.isEmpty()?null:list.get(0);
     }
+    @Inject
+    private ProjectService projectService;
 }

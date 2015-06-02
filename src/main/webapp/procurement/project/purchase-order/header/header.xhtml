@@ -46,20 +46,20 @@
             <div style="width: 278px!important; float: left!important;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                   for="headerProject" value="#{msgs['po.main.data.lbl.project']}"/>
+                                   for="headerProject" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                     <div style="width: 145px; float: left;">
                         <h:selectOneMenu id="headerProject"
-                                         value="#{projectBean.projectCurrencyEntity.currency}"
+                                         value="#{poBean.purchaseOrder.poEntity.supplierHeader}"
                                          styleClass="form-control"
                                          converter="currencyConverter">
                             <f:selectItem
                                     itemLabel="#{msgs['po.header.selection.choose.supplier']}"
                                     noSelectionOption="true"/>
-                            <f:selectItems value="#{projectBean.currencyList}"
-                                           var="_c"
-                                           itemValue="#{_c}"
-                                           itemLabel="#{_c.name}"/>
+                            <f:selectItems value="#{supplierProcList.list}"
+                                           var="_s"
+                                           itemValue="#{_s}"
+                                           itemLabel="#{_s.company}"/>
                         </h:selectOneMenu>
                     </div>
                 </div>
@@ -81,13 +81,12 @@
 
                     <div style="width: 145px; float: left;">
                         <h:selectOneMenu id="headerClass"
-                                         value="#{projectBean.projectCurrencyEntity.currency}"
-                                         styleClass="form-control"
-                                         converter="currencyConverter">
+                                         value="#{poBean.purchaseOrder.poEntity.clazz}"
+                                         styleClass="form-control">
                             <f:selectItem
-                                    itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                    itemLabel="Select one"
                                     noSelectionOption="true"/>
-                            <f:selectItems value="#{projectBean.currencyList}"
+                            <f:selectItems value="#{classes}"
                                            var="_c"
                                            itemValue="#{_c}"
                                            itemLabel="#{_c.name}"/>
@@ -116,7 +115,7 @@
                                             converter="#{dateConverter}"
                                             jsf:placeholder="#{configuration.formatDate}"
                                             converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{purchaseOrderCreate.newPurchaseOrder.poDeliveryDate}"
+                                            value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
                                     <p:ajax process="@this" event="dateSelect"/>
@@ -132,7 +131,7 @@
 
                             <div style="width: 145px; float: left;">
                                 <h:inputText id="headerPoint"
-                                             value="#{projectBean.projectEntity.projectNumber}"
+                                             value="#{poBean.purchaseOrder.poEntity.point}"
                                              styleClass="form-control"/>
                                 <p:message for="headerPoint" id="msgHeaderPoint"/>
                             </div>
@@ -150,7 +149,7 @@
                                 <p:inputTextarea id="headerInstruction" type="text" style="height: 75px;"
                                                  maxlength="950" class="form-control"
                                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
-                                                 value="#{purchaseOrderCreate.newComment.description}"/>
+                                                 value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"/>
                             </div>
                         </div>
                     </div>
@@ -170,16 +169,16 @@
 
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="defaultCurrencyId"
-                                             value="#{projectBean.projectCurrencyEntity.currency}"
+                                             value="#{poBean.purchaseOrder.poEntity.currency}"
                                              styleClass="form-control"
-                                             converter="currencyConverter">
+                                             converter="projectCurrencyConverter">
                                 <f:selectItem
-                                        itemLabel="#{msgs['po.header.selection.choose.default.currency']}"
+                                        itemLabel="Select one"
                                         noSelectionOption="true"/>
-                                <f:selectItems value="#{projectBean.currencyList}"
-                                               var="_c"
-                                               itemValue="#{_c}"
-                                               itemLabel="#{_c.name}"/>
+                                <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
+                                               var="_pc"
+                                               itemValue="#{_pc}"
+                                               itemLabel="#{_pc.currency.code}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -187,7 +186,7 @@
                 <div style="width: 280px!important; float: left!important; margin-left: 25px;">
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
-                                       for="conversionRateId" value="#{msgs['po.header.lbl.conversion.rate']}"/>
+                                       for="conversionRateId" value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"/>
 
                         <div style="width: 145px; float: left;">
                             <h:outputText id="conversionRateId" value="Auto" styleClass="form-control"
@@ -216,16 +215,15 @@
 
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="headerStatusId"
-                                             value="#{projectBean.projectCurrencyEntity.currency}"
-                                             styleClass="form-control"
-                                             converter="currencyConverter">
+                                             value="#{poBean.purchaseOrder.poEntity.poProcStatus}"
+                                             styleClass="form-control">
                                 <f:selectItem
-                                        itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                        itemLabel="Select one"
                                         noSelectionOption="true"/>
-                                <f:selectItems value="#{projectBean.currencyList}"
-                                               var="_c"
-                                               itemValue="#{_c}"
-                                               itemLabel="#{_c.name}"/>
+                                <f:selectItems value="#{procPoStatuses}"
+                                               var="_st"
+                                               itemValue="#{_st}"
+                                               itemLabel="#{configuration.getMessage(_st.name)}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
@@ -244,5 +242,4 @@
             </div>
         </div>
     </div>
-
 </ui:composition>

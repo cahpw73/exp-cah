@@ -10,7 +10,9 @@ import ch.swissbytes.domain.types.StatusEnum;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -28,6 +30,8 @@ public class ProjectEntity implements Serializable{
     private SupplierProcEntity supplierProcurement;
     private StatusEnum status;
     private Date lastUpdate;
+
+    private List<ProjectCurrencyEntity> currencies=new ArrayList<>();
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -148,6 +152,11 @@ public class ProjectEntity implements Serializable{
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Transient
+    public List<ProjectCurrencyEntity> getCurrencies() {
+        return currencies;
     }
 
     @Override

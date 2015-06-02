@@ -4,6 +4,9 @@ package ch.swissbytes.domain.model.entities;
  * Created by alvaro on 9/8/14.
  */
 
+import ch.swissbytes.domain.types.ClassEnum;
+import ch.swissbytes.domain.types.POStatusEnum;
+
 import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -22,10 +25,12 @@ public class POEntity implements Serializable{
     private String orderTitle;
     private String varNumber;
     private String orderNumber;
-    private CurrencyEntity currency;
+    private ProjectCurrencyEntity currency;
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
     private String point;
+    private ClassEnum clazz;
+    private POStatusEnum poProcStatus;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -50,11 +55,11 @@ public class POEntity implements Serializable{
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="currency_id")
-    public CurrencyEntity getCurrency() {
+    public ProjectCurrencyEntity getCurrency() {
         return currency;
     }
 
-    public void setCurrency(CurrencyEntity currency) {
+    public void setCurrency(ProjectCurrencyEntity currency) {
         this.currency = currency;
     }
     @Size(max = 250)
@@ -115,6 +120,7 @@ public class POEntity implements Serializable{
         this.orderNumber = orderNumber;
     }
 
+
     @Column(name="point",length = 250)
     public String getPoint() {
         return point;
@@ -122,5 +128,35 @@ public class POEntity implements Serializable{
 
     public void setPoint(String point) {
         this.point = point;
+    }
+
+    private SupplierProcEntity supplierHeader;
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="supplier_header_id")
+    public SupplierProcEntity getSupplierHeader() {
+        return supplierHeader;
+    }
+
+    public void setSupplierHeader(SupplierProcEntity supplierHeader) {
+        this.supplierHeader = supplierHeader;
+    }
+
+    @Column(name = "po_status", nullable = false)
+    public POStatusEnum getPoProcStatus() {
+        return poProcStatus;
+    }
+
+    public void setPoProcStatus(POStatusEnum poProcStatus) {
+        this.poProcStatus = poProcStatus;
+    }
+
+    @Column(name = "class", nullable = false)
+    public ClassEnum getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(ClassEnum clazz) {
+        this.clazz = clazz;
     }
 }

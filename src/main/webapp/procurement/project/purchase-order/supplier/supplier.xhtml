@@ -19,7 +19,7 @@
 
                             <div style="width: 200px; float: left;">
                                 <h:selectOneMenu id="supplierSupId"
-                                                 value="#{projectBean.projectCurrencyEntity.currency}"
+                                                 value="#{poBean.purchaseOrder.poEntity.supplier}"
                                                  styleClass="form-control"
                                                  converter="currencyConverter">
                                     <f:selectItem

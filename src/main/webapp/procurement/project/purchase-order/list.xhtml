@@ -24,16 +24,16 @@
                                 #{_p.po}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="90">
-                                #{_p.variationNumber}
+                                #{_p.poEntity.varNumber}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="90">
-
+                                #{_p.poEntity.deliveryInstruction}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="90">
                                 #{_p.poEntity.supplier.company}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="90">
-
+                                #{configuration.getPOProcStatus(_p.poEntity.poProcStatus)}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"

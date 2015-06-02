@@ -115,7 +115,9 @@ public class ProjectService implements Serializable {
         ProjectEntity entity = null;
         if(!list.isEmpty()){
             entity = list.get(0);
+            entity.getCurrencies().addAll(findProjectCurrencyByProjectId(projectId));
         }
+
         return entity;
     }
 
