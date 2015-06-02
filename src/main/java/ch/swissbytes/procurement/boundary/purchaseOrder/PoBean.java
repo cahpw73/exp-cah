@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -41,6 +42,7 @@ public class PoBean extends Bean {
                 if (projectEntity != null) {
                     purchaseOrder.setProjectEntity(projectEntity);
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
+                    purchaseOrder.setPoEntity(new POEntity());
                     putModeCreation();
                 }else{
                     throw new IllegalArgumentException(" project invalid");
@@ -51,6 +53,7 @@ public class PoBean extends Bean {
         }else if(poId!=null){
             try {
                 purchaseOrder=service.findById(Long.valueOf(poId));
+                putModeEdition();
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
@@ -67,16 +70,15 @@ public class PoBean extends Bean {
     protected void initialize() {
         purchaseOrder=new PurchaseOrderEntity();
     }
-    @Override
-    protected  void ending(){
-        //sub class should implement something
-    }
 
-    public void doSave(){
-        service.savePOOnProcurement(purchaseOrder);
+
+    public String doSave(){
+        purchaseOrder=service.savePOOnProcurement(purchaseOrder);
+        return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
-    public void doUpdate(){
-        service.updatePOOnProcurement(purchaseOrder);
+    public String doUpdate(){
+        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
+        return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
     public String getProjectId() {

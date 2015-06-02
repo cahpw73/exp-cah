@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
+import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -89,8 +90,20 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" WHERE po.status.id=:ENABLED ");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
     }
+
+    public POEntity savePOEntity(POEntity poEntity){
+        entityManager.persist(poEntity);
+        return poEntity;
+    }
+
+    public POEntity updatePOEntity(POEntity poEntity){
+        POEntity entityManaged=entityManager.merge(poEntity);
+        entityManager.persist(entityManaged);
+        return entityManaged;
+    }
+
     @Override
     public String orderBy(String field,boolean ascending){
         return "ORDER BY "+field;

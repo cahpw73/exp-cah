@@ -281,7 +281,7 @@ public class PurchaseOrderEntity implements Serializable{
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="po_id", nullable=false)
+    @JoinColumn(name="po_id")
     public POEntity getPoEntity() {
         return poEntity;
     }
