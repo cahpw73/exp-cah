@@ -1,7 +1,9 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
 import ch.swissbytes.Service.business.supplierProc.SupplierProcDao;
+import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -28,11 +31,17 @@ public class SupplierProcList implements Serializable {
     @Inject
     private SupplierProcDao dao;
 
+    @Inject
+    private SupplierProcService service;
+
     @PostConstruct
     public void create(){
         log.info("SupplierProcList bean created");
-        //filter=new Filter();
         list=new SupplierTbl(dao,filter);
+    }
+
+    public List<SupplierProcEntity> getSuppliers(){
+        return service.findAll();
     }
 
     @PreDestroy

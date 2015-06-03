@@ -159,4 +159,15 @@ public class POEntity implements Serializable{
     public void setClazz(ClassEnum clazz) {
         this.clazz = clazz;
     }
+
+    private ContactEntity contactEntity;
+
+    @Column(name = "contact_id", nullable = false)
+    public ContactEntity getContactEntity() {
+        return contactEntity;
+    }
+
+    public void setContactEntity(ContactEntity contactEntity) {
+        this.contactEntity = contactEntity;
+    }
 }

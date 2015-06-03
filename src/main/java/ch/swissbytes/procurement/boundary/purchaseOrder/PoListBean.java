@@ -56,7 +56,7 @@ public class PoListBean implements Serializable {
             if(projectEntity==null){
                 throw   new IllegalArgumentException("project Id invalid");
             }
-            list=service.purchaseListByProject(Long.parseLong(projectId));
+           // list=service.purchaseListByProject(Long.parseLong(projectId));
         }else{
             throw   new IllegalArgumentException("project Id invalid");
         }

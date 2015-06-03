@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Created by alvaro on 9/22/14.
@@ -100,6 +101,10 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     }
 
     public List<SupplierProcEntity> findAll() {
-        return dao.findAll();
+        List<SupplierProcEntity>suppliers=dao.findAll();
+        for(SupplierProcEntity supplier:suppliers){
+            supplier.getContacts().addAll(contactDao.findByContactsBySupplier(supplier.getId()));
+        }
+        return suppliers;
     }
 }
