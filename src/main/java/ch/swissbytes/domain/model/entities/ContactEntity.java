@@ -153,7 +153,7 @@ public class ContactEntity extends Record implements Serializable{
         if (o == null || getClass() != o.getClass()) return false;
 
         ContactEntity that = (ContactEntity) o;
-
+        if(that.id==null&&id!=null)return false;
         if (id != null ? id.longValue()==that.id.longValue() : that.id != null) return false;
        return true;
 

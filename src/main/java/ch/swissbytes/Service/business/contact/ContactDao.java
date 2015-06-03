@@ -46,7 +46,7 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         }
         for(ContactEntity contactEntity:contacts){
             contactEntity.setLastUpdate(now);
-            if(!contacts.isEmpty()) {
+            if(!contactEntity.isWithNoData()) {
                 if (contactEntity.getId() == null||contactEntity.getId()<0) {
                     contactEntity.setId(null);
                     contactEntity.setStatus(StatusEnum.ENABLE);

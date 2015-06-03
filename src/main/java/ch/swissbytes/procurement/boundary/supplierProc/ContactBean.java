@@ -32,47 +32,51 @@ public class ContactBean extends Bean {
 
     @Override
     protected void initialize() {
-        contacts=new ArrayList<>();
-        contact=new ContactEntity();
+        contacts = new ArrayList<>();
+        contact = new ContactEntity();
     }
 
-public void start(){
-    switch (modeOperationEnum) {
-        case NEW:
-            contact=new ContactEntity();
-            break;
-        case UPDATE:
-            int index=contacts.indexOf(contact);
-            contact=contacts.get(index);
-            break;
+    public void start() {
+        switch (modeOperationEnum) {
+            case NEW:
+                contact = new ContactEntity();
+                break;
+            case UPDATE:
+                ContactEntity temporary=new ContactEntity();
+                temporary.setId(currentId);
+                int index = contacts.indexOf(temporary);
+                if(index>=0&&index<contacts.size()) {
+                    contact = contacts.get(index);
+                }
+                break;
+        }
     }
-}
 
     public Long getCurrentId() {
         return currentId;
     }
 
-    public void saveContact(){
-       switch (modeOperationEnum){
-           case NEW:
-               contact.setId(currentId);
-               try {
-                   contacts.add(contacts.size() - 1, (ContactEntity) BeanUtils.cloneBean(contact));
-               }catch (Exception ex){
+    public void saveContact() {
+        switch (modeOperationEnum) {
+            case NEW:
+                contact.setId(currentId);
+                try {
+                    contacts.add(contacts.size() - 1, (ContactEntity) BeanUtils.cloneBean(contact));
+                } catch (Exception ex) {
 
-               }
-               break;
+                }
+                break;
 
-           case UPDATE:
-               int index=contacts.indexOf(contact);
-               if(index>=0){
-                   contacts.set(index,contact);
-               }else{
-                   log.log(Level.WARNING,"contact editing was not found");
-               }
-               break;
+            case UPDATE:
+                int index = contacts.indexOf(contact);
+                if (index >= 0) {
+                    contacts.set(index, contact);
+                } else {
+                    log.log(Level.WARNING, "contact editing was not found");
+                }
+                break;
 
-       }
+        }
     }
 
     public void setCurrentId(Long currentId) {
@@ -91,8 +95,6 @@ public void start(){
     public void setContact(ContactEntity contact) {
         this.contact = contact;
     }
-
-
 
 
 }
