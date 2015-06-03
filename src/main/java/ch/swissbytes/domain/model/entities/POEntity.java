@@ -142,7 +142,7 @@ public class POEntity implements Serializable{
         this.supplierHeader = supplierHeader;
     }
 
-    @Column(name = "po_status", nullable = false)
+    @Column(name = "po_status")
     public POStatusEnum getPoProcStatus() {
         return poProcStatus;
     }
@@ -151,7 +151,7 @@ public class POEntity implements Serializable{
         this.poProcStatus = poProcStatus;
     }
 
-    @Column(name = "class", nullable = false)
+    @Column(name = "class")
     public ClassEnum getClazz() {
         return clazz;
     }
@@ -162,7 +162,7 @@ public class POEntity implements Serializable{
 
     private ContactEntity contactEntity;
 
-    @Column(name = "contact_id", nullable = false)
+    @Column(name = "contact_id")
     public ContactEntity getContactEntity() {
         return contactEntity;
     }
