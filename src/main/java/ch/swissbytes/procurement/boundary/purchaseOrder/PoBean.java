@@ -110,4 +110,7 @@ public class PoBean extends Bean {
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
     }
+
+
+
 }

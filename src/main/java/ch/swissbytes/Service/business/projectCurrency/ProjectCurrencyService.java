@@ -41,7 +41,10 @@ public class ProjectCurrencyService implements Serializable {
         return dao.findByProjectId(id);
     }
 
-
+    public ProjectCurrencyEntity findById(final Long id){
+        List<ProjectCurrencyEntity>list=dao.findById(ProjectCurrencyEntity.class, id);
+        return list.isEmpty()?null:list.get(0);
+    }
 
 
 

@@ -52,11 +52,11 @@
                         <h:selectOneMenu id="headerProject"
                                          value="#{poBean.purchaseOrder.poEntity.supplierHeader}"
                                          styleClass="form-control"
-                                         converter="currencyConverter">
+                                         converter="supplierConverter">
                             <f:selectItem
                                     itemLabel="#{msgs['po.header.selection.choose.supplier']}"
                                     noSelectionOption="true"/>
-                            <f:selectItems value="#{supplierProcList.list}"
+                            <f:selectItems value="#{supplierProcList.suppliers}"
                                            var="_s"
                                            itemValue="#{_s}"
                                            itemLabel="#{_s.company}"/>
@@ -172,6 +172,7 @@
                                              value="#{poBean.purchaseOrder.poEntity.currency}"
                                              styleClass="form-control"
                                              converter="projectCurrencyConverter">
+                                <p:ajax event="change" update="conversionRateId" process="@this"/>
                                 <f:selectItem
                                         itemLabel="Select one"
                                         noSelectionOption="true"/>
@@ -181,15 +182,17 @@
                                                itemLabel="#{_pc.currency.code}"/>
                             </h:selectOneMenu>
                         </div>
+
                     </div>
                 </div>
                 <div style="width: 280px!important; float: left!important; margin-left: 25px;">
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
-                                       for="conversionRateId" value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"/>
+
+                                       for="conversionRateId" value="Conversation Rate"/>
 
                         <div style="width: 145px; float: left;">
-                            <h:outputText id="conversionRateId" value="Auto" styleClass="form-control"
+                            <h:outputText id="conversionRateId" value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"  styleClass="form-control"
                                           style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
                         </div>
                     </div>

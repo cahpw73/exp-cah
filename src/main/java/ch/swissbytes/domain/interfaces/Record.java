@@ -1,5 +1,7 @@
 package ch.swissbytes.domain.interfaces;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 /**
  * Created by alvaro on 9/15/14.
  */
