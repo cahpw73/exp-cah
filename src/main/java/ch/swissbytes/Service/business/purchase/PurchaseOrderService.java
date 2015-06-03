@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.purchase;
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.comment.CommentDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
@@ -41,6 +42,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private TransitDeliveryPointService transitDeliveryPointService;
+
+    @Inject
+    private ItemService itemService;
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -173,7 +177,8 @@ public class PurchaseOrderService extends Service implements Serializable {
 
 
     @Transactional
-    public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+    public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
+        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(purchaseOrderEntity.getPoEntity().getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
@@ -185,7 +190,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //supplier daos
 
         //items
-
+        itemService.doSave(purchaseOrderEntity.getPoEntity().getItemList(),po);
         //dao2
 
         //dao3

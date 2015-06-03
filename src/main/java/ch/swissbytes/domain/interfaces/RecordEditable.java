@@ -4,6 +4,7 @@ package ch.swissbytes.domain.interfaces;
 import org.apache.commons.beanutils.BeanUtils;
 
 
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 import java.util.logging.Logger;
@@ -37,6 +38,7 @@ public class RecordEditable<T> implements Serializable {
         }
     }
 
+    @Transient
     public Boolean getIsEditable() {
         return isEditable;
     }
@@ -46,6 +48,7 @@ public class RecordEditable<T> implements Serializable {
     }
 
 
+    @Transient
     public Object getValueCloned() {
         return valueCloned;
     }

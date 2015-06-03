@@ -79,12 +79,18 @@ public class PoBean extends Bean {
 
 
     public String doSave(){
+        collectData();
         purchaseOrder=service.savePOOnProcurement(purchaseOrder);
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
     public String doUpdate(){
+        collectData();
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+    }
+
+    private void collectData(){
+        purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
     }
 
     public String getProjectId() {

@@ -10,7 +10,7 @@
             <div class="form-group">
                 <h:panelGroup id="itemsGroup">
                     <p:dataTable id="itemsDt" var="_i"
-                                 value="#{itemBean.itemList}">
+                                 value="#{poBean.itemBean.itemList}">
                         <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="50">
                             <h:panelGroup id="viItemNo" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.itemNo}"/>
@@ -141,14 +141,14 @@
             <div class="form-group">
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.add.item']}"
-                        action="#{itemBean.addItem}"
+                        action="#{poBean.itemBean.addItem}"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
                 &#160;
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.copy.date']}"
-                        action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.poEntity.orderDate)}"
+                        action="#{poBean.itemBean.copyDateToItemList(poBean.purchaseOrder.poEntity.orderDate)}"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>

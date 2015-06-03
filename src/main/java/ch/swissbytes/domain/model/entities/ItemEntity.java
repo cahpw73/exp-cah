@@ -125,7 +125,7 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
         this.costCode = costCode;
     }
 
-    @Column(name = "delivery_date",nullable = false)
+    @Column(name = "delivery_date")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getDeliveryDate() {
         return deliveryDate;

@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
@@ -34,6 +35,8 @@ public class ItemBean  implements Serializable {
 
     private List<ItemEntity> itemList;
 
+    private Long preId = -1L;
+
     @PostConstruct
     public void create(){
         log.info("create itemBean");
@@ -47,20 +50,30 @@ public class ItemBean  implements Serializable {
 
     public void addItem(){
         log.info("add Item");
-        if(lastItemIsNotEmpty()){
+        if(lastItemNoIsNotEmpty()){
             ItemEntity entity = new ItemEntity();
+            entity.setId(preId);
             entity.startEditing();
             itemList.add(entity);
+            preId--;
         }
     }
 
-    private boolean lastItemIsNotEmpty() {
+    public void loadItemList(){
+
+    }
+
+    private boolean lastItemNoIsNotEmpty() {
         int index = itemList.size();
-        ItemEntity lastItem = itemList.get(index-1);
-        if(noHasData(lastItem)){
-            
+        if(index > 0) {
+            ItemEntity lastItem = itemList.get(index - 1);
+            return itemNoIsNotEmpty(lastItem);
         }
-        return false;
+        return true;
+    }
+    private  boolean itemNoIsNotEmpty(ItemEntity entity){
+        log.info("item is not empty");
+        return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
     }
 
     public void copyDateToItemList(Date orderDate){
@@ -73,7 +86,12 @@ public class ItemBean  implements Serializable {
 
     public void confirmItem(ItemEntity itemEntity){
         log.info("confirm item");
-        itemEntity.stopEditing();
+        if(itemNoIsNotEmpty(itemEntity)){
+            int index=itemList.indexOf(itemEntity);
+            itemList.set(index,itemEntity);
+            itemEntity.stopEditing();
+        }
+
     }
 
     public void deleteItem(ItemEntity itemEntity){

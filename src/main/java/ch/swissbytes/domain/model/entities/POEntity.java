@@ -11,7 +11,9 @@ import javax.inject.Named;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Named
 @Entity
@@ -31,6 +33,7 @@ public class POEntity implements Serializable{
     private String point;
     private ClassEnum clazz;
     private POStatusEnum poProcStatus;
+    private List<ItemEntity> itemList = new ArrayList<>();
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -170,4 +173,10 @@ public class POEntity implements Serializable{
     public void setContactEntity(ContactEntity contactEntity) {
         this.contactEntity = contactEntity;
     }
+
+    @Transient
+    public List<ItemEntity> getItemList() {
+        return itemList;
+    }
+
 }
