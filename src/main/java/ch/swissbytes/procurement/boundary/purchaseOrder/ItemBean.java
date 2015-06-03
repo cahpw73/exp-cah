@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,9 +47,28 @@ public class ItemBean  implements Serializable {
 
     public void addItem(){
         log.info("add Item");
-        ItemEntity entity = new ItemEntity();
-        entity.startEditing();
-        itemList.add(entity);
+        if(lastItemIsNotEmpty()){
+            ItemEntity entity = new ItemEntity();
+            entity.startEditing();
+            itemList.add(entity);
+        }
+    }
+
+    private boolean lastItemIsNotEmpty() {
+        int index = itemList.size();
+        ItemEntity lastItem = itemList.get(index-1);
+        if(noHasData(lastItem)){
+            
+        }
+        return false;
+    }
+
+    public void copyDateToItemList(Date orderDate){
+        if(orderDate != null){
+            for (ItemEntity i : itemList){
+                i.setDeliveryDate(orderDate);
+            }
+        }
     }
 
     public void confirmItem(ItemEntity itemEntity){

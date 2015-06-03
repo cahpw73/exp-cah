@@ -141,16 +141,16 @@
             <div class="form-group">
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.add.item']}"
-                        action="#{poBean.itemBean.addItem}"
+                        action="#{itemBean.addItem}"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
                 &#160;
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.copy.date']}"
-                        action="#{projectBean.addCurrency}"
-                        styleClass="btn btn-primary btn-sm"
-                        rendered="#{projectBean.createCurrency}">
+                        action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.poEntity.orderDate)}"
+                        styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
             </div>
         </div>
