@@ -32,7 +32,6 @@ public class RecordEditable<T> implements Serializable {
     public void storeOldValue(T oldValue) {
         try {
             BeanUtils.copyProperties(oldValue,valueCloned);
-           // valueCloned=BeanUtils.cloneBean(oldValue);
         } catch (Exception e) {
             e.printStackTrace();
         }

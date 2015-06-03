@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.boundary.Bean;
+import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
@@ -68,8 +69,23 @@ public class ItemBean  implements Serializable {
 
     public void cancelEditionItem(ItemEntity itemEntity){
         log.info("cancel item");
-        itemEntity.stopEditing();
-        itemEntity = (ItemEntity) itemEntity.getValueCloned();
+        if(noHasData(itemEntity)){
+            itemList.remove(itemEntity);
+        }else{
+            itemEntity.stopEditing();
+            itemEntity = (ItemEntity) itemEntity.getValueCloned();
+        }
+
+    }
+
+    private boolean noHasData(ItemEntity itemEntity) {
+        if(itemEntity.getCostCode() == null && itemEntity.getDeliveryDate() == null
+                && itemEntity.getDescription() == null && itemEntity.getItemNo() == null && itemEntity.getQty() == null
+                && itemEntity.getTotalCost() == null && itemEntity.getUnit() == null && itemEntity.getUnitCost() == null
+                && itemEntity.getProjectCurrency() == null ){
+            return true;
+        }
+        return false;
     }
 
     public List<ItemEntity> getItemList() {
