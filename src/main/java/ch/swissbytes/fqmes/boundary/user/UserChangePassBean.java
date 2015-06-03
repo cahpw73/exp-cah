@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -45,16 +46,16 @@ public class UserChangePassBean implements Serializable {
 
     @PostConstruct
     public void init(){
-        log.info("create UserChangePassBean");
+        log.log(Level.FINE, "create UserChangePassBean");
     }
 
     @PreDestroy
     public void destroy(){
-        log.info("destroy UserChangePassBean");
+        log.log(Level.FINE, "destroy UserChangePassBean");
     }
 
     public void loadUserSelected(){
-        log.info("Loading User Entity....");
+        log.log(Level.FINE,"Loading User Entity....");
         User account=(User)identity.getAccount();
         userSelected =userService.getByUserName(account.getLoginName());
         log.info("UserSelected: " + userSelected.getFirstName());

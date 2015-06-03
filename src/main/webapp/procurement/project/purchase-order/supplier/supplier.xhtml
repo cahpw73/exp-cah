@@ -17,7 +17,6 @@
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="supplierSupId" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
-
                             <div style="width: 200px; float: left;">
                                 <h:selectOneMenu id="supplierSupId"
                                                  value="#{poBean.purchaseOrder.poEntity.supplier}"
@@ -30,11 +29,13 @@
                                                    var="_s"
                                                    itemValue="#{_s}"
                                                    itemLabel="#{_s.company}"/>
+                                    <p:ajax async="true" update="supplierDetail" process="@this"/>
                                 </h:selectOneMenu>
                                 <p:message for="supplierSupId" id="msgSupplierSupId"/>
                             </div>
                         </div>
                     </div>
+
                     <div style="width: 440px!important;">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
@@ -71,6 +72,7 @@
                             <div style="width: 200px; float: left;">
                                 <h:inputText id="suburbSupId"
                                              readonly="true"
+                                             value="#{poBean.purchaseOrder.poEntity.supplier.suburb}"
                                              styleClass="form-control" />
                                 <p:message for="suburbSupId" id="msgSuburbSupId"/>
                             </div>
@@ -99,6 +101,7 @@
                                 <div style="width: 100px; float: left;">
                                     <h:inputText id="postcodeSupId"
                                                  readonly="true"
+                                                 value="#{poBean.purchaseOrder.poEntity.supplier.postCode}"
                                                  styleClass="form-control" />
                                     <p:message for="postcodeSupId" id="msgPostcodeSupId"/>
                                 </div>
@@ -114,11 +117,13 @@
                             <div style="width: 200px; float: left;">
                                 <h:inputText id="countrySupId"
                                              readonly="true"
+                                             value="#{poBean.purchaseOrder.poEntity.supplier.country}"
                                              styleClass="form-control"/>
                                 <p:message for="countrySupId" id="msgCountrySupId"/>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!--COL2-->
                 <div style="float: left; margin-left: -27px;">
@@ -141,6 +146,7 @@
                                 <p:inputTextarea id="commentSupId" type="text" style="height: 97px;"
                                                  maxlength="950" class="form-control" disabled="true"
                                                  readonly="true"
+                                                 value="#{poBean.purchaseOrder.poEntity.supplier.comments}"
                                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
                                                  />
                                 <p:message for="commentSupId" id="msgCommentSupId"/>
@@ -153,6 +159,7 @@
         </h:panelGroup>
         <div class="clearfix"></div>
         <!--Contact and New Contact-->
+        <h:panelGroup id="contactDetail">
         <div style="margin-left: 0px!important; margin-right: 15px!important;">
             <div style="width: 440px!important; float: left!important;">
                 <div class="form-group">
@@ -161,16 +168,15 @@
 
                     <div style="width: 180px; float: left;">
                         <h:selectOneMenu id="conactSupId"
-                                         value="#{poBean.purchaseOrder.poEntity.supplier}"
-                                         styleClass="form-control"
-                                         converter="currencyConverter">
+                                         value="#{poBean.purchaseOrder.poEntity.contactEntity}"
+                                         styleClass="form-control">
                             <f:selectItem
                                     itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
                                     noSelectionOption="true"/>
-                            <f:selectItems var="_s"
-                                           itemValue="#{_s}"
-                                           itemLabel="#{_s.company}"/>
-                            <p:ajax async="true" update="supplierDetail" process="@this" event="change"/>
+                            <f:selectItems var="_c"
+                                           itemValue="#{_c}"
+                                           itemLabel="#{_c.company}"/>
+                            <p:ajax async="true" update="contactDetail" process="@this" event="change"/>
                         </h:selectOneMenu>
                         <p:message for="conactSupId" id="msgConactSupId"/>
                     </div>
@@ -198,8 +204,8 @@
                     <div style="width: 180px; float: left;">
                         <h:inputText id="phoneSupId" disabled="true"
                                      readonly="true"
-                                     styleClass="form-control" required="true"
-                                     requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                                     value="#{poBean.purchaseOrder.poEntity.supplier.phone}"
+                                     styleClass="form-control"/>
                         <p:message for="phoneSupId" id="msgPhoneSupId"/>
                     </div>
                 </div>
@@ -212,8 +218,7 @@
                     <div style="width: 180px; float: left;">
                         <h:inputText id="faxSupId" disabled="true"
                                         readonly="true"
-                                     styleClass="form-control" required="true"
-                                     requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                                     styleClass="form-control"/>
                         <p:message for="faxSupId" id="msgFaxSupId"/>
                     </div>
                 </div>
@@ -230,13 +235,13 @@
                     <div style="width: 180px; float: left;">
                         <h:inputText id="projectEmailSupId" disabled="true"
                                     readonly="true"
-                                     styleClass="form-control" required="true"
-                                     requiredMessage="#{msgs['project.detail.project.number.required']}"/>
+                                     styleClass="form-control"/>
                         <p:message for="projectEmailSupId" id="msgProjectEmailSupId"/>
                     </div>
                 </div>
             </div>
         </div>
+        </h:panelGroup>
     </div>
 
 </ui:composition>
