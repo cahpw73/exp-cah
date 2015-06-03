@@ -14,9 +14,9 @@
                                            value="#{msgs['supplier.contact.lbl.first.name']} *"/>
 
                             <div class="col-sm-5">
-                                <h:inputText id="username" value="#{contactBean.contact.firstName}"
+                                <h:inputText id="firstName" value="#{contactBean.contact.firstName}"
                                              styleClass="form-control" required="true"/>
-                                <p:message for="username"/>
+                                <p:message for="firstName"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -56,8 +56,7 @@
 
                             <div class="col-sm-5">
                                 <h:inputText id="phone" value="#{contactBean.contact.phone}"
-                                             styleClass="form-control"
-                                        />
+                                             styleClass="form-control"/>
                                 <p:message for="phone"/>
                             </div>
                         </div>
@@ -94,7 +93,7 @@
 
                     </div>
                     <div class="row">
-                        <h:commandButton value="#{ contactBean.beingCreated? msgs['supplier.contact.btn.save']: msgs['supplier.contact.btn.update']}"
+                        <h:commandButton value="#{msgs['lbl.save']}"
                                          action="#{supplierProcBean.saveContact}"
                                          styleClass="btn btn-primary btn-sm">
                             <p:ajax async="false" process ="editContact" update=":contactEditId:idBtnSave :contactEditId:bodySupplier"/>

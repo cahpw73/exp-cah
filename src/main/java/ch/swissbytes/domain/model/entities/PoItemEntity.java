@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "item")
+@Table(name = "po_item")
 public class PoItemEntity implements Serializable{
 
     private Long id;

@@ -9,6 +9,7 @@ import ch.swissbytes.domain.interfaces.Record;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -127,6 +128,7 @@ public class ContactEntity extends Record implements Serializable{
         this.fax = fax;
     }
     @Size(max = 250)
+    @Pattern(regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",message = "Enter a valid email account")
     @Column(name = "email", length = 250)
     public String getEmail() {
         return email;

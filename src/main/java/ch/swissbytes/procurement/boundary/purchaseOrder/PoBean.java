@@ -82,15 +82,21 @@ public class PoBean extends Bean {
 
     public String doSave(){
         log.info("trying to save purchase order on procurement module");
+        collectData();
         purchaseOrder=service.savePOOnProcurement(purchaseOrder);
         log.info("purchase order created ["+purchaseOrder.getId()+"]");
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
     public String doUpdate(){
         log.info("trying to update purchase order on procurement module");
+        collectData();
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
         log.info("purchase order updated ["+purchaseOrder.getId()+"]");
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+    }
+
+    private void collectData(){
+        purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
     }
 
     public String getProjectId() {

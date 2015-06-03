@@ -29,7 +29,7 @@
                                                    var="_s"
                                                    itemValue="#{_s}"
                                                    itemLabel="#{_s.company}"/>
-                                    <p:ajax async="true" update="supplierDetail" process="@this"/>
+                                    <p:ajax async="true" update="supplierDetail contactDetail" process="@this"/>
                                 </h:selectOneMenu>
                                 <p:message for="supplierSupId" id="msgSupplierSupId"/>
                             </div>
@@ -174,6 +174,7 @@
                                     itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
                                     noSelectionOption="true"/>
                             <f:selectItems var="_c"
+                                           value="#{poBean.purchaseOrder.poEntity.supplier.contacts}"
                                            itemValue="#{_c}"
                                            itemLabel="#{_c.company}"/>
                             <p:ajax async="true" update="contactDetail" process="@this" event="change"/>

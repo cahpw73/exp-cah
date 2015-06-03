@@ -61,6 +61,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         supplier.setLastUpdate(new Date());
         supplierBrandDao.doUpdate(supplier.getBrands(), supplier);
         supplierCategoryDao.doUpdate(supplier.getCategories(), supplier);
+        contactDao.doUpdate(supplier.getContacts(), supplier);
         return supplier;
     }
 

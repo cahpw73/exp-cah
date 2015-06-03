@@ -122,7 +122,6 @@ public class SupplierProcBean implements Serializable {
     }
 
     public void putModeContact(Long id){
-       // System.out.println("mode contact.......")
         contactBean.getContacts().clear();
         contactBean.getContacts().addAll(supplier.getContacts());
         if(id==null||id==0){
@@ -132,6 +131,7 @@ public class SupplierProcBean implements Serializable {
             contactBean.putModeEdition();
             contactBean.setCurrentId(id);
         }
+        contactBean.start();
         addingContact=true;
     }
 
