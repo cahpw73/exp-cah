@@ -20,7 +20,12 @@
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.equip.no']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-
+                            <h:panelGroup id="viEquipNo" rendered="#{!_i.isEditable}">
+                                <h:outputText value="#{_i.equipNo}"/>
+                            </h:panelGroup>
+                            <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
+                                <h:inputText id="equipNo" value="#{_i.equipNo}" styleClass="form-control"/>
+                            </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viQty" rendered="#{!_i.isEditable}">
@@ -40,8 +45,7 @@
                             </h:panelGroup>
                         </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.description']}" width="150" style="padding-right: 5px!important;"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.description']}" width="150" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
                                 <p:inputTextarea value="#{_i.description}" readonly="true"
                                                  styleClass="form-control"

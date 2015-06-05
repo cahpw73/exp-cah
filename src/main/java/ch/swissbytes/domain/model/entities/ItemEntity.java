@@ -20,6 +20,7 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
 
     private Long id;
     private String itemNo;
+    private String equipNo;
     private String qty;
     private String unit;
     private String description;
@@ -70,6 +71,15 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
 
     public void setItemNo(String itemNo) {
         this.itemNo = itemNo;
+    }
+
+    @Column(name = "equip_no")
+    public String getEquipNo() {
+        return equipNo;
+    }
+
+    public void setEquipNo(String equipNo) {
+        this.equipNo = equipNo;
     }
 
     @Column(name = "qty")
