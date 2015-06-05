@@ -40,31 +40,31 @@ public class PoListBean implements Serializable {
 
 
     @PostConstruct
-    public void create(){
+    public void create() {
         log.info("Created POListBean");
-        list=new ArrayList<>();
+        list = new ArrayList<>();
     }
 
-    public void load(){
-        if(StringUtils.isNotEmpty(projectId)&& StringUtils.isNotBlank(projectId)){
-            try{
+    public void load() {
+        if (StringUtils.isNotEmpty(projectId) && StringUtils.isNotBlank(projectId)) {
+            try {
                 Long.parseLong(projectId);
-            }catch (NumberFormatException nfe){
-             throw   new IllegalArgumentException("project Id invalid");
+            } catch (NumberFormatException nfe) {
+                throw new IllegalArgumentException("project Id invalid");
             }
-            ProjectEntity projectEntity=projectService.findProjectById(Long.parseLong(projectId));
-            if(projectEntity==null){
-                throw   new IllegalArgumentException("project Id invalid");
+            project = projectService.findProjectById(Long.parseLong(projectId));
+            if (project == null) {
+                throw new IllegalArgumentException("project Id invalid");
             }
-            list=service.purchaseListByProject(Long.parseLong(projectId));
-        }else{
-            throw   new IllegalArgumentException("project Id invalid");
+            list = service.purchaseListByProject(Long.parseLong(projectId));
+        } else {
+            throw new IllegalArgumentException("project Id invalid");
         }
 
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("Destroyed POListBean");
     }
 

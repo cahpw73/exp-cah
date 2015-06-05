@@ -373,8 +373,8 @@ textarea.form-control {
 .ui-datatable thead th,
 .ui-datatable tbody td,
 .ui-datatable tfoot td {
-    padding-left: 0px!important;
-    padding-right: 0px!important;
+    padding-left: 1px!important;
+    padding-right: 1px!important;
 }
 .ui-column-title{
     width: 15px!important;
