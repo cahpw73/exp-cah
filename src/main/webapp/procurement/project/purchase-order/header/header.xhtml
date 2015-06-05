@@ -12,21 +12,44 @@
                                for="requisitionDt" value="#{msgs['po.header.lbl.requisition']}"/>
 
                 <div style="width: 667px; float: left; margin-left:-32px!important;">
-                    <p:dataTable id="requisitionDt" var="_pt"
-                                 value="#{projectBean.projectStandardTextList}">
+                    <h:panelGroup id="requisitionsGroup">
+                    <p:dataTable id="requisitionDt" var="_req"
+                                 value="#{requisitionBean.filteredList()}">
                         <p:column headerText="#{msgs['po.header.column.req.no']}">
-                            #{_pt.code}
+                            <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
+                            <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"/>
                         </p:column>
                         <p:column headerText="#{msgs['po.header.column.originator']}">
-                            #{_pt.textSnippet}
+                            <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>
+                            <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}"/>
                         </p:column>
                         <p:column headerText="#{msgs['po.header.column.req.date']}">
-                            #{_pt.code}
+                            <h:outputText rendered="#{not _req.isEditable}" value="#{util.toLocal(_req.requisitionDate)}"/>
+                            <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                        navigator="true" mask="#{configuration.mask}"
+                                        rendered="#{_req.isEditable}"
+                                        pattern="#{configuration.formatDate}"
+                                        converter="#{dateConverter}"
+                                        jsf:placeholder="#{configuration.formatDate}"
+                                        converterMessage="#{msgs['validator.date.invalid']}"
+                                        value="#{_req.requisitionDate}"
+                                        timeZone="#{configuration.timeZone}"
+                                        onselect="calendarChanges();" onchange="calendarChanges();">
+                            </p:calendar>
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}">
-                            #{_pt.textSnippet}
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_req.isEditable}" process="@this"
+                            action="#{requisitionBean.edit(_req.id)}" update="requisitionDt"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_req.isEditable}" process=":editPoForm:requisitionsGroup"
+                                           action="#{requisitionBean.confirm(_req.id)}" update="requisitionDt"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_req.isEditable}" process="@this"
+                                           action="#{requisitionBean.delete(_req.id)}" update="requisitionDt"/>
+                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_req.isEditable}" process="@this"
+                                           action="#{requisitionBean.cancel(_req.id)}" update="requisitionDt"/>
                         </p:column>
                     </p:dataTable>
+                    </h:panelGroup>
                 </div>
             </div>
         </div>
@@ -34,9 +57,9 @@
         <div style="margin-left: 114px!important;">
             <h:commandButton
                     value="#{msgs['lbl.add']}"
-                    action="#{projectBean.addCurrency}"
-                    styleClass="btn btn-primary btn-sm"
-                    rendered="#{projectBean.createCurrency}">
+                    action="#{requisitionBean.add()}"
+                    styleClass="btn btn-primary btn-sm">
+                <p:ajax async="false" update="requisitionsGroup"/>
             </h:commandButton>
         </div>
         <div class="clearfix"/>

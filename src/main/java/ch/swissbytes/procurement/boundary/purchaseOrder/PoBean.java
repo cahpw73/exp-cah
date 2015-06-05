@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -40,6 +41,12 @@ public class PoBean extends Bean {
     private ItemBean itemBean;
 
 
+    @Inject
+    private RequisitionBean requisitionBean;
+
+    @Inject
+    private DeliverableBean deliverableBean;
+
     public ItemBean getItemBean() {
         return itemBean;
     }
@@ -67,6 +74,8 @@ public class PoBean extends Bean {
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
+                requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
+
             }catch(NumberFormatException nfe){
                 throw new IllegalArgumentException("invalid purchase order Id");
             }
@@ -104,7 +113,9 @@ public class PoBean extends Bean {
     private void collectData(){
         log.info("itemBean get item list size : " + itemBean.getItemList().size());
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
-        log.info("getPoEntity().getItemList() "  + purchaseOrder.getPoEntity().getItemList().size());
+        purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
+        purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
+
     }
 
     public String getProjectId() {
