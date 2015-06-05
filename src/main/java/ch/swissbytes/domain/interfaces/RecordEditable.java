@@ -21,6 +21,7 @@ public class RecordEditable<T> implements Serializable {
 
     private T valueCloned;
 
+
     public void stopEditing(){
         log.info("stopEditing");
         isEditable = false;
@@ -33,7 +34,8 @@ public class RecordEditable<T> implements Serializable {
 
     public void storeOldValue(T oldValue) {
         try {
-            BeanUtils.copyProperties(oldValue,valueCloned);
+            //BeanUtils.copyProperties(valueCloned,oldValue);
+            valueCloned=(T)BeanUtils.cloneBean(oldValue);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,8 +52,12 @@ public class RecordEditable<T> implements Serializable {
 
 
     @Transient
-    public Object getValueCloned() {
+    public T getValueCloned() {
         return valueCloned;
+    }
+
+    public void setValueCloned(T value){
+        valueCloned=value;
     }
 
     public void setId(Long id){

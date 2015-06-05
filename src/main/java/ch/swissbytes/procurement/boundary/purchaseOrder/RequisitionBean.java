@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.RequisitionEntity;
 import ch.swissbytes.procurement.boundary.BeanEditableList;
 import javax.faces.view.ViewScoped;

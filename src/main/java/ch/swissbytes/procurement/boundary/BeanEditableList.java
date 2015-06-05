@@ -17,7 +17,6 @@ public class BeanEditableList<T> extends Bean {
 
     public BeanEditableList(){
         super();
-        System.out.println("building bean editable list");
     }
 
     public void add(T element) {
@@ -38,12 +37,17 @@ public class BeanEditableList<T> extends Bean {
             RecordEditable record = find(id);
             if (record != null) {
                 putModeEdition();
+              //  record.setValueCloned(createNewInstance());
                 record.storeOldValue(record);
                 record.startEditing();
             }
         }
 
     }
+
+   /* protected T createNewInstance(){
+        return null;
+    }*/
 
     private RecordEditable find(Long id) {
         RecordEditable recordEditable = null;
@@ -55,6 +59,19 @@ public class BeanEditableList<T> extends Bean {
             }
         }
         return recordEditable;
+    }
+    private Integer index(Long id) {
+        int index=-1;
+        int i=0;
+        for (T re : list) {
+            RecordEditable  r=(RecordEditable)re;
+            if (r.getId().longValue() == id.longValue()) {
+                index=i;
+                break;
+            }
+            i++;
+        }
+        return index;
     }
 
     public void confirm(Long id) {
@@ -77,8 +94,14 @@ public class BeanEditableList<T> extends Bean {
                 list.remove(record);
             }
             if (isBeingUpdated()) {
-                record = (RecordEditable) record.getValueCloned();
-                record.setIsEditable(false);
+                T originalValue= (T) record.getValueCloned();
+                //record=(RecordEditable)originalValue;
+                //record.setIsEditable(false);
+                //originalValue=(T)
+                int index=index(id);
+                if(index>=0){
+                    list.set(index,originalValue);
+                }
             }
         }
         putModeView();
