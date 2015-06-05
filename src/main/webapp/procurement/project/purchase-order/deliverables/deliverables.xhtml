@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:p="http://primefaces.org/ui">
 
@@ -10,7 +11,13 @@
                 <p:dataTable id="deliverableDt" var="_dv"
                              value="#{deliverableBean.filteredList()}">
                     <p:column headerText="#{msgs['po.deliverables.column.description']}">
-                        #{_pt.code}
+                        <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
+                        <p:selectOneMenu id="descriptions" value="#{_dv.description}"
+                                         rendered="#{_dv.isEditable}"
+                                         effect="fold" editable="true" styleClass="menu-ddp"
+                                         maxlength="50"  style="width: 100%">
+                            <f:selectItems value="#{itemBean.items()}"/>
+                        </p:selectOneMenu>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.Qty']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
