@@ -2,7 +2,6 @@ package ch.swissbytes.procurement.boundary;
 
 import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
-import javafx.animation.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,6 @@ import java.util.List;
 public class BeanEditableList<T> extends Bean {
 
     protected List<T> list = new ArrayList<>();
-
-//    protected RecordEditable record;
 
     private Long temporaryId = -1L;
 
@@ -55,12 +52,6 @@ public class BeanEditableList<T> extends Bean {
         return recordEditable;
     }
 
-    /* public void confirmUpgrading(Long id) {
-         RecordEditable record = find(id);
-         if (record != null && validate(record)) {
-             record.stopEditing();
-         }
-     }*/
     public void confirm(Long id) {
         RecordEditable record = find(id);
         if (record != null) {
