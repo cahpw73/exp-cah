@@ -17,7 +17,7 @@ public class RecordEditable<T> implements Serializable {
 
     public final static Logger log = Logger.getLogger(RecordEditable.class.getName());
 
-    private Boolean isEditable;
+    private Boolean isEditable=false;
 
     private T valueCloned;
 

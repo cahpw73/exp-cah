@@ -199,13 +199,13 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
         //requisition daos
-        requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),purchaseOrderEntity.getPoEntity().getRequisitions());
+        requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
         //supplier daos
 
         //items
-        itemService.doSave(purchaseOrderEntity.getPoEntity().getItemList(),po);
+        itemService.doSave(po.getItemList(),po);
         //deliverable
-            deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),purchaseOrderEntity.getPoEntity().getDeliverables());
+            deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
         //dao3
 
         //dao4
@@ -223,15 +223,15 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
         //requisition daos
-        requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), purchaseOrderEntity.getPoEntity().getRequisitions());
+        requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //supplier daos
 
         //items
-        itemService.doUpdate(purchaseOrderEntity.getPoEntity().getItemList(), po);
+        itemService.doUpdate(po.getItemList(), po);
         //dao2
 
         //deliverable
-        deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), purchaseOrderEntity.getPoEntity().getDeliverables());
+        deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //dao3
 
         //dao4

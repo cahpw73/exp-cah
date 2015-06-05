@@ -40,7 +40,6 @@ public class PoBean extends Bean {
     @Inject
     private ItemBean itemBean;
 
-
     @Inject
     private RequisitionBean requisitionBean;
 
@@ -96,14 +95,15 @@ public class PoBean extends Bean {
         collectData();
         purchaseOrder=service.savePOOnProcurement(purchaseOrder);
         log.info("purchase order created ["+purchaseOrder.getId()+"]");
-        return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+        //return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+        return backToList();
     }
-    public String doUpdate(){
+    public String doUpdate() {
         log.info("trying to update purchase order on procurement module");
         collectData();
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
-        log.info("purchase order updated ["+purchaseOrder.getId()+"]");
-        return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+        log.info("purchase order updated [" + purchaseOrder.getId()+"]");
+        return backToList();
     }
 
     public String backToList(){
@@ -111,10 +111,8 @@ public class PoBean extends Bean {
     }
 
     private void collectData(){
-        log.info("itemBean get item list size : " + itemBean.getItemList().size());
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
-        log.info("deliverables size: " + deliverableBean.getList().size());
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
 
     }

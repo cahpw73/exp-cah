@@ -28,7 +28,7 @@ public class DeliverableBean extends BeanEditableList<DeliverableEntity> {
     }
 
     public void add(){
-        this.add(new DeliverableEntity());
+        super.add(new DeliverableEntity());
         log.info("elements "+this.list.size());
     }
     protected boolean canEdit(){
