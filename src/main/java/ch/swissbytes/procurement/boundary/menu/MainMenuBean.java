@@ -14,6 +14,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -29,11 +30,11 @@ public class MainMenuBean implements Serializable {
 
     @PostConstruct
     public void create(){
-        log.info("created MainMenuBean");
+        log.log(Level.FINE,"created MainMenuBean");
     }
 
     public void select(Integer menu){
-        log.info("menu number :" + menu);
+        log.log(Level.FINE,"menu number :" + menu);
         selected=MenuProcurementEnum.getEnum(menu);
     }
 
@@ -43,7 +44,7 @@ public class MainMenuBean implements Serializable {
 
     @PreDestroy
     public void destroy(){
-        log.info("destroying MainMenuBean");
+        log.log(Level.FINE, "destroying MainMenuBean");
     }
 
 

@@ -56,11 +56,11 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     @Override
     @Transactional
     public SupplierProcEntity update(SupplierProcEntity supplier) {
-        supplier = super.update(supplier);
-        supplier.setStatus(StatusEnum.ENABLE);
         supplier.setLastUpdate(new Date());
+        supplier = super.update(supplier);
         supplierBrandDao.doUpdate(supplier.getBrands(), supplier);
         supplierCategoryDao.doUpdate(supplier.getCategories(), supplier);
+        contactDao.doUpdate(supplier.getContacts(), supplier);
         return supplier;
     }
 

@@ -10,6 +10,7 @@ import ch.swissbytes.procurement.boundary.Bean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.logging.Logger;
 
 
 /**
@@ -20,6 +21,7 @@ import javax.inject.Named;
 @ViewScoped
 public class PoBean extends Bean {
 
+    private static final Logger log = Logger.getLogger(PoBean.class.getName());
 
     private PurchaseOrderEntity purchaseOrder;
 
@@ -79,13 +81,17 @@ public class PoBean extends Bean {
 
 
     public String doSave(){
+        log.info("trying to save purchase order on procurement module");
         collectData();
         purchaseOrder=service.savePOOnProcurement(purchaseOrder);
+        log.info("purchase order created ["+purchaseOrder.getId()+"]");
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
     public String doUpdate(){
+        log.info("trying to update purchase order on procurement module");
         collectData();
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
+        log.info("purchase order updated ["+purchaseOrder.getId()+"]");
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
