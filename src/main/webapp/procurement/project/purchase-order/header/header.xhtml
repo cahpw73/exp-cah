@@ -24,7 +24,7 @@
                             <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}"/>
                         </p:column>
                         <p:column headerText="#{msgs['po.header.column.req.date']}">
-                            <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionDate}"/>
+                            <h:outputText rendered="#{not _req.isEditable}" value="#{util.toLocal(_req.requisitionDate)}"/>
                             <p:calendar id="poOrderDate" type="text" styleClass="calendar"
                                         navigator="true" mask="#{configuration.mask}"
                                         rendered="#{_req.isEditable}"
