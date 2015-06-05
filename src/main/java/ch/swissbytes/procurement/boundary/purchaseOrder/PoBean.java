@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -41,6 +42,9 @@ public class PoBean extends Bean {
 
     @Inject
     private RequisitionBean requisitionBean;
+
+    @Inject
+    private DeliverableBean deliverableBean;
 
     public ItemBean getItemBean() {
         return itemBean;
@@ -103,6 +107,7 @@ public class PoBean extends Bean {
     private void collectData(){
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
+        purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
     }
 
     public String getProjectId() {
