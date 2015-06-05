@@ -4,6 +4,8 @@ import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,7 +18,6 @@ import java.util.Date;
 public class DeliverableEntity extends RecordEditable<DeliverableEntity> implements Serializable {
 
     private Long id;
-
     private String description;
     private Integer quantity;
     private Integer noDays;
@@ -28,15 +29,16 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "REQUISITION_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "DELIVERABLE_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Column (name = "status",nullable = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     public StatusEnum getStatus() {
         return status;
@@ -46,7 +48,7 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
         this.status = status;
     }
 
-    @Column(name = "last_update",nullable = false)
+    @Column(name = "last_update", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
         return lastUpdate;
@@ -55,12 +57,8 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-
-
-
-
-
-    @Column(name = "description")
+    @Size(max = 950)
+    @Column(name = "description", length = 1000)
     public String getDescription() {
         return description;
     }
@@ -79,8 +77,8 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
         this.requiredDate = requiredDate;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="po_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "po_id")
     public POEntity getPoEntity() {
         return poEntity;
     }
@@ -100,6 +98,7 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
 
         return true;
     }
+
     @Column(name = "quantity")
     public Integer getQuantity() {
         return quantity;
@@ -108,6 +107,7 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
     @Column(name = "no_days")
     public Integer getNoDays() {
         return noDays;

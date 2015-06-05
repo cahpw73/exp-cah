@@ -19,9 +19,17 @@ public class DeliverableBean extends BeanEditableList<DeliverableEntity> {
 
     public static final Logger log = Logger.getLogger(DeliverableBean.class.getName());
 
-    public void add(){
-        this.add(new DeliverableEntity());
+    protected void initialize(){
+        log.info("my list size starting  " + list.size());
+    }
 
+    protected void ending(){
+        log.info("my list size ending  "+list.size());
+    }
+
+    public void add(){
+        super.add(new DeliverableEntity());
+        log.info("elements "+this.list.size());
     }
     protected boolean canEdit(){
         return rowsBeingEdited()==0;

@@ -118,7 +118,6 @@
                                 value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                 timeZone="#{configuration.timeZone}"
                                 onselect="calendarChanges();" onchange="calendarChanges();" >
-                        <p:ajax process="@this" event="dateSelect" />
                     </p:calendar>
                     <p:message for="poOrderDate" id="msgInputPoOrderDate"/>
                 </div>

@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -167,6 +168,17 @@ public class ItemBean implements Serializable {
 
     public List<ItemEntity> getItemList() {
         return itemList;
+    }
+
+    public List<String> items(){
+        List<String>list=new ArrayList<>();
+        for(ItemEntity item:itemList){
+            if(StringUtils.isNotEmpty(item.getDescription())&&StringUtils.isNotBlank(item.getDescription())) {
+                list.add(item.getDescription().trim());
+            }
+        }
+        Collections.sort(list);
+        return list;
     }
 
 }
