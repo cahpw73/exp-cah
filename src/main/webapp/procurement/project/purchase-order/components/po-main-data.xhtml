@@ -15,15 +15,13 @@
                     <f:param name="projectId" value="#{poListBean.projectId}"/>
                 </h:commandButton>
                 &#160;
-                <h:commandButton type="submit"
-                                 styleClass="btn btn-primary btn-sm"
-                                 action="#{poBean.doUpdate}"
-                                 rendered="#{poBean.beingUpdated}"
+                <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
+                                 action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                  value="#{msgs['lbl.save']}">
                 </h:commandButton>
                 &#160;
-                <h:commandButton type="submit"
-                                 styleClass="btn btn-primary btn-sm"
+                <h:commandButton type="submit" action="#{poBean.backToList}"
+                                 styleClass="btn btn-primary btn-sm" immediate="true"
                                  value="#{msgs['lbl.cancel']}">
                 </h:commandButton>
                 &#160;

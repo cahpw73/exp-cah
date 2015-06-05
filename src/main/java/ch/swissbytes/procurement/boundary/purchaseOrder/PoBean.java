@@ -89,6 +89,10 @@ public class PoBean extends Bean {
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
+    public String backToList(){
+        return "list.xhtml?faces-redirect=true&projectId="+projectId+"";
+    }
+
     private void collectData(){
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
     }
