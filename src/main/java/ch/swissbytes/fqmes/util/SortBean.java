@@ -1,5 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
+import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -30,6 +31,19 @@ public class SortBean implements Serializable {
             @Override
             public int compare(ScopeSupplyEntity ssp1, ScopeSupplyEntity ssp2) {
                 return sortItemNumber(ssp1.getCode(), ssp2.getCode());
+            }
+        };
+        Collections.sort(list, comparator);
+    }
+
+    public void sortItemEntity(List<ItemEntity> list){
+        Comparator<ItemEntity> comparator = new Comparator<ItemEntity>() {
+            @Override
+            public int compare(ItemEntity ie1, ItemEntity ie2) {
+                if(StringUtils.isNotEmpty(ie1.getItemNo()) && StringUtils.isNotEmpty(ie2.getItemNo())){
+                    return sortItemNumber(ie1.getItemNo(), ie2.getItemNo());
+                }
+                return 0;
             }
         };
         Collections.sort(list, comparator);

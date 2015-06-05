@@ -2,6 +2,8 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.domain.model.entities.ItemEntity;
+import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -23,106 +25,145 @@ import java.util.logging.Logger;
 
 @Named
 @ViewScoped
-public class ItemBean  implements Serializable {
+public class ItemBean implements Serializable {
 
     public static final Logger log = Logger.getLogger(ItemBean.class.getName());
 
     @Inject
     private ItemService itemService;
 
+    @Inject
+    private SortBean sortBean;
+
     private List<ItemEntity> itemList;
 
     private Long preId = -1L;
 
     @PostConstruct
-    public void create(){
+    public void create() {
         log.info("create itemBean");
         itemList = new ArrayList<>();
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("destroy itemBean");
     }
 
-    public void addItem(){
+    public void addItem() {
         log.info("add Item");
-        if(lastItemNoIsNotEmpty()){
-            ItemEntity entity = new ItemEntity();
-            entity.setId(preId);
-            entity.startEditing();
-            itemList.add(entity);
-            preId--;
+        if (lastItemNoIsNotEmpty()) {
+                ItemEntity entity = new ItemEntity();
+                entity.setId(preId);
+                entity.startEditing();
+                itemList.add(entity);
+                preId--;
+                sortBean.sortItemEntity(itemList);
         }
-        log.info("item list size : " + itemList.size());
     }
 
-    public void loadItemList(final Long poEntityId){
+    public void loadItemList(final Long poEntityId) {
         log.info("loading item list to edit");
-       itemList =  itemService.findByPoId(poEntityId);
+        itemList = itemService.findByPoId(poEntityId);
+        sortBean.sortItemEntity(itemList);
     }
 
-    private boolean lastItemNoIsNotEmpty() {
-        int index = itemList.size();
-        if(index > 0) {
-            ItemEntity lastItem = itemList.get(index - 1);
-            return itemNoIsNotEmpty(lastItem);
-        }
-        return true;
-    }
-    private  boolean itemNoIsNotEmpty(ItemEntity entity){
-        log.info("item is not empty");
-        return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
-    }
-
-    public void copyDateToItemList(Date orderDate){
-        if(orderDate != null){
-            for (ItemEntity i : itemList){
+    public void copyDateToItemList(Date orderDate) {
+        if (orderDate != null) {
+            for (ItemEntity i : itemList) {
                 i.setDeliveryDate(orderDate);
             }
         }
     }
 
-    public void confirmItem(ItemEntity itemEntity){
+    public void confirmItem(ItemEntity itemEntity) {
         log.info("confirm item");
-        if(itemNoIsNotEmpty(itemEntity)){
-            int index=itemList.indexOf(itemEntity);
-            itemList.set(index,itemEntity);
+        if (itemNoIsNotEmpty(itemEntity)) {
+            int index = itemList.indexOf(itemEntity);
+            itemList.set(index, itemEntity);
             itemEntity.stopEditing();
         }
-
     }
 
-    public void deleteItem(ItemEntity itemEntity){
+    public void deleteItem(ItemEntity itemEntity) {
         log.info("delete item");
-        itemList.remove(itemEntity);
+        if (itemEntity.getId() < 0L) {
+            itemList.remove(itemEntity);
+        } else {
+            itemEntity.setStatus(StatusEnum.DELETED);
+        }
+        sortBean.sortItemEntity(itemList);
     }
 
-    public void editItem(ItemEntity itemEntity){
+    public void editItem(ItemEntity itemEntity) {
         log.info("edit item");
         itemEntity.startEditing();
         itemEntity.storeOldValue(itemEntity);
+        sortBean.sortItemEntity(itemList);
     }
 
-    public void cancelEditionItem(ItemEntity itemEntity){
+    public void cancelEditionItem(ItemEntity itemEntity) {
         log.info("cancel item");
-        if(noHasData(itemEntity)){
+        if (noHasData(itemEntity)) {
             itemList.remove(itemEntity);
-        }else{
+        } else {
             itemEntity.stopEditing();
             itemEntity = (ItemEntity) itemEntity.getValueCloned();
         }
+        sortBean.sortItemEntity(itemList);
+    }
+
+    public boolean hasNotStatusDeleted(ItemEntity itemEntity) {
+        if (itemEntity != null && itemEntity.getStatus() != null)
+            return StatusEnum.DELETED.getId().intValue() != itemEntity.getStatus().getId().intValue();
+        else
+            return true;
 
     }
 
     private boolean noHasData(ItemEntity itemEntity) {
-        if(itemEntity.getCostCode() == null && itemEntity.getDeliveryDate() == null
-                && itemEntity.getDescription() == null && itemEntity.getItemNo() == null && itemEntity.getQty() == null
-                && itemEntity.getTotalCost() == null && itemEntity.getUnit() == null && itemEntity.getUnitCost() == null
-                && itemEntity.getProjectCurrency() == null ){
+        if (itemEntity.getCostCode() == null && itemEntity.getDeliveryDate() == null
+                && (StringUtils.isEmpty(itemEntity.getItemNo()) && StringUtils.isBlank(itemEntity.getItemNo()))
+                && (StringUtils.isEmpty(itemEntity.getQty()) && StringUtils.isBlank(itemEntity.getQty()))
+                && (StringUtils.isEmpty(itemEntity.getUnit()) && StringUtils.isBlank(itemEntity.getUnit()))
+                && (StringUtils.isEmpty(itemEntity.getDescription()) && StringUtils.isBlank(itemEntity.getDescription()))
+                && itemEntity.getTotalCost() == null && itemEntity.getUnitCost() == null
+                && itemEntity.getProjectCurrency() == null) {
             return true;
         }
         return false;
+    }
+
+    private boolean lastItemNoIsNotEmpty() {
+        int index = itemList.size();
+        if (index > 0) {
+            ItemEntity lastItem = itemList.get(index - 1);
+            return itemNoIsNotEmpty(lastItem);
+        }
+        return true;
+    }
+
+    private boolean hasFormatCorrect() {
+        int index = itemList.size();
+        if (index > 0) {
+            ItemEntity lastItem = itemList.get(index - 1);
+            String[] itemNoFormat = lastItem.getItemNo().split(",");
+            if (itemNoFormat.length > 0) {
+                return false;
+            }
+            try {
+                Integer intemNo = Integer.valueOf(lastItem.getItemNo());
+                return true;
+            } catch (NumberFormatException nfe) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean itemNoIsNotEmpty(ItemEntity entity) {
+        log.info("item is not empty");
+        return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
     }
 
     public List<ItemEntity> getItemList() {
