@@ -15,7 +15,7 @@
         <h:form prependId="false">
             <div class="col-md-8">
                 <div class="panel panel-default panel-tab">
-                    <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']}</div>
+                    <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
                         <p:dataTable id="projectListId" value="#{poListBean.list}" var="_p"
@@ -42,27 +42,23 @@
                                     <f:param name="poId" value="#{_p.id}"/>
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                <h:link value="#{msgs['project.list.action.view']}" outcome="edit"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                <h:link value="#{msgs['project.list.action.print.po']}" outcome="edit"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                <h:link value="#{msgs['project.list.action.varation']}" outcome="edit"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                <h:link value="#{msgs['project.list.action.commit']}" outcome="edit"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
-                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                                </h:link>
-                                &#160;
-                                <h:link value="#{msgs['project.list.action.pos']}" outcome="edit"
+                                <h:link value="#{msgs['project.list.action.release']}" outcome="edit"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                             </p:column>
