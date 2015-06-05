@@ -39,6 +39,9 @@ public class PoBean extends Bean {
     private ItemBean itemBean;
 
 
+    @Inject
+    private RequisitionBean requisitionBean;
+
     public ItemBean getItemBean() {
         return itemBean;
     }
@@ -65,6 +68,8 @@ public class PoBean extends Bean {
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
+                requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
+
             }catch(NumberFormatException nfe){
                 throw new IllegalArgumentException("invalid purchase order Id");
             }
@@ -97,6 +102,7 @@ public class PoBean extends Bean {
 
     private void collectData(){
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
+        purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
     }
 
     public String getProjectId() {

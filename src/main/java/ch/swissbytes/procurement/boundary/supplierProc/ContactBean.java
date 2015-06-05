@@ -63,7 +63,6 @@ public class ContactBean extends Bean {
                 try {
                     contacts.add(contacts.size() - 1, (ContactEntity) BeanUtils.cloneBean(contact));
                 } catch (Exception ex) {
-
                 }
                 break;
 

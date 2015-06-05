@@ -1,6 +1,7 @@
 package ch.swissbytes.domain.interfaces;
 
 
+import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.beanutils.BeanUtils;
 
 
@@ -51,6 +52,22 @@ public class RecordEditable<T> implements Serializable {
     @Transient
     public Object getValueCloned() {
         return valueCloned;
+    }
+
+    public void setId(Long id){
+
+    }
+
+    public Long getId(){
+        return 0L;
+    }
+
+    public void setStatus(StatusEnum status){
+
+    }
+
+    public StatusEnum getStatus(){
+        return null;
     }
 
 }

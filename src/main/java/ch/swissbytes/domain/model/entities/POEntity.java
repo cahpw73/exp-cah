@@ -34,6 +34,7 @@ public class POEntity implements Serializable{
     private ClassEnum clazz;
     private POStatusEnum poProcStatus;
     private List<ItemEntity> itemList = new ArrayList<>();
+    private List<RequisitionEntity> requisitions = new ArrayList<>();
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -179,4 +180,8 @@ public class POEntity implements Serializable{
         return itemList;
     }
 
+    @Transient
+    public List<RequisitionEntity> getRequisitions() {
+        return requisitions;
+    }
 }

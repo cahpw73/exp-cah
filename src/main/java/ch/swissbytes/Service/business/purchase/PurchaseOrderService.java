@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.comment.CommentDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
@@ -45,6 +46,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ItemService itemService;
+
+    @Inject
+    private RequisitionDao requisitionDao;
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -185,8 +189,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
-        //Requisition daos
-
+        //requisition daos
+        requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),purchaseOrderEntity.getPoEntity().getRequisitions());
         //supplier daos
 
         //items
@@ -209,8 +213,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setPo(po.getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
-        //Requisition daos
-
+        //requisition daos
+        requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(),purchaseOrderEntity.getPoEntity().getRequisitions());
         //supplier daos
 
         //items
@@ -233,6 +237,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
         if(po!=null){
             po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
+            po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));
         }
         return list.isEmpty()?null:list.get(0);
     }
