@@ -45,10 +45,6 @@ public class BeanEditableList<T> extends Bean {
 
     }
 
-   /* protected T createNewInstance(){
-        return null;
-    }*/
-
     private RecordEditable find(Long id) {
         RecordEditable recordEditable = null;
         for (T re : list) {
@@ -95,9 +91,6 @@ public class BeanEditableList<T> extends Bean {
             }
             if (isBeingUpdated()) {
                 T originalValue= (T) record.getValueCloned();
-                //record=(RecordEditable)originalValue;
-                //record.setIsEditable(false);
-                //originalValue=(T)
                 int index=index(id);
                 if(index>=0){
                     list.set(index,originalValue);

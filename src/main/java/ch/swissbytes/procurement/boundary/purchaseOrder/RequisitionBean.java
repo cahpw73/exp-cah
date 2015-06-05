@@ -1,6 +1,5 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
-import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.RequisitionEntity;
 import ch.swissbytes.procurement.boundary.BeanEditableList;
 import javax.faces.view.ViewScoped;
@@ -21,14 +20,6 @@ public class RequisitionBean extends BeanEditableList<RequisitionEntity> {
     public void add(){
         this.add(new RequisitionEntity());
 
-    }
-
-    protected void initialize(){
-        log.info("my list size starting  " + list.size());
-    }
-
-    protected void ending(){
-        log.info("my list size ending  "+list.size());
     }
     protected boolean canEdit(){
         return rowsBeingEdited()==0;
