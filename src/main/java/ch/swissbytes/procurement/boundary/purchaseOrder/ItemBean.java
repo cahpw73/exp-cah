@@ -1,15 +1,8 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
-import ch.swissbytes.Service.business.project.ProjectService;
-import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.domain.model.entities.ItemEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
-import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.procurement.boundary.Bean;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -33,6 +26,9 @@ import java.util.logging.Logger;
 public class ItemBean  implements Serializable {
 
     public static final Logger log = Logger.getLogger(ItemBean.class.getName());
+
+    @Inject
+    private ItemService itemService;
 
     private List<ItemEntity> itemList;
 
@@ -58,10 +54,12 @@ public class ItemBean  implements Serializable {
             itemList.add(entity);
             preId--;
         }
+        log.info("item list size : " + itemList.size());
     }
 
-    public void loadItemList(){
-
+    public void loadItemList(final Long poEntityId){
+        log.info("loading item list to edit");
+       itemList =  itemService.findByPoId(poEntityId);
     }
 
     private boolean lastItemNoIsNotEmpty() {

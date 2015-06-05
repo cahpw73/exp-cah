@@ -20,11 +20,15 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by alvaro on 9/15/14.
  */
 public class PurchaseOrderService extends Service implements Serializable {
+
+
+    public static final Logger log = Logger.getLogger(PurchaseOrderService.class.getName());
 
     @Inject
     private PurchaseOrderDao dao;
@@ -212,6 +216,8 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
         POEntity po=dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
+        po.getItemList().clear();
+        po.getItemList().addAll(purchaseOrderEntity.getPoEntity().getItemList());
         purchaseOrderEntity.setPoEntity(po);
         //purchaseOrderEntity.setProject(pur);
         purchaseOrderEntity.setPo(po.getOrderNumber());
@@ -222,6 +228,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         //supplier daos
 
         //items
+        itemService.doUpdate(purchaseOrderEntity.getPoEntity().getItemList(),po);
+        //dao2
 
         //deliverable
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(),purchaseOrderEntity.getPoEntity().getDeliverables());

@@ -40,6 +40,19 @@ public class ItemDao extends GenericDao<ItemEntity> implements Serializable {
         return super.findBy(sb.toString(),map);
     }
 
+    public List<ItemEntity> findByPoId(Long poEntityId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ItemEntity x ");
+        sb.append(" WHERE x.status = :ENABLED ");
+        sb.append(" AND x.po.id = :PO_ID ");
+        sb.append(" ORDER BY x.id ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("PO_ID", poEntityId);
+        return super.findBy(sb.toString(),map);
+    }
+
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
@@ -55,4 +68,6 @@ public class ItemDao extends GenericDao<ItemEntity> implements Serializable {
     protected String addCriteria(Filter filter) {
         return null;
     }
+
+
 }
