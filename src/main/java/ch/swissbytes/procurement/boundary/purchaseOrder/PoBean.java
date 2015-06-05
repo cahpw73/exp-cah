@@ -75,7 +75,7 @@ public class PoBean extends Bean {
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
                 requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
-
+                deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
             }catch(NumberFormatException nfe){
                 throw new IllegalArgumentException("invalid purchase order Id");
             }
@@ -114,6 +114,7 @@ public class PoBean extends Bean {
         log.info("itemBean get item list size : " + itemBean.getItemList().size());
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
+        log.info("deliverables size: " + deliverableBean.getList().size());
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
 
     }
@@ -141,7 +142,5 @@ public class PoBean extends Bean {
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
     }
-
-
 
 }

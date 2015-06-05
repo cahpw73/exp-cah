@@ -21,6 +21,14 @@ public class RequisitionBean extends BeanEditableList<RequisitionEntity> {
         this.add(new RequisitionEntity());
 
     }
+
+    protected void initialize(){
+        log.info("my list size starting  " + list.size());
+    }
+
+    protected void ending(){
+        log.info("my list size ending  "+list.size());
+    }
     protected boolean canEdit(){
         return rowsBeingEdited()==0;
     }

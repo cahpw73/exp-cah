@@ -15,6 +15,11 @@ public class BeanEditableList<T> extends Bean {
 
     private Long temporaryId = -1L;
 
+    public BeanEditableList(){
+        super();
+        System.out.println("building bean editable list");
+    }
+
     public void add(T element) {
         if (canEdit()) {
             RecordEditable record = (RecordEditable) element;
