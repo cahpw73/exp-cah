@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.boundary.Bean;
+import org.apache.commons.lang.StringUtils;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -102,6 +103,10 @@ public class PoBean extends Bean {
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
         log.info("purchase order updated ["+purchaseOrder.getId()+"]");
         return "list?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+    }
+
+    public String backToList(){
+        return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
     private void collectData(){
