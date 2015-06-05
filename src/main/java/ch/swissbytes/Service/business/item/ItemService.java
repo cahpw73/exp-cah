@@ -1,18 +1,11 @@
 package ch.swissbytes.Service.business.item;
 
 
-import ch.swissbytes.Service.business.Service;
-import ch.swissbytes.Service.business.currency.CurrencyDao;
-import ch.swissbytes.Service.business.poitem.PoItemService;
-import ch.swissbytes.domain.model.entities.CurrencyEntity;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.POEntity;
-import ch.swissbytes.domain.model.entities.PoItemEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -28,9 +21,6 @@ public class ItemService  implements Serializable {
     @Inject
     private ItemDao dao;
 
-    @Inject
-    private PoItemService poItemService;
-
     public void doSave(ItemEntity entity){
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
@@ -38,16 +28,27 @@ public class ItemService  implements Serializable {
     }
 
     public void doSave(List<ItemEntity> itemList, POEntity po) {
-        log.info("saving Item and PoItem");
+        log.info("saving Item");
         for(ItemEntity entity : itemList){
             entity.setId(null);
             entity.setLastUpdate(new Date());
             entity.setStatus(StatusEnum.ENABLE);
+            entity.setPo(po);
             dao.doSave(entity);
-            PoItemEntity poItemEntity = new PoItemEntity();
-            poItemEntity.setItem(entity);
-            poItemEntity.setPo(po);
-            poItemService.doSave(poItemEntity);
+        }
+    }
+
+    public void doUpdate(List<ItemEntity> itemList, POEntity po) {
+        log.info("updating Item");
+        log.info("ItemList size: " + itemList.size());
+        for(ItemEntity entity : itemList){
+            if(entity.getId() < 0L) {
+                entity.setId(null);
+                entity.setStatus(StatusEnum.ENABLE);
+                entity.setPo(po);
+            }
+            entity.setLastUpdate(new Date());
+            dao.doUpdate(entity);
         }
     }
 
@@ -70,4 +71,9 @@ public class ItemService  implements Serializable {
     public List<ItemEntity> findAll() {
         return dao.findAll();
     }
+
+    public List<ItemEntity> findByPoId(Long poEntityId) {
+        return dao.findByPoId(poEntityId);
+    }
+
 }

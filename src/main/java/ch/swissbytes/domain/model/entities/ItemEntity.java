@@ -30,6 +30,7 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
     private StatusEnum status;
     private Date lastUpdate;
     private ProjectCurrencyEntity projectCurrency;
+    private POEntity po;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -143,6 +144,16 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
 
     public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
         this.projectCurrency = projectCurrency;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="po_id")
+    public POEntity getPo() {
+        return po;
+    }
+
+    public void setPo(POEntity po) {
+        this.po = po;
     }
 
 
