@@ -46,6 +46,9 @@ public class PoBean extends Bean {
     @Inject
     private DeliverableBean deliverableBean;
 
+    @Inject
+    private PoTextBean poTextBean;
+
     public ItemBean getItemBean() {
         return itemBean;
     }
@@ -81,7 +84,7 @@ public class PoBean extends Bean {
         }else{
             throw new IllegalArgumentException("parameter missing");
         }
-
+        poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
     }
 
     @Override

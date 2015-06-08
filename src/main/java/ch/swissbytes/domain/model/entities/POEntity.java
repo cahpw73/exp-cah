@@ -21,8 +21,6 @@ import java.util.List;
 public class POEntity implements Serializable{
 
     private Long id;
-
-    private Long transactionNumber;
     private Date orderDate;
     private String orderTitle;
     private String varNumber;
@@ -88,14 +86,6 @@ public class POEntity implements Serializable{
     }
 
 
-    @Column(name="transaction_number")
-    public Long getTransactionNumber() {
-        return transactionNumber;
-    }
-
-    public void setTransactionNumber(Long transactionNumber) {
-        this.transactionNumber = transactionNumber;
-    }
     @Column(name="ORDER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getOrderDate() {

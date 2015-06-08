@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <div style="width: 1100px!important;">
+        <div style="width: 400px!important; float: left!important; ">
+            <div class="form-group">
+                <h:outputLabel value="#{msgs['po.text.lbl.standard']}" for="standardTextDt"/>
+                <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}">
+                    <p:column style="width:20px">
+                        <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4"/>
+                        <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
+                        <h:outputText id="textSnippetCode" value="#{_t.textSnippet.code}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
+                        <h:outputText id="texSnippetSt" value="#{_t.textSnippet.textSnippet}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+        <div style="width: 400px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
+            <div class="form-group">
+                <h:outputLabel value="#{msgs['po.text.lbl.preamble']}" for="preambleTxtId"/>
+                <p:inputTextarea id="preambleTxtId"
+                                 styleClass="form-control"
+                                 style=" height:70px!important; ; max-height: 70px; width: 100%!important;"
+                                 scrollHeight="71" maxlength="500"/>
+            </div>
+            <div class="form-group">
+                <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesDt"/>
+                <p:dataTable id="clausesDt" var="_dt"
+                             value="#{poTextBean.droppedTextSnippetList}">
+                    <p:draggable revert="true" scope="forward"/>
+                    <p:draggable handle=""  />
+                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
+                        <h:outputText value="#{_dt.textSnippet.code}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
+                        <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div class="form-group">
+                <h:outputText value="#{msgs['po.text.lbl.clauses.box.information.1']}" styleClass="text-danger"/>
+                <br/>
+                <h:outputText value="#{msgs['po.text.lbl.clauses.box.information.2']}" styleClass="text-danger"/>
+            </div>
+        </div>
+
+        <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
+            <h:commandButton value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm">
+                <p:ajax async="false"/>
+            </h:commandButton>
+            <br/>
+            <h:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
+                             styleClass="btn btn-primary btn-sm" style="margin-top: 20px!important;">
+                <p:ajax async="false" update="clausesDt,standardTextDt" process="@this,clausesDt"/>
+            </h:commandButton>
+        </div>
+        <h:panelGroup id="bbtnt">
+            <p:droppable id="droppDt" for="clausesDt"  activeStyleClass="ui-state-highlight"
+                         datasource="standardTextDt" tolerance="touch"
+                         onDrop="handleDrop" >
+                <p:ajax listener="#{poTextBean.onStandardTextDrop}" process="@this"  async="true"
+                        update="bbtnt,standardTextDt,clausesDt"/>
+            </p:droppable>
+        </h:panelGroup>
+
+    </div>
+    <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+        <div class="pull-right">
+            <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            &#160;
+            <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+        </div>
+    </p:confirmDialog>
+</ui:composition>

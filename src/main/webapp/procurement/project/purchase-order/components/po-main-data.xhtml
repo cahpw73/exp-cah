@@ -89,21 +89,7 @@
         </div>
     </div>
     <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <div style="width: 220px!important; float: left!important;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poTransNo" value="#{msgs['po.main.data.lbl.trans.no']}"/>
-
-                <div style="width: 145px; float: left;">
-                    <h:inputText id="poTransNo"
-                                 value="#{poBean.purchaseOrder.poEntity.transactionNumber}"
-                                 styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['project.detail.project.number.required']}"/>
-                    <p:message for="poTransNo" id="msgInputPoTransNo"/>
-                </div>
-            </div>
-        </div>
-        <div style="width: 280px!important; float: left!important; margin-left: 25px;">
+        <div style="width: 240px!important; float: left!important;">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                for="poOrderDate" value="#{msgs['po.main.data.lbl.order.date']}"/>
@@ -123,6 +109,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </ui:composition>

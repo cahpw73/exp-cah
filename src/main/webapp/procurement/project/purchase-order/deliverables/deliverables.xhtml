@@ -14,18 +14,18 @@
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
                         <p:selectOneMenu id="descriptions" value="#{_dv.description}"
                                          rendered="#{_dv.isEditable}"
-                                         effect="fold" editable="true" styleClass="menu-ddp"
+                                         effect="fold" editable="true" styleClass="form-control"
                                          maxlength="50"  style="width: 100%">
                             <f:selectItems value="#{itemBean.items()}"/>
                         </p:selectOneMenu>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.Qty']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
-                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}"/>
+                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control"/>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.no.day']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.noDays}"/>
-                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.noDays}"/>
+                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.noDays}" styleClass="form-control"/>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.day.required']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{util.toLocal(_dv.requiredDate)}"/>
