@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.business.Service;
+import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.comment.CommentDao;
 import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
@@ -45,7 +46,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private EnumService enumService;
 
-
     @Inject
     private TransitDeliveryPointService transitDeliveryPointService;
 
@@ -57,6 +57,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private DeliverableDao deliverableDao;
+
+    @Inject
+    private CashflowService cashflowService;
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -200,43 +203,32 @@ public class PurchaseOrderService extends Service implements Serializable {
         dao.save(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
-        //supplier daos
-
         //items
         itemService.doSave(po.getItemList(),po);
         //deliverable
-            deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
-        //dao3
+        deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
+        //CashFlow
+        cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
 
-        //dao4
-
-        //dao5
         return purchaseOrderEntity;
     }
 
     @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
-       collectLists(po,purchaseOrderEntity);
+        collectLists(po,purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(po.getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
-        //supplier daos
-
         //items
         itemService.doUpdate(po.getItemList(), po);
-        //dao2
-
         //deliverable
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
-        //dao3
-
-        //dao4
-
-        //dao5
+        //cashFlow
+        cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(),po);
 
         return purchaseOrderEntity;
     }
@@ -247,6 +239,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.getDeliverables().addAll(poe.getPoEntity().getDeliverables());
         po.getRequisitions().clear();
         po.getRequisitions().addAll(poe.getPoEntity().getRequisitions());
+        po.setCashflow(poe.getPoEntity().getCashflow());
     }
     public PurchaseOrderEntity findById(Long id){
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);

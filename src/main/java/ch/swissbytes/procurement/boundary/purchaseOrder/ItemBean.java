@@ -118,7 +118,6 @@ public class ItemBean implements Serializable {
             return StatusEnum.DELETED.getId().intValue() != itemEntity.getStatus().getId().intValue();
         else
             return true;
-
     }
 
     private boolean noHasData(ItemEntity itemEntity) {

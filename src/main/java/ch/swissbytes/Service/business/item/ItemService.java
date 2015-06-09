@@ -28,7 +28,6 @@ public class ItemService  implements Serializable {
     }
 
     public void doSave(List<ItemEntity> itemList, POEntity po) {
-        log.info("saving Item");
         for(ItemEntity entity : itemList){
             entity.setId(null);
             entity.setLastUpdate(new Date());
@@ -39,8 +38,6 @@ public class ItemService  implements Serializable {
     }
 
     public void doUpdate(List<ItemEntity> itemList, POEntity po) {
-        log.info("updating Item");
-        log.info("ItemList size: " + itemList.size());
         for(ItemEntity entity : itemList){
             if(entity.getId() < 0L) {
                 entity.setId(null);

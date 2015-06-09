@@ -2,10 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.DeliverableEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
-import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.lang.StringUtils;
 
@@ -49,6 +46,9 @@ public class PoBean extends Bean {
     @Inject
     private PoTextBean poTextBean;
 
+    @Inject
+    private CashflowBean cashflowBean;
+
     public ItemBean getItemBean() {
         return itemBean;
     }
@@ -72,6 +72,7 @@ public class PoBean extends Bean {
             try {
                 purchaseOrder=service.findById(Long.valueOf(poId));
                 itemBean.loadItemList(purchaseOrder.getPoEntity().getId());
+                cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
                 putModeEdition();
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
@@ -116,7 +117,8 @@ public class PoBean extends Bean {
         purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
-
+        purchaseOrder.getPoEntity().setCashflow(cashflowBean.getCashflow());
+        purchaseOrder.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
     }
 
     public String getProjectId() {
