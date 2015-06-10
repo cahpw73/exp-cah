@@ -142,7 +142,7 @@
                                 </p:calendar>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.editItem(_i)}" update="itemsDt" async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}" process=":editPoForm:itemsGroup"
@@ -165,14 +165,14 @@
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.add.item']}"
                         action="#{poBean.itemBean.addItem}"
-                        styleClass="btn btn-primary btn-sm">
+                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
                 &#160;
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.copy.date']}"
                         action="#{poBean.itemBean.copyDateToItemList(poBean.purchaseOrder.poEntity.orderDate)}"
-                        styleClass="btn btn-primary btn-sm">
+                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
             </div>

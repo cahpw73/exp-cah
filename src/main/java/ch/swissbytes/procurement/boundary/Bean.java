@@ -67,4 +67,8 @@ public class Bean implements Serializable{
         return modeOperationEnum!=null?modeOperationEnum.ordinal()==ModeOperationEnum.DELETE.ordinal():false;
     }
 
+    public boolean isBeingEdited(){
+        return modeOperationEnum!=null?(modeOperationEnum.ordinal()==ModeOperationEnum.NEW.ordinal() || modeOperationEnum.ordinal()==ModeOperationEnum.UPDATE.ordinal()):false;
+    }
+
 }

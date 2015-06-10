@@ -29,6 +29,8 @@ public class PoBean extends Bean {
 
     private String poId;
 
+    private Boolean modeView;
+
     @Inject
     private PurchaseOrderService service;
 
@@ -74,12 +76,19 @@ public class PoBean extends Bean {
                 purchaseOrder=service.findById(Long.valueOf(poId));
                 itemBean.loadItemList(purchaseOrder.getPoEntity().getId());
                 cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
-                putModeEdition();
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
                 requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
                 deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
+                if(modeView == null) {
+                    log.info("mode edition");
+                    putModeEdition();
+                }else if(modeView) {
+                    log.info("mode view");
+                    putModeView();
+                }
+
             }catch(NumberFormatException nfe){
                 throw new IllegalArgumentException("invalid purchase order Id");
             }
@@ -173,4 +182,11 @@ public class PoBean extends Bean {
         this.purchaseOrder = purchaseOrder;
     }
 
+    public Boolean getModeView() {
+        return modeView;
+    }
+
+    public void setModeView(Boolean modeView) {
+        this.modeView = modeView;
+    }
 }

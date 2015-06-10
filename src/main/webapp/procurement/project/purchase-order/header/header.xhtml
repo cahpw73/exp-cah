@@ -37,7 +37,7 @@
                                         onselect="calendarChanges();" onchange="calendarChanges();">
                             </p:calendar>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}">
+                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_req.isEditable}" process="@this"
                             action="#{requisitionBean.edit(_req.id)}" update="requisitionDt"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_req.isEditable}" process=":editPoForm:requisitionsGroup"
@@ -58,7 +58,7 @@
             <h:commandButton
                     value="#{msgs['lbl.add']}"
                     action="#{requisitionBean.add()}"
-                    styleClass="btn btn-primary btn-sm">
+                    styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
                 <p:ajax async="false" update="requisitionsGroup"/>
             </h:commandButton>
         </div>
@@ -72,7 +72,7 @@
                                    for="headerProject" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                     <div style="width: 145px; float: left;">
-                        <h:selectOneMenu id="headerProject"
+                        <h:selectOneMenu id="headerProject" rendered="#{poBean.beingEdited}"
                                          value="#{poBean.purchaseOrder.poEntity.supplierHeader}"
                                          styleClass="form-control"
                                          converter="supplierConverter">
@@ -84,6 +84,9 @@
                                            itemValue="#{_s}"
                                            itemLabel="#{_s.company}"/>
                         </h:selectOneMenu>
+                        <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.poEntity.supplierHeader.company}"
+                                     rendered="#{poBean.beingViewed}"/>
                     </div>
                 </div>
             </div>
@@ -93,7 +96,7 @@
                             value="#{msgs['po.header.lbl.panel.delivery.add.new.supplier']}"
                             action="#{projectBean.addCurrency}"
                             styleClass="btn btn-primary btn-sm"
-                            rendered="#{projectBean.createCurrency}">
+                            rendered="#{poBean.beingEdited}">
                     </h:commandButton>
                 </div>
             </div>
@@ -105,7 +108,7 @@
                     <div style="width: 145px; float: left;">
                         <h:selectOneMenu id="headerClass"
                                          value="#{poBean.purchaseOrder.poEntity.clazz}"
-                                         styleClass="form-control">
+                                         styleClass="form-control" rendered="#{poBean.beingEdited}">
                             <f:selectItem
                                     itemLabel="Select one"
                                     noSelectionOption="true"/>
@@ -114,6 +117,9 @@
                                            itemValue="#{_c}"
                                            itemLabel="#{_c.name}"/>
                         </h:selectOneMenu>
+                        <h:inputText id="headerClassVi" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.poEntity.clazz}"
+                                     rendered="#{poBean.beingViewed}"/>
                     </div>
                 </div>
             </div>
@@ -140,10 +146,16 @@
                                             converterMessage="#{msgs['validator.date.invalid']}"
                                             value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                             timeZone="#{configuration.timeZone}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();">
-                                    <p:ajax process="@this" event="dateSelect"/>
+                                            onselect="calendarChanges();" onchange="calendarChanges();"
+                                            rendered="#{poBean.beingEdited}">
+                                    <p:ajax process="@this" event="dateSelect" rendered="#{poBean.beingEdited}"/>
                                 </p:calendar>
                                 <p:message for="headerDate" id="msgHeaderDate"/>
+                                <h:inputText id="headerDateVi" readonly="true" styleClass="form-control view-po"
+                                             value="#{poBean.purchaseOrder.poEntity.orderDate}"
+                                             rendered="#{poBean.beingViewed}">
+                                    <f:convertDateTime timeZone="#{configuration.timeZone}" pattern="#{configuration.formatDate}"/>
+                                </h:inputText>
                             </div>
                         </div>
                     </div>
@@ -155,8 +167,11 @@
                             <div style="width: 145px; float: left;">
                                 <h:inputText id="headerPoint"
                                              value="#{poBean.purchaseOrder.poEntity.point}"
-                                             styleClass="form-control"/>
+                                             styleClass="form-control" rendered="#{poBean.beingEdited}"/>
                                 <p:message for="headerPoint" id="msgHeaderPoint"/>
+                                <h:inputText id="headerPointVi" readonly="true" styleClass="form-control view-po"
+                                             value="#{poBean.purchaseOrder.poEntity.point}"
+                                             rendered="#{poBean.beingViewed}"/>
                             </div>
                         </div>
                     </div>
@@ -172,6 +187,10 @@
                                 <p:inputTextarea id="headerInstruction" type="text" style="height: 75px;"
                                                  maxlength="950" class="form-control"
                                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
+                                                 value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"
+                                                 rendered="#{poBean.beingEdited}"/>
+                                <h:inputTextarea readonly="true" styleClass="form-control"
+                                                 style="height: 75px;" rendered="#{poBean.beingViewed}"
                                                  value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"/>
                             </div>
                         </div>
@@ -193,7 +212,7 @@
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="defaultCurrencyId"
                                              value="#{poBean.purchaseOrder.poEntity.currency}"
-                                             styleClass="form-control"
+                                             styleClass="form-control" rendered="#{poBean.beingEdited}"
                                              converter="projectCurrencyConverter">
                                 <p:ajax event="change" update="conversionRateId" process="@this"/>
                                 <f:selectItem
@@ -204,6 +223,9 @@
                                                itemValue="#{_pc}"
                                                itemLabel="#{_pc.currency.code}"/>
                             </h:selectOneMenu>
+                            <h:inputText id="defaultCurrencyViId" readonly="true" styleClass="form-control view-po"
+                                         value="#{poBean.purchaseOrder.poEntity.currency}"
+                                         rendered="#{poBean.beingViewed}"/>
                         </div>
 
                     </div>

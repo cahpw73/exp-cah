@@ -41,7 +41,7 @@
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                         </p:calendar>
                     </p:column>
-                    <p:column headerText="#{msgs['lbl.actions']}">
+                    <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
                         <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dv.isEditable}" process="@this"
                                        action="#{deliverableBean.edit(_dv.id)}" update="deliverableDt"/>
                         <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dv.isEditable}" process=":editPoForm:deliverableDt"
@@ -60,7 +60,7 @@
                 <h:commandButton
                         value="#{msgs['lbl.add']}"
                         action="#{deliverableBean.add()}"
-                        styleClass="btn btn-primary btn-sm">
+                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
                     <p:ajax async="false" update="deliverableDt"/>
                 </h:commandButton>
             </div>

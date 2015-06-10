@@ -9,6 +9,7 @@
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
         <f:viewParam name="projectId" value="#{poBean.projectId}"/>
         <f:viewParam name="poId" value="#{poBean.poId}"/>
+        <f:viewParam name="modeView" value="#{poBean.modeView}"/>
         <f:viewAction action="#{poBean.load}"/>
     </f:metadata>
     <ui:define name="body">

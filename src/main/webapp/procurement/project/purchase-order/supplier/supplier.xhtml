@@ -20,7 +20,7 @@
                             <div style="width: 200px; float: left;">
                                 <h:selectOneMenu id="supplierSupId"
                                                  value="#{poBean.purchaseOrder.poEntity.supplier}"
-                                                 styleClass="form-control"
+                                                 styleClass="form-control" rendered="#{poBean.beingEdited}"
                                                  converter="supplierConverter">
                                     <f:selectItem
                                             itemLabel="#{msgs['po.supplier.panel.lbl.selection.supplier']}"
@@ -32,6 +32,9 @@
                                     <p:ajax async="true" update="supplierDetail contactDetail" process="@this"/>
                                 </h:selectOneMenu>
                                 <p:message for="supplierSupId" id="msgSupplierSupId"/>
+                                <h:inputText id="supplierSupViId" readonly="true" styleClass="form-control view-po"
+                                             value="#{poBean.purchaseOrder.poEntity.supplier}"
+                                             rendered="#{poBean.beingViewed}"/>
                             </div>
                         </div>
                     </div>
@@ -133,7 +136,7 @@
                                     value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
                                     action="#{projectBean.addCurrency}"
                                     styleClass="btn btn-primary btn-sm"
-                                    rendered="#{projectBean.createCurrency}">
+                                    rendered="#{poBean.beingEdited}">
                             </h:commandButton>
                         </div>
                     </div>
@@ -167,7 +170,7 @@
                                    for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
 
                     <div style="width: 180px; float: left;">
-                        <h:selectOneMenu id="conactSupId"
+                        <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
                                          value="#{poBean.purchaseOrder.poEntity.contactEntity}"
                                          styleClass="form-control">
                             <f:selectItem
@@ -180,6 +183,9 @@
                             <p:ajax async="true" update="contactDetail" process="@this" event="change"/>
                         </h:selectOneMenu>
                         <p:message for="conactSupId" id="msgConactSupId"/>
+                        <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.poEntity.contactEntity}"
+                                     rendered="#{poBean.beingViewed}"/>
                     </div>
                 </div>
             </div>
@@ -189,7 +195,7 @@
                             value="#{msgs['po.supplier.lbl.btn.add.contact']}"
                             action="#{projectBean.addCurrency}"
                             styleClass="btn btn-primary btn-sm"
-                            rendered="#{projectBean.createCurrency}">
+                            rendered="#{poBean.beingEdited}">
                     </h:commandButton>
                 </div>
             </div>
