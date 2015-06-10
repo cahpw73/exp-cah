@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.ReorderEvent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -59,22 +60,34 @@ public class PoTextBean implements Serializable {
         textSnippetList.remove(poText);
     }
 
+    public void onRowReorder(ReorderEvent event) {
+        log.info("on row reorder");
+        //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row Moved", "From: " + event.getFromIndex() + ", To:" + event.getToIndex());
+        //FacesContext.getCurrentInstance().addMessage(null, msg);
+        for(ProjectTextSnippetEntity p : textSnippetList){
+            log.info("text Id: " + p.getId());
+        }
+    }
+
     public void removeClauses(){
         droppedTextSnippetList.removeAll(selectedClausesTextList);
         textSnippetList.addAll(selectedClausesTextList);
+        selectedClausesTextList.clear();
     }
 
     public List<ProjectTextSnippetEntity> getTextSnippetList() {
-        log.info("get text snippet size : " + textSnippetList.size());
         return textSnippetList;
     }
 
     public List<ProjectTextSnippetEntity> getDroppedTextSnippetList() {
-        log.info("get dropped text snippet size: " + droppedTextSnippetList.size());
         return droppedTextSnippetList;
     }
 
     public List<ProjectTextSnippetEntity> getSelectedClausesTextList() {
         return selectedClausesTextList;
+    }
+
+    public void setSelectedClausesTextList(List<ProjectTextSnippetEntity> selectedClausesTextList) {
+        this.selectedClausesTextList = selectedClausesTextList;
     }
 }

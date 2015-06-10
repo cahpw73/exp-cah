@@ -2,6 +2,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
+
+
     <div style="width: 1100px!important;">
         <div style="width: 400px!important; float: left!important; ">
             <div class="form-group">
@@ -29,18 +31,40 @@
                                  scrollHeight="71" maxlength="500"/>
             </div>
             <div class="form-group">
-                <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesDt"/>
-                <p:dataTable id="clausesDt" var="_dt"
-                             value="#{poTextBean.droppedTextSnippetList}">
-                    <p:draggable revert="true" scope="forward"/>
-                    <p:draggable handle=""  />
-                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
-                        <h:outputText value="#{_dt.textSnippet.code}"/>
-                    </p:column>
-                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
-                        <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
-                    </p:column>
-                </p:dataTable>
+                <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesAuxDt"/>
+                <p:panel id="targetPanel" style="margin-top: -30px; width: 435px; height: 32px; border-color: #eee; background-color: #eee; ">
+                    <ui:remove>
+                    <div style="display: none!important;">
+                        <p:dataTable var="_dt"
+                                     value="#{poTextBean.droppedTextSnippetList}">
+                            <p:column id="textClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
+                                <h:outputText value="#{_dt.textSnippet.code}"/>
+                            </p:column>
+                            <p:column id="textCl" headerText="#{msgs['po.text.lbl.standard.column.text']}">
+                                <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    </ui:remove>
+                </p:panel>
+                <br/>
+                <br/>
+
+                <div style="margin-top: -28px;">
+                    <p:dataTable id="clausesAuxDt" var="_dt" draggableRows="true"
+                                 value="#{poTextBean.droppedTextSnippetList}"
+                                 selectionMode="multiple" selection="#{poTextBean.selectedClausesTextList}"
+                                 rowKey="#{_dt.id}">
+                        <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}"/>
+                        <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
+                            <h:outputText value="#{_dt.textSnippet.code}"/>
+                        </p:column>
+                        <p:column id="textAuxCl" headerText="#{msgs['po.text.lbl.standard.column.text']}">
+                            <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
             </div>
             <div class="form-group">
                 <h:outputText value="#{msgs['po.text.lbl.clauses.box.information.1']}" styleClass="text-danger"/>
@@ -50,23 +74,27 @@
         </div>
 
         <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
-            <h:commandButton value="#{msgs['lbl.add']}" styleClass="btn btn-primary btn-sm">
-                <p:ajax async="false"/>
+            <h:commandButton
+                    value="#{msgs['lbl.add']}"
+                    onclick="PF('textSnippetModal').show();"
+                    styleClass="btn btn-primary btn-sm">
+                <p:ajax async="false" update="textSnippetModalId" process="@this"/>
             </h:commandButton>
             <br/>
             <h:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
                              styleClass="btn btn-primary btn-sm" style="margin-top: 20px!important;">
-                <p:ajax async="false" update="clausesDt,standardTextDt" process="@this,clausesDt"/>
+                <p:ajax async="false" update="clausesAuxDt,standardTextDt" process="@this,clausesAuxDt"/>
             </h:commandButton>
         </div>
         <h:panelGroup id="bbtnt">
-            <p:droppable id="droppDt" for="clausesDt"  activeStyleClass="ui-state-highlight"
+            <p:droppable id="droppDt" for="targetPanel" activeStyleClass="ui-state-highlight"
                          datasource="standardTextDt" tolerance="touch"
-                         onDrop="handleDrop" >
-                <p:ajax listener="#{poTextBean.onStandardTextDrop}" process="@this"  async="true"
-                        update="bbtnt,standardTextDt,clausesDt"/>
+                         onDrop="handleDrop">
+                <p:ajax listener="#{poTextBean.onStandardTextDrop}" process="@this" async="true"
+                        update="bbtnt,standardTextDt" oncomplete="rc()"/>
             </p:droppable>
         </h:panelGroup>
+        <p:remoteCommand name="rc" update="clausesAuxDt"/>
 
     </div>
     <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
@@ -76,4 +104,14 @@
             <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
         </div>
     </p:confirmDialog>
+    <p:dialog header="New Custom Text" widgetVar="textSnippetModal"
+              resizable="false">
+        <h:panelGroup id="textSnippetModalId">
+            <div class="col-md-12">
+                <ui:include src="../../component/textSnippet.xhtml">
+                    <ui:param name="MODE" value="PROJECT"/>
+                </ui:include>
+            </div>
+        </h:panelGroup>
+    </p:dialog>
 </ui:composition>

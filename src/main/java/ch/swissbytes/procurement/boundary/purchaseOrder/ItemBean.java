@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.event.ReorderEvent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
