@@ -14,7 +14,6 @@
                                  value="#{msgs['lbl.save']}">
                     <f:param name="projectId" value="#{poListBean.projectId}"/>
                 </h:commandButton>
-                &#160;
                 <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
                                  action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                  value="#{msgs['lbl.save']}">
@@ -27,20 +26,29 @@
                 &#160;
                 <h:commandButton type="submit"
                                  styleClass="btn btn-primary btn-sm"
+                                 action="#{poBean.doSaveView}"
+                                 rendered="#{poBean.beingCreated}"
+                                 value="#{msgs['lbl.view']}">
+                    <f:param name="projectId" value="#{poListBean.projectId}"/>
+                </h:commandButton>
+                <h:commandButton type="submit"
+                                 styleClass="btn btn-primary btn-sm"
+                                 action="#{poBean.doUpdateView}"
+                                 rendered="#{poBean.beingUpdated}"
                                  value="#{msgs['lbl.view']}">
                 </h:commandButton>
             </div>
         </div>
     </div>
     <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <div style="width: 220px!important; float: left!important;">
+        <div style="width: 240px!important; float: left!important;">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                for="poProject" value="#{msgs['po.main.data.lbl.project']}"/>
 
                 <div style="width: 145px; float: left;">
-                    <h:outputText id="poProject" value="#{poBean.purchaseOrder.projectEntity.projectNumber}" styleClass="form-control"
-                                  style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
+                    <h:inputText  id="poProject" readonly="true" styleClass="form-control view-po"
+                                  value="#{poBean.purchaseOrder.projectEntity.projectNumber}" />
                 </div>
             </div>
         </div>

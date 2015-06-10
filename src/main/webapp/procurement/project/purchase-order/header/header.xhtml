@@ -239,6 +239,11 @@
                         <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                        for="headerStatusId" value="#{msgs['po.header.lbl.status']}"/>
 
+                        <h:inputText  readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.poStatusProc()}" style="width: 200px; float: left;"/>
+
+
+                    <ui:remove>
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="headerStatusId"
                                              value="#{poBean.purchaseOrder.poEntity.poProcStatus}"
@@ -252,6 +257,7 @@
                                                itemLabel="#{configuration.getMessage(_st.name)}"/>
                             </h:selectOneMenu>
                         </div>
+                    </ui:remove>
                     </div>
                 </div>
                 <div style="width: 280px!important; float: left!important; margin-left: 25px;">

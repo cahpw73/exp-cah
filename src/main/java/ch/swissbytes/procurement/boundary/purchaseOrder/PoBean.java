@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.lang.StringUtils;
 
@@ -97,20 +98,47 @@ public class PoBean extends Bean {
     public String doSave(){
         log.info("trying to save purchase order on procurement module");
         collectData();
+        purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
         purchaseOrder=service.savePOOnProcurement(purchaseOrder);
         log.info("purchase order created ["+purchaseOrder.getId()+"]");
         return backToList();
     }
+
     public String doUpdate() {
         log.info("trying to update purchase order on procurement module");
         collectData();
+        purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
         log.info("purchase order updated [" + purchaseOrder.getId()+"]");
         return backToList();
     }
 
+    public String doSaveView(){
+        log.info("trying to saveView purchase order on procurement module");
+        collectData();
+        purchaseOrder=service.savePOOnProcurement(purchaseOrder);
+        log.info("purchase order created ["+purchaseOrder.getId()+"]");
+        return backToList();
+    }
+
+    public String doUpdateView(){
+        log.info("trying to updateView purchase order on procurement module");
+        collectData();
+        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
+        log.info("purchase order created ["+purchaseOrder.getId()+"]");
+        return backToList();
+    }
+
     public String backToList(){
         return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+    }
+
+    public String poStatusProc(){
+        if(purchaseOrder.getPoEntity().getPoProcStatus() != null)
+            return purchaseOrder.getPoEntity().getPoProcStatus().name();
+        else
+            return "";
+
     }
 
     private void collectData(){

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public enum POStatusEnum implements Serializable {
 
 
-    COMMITED(0,"COMMITED"), FINAL(1,"FINAL"), READY(2,"READY"), ON_HOLD(3,"ON_HOLD");
+    COMMITED(0,"Committed"), FINAL(1,"Final"), READY(2,"Ready"), ON_HOLD(3,"On hold");
 
     private Integer id;
     private String label;
