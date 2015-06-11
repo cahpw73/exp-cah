@@ -6,7 +6,6 @@ import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.TextEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
-import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,9 +14,9 @@ import java.util.logging.Logger;
 /**
  * Created by christian  on 11/05/15.
  */
-public class TextService1 implements Serializable {
+public class TextService implements Serializable {
 
-    private static final Logger log = Logger.getLogger(TextService1.class.getName());
+    private static final Logger log = Logger.getLogger(TextService.class.getName());
 
     //@Inject
     //private textDao dao;

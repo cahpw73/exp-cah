@@ -2,7 +2,7 @@ package ch.swissbytes.Service.business.text;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
-import ch.swissbytes.domain.model.entities.TextEntity;
+import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -16,20 +16,20 @@ import java.util.logging.Logger;
  * Created by christian on 9/10/14.
  */
 
-public class TextDao1 extends GenericDao<TextEntity> implements Serializable {
+public class TextClausesDao extends GenericDao<ClausesEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(TextDao1.class.getName());
+    private static final Logger log = Logger.getLogger(TextClausesDao.class.getName());
 
 
-    public void doSave(TextEntity entity){
+    public void doSave(ClausesEntity entity){
         super.save(entity);
     }
 
-    public void doUpdate(TextEntity detachedEntity){
+    public void doUpdate(ClausesEntity detachedEntity){
        super.update(detachedEntity);
     }
 
-    public List<TextEntity> findAll() {
+    public List<ClausesEntity> findAll() {
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM TextEntity x ");
@@ -39,7 +39,7 @@ public class TextDao1 extends GenericDao<TextEntity> implements Serializable {
         return super.findBy(sb.toString(),map);
     }
 
-    public List<TextEntity> findByPoId(Long poEntityId) {
+    public List<ClausesEntity> findByPoId(Long poEntityId) {
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");
         sb.append(" FROM TextEntity x ");
