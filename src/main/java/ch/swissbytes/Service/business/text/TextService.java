@@ -1,11 +1,11 @@
 package ch.swissbytes.Service.business.text;
 
 
-import ch.swissbytes.domain.model.entities.ItemEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
-import ch.swissbytes.domain.model.entities.TextEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 
+import javax.inject.Inject;
+import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,46 +18,68 @@ public class TextService implements Serializable {
 
     private static final Logger log = Logger.getLogger(TextService.class.getName());
 
-    //@Inject
-    //private textDao dao;
+    @Inject
+    private TextDao dao;
 
-    public void doSave(TextEntity entity){
+    @Inject
+    private TextClausesDao textClausesDao;
+
+    public void doSave(TextEntity entity, POEntity po){
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
-      //  dao.doSave(entity);
+        entity.setPo(po);
+        dao.doSave(entity);
+        for(ProjectTextSnippetEntity ps: entity.getClausesList()){
+            ClausesEntity clausesEntity = new ClausesEntity();
+            clausesEntity.setStatus(StatusEnum.ENABLE);
+            clausesEntity.setId(null);
+            clausesEntity.setTextSnippet(ps.getTextSnippet());
+            clausesEntity.setText(entity);
+            clausesEntity.setClauses(ps.getTextSnippet().getTextSnippet());
+            textClausesDao.doSave(clausesEntity);
+        }
     }
 
-    public void doSave(List<TextEntity> itemList) {
-        log.info("saving Item");
-
+    public void doUpdate(TextEntity entity) {
+        entity.setLastUpdate(new Date());
+        dao.doUpdate(entity);
+        List<ClausesEntity> clausesList = textClausesDao.findByTextId(entity.getId());
+        if(!entity.getClausesList().isEmpty()){
+            for(ProjectTextSnippetEntity ps: entity.getClausesList()){
+                ClausesEntity clausesEntity = new ClausesEntity();
+                clausesEntity.setId(null);
+                clausesEntity.setTextSnippet(ps.getTextSnippet());
+                clausesEntity.setText(entity);
+                clausesEntity.setClauses(ps.getTextSnippet().getTextSnippet());
+                textClausesDao.doSave(clausesEntity);
+            }
+            ClausesEntity clauses;
+            for(ClausesEntity cl : clausesList){
+                clauses = cl;
+                if(!entity.getClausesList().contains(cl)){
+                    log.info("removing clauses");
+                    textClausesDao.doDelete(clauses);
+                }
+            }
+        }else if(!clausesList.isEmpty() && entity.getClausesList().isEmpty()){
+            ClausesEntity clauses;
+            for(ClausesEntity cl : clausesList){
+                clauses = cl;
+                if(!entity.getClausesList().contains(cl)){
+                    log.info("removing clauses");
+                    textClausesDao.doDelete(clauses);
+                }
+            }
+        }
     }
 
-    public void doUpdate(List<ItemEntity> itemList, POEntity po) {
-        log.info("updating Item");
-        log.info("ItemList size: " + itemList.size());
 
+    public TextEntity findByPoId(Long poEntityId) {
+        List<TextEntity> list = dao.findByPoId(poEntityId);
+        return !list.isEmpty() ? list.get(0) : null;
     }
 
-    public void doUpdate(ItemEntity entity){
-
+    public List<ClausesEntity> findClausesByTextId(Long id) {
+        return textClausesDao.findClausesByTextId(id);
     }
-
-    public void delete(ItemEntity entity) {
-
-    }
-
-    public ItemEntity findById(Long id) {
-        //List<ItemEntity> list = dao.findById(ItemEntity.class, id);
-       // return !list.isEmpty() ? list.get(0) : null;
-        return null;
-    }
-
-    public List<ItemEntity> findAll() {
-        return null;
-    }
-
-    public List<ItemEntity> findByPoId(Long poEntityId) {
-        return null;
-    }
-
 }

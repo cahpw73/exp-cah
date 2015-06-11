@@ -65,6 +65,7 @@ public class PoBean extends Bean {
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
                     purchaseOrder.setPoEntity(new POEntity());
                     putModeCreation();
+                    poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
                 }else{
                     throw new IllegalArgumentException(" project invalid");
                 }
@@ -76,6 +77,8 @@ public class PoBean extends Bean {
                 purchaseOrder=service.findById(Long.valueOf(poId));
                 itemBean.loadItemList(purchaseOrder.getPoEntity().getId());
                 cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
+                poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+                poTextBean.loadText(purchaseOrder.getPoEntity(),purchaseOrder.getProjectEntity().getId());
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");
                 }
@@ -95,7 +98,6 @@ public class PoBean extends Bean {
         }else{
             throw new IllegalArgumentException("parameter missing");
         }
-        poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
     }
 
     @Override

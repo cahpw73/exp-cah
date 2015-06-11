@@ -11,6 +11,7 @@ import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
+import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -61,8 +62,8 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private CashflowService cashflowService;
 
-    //@Inject
-    //private
+    @Inject
+    private TextService textService;
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -213,7 +214,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //CashFlow
         cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
         //Text
-
+        textService.doSave(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
 
         return purchaseOrderEntity;
     }
@@ -234,6 +235,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //cashFlow
         cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(),po);
+        //Text
+        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity());
+
 
         return purchaseOrderEntity;
     }
@@ -251,6 +255,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.getRequisitions().clear();
         po.getRequisitions().addAll(poe.getPoEntity().getRequisitions());
         po.setCashflow(poe.getPoEntity().getCashflow());
+        po.setTextEntity(poe.getPoEntity().getTextEntity());
     }
     public PurchaseOrderEntity findById(Long id){
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);

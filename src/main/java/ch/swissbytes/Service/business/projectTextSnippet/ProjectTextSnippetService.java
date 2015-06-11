@@ -1,12 +1,14 @@
 package ch.swissbytes.Service.business.projectTextSnippet;
 
 import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyDao;
+import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,7 +43,13 @@ public class ProjectTextSnippetService implements Serializable {
     }
 
 
-
-
-
+    public List<ProjectTextSnippetEntity> findTextSnippetByClausesId(List<ClausesEntity> clausesEntities) {
+        List<ProjectTextSnippetEntity> list = new ArrayList<>();
+        for(ClausesEntity entity : clausesEntities){
+            ProjectTextSnippetEntity ps;
+            ps= dao.findByTextSnippetId(entity.getTextSnippet().getId());
+            list.add(ps);
+        }
+        return list;
+    }
 }

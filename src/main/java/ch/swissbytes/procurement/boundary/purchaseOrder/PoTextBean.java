@@ -1,6 +1,9 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
+import ch.swissbytes.Service.business.text.TextService;
+import ch.swissbytes.domain.model.entities.ClausesEntity;
+import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.model.entities.TextEntity;
 import org.primefaces.event.DragDropEvent;
@@ -30,13 +33,19 @@ public class PoTextBean implements Serializable {
     @Inject
     private ProjectTextSnippetService projectTextSnippetService;
 
+    @Inject
+    private TextService textService;
+
     private List<ProjectTextSnippetEntity> textSnippetList;
 
     private List<ProjectTextSnippetEntity> droppedTextSnippetList;
 
     private List<ProjectTextSnippetEntity> selectedClausesTextList;
 
+    private List<ClausesEntity> clausesEntities;
+
     private TextEntity textEntity;
+
 
     @PostConstruct
     public void create() {
@@ -45,6 +54,7 @@ public class PoTextBean implements Serializable {
         textSnippetList = new ArrayList<>();
         droppedTextSnippetList = new ArrayList<>();
         selectedClausesTextList = new ArrayList<>();
+        clausesEntities = new ArrayList<>();
     }
 
     @PreDestroy
@@ -55,6 +65,23 @@ public class PoTextBean implements Serializable {
     public void loadProjectTextSnippets(final Long projectId){
         log.info("loading projectTextSnippet list");
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
+    }
+
+    public void loadText(POEntity poEntity, final Long projectId) {
+        log.info("loadText");
+        textEntity = textService.findByPoId(poEntity.getId());
+        clausesEntities = textService.findClausesByTextId(textEntity.getId());
+        textSnippetList = projectTextSnippetService.findByProjectId(projectId);
+        droppedTextSnippetList = projectTextSnippetService.findTextSnippetByClausesId(clausesEntities);
+        List<ProjectTextSnippetEntity> listToRemove = new ArrayList<>();
+        for(ProjectTextSnippetEntity ps : droppedTextSnippetList){
+            for (ProjectTextSnippetEntity t : textSnippetList){
+                if(t.getId().intValue() == ps.getId().intValue()){
+                    listToRemove.add(t);
+                }
+            }
+        }
+        textSnippetList.removeAll(listToRemove);
     }
 
     public void onStandardTextDrop(DragDropEvent ddEvent) {
@@ -100,4 +127,6 @@ public class PoTextBean implements Serializable {
     public void setTextEntity(TextEntity textEntity) {
         this.textEntity = textEntity;
     }
+
+
 }

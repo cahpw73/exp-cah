@@ -11,6 +11,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
     private StatusEnum status;
     private Date lastUpdate;
     private POEntity po;
-    private List<ProjectTextSnippetEntity> clausesList;
+    private List<ProjectTextSnippetEntity> clausesList = new ArrayList<>();
 
     @Id
     @Column(name = "id", unique = true, nullable = false)

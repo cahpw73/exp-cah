@@ -29,6 +29,20 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
        super.update(detachedEntity);
     }
 
+    public void doDelete(ClausesEntity entity){
+        super.delete(entity);
+    }
+
+    public List<ClausesEntity> findClausesByTextId(Long id) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ClausesEntity x ");
+        sb.append(" WHERE x.text.id = :TEXT_ID ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("TEXT_ID", id);
+        return super.findBy(sb.toString(),map);
+    }
+
     public List<ClausesEntity> findAll() {
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
@@ -39,16 +53,14 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
         return super.findBy(sb.toString(),map);
     }
 
-    public List<ClausesEntity> findByPoId(Long poEntityId) {
+    public List<ClausesEntity> findByTextId(Long textEntityId) {
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");
-        sb.append(" FROM TextEntity x ");
-        sb.append(" WHERE x.status = :ENABLED ");
-        sb.append(" AND x.po.id = :PO_ID ");
+        sb.append(" FROM ClausesEntity x ");
+        sb.append(" WHERE x.text.id = :TEXT_ID ");
         sb.append(" ORDER BY x.id ");
         Map<String,Object> map=new HashMap<String,Object>();
-        map.put("ENABLED", StatusEnum.ENABLE);
-        map.put("PO_ID", poEntityId);
+        map.put("TEXT_ID", textEntityId);
         return super.findBy(sb.toString(),map);
     }
 
@@ -67,6 +79,5 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
     protected String addCriteria(Filter filter) {
         return null;
     }
-
 
 }
