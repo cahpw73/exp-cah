@@ -232,6 +232,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
         return purchaseOrderEntity;
     }
+
+    @Transactional
+    public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
+        dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
+        return purchaseOrderEntity;
+    }
     private void collectLists(POEntity po,PurchaseOrderEntity poe){
         po.getItemList().clear();
         po.getItemList().addAll(poe.getPoEntity().getItemList());

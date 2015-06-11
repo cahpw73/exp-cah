@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.types.POStatusEnum;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -38,11 +39,14 @@ public class PoListBean implements Serializable {
 
     private ProjectEntity project;
 
+    private PurchaseOrderEntity currentPurchaseOrder;
+
 
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
         list = new ArrayList<>();
+        currentPurchaseOrder = new PurchaseOrderEntity();
     }
 
     public void load() {
@@ -68,6 +72,65 @@ public class PoListBean implements Serializable {
         log.info("Destroyed POListBean");
     }
 
+    public void doCommitPo(){
+        log.info("do commit purchase order");
+        currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
+        currentPurchaseOrder=service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+    }
+
+    public void doReleasePo(){
+        log.info("do release purchase order");
+        currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+        currentPurchaseOrder=service.updateOnlyPOOnProcurement((currentPurchaseOrder));
+    }
+
+    public boolean actionViewPOO(PurchaseOrderEntity entity){
+        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())){
+            return true;
+        }
+            return false;
+    }
+
+    public boolean actionEditPOO(PurchaseOrderEntity entity){
+        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.ON_HOLD.ordinal())){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean actionVarationPOO(PurchaseOrderEntity entity){
+        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean actionCommitPOO(PurchaseOrderEntity entity){
+        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean actionReleasePOO(PurchaseOrderEntity entity){
+        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean actionPrintPOO(PurchaseOrderEntity entity){
+        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())){
+            return true;
+        }
+        return false;
+    }
+
     public List<PurchaseOrderEntity> getList() {
         return list;
     }
@@ -86,5 +149,13 @@ public class PoListBean implements Serializable {
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
+    }
+
+    public PurchaseOrderEntity getCurrentPurchaseOrder() {
+        return currentPurchaseOrder;
+    }
+
+    public void setCurrentPurchaseOrder(PurchaseOrderEntity currentPurchaseOrder) {
+        this.currentPurchaseOrder = currentPurchaseOrder;
     }
 }

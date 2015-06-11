@@ -20,48 +20,72 @@
                     <div class="panel-body">
                         <p:dataTable id="projectListId" value="#{poListBean.list}" var="_p"
                                      paginator="false" lazy="true">
-                            <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="100">
+                            <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="70">
                                 #{_p.po}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="90">
+                            <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="70">
                                 #{_p.poEntity.varNumber}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="90">
+                            <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="110">
                                 #{_p.poEntity.deliveryInstruction}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="90">
+                            <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110">
                                 #{_p.poEntity.supplier.company}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="90">
+                            <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="70">
                                 #{configuration.getPOProcStatus(_p.poEntity.poProcStatus)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
+                                        rendered="#{poListBean.actionEditPOO(_p)}"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                     <f:param name="poId" value="#{_p.id}"/>
                                 </h:link>
                                 &#160;
                                 <h:link value="#{msgs['project.list.action.view']}" outcome="edit"
+                                        rendered="#{poListBean.actionViewPOO(_p)}"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                     <f:param name="poId" value="#{_p.id}"/>
                                     <f:param name="modeView" value="true"/>
                                 </h:link>
                                 &#160;
                                 <h:link value="#{msgs['project.list.action.print.po']}" outcome="edit"
+                                        rendered="#{poListBean.actionPrintPOO(_p)}"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
                                 <h:link value="#{msgs['project.list.action.varation']}" outcome="edit"
+                                        rendered="#{poListBean.actionVarationPOO(_p)}"
                                         style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.commit']}" outcome="edit"
-                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                                </h:link>
+                                <p:commandLink
+                                               update="@form" ajax="true"
+                                               value="#{msgs['project.list.action.commit']}"
+                                               action="#{poListBean.doCommitPo}"
+                                               style="float: left!important; color: #428BCA; "
+                                               rendered="#{poListBean.actionCommitPOO(_p)}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.release']}" outcome="edit"
-                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                                </h:link>
+                                <p:commandLink
+                                        update="@form" ajax="true"
+                                        value="#{msgs['project.list.action.release']}"
+                                        action="#{poListBean.doReleasePo}"
+                                        style="float: left!important; color: #428BCA; "
+                                        rendered="#{poListBean.actionReleasePOO(_p)}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.release']}"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
                             </p:column>
                         </p:dataTable>
                         <br/>
