@@ -2,7 +2,6 @@ package ch.swissbytes.Service.business.text;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
-import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.TextEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -17,9 +16,9 @@ import java.util.logging.Logger;
  * Created by christian on 9/10/14.
  */
 
-public class textDao extends GenericDao<TextEntity> implements Serializable {
+public class TextDao1 extends GenericDao<TextEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(textDao.class.getName());
+    private static final Logger log = Logger.getLogger(TextDao1.class.getName());
 
 
     public void doSave(TextEntity entity){

@@ -3,7 +3,6 @@ package ch.swissbytes.Service.business.text;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.TextEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -17,9 +16,9 @@ import java.util.logging.Logger;
  * Created by christian on 9/10/14.
  */
 
-public class textClausesDao extends GenericDao<ClausesEntity> implements Serializable {
+public class TextClausesDao1 extends GenericDao<ClausesEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(textClausesDao.class.getName());
+    private static final Logger log = Logger.getLogger(TextClausesDao1.class.getName());
 
 
     public void doSave(ClausesEntity entity){

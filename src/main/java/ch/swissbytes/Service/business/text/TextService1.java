@@ -1,7 +1,6 @@
 package ch.swissbytes.Service.business.text;
 
 
-import ch.swissbytes.Service.business.item.ItemDao;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.TextEntity;
@@ -16,17 +15,17 @@ import java.util.logging.Logger;
 /**
  * Created by christian  on 11/05/15.
  */
-public class textService implements Serializable {
+public class TextService1 implements Serializable {
 
-    private static final Logger log = Logger.getLogger(textService.class.getName());
+    private static final Logger log = Logger.getLogger(TextService1.class.getName());
 
-    @Inject
-    private textDao dao;
+    //@Inject
+    //private textDao dao;
 
     public void doSave(TextEntity entity){
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
-        dao.doSave(entity);
+      //  dao.doSave(entity);
     }
 
     public void doSave(List<TextEntity> itemList) {
@@ -49,8 +48,9 @@ public class textService implements Serializable {
     }
 
     public ItemEntity findById(Long id) {
-        List<ItemEntity> list = dao.findById(ItemEntity.class, id);
-        return !list.isEmpty() ? list.get(0) : null;
+        //List<ItemEntity> list = dao.findById(ItemEntity.class, id);
+       // return !list.isEmpty() ? list.get(0) : null;
+        return null;
     }
 
     public List<ItemEntity> findAll() {
