@@ -27,11 +27,12 @@
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.preamble']}" for="preambleTxtId"/>
                 <p:inputTextarea id="preambleTxtId" styleClass="form-control"
+                                 value="#{poTextBean.textEntity.preamble}"
                                  style=" height:70px!important; max-height: 70px; width: 100%!important;"
                                  scrollHeight="71" maxlength="500" rendered="#{poBean.beingEdited}"/>
                 <h:inputTextarea readonly="true" styleClass="form-control" rendered="#{poBean.beingViewed}"
-                                 style="height: 70px;  max-height: 70px; width: 100%!important;"
-                                 value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"/>
+                                 value="#{poTextBean.textEntity.preamble}"
+                                 style="height: 70px;  max-height: 70px; width: 100%!important;"/>
             </div>
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesAuxDt"/>

@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "text")
@@ -22,6 +23,7 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
     private StatusEnum status;
     private Date lastUpdate;
     private POEntity po;
+    private List<ProjectTextSnippetEntity> clausesList;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -73,6 +75,10 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
         this.po = po;
     }
 
+    @Transient
+    public List<ProjectTextSnippetEntity> getClausesList() {
+        return clausesList;
+    }
 
     @Override
     public boolean equals(Object o) {

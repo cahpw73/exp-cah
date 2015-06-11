@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
+import ch.swissbytes.domain.model.entities.TextEntity;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.ReorderEvent;
 
@@ -35,9 +36,12 @@ public class PoTextBean implements Serializable {
 
     private List<ProjectTextSnippetEntity> selectedClausesTextList;
 
+    private TextEntity textEntity;
+
     @PostConstruct
     public void create() {
         log.info("create poTextBean");
+        textEntity = new TextEntity();
         textSnippetList = new ArrayList<>();
         droppedTextSnippetList = new ArrayList<>();
         selectedClausesTextList = new ArrayList<>();
@@ -62,8 +66,6 @@ public class PoTextBean implements Serializable {
 
     public void onRowReorder(ReorderEvent event) {
         log.info("on row reorder");
-        //FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Row Moved", "From: " + event.getFromIndex() + ", To:" + event.getToIndex());
-        //FacesContext.getCurrentInstance().addMessage(null, msg);
         for(ProjectTextSnippetEntity p : textSnippetList){
             log.info("text Id: " + p.getId());
         }
@@ -89,5 +91,13 @@ public class PoTextBean implements Serializable {
 
     public void setSelectedClausesTextList(List<ProjectTextSnippetEntity> selectedClausesTextList) {
         this.selectedClausesTextList = selectedClausesTextList;
+    }
+
+    public TextEntity getTextEntity() {
+        return textEntity;
+    }
+
+    public void setTextEntity(TextEntity textEntity) {
+        this.textEntity = textEntity;
     }
 }

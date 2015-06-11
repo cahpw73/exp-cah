@@ -61,6 +61,9 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private CashflowService cashflowService;
 
+    //@Inject
+    //private
+
     public PurchaseOrderService() {
         super.initialize(dao);
     }
@@ -209,6 +212,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
         //CashFlow
         cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
+        //Text
+
 
         return purchaseOrderEntity;
     }

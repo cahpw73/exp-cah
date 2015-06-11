@@ -35,6 +35,7 @@ public class POEntity implements Serializable{
     private List<RequisitionEntity> requisitions = new ArrayList<>();
     private List<DeliverableEntity> deliverables = new ArrayList<>();
     private CashflowEntity cashflow;
+    private TextEntity textEntity;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -176,6 +177,7 @@ public class POEntity implements Serializable{
     public List<RequisitionEntity> getRequisitions() {
         return requisitions;
     }
+
     @Transient
     public List<DeliverableEntity> getDeliverables() {
         return deliverables;
@@ -188,5 +190,14 @@ public class POEntity implements Serializable{
 
     public void setCashflow(CashflowEntity cashflow) {
         this.cashflow = cashflow;
+    }
+
+    @Transient
+    public TextEntity getTextEntity() {
+        return textEntity;
+    }
+
+    public void setTextEntity(TextEntity textEntity) {
+        this.textEntity = textEntity;
     }
 }

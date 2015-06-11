@@ -156,6 +156,8 @@ public class PoBean extends Bean {
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
         purchaseOrder.getPoEntity().setCashflow(cashflowBean.getCashflow());
         purchaseOrder.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
+        purchaseOrder.getPoEntity().setTextEntity(poTextBean.getTextEntity());
+        purchaseOrder.getPoEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
     }
 
     public String getProjectId() {
