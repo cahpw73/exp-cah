@@ -86,6 +86,7 @@ public class PoListBean implements Serializable {
     public void doSavePOO(){
         log.info("do save POO with variation");
         service.savePOOnProcurement(purchaseOrderToVariation);
+        list = service.purchaseListByProject(Long.parseLong(projectId));
     }
 
     public void createVarNumberToPO(PurchaseOrderEntity entity) {

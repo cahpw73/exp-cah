@@ -12,7 +12,7 @@
         <f:viewAction action="#{poListBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="listPooId" prependId="false">
+        <h:form id="listPooFormId" prependId="false">
             <div class="col-md-8">
                 <div class="panel panel-default panel-tab">
                     <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
@@ -58,6 +58,7 @@
                                                rendered="#{poListBean.actionVarationPOO(_p)}"
                                                oncomplete="PF('variationModal').show();"
                                                action="#{poListBean.createVarNumberToPO(_p)}"
+                                               update=":variationGroupId"
                                                style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                                 </p:commandLink>
                                 &#160;
@@ -102,7 +103,6 @@
         </h:form>
         <p:dialog id="variationModalId" header="Create Varation" widgetVar="variationModal"
                   resizable="false">
-            <ui:remove>
             <h:panelGroup id="variationGroupId">
                 <div class="col-md-12">
                     <div style="width: 340px!important; float: left!important;">
@@ -123,23 +123,18 @@
 
                         <div class="form-group">
                                 <div class="pull-right" style="margin-right: 60px!important;">
-                                    <h:commandButton value="aceptar" styleClass="btn btn-primary btn-sm" action="#{poListBean.doSavePOO}">
-
-                                    </h:commandButton>
-
+                                    <p:commandLink value="aceptar" action="#{poListBean.doSavePOO}"
+                                                   oncomplete="PF('variationModal').hide();"
+                                                   update=":listPooFormId:projectListId"
+                                                   styleClass="btn btn-primary btn-sm"/>
+                                    &#160;
+                                    <p:commandLink value="cerrar" onclick="PF('variationModal').hide();"
+                                                   styleClass="btn btn-primary btn-sm"/>
                                 </div>
                         </div>
                     </div>
                 </div>
             </h:panelGroup>
-
-            <div class="clearfix"></div>
-            <br/>
-            </ui:remove>
-            <p:commandLink value="aceptar" action="#{poListBean.doSavePOO}"
-                           oncomplete="PF('variationModal').hide();"
-                           update=":listPooId:projectListId"/>
-            <p:commandLink value="cerrar" onclick="PF('variationModal').hide();"></p:commandLink>
         </p:dialog>
     </ui:define>
 </ui:composition>
