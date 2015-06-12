@@ -294,7 +294,7 @@
                                 </p:calendar>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)} and #{poBean.beingEdited}">
+                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_l.isEditable}" process="@this"
                                            action="#{cashflowBean.editCashflowDetail(_l)}" update="forecastDt" async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}" process="forecastDt"

@@ -110,4 +110,18 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return "ORDER BY "+field;
     }
 
+    public List<PurchaseOrderEntity> findByProjectAndPo(Long projectId, String poNo) {
+        StringBuilder  sb=new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id  = :PROJECT_ID");
+        sb.append(" AND po.po = :PO_NO ");
+        sb.append(" ORDER BY po.po ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PROJECT_ID", projectId);
+        map.put("PO_NO", poNo);
+        return super.findBy(sb.toString(), map);
+    }
 }

@@ -7,6 +7,7 @@ import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.SupplierDao;
@@ -64,6 +65,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private TextService textService;
+
+    @Inject
+    private ProjectService projectService;
+
+    @Inject
+    private ProjectTextSnippetService projectTextSnippetService;
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -198,7 +205,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
         POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
-        collectLists(po,purchaseOrderEntity);
+        //collectLists(po,purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(purchaseOrderEntity.getPoEntity().getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
@@ -264,9 +271,16 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
             po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));
             po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
+            po.getPoEntity().getItemList().addAll(itemService.findByPoId(po.getPoEntity().getId()));
+            po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
+            po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
+            List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
+            po.getPoEntity().getTextEntity().getClausesList().addAll(projectTextSnippetService.findTextSnippetByClausesId(clausesEntities));
         }
         return list.isEmpty()?null:list.get(0);
     }
-    @Inject
-    private ProjectService projectService;
+    public List<PurchaseOrderEntity> findByProjectIdAndPo(final Long projectId, final String poNo){
+        return dao.findByProjectAndPo(projectId,poNo);
+    }
 }

@@ -2,9 +2,10 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.fqmes.util.SortBean;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,13 +29,14 @@ public class PoListBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(PoListBean.class.getName());
 
-    private List<PurchaseOrderEntity> list;
-
     @Inject
     private PurchaseOrderService service;
 
     @Inject
     private ProjectService projectService;
+
+    @Inject
+    private SortBean sortBean;
 
     private String projectId;
 
@@ -41,12 +44,21 @@ public class PoListBean implements Serializable {
 
     private PurchaseOrderEntity currentPurchaseOrder;
 
+    private List<PurchaseOrderEntity> list;
+
+    private List<PurchaseOrderEntity> pOrderList;
+
+    private String newVariationNumber;
+
+    private PurchaseOrderEntity purchaseOrderToVariation;
 
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
         list = new ArrayList<>();
         currentPurchaseOrder = new PurchaseOrderEntity();
+        purchaseOrderToVariation = new PurchaseOrderEntity();
+        pOrderList = new ArrayList<>();
     }
 
     public void load() {
@@ -64,7 +76,6 @@ public class PoListBean implements Serializable {
         } else {
             throw new IllegalArgumentException("project Id invalid");
         }
-
     }
 
     @PreDestroy
@@ -72,60 +83,122 @@ public class PoListBean implements Serializable {
         log.info("Destroyed POListBean");
     }
 
-    public void doCommitPo(){
+    public void doSavePOO(){
+        log.info("do save POO with variation");
+        service.savePOOnProcurement(purchaseOrderToVariation);
+    }
+
+    public void createVarNumberToPO(PurchaseOrderEntity entity) {
+        log.info("loading current purchase order");
+        currentPurchaseOrder = entity;
+        pOrderList = service.findByProjectIdAndPo(project.getId(),entity.getPo());
+        sortBean.sortPurchaseOrderEntity(pOrderList);
+        String lastVarNumber = pOrderList.get(pOrderList.size()-1).getPoEntity().getVarNumber();
+        generateVariationNumber(lastVarNumber);
+        purchaseOrderToVariation = service.findById(entity.getPoEntity().getId());
+        prepareToSaveWithNewVariation(purchaseOrderToVariation);
+        log.info("algo");
+
+    }
+
+    private void prepareToSaveWithNewVariation(PurchaseOrderEntity purchaseOrderToVariation) {
+        purchaseOrderToVariation.setId(null);
+        purchaseOrderToVariation.getPoEntity().setId(null);
+        purchaseOrderToVariation.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+        purchaseOrderToVariation.getPoEntity().setVarNumber(newVariationNumber);
+        purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
+        purchaseOrderToVariation.getPoEntity().getCashflow().setId(null);
+        for(CashflowDetailEntity entity : purchaseOrderToVariation.getPoEntity().getCashflow().getCashflowDetailList()){
+            entity.setId(null);
+        }
+        for(ItemEntity entity : purchaseOrderToVariation.getPoEntity().getItemList()){
+            entity.setId(null);
+        }
+        for(DeliverableEntity entity : purchaseOrderToVariation.getPoEntity().getDeliverables()){
+            entity.setId(null);
+        }
+        for(RequisitionEntity entity : purchaseOrderToVariation.getPoEntity().getRequisitions()){
+            entity.setId(null);
+        }
+        log.info("");
+    }
+
+    private void generateVariationNumber(String lastVarNumber) {
+        String[] number = lastVarNumber.split("\\.");
+        Integer lastNumber;
+        if(number.length == 0){
+            lastNumber = Integer.valueOf(lastVarNumber);
+            lastNumber++;
+            newVariationNumber = String.valueOf(lastNumber);
+        }else if(number.length > 1){
+            lastNumber = Integer.valueOf(number[number.length-1]);
+            lastNumber++;
+            String varNo = "";
+            for(int i = 0; i < number.length-1; i++){
+                varNo = varNo + number[i] + ".";
+            }
+            newVariationNumber = varNo + String.valueOf(lastNumber);
+        }else if(number.length == 1){
+            lastNumber = Integer.valueOf(lastVarNumber);
+            lastNumber++;
+            newVariationNumber = String.valueOf(lastNumber);
+        }
+    }
+
+    public void doCommitPo() {
         log.info("do commit purchase order");
         currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
-        currentPurchaseOrder=service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+        currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
     }
 
-    public void doReleasePo(){
+    public void doReleasePo() {
         log.info("do release purchase order");
         currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
-        currentPurchaseOrder=service.updateOnlyPOOnProcurement((currentPurchaseOrder));
+        currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
     }
 
-    public boolean actionViewPOO(PurchaseOrderEntity entity){
+    public boolean actionViewPOO(PurchaseOrderEntity entity) {
         if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())){
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
             return true;
         }
-            return false;
+        return false;
     }
 
-    public boolean actionEditPOO(PurchaseOrderEntity entity){
+    public boolean actionEditPOO(PurchaseOrderEntity entity) {
         if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.ON_HOLD.ordinal())){
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.ON_HOLD.ordinal())) {
             return true;
         }
         return false;
     }
 
-    public boolean actionVarationPOO(PurchaseOrderEntity entity){
-        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()){
+    public boolean actionVarationPOO(PurchaseOrderEntity entity) {
+        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
             return true;
         }
         return false;
     }
 
-    public boolean actionCommitPOO(PurchaseOrderEntity entity){
+    public boolean actionCommitPOO(PurchaseOrderEntity entity) {
         if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())){
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
             return true;
         }
         return false;
     }
 
-    public boolean actionReleasePOO(PurchaseOrderEntity entity){
-        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal()){
+    public boolean actionReleasePOO(PurchaseOrderEntity entity) {
+        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal()) {
             return true;
         }
         return false;
     }
 
-    public boolean actionPrintPOO(PurchaseOrderEntity entity){
+    public boolean actionPrintPOO(PurchaseOrderEntity entity) {
         if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
                 || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())){
+                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())) {
             return true;
         }
         return false;
@@ -152,10 +225,19 @@ public class PoListBean implements Serializable {
     }
 
     public PurchaseOrderEntity getCurrentPurchaseOrder() {
+        log.info("set value on current purchase order");
         return currentPurchaseOrder;
     }
 
     public void setCurrentPurchaseOrder(PurchaseOrderEntity currentPurchaseOrder) {
         this.currentPurchaseOrder = currentPurchaseOrder;
+    }
+
+    public String getNewVariationNumber() {
+        return newVariationNumber;
+    }
+
+    public void setNewVariationNumber(String newVariationNumber) {
+        this.newVariationNumber = newVariationNumber;
     }
 }
