@@ -144,7 +144,7 @@
                                             converter="#{dateConverter}"
                                             jsf:placeholder="#{configuration.formatDate}"
                                             converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{poBean.purchaseOrder.poEntity.orderDate}"
+                                            value="#{poBean.purchaseOrder.poDeliveryDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();"
                                             rendered="#{poBean.beingEdited}">
@@ -152,7 +152,7 @@
                                 </p:calendar>
                                 <p:message for="headerDate" id="msgHeaderDate"/>
                                 <h:inputText id="headerDateVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{poBean.purchaseOrder.poEntity.orderDate}"
+                                             value="#{poBean.purchaseOrder.poDeliveryDate}"
                                              rendered="#{poBean.beingViewed}">
                                     <f:convertDateTime timeZone="#{configuration.timeZone}" pattern="#{configuration.formatDate}"/>
                                 </h:inputText>
