@@ -3,55 +3,67 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dataTable value="#{supplierProcBean.supplier.contacts}" var="_contact">
+    <p:dataTable id="contactList" value="#{contactBean.list}" var="_contact">
         <p:column headerText="Title">
-            #{_contact.title}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.title}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.title}"/>
         </p:column>
-
         <p:column headerText="#{msgs['supplier.contact.lbl.first.name']}">
-            #{_contact.firstName}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.firstName}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.firstName}"/>
         </p:column>
-
         <p:column headerText="#{msgs['supplier.contact.lbl.surname']}">
-            #{_contact.surName}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.surName}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.surName}"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.job.title']}">
-            #{_contact.jobTitle}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.jobTitle}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.jobTitle}"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.phone']}">
-            #{_contact.phone}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.phone}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.phone}"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.mobile']}">
-            #{_contact.mobile}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.mobile}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.mobile}"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.fax']}">
-            #{_contact.fax}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.fax}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.fax}"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.email']}">
-            #{_contact.email}
+            <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.email}"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.email}"/>
         </p:column>
         <p:column headerText="#{msgs['lbl.actions']}">
-            <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm"
-                           action="#{supplierProcBean.putModeContact(_contact.id)}"
-                           rendered="#{not _contact.withNoData}">
-                <p:ajax async="false"
-                        update=":contactEditId:idBtnSave :contactEditId:bodySupplier :contactEditId:editContact"/>
-            </h:commandLink>
-            &#160;
-            <p:commandLink value="#{msgs['lbl.delete']}"
-                           style="color: #ffffff;"
-                           rendered="#{not _contact.withNoData}"
-                           styleClass="btn btn-primary btn-sm">
-            </p:commandLink>
-            <h:commandButton value="#{msgs['lbl.add']}"
-                             rendered="#{_contact.withNoData}"
-                             action="#{supplierProcBean.putModeContact(0)}"
-                             styleClass="btn btn-primary btn-sm">
+            <ui:remove>
+            <h:commandButton value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm"
+                           action="#{supplierProcBean.putModeContact(_contact.id)}">
                 <p:ajax async="false"
                         update=":contactEditId:idBtnSave :contactEditId:bodySupplier :contactEditId:editContact"/>
             </h:commandButton>
-
+            &#160;
+            <p:commandLink value="#{msgs['lbl.delete']}"
+                           style="color: #ffffff;"
+                           styleClass="btn btn-primary btn-sm">
+            </p:commandLink>
+            </ui:remove>
+            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_contact.isEditable}" process="@this"
+                           action="#{contactBean.edit(_contact.id)}" update="contactList"/>
+            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_contact.isEditable}" process=":contactEditId:contactList"
+                           action="#{contactBean.confirm(_contact.id)}" update="contactList"/>
+            &#160;
+            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}" process="@this"
+                           action="#{contactBean.delete(_contact.id)}" update="contactList"/>
+            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_contact.isEditable}" process="@this"
+                           action="#{contactBean.cancel(_contact.id)}" update="contactList"/>
         </p:column>
     </p:dataTable>
-
+    <h:commandButton value="#{msgs['lbl.add']}"
+                     action="#{contactBean.add()}"
+                     styleClass="btn btn-primary btn-sm">
+        <p:ajax async="false"
+                update="contactList"/>
+    </h:commandButton>
 </ui:composition>

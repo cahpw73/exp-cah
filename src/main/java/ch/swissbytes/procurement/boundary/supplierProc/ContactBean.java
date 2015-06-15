@@ -1,7 +1,9 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
 import ch.swissbytes.domain.model.entities.ContactEntity;
+import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.procurement.boundary.Bean;
+import ch.swissbytes.procurement.boundary.BeanEditableList;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.annotation.PostConstruct;
@@ -19,81 +21,16 @@ import java.util.logging.Logger;
  */
 @Named
 @ViewScoped
-public class ContactBean extends Bean {
+public class ContactBean extends BeanEditableList<ContactEntity> {
 
     private static final Logger log = Logger.getLogger(ContactBean.class.getName());
 
-    private List<ContactEntity> contacts;
-
-    private ContactEntity contact;
-
-    private Long currentId;
-
-
-    @Override
-    protected void initialize() {
-        contacts = new ArrayList<>();
-        contact = new ContactEntity();
+    public void add(){
+        super.add(new ContactEntity());
+        log.info("elements "+this.list.size());
     }
-
-    public void start() {
-        switch (modeOperationEnum) {
-            case NEW:
-                contact = new ContactEntity();
-                break;
-            case UPDATE:
-                ContactEntity temporary=new ContactEntity();
-                temporary.setId(currentId);
-                int index = contacts.indexOf(temporary);
-                if(index>=0&&index<contacts.size()) {
-                    contact = contacts.get(index);
-                }
-                break;
-        }
+    protected boolean canEdit(){
+        return rowsBeingEdited()==0;
     }
-
-    public Long getCurrentId() {
-        return currentId;
-    }
-
-    public void saveContact() {
-        switch (modeOperationEnum) {
-            case NEW:
-                contact.setId(currentId);
-                try {
-                    contacts.add(contacts.size() - 1, (ContactEntity) BeanUtils.cloneBean(contact));
-                } catch (Exception ex) {
-                }
-                break;
-
-            case UPDATE:
-                int index = contacts.indexOf(contact);
-                if (index >= 0) {
-                    contacts.set(index, contact);
-                } else {
-                    log.log(Level.WARNING, "contact editing was not found");
-                }
-                break;
-
-        }
-    }
-
-    public void setCurrentId(Long currentId) {
-        this.currentId = currentId;
-    }
-
-    public List<ContactEntity> getContacts() {
-        return contacts;
-    }
-
-
-    public ContactEntity getContact() {
-        return contact;
-    }
-
-    public void setContact(ContactEntity contact) {
-        this.contact = contact;
-    }
-
 
 }

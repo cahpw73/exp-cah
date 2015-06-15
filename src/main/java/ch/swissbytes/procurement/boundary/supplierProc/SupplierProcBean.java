@@ -43,13 +43,10 @@ public class SupplierProcBean implements Serializable {
     private boolean editing =false;
     private boolean addingContact=false;
 
-    private Long temporaryId=-1L;
 
     @PostConstruct
     public void create() {
         log.info("SupplierProcBean bean created");
-        //  supplier.setStatus(StatusEnum.ENABLE);
-
     }
 
     public void load() {
@@ -60,8 +57,6 @@ public class SupplierProcBean implements Serializable {
             } catch (NumberFormatException nfe) {
             }
         }
-        ContactEntity emptyContact=new ContactEntity();
-        emptyContact.setWithNoData(true);
         if (id != null && id > 0) {
             supplier = service.findById(id);
             editing =true;
@@ -73,7 +68,8 @@ public class SupplierProcBean implements Serializable {
         supplier.getBrands().addAll(service.getBrands(id));
         supplier.getCategories().addAll(service.getCategories(id));
         supplier.getContacts().addAll(service.getContacts(id));
-        supplier.getContacts().add(emptyContact);
+        contactBean.getList().clear();
+        contactBean.getList().addAll(supplier.getContacts());
     }
 
 
@@ -82,6 +78,8 @@ public class SupplierProcBean implements Serializable {
             Messages.addFlashError("supplierID","supplier id is already being used");
             return "";
         }
+        supplier.getContacts().clear();
+        supplier.getContacts().addAll(contactBean.getList());
         service.save(supplier);
         return "list?faces-redirect=true";
     }
@@ -91,6 +89,8 @@ public class SupplierProcBean implements Serializable {
             Messages.addFlashError("supplierID","supplier id is already being used");
             return "";
         }
+        supplier.getContacts().clear();
+        supplier.getContacts().addAll(contactBean.getList());
         service.update(supplier);
         return "list?faces-redirect=true";
     }
@@ -105,13 +105,6 @@ public class SupplierProcBean implements Serializable {
         categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
-    public void saveContact(){
-        contactBean.saveContact();
-        supplier.getContacts().clear();
-        supplier.getContacts().addAll(contactBean.getContacts());
-        putModeSupplier();
-    }
-
     public boolean isSupplierMode() {
         return !addingBrand && !addingCategory;
     }
@@ -122,17 +115,6 @@ public class SupplierProcBean implements Serializable {
     }
 
     public void putModeContact(Long id){
-        contactBean.getContacts().clear();
-        contactBean.getContacts().addAll(supplier.getContacts());
-        if(id==null||id==0){
-            contactBean.putModeCreation();
-            contactBean.setCurrentId(temporaryId--);
-        }else{
-            contactBean.putModeEdition();
-            contactBean.setCurrentId(id);
-        }
-        contactBean.start();
-        addingContact=true;
     }
 
     public void putModeSupplier() {
