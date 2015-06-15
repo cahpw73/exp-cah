@@ -20,6 +20,16 @@ public class RecordEditable<T> implements Serializable {
     private Boolean isEditable=false;
 
     private T valueCloned;
+/*so far this is only used by contacts*/
+    protected boolean withNoData =false;
+
+    public boolean isWithNoData() {
+        return withNoData;
+    }
+
+    public void setWithNoData(boolean withNoData) {
+        this.withNoData = withNoData;
+    }
 
 
     public void stopEditing(){

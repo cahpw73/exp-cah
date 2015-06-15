@@ -6,10 +6,13 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 
@@ -192,5 +195,28 @@ public class PoBean extends Bean {
 
     public void setModeView(Boolean modeView) {
         this.modeView = modeView;
+    }
+
+    public void updateRequiredDate(DeliverableEntity deliverable){
+        if(purchaseOrder.getPoEntity().getOrderDate()!=null){
+            deliverable.setRequiredDate(DateUtils.addDays(purchaseOrder.getPoEntity().getOrderDate(), deliverable.getNoDays()));
+        }
+
+    }
+    public void updateNoDays(DeliverableEntity deliverable){
+        if(purchaseOrder.getPoEntity().getOrderDate()!=null&&deliverable.getRequiredDate()!=null){
+            long diff=deliverable.getRequiredDate().getTime()-purchaseOrder.getPoEntity().getOrderDate().getTime();
+            deliverable.setNoDays(Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toDays(diff))));
+        }
+    }
+
+    public void updateDeliverables(){
+        for(DeliverableEntity deliverable:deliverableBean.getList()){
+            if(deliverable.getNoDays()!=null){
+                updateRequiredDate(deliverable);
+            }else if(deliverable.getRequiredDate()!=null){
+                updateNoDays(deliverable);
+            }
+        }
     }
 }

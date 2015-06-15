@@ -6,6 +6,7 @@ package ch.swissbytes.domain.model.entities;
 
 
 import ch.swissbytes.domain.interfaces.Record;
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "contact")
-public class ContactEntity extends Record implements Serializable{
+public class ContactEntity extends RecordEditable<ContactEntity> implements Serializable{
 
     private Long id;
     private String firstName;

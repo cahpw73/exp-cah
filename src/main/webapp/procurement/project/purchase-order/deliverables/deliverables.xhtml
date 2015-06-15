@@ -13,10 +13,12 @@
                     <p:column headerText="#{msgs['po.deliverables.column.description']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
                         <p:selectOneMenu id="descriptions" value="#{_dv.description}"
+                                         required="true"
                                          rendered="#{_dv.isEditable}"
                                          effect="fold" editable="true" styleClass="form-control"
                                          maxlength="50"  style="width: 100%">
                             <f:selectItems value="#{itemBean.items()}"/>
+                            <p:ajax async="false" process="@this" event="change"/>
                         </p:selectOneMenu>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.Qty']}">
@@ -25,7 +27,12 @@
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.no.day']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.noDays}"/>
-                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.noDays}" styleClass="form-control"/>
+                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.noDays}" styleClass="form-control">
+                            <p:ajax event="change" async="false"
+                                    process="@this"
+                                    listener="#{poBean.updateRequiredDate(_dv)}"
+                                    update="deliverableDt"/>
+                        </h:inputText>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.day.required']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{util.toLocal(_dv.requiredDate)}"/>
@@ -39,6 +46,14 @@
                                     value="#{_dv.requiredDate}"
                                     timeZone="#{configuration.timeZone}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
+                            <p:ajax event="dateSelect" async="false"
+                                    process="@this"
+                                    listener="#{poBean.updateNoDays(_dv)}"
+                                    delay="500" update="deliverableDt"/>
+                            <p:ajax event="change" async="false"
+                                    process="@this"
+                                    listener="#{poBean.updateNoDays(_dv)}"
+                                    delay="500" update="deliverableDt"/>
                         </p:calendar>
                     </p:column>
                     <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">

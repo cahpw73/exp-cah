@@ -12,7 +12,6 @@
                                  action="#{poBean.doSave}"
                                  rendered="#{poBean.beingCreated}"
                                  value="#{msgs['lbl.save']}">
-                    <f:param name="projectId" value="#{poListBean.projectId}"/>
                 </h:commandButton>
                 <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
                                  action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
@@ -125,8 +124,14 @@
                                 timeZone="#{configuration.timeZone}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"
                                 rendered="#{poBean.beingEdited}">
+                        <p:ajax event="dateSelect" update="deliverableDt"
+                                listener="#{poBean.updateDeliverables}"
+                                process="@this" async="false" delay="500"/>
+                        <p:ajax event="change" update="deliverableDt"
+                                listener="#{poBean.updateDeliverables}"
+                                process="@this" async="false" delay="500"/>
                     </p:calendar>
-                    <p:message for="poOrderDate" id="msgInputPoOrderDate"/>
+                    <p:message for="poOrderDate"/>
                     <h:inputText id="poOrderDateVi" readonly="true" styleClass="form-control view-po"
                                  value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                  rendered="#{poBean.beingViewed}">
