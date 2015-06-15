@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - Brand</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(1)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form prependId="false">
+            <div class="col-md-8">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['report.deliverables.title']}</div>
+                    <!-- Default panel contents -->
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="projectDelId"
+                                                   value="#{msgs['report.deliverables.lbl.project']}"/>
+
+                                    <div class="col-md-7">
+                                        <h:selectOneMenu id="projectDelId"
+                                                         value="#{reportDeliverableBean.selectedProject}"
+                                                         styleClass="form-control" converter="projectConverter">
+                                            <f:selectItem
+                                                    itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
+                                                    noSelectionOption="true"/>
+                                            <f:selectItems value="#{reportDeliverableBean.projectList}"
+                                                           var="_p"
+                                                           itemValue="#{_p}"
+                                                           itemLabel="#{_p.title}"/>
+                                            <p:ajax async="false" process="@this" event="change" update="deliverablesTblId"
+                                                    listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
+                                        </h:selectOneMenu>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="poNoDelId" value="#{msgs['report.deliverables.lbl.po.no']}"/>
+
+                                    <div class="col-md-7">
+                                        <div class="left-inner-addon">
+                                            <i class="fa fa-search fa-lg"></i>
+                                            <h:inputText id="poNoDelId" styleClass="form-control input-search"
+                                                         value="#{reportDeliverableBean.termsPoNo}"
+                                                         jsf:placeholder="#{msgs['lbl.search']}">
+                                                <p:ajax event="keyup" process="@this" update="deliverablesTblId"
+                                                        listener="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}" async="false"/>
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h:commandButton type="button"
+                                                         styleClass="btn btn-primary btn-sm"
+                                                         value="#{msgs['lbl.print']}">
+                                            <p:ajax async="false"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"/>
+                        <br/>
+
+                        <div>
+                            <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
+                                         rows="#{configuration.defaultPageSize}" lazy="true"
+                                         rowsPerPageTemplate="#{configuration.getPagesSize(projectsBean.projectList.size())}">
+                                <p:column headerText="#{msgs['report.deliverables.column.po.no']}" width="50">
+                                    #{_l.poNo}
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.var.no']}" width="50">
+                                    #{_l.varNo}
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.po.description']}" width="100">
+                                    #{_l.poDescription}
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.del.no']}" width="50">
+                                    #{_l.delNo}
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.description']}" width="100">
+                                    #{_l.description}
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.qty']}" width="50">
+                                    #{_l.qty}
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.required.date']}" width="100">
+                                    <h:outputText value="#{_l.requiredDate}">
+                                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.forecast.date']}" width="100">
+                                    <h:outputText value="#{_l.forecastDate}">
+                                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="#{msgs['report.deliverables.column.received.date']}" width="100">
+                                    <h:outputText value="#{_l.receivedDate}">
+                                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                                    </h:outputText>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

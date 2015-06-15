@@ -88,9 +88,11 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id=:PROJECT_ID ");
         sb.append(" ORDER BY po.po ");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PROJECT_ID", projectId);
         return super.findBy(sb.toString(), map);
     }
 

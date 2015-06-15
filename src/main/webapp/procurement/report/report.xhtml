@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
@@ -12,8 +13,9 @@
         <div style="margin-top: 20px;">
             <ul class="link-home">
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.deliverable']}</a>
+                    <h:link
+                            outcome="/procurement/report/deliverables/deliverables">#{msgs['lbl.report.deliverable']}
+                    </h:link>
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->

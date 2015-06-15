@@ -51,8 +51,8 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
         }
 
     }
-    public List<DeliverableEntity> findDeliverableByPurchaseOrder(Long id){
 
+    public List<DeliverableEntity> findDeliverableByPurchaseOrder(Long id){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT d ");
         sb.append(" FROM DeliverableEntity d ");
@@ -61,6 +61,18 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         params.put("ID",id!=null?id:id);
+        return super.findBy(sb.toString(),params);
+    }
+
+    public List<DeliverableEntity> findDeliverableByPOEntityId(Long id){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT d ");
+        sb.append(" FROM DeliverableEntity d LEFT JOIN d.poEntity p ");
+        sb.append(" WHERE d.status = :ENABLE ");
+        sb.append(" AND p.id=:ID");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("ID",id);
         return super.findBy(sb.toString(),params);
     }
 
