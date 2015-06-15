@@ -11,7 +11,9 @@
                 <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}">
                     <p:column style="width:20px" rendered="#{poBean.beingEdited}">
                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4"/>
-                        <p:draggable for="dragIcon" revert="true" helper="clone"/>
+                        <p:draggable id="draggable" for="dragIcon"
+                                     scope="textSnippetScope"
+                                     revert="true" helper="clone"/>
                     </p:column>
                     <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
                         <h:outputText id="textSnippetCode" value="#{_t.textSnippet.code}"/>
@@ -36,26 +38,8 @@
             </div>
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesAuxDt"/>
-                <p:panel id="targetPanel"
-                         style="margin-top: -30px; width: 435px; height: 32px; border-color: #eee; background-color: #eee; ">
-                    <ui:remove>
-                        <div style="display: none!important;">
-                            <p:dataTable var="_dt"
-                                         value="#{poTextBean.droppedTextSnippetList}">
-                                <p:column id="textClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
-                                    <h:outputText value="#{_dt.textSnippet.code}"/>
-                                </p:column>
-                                <p:column id="textCl" headerText="#{msgs['po.text.lbl.standard.column.text']}">
-                                    <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
-                    </ui:remove>
-                </p:panel>
-                <br/>
-                <br/>
 
-                <div style="margin-top: -28px;">
+                <div style="margin-top: 0px;">
                     <p:dataTable id="clausesAuxDt" var="_dt" draggableRows="true"
                                  value="#{poTextBean.droppedTextSnippetList}"
                                  selectionMode="multiple" selection="#{poTextBean.selectedClausesTextList}"
@@ -81,25 +65,28 @@
         </div>
         <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
             <h:panelGroup rendered="#{poBean.beingEdited}">
-                <p:commandLink value="dialogo" onclick="PF('textSnippetModal1').show();"
+                <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('textSnippetModal1').show();"
                                process="@this" update=":textSnippetModalId"
-                               styleClass="btn btn-primary btn-sm"/>
+                               styleClass="btn btn-primary btn-sm">
+                    <p:ajax process="@this" update=""/>
+                </h:commandLink>
                 <br/>
                 <h:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
                                  styleClass="btn btn-primary btn-sm" style="margin-top: 20px!important;">
-                    <p:ajax async="false" update="clausesAuxDt,standardTextDt" process="@this,clausesAuxDt"/>
+                    <p:ajax async="false" update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"/>
                 </h:commandButton>
             </h:panelGroup>
         </div>
         <h:panelGroup id="bbtnt" rendered="#{poBean.beingEdited}">
-            <p:droppable id="droppDt" for="targetPanel" activeStyleClass="ui-state-highlight"
+            <p:droppable id="droppDt" for="clausesAuxDt" activeStyleClass="ui-state-highlight"
                          datasource="standardTextDt" tolerance="touch"
+                         scope="textSnippetScope"
                          onDrop="handleDrop">
                 <p:ajax listener="#{poTextBean.onStandardTextDrop}" process="@this" async="true"
-                        update="bbtnt,standardTextDt" oncomplete="rc()"/>
+                        update="bbtnt,standardTextDt,clausesAuxDt"/>
             </p:droppable>
         </h:panelGroup>
-        <p:remoteCommand name="rc" update="clausesAuxDt"/>
+
 
     </div>
     <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
