@@ -23,7 +23,7 @@ public class ItemService  implements Serializable {
 
     public void doSave(ItemEntity entity){
         entity.setLastUpdate(new Date());
-        entity.setStatus(StatusEnum.ENABLE);
+        entity.setStatusEnum(StatusEnum.ENABLE);
         dao.doSave(entity);
     }
 
@@ -31,7 +31,7 @@ public class ItemService  implements Serializable {
         for(ItemEntity entity : itemList){
             entity.setId(null);
             entity.setLastUpdate(new Date());
-            entity.setStatus(StatusEnum.ENABLE);
+            entity.setStatusEnum(StatusEnum.ENABLE);
             entity.setPo(po);
             dao.doSave(entity);
         }
@@ -41,7 +41,7 @@ public class ItemService  implements Serializable {
         for(ItemEntity entity : itemList){
             if(entity.getId() < 0L) {
                 entity.setId(null);
-                entity.setStatus(StatusEnum.ENABLE);
+                entity.setStatusEnum(StatusEnum.ENABLE);
                 entity.setPo(po);
             }
             entity.setLastUpdate(new Date());
@@ -55,7 +55,7 @@ public class ItemService  implements Serializable {
     }
 
     public void delete(ItemEntity entity) {
-        entity.setStatus(StatusEnum.DELETED);
+        entity.setStatusEnum(StatusEnum.DELETED);
         entity.setLastUpdate(new Date());
         dao.update(entity);
     }

@@ -31,7 +31,7 @@ public class TextService implements Serializable {
         dao.doSave(entity);
         for(ProjectTextSnippetEntity ps: entity.getClausesList()){
             ClausesEntity clausesEntity = new ClausesEntity();
-            clausesEntity.setStatus(StatusEnum.ENABLE);
+            clausesEntity.setStatusEnum(StatusEnum.ENABLE);
             clausesEntity.setId(null);
             clausesEntity.setTextSnippet(ps.getTextSnippet());
             clausesEntity.setText(entity);

@@ -25,7 +25,7 @@ public class BeanEditableList<T> extends Bean {
             record.setId(temporaryId);
             temporaryId--;
             putModeCreation();
-            record.setStatus(StatusEnum.ENABLE);
+            record.setStatusEnum(StatusEnum.ENABLE);
             record.startEditing();
             list.add((T)record);
         }
@@ -102,7 +102,7 @@ public class BeanEditableList<T> extends Bean {
 
     public void delete(Long id) {
         RecordEditable record = find(id);
-        record.setStatus(StatusEnum.DELETED);
+        record.setStatusEnum(StatusEnum.DELETED);
     }
 
     protected boolean validate(RecordEditable record) {
@@ -113,7 +113,7 @@ public class BeanEditableList<T> extends Bean {
         List<T> list = new ArrayList<>();
         for (T r : this.list) {
             RecordEditable record=(RecordEditable)r;
-            if (record.getStatus() != null && record.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
+            if (record.getStatusEnum() != null && record.getStatusEnum().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
                 T object = (T) record;
                 list.add(object);
             }

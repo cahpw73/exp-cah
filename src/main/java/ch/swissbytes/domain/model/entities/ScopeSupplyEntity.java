@@ -1,5 +1,6 @@
 package ch.swissbytes.domain.model.entities;
 
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
 
 import javax.inject.Named;
@@ -20,7 +21,7 @@ import java.util.List;
 @Named
 @Entity
 @Table(name = "scope_supply")
-public class ScopeSupplyEntity implements Serializable, EntityTbl{
+public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> implements Serializable, EntityTbl{
 
     private Long id;
     private BigDecimal cost;
@@ -58,6 +59,11 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     private String to;
     private Date date;
     private String descriptionAttachment;
+    //new fields
+    private BigDecimal totalCost;
+    private BigDecimal costCode;
+    //@TODO change this value replace to currency
+    private ProjectCurrencyEntity projectCurrency;
 
 
 
@@ -86,7 +92,8 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
-@Size(max = 50)
+
+    @Size(max = 50)
     @Column(name="code", length = 50)
     public String getCode() {
         return code;
@@ -208,6 +215,7 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
         this.lastUpdate = lastUpdate;
     }
 
+    @Override
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="status_id", nullable=false)
     public StatusEntity getStatus() {
@@ -427,6 +435,34 @@ public class ScopeSupplyEntity implements Serializable, EntityTbl{
 
     public void setDescriptionAttachment(String descriptionAttachment) {
         this.descriptionAttachment = descriptionAttachment;
+    }
+
+    @Column(name="total_cost", precision=18, scale=5)
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    @Column(name="cost_code", precision=18, scale=5)
+    public BigDecimal getCostCode() {
+        return costCode;
+    }
+
+    public void setCostCode(BigDecimal costCode) {
+        this.costCode = costCode;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="project_currency_id")
+    public ProjectCurrencyEntity getProjectCurrency() {
+        return projectCurrency;
+    }
+
+    public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
+        this.projectCurrency = projectCurrency;
     }
 
     @Override

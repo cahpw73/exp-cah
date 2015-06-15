@@ -55,10 +55,6 @@ public class PoBean extends Bean {
     @Inject
     private CashflowBean cashflowBean;
 
-    public ItemBean getItemBean() {
-        return itemBean;
-    }
-
     public void load(){
         if(projectId!=null){
             try {

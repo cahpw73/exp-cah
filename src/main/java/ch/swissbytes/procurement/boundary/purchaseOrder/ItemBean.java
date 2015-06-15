@@ -1,7 +1,10 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.domain.model.entities.ItemEntity;
+import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.model.entities.StatusEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
@@ -36,7 +39,12 @@ public class ItemBean implements Serializable {
     @Inject
     private SortBean sortBean;
 
+    @Inject
+    private EnumService enumService;
+
     private List<ItemEntity> itemList;
+
+    private List<ScopeSupplyEntity> scopeSupplyList;
 
     private Long preId = -1L;
 
@@ -44,6 +52,7 @@ public class ItemBean implements Serializable {
     public void create() {
         log.info("create itemBean");
         itemList = new ArrayList<>();
+        scopeSupplyList = new ArrayList<>();
     }
 
     @PreDestroy
@@ -54,12 +63,19 @@ public class ItemBean implements Serializable {
     public void addItem() {
         log.info("add Item");
         if (lastItemNoIsNotEmpty()) {
-                ItemEntity entity = new ItemEntity();
-                entity.setId(preId);
-                entity.startEditing();
-                itemList.add(entity);
-                preId--;
-                sortBean.sortItemEntity(itemList);
+            ScopeSupplyEntity supply = new ScopeSupplyEntity();
+            supply.setId(preId);
+            supply.startEditing();
+            scopeSupplyList.add(supply);
+            preId--;
+            sortBean.sortScopeSupplyEntity(scopeSupplyList);
+
+            /*ItemEntity entity = new ItemEntity();
+            entity.setId(preId);
+            entity.startEditing();
+            itemList.add(entity);
+            preId--;
+            sortBean.sortItemEntity(itemList);*/
         }
     }
 
@@ -71,57 +87,101 @@ public class ItemBean implements Serializable {
 
     public void copyDateToItemList(Date orderDate) {
         if (orderDate != null) {
-            for (ItemEntity i : itemList) {
-                i.setDeliveryDate(orderDate);
+            for(ScopeSupplyEntity s : scopeSupplyList){
+                s.setPoDeliveryDate(orderDate);
             }
+            /*for (ItemEntity i : itemList) {
+                i.setDeliveryDate(orderDate);
+            }*/
         }
     }
 
-    public void confirmItem(ItemEntity itemEntity) {
+    public void confirmItem(ScopeSupplyEntity entity) {
         log.info("confirm item");
-        if (itemNoIsNotEmpty(itemEntity)) {
+        if(true){
+            int index = scopeSupplyList.indexOf(entity);
+            scopeSupplyList.set(index,entity);
+            entity.stopEditing();
+        }
+        /*if (itemNoIsNotEmpty(itemEntity)) {
             int index = itemList.indexOf(itemEntity);
             itemList.set(index, itemEntity);
             itemEntity.stopEditing();
-        }
+        }*/
     }
 
-    public void deleteItem(ItemEntity itemEntity) {
+    public void deleteItem(ScopeSupplyEntity entity) {
         log.info("delete item");
-        if (itemEntity.getId() < 0L) {
+        if(entity.getId()< 0L){
+            scopeSupplyList.remove(entity);
+        }else{
+            entity.setStatus(enumService.getStatusEnumDeleted());
+        }
+        sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        /*if (itemEntity.getId() < 0L) {
             itemList.remove(itemEntity);
         } else {
-            itemEntity.setStatus(StatusEnum.DELETED);
+            itemEntity.setStatusEnum(StatusEnum.DELETED);
         }
-        sortBean.sortItemEntity(itemList);
+        sortBean.sortItemEntity(itemList);*/
     }
 
-    public void editItem(ItemEntity itemEntity) {
+    public void editItem(ScopeSupplyEntity entity) {
         log.info("edit item");
-        itemEntity.startEditing();
+        entity.startEditing();
+        entity.storeOldValue(entity);
+        sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        /*itemEntity.startEditing();
         itemEntity.storeOldValue(itemEntity);
-        sortBean.sortItemEntity(itemList);
+        sortBean.sortItemEntity(itemList);*/
     }
 
-    public void cancelEditionItem(ItemEntity itemEntity) {
+    public void cancelEditionItem(ScopeSupplyEntity entity) {
         log.info("cancel item");
-        if (noHasData(itemEntity)) {
+        if(true){
+            scopeSupplyList.remove(entity);
+        }else{
+            entity.stopEditing();
+            entity = entity.getValueCloned();
+        }
+        sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        /*if (noHasData(itemEntity)) {
             itemList.remove(itemEntity);
         } else {
             itemEntity.stopEditing();
             itemEntity = (ItemEntity) itemEntity.getValueCloned();
         }
-        sortBean.sortItemEntity(itemList);
+        sortBean.sortItemEntity(itemList);*/
     }
 
-    public boolean hasNotStatusDeleted(ItemEntity itemEntity) {
-        if (itemEntity != null && itemEntity.getStatus() != null)
-            return StatusEnum.DELETED.getId().intValue() != itemEntity.getStatus().getId().intValue();
+    public boolean hasNotStatusDeleted(ScopeSupplyEntity entity) {
+        if (entity != null && entity.getStatus() != null)
+            return entity.getStatus().getId().intValue() != StatusEnum.DELETED.getId().intValue();
         else
             return true;
     }
 
-    private boolean noHasData(ItemEntity itemEntity) {
+    /*public boolean hasNotStatusDeleted(ItemEntity itemEntity) {
+        if (itemEntity != null && itemEntity.getStatusEnum() != null)
+            return StatusEnum.DELETED.getId().intValue() != itemEntity.getStatusEnum().getId().intValue();
+        else
+            return true;
+    }*/
+
+    private boolean noHasData(ScopeSupplyEntity entity) {
+        if (entity.getCostCode() == null && entity.getPoDeliveryDate() == null
+                && (entity.getQuantity()  == null)
+                && (StringUtils.isEmpty(entity.getCode()) && StringUtils.isBlank(entity.getCode()))
+                && (StringUtils.isEmpty(entity.getUnit()) && StringUtils.isBlank(entity.getUnit()))
+                && (StringUtils.isEmpty(entity.getDescription()) && StringUtils.isBlank(entity.getDescription()))
+                && entity.getTotalCost() == null && entity.getCost() == null
+                && entity.getProjectCurrency() == null) {
+            return true;
+        }
+        return false;
+    }
+
+    /*private boolean noHasData(ItemEntity itemEntity) {
         if (itemEntity.getCostCode() == null && itemEntity.getDeliveryDate() == null
                 && (StringUtils.isEmpty(itemEntity.getItemNo()) && StringUtils.isBlank(itemEntity.getItemNo()))
                 && (StringUtils.isEmpty(itemEntity.getQty()) && StringUtils.isBlank(itemEntity.getQty()))
@@ -132,48 +192,47 @@ public class ItemBean implements Serializable {
             return true;
         }
         return false;
-    }
+    }*/
 
     private boolean lastItemNoIsNotEmpty() {
+        int index = scopeSupplyList.size();
+        if (index > 0) {
+            ScopeSupplyEntity lastItem = scopeSupplyList.get(index - 1);
+            return itemNoIsNotEmpty(lastItem);
+            /*ItemEntity lastItem = itemList.get(index - 1);
+            return itemNoIsNotEmpty(lastItem);*/
+        }
+        return true;
+    }
+
+    /*private boolean lastItemNoIsNotEmpty() {
         int index = itemList.size();
         if (index > 0) {
             ItemEntity lastItem = itemList.get(index - 1);
             return itemNoIsNotEmpty(lastItem);
         }
         return true;
+    }*/
+
+    private boolean itemNoIsNotEmpty(ScopeSupplyEntity entity) {
+        log.info("item is not empty");
+        return StringUtils.isNotEmpty(entity.getCode()) && StringUtils.isNotBlank(entity.getCode());
+        //return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
     }
 
-    private boolean hasFormatCorrect() {
-        int index = itemList.size();
-        if (index > 0) {
-            ItemEntity lastItem = itemList.get(index - 1);
-            String[] itemNoFormat = lastItem.getItemNo().split(",");
-            if (itemNoFormat.length > 0) {
-                return false;
-            }
-            try {
-                Integer intemNo = Integer.valueOf(lastItem.getItemNo());
-                return true;
-            } catch (NumberFormatException nfe) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean itemNoIsNotEmpty(ItemEntity entity) {
+    /*private boolean itemNoIsNotEmpty(ItemEntity entity) {
         log.info("item is not empty");
         return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
-    }
+    }*/
 
     public List<ItemEntity> getItemList() {
         return itemList;
     }
 
-    public List<String> items(){
-        List<String>list=new ArrayList<>();
-        for(ItemEntity item:itemList){
-            if(StringUtils.isNotEmpty(item.getDescription())&&StringUtils.isNotBlank(item.getDescription())) {
+    public List<String> items() {
+        List<String> list = new ArrayList<>();
+        for (ItemEntity item : itemList) {
+            if (StringUtils.isNotEmpty(item.getDescription()) && StringUtils.isNotBlank(item.getDescription())) {
                 list.add(item.getDescription().trim());
             }
         }
@@ -181,4 +240,7 @@ public class ItemBean implements Serializable {
         return list;
     }
 
+    public List<ScopeSupplyEntity> getScopeSupplyList() {
+        return scopeSupplyList;
+    }
 }

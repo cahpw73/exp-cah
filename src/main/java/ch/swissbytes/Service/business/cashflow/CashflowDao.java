@@ -34,7 +34,7 @@ public class CashflowDao extends GenericDao<CashflowEntity> implements Serializa
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM CashflowEntity x ");
-        sb.append("WHERE x.status=:ENABLED ");
+        sb.append("WHERE x.statusEnum=:ENABLED ");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),map);
@@ -44,7 +44,7 @@ public class CashflowDao extends GenericDao<CashflowEntity> implements Serializa
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");
         sb.append(" FROM CashflowEntity x ");
-        sb.append(" WHERE x.status = :ENABLED ");
+        sb.append(" WHERE x.statusEnum = :ENABLED ");
         sb.append(" AND x.po.id = :PO_ID ");
         sb.append(" ORDER BY x.id ");
         Map<String,Object> map=new HashMap<String,Object>();

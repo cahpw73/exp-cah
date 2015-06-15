@@ -31,7 +31,7 @@ public class CashflowService implements Serializable {
         log.info("do save cashflow");
         if(entity != null) {
             entity.setLastUpdate(new Date());
-            entity.setStatus(StatusEnum.ENABLE);
+            entity.setStatusEnum(StatusEnum.ENABLE);
             entity.setPo(po);
             dao.doSave(entity);
             for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
@@ -59,7 +59,7 @@ public class CashflowService implements Serializable {
     }
 
     public void delete(CashflowEntity entity) {
-        entity.setStatus(StatusEnum.DELETED);
+        entity.setStatusEnum(StatusEnum.DELETED);
         entity.setLastUpdate(new Date());
         dao.update(entity);
     }
