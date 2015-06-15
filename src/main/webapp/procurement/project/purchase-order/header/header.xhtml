@@ -17,7 +17,9 @@
                                  value="#{requisitionBean.filteredList()}">
                         <p:column headerText="#{msgs['po.header.column.req.no']}">
                             <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
-                            <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}" styleClass="form-control"/>
+                            <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
+                                         required="true"
+                                         styleClass="form-control"/>
                         </p:column>
                         <p:column headerText="#{msgs['po.header.column.originator']}">
                             <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>

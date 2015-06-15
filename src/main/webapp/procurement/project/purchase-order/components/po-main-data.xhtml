@@ -124,8 +124,12 @@
                                 timeZone="#{configuration.timeZone}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"
                                 rendered="#{poBean.beingEdited}">
-                        <p:ajax event="dateSelect" async="false" delay="500"/>
-                        <p:ajax event="change" async="false" delay="500"/>
+                        <p:ajax event="dateSelect" update="deliverableDt"
+                                listener="#{poBean.updateDeliverables}"
+                                process="@this" async="false" delay="500"/>
+                        <p:ajax event="change" update="deliverableDt"
+                                listener="#{poBean.updateDeliverables}"
+                                process="@this" async="false" delay="500"/>
                     </p:calendar>
                     <p:message for="poOrderDate"/>
                     <h:inputText id="poOrderDateVi" readonly="true" styleClass="form-control view-po"
