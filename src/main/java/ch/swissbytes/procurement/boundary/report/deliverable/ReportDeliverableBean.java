@@ -80,7 +80,7 @@ public class ReportDeliverableBean implements Serializable {
                 DeliverableDto dto = new DeliverableDto();
                 dto.setPoNo(p.getPoEntity().getOrderNumber());
                 dto.setVarNo(p.getPoEntity().getVarNumber());
-                dto.setPoDescription(p.getPoEntity().getPoint());
+                dto.setPoDescription(p.getPoEntity().getDeliveryInstruction());
                 dto.setDescription(d.getDescription());
                 dto.setDelNo("");
                 dto.setQty(d.getQuantity().toString());
