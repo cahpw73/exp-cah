@@ -109,6 +109,21 @@ public class ProjectService implements Serializable {
         }
     }
 
+    @Transactional
+    public ProjectTextSnippetEntity addNewTextSnippet(ProjectEntity projectEntity,TextSnippetEntity textSnippetEntity){
+        textSnippetEntity.setId(null);
+        textSnippetEntity.setProject(projectEntity);
+        textSnippetEntity=textSnippetService.save(textSnippetEntity);
+        ProjectTextSnippetEntity projectTextSnippetEntity=new ProjectTextSnippetEntity();
+        projectTextSnippetEntity.setLastUpdate(new Date());
+        projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
+        projectTextSnippetEntity.setProject(projectEntity);
+        projectTextSnippetEntity.setStatus(StatusEnum.ENABLE);
+        projectTextSnippetService.doSave(projectTextSnippetEntity);
+        return projectTextSnippetEntity;
+
+    }
+
 
     public ProjectEntity findProjectById(Long projectId) {
         List<ProjectEntity> list = projectDao.findById(ProjectEntity.class,projectId);

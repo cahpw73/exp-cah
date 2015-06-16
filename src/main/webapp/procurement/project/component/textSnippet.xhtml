@@ -21,9 +21,16 @@
                                      styleClass="form-control" maxlength="1000"/>
                     <p:message for="textTS"/>
                     <br/>
+
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.addNewCustomText}"
+                                     rendered="#{MODE eq 'PROJECT'}"
                                      styleClass="btn btn-primary btn-sm">
-                        <p:ajax async="false" process="textSnippetDlg" />
+                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editUserForm:projectTextDt"/>
+                    </h:commandButton>
+                    <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.saveNewCustomText(poBean.purchaseOrder.projectEntity.id)}"
+                                     rendered="#{MODE eq 'PO'}"
+                                     styleClass="btn btn-primary btn-sm">
+                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editPoForm:clausesAuxDt" />
                     </h:commandButton>
                 </h:form>
             </div>
