@@ -22,7 +22,7 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
     private Integer quantity;
     private Integer noDays;
     private Date requiredDate;
-    private StatusEnum status;
+    private StatusEnum statusEnum;
     private Date lastUpdate;
     private POEntity poEntity;
 
@@ -40,12 +40,12 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    public StatusEnum getStatus() {
-        return status;
+    public StatusEnum getStatusEnum() {
+        return statusEnum;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setStatusEnum(StatusEnum status) {
+        this.statusEnum = status;
     }
 
     @Column(name = "last_update", nullable = false)

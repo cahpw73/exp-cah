@@ -38,7 +38,7 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         Date now = new Date();
         for (ContactEntity contact : oldContacts) {
             if (contacts.indexOf(contact) < 0) {
-                contact.setStatus(StatusEnum.DELETED);
+                contact.setStatusEnum(StatusEnum.DELETED);
                 contact.setLastUpdate(now);
                 super.update(contact);
             }
@@ -47,7 +47,7 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
             contactEntity.setLastUpdate(now);
             if (contactEntity.getId() == null || contactEntity.getId() < 0) {
                 contactEntity.setId(null);
-                contactEntity.setStatus(StatusEnum.ENABLE);
+                contactEntity.setStatusEnum(StatusEnum.ENABLE);
                 contactEntity.setSupplier(supplier);
                 super.save(contactEntity);
             } else {
@@ -62,7 +62,7 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT c ");
         sb.append(" FROM ContactEntity c ");
-        sb.append(" WHERE c.status =:ENABLE ");
+        sb.append(" WHERE c.statusEnum =:ENABLE ");
         sb.append(" AND c.supplier.id = :SUPPLIER_ID ");
         sb.append(" ORDER BY c.surName, c.firstName ");
         Map<String, Object> params = new HashMap<>();

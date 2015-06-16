@@ -55,10 +55,6 @@ public class PoBean extends Bean {
     @Inject
     private CashflowBean cashflowBean;
 
-    public ItemBean getItemBean() {
-        return itemBean;
-    }
-
     public void load(){
         if(projectId!=null){
             try {
@@ -78,7 +74,7 @@ public class PoBean extends Bean {
         }else if(poId!=null){
             try {
                 purchaseOrder=service.findById(Long.valueOf(poId));
-                itemBean.loadItemList(purchaseOrder.getPoEntity().getId());
+                itemBean.loadItemList(purchaseOrder.getId());
                 cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
                 poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
                 poTextBean.loadText(purchaseOrder.getPoEntity(),purchaseOrder.getProjectEntity().getId());
@@ -156,7 +152,8 @@ public class PoBean extends Bean {
     }
 
     private void collectData(){
-        purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
+        purchaseOrder.getPoEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
+        //purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
         purchaseOrder.getPoEntity().setCashflow(cashflowBean.getCashflow());

@@ -19,7 +19,7 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
     private String requisitionNumber;
     private String originator;
     private Date requisitionDate;
-    private StatusEnum status;
+    private StatusEnum statusEnum;
     private Date lastUpdate;
     private POEntity poEntity;
 
@@ -36,12 +36,12 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
 
     @Column (name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    public StatusEnum getStatus() {
-        return status;
+    public StatusEnum getStatusEnum() {
+        return statusEnum;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setStatusEnum(StatusEnum status) {
+        this.statusEnum = status;
     }
 
     @Column(name = "last_update",nullable = false)

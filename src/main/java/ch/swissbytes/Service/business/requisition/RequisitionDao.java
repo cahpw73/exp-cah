@@ -30,7 +30,7 @@ public class RequisitionDao extends GenericDao<RequisitionEntity> implements Ser
         Date now=new Date();
         for(RequisitionEntity requisitionEntity:requisitions){
             requisitionEntity.setId(null);
-            requisitionEntity.setStatus(StatusEnum.ENABLE);
+            requisitionEntity.setStatusEnum(StatusEnum.ENABLE);
             requisitionEntity.setLastUpdate(now);
             requisitionEntity.setPoEntity(poEntity);
             save(requisitionEntity);
@@ -43,7 +43,7 @@ public class RequisitionDao extends GenericDao<RequisitionEntity> implements Ser
             requisitionEntity.setPoEntity(poEntity);
             if(requisitionEntity.getId()<0){
                 requisitionEntity.setId(null);
-                requisitionEntity.setStatus(StatusEnum.ENABLE);
+                requisitionEntity.setStatusEnum(StatusEnum.ENABLE);
                 save(requisitionEntity);
             }else{
                 update(requisitionEntity);
@@ -56,7 +56,7 @@ public class RequisitionDao extends GenericDao<RequisitionEntity> implements Ser
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT r ");
         sb.append(" FROM RequisitionEntity r ");
-        sb.append(" WHERE r.status = :ENABLE ");
+        sb.append(" WHERE r.statusEnum = :ENABLE ");
         sb.append(" AND r.poEntity.id=:ID");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);

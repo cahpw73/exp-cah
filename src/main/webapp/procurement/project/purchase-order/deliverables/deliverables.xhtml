@@ -10,6 +10,7 @@
             <div class="form-group">
                 <p:dataTable id="deliverableDt" var="_dv"
                              value="#{deliverableBean.filteredList()}">
+                    <ui:remove>
                     <p:column headerText="#{msgs['po.deliverables.column.description']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
                         <p:selectOneMenu id="descriptions" value="#{_dv.description}"
@@ -21,6 +22,7 @@
                             <p:ajax async="false" process="@this" event="change"/>
                         </p:selectOneMenu>
                     </p:column>
+                    </ui:remove>
                     <p:column headerText="#{msgs['po.deliverables.column.Qty']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
                         <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control"/>

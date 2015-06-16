@@ -28,7 +28,7 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
     private String mobile;
     private String fax;
     private String email;
-    private StatusEnum status;
+    private StatusEnum statusEnum;
     private Date lastUpdate;
     private SupplierProcEntity supplier;
 
@@ -56,12 +56,12 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
 
     @Column (name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    public StatusEnum getStatus() {
-        return status;
+    public StatusEnum getStatusEnum() {
+        return statusEnum;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setStatusEnum(StatusEnum status) {
+        this.statusEnum = status;
     }
 
     @Column(name = "last_update",nullable = false)
@@ -167,14 +167,4 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
         return result;
     }
 
-    @Override
-    @Transient
-    public boolean isWithNoData() {
-        return withNoData;
-    }
-
-    @Override
-    public void setWithNoData(boolean isEmpty){
-        withNoData =isEmpty;
-    }
 }

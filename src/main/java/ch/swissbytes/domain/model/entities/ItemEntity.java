@@ -19,19 +19,19 @@ import java.util.Date;
 public class ItemEntity extends RecordEditable<ItemEntity> implements Serializable{
 
     private Long id;
-    private String itemNo;
-    private String equipNo;
-    private String qty;
-    private String unit;
-    private String description;
-    private BigDecimal unitCost;
-    private BigDecimal totalCost;
-    private BigDecimal costCode;
-    private Date deliveryDate;
-    private StatusEnum status;
+    private String itemNo;//Code*
+    private String equipNo;//TagNo*
+    private String qty;//quantity*
+    private String unit;//unit*
+    private String description;//description*
+    private BigDecimal unitCost;//cost*
+    private BigDecimal totalCost;//new
+    private BigDecimal costCode;//new
+    private Date deliveryDate;//poDeliveryDate*
+    private StatusEnum statusEnum;
     private Date lastUpdate;
-    private ProjectCurrencyEntity projectCurrency;
-    private POEntity po;
+    private ProjectCurrencyEntity projectCurrency;//new
+    private POEntity po;//no copy
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -46,12 +46,12 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
 
     @Column (name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    public StatusEnum getStatus() {
-        return status;
+    public StatusEnum getStatusEnum() {
+        return statusEnum;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setStatusEnum(StatusEnum status) {
+        this.statusEnum = status;
     }
 
     @Column(name = "last_update",nullable = false)

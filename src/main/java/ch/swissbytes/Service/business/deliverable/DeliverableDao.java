@@ -30,7 +30,7 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
         Date now=new Date();
         for(DeliverableEntity deliverable:deliverables){
             deliverable.setId(null);
-            deliverable.setStatus(StatusEnum.ENABLE);
+            deliverable.setStatusEnum(StatusEnum.ENABLE);
             deliverable.setLastUpdate(now);
             deliverable.setPoEntity(poEntity);
             save(deliverable);
@@ -43,7 +43,7 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
             deliverable.setPoEntity(poEntity);
             if(deliverable.getId()<0){
                 deliverable.setId(null);
-                deliverable.setStatus(StatusEnum.ENABLE);
+                deliverable.setStatusEnum(StatusEnum.ENABLE);
                 save(deliverable);
             }else{
                 update(deliverable);
@@ -56,7 +56,7 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT d ");
         sb.append(" FROM DeliverableEntity d ");
-        sb.append(" WHERE d.status = :ENABLE ");
+        sb.append(" WHERE d.statusEnum = :ENABLE ");
         sb.append(" AND d.poEntity.id=:ID");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
@@ -68,7 +68,7 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT d ");
         sb.append(" FROM DeliverableEntity d LEFT JOIN d.poEntity p ");
-        sb.append(" WHERE d.status = :ENABLE ");
+        sb.append(" WHERE d.statusEnum = :ENABLE ");
         sb.append(" AND p.id=:ID");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);

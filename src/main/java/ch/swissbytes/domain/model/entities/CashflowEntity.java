@@ -28,7 +28,7 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     private String orderValue;
     private String balance;
     private Date expDate;
-    private StatusEnum status;
+    private StatusEnum statusEnum;
     private PaymentTermsEnum paymentTerms;
     private Date lastUpdate;
     private POEntity po;
@@ -102,12 +102,12 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
 
     @Column (name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    public StatusEnum getStatus() {
-        return status;
+    public StatusEnum getStatusEnum() {
+        return statusEnum;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setStatusEnum(StatusEnum status) {
+        this.statusEnum = status;
     }
 
     @Column (name = "payment_terms")
