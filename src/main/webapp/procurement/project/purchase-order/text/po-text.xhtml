@@ -67,8 +67,9 @@
             <h:panelGroup rendered="#{poBean.beingEdited}">
                 <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('textSnippetModal1').show();"
                                process="@this" update=":textSnippetModalId"
+                               action="#{textSnippetBean.clear}"
                                styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this" update=""/>
+                    <p:ajax process="@this" update=":textSnippetDlg"/>
                 </h:commandLink>
                 <br/>
                 <h:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
