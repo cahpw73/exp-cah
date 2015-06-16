@@ -436,7 +436,7 @@ public class ProjectBean implements Serializable {
 
     public void addNewCustomText(){
         log.info("addNewCustomText");
-        if(standartText.addProject()) {
+        if(standartText.addProject(true)) {
             TextSnippetEntity textSnippet=standartText.getTextSnippet();
             textSnippet.setId(temporaryId--);
             projectStandardTextList.add(textSnippet);
@@ -452,11 +452,12 @@ public class ProjectBean implements Serializable {
     public void saveNewCustomText(Long projectId){
         log.info("saveNewCustomText");
         ProjectEntity project=projectService.findProjectById(projectId);
-        if(project!=null&&standartText.addProject()) {
+        if(project!=null&&standartText.addProject(false)) {
             TextSnippetEntity textSnippet=standartText.getTextSnippet();
-
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('textSnippetModal1').hide();");
             ProjectTextSnippetEntity ptse=projectService.addNewTextSnippet(project, textSnippet);
-            poTextBean.getSelectedClausesTextList().add(ptse);
+            poTextBean.getDroppedTextSnippetList().add(ptse);
         }
         log.info("end..");
     }
