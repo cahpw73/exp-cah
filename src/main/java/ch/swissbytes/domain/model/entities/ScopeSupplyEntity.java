@@ -83,6 +83,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     public void setId(Long id) {
         this.id = id;
     }
+
     @Column(name="cost", precision=18, scale=5)
     @DecimalMin(value = "0",message = "just positive values")
     public BigDecimal getCost() {
@@ -104,7 +105,6 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     }
 
     @Column(name="quantity",nullable = false)
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -133,7 +133,8 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.description = description;
     }
 
-    @Column(name="EX_WORK_DATE", nullable = false)
+    //@TODO Cambiamos el valur nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    @Column(name="EX_WORK_DATE")
     public Date getForecastExWorkDate() {
         return forecastExWorkDate;
     }
@@ -151,7 +152,9 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     public void setExWorkDateDescription(String exWorkDateDescription) {
         this.exWorkDateDescription = exWorkDateDescription;
     }
-    @Column(name="DELIVERY_LEAD_TIME_QT", nullable = false)
+
+    //TODO Cambiamos el valur nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    @Column(name="DELIVERY_LEAD_TIME_QT")
     public Integer getDeliveryLeadTimeQt() {
         return deliveryLeadTimeQt;
     }
@@ -178,7 +181,9 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     public void setGetDeliveryLeadTimeDescription(String getDeliveryLeadTimeDescription) {
         this.getDeliveryLeadTimeDescription = getDeliveryLeadTimeDescription;
     }
-    @Column(name="SITE_DATE", nullable = false)
+
+    //TODO Cambiamos el valur nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    @Column(name="SITE_DATE")
     public Date getForecastSiteDate() {
         return forecastSiteDate;
     }

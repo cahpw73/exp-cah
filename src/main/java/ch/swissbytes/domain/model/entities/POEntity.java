@@ -31,6 +31,7 @@ public class POEntity implements Serializable{
     private String point;
     private ClassEnum clazz;
     private POStatusEnum poProcStatus;
+    private List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
     private List<ItemEntity> itemList = new ArrayList<>();
     private List<RequisitionEntity> requisitions = new ArrayList<>();
     private List<DeliverableEntity> deliverables = new ArrayList<>();
@@ -171,6 +172,11 @@ public class POEntity implements Serializable{
     @Transient
     public List<ItemEntity> getItemList() {
         return itemList;
+    }
+
+    @Transient
+    public List<ScopeSupplyEntity> getScopeSupplyList() {
+        return scopeSupplyList;
     }
 
     @Transient

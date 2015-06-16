@@ -216,7 +216,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
         //items
-        itemService.doSave(po.getItemList(),po);
+        itemService.doSave(po.getScopeSupplyList(),purchaseOrderEntity);
         //deliverable
         deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
         //CashFlow
@@ -238,7 +238,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //requisition daos
         requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //items
-        itemService.doUpdate(po.getItemList(), po);
+        itemService.doUpdate(po.getScopeSupplyList(), purchaseOrderEntity);
         //deliverable
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //cashFlow
@@ -256,8 +256,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         return purchaseOrderEntity;
     }
     private void collectLists(POEntity po,PurchaseOrderEntity poe){
-        po.getItemList().clear();
-        po.getItemList().addAll(poe.getPoEntity().getItemList());
+        /*po.getItemList().clear();
+        po.getItemList().addAll(poe.getPoEntity().getItemList());*/
+        po.getScopeSupplyList().clear();
+        po.getScopeSupplyList().addAll(poe.getPoEntity().getScopeSupplyList());
         po.getDeliverables().clear();
         po.getDeliverables().addAll(poe.getPoEntity().getDeliverables());
         po.getRequisitions().clear();
@@ -272,7 +274,8 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
             po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));
             po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
-            po.getPoEntity().getItemList().addAll(itemService.findByPoId(po.getPoEntity().getId()));
+            po.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
+            //po.getPoEntity().getItemList().addAll(itemService.findByPoId(po.getPoEntity().getId()));
             po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
             po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
             po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));

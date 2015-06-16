@@ -32,7 +32,10 @@ public class SortBean implements Serializable {
         Comparator<ScopeSupplyEntity> comparator = new Comparator<ScopeSupplyEntity>() {
             @Override
             public int compare(ScopeSupplyEntity ssp1, ScopeSupplyEntity ssp2) {
-                return sortItemNumber(ssp1.getCode(), ssp2.getCode());
+                if(StringUtils.isNotEmpty(ssp1.getCode()) && StringUtils.isNotEmpty(ssp2.getCode())){
+                    return sortItemNumber(ssp1.getCode(), ssp2.getCode());
+                }
+                return 0;
             }
         };
         Collections.sort(list, comparator);

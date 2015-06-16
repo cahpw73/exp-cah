@@ -81,8 +81,9 @@ public class ItemBean implements Serializable {
 
     public void loadItemList(final Long poEntityId) {
         log.info("loading item list to edit");
-        itemList = itemService.findByPoId(poEntityId);
-        sortBean.sortItemEntity(itemList);
+        scopeSupplyList = itemService.findByPoId(poEntityId);
+        //itemList = itemService.findByPoId(poEntityId);
+        sortBean.sortScopeSupplyEntity(scopeSupplyList);
     }
 
     public void copyDateToItemList(Date orderDate) {
@@ -98,7 +99,7 @@ public class ItemBean implements Serializable {
 
     public void confirmItem(ScopeSupplyEntity entity) {
         log.info("confirm item");
-        if(true){
+        if(itemNoIsNotEmpty(entity)){
             int index = scopeSupplyList.indexOf(entity);
             scopeSupplyList.set(index,entity);
             entity.stopEditing();
