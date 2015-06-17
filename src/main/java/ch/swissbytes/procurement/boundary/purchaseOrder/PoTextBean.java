@@ -68,6 +68,7 @@ public class PoTextBean implements Serializable {
     }
 
     public void loadText(POEntity poEntity, final Long projectId) {
+        //check this if we can improve. it takes about 1 second.
         log.info("loadText");
         textEntity = textService.findByPoId(poEntity.getId());
         clausesEntities = textService.findClausesByTextId(textEntity.getId());

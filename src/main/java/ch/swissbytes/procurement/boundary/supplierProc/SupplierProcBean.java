@@ -70,7 +70,6 @@ public class SupplierProcBean extends Bean implements Serializable {
         if (supplier == null) {
             throw new IllegalArgumentException("Supplier not found");
         }
-
         supplier.getBrands().addAll(service.getBrands(id));
         supplier.getCategories().addAll(service.getCategories(id));
         supplier.getContacts().addAll(service.getContacts(id));

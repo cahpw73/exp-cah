@@ -101,9 +101,9 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
 
     public List<SupplierProcEntity> findAll() {
         List<SupplierProcEntity>suppliers=dao.findAll();
-        for(SupplierProcEntity supplier:suppliers){
+      /*  for(SupplierProcEntity supplier:suppliers){
             supplier.getContacts().addAll(contactDao.findByContactsBySupplier(supplier.getId()));
-        }
+        }*/
         return suppliers;
     }
 }

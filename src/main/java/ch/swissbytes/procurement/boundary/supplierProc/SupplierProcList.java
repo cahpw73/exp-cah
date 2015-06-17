@@ -34,6 +34,8 @@ public class SupplierProcList implements Serializable {
     @Inject
     private SupplierProcService service;
 
+    private List<SupplierProcEntity> suppliers;
+
     @PostConstruct
     public void create(){
         log.info("SupplierProcList bean created");
@@ -41,7 +43,10 @@ public class SupplierProcList implements Serializable {
     }
 
     public List<SupplierProcEntity> getSuppliers(){
-        return service.findAll();
+        if(suppliers==null||suppliers.size()==0){
+            suppliers=service.findAll();
+        }
+        return suppliers;
     }
 
     @PreDestroy
