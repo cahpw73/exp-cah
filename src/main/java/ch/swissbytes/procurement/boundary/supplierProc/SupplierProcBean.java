@@ -95,7 +95,8 @@ public class SupplierProcBean implements Serializable {
         return "list?faces-redirect=true";
     }
 
-    public String doDelete() {
+    public String doDelete(Long id) {
+        supplier=service.findById(id);
         service.doDelete(supplier);
         return "list?faces-redirect=true";
     }

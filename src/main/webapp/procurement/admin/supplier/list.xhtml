@@ -48,14 +48,22 @@
                 </p:column>
                 <p:column headerText="#{msgs['lbl.actions']}">
                     <h:form prependId="false">
-                        <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm">
+                        <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-primary btn-sm color-btn-data-table">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
                         </h:link>
                         &#160;
-                        <p:commandLink value="#{msgs['lbl.delete']}"
-                                       style="color: #ffffff;"
-                                       styleClass="btn btn-primary btn-sm">
+                        <h:link value="#{msgs['lbl.view']}" outcome="edit" styleClass="btn btn-primary btn-sm color-btn-data-table">
+                            <f:param name="supplierId" value="#{_supplier.id}"/>
+                            <f:param name="MODE" value="VIEW"/>
+                        </h:link>
 
+                        <p:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                       action="#{supplierProcBean.doDelete(_supplier.id)}"
+                                       value="#{msgs['lbl.delete']}">
+                            <p:confirm header="Removing Supplier"
+                                       message="Are you sure to delete this supplier ?"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
                         </p:commandLink>
                     </h:form>
                 </p:column>
