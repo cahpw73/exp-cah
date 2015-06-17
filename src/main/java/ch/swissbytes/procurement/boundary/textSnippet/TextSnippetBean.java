@@ -70,13 +70,15 @@ public class TextSnippetBean implements Serializable {
         return valid;
     }
 
-    public boolean addProject(){
+    public boolean addProject(boolean hideModal){
         if(!validate(textSnippet)){
             return false;
         }
-        RequestContext context = RequestContext.getCurrentInstance();
-        RequestContext.getCurrentInstance().update("pickSystemFormId");
-        context.execute("PF('textSnippetModal').hide();");
+        if(hideModal) {
+            RequestContext context = RequestContext.getCurrentInstance();
+            RequestContext.getCurrentInstance().update("pickSystemFormId");
+            context.execute("PF('textSnippetModal').hide();");
+        }
         return true;
     }
 

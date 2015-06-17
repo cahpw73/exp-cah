@@ -1,26 +1,19 @@
 package ch.swissbytes.procurement.boundary.project;
 
 import ch.swissbytes.Service.business.currency.CurrencyService;
-import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.logo.LogoService;
-import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
 import ch.swissbytes.Service.business.project.ProjectService;
-import ch.swissbytes.Service.business.role.RoleDao;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
-import ch.swissbytes.Service.business.user.UserService;
-import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.ModuleSystemEnum;
-import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
-import ch.swissbytes.fqmes.util.Encode;
 import ch.swissbytes.procurement.boundary.currency.CurrencyBean;
 import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
+import ch.swissbytes.procurement.boundary.purchaseOrder.PoTextBean;
 import ch.swissbytes.procurement.boundary.textSnippet.TextSnippetBean;
-import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -29,7 +22,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -444,11 +436,28 @@ public class ProjectBean implements Serializable {
 
     public void addNewCustomText(){
         log.info("addNewCustomText");
-        if(standartText.addProject()) {
+        if(standartText.addProject(true)) {
             TextSnippetEntity textSnippet=standartText.getTextSnippet();
             textSnippet.setId(temporaryId--);
             projectStandardTextList.add(textSnippet);
-            //selectedGlobalTexts.clear();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('textSnippetModal').hide();");
+        }
+        log.info("end..");
+    }
+
+    @Inject
+    private PoTextBean poTextBean;
+
+    public void saveNewCustomText(Long projectId){
+        log.info("saveNewCustomText");
+        ProjectEntity project=projectService.findProjectById(projectId);
+        if(project!=null&&standartText.addProject(false)) {
+            TextSnippetEntity textSnippet=standartText.getTextSnippet();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('textSnippetModal1').hide();");
+            ProjectTextSnippetEntity ptse=projectService.addNewTextSnippet(project, textSnippet);
+            poTextBean.getDroppedTextSnippetList().add(ptse);
         }
         log.info("end..");
     }
