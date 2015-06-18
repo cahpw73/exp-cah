@@ -45,7 +45,9 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <h:selectBooleanCheckbox id="retentionCf" value="#{cashflowBean.cashflow.applyRetention}" disabled="#{!poBean.beingEdited}">
+                                    <h:selectBooleanCheckbox id="retentionCf"
+                                                             value="#{cashflowBean.cashflow.applyRetention}"
+                                                             disabled="#{!poBean.beingEdited}">
                                     </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
                                 </label>
                             </div>
@@ -138,7 +140,8 @@
                                 <h:inputText id="expDateCfVi" readonly="true" styleClass="form-control view-po"
                                              value="#{cashflowBean.cashflow.expDate}"
                                              rendered="#{poBean.beingViewed}">
-                                    <f:convertDateTime timeZone="#{configuration.timeZone}" pattern="#{configuration.formatDate}"/>
+                                    <f:convertDateTime timeZone="#{configuration.timeZone}"
+                                                       pattern="#{configuration.formatDate}"/>
                                 </h:inputText>
                             </div>
                         </div>
@@ -153,6 +156,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['po.cashflow.lbl.forescast.cashflow']}"/>
+
                     <div style="width: 180px; float: left;">
                     </div>
                 </div>
@@ -193,7 +197,8 @@
                 <div class="form-group">
                     <p:dataTable id="forecastDt" var="_l"
                                  value="#{cashflowBean.cashflowDetailList}">
-                        <p:column headerText="#{msgs['po.cashflow.column.item']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.item']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viItem" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.item}"/>
                             </h:panelGroup>
@@ -201,7 +206,8 @@
                                 <h:inputText id="itemNo" value="#{_l.item}" styleClass="form-control"/>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viDescrip" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.milestone}"/>
                             </h:panelGroup>
@@ -209,7 +215,8 @@
                                 <h:inputText id="descrip" value="#{_l.milestone}" styleClass="form-control"/>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.currency']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.currency']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viCurrency" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.projectCurrency.currency.code}"/>
                             </h:panelGroup>
@@ -228,7 +235,8 @@
                                 </h:selectOneMenu>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.order.amt']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.order.amt']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viOrderAmt" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.orderAmt}">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
@@ -242,7 +250,8 @@
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.project.amt']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.project.amt']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPoAmt" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.projectAmt}">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
@@ -256,7 +265,8 @@
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.claim.date']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.claim.date']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viClaimDate" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.claimDate}">
                                     <f:convertDateTime pattern="#{configuration.formatDate}"/>
@@ -275,7 +285,8 @@
                                 </p:calendar>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.payment.date']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                        <p:column headerText="#{msgs['po.cashflow.column.payment.date']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPaymentDate" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.paymentDate}">
                                     <f:convertDateTime pattern="#{configuration.formatDate}"/>
@@ -294,16 +305,26 @@
                                 </p:calendar>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
+                        <p:column headerText="#{msgs['lbl.actions']}"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.editCashflowDetail(_l)}" update="forecastDt" async="false"/>
+                                           action="#{cashflowBean.editCashflowDetail(_l)}" update="forecastDt"
+                                           async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}" process="forecastDt"
-                                           action="#{cashflowBean.confirmCashflowDetail(_l)}" update="forecastDt" async="false"/>
+                                           action="#{cashflowBean.confirmCashflowDetail(_l)}" update="forecastDt"
+                                           async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt" async="false"/>
+                                           action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt"
+                                           async="false">
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.cancelEditionCashDetail(_l)}" update="forecastDt" async="false"/>
+                                           action="#{cashflowBean.cancelEditionCashDetail(_l)}" update="forecastDt"
+                                           async="false"/>
                         </p:column>
                     </p:dataTable>
                 </div>

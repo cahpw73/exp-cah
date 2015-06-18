@@ -3,7 +3,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <p:dataTable id="contactList" value="#{contactBean.list}" var="_contact">
+    <p:dataTable id="contactList" value="#{contactBean.filteredList()}" var="_contact">
         <p:column headerText="Title">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.title}"/>
             <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.title}"/>
@@ -55,11 +55,17 @@
                            action="#{contactBean.confirm(_contact.id)}" update="contactList"/>
             &#160;
             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}" process="@this"
-                           action="#{contactBean.delete(_contact.id)}" update="contactList"/>
+                           action="#{contactBean.delete(_contact.id)}" update="contactList">
+                <p:confirm header="Remove contact"
+                           message="Are you sure to delete this contact?"
+                           icon="ui-icon-alert">
+                </p:confirm>
+            </p:commandLink>
             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_contact.isEditable}" process="@this"
                            action="#{contactBean.cancel(_contact.id)}" update="contactList"/>
         </p:column>
     </p:dataTable>
+    <br/>
     <h:commandButton value="#{msgs['lbl.add']}"
                      rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}"
                      action="#{contactBean.add()}"

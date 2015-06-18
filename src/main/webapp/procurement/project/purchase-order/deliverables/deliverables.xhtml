@@ -17,7 +17,7 @@
                                          required="true"
                                          rendered="#{_dv.isEditable}"
                                          effect="fold" editable="true" styleClass="form-control"
-                                         maxlength="50"  style="width: 100%">
+                                         maxlength="50" style="width: 100%">
                             <f:selectItems value="#{itemBean.items()}"/>
                             <p:ajax async="false" process="@this" event="change"/>
                         </p:selectOneMenu>
@@ -61,11 +61,17 @@
                     <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
                         <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dv.isEditable}" process="@this"
                                        action="#{deliverableBean.edit(_dv.id)}" update="deliverableDt"/>
-                        <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dv.isEditable}" process=":editPoForm:deliverableDt"
+                        <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dv.isEditable}"
+                                       process=":editPoForm:deliverableDt"
                                        action="#{deliverableBean.confirm(_dv.id)}" update="deliverableDt"/>
                         &#160;
                         <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_dv.isEditable}" process="@this"
-                                       action="#{deliverableBean.delete(_dv.id)}" update="deliverableDt"/>
+                                       action="#{deliverableBean.delete(_dv.id)}" update="deliverableDt">
+                            <p:confirm header="Remove Deliverable"
+                                       message="Are you sure to delete this delivery?"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
                         <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dv.isEditable}" process="@this"
                                        action="#{deliverableBean.cancel(_dv.id)}" update="deliverableDt"/>
                     </p:column>

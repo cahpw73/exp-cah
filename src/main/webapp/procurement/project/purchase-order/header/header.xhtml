@@ -51,7 +51,12 @@
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_req.isEditable}"
                                                process="@this"
-                                               action="#{requisitionBean.delete(_req.id)}" update="requisitionDt"/>
+                                               action="#{requisitionBean.delete(_req.id)}" update="requisitionDt">
+                                    <p:confirm header="Remove Requisition"
+                                               message="Are you sure to delete this Requisition"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
                                 <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_req.isEditable}"
                                                process="@this"
                                                action="#{requisitionBean.cancel(_req.id)}" update="requisitionDt"/>
