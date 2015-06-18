@@ -36,7 +36,7 @@
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.email}"/>
             <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.email}"/>
         </p:column>
-        <p:column headerText="#{msgs['lbl.actions']}">
+        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{supplierProcBean.beingEdited or supplierProcBean.beingCreated}">
             <ui:remove>
             <h:commandButton value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm"
                            action="#{supplierProcBean.putModeContact(_contact.id)}">
@@ -61,6 +61,7 @@
         </p:column>
     </p:dataTable>
     <h:commandButton value="#{msgs['lbl.add']}"
+                     rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}"
                      action="#{contactBean.add()}"
                      styleClass="btn btn-primary btn-sm">
         <p:ajax async="false"

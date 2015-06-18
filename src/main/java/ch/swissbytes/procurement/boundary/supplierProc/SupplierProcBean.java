@@ -5,6 +5,9 @@ import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import ch.swissbytes.domain.types.ModeOperationEnum;
+import ch.swissbytes.procurement.boundary.Bean;
+import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
@@ -21,7 +24,7 @@ import java.util.logging.Logger;
  */
 @Named
 @ViewScoped
-public class SupplierProcBean implements Serializable {
+public class SupplierProcBean extends Bean implements Serializable {
 
     private static final Logger log = Logger.getLogger(SupplierProcBean.class.getName());
 
@@ -42,6 +45,7 @@ public class SupplierProcBean implements Serializable {
     private boolean addingBrand = false;
     private boolean editing =false;
     private boolean addingContact=false;
+    private String mode;
 
 
     @PostConstruct
@@ -51,6 +55,7 @@ public class SupplierProcBean implements Serializable {
 
     public void load() {
         Long id = null;
+        putModeCreation();
         if (supplierId != null) {
             try {
                 id = Long.parseLong(supplierId);
@@ -60,6 +65,7 @@ public class SupplierProcBean implements Serializable {
         if (id != null && id > 0) {
             supplier = service.findById(id);
             editing =true;
+            putModeEdition();
         }
         if (supplier == null) {
             throw new IllegalArgumentException("Supplier not found");
@@ -70,6 +76,9 @@ public class SupplierProcBean implements Serializable {
         supplier.getContacts().addAll(service.getContacts(id));
         contactBean.getList().clear();
         contactBean.getList().addAll(supplier.getContacts());
+        if(StringUtils.isNotBlank(mode)&&StringUtils.isNotBlank(mode)&&mode.equalsIgnoreCase(ModeOperationEnum.VIEW.name())){
+            putModeView();
+        }
     }
 
 
@@ -95,7 +104,8 @@ public class SupplierProcBean implements Serializable {
         return "list?faces-redirect=true";
     }
 
-    public String doDelete() {
+    public String doDelete(Long id) {
+        supplier=service.findById(id);
         service.doDelete(supplier);
         return "list?faces-redirect=true";
     }
@@ -175,5 +185,13 @@ public class SupplierProcBean implements Serializable {
 
     public void setAddingContact(boolean addingContact) {
         this.addingContact = addingContact;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

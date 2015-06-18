@@ -7,6 +7,7 @@
     <ui:define name="title">Admin - Supplier</ui:define>
     <f:metadata>
         <f:viewParam name="supplierId" value="#{supplierProcBean.supplierId}"/>
+        <f:viewParam name="MODE" value="#{supplierProcBean.mode}"/>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
         <f:viewAction action="#{supplierProcBean.load}"/>
@@ -22,8 +23,9 @@
 
                         <div class="col-sm-8">
                             <h:inputText id="supplierID" maxlength="50"
+                                         readonly="#{supplierProcBean.beingViewed}"
                                          value="#{supplierProcBean.supplier.supplierId}"
-                                         class="form-control " required="true"/>
+                                         class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} " required="true"/>
                             <p:message for="supplierID"/>
                         </div>
                     </div>
@@ -31,7 +33,7 @@
                 <br/>
 
                 <div class="col-sm-3">
-                    <h:panelGroup id="idBtnSave">
+                    <h:panelGroup id="idBtnSave" rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
                         <h:commandButton value="#{msgs['lbl.save']}"
                                          action="#{supplierProcBean.doSave}"
                                          rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
@@ -57,8 +59,9 @@
                         <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']} *"/>
                         <div class="col-sm-8">
                             <h:inputText maxlength="50" id="companyId"
+                                         readonly="#{supplierProcBean.beingViewed}"
                                          value="#{supplierProcBean.supplier.company}"
-                                         class="form-control" required="true"/>
+                                         class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} " required="true"/>
                             <p:message for="companyId"/>
                         </div>
 

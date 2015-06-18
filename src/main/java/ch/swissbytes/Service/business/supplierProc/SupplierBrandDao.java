@@ -39,10 +39,10 @@ public class SupplierBrandDao extends GenericDao<SupplierBrand> implements Seria
     public void doDelete(Long id){
         StringBuilder sb = new StringBuilder();
         sb.append(" UPDATE SupplierBrand SET ");
-        sb.append(" status=:DELETED ");
+        sb.append(" status=:DELETED , ");
         sb.append(" lastUpdate=:LAST_UPDATE ");
-        sb.append(" WHERE sb.status=:ENABLE ");
-        sb.append(" AND sb.supplier.id = :SUPPLIER_ID ");
+        sb.append(" WHERE status=:ENABLE ");
+        sb.append(" AND supplier.id = :SUPPLIER_ID ");
         Map<String,Object> params = new HashMap<>();
         params.put("SUPPLIER_ID", id);
         params.put("LAST_UPDATE", new Date());
