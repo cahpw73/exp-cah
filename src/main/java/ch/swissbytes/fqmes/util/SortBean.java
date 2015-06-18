@@ -71,8 +71,8 @@ public class SortBean implements Serializable {
         Comparator<PurchaseOrderEntity> comparator = new Comparator<PurchaseOrderEntity>() {
             @Override
             public int compare(PurchaseOrderEntity po1, PurchaseOrderEntity po2) {
-                if(StringUtils.isNotEmpty(po1.getPoEntity().getVarNumber()) && StringUtils.isNotEmpty(po2.getPoEntity().getVarNumber())){
-                    return sortItemNumber(po1.getPoEntity().getVarNumber(), po2.getPoEntity().getVarNumber());
+                if(StringUtils.isNotEmpty(po1.getVariation()) && StringUtils.isNotEmpty(po2.getVariation())){
+                    return sortItemNumber(po1.getVariation(), po2.getVariation());
                 }
                 return 0;
             }

@@ -148,4 +148,18 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("PO_NO", poNo);
         return super.findBy(sb.toString(), map);
     }
+
+    public List<PurchaseOrderEntity> findByVariation(String variation, Long id){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND lower(po.variation)  = :VARIATION");
+        sb.append(" AND NOT po.id = :ID ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("VARIATION", variation!=null?variation.trim().toLowerCase():"");
+        map.put("ID",id==null?0:id);
+        return super.findBy(sb.toString(), map);
+    }
 }

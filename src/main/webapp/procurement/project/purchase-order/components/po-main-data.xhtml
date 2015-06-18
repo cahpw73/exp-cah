@@ -95,13 +95,13 @@
 
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poVarNumber"
-                                 value="#{poBean.purchaseOrder.poEntity.varNumber}"
+                                 value="#{poBean.purchaseOrder.variation}"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"
                                  rendered="#{poBean.beingEdited}"/>
                     <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
                     <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.poEntity.varNumber}"
+                                 value="#{poBean.purchaseOrder.variation}"
                                  rendered="#{poBean.beingViewed}"/>
                 </div>
             </div>

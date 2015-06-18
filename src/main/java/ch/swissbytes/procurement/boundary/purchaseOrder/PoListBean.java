@@ -94,11 +94,10 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = entity;
         pOrderList = service.findByProjectIdAndPo(project.getId(),entity.getPo());
         sortBean.sortPurchaseOrderEntity(pOrderList);
-        String lastVarNumber = pOrderList.get(pOrderList.size()-1).getPoEntity().getVarNumber();
+        String lastVarNumber = pOrderList.get(pOrderList.size()-1).getVariation();
         generateVariationNumber(lastVarNumber);
-        purchaseOrderToVariation = service.findById(entity.getPoEntity().getId());
+        purchaseOrderToVariation = service.findById(entity.getId());
         prepareToSaveWithNewVariation(purchaseOrderToVariation);
-        log.info("algo");
 
     }
 
@@ -106,7 +105,7 @@ public class PoListBean implements Serializable {
         purchaseOrderToVariation.setId(null);
         purchaseOrderToVariation.getPoEntity().setId(null);
         purchaseOrderToVariation.getPoEntity().setPoProcStatus(POStatusEnum.READY);
-        purchaseOrderToVariation.getPoEntity().setVarNumber(newVariationNumber);
+        purchaseOrderToVariation.setVariation(newVariationNumber);
         purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
         purchaseOrderToVariation.getPoEntity().getCashflow().setId(null);
         for(CashflowDetailEntity entity : purchaseOrderToVariation.getPoEntity().getCashflow().getCashflowDetailList()){

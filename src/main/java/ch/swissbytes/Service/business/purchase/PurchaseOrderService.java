@@ -16,7 +16,6 @@ import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
-import ch.swissbytes.fqmes.util.Purchase;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -202,7 +201,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public List<PurchaseOrderEntity> purchaseListByProjectIdAnPoNo(final Long projectId, final String poNo){
-        return dao.findPOByProjectIdAndPoNo(projectId,poNo);
+        return dao.findPOByProjectIdAndPoNo(projectId, poNo);
     }
 
 
@@ -234,7 +233,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
-        collectLists(po,purchaseOrderEntity);
+        collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(po.getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
@@ -246,7 +245,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //deliverable
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //cashFlow
-        cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(),po);
+        cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
         textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity());
 
@@ -290,5 +289,10 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
     public List<PurchaseOrderEntity> findByProjectIdAndPo(final Long projectId, final String poNo){
         return dao.findByProjectAndPo(projectId,poNo);
+    }
+
+    public boolean isVarNumberUsed(String varNumber, Long id){
+        List<PurchaseOrderEntity> list=dao.findByVariation(varNumber, id);
+        return !list.isEmpty();
     }
 }
