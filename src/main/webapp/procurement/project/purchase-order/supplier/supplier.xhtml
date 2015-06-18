@@ -199,9 +199,12 @@
                     <div class="form-group">
                         <h:commandButton
                                 value="#{msgs['po.supplier.lbl.btn.add.contact']}"
-                                action="#{projectBean.addCurrency}"
+                                disabled="#{poBean.purchaseOrder.poEntity.supplier==null}"
+                                action="#{contactBean.start(poBean.purchaseOrder.poEntity.supplier.id)}"
+                                onclick="PF('contactModal').show();"
                                 styleClass="btn btn-primary btn-sm"
                                 rendered="#{poBean.beingEdited}">
+                            <p:ajax async="false" update=":editContact"/>
                         </h:commandButton>
                     </div>
                 </div>

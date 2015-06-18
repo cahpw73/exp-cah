@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.converter;
 
-import ch.swissbytes.Service.business.contact.ContactDao;
+
+import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
@@ -23,7 +24,7 @@ public class SupplierConverter implements Converter {
     private SupplierProcService service;
 
     @Inject
-    private ContactDao contactService;
+    private ContactService contactService;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,

@@ -81,6 +81,7 @@ public class SupplierProcBean extends Bean implements Serializable {
     }
 
 
+
     public String doSave() {
         if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
             Messages.addFlashError("supplierID","supplier id is already being used");

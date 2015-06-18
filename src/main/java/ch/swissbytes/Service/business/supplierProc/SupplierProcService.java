@@ -1,13 +1,12 @@
 package ch.swissbytes.Service.business.supplierProc;
 
 import ch.swissbytes.Service.business.Service;
-import ch.swissbytes.Service.business.contact.ContactDao;
+import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.StatusEnum;
-import org.apache.commons.lang.ArrayUtils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -32,7 +31,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     private SupplierBrandDao supplierBrandDao;
 
     @Inject
-    private ContactDao contactDao;
+    private ContactService contactService;
 
     @PostConstruct
     public void create() {
@@ -48,7 +47,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         supplier = super.save(supplier);
         supplierBrandDao.doSave(supplier.getBrands(), supplier);
         supplierCategoryDao.doSave(supplier.getCategories(), supplier);
-        contactDao.doSave(supplier.getContacts(), supplier);
+        contactService.doSave(supplier.getContacts(), supplier);
         return supplier;
     }
 
@@ -59,7 +58,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         supplier = super.update(supplier);
         supplierBrandDao.doUpdate(supplier.getBrands(), supplier);
         supplierCategoryDao.doUpdate(supplier.getCategories(), supplier);
-        contactDao.doUpdate(supplier.getContacts(), supplier);
+        contactService.doUpdate(supplier.getContacts(), supplier);
         return supplier;
     }
 
@@ -92,7 +91,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     }
 
     public List<ContactEntity> getContacts(Long id) {
-        return id != null && id > 0 ? contactDao.findByContactsBySupplier(id) : new ArrayList<ContactEntity>();
+        return id != null && id > 0 ? contactService.findByContactsBySupplier(id) : new ArrayList<ContactEntity>();
     }
 
     public List<SupplierProcEntity> findByCompany(final String company) {
@@ -102,7 +101,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     public List<SupplierProcEntity> findAll() {
         List<SupplierProcEntity>suppliers=dao.findAll();
       /*  for(SupplierProcEntity supplier:suppliers){
-            supplier.getContacts().addAll(contactDao.findByContactsBySupplier(supplier.getId()));
+            supplier.getContacts().addAll(contactService.findByContactsBySupplier(supplier.getId()));
         }*/
         return suppliers;
     }

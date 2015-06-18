@@ -1,16 +1,13 @@
 package ch.swissbytes.procurement.converter;
 
-import ch.swissbytes.Service.business.contact.ContactDao;
-import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
+import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.domain.model.entities.ContactEntity;
-import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -24,7 +21,7 @@ public class ContactConverter implements Converter {
 
 
     @Inject
-    private ContactDao contactService;
+    private ContactService contactService;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
@@ -34,8 +31,7 @@ public class ContactConverter implements Converter {
         }
         try {
             Long id = Long.parseLong(value);
-            List<ContactEntity>contacts=contactService.findById(ContactEntity.class, id);
-            ContactEntity contactEntity= contacts.isEmpty()?null:contacts.get(0);
+            ContactEntity contactEntity= contactService.findById( id);
             System.out.println(contactEntity);
             return contactEntity;
         } catch (NumberFormatException nfe) {
