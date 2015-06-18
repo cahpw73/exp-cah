@@ -52,11 +52,13 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\deliverables\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select p.order_number,p.var_number,p.id
 from purchase_order po, p_order p
 where po.status_id = 1 and po.project_id = $P{projectIdFilter}
-      and po.po_id = p.id]]>
+      and po.po_id = p.id and p.order_number = $P{poNoFilter}]]>
 	</queryString>
 	<field name="order_number" class="java.lang.String"/>
 	<field name="var_number" class="java.lang.String"/>
@@ -215,8 +217,14 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 		<band height="19" splitType="Stretch">
 			<subreport>
 				<reportElement uuid="75bcff3e-0ce9-4abb-a4ad-ac2294da9a92" x="0" y="0" width="555" height="16"/>
+				<subreportParameter name="FORMAT_DATE">
+					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="poIdFilter">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "deliverable.jasper"]]></subreportExpression>

@@ -1,7 +1,6 @@
 package ch.swissbytes.procurement.report;
 
 
-
 import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.DeliverableEntity;
@@ -31,7 +30,7 @@ public class ReportDeliverables extends ReportView implements Serializable {
     private List<DeliverableDto> dtos;
     private PurchaseOrderEntity po;
     private Long projectId;
-
+    private String poNo;
 
 
     /**
@@ -41,13 +40,14 @@ public class ReportDeliverables extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportDeliverables(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                              Configuration configuration,List<DeliverableDto> dtos, PurchaseOrderEntity po,Long projectId) {
+                              Configuration configuration, List<DeliverableDto> dtos, PurchaseOrderEntity po, Long projectId, String poNo) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.dtos = dtos;
-        this.po  = po;
+        this.po = po;
         this.projectId = projectId;
-        LookupValueFactory lookupValueFactory=new LookupValueFactory();
+        this.poNo = poNo;
+        LookupValueFactory lookupValueFactory = new LookupValueFactory();
         //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
         //addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
@@ -58,7 +58,7 @@ public class ReportDeliverables extends ReportView implements Serializable {
 
     private void loadParamDeliverables() {
         InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        addParameters("logo",logo);
+        addParameters("logo", logo);
         addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
         addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
         addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
@@ -67,9 +67,9 @@ public class ReportDeliverables extends ReportView implements Serializable {
         addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
         addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
         addParameters("projectIdFilter", projectId);
-        //addParameters("deliverableList", createDataSource(dtos));
-        addParameters("TIME_ZONE",configuration.getTimeZone());
-        Date now=new Date();
+        addParameters("poNoFilter", poNo != null ? poNo : "");
+        addParameters("TIME_ZONE", configuration.getTimeZone());
+        Date now = new Date();
         now.setHours(23);
         now.setMinutes(59);
         now.setSeconds(59);
@@ -78,13 +78,12 @@ public class ReportDeliverables extends ReportView implements Serializable {
 
     @Override
     public void printDocument(Long documentId) {
-        try{
+        try {
             runReport();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
 
 
 }

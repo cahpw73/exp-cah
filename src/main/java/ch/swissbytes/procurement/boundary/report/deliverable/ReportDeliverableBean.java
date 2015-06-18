@@ -53,7 +53,7 @@ public class ReportDeliverableBean implements Serializable {
     private List<DeliverableDto> deliverableDtoList;
 
     @PostConstruct
-    public void create(){
+    public void create() {
         log.info("creating reportDeliverableBean");
         selectedProject = new ProjectEntity();
         projectList = new ArrayList<>();
@@ -63,42 +63,52 @@ public class ReportDeliverableBean implements Serializable {
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("destroyed reportDeliverableBean");
     }
 
-    public void loadProjects(){
+    public void loadProjects() {
         log.info("loading projects");
         projectList = projectService.findAllProjects();
     }
 
-    public void searchPurchaseOrder(){
+    public void searchPurchaseOrder() {
         log.info("searching purchase order");
-        loadDeliverablesDtoList(selectedProject.getId(),null);
+        if (selectedProject != null) {
+            loadDeliverablesDtoList(selectedProject.getId(), null);
+        } else {
+            purchaseOrderList.clear();
+            deliverableDtoList.clear();
+        }
     }
 
-    public void filterDeliverableDtoListByPoNo(){
+    public void filterDeliverableDtoListByPoNo() {
         log.info("filtering by project id and poNo");
-        loadDeliverablesDtoList(selectedProject.getId(),termsPoNo);
+        loadDeliverablesDtoList(selectedProject.getId(), termsPoNo != null ? termsPoNo : "");
+
     }
 
-    public void printReportDeliverables(){
-        reportProcBean.printReportDeliverables(deliverableDtoList,purchaseOrderList.get(0),selectedProject.getId());
+    public void printReportDeliverables() {
+        reportProcBean.printReportDeliverables(deliverableDtoList, purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
     }
 
-    private void loadDeliverablesDtoList(Long projectId, String poNo){
+    private void loadDeliverablesDtoList(Long projectId, String poNo) {
         purchaseOrderList.clear();
-        purchaseOrderList = purchaseOrderService.purchaseListByProjectIdAnPoNo(projectId,poNo);
-        for(PurchaseOrderEntity p : purchaseOrderList){
+        purchaseOrderList = purchaseOrderService.purchaseListByProjectIdAnPoNo(projectId, poNo);
+        for (PurchaseOrderEntity p : purchaseOrderList) {
             p.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(p.getPoEntity().getId()));
         }
         deliverableDtoList.clear();
-        for(PurchaseOrderEntity p : purchaseOrderList){
-            for(DeliverableEntity d : p.getPoEntity().getDeliverables()){
-                DeliverableDto dto = new DeliverableDto(p,d);
+        for (PurchaseOrderEntity p : purchaseOrderList) {
+            for (DeliverableEntity d : p.getPoEntity().getDeliverables()) {
+                DeliverableDto dto = new DeliverableDto(p, d);
                 deliverableDtoList.add(dto);
             }
         }
+    }
+
+    public boolean isProjectSelected() {
+        return selectedProject != null ? (selectedProject.getId() != null ? true : false) : false;
     }
 
     public ProjectEntity getSelectedProject() {

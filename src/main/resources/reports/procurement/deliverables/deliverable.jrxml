@@ -4,6 +4,8 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="poIdFilter" class="java.lang.Long"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select p.order_number,p.var_number,d.no_days,d.description,d.quantity,d.required_date
 from deliverable d, p_order p
@@ -76,7 +78,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{required_date}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{required_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{required_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="4b32b627-4624-4b66-b2e5-36590ecc15c5" positionType="Float" x="0" y="14" width="555" height="1"/>
