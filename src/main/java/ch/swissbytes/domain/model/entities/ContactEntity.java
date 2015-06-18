@@ -172,4 +172,11 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
         return result;
     }
 
+    @Override
+    public String toString() {
+        return
+                title + " : " +
+                firstName +" "+
+                surName;
+    }
 }

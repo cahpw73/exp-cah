@@ -30,7 +30,7 @@
                                                        var="_s"
                                                        itemValue="#{_s}"
                                                        itemLabel="#{_s.company}"/>
-                                        <p:ajax async="true" update="supplierDetail contactDetail conactSupId"
+                                        <p:ajax async="false" update="supplierDetail conactSupId"
                                                 process="@this"/>
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
@@ -125,7 +125,7 @@
                                 <div style="width: 200px; float: left;">
                                     <h:inputText id="countrySupId"
                                                  readonly="true"
-                                                 value="#{poBean.purchaseOrder.poEntity.supplier.country}"
+                                                     value="#{poBean.purchaseOrder.poEntity.supplier.country}"
                                                  styleClass="form-control"/>
                                     <p:message for="countrySupId" id="msgCountrySupId"/>
                                 </div>
@@ -173,7 +173,6 @@
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                        for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
-
                         <div style="width: 180px; float: left;">
                             <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
                                              value="#{poBean.purchaseOrder.poEntity.contactEntity}"
@@ -186,9 +185,10 @@
                                                value="#{poBean.purchaseOrder.poEntity.supplier.contacts}"
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.fullName}"/>
-                                <p:ajax async="true" update="contactDetail" process="@this" event="change"/>
+                                <p:ajax async="false" update="phoneSupId faxSupId test" process="contactDetail"/>
                             </h:selectOneMenu>
-                            <p:message for="conactSupId" id="msgConactSupId"/>
+                            <p:message for="conactSupId"/>
+                            <h:inputText id="test" value="#{poBean.purchaseOrder.poEntity.contactEntity}"/>
                             <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.poEntity.contactEntity}"
                                          rendered="#{poBean.beingViewed}"/>

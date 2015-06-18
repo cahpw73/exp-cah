@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -33,7 +34,10 @@ public class ContactConverter implements Converter {
         }
         try {
             Long id = Long.parseLong(value);
-            return contactService.findById(ContactEntity.class,id);
+            List<ContactEntity>contacts=contactService.findById(ContactEntity.class, id);
+            ContactEntity contactEntity= contacts.isEmpty()?null:contacts.get(0);
+            System.out.println(contactEntity);
+            return contactEntity;
         } catch (NumberFormatException nfe) {
             return null;
         }
@@ -43,9 +47,12 @@ public class ContactConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component,
                               Object value) {
         String string = null;
+        System.out.println("value "+value);
         if (value instanceof ContactEntity) {
             string = ((ContactEntity) value).getId().toString();
+
         }
+        System.out.println("value returned "+string);
         return string;
     }
 }
