@@ -33,6 +33,13 @@ public class ContactDao extends GenericDao<ContactEntity> implements Serializabl
         }
     }
 
+    public ContactEntity doSave(ContactEntity contactEntity,SupplierProcEntity supplierProcEntity){
+        contactEntity.setLastUpdate(new Date());
+        contactEntity.setSupplier(supplierProcEntity);
+        super.save(contactEntity);
+        return contactEntity;
+    }
+
     public void doUpdate(List<ContactEntity> contacts, SupplierProcEntity supplier) {
         List<ContactEntity> oldContacts = findByContactsBySupplier(supplier.getId());
         Date now = new Date();

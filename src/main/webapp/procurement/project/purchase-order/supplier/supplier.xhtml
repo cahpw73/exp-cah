@@ -185,10 +185,9 @@
                                                value="#{poBean.purchaseOrder.poEntity.supplier.contacts}"
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.fullName}"/>
-                                <p:ajax async="false" update="phoneSupId faxSupId test" process="contactDetail"/>
+                                <p:ajax async="false" update="phoneSupId faxSupId" process="contactDetail"/>
                             </h:selectOneMenu>
                             <p:message for="conactSupId"/>
-                            <h:inputText id="test" value="#{poBean.purchaseOrder.poEntity.contactEntity}"/>
                             <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.poEntity.contactEntity}"
                                          rendered="#{poBean.beingViewed}"/>

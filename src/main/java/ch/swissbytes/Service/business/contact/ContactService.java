@@ -34,11 +34,9 @@ public class ContactService extends Service<ContactEntity> implements Serializab
         dao.doSave(contacts, supplier);
     }
     @Transactional
-    public void doSave(ContactEntity contact, SupplierProcEntity supplier) {
-        List<ContactEntity>contacts=new ArrayList<>();
+    public ContactEntity doSave(ContactEntity contact, SupplierProcEntity supplier) {
         contact.setStatusEnum(StatusEnum.ENABLE);
-        contacts.add(contact);
-        dao.doSave(contacts,supplier);
+        return dao.doSave(contact,supplier);
     }
 
     @Transactional

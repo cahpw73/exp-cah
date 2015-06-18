@@ -90,9 +90,9 @@
             </div>
             <div class="row pull-right">
                 <h:commandButton value="#{msgs['lbl.save']}"
-                                 action="#{contactBean.doSave()}"
+                                 action="#{poBean.doSaveContact}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" process="editContact"/>
+                    <p:ajax async="false" update="editContact :editPoForm:conactSupId" process="editContact"/>
                 </h:commandButton>
                 &#160;
                 <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">

@@ -3,8 +3,12 @@ package ch.swissbytes.procurement.boundary.supplierProc;
 import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.domain.model.entities.ContactEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.procurement.boundary.BeanEditableList;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 
 import javax.faces.view.ViewScoped;
@@ -52,17 +56,27 @@ public class ContactBean extends BeanEditableList<ContactEntity> {
         this.contact = contact;
     }
 
-    public void doSave(){
+    public ContactEntity doSave(){
         SupplierProcEntity supplier=supplierService.findById(idSupplier);
         if(supplier!=null&&validate()) {
-            service.doSave(contact, supplier);
+            contact=service.doSave(contact, supplier);
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('contactModal').show();");
+            context.execute("PF('contactModal').hide();");
         }
+        return service.findById(contact.getId());
     }
 
     private boolean validate(){
-        return true;
+        boolean validated=true;
+        if(StringUtils.isEmpty(contact.getFirstName())||StringUtils.isBlank(contact.getFirstName())){
+            Messages.addFlashError("firstName","Enter valid first name");
+            validated=false;
+        }
+        if(StringUtils.isEmpty(contact.getSurName())||StringUtils.isBlank(contact.getSurName())){
+            Messages.addFlashError("name","Enter valid sur name");
+            validated=false;
+        }
+        return validated;
     }
 
 }

@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
+import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -54,6 +55,9 @@ public class PoBean extends Bean {
 
     @Inject
     private CashflowBean cashflowBean;
+
+    @Inject
+    private ContactBean contactBean;
 
     public void load(){
         if(projectId!=null){
@@ -214,6 +218,13 @@ public class PoBean extends Bean {
             }else if(deliverable.getRequiredDate()!=null){
                 updateNoDays(deliverable);
             }
+        }
+    }
+
+    public void doSaveContact(){
+        ContactEntity contact=contactBean.doSave();
+        if(contact!=null){
+            purchaseOrder.getPoEntity().setContactEntity(contact);
         }
     }
 }
