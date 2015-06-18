@@ -29,7 +29,7 @@ public abstract class ReportView implements Serializable {
 
     private final Map<String, Object> parameters = new HashMap<String, Object>();
 
-    private final String DATA_SOURCE="java:/fqm/fqmesDS";
+    private final String DATA_SOURCE="java:/fqm/procurementDS";
 
     /***
      *
@@ -41,7 +41,7 @@ public abstract class ReportView implements Serializable {
     public ReportView( final String filenameJasper, final String reportNameMsgKey, final Map<String, String> messages, final Locale locale) {
         this.messages = messages;
         this.filenameJasper = filenameJasper;
-        this.reportName = new StringBuilder("reports.pallet");
+        this.reportName = new StringBuilder(reportNameMsgKey);
         parameters.put(JRParameter.REPORT_LOCALE, locale);
     }
 

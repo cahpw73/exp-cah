@@ -201,6 +201,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findPOByProject(projectId);
     }
 
+    public List<PurchaseOrderEntity> purchaseListByProjectIdAnPoNo(final Long projectId, final String poNo){
+        return dao.findPOByProjectIdAndPoNo(projectId,poNo);
+    }
+
 
     @Transactional
     public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){

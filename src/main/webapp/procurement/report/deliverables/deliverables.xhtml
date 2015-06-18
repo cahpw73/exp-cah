@@ -35,7 +35,7 @@
                                                            var="_p"
                                                            itemValue="#{_p}"
                                                            itemLabel="#{_p.title}"/>
-                                            <p:ajax async="false" process="@this" event="change" update="deliverablesTblId"
+                                            <p:ajax async="false" process="@this" event="change" update="deliverablesTblId printBtnId"
                                                     listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
                                         </h:selectOneMenu>
 
@@ -61,11 +61,10 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h:commandButton type="button"
-                                                         styleClass="btn btn-primary btn-sm"
-                                                         value="#{msgs['lbl.print']}">
-                                            <p:ajax async="false"/>
-                                        </h:commandButton>
+                                        <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
+                                                       value="#{msgs['lbl.print']}"
+                                                       action="#{reportDeliverableBean.printReportDeliverables}"
+                                                       target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
                                     </div>
                                 </div>
                             </div>
