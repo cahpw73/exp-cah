@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,9 @@ public class ReportDeliverableBean implements Serializable {
     @Inject
     private DeliverableDao deliverableDao;
 
+    @Inject
+    private ReportProcBean reportProcBean;
+
     private List<ProjectEntity> projectList;
 
     private List<PurchaseOrderEntity> purchaseOrderList;
@@ -66,44 +70,34 @@ public class ReportDeliverableBean implements Serializable {
     public void loadProjects(){
         log.info("loading projects");
         projectList = projectService.findAllProjects();
-        log.info("finalize load");
     }
 
     public void searchPurchaseOrder(){
         log.info("searching purchase order");
-        purchaseOrderList = purchaseOrderService.purchaseListByProject(selectedProject.getId());
-        for(PurchaseOrderEntity p : purchaseOrderList){
-            p.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(p.getPoEntity().getId()));
-        }
-        for(PurchaseOrderEntity p : purchaseOrderList){
-            for(DeliverableEntity d : p.getPoEntity().getDeliverables()){
-                DeliverableDto dto = new DeliverableDto();
-                dto.setPoNo(p.getPoEntity().getOrderNumber());
-                dto.setVarNo(p.getPoEntity().getVarNumber());
-                dto.setPoDescription(p.getPoEntity().getDeliveryInstruction());
-                dto.setDescription(d.getDescription());
-                dto.setDelNo("");
-                dto.setQty(d.getQuantity().toString());
-                dto.setRequiredDate(d.getRequiredDate());
-                dto.setForecastDate(new Date());
-                dto.setReceivedDate(new Date());
-                deliverableDtoList.add(dto);
-            }
-        }
+        loadDeliverablesDtoList(selectedProject.getId(),null);
     }
 
     public void filterDeliverableDtoListByPoNo(){
-        log.info("filtering deliverables");
-        if(StringUtils.isNotEmpty(termsPoNo) && StringUtils.isNotBlank(termsPoNo)){
-            List<DeliverableDto> deliverableDtos = new ArrayList<>();
-            for(DeliverableDto dto : deliverableDtoList){
-                if(dto.getPoNo().equalsIgnoreCase(termsPoNo.trim())){
-                    DeliverableDto deliverableDto = new DeliverableDto();
-                    deliverableDtos.add(deliverableDto);
-                }
+        log.info("filtering by project id and poNo");
+        loadDeliverablesDtoList(selectedProject.getId(),termsPoNo);
+    }
+
+    public void printReportDeliverables(){
+        reportProcBean.printReportDeliverables(deliverableDtoList,purchaseOrderList.get(0),selectedProject.getId());
+    }
+
+    private void loadDeliverablesDtoList(Long projectId, String poNo){
+        purchaseOrderList.clear();
+        purchaseOrderList = purchaseOrderService.purchaseListByProjectIdAnPoNo(projectId,poNo);
+        for(PurchaseOrderEntity p : purchaseOrderList){
+            p.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(p.getPoEntity().getId()));
+        }
+        deliverableDtoList.clear();
+        for(PurchaseOrderEntity p : purchaseOrderList){
+            for(DeliverableEntity d : p.getPoEntity().getDeliverables()){
+                DeliverableDto dto = new DeliverableDto(p,d);
+                deliverableDtoList.add(dto);
             }
-            deliverableDtoList.clear();
-            deliverableDtoList.addAll(deliverableDtos);
         }
     }
 

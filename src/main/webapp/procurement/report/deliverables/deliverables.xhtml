@@ -61,11 +61,10 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h:commandButton type="button"
-                                                         styleClass="btn btn-primary btn-sm"
-                                                         value="#{msgs['lbl.print']}">
-                                            <p:ajax async="false"/>
-                                        </h:commandButton>
+                                        <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                       value="#{msgs['lbl.print']}"
+                                                       action="#{reportDeliverableBean.printReportDeliverables}"
+                                                       target="_blank"/>
                                     </div>
                                 </div>
                             </div>

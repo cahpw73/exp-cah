@@ -1,5 +1,9 @@
 package ch.swissbytes.procurement.boundary.report.deliverable;
 
+import ch.swissbytes.domain.model.entities.DeliverableEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,6 +21,22 @@ public class DeliverableDto implements Serializable {
     private Date requiredDate;
     private Date forecastDate;
     private Date receivedDate;
+
+    public DeliverableDto() {
+
+    }
+
+    public DeliverableDto(PurchaseOrderEntity p, DeliverableEntity d) {
+        this.poNo = p.getPoEntity().getOrderNumber();
+        this.varNo = p.getPoEntity().getVarNumber();
+        this.poDescription = "";
+        this.delNo = d.getNoDays() != null ? d.getNoDays().toString() : "";
+        this.description = StringUtils.isNotEmpty(d.getDescription()) ? d.getDescription() : "";
+        this.qty = d.getQuantity() != null ? d.getQuantity().toString() : "";
+        this.requiredDate = d.getRequiredDate() != null ? d.getRequiredDate() : null;
+        this.forecastDate = null;
+        this.receivedDate = null;
+    }
 
     public String getPoNo() {
         return poNo;

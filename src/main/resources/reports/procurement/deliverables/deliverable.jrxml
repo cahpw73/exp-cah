@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deliverable" pageWidth="555" pageHeight="802" whenNoDataType="BlankPage" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d990b354-8e89-4c0e-9803-515c0cacbe77">
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="poIdFilter" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select p.order_number,p.var_number,d.no_days,d.description,d.quantity,d.required_date
+from deliverable d, p_order p
+where d.status = 0 and d.po_id = $P{poIdFilter}
+      and d.po_id = p.id]]>
+	</queryString>
+	<field name="order_number" class="java.lang.String"/>
+	<field name="var_number" class="java.lang.String"/>
+	<field name="no_days" class="java.lang.Integer"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="required_date" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="2" y="1" width="40" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="43" y="1" width="40" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{var_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="226" y="1" width="85" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="3da85bcf-02bf-4906-985c-d2c9551448e6" x="185" y="1" width="40" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_days}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="312" y="1" width="30" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="343" y="1" width="70" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{required_date}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4b32b627-4624-4b66-b2e5-36590ecc15c5" positionType="Float" x="0" y="14" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
