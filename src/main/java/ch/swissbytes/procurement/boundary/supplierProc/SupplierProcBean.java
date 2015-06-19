@@ -44,7 +44,6 @@ public class SupplierProcBean extends Bean implements Serializable {
     private boolean addingCategory = false;
     private boolean addingBrand = false;
     private boolean editing =false;
-    private boolean addingContact=false;
     private String mode;
 
 
@@ -124,13 +123,9 @@ public class SupplierProcBean extends Bean implements Serializable {
         categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
-    public void putModeContact(Long id){
-    }
-
     public void putModeSupplier() {
         addingCategory = false;
         addingBrand = false;
-        addingContact=false;
     }
 
     public void addCategoryBrand() {
@@ -144,10 +139,6 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
         addingCategory = addingBrand = false;
     }
-
-
-
-
 
     @PreDestroy
     public void destroy() {
@@ -177,14 +168,6 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public boolean isEditing() {
         return editing;
-    }
-
-    public boolean isAddingContact() {
-        return addingContact;
-    }
-
-    public void setAddingContact(boolean addingContact) {
-        this.addingContact = addingContact;
     }
 
     public String getMode() {

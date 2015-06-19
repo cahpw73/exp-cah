@@ -25,7 +25,9 @@
 
                     <p:column headerText="#{msgs['po.deliverables.column.Qty']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
-                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control"/>
+                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control">
+                            <p:ajax async="false" process="@this" event="change"/>
+                        </h:inputText>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.no.day']}">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.noDays}"/>
