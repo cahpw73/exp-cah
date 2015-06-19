@@ -278,9 +278,7 @@
                                        for="headerStatusId" value="#{msgs['po.header.lbl.status']}"/>
 
                         <h:inputText readonly="true" styleClass="form-control view-po"
-                                     value="#{poBean.poStatusProc()}" style="width: 200px; float: left;"/>
-
-
+                                     value="#{configuration.getPOProcStatus(poBean.purchaseOrder.poEntity.poProcStatus)}" style="width: 200px; float: left;"/>
                         <ui:remove>
                             <div style="width: 200px; float: left;">
                                 <h:selectOneMenu id="headerStatusId"
