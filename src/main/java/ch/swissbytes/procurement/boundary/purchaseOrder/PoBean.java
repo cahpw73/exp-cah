@@ -145,8 +145,9 @@ public class PoBean extends Bean {
 
     private boolean validate(){
         boolean validated=true;
-        if(service.isVarNumberUsed(purchaseOrder.getVariation(),purchaseOrder.getId())){
-            Messages.addFlashError("","variation number is already being used");
+        if(service.isVarNumberUsed(purchaseOrder.getVariation(),purchaseOrder.getPo(),purchaseOrder.getId())){
+            Messages.addFlashError("poVarNumber","variation number is already being used");
+            validated=false;
         }
         return validated;
     }

@@ -207,7 +207,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
-        purchaseOrderEntity.setPo(purchaseOrderEntity.getPoEntity().getOrderNumber());
+       //
         POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         //collectLists(po,purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
@@ -235,7 +235,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
-        purchaseOrderEntity.setPo(po.getOrderNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
         //requisition daos
@@ -291,8 +290,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findByProjectAndPo(projectId,poNo);
     }
 
-    public boolean isVarNumberUsed(String varNumber, Long id){
-        List<PurchaseOrderEntity> list=dao.findByVariation(varNumber, id);
+    public boolean isVarNumberUsed(String varNumber,String poNumber,Long id ){
+        List<PurchaseOrderEntity> list=dao.findByVariation(varNumber, poNumber,id);
         return !list.isEmpty();
     }
 }

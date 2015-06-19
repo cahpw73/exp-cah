@@ -149,17 +149,19 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-    public List<PurchaseOrderEntity> findByVariation(String variation, Long id){
+    public List<PurchaseOrderEntity> findByVariation(String variation, String poNumber,Long id){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND lower(po.variation)  = :VARIATION");
+        sb.append(" AND lower(po.po) = :PO_NUMBER ");
         sb.append(" AND NOT po.id = :ID ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("VARIATION", variation!=null?variation.trim().toLowerCase():"");
-        map.put("ID",id==null?0:id);
+        map.put("PO_NUMBER",poNumber==null?"":poNumber.trim().toLowerCase());
+        map.put("ID",id==null?"":id!=null?id:0);
         return super.findBy(sb.toString(), map);
     }
 }
