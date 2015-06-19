@@ -15,7 +15,7 @@ public class BeanEditableList<T> extends Bean {
 
     private Long temporaryId = -1L;
 
-    public BeanEditableList(){
+    public BeanEditableList() {
         super();
     }
 
@@ -27,7 +27,7 @@ public class BeanEditableList<T> extends Bean {
             putModeCreation();
             record.setStatusEnum(StatusEnum.ENABLE);
             record.startEditing();
-            list.add((T)record);
+            list.add((T) record);
         }
     }
 
@@ -37,7 +37,6 @@ public class BeanEditableList<T> extends Bean {
             RecordEditable record = find(id);
             if (record != null) {
                 putModeEdition();
-              //  record.setValueCloned(createNewInstance());
                 record.storeOldValue(record);
                 record.startEditing();
             }
@@ -48,7 +47,7 @@ public class BeanEditableList<T> extends Bean {
     private RecordEditable find(Long id) {
         RecordEditable recordEditable = null;
         for (T re : list) {
-            RecordEditable  r=(RecordEditable)re;
+            RecordEditable r = (RecordEditable) re;
             if (r.getId().longValue() == id.longValue()) {
                 recordEditable = r;
                 break;
@@ -56,13 +55,14 @@ public class BeanEditableList<T> extends Bean {
         }
         return recordEditable;
     }
+
     private Integer index(Long id) {
-        int index=-1;
-        int i=0;
+        int index = -1;
+        int i = 0;
         for (T re : list) {
-            RecordEditable  r=(RecordEditable)re;
+            RecordEditable r = (RecordEditable) re;
             if (r.getId().longValue() == id.longValue()) {
-                index=i;
+                index = i;
                 break;
             }
             i++;
@@ -84,17 +84,14 @@ public class BeanEditableList<T> extends Bean {
     }
 
     public void cancel(Long id) {
-        RecordEditable record = find(id);
-        if (record != null) {
+        int index = index(id);
+        if (index >= 0) {
             if (isBeingCreated()) {
-                list.remove(record);
+                list.remove(index);
             }
             if (isBeingUpdated()) {
-                T originalValue= (T) record.getValueCloned();
-                int index=index(id);
-                if(index>=0){
-                    list.set(index,originalValue);
-                }
+                T originalValue = (T) ((RecordEditable) list.get(index)).getValueCloned();
+                list.set(index, originalValue);
             }
         }
         putModeView();
@@ -112,7 +109,7 @@ public class BeanEditableList<T> extends Bean {
     public List<T> filteredList() {
         List<T> list = new ArrayList<>();
         for (T r : this.list) {
-            RecordEditable record=(RecordEditable)r;
+            RecordEditable record = (RecordEditable) r;
             if (record.getStatusEnum() != null && record.getStatusEnum().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
                 T object = (T) record;
                 list.add(object);
@@ -125,7 +122,7 @@ public class BeanEditableList<T> extends Bean {
     public Integer rowsBeingEdited() {
         Integer rows = 0;
         for (T r : list) {
-            RecordEditable record=(RecordEditable)r;
+            RecordEditable record = (RecordEditable) r;
             if (record.getIsEditable()) {
                 rows++;
             }
@@ -133,7 +130,7 @@ public class BeanEditableList<T> extends Bean {
         return rows;
     }
 
-    public List<T> getList(){
+    public List<T> getList() {
         return list;
     }
 }
