@@ -8,6 +8,8 @@ package ch.swissbytes.domain.model.entities;
 import ch.swissbytes.domain.interfaces.Record;
 import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -153,24 +155,7 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
         return firstName+" "+surName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        ContactEntity that = (ContactEntity) o;
-        if(that.id==null&&id!=null)return false;
-        if (id != null ? id.longValue()==that.id.longValue() : that.id != null) return false;
-       return true;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-
-        return result;
-    }
 
     @Override
     public String toString() {
@@ -178,5 +163,25 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
                 title + " : " +
                 firstName +" "+
                 surName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactEntity that = (ContactEntity) o;
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .toHashCode();
     }
 }
