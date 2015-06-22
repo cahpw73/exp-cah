@@ -211,6 +211,13 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = po;
     }
 
+    public boolean hasCurrentPOStatusFinal(){
+        if(currentPurchaseOrder != null && currentPurchaseOrder.getPoEntity()!=null){
+            return currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal();
+        }
+        return false;
+    }
+
     public void printPOFinal(){
         log.info("printing po final");
         currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
