@@ -99,8 +99,15 @@
                 </div>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog header="New Contact" widgetVar="contactModal" width="500">
+        <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
             <ui:include src="../../admin/supplier/components/contactEdit.xhtml"/>
+        </p:dialog>
+        <p:dialog header="New Supplier" widgetVar="supplierModal" resizable="false">
+            <h:form id="contactEditId" prependId="false">
+                    <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
+                        <ui:param name="MODE" value="PO"/>
+                    </ui:include>
+            </h:form>
         </p:dialog>
     </ui:define>
 </ui:composition>

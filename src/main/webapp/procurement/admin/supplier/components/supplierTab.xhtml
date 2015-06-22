@@ -4,8 +4,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
 
 
-    <div class="panel panel-default panel-tab">
-        <div class="procurement-panel-header">#{msgs['supplier.lbl.address']}</div>
+    <div class="#{MODE eq 'PO'?'':'panel panel-default panel-tab'}">
+        <div class="#{MODE eq 'PO'?'':'procurement-panel-header'}">#{msgs['supplier.lbl.address']}</div>
         <div class="panel-body">
             <div class="row">
                 <div class="form-group">
