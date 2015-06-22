@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
+import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -37,6 +38,9 @@ public class PoListBean implements Serializable {
 
     @Inject
     private SortBean sortBean;
+
+    @Inject
+    private ReportProcBean reportProcBean;
 
     private String projectId;
 
@@ -203,6 +207,27 @@ public class PoListBean implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public void loadCurrentPo(final PurchaseOrderEntity po){
+        log.info("loading current po");
+        currentPurchaseOrder = po;
+    }
+
+    public void printPOFinal(){
+        log.info("printing po final");
+        currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
+        currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+        printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus());
+    }
+
+    public void printPODraft(){
+        log.info("printing po draft");
+        printPo(null);
+    }
+
+    private void printPo(POStatusEnum poStatusEnum){
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder);
     }
 
     public List<PurchaseOrderEntity> getList() {

@@ -49,16 +49,19 @@
                                     <f:param name="modeView" value="true"/>
                                 </h:link>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.print.po']}" outcome="edit"
-                                        rendered="#{poListBean.actionPrintPOO(_p)}"
-                                        style="float: left!important; color: #428BCA; margin-right:5px;">
-                                </h:link>
+                                <p:commandLink value="#{msgs['project.list.action.print.po']}"
+                                               action="#{poListBean.loadCurrentPo(_p)}"
+                                               rendered="#{poListBean.actionPrintPOO(_p)}"
+                                               oncomplete="PF('printPoDlg').show();"
+                                               update=":printPoGroupId" async="false"
+                                               style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
+                                </p:commandLink>
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.variation']}"
                                                rendered="#{poListBean.actionVarationPOO(_p)}"
                                                oncomplete="PF('variationModal').show();"
                                                action="#{poListBean.createVarNumberToPO(_p)}"
-                                               update=":variationGroupId"
+                                               update=":variationGroupId" async="false"
                                                style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                                 </p:commandLink>
                                 &#160;
@@ -122,24 +125,66 @@
                         <br/>
 
                         <div class="form-group">
-                                <div class="pull-right" style="margin-right: 60px!important;">
-                                    <h:commandButton value="#{msgs['lbl.accept']}" styleClass="btn btn-primary btn-sm"
-                                                     action="#{poListBean.doSavePOO}">
-                                        <p:ajax onsuccess="PF('variationModal').hide();"
-                                                process="variationGroupId"
-                                                update=":listPooFormId:projectListId"/>
-                                    </h:commandButton>
-                                    &#160;
-                                    <button class="btn btn-primary btn-sm" type="button"
-                                            onclick="PF('variationModal').hide();">
-                                        #{msgs['lbl.cancel']}</button>
+                            <div class="pull-right" style="margin-right: 60px!important;">
+                                <h:commandButton value="#{msgs['lbl.accept']}" styleClass="btn btn-primary btn-sm"
+                                                 action="#{poListBean.doSavePOO}">
+                                    <p:ajax onsuccess="PF('variationModal').hide();"
+                                            process="variationGroupId"
+                                            update=":listPooFormId:projectListId"/>
+                                </h:commandButton>
+                                &#160;
+                                <button class="btn btn-primary btn-sm" type="button"
+                                        onclick="PF('variationModal').hide();">
+                                    #{msgs['lbl.cancel']}</button>
 
-                                </div>
+                            </div>
                         </div>
                         <br/>
                     </div>
                 </div>
             </h:panelGroup>
+        </p:dialog>
+        <!--Dialog for print Po-->
+        <p:dialog id="printPoModalId" header="Print Purchase Order" widgetVar="printPoDlg"
+                  resizable="false">
+
+                <h:panelGroup id="printPoGroupId">
+                    <div class="col-md-12">
+                        <div style="width: 340px!important; float: left!important;">
+                            <div class="form-group">
+                                <h:outputText styleClass="col-sm-8 control-label"
+                                              style="text-align: left !important;direction: ltr !important;"
+                                              for="poVarNumberVi"
+                                              value="#{msgs['project.list.lbl.msg.conf.print.po']}"/>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br/>
+
+                            <div class="form-group">
+                                <div class="pull-left">
+                                    <h:form>
+                                    <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['project.list.lbl.btn.print.po.final']}"
+                                                   action="#{poListBean.printPOFinal}"
+                                                   target="_blank"/>
+                                    &#160;
+                                    <h:commandLink id="printDraftlBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['project.list.lbl.btn.print.po.draft']}"
+                                                   action="#{poListBean.printPODraft}"
+                                                   target="_blank"/>
+
+                                    &#160;
+                                    <button class="btn btn-primary btn-sm" type="button"
+                                            onclick="PF('printPoDlg').hide();">
+                                        #{msgs['lbl.cancel']}</button>
+                                    </h:form>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </h:panelGroup>
+
         </p:dialog>
     </ui:define>
 </ui:composition>
