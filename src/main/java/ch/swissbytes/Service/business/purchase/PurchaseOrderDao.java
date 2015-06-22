@@ -161,7 +161,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("VARIATION", variation!=null?variation.trim().toLowerCase():"");
         map.put("PO_NUMBER",poNumber==null?"":poNumber.trim().toLowerCase());
-        map.put("ID",id==null?"":id!=null?id:0);
+        map.put("ID",id==null?-1L:id);
         return super.findBy(sb.toString(), map);
     }
 }

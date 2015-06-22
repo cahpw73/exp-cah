@@ -35,7 +35,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="500" splitType="Stretch"/>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
@@ -232,6 +232,10 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{deliveryDate}.getTime())):null]]></textFieldExpression>
 			</textField>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" x="2" y="3" width="100" height="69"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
