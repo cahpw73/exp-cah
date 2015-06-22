@@ -5,13 +5,13 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
-import org.apache.commons.lang.StringUtils;
+import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import org.apache.commons.lang.time.DateUtils;
+import org.omnifaces.util.Messages;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -54,6 +54,9 @@ public class PoBean extends Bean {
 
     @Inject
     private CashflowBean cashflowBean;
+
+    @Inject
+    private ContactBean contactBean;
 
     public void load(){
         if(projectId!=null){
@@ -107,30 +110,47 @@ public class PoBean extends Bean {
 
     public String doSave(){
         log.info("trying to save purchase order on procurement module");
-        collectData();
-        purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
-        purchaseOrder=service.savePOOnProcurement(purchaseOrder);
-        log.info("purchase order created ["+purchaseOrder.getId()+"]");
-        return backToList();
+        if(validate()) {
+            collectData();
+            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder = service.savePOOnProcurement(purchaseOrder);
+            log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            return backToList();
+        }
+        return "";
     }
 
     public String doUpdate() {
         log.info("trying to update purchase order on procurement module");
-        collectData();
-        purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
-        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
-        log.info("purchase order updated [" + purchaseOrder.getId()+"]");
-        return backToList();
+        if(validate()) {
+            collectData();
+            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
+            log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+            return backToList();
+        }
+        return "";
     }
 
     public String doSaveView(){
         log.info("trying to saveView purchase order on procurement module");
-        collectData();
-        purchaseOrder=service.savePOOnProcurement(purchaseOrder);
-        log.info("purchase order created ["+purchaseOrder.getId()+"]");
-        return backToList();
+        if(validate()) {
+            collectData();
+            purchaseOrder = service.savePOOnProcurement(purchaseOrder);
+            log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            return backToList();
+        }
+        return "";
     }
 
+    private boolean validate(){
+        boolean validated=true;
+        if(service.isVarNumberUsed(purchaseOrder.getVariation(),purchaseOrder.getPo(),purchaseOrder.getId())){
+            Messages.addFlashError("poVarNumber","variation number is already being used");
+            validated=false;
+        }
+        return validated;
+    }
     public String doUpdateView(){
         log.info("trying to updateView purchase order on procurement module");
         collectData();
@@ -214,6 +234,13 @@ public class PoBean extends Bean {
             }else if(deliverable.getRequiredDate()!=null){
                 updateNoDays(deliverable);
             }
+        }
+    }
+
+    public void doSaveContact(){
+        ContactEntity contact=contactBean.doSave();
+        if(contact!=null){
+            purchaseOrder.getPoEntity().setContactEntity(contact);
         }
     }
 }

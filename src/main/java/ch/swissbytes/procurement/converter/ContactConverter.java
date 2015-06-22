@@ -1,9 +1,7 @@
 package ch.swissbytes.procurement.converter;
 
-
 import ch.swissbytes.Service.business.contact.ContactService;
-import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
-import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import ch.swissbytes.domain.model.entities.ContactEntity;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,13 +13,12 @@ import java.util.logging.Logger;
 /**
  * Created by Christian on 13/01/15.
  */
-@FacesConverter("supplierConverter")
-public class SupplierConverter implements Converter {
+@FacesConverter("contactConverter")
+public class ContactConverter implements Converter {
 
-    public static final Logger log = Logger.getLogger(SupplierConverter.class.getName());
+    public static final Logger log = Logger.getLogger(ContactConverter.class.getName());
 
-    @Inject
-    private SupplierProcService service;
+
 
     @Inject
     private ContactService contactService;
@@ -34,11 +31,9 @@ public class SupplierConverter implements Converter {
         }
         try {
             Long id = Long.parseLong(value);
-            SupplierProcEntity supplier=service.findById(id);
-            if(supplier!=null) {
-                supplier.getContacts().addAll(contactService.findByContactsBySupplier(supplier.getId()));
-            }
-            return supplier;
+            ContactEntity contactEntity= contactService.findById( id);
+            System.out.println(contactEntity);
+            return contactEntity;
         } catch (NumberFormatException nfe) {
             return null;
         }
@@ -48,9 +43,12 @@ public class SupplierConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component,
                               Object value) {
         String string = null;
-        if (value instanceof SupplierProcEntity) {
-            string = ((SupplierProcEntity) value).getId().toString();
+        System.out.println("value "+value);
+        if (value instanceof ContactEntity) {
+            string = ((ContactEntity) value).getId().toString();
+
         }
+        System.out.println("value returned "+string);
         return string;
     }
 }

@@ -6,7 +6,6 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +14,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -98,11 +96,10 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = entity;
         pOrderList = service.findByProjectIdAndPo(project.getId(),entity.getPo());
         sortBean.sortPurchaseOrderEntity(pOrderList);
-        String lastVarNumber = pOrderList.get(pOrderList.size()-1).getPoEntity().getVarNumber();
+        String lastVarNumber = pOrderList.get(pOrderList.size()-1).getVariation();
         generateVariationNumber(lastVarNumber);
-        purchaseOrderToVariation = service.findById(entity.getPoEntity().getId());
+        purchaseOrderToVariation = service.findById(entity.getId());
         prepareToSaveWithNewVariation(purchaseOrderToVariation);
-        log.info("algo");
 
     }
 
@@ -110,7 +107,7 @@ public class PoListBean implements Serializable {
         purchaseOrderToVariation.setId(null);
         purchaseOrderToVariation.getPoEntity().setId(null);
         purchaseOrderToVariation.getPoEntity().setPoProcStatus(POStatusEnum.READY);
-        purchaseOrderToVariation.getPoEntity().setVarNumber(newVariationNumber);
+        purchaseOrderToVariation.setVariation(newVariationNumber);
         purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
         purchaseOrderToVariation.getPoEntity().getCashflow().setId(null);
         for(CashflowDetailEntity entity : purchaseOrderToVariation.getPoEntity().getCashflow().getCashflowDetailList()){

@@ -149,7 +149,12 @@
                                            action="#{itemBean.confirmItem(_i)}" update="itemsDt" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}" process="@this"
-                                           action="#{itemBean.deleteItem(_i)}" update="itemsDt" async="false"/>
+                                           action="#{itemBean.deleteItem(_i)}" update="itemsDt" async="false">
+                                <p:confirm header="Remove item"
+                                           message="Are you sure to delete this item"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_i.isEditable}" process="@this"
                                            action="#{itemBean.cancelEditionItem(_i)}" update="itemsDt" async="false"/>
                         </p:column>

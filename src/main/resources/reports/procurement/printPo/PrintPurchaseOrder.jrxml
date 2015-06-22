@@ -42,10 +42,6 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 	</title>
 	<pageHeader>
 		<band height="214" splitType="Stretch">
-			<image scaleImage="FillFrame" evaluationTime="Report">
-				<reportElement uuid="53ebf378-c958-41fa-8b89-bf7bfc03beaf" x="0" y="0" width="93" height="72" isRemoveLineWhenBlank="true"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
-			</image>
 			<line>
 				<reportElement uuid="104c421e-90f8-4d59-b5c9-b27e3079e11b" x="0" y="78" width="555" height="1" isRemoveLineWhenBlank="true"/>
 			</line>

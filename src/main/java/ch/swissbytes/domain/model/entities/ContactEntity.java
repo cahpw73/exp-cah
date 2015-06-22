@@ -148,6 +148,11 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
         this.supplier = supplier;
     }
 
+    @Transient
+    public String getFullName(){
+        return firstName+" "+surName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -167,4 +172,11 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
         return result;
     }
 
+    @Override
+    public String toString() {
+        return
+                title + " : " +
+                firstName +" "+
+                surName;
+    }
 }

@@ -72,10 +72,14 @@
                     <p:ajax process="@this" update=":textSnippetDlg"/>
                 </h:commandLink>
                 <br/>
-                <h:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
+                <p:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
+                                 update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"
                                  styleClass="btn btn-primary btn-sm" style="margin-top: 20px!important;">
-                    <p:ajax async="false" update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"/>
-                </h:commandButton>
+                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                               message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                               icon="ui-icon-alert">
+                    </p:confirm>
+                </p:commandButton>
             </h:panelGroup>
         </div>
         <h:panelGroup id="bbtnt" rendered="#{poBean.beingEdited}">

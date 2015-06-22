@@ -13,44 +13,55 @@
 
                 <div style="width: 667px; float: left; margin-left:-32px!important;">
                     <h:panelGroup id="requisitionsGroup">
-                    <p:dataTable id="requisitionDt" var="_req"
-                                 value="#{requisitionBean.filteredList()}">
-                        <p:column headerText="#{msgs['po.header.column.req.no']}">
-                            <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
-                            <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
-                                         required="true"
-                                         styleClass="form-control"/>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.header.column.originator']}">
-                            <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>
-                            <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}" styleClass="form-control"/>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.header.column.req.date']}">
-                            <h:outputText rendered="#{not _req.isEditable}" value="#{util.toLocal(_req.requisitionDate)}"/>
-                            <p:calendar id="poOrderDate" type="text" styleClass="calendar"
-                                        navigator="true" mask="#{configuration.mask}"
-                                        rendered="#{_req.isEditable}"
-                                        pattern="#{configuration.formatDate}"
-                                        converter="#{dateConverter}"
-                                        jsf:placeholder="#{configuration.formatDate}"
-                                        converterMessage="#{msgs['validator.date.invalid']}"
-                                        value="#{_req.requisitionDate}"
-                                        timeZone="#{configuration.timeZone}"
-                                        onselect="calendarChanges();" onchange="calendarChanges();">
-                            </p:calendar>
-                        </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
-                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_req.isEditable}" process="@this"
-                            action="#{requisitionBean.edit(_req.id)}" update="requisitionDt"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_req.isEditable}" process=":editPoForm:requisitionsGroup"
-                                           action="#{requisitionBean.confirm(_req.id)}" update="requisitionDt"/>
-                            &#160;
-                            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_req.isEditable}" process="@this"
-                                           action="#{requisitionBean.delete(_req.id)}" update="requisitionDt"/>
-                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_req.isEditable}" process="@this"
-                                           action="#{requisitionBean.cancel(_req.id)}" update="requisitionDt"/>
-                        </p:column>
-                    </p:dataTable>
+                        <p:dataTable id="requisitionDt" var="_req"
+                                     value="#{requisitionBean.filteredList()}">
+                            <p:column headerText="#{msgs['po.header.column.req.no']}">
+                                <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
+                                <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
+                                             required="true"
+                                             styleClass="form-control"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.header.column.originator']}">
+                                <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>
+                                <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}"
+                                             styleClass="form-control"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.header.column.req.date']}">
+                                <h:outputText rendered="#{not _req.isEditable}"
+                                              value="#{util.toLocal(_req.requisitionDate)}"/>
+                                <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                            navigator="true" mask="#{configuration.mask}"
+                                            rendered="#{_req.isEditable}"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            jsf:placeholder="#{configuration.formatDate}"
+                                            converterMessage="#{msgs['validator.date.invalid']}"
+                                            value="#{_req.requisitionDate}"
+                                            timeZone="#{configuration.timeZone}"
+                                            onselect="calendarChanges();" onchange="calendarChanges();">
+                                </p:calendar>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
+                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_req.isEditable}"
+                                               process="@this"
+                                               action="#{requisitionBean.edit(_req.id)}" update="requisitionDt"/>
+                                <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_req.isEditable}"
+                                               process=":editPoForm:requisitionsGroup"
+                                               action="#{requisitionBean.confirm(_req.id)}" update="requisitionDt"/>
+                                &#160;
+                                <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_req.isEditable}"
+                                               process="@this"
+                                               action="#{requisitionBean.delete(_req.id)}" update="requisitionDt">
+                                    <p:confirm header="Remove Requisition"
+                                               message="Are you sure to delete this Requisition"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
+                                <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_req.isEditable}"
+                                               process="@this"
+                                               action="#{requisitionBean.cancel(_req.id)}" update="requisitionDt"/>
+                            </p:column>
+                        </p:dataTable>
                     </h:panelGroup>
                 </div>
             </div>
@@ -156,7 +167,8 @@
                                 <h:inputText id="headerDateVi" readonly="true" styleClass="form-control view-po"
                                              value="#{poBean.purchaseOrder.poDeliveryDate}"
                                              rendered="#{poBean.beingViewed}">
-                                    <f:convertDateTime timeZone="#{configuration.timeZone}" pattern="#{configuration.formatDate}"/>
+                                    <f:convertDateTime timeZone="#{configuration.timeZone}"
+                                                       pattern="#{configuration.formatDate}"/>
                                 </h:inputText>
                             </div>
                         </div>
@@ -239,7 +251,9 @@
                                        for="conversionRateId" value="Conversation Rate"/>
 
                         <div style="width: 145px; float: left;">
-                            <h:outputText id="conversionRateId" value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"  styleClass="form-control"
+                            <h:outputText id="conversionRateId"
+                                          value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"
+                                          styleClass="form-control"
                                           style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none"/>
                         </div>
                     </div>
@@ -263,25 +277,25 @@
                         <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                        for="headerStatusId" value="#{msgs['po.header.lbl.status']}"/>
 
-                        <h:inputText  readonly="true" styleClass="form-control view-po"
+                        <h:inputText readonly="true" styleClass="form-control view-po"
                                      value="#{poBean.poStatusProc()}" style="width: 200px; float: left;"/>
 
 
-                    <ui:remove>
-                        <div style="width: 200px; float: left;">
-                            <h:selectOneMenu id="headerStatusId"
-                                             value="#{poBean.purchaseOrder.poEntity.poProcStatus}"
-                                             styleClass="form-control">
-                                <f:selectItem
-                                        itemLabel="Select one"
-                                        noSelectionOption="true"/>
-                                <f:selectItems value="#{procPoStatuses}"
-                                               var="_st"
-                                               itemValue="#{_st}"
-                                               itemLabel="#{configuration.getMessage(_st.name)}"/>
-                            </h:selectOneMenu>
-                        </div>
-                    </ui:remove>
+                        <ui:remove>
+                            <div style="width: 200px; float: left;">
+                                <h:selectOneMenu id="headerStatusId"
+                                                 value="#{poBean.purchaseOrder.poEntity.poProcStatus}"
+                                                 styleClass="form-control">
+                                    <f:selectItem
+                                            itemLabel="Select one"
+                                            noSelectionOption="true"/>
+                                    <f:selectItems value="#{procPoStatuses}"
+                                                   var="_st"
+                                                   itemValue="#{_st}"
+                                                   itemLabel="#{configuration.getMessage(_st.name)}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </ui:remove>
                     </div>
                 </div>
                 <div style="width: 280px!important; float: left!important; margin-left: 25px;">
