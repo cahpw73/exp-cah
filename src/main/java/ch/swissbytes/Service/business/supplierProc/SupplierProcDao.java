@@ -90,4 +90,35 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
     }
+
+    public List<String>findCountriesByCategory(final Long categoryId){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT sc.supplier.country ");
+        sb.append(" FROM SupplierCategory sc ");
+        sb.append(" WHERE sc.status = :ENABLE ");
+        sb.append(" AND sc.category.id = :CATEGORY_ID ");
+        sb.append(" AND sc.supplier.country IS NOT NULL ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("CATEGORY_ID",categoryId!=null?categoryId:0);
+        return super.findBy(sb.toString(),params);
+    }
+
+    public List<String> findSupplierByCountriesAndCategory(final Long categoryId,List<String> countries){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT sc.supplier ");
+        sb.append(" FROM SupplierCategory sc ");
+        sb.append(" WHERE sc.status = :ENABLE ");
+        sb.append(" AND sc.category.id = :CATEGORY_ID ");
+        if(countries!=null &&!countries.isEmpty()){
+            sb.append(" sc.supplier.country IN (:COUNTRIES)");
+        }
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("CATEGORY_ID",categoryId!=null?categoryId:0);
+        if(countries!=null &&!countries.isEmpty()){
+            params.put("COUNTRIES",countries);
+        }
+        return super.findBy(sb.toString(),params);
+    }
 }

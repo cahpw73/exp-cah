@@ -1,10 +1,18 @@
 package ch.swissbytes.procurement.boundary.report.bidList;
 
+import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
+import ch.swissbytes.domain.model.entities.CategoryEntity;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,11 +25,21 @@ public class BidListBean implements Serializable {
 
     public static final Logger log = Logger.getLogger(BidListBean.class.getName());
 
-    private Long projectId;
+    private ProjectEntity project;
+
+    private List<String> countries;
+    private List<String>countriesSelected;
+
+    @Inject
+    private SupplierProcService supplierService;
+
+    private boolean categorySelection=true;
 
     @PostConstruct
     public void create(){
         log.log(Level.FINE,"creating bidListBean");
+        countries=new ArrayList<>();
+        countriesSelected=new ArrayList<>();
     }
 
     @PreDestroy
@@ -29,4 +47,38 @@ public class BidListBean implements Serializable {
         log.log(Level.FINE,"destroying bidListBean");
     }
 
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public List<String> findCountriesByCategory(CategoryEntity categoryEntity){
+        if(categoryEntity!=null){
+           countries= supplierService.findCountriesByCategory(categoryEntity.getId());
+        }
+        Collections.sort(countriesSelected);
+        return countries;
+    }
+
+    public void selectCountry(String country){
+        if(!countriesSelected.contains(country)){
+            countriesSelected.add(country);
+        }else{
+            countriesSelected.remove(country);
+        }
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
+    }
+
+    public boolean isCategorySelection() {
+        return categorySelection;
+    }
+
+    public void putModeCategory(){
+        categorySelection=true;
+    }
+    public void putModeSupplier(){
+        categorySelection=false;
+    }
 }
