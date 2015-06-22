@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.purchase;
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.comment.CommentDao;
+import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
@@ -70,6 +71,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ProjectTextSnippetService projectTextSnippetService;
+
+    @Inject
+    private ContactService contactService;
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -272,6 +276,9 @@ public class PurchaseOrderService extends Service implements Serializable {
     public PurchaseOrderEntity findById(Long id){
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
+        if(po.getPoEntity().getSupplier()!=null){
+            po.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPoEntity().getSupplier().getId()));
+        }
         if(po!= null) {
             po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
             po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));

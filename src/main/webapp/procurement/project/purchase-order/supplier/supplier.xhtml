@@ -30,7 +30,7 @@
                                                        var="_s"
                                                        itemValue="#{_s}"
                                                        itemLabel="#{_s.company}"/>
-                                        <p:ajax async="false" update="supplierDetail conactSupId"
+                                        <p:ajax async="false" update="supplierDetail conactSupId btnAddContact"
                                                 process="@this"/>
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
@@ -197,6 +197,7 @@
                 <div style="width: 290px!important; float: left!important; margin-left: -13px">
                     <div class="form-group">
                         <h:commandButton
+                                id="btnAddContact"
                                 value="#{msgs['po.supplier.lbl.btn.add.contact']}"
                                 disabled="#{poBean.purchaseOrder.poEntity.supplier==null}"
                                 action="#{contactBean.start(poBean.purchaseOrder.poEntity.supplier.id)}"
