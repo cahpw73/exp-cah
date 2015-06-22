@@ -18,7 +18,7 @@
                         <div class="left-inner-addon">
                             <i class="fa fa-search fa-lg"></i>
                             <h:inputText id="searchTermId" styleClass="form-control input-search"
-                                         value="#{projectsBean.searchTerm}"
+                                         value="#{projectListBean.searchTerm}"
                                          jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
                             </h:inputText>
                         </div>
@@ -27,12 +27,12 @@
                         <div>
                             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
                                 <p:ajax process="@this,searchTermId" update="projectListId"
-                                        listener="#{projectsBean.doSearch}"/>
+                                        listener="#{projectListBean.doSearch}"/>
                             </h:commandButton>
                             &#160;
                             <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm">
                                 <p:ajax process="@this,searchTermId" update="projectListId,searchTermId"
-                                        listener="#{projectsBean.doClean}"/>
+                                        listener="#{projectListBean.doClean}"/>
                             </h:commandButton>
                         </div>
                     </div>
@@ -46,9 +46,9 @@
                         </div>
                     </div>
                 </div>
-                <p:dataTable id="projectListId" value="#{projectsBean.projectList}" var="_p"
+                <p:dataTable id="projectListId" value="#{projectListBean.projectList}" var="_p"
                              paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
-                             rowsPerPageTemplate="#{configuration.getPagesSize(projectsBean.projectList.size())}"
+                             rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}"
                              paginatorPosition="bottom">
                     <p:column headerText="#{msgs['project.list.column.number']}" width="100">
                         #{_p.projectNumber}

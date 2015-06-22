@@ -75,7 +75,7 @@
                         <div>
                             <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
                                          rows="#{configuration.defaultPageSize}" lazy="true"
-                                         rowsPerPageTemplate="#{configuration.getPagesSize(projectsBean.projectList.size())}">
+                                         rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}">
                                 <p:column headerText="#{msgs['report.deliverables.column.po.no']}" width="50">
                                     #{_l.poNo}
                                 </p:column>

@@ -263,7 +263,7 @@
                                     <div class="left-inner-addon">
                                         <i class="fa fa-search fa-lg"></i>
                                         <h:inputText id="searchTermId" styleClass="form-control input-search"
-                                                     value="#{projectsBean.searchTerm}"
+                                                     value="#{projectListBean.searchTerm}"
                                                      jsf:placeholder="#{msgs['project.standard.text.lbl.search.global.text']}"
                                                      type="search" maxlength="250"/>
                                     </div>
@@ -271,7 +271,7 @@
                                 <div class="col-sm-3">
                                     <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
                                         <p:ajax process="@this"
-                                                listener="#{projectsBean.doSearch}"/>
+                                                listener="#{projectListBean.doSearch}"/>
                                     </h:commandButton>
                                 </div>
                             </div>

@@ -1,15 +1,7 @@
 package ch.swissbytes.procurement.boundary.project;
 
-import ch.swissbytes.Service.business.enumService.EnumService;
-import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
 import ch.swissbytes.Service.business.project.ProjectService;
-import ch.swissbytes.Service.business.user.UserService;
-import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.ModuleSystemEnum;
-import ch.swissbytes.domain.types.RoleEnum;
-import ch.swissbytes.domain.types.StatusEnum;
-import ch.swissbytes.fqmes.boundary.user.VerificationTokenBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -26,9 +18,9 @@ import java.util.logging.Logger;
  */
 @Named
 @ViewScoped
-public class ProjectsBean implements Serializable {
+public class ProjectListBean implements Serializable {
 
-    public static final Logger log = Logger.getLogger(ProjectsBean.class.getName());
+    public static final Logger log = Logger.getLogger(ProjectListBean.class.getName());
 
     @Inject
     private ProjectService projectService;
