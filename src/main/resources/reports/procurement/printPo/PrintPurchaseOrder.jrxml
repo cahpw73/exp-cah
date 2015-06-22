@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -13,11 +13,13 @@
 	<parameter name="phone" class="java.lang.String"/>
 	<parameter name="fax" class="java.lang.String"/>
 	<parameter name="PoNo" class="java.lang.String"/>
-	<parameter name="orderDate" class="java.lang.String"/>
-	<parameter name="deliveryDate" class="java.lang.String"/>
+	<parameter name="orderDate" class="java.util.Date"/>
+	<parameter name="deliveryDate" class="java.util.Date"/>
 	<parameter name="deliveryPoint" class="java.lang.String"/>
 	<parameter name="deliveryInstructions" class="java.lang.String"/>
 	<parameter name="lastPage" class="java.lang.Integer"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ss.code, ss.quantity, ss.unit, ss.description, ss.cost, ss.total_cost
 from scope_supply ss
@@ -33,16 +35,13 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="500" splitType="Stretch"/>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band height="214" splitType="Stretch">
-			<image evaluationTime="Report">
-				<reportElement uuid="53ebf378-c958-41fa-8b89-bf7bfc03beaf" x="0" y="0" width="93" height="72" isRemoveLineWhenBlank="true"/>
-			</image>
 			<line>
 				<reportElement uuid="104c421e-90f8-4d59-b5c9-b27e3079e11b" x="0" y="78" width="555" height="1" isRemoveLineWhenBlank="true"/>
 			</line>
@@ -170,7 +169,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{orderDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{orderDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{orderDate}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="518d82ec-737e-47d8-9bbc-348bc8e543ab" x="381" y="37" width="28" height="17" isRemoveLineWhenBlank="true"/>
@@ -231,8 +230,12 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{deliveryDate}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{deliveryDate}.getTime())):null]]></textFieldExpression>
 			</textField>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" x="2" y="3" width="100" height="69"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -370,7 +373,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="4" splitType="Stretch">
+		<band height="6" splitType="Stretch">
 			<line>
 				<reportElement uuid="660c7f6f-4433-4cf9-983b-bd5659decf0b" x="0" y="1" width="555" height="1"/>
 			</line>
