@@ -31,7 +31,7 @@ public class ContactConverter implements Converter {
         }
         try {
             Long id = Long.parseLong(value);
-            ContactEntity contactEntity= contactService.findById( id);
+            ContactEntity contactEntity= contactService.findById(id);
             System.out.println(contactEntity);
             return contactEntity;
         } catch (NumberFormatException nfe) {

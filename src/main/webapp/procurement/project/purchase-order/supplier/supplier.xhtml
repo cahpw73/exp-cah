@@ -30,7 +30,7 @@
                                                        var="_s"
                                                        itemValue="#{_s}"
                                                        itemLabel="#{_s.company}"/>
-                                        <p:ajax async="false" update="supplierDetail conactSupId"
+                                        <p:ajax async="false" update="supplierDetail conactSupId btnAddContact"
                                                 process="@this"/>
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
@@ -139,9 +139,10 @@
                             <div class="form-group">
                                 <h:commandButton
                                         value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
-                                        action="#{projectBean.addCurrency}"
+                                        onclick="PF('supplierModal').show();"
                                         styleClass="btn btn-primary btn-sm"
                                         rendered="#{poBean.beingEdited}">
+                                    <p:ajax async="false" process="@this" update=":contactEditId"/>
                                 </h:commandButton>
                             </div>
                         </div>
@@ -185,9 +186,9 @@
                                                value="#{poBean.purchaseOrder.poEntity.supplier.contacts}"
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.fullName}"/>
-                                <p:ajax async="false" update="phoneSupId faxSupId" process="contactDetail"/>
+                                <p:ajax async="false" update="phoneSupId faxSupId messageContact" process="conactSupId"/>
                             </h:selectOneMenu>
-                            <p:message for="conactSupId"/>
+                            <p:message id="messageContact" for="conactSupId"/>
                             <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.poEntity.contactEntity}"
                                          rendered="#{poBean.beingViewed}"/>
@@ -197,6 +198,7 @@
                 <div style="width: 290px!important; float: left!important; margin-left: -13px">
                     <div class="form-group">
                         <h:commandButton
+                                id="btnAddContact"
                                 value="#{msgs['po.supplier.lbl.btn.add.contact']}"
                                 disabled="#{poBean.purchaseOrder.poEntity.supplier==null}"
                                 action="#{contactBean.start(poBean.purchaseOrder.poEntity.supplier.id)}"

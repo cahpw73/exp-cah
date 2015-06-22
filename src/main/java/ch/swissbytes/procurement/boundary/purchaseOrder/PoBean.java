@@ -241,6 +241,7 @@ public class PoBean extends Bean {
         ContactEntity contact=contactBean.doSave();
         if(contact!=null){
             purchaseOrder.getPoEntity().setContactEntity(contact);
+            purchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
         }
     }
 }

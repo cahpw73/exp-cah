@@ -4,15 +4,16 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Created by alvaro on 6/19/2015.
  */
-//@Named
-//@ViewScoped
-public class BidListBean {
+@Named
+@ViewScoped
+public class BidListBean implements Serializable {
 
     public static final Logger log = Logger.getLogger(BidListBean.class.getName());
 
