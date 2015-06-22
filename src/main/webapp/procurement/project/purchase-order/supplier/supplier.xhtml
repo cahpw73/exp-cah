@@ -140,6 +140,7 @@
                                 <h:commandButton
                                         value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
                                         onclick="PF('supplierModal').show();"
+                                        disabled="true"
                                         styleClass="btn btn-primary btn-sm"
                                         rendered="#{poBean.beingEdited}">
                                     <p:ajax async="false" process="@this" update=":contactEditId"/>
