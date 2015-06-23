@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
@@ -67,6 +68,9 @@ public class PoBean extends Bean {
 
     @Inject
     private SupplierProcBean supplier;
+
+    @Inject
+    private SupplierProcList list;
 
     private boolean supplierHeaderMode=false;
     private boolean supplierMode=false;
@@ -290,8 +294,10 @@ public class PoBean extends Bean {
                 purchaseOrder.getPoEntity().setContactEntity(null);
             }
             supplierHeaderMode=supplierMode=false;
+            list.updateSupplierList();
         }
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('supplierModal').hide();");
+
     }
 }

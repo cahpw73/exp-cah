@@ -84,10 +84,10 @@
             <div style="width: 278px!important; float: left!important;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                   for="headerProject" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
+                                   for="supplierHeader" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                     <div style="width: 145px; float: left;">
-                        <h:selectOneMenu id="headerProject" rendered="#{poBean.beingEdited}"
+                        <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
                                          value="#{poBean.purchaseOrder.poEntity.supplierHeader}"
                                          styleClass="form-control"
                                          converter="supplierConverter">

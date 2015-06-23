@@ -37,7 +37,7 @@
                 <h:commandButton value="#{msgs['lbl.save']}"
                                  action="#{poBean.saveSupplier}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="true" process="@form"/>
+                    <p:ajax async="true" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId" process="@form"/>
                 </h:commandButton>
             </h:panelGroup>
             <h:commandButton value="#{msgs['lbl.save']}"
