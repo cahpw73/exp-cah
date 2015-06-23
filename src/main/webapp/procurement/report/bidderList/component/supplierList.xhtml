@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+
+    <div class="col-md-8">
+        <div class="panel panel-default panel-tab">
+            <div class="procurement-panel-header">#{msgs['report.deliverables.title']}</div>
+            <!-- Default panel contents -->
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           value="Package No"/>
+                            <div class="col-md-7">
+                                <h:inputText value="#{bidListBean.packageNo}"/>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           value="Description"/>
+
+                            <div class="col-md-7">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText value="#{bidListBean.description}"/>
+                                </div>
+                            </div>
+                            <div>
+                                <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
+                                               value="OK"
+                                               action="#{reportDeliverableBean.printReportDeliverables}"
+                                               target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                <h:commandLink styleClass="btn btn-primary btn-sm"
+                                               value="Close"
+                                               action="#{reportDeliverableBean.printReportDeliverables}"
+                                               target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"/>
+                <br/>
+
+                <div>
+                    <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
+                                 rows="#{configuration.defaultPageSize}" lazy="true">
+                        <p:column headerText="Supplier ID">
+                            #{_l.poNo}
+                        </p:column>
+                        <p:column headerText="Company">
+                            #{_l.varNo}
+                        </p:column>
+                        <p:column headerText="state">
+                            #{_l.poDescription}
+                        </p:column>
+                        <p:column headerText="Contact" >
+                            #{_l.delNo}
+                        </p:column>
+                        <p:column headerText="Print" >
+                            #{_l.description}
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</ui:composition>

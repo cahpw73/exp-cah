@@ -7,8 +7,11 @@ import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -62,6 +65,17 @@ public class PoBean extends Bean {
 
     @Inject
     private SortBean sortBean;
+
+    @Inject
+    private SupplierProcBean supplier;
+
+    @Inject
+    private SupplierProcList list;
+
+    private boolean supplierHeaderMode=false;
+    private boolean supplierMode=false;
+
+
 
     public void load(){
         if(projectId!=null){
@@ -256,5 +270,34 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setContactEntity(contact);
             purchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
         }
+    }
+
+    public void addingSupplierHeader(){
+        supplier.putModeCreation();
+        supplier.start();
+        supplierHeaderMode=true;
+    }
+
+    public void addingSupplier(){
+        supplier.putModeCreation();
+        supplier.start();
+        supplierMode=true;
+    }
+
+    public void saveSupplier(){
+        SupplierProcEntity supplierProcEntity=supplier.save();
+        if(supplierProcEntity!=null){
+            if(supplierHeaderMode){
+                purchaseOrder.getPoEntity().setSupplierHeader(supplierProcEntity);
+            }else if(supplierMode){
+                purchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
+                purchaseOrder.getPoEntity().setContactEntity(null);
+            }
+            supplierHeaderMode=supplierMode=false;
+            list.updateSupplierList();
+        }
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('supplierModal').hide();");
+
     }
 }

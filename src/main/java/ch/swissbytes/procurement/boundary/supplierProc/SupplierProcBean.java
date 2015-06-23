@@ -79,6 +79,10 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
     }
 
+    public void start(){
+        supplier=new SupplierProcEntity();
+    }
+
 
 
     public String doSave() {
@@ -90,6 +94,16 @@ public class SupplierProcBean extends Bean implements Serializable {
         supplier.getContacts().addAll(contactBean.getList());
         service.save(supplier);
         return "list?faces-redirect=true";
+    }
+    public SupplierProcEntity save(){
+        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
+            Messages.addFlashError("supplierID","supplier id is already being used");
+            return null;
+        }
+        supplier.getContacts().clear();
+        supplier.getContacts().addAll(contactBean.getList());
+        return service.save(supplier);
+
     }
 
     public String doUpdate() {

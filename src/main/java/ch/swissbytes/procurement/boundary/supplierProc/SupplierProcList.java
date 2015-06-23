@@ -49,6 +49,10 @@ public class SupplierProcList implements Serializable {
         return suppliers;
     }
 
+    public void updateSupplierList(){
+        suppliers=service.findAll();
+    }
+
     @PreDestroy
     public void destroy(){
         log.info("SupplierProcList bean destroyed");

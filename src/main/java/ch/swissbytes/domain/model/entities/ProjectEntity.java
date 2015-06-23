@@ -114,7 +114,7 @@ public class ProjectEntity implements Serializable{
         this.defaultFooter = defaultFooter;
     }
 
-    @Size(max = 1000)
+    @Size(max = 950,message = "It must contain 950 characters at most")
     @Column(name = "delivery_instructions", nullable = true, length = 1000)
     public String getDeliveryInstructions() {
         return deliveryInstructions;

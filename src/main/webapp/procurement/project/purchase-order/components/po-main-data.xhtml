@@ -59,6 +59,7 @@
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poOrderTitle"
                                  value="#{poBean.purchaseOrder.poEntity.orderTitle}"
+                                 maxlength="250"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"
                                  rendered="#{poBean.beingEdited}"/>
@@ -77,6 +78,7 @@
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poOrderNumber"
                                  value="#{poBean.purchaseOrder.po}"
+                                 maxlength="50"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"
                                  rendered="#{poBean.beingEdited}"/>
@@ -96,6 +98,7 @@
                 <div style="width: 145px; float: left;">
                     <h:inputText id="poVarNumber"
                                  value="#{poBean.purchaseOrder.variation}"
+                                 maxlength="50"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['project.detail.project.number.required']}"
                                  rendered="#{poBean.beingEdited}"/>

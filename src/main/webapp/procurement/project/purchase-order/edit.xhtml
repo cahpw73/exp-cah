@@ -102,8 +102,8 @@
         <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
             <ui:include src="../../admin/supplier/components/contactEdit.xhtml"/>
         </p:dialog>
-        <p:dialog header="New Supplier" widgetVar="supplierModal" resizable="false">
-            <h:form id="contactEditId" prependId="false">
+        <p:dialog header="New Supplier" widgetVar="supplierModal" width="850" height="600" resizable="false">
+            <h:form id="supplierId" prependId="false">
                     <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
                         <ui:param name="MODE" value="PO"/>
                     </ui:include>

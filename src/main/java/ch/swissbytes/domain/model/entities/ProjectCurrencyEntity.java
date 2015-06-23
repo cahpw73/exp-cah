@@ -77,6 +77,7 @@ public class ProjectCurrencyEntity implements Serializable{
         this.currencyFactor = currencyFactor;
     }
 
+    @Size(max = 255,message = "Length must be less than 255")
     @Column(name="format", nullable=true, length = 255)
     public String getFormat() {
         return format;

@@ -16,7 +16,9 @@
                                 <h:outputText value="#{_i.code}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edItemNo" rendered="#{_i.isEditable}">
-                                <h:inputText id="itemNo" value="#{_i.code}" styleClass="form-control" onkeypress="return isNumberFormat(event);"/>
+                                <h:inputText id="itemNo" value="#{_i.code}" maxlength="50" styleClass="form-control" onkeypress="return isNumberFormat(event);">
+                                    <p:ajax event="change" async="false" process="@this"/>
+                                </h:inputText>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.equip.no']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
@@ -24,7 +26,9 @@
                                 <h:outputText value="#{_i.tagNo}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
-                                <h:inputText id="equipNo" value="#{_i.tagNo}" styleClass="form-control"/>
+                                <h:inputText id="equipNo" maxlength="1000" value="#{_i.tagNo}" styleClass="form-control">
+                                    <p:ajax event="change" async="false" process="@this"/>
+                                </h:inputText>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
@@ -32,7 +36,11 @@
                                 <h:outputText value="#{_i.quantity}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
-                                <h:inputText id="qty" value="#{_i.quantity}" styleClass="form-control"/>
+                                <h:inputText id="qty" value="#{_i.quantity}" styleClass="form-control">
+                                    <f:convertNumber integerOnly="true"/>
+                                    <p:ajax event="change" async="false" process="@this"/>
+
+                                </h:inputText>
                             </h:panelGroup>
                         </p:column>
 
@@ -41,7 +49,9 @@
                                 <h:outputText value="#{_i.unit}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edUnit" rendered="#{_i.isEditable}">
-                                <h:inputText id="unitItem" value="#{_i.unit}" styleClass="form-control"/>
+                                <h:inputText id="unitItem" maxlength="50" value="#{_i.unit}" styleClass="form-control">
+                                    <p:ajax event="change" async="false" process="@this"/>
+                                </h:inputText>
                             </h:panelGroup>
                         </p:column>
 
@@ -56,7 +66,9 @@
                                 <p:inputTextarea id="descripItem" value="#{_i.description}"
                                                  styleClass="form-control"
                                                  style="max-height: 33px; width: 100%!important;"
-                                                 scrollHeight="32" maxlength="500"/>
+                                                 scrollHeight="32" maxlength="500">
+                                    <p:ajax event="change" async="false" process="@this"/>
+                                </p:inputTextarea>
                             </h:panelGroup>
                         </p:column>
 
@@ -76,6 +88,7 @@
                                                    var="_pc"
                                                    itemValue="#{_pc}"
                                                    itemLabel="#{_pc.currency.code}"/>
+                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:selectOneMenu>
                             </h:panelGroup>
                         </p:column>
@@ -90,6 +103,7 @@
                                 <h:inputText id="unitCostItem" value="#{_i.cost}" styleClass="form-control">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
+                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -104,6 +118,7 @@
                                 <h:inputText id="totalCostItem" value="#{_i.totalCost}" styleClass="form-control">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
+                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -119,11 +134,12 @@
                                 <h:inputText id="costCodeItem" value="#{_i.costCode}" styleClass="form-control">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
+                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.delivery.date']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column id="deliveryDateColumn"  headerText="#{msgs['po.items.dt.column.delivery.date']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.poDeliveryDate}">
                                     <f:convertDateTime pattern="#{configuration.formatDate}"/>

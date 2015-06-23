@@ -17,7 +17,7 @@
                                          required="true"
                                          rendered="#{_dv.isEditable}"
                                          effect="fold" editable="true" styleClass="form-control"
-                                         maxlength="50" style="width: 100%">
+                                         maxlength="950" style="width: 100%">
                             <f:selectItems value="#{itemBean.items()}"/>
                             <p:ajax async="false" process="@this" event="change"/>
                         </p:selectOneMenu>
@@ -27,6 +27,7 @@
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
                         <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control">
                             <p:ajax async="false" process="@this" event="change"/>
+                            <f:convertNumber integerOnly="true"/>
                         </h:inputText>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.no.day']}">
@@ -36,6 +37,7 @@
                                     process="@this"
                                     listener="#{poBean.updateRequiredDate(_dv)}"
                                     update="deliverableDt"/>
+                            <f:convertNumber integerOnly="true"/>
                         </h:inputText>
                     </p:column>
                     <p:column headerText="#{msgs['po.deliverables.column.day.required']}">
