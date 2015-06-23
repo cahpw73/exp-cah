@@ -110,9 +110,10 @@
                     <h:commandButton
                             value="#{msgs['po.header.lbl.panel.delivery.add.new.supplier']}"
                             onclick="PF('supplierModal').show();"
+                            action="#{poBean.addingSupplierHeader}"
                             styleClass="btn btn-primary btn-sm"
                             rendered="#{poBean.beingEdited}">
-                        <p:ajax async="false" process="@this" update=":contactEditId"/>
+                        <p:ajax async="false" process="@this" update=":supplierId"/>
                     </h:commandButton>
                 </div>
             </div>

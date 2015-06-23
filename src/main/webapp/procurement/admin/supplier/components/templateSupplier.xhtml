@@ -23,14 +23,23 @@
 
     <div class="col-sm-3">
         <h:panelGroup id="idBtnSave" rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
-            <h:commandButton value="#{msgs['lbl.save']}"
-                             action="#{supplierProcBean.doSave}"
-                             rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
-                             styleClass="btn btn-primary btn-sm"/>
-            <h:commandButton value="#{msgs['lbl.save']}"
-                             action="#{supplierProcBean.doUpdate}"
-                             rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
-                             styleClass="btn btn-primary btn-sm"/>
+            <h:panelGroup rendered="#{MODE ==null}">
+                <h:commandButton value="#{msgs['lbl.save']}"
+                                 action="#{supplierProcBean.doSave}"
+                                 rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
+                                 styleClass="btn btn-primary btn-sm"/>
+                <h:commandButton value="#{msgs['lbl.save']}"
+                                 action="#{supplierProcBean.doUpdate}"
+                                 rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
+                                 styleClass="btn btn-primary btn-sm"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{MODE eq 'PO'}">
+                <h:commandButton value="#{msgs['lbl.save']}"
+                                 action="#{poBean.saveSupplier}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="true" process="@form"/>
+                </h:commandButton>
+            </h:panelGroup>
             <h:commandButton value="#{msgs['lbl.save']}"
                              rendered="#{not supplierProcBean.supplierMode}"
                              styleClass="btn btn-primary btn-sm">
@@ -39,6 +48,7 @@
                         process="@form"
                         update="idBtnSave idBtnCancel bodySupplier"/>
             </h:commandButton>
+
         </h:panelGroup>
     </div>
     <br/>
