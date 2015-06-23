@@ -247,6 +247,7 @@
                                     <div class="col-sm-5">
                                         <p:inputTextarea id="instructions"
                                                          value="#{projectBean.projectEntity.deliveryInstructions}"
+                                                         maxlength="950"
                                                          styleClass="form-control"
                                                          style="height: 135px!important; width: 366px!important"/>
                                         <p:message for="instructions" id="msgInstruction"/>
@@ -447,10 +448,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <p:dataTable id="currencyListId" value="#{projectBean.projectCurrencyList}" var="_p"
-                                                 paginator="false" rows="#{configuration.defaultPageSize}" lazy="true"
-                                                 rowsPerPageTemplate="#{configuration.getPagesSize(projectBean.projectCurrencyList.size())}"
-                                                 paginatorPosition="bottom">
+                                    <p:dataTable id="currencyListId" value="#{projectBean.projectCurrencyList}" var="_p">
                                         <p:column headerText="#{msgs['project.currencies.column.project.currency']}"
                                                   width="180" rendered="#{projectBean.isCurrencyEnable(_p)}">
                                             #{_p.currency.name}
@@ -473,9 +471,11 @@
                                         </p:column>
                                         <p:column headerText="#{msgs['project.currencies.column.project.default']}"
                                                   width="50" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            <h:selectBooleanCheckbox
+                                            <p:selectBooleanCheckbox
                                                     value="#{projectBean.projectCurrencyEntity.projectDefault}">
-                                            </h:selectBooleanCheckbox>
+                                                <p:ajax process="@this" event="change"
+                                                        listener="#{projectBean.updateDefaultStatusCurrency(_p)}" update="currencyListId" />
+                                            </p:selectBooleanCheckbox>
                                         </p:column>
                                         <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140"
                                                   rendered="#{projectBean.isCurrencyEnable(_p)}">

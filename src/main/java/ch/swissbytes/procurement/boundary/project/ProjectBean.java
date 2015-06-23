@@ -492,4 +492,17 @@ public class ProjectBean implements Serializable {
         }
         log.info("end..");
     }
+
+    public void updateDefaultStatusCurrency(ProjectCurrencyEntity currencyEntity){
+        for(ProjectCurrencyEntity pce:projectCurrencyList){
+            if(currencyEntity.getId().longValue()!=pce.getId().longValue()){
+                pce.setProjectDefault(false);
+            }else{
+                pce.setProjectDefault(true);
+            }
+        }
+        for(ProjectCurrencyEntity pce:projectCurrencyList){
+            log.info("status : " + pce.getProjectDefault());
+        }
+    }
 }
