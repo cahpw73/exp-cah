@@ -31,7 +31,7 @@
                 <p:inputTextarea id="preambleTxtId" styleClass="form-control"
                                  value="#{poTextBean.textEntity.preamble}"
                                  style=" height:70px!important; max-height: 70px; width: 100%!important;"
-                                 scrollHeight="71" maxlength="500" rendered="#{poBean.beingEdited}"/>
+                                 scrollHeight="71" maxlength="950" rendered="#{poBean.beingEdited}"/>
                 <h:inputTextarea readonly="true" styleClass="form-control" rendered="#{poBean.beingViewed}"
                                  value="#{poTextBean.textEntity.preamble}"
                                  style="height: 70px;  max-height: 70px; width: 100%!important;"/>
@@ -73,6 +73,7 @@
                 </h:commandLink>
                 <br/>
                 <p:commandButton value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
+                                 disabled=""
                                  update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"
                                  styleClass="btn btn-primary btn-sm" style="margin-top: 20px!important;">
                     <p:confirm header="#{msgs['lbl.confirmation']}"

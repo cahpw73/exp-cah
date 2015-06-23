@@ -9,6 +9,7 @@ import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
         this.id = id;
     }
 
+    @Size(max=1000)
     @Column(name = "preamble", length = 1000)
     public String getPreamble() {
         return preamble;
