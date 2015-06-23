@@ -4,6 +4,7 @@ import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -54,7 +55,8 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
         this.lastUpdate = lastUpdate;
     }
 
-    @Column(name = "requisition_number", nullable = false)
+    @Size(max = 250)
+    @Column(name = "requisition_number", nullable = false,length = 250)
     public String getRequisitionNumber() {
         return requisitionNumber;
     }
@@ -63,7 +65,8 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
         this.requisitionNumber = reqNo;
     }
 
-    @Column(name = "originator")
+    @Size(max=250)
+    @Column(name = "originator",length = 250)
     public String getOriginator() {
         return originator;
     }

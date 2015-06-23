@@ -62,6 +62,7 @@
                                     <div class="col-sm-5">
                                         <h:inputText id="titleId" value="#{projectBean.projectEntity.title}"
                                                      styleClass="form-control" required="true"
+                                                     maxlength="255"
                                                      requiredMessage="#{msgs['project.detail.title.required']}"/>
                                         <p:message for="titleId" id="msgtitle"/>
                                     </div>

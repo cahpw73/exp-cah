@@ -119,6 +119,7 @@ public class POEntity implements Serializable{
     }
 
 
+    @Size(max = 250)
     @Column(name="point",length = 250)
     public String getPoint() {
         return point;

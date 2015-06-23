@@ -19,11 +19,13 @@
                                 <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
                                 <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
                                              required="true"
+                                             maxlength="250"
                                              styleClass="form-control"/>
                             </p:column>
                             <p:column headerText="#{msgs['po.header.column.originator']}">
                                 <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>
                                 <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}"
+                                             maxlength="250"
                                              styleClass="form-control"/>
                             </p:column>
                             <p:column headerText="#{msgs['po.header.column.req.date']}">
@@ -183,6 +185,7 @@
                             <div style="width: 145px; float: left;">
                                 <h:inputText id="headerPoint"
                                              value="#{poBean.purchaseOrder.poEntity.point}"
+                                             maxlength="250"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}"/>
                                 <p:message for="headerPoint" id="msgHeaderPoint"/>
                                 <h:inputText id="headerPointVi" readonly="true" styleClass="form-control view-po"
@@ -205,6 +208,7 @@
                                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
                                                  value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"
                                                  rendered="#{poBean.beingEdited}"/>
+                                <p:message for="headerInstruction"/>
                                 <h:inputTextarea readonly="true" styleClass="form-control"
                                                  style="height: 75px;" rendered="#{poBean.beingViewed}"
                                                  value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"/>
