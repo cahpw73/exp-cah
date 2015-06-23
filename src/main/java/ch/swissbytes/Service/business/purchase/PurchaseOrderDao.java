@@ -164,4 +164,46 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("ID",id==null?-1L:id);
         return super.findBy(sb.toString(), map);
     }
+
+    public List<PurchaseOrderEntity> findByProjectCustomizedSort(Long projectId, Map<String, Boolean> sortByMap) {
+
+        Boolean poNo = sortByMap.get("poNo");
+        Boolean varNo = sortByMap.get("varNo");
+        Boolean supplier = sortByMap.get("supplier");
+        Boolean deliveryDate = sortByMap.get("deliveryDate");
+        String strSort = "";
+        if(poNo){
+            strSort = strSort+"p.po,";
+        }
+        if(varNo){
+            strSort = strSort+"p.orderedVariation,";
+        }
+        if (supplier){
+            strSort = strSort+"sp.company,";
+        }
+        if(deliveryDate){
+            strSort = strSort+"p.poDeliveryDate,";
+        }
+
+        strSort = strSort.substring(0,strSort.length() - 1);
+
+        log.info(" sort by: " + strSort);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p.po, p.variation, po.orderDate,sp.company,po.orderTitle,c.code, p.poDeliveryDate,po.poProcStatus ");
+        sb.append(" FROM PurchaseOrderEntity p ");
+        sb.append(" INNER JOIN po.poEntity po ");
+        sb.append(" LEFT JOIN po.supplier sp ");
+        sb.append(" LEFT JOIN po.currency pc ");
+        sb.append(" LEFT JOIN pc.currency c");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id  = :PROJECT_ID");
+        if(poNo || varNo || supplier || deliveryDate) {
+            sb.append(" ORDER BY " + strSort + " ");
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), map);
+    }
 }

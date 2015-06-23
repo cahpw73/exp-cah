@@ -7,6 +7,7 @@
     <h:panelGroup id="projectProcGroupId">
         <div class="col-md-12">
             <div style="width: 340px!important; float: left!important;">
+
                 <div class="form-group">
                     <h:outputText styleClass="col-sm-8 control-label"
                                   style="text-align: left !important;direction: ltr !important;"
@@ -14,42 +15,67 @@
                 </div>
                 <div class="clearfix"></div>
                 <br/>
+                <div class="row">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                       for="projectDelId"
+                                       value="#{msgs['report.deliverables.lbl.project']}"/>
+
+                        <div class="col-md-7">
+                            <h:selectOneMenu id="projectDelId"
+                                             value="#{reportProcurementBean.selectedProject}"
+                                             styleClass="form-control" converter="projectConverter">
+                                <f:selectItem
+                                        itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
+                                        noSelectionOption="true"/>
+                                <f:selectItems value="#{reportProcurementBean.projectList}"
+                                               var="_p"
+                                               itemValue="#{_p}"
+                                               itemLabel="#{_p.title}"/>
+                                <p:ajax event="change" process="@this" />
+                            </h:selectOneMenu>
+
+                        </div>
+                    </div>
+                </div>
+                <br/>
                 <div class="form-group">
                     <div class="checkbox-inline">
                         <label>
-                            <h:selectBooleanCheckbox id="poNoBoxId" value="#{usersBean.searchProcurementActiveUsers}">
-                                <p:ajax process="@this"  listener="#{usersBean.doSearchProcurement}"/>
+                            <h:selectBooleanCheckbox id="poNoBoxId" value="#{reportProcurementBean.sortByPoNo}">
+                                <p:ajax event="change" process="@this" />
                             </h:selectBooleanCheckbox> PO No
                         </label>
                     </div>
                     <div class="checkbox-inline">
                         <label>
-                            <h:selectBooleanCheckbox id="varBoxId" value="#{usersBean.searchProcurementActiveUsers}">
-                                <p:ajax process="@this"  listener="#{usersBean.doSearchProcurement}"/>
+                            <h:selectBooleanCheckbox id="varBoxId" value="#{reportProcurementBean.sortByVarNo}">
+                                <p:ajax event="change" process="@this" />
                             </h:selectBooleanCheckbox> Var No
                         </label>
                     </div>
                     <div class="checkbox-inline">
                         <label>
-                            <h:selectBooleanCheckbox id="supplierBoxId" value="#{usersBean.searchProcurementActiveUsers}">
-                                <p:ajax process="@this"  listener="#{usersBean.doSearchProcurement}"/>
+                            <h:selectBooleanCheckbox id="supplierBoxId" value="#{reportProcurementBean.sortBySupplier}">
+                                <p:ajax event="change" process="@this" />
                             </h:selectBooleanCheckbox> Supplier
                         </label>
                     </div>
                     <div class="checkbox-inline">
                         <label>
-                            <h:selectBooleanCheckbox id="deliveryBoxId" value="#{usersBean.searchProcurementActiveUsers}">
-                                <p:ajax process="@this"  listener="#{usersBean.doSearchProcurement}"/>
+                            <h:selectBooleanCheckbox id="deliveryBoxId" value="#{reportProcurementBean.sortByDeliveryDate}">
+                                <p:ajax event="change" process="@this" />
                             </h:selectBooleanCheckbox> Delivery Date
                         </label>
                     </div>
                 </div>
+                <br/>
                 <div class="form-group">
                     <div class="pull-right">
                         <h:form>
                             <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
                                            value="#{msgs['project.list.lbl.btn.print.po.final']}"
-                                           action="#{poListBean.printPOFinal}"
+                                           action="#{reportProcurementBean.printProjectProcurementReport}"
                                            target="_blank" style="color: #ffffff" onclick="PF('projectProcDlg').hide();">
                             </h:commandLink>
                             &#160;

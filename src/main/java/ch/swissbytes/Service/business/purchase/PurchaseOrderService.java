@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -295,6 +296,10 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
     public List<PurchaseOrderEntity> findByProjectIdAndPo(final Long projectId, final String poNo){
         return dao.findByProjectAndPo(projectId,poNo);
+    }
+
+    public List<PurchaseOrderEntity> findByProjectIdCustomizedSort(final Long projectId, Map<String,Boolean> sortByMap){
+        return dao.findByProjectCustomizedSort(projectId,sortByMap);
     }
 
     public boolean isVarNumberUsed(String varNumber,String poNumber,Long id ){
