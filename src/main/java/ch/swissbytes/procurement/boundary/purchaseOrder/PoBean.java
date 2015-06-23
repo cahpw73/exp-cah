@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import org.apache.commons.lang.time.DateUtils;
@@ -12,6 +13,7 @@ import org.omnifaces.util.Messages;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -57,6 +59,9 @@ public class PoBean extends Bean {
 
     @Inject
     private ContactBean contactBean;
+
+    @Inject
+    private SortBean sortBean;
 
     public void load(){
         if(projectId!=null){
@@ -115,6 +120,7 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            sortPurchaseListByVariationAndDoUpdate();
             return backToList();
         }
         return "";
@@ -127,6 +133,7 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+            sortPurchaseListByVariationAndDoUpdate();
             return backToList();
         }
         return "";
@@ -138,9 +145,34 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            sortPurchaseListByVariationAndDoUpdate();
             return backToList();
         }
         return "";
+    }
+
+    public String doUpdateView(){
+        log.info("trying to updateView purchase order on procurement module");
+        collectData();
+        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
+        log.info("purchase order created ["+purchaseOrder.getId()+"]");
+        sortPurchaseListByVariationAndDoUpdate();
+        return backToList();
+    }
+
+    public String backToList(){
+        return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+    }
+
+    private void sortPurchaseListByVariationAndDoUpdate(){
+        List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(),purchaseOrder.getPo());
+        sortBean.sortPurchaseOrderEntity(poList);
+        int index = 1;
+        for(PurchaseOrderEntity po : poList){
+            po.setOrderedVariation(index);
+            service.doUpdatePurchaseOrder(po);
+            index++;
+        }
     }
 
     private boolean validate(){
@@ -150,25 +182,6 @@ public class PoBean extends Bean {
             validated=false;
         }
         return validated;
-    }
-    public String doUpdateView(){
-        log.info("trying to updateView purchase order on procurement module");
-        collectData();
-        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
-        log.info("purchase order created ["+purchaseOrder.getId()+"]");
-        return backToList();
-    }
-
-    public String backToList(){
-        return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
-    }
-
-    public String poStatusProc(){
-        if(purchaseOrder.getPoEntity().getPoProcStatus() != null)
-            return purchaseOrder.getPoEntity().getPoProcStatus().name();
-        else
-            return "";
-
     }
 
     private void collectData(){

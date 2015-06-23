@@ -161,17 +161,21 @@
                             <br/>
 
                             <div class="form-group">
-                                <div class="pull-left">
+                                <div class="pull-right">
                                     <h:form>
                                     <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
                                                    value="#{msgs['project.list.lbl.btn.print.po.final']}"
                                                    action="#{poListBean.printPOFinal}"
-                                                   target="_blank"/>
+                                                   target="_blank" style="color: #ffffff" onclick="PF('printPoDlg').hide();">/>
+                                    </h:commandLink>
                                     &#160;
-                                    <h:commandLink id="printDraftlBtnId" styleClass="btn btn-primary btn-sm"
+                                    <h:commandLink id="printDraftlBtnId" styleClass="btn btn-primary btn-sm
+                                                   #{poListBean.hasCurrentPOStatusFinal()==true?'disabled':''} "
                                                    value="#{msgs['project.list.lbl.btn.print.po.draft']}"
-                                                   action="#{poListBean.printPODraft}"
-                                                   target="_blank"/>
+                                                   action="#{poListBean.printPODraft}" style="color: #ffffff;"
+                                                   target="_blank" disabled="#{poListBean.hasCurrentPOStatusFinal()}"
+                                                   onclick="PF('printPoDlg').hide();">
+                                    </h:commandLink>
 
                                     &#160;
                                     <button class="btn btn-primary btn-sm" type="button"

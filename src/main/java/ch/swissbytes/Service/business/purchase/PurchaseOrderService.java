@@ -18,6 +18,7 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -78,7 +79,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     public PurchaseOrderService() {
         super.initialize(dao);
     }
-
 
     public PurchaseOrderEntity load(Long id) {
         return dao.load(id);
@@ -300,5 +300,10 @@ public class PurchaseOrderService extends Service implements Serializable {
     public boolean isVarNumberUsed(String varNumber,String poNumber,Long id ){
         List<PurchaseOrderEntity> list=dao.findByVariation(varNumber, poNumber,id);
         return !list.isEmpty();
+    }
+
+    @Transactional
+    public void doUpdatePurchaseOrder(PurchaseOrderEntity entity){
+        dao.update(entity);
     }
 }

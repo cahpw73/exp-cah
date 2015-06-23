@@ -2,15 +2,16 @@ package ch.swissbytes.procurement.report;
 
 
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
+import ch.swissbytes.procurement.util.ResourceUtils;
+import jdk.internal.util.xml.impl.Input;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -22,6 +23,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private final Logger log = Logger.getLogger(ReportPurchaseOrder.class.getName());
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
     private Configuration configuration;
+    private ResourceUtils resourceUtils;
     private PurchaseOrderEntity po;
 
 
@@ -38,14 +40,16 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.po = po;
         LookupValueFactory lookupValueFactory = new LookupValueFactory();
         //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
-        //addParameters("patternDecimal", configuration.getPatternDecimal());
+        addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
+        addParameters("TIME_ZONE", configuration.getTimeZone());
         //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
         //addParameters("COUNTRY_LOCALE", configuration.getCountry());
         loadParamPurchaseOrder();
     }
 
     private void loadParamPurchaseOrder() {
+        resourceUtils = new ResourceUtils();
         InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
         addParameters("purchaseOrderId",po.getId());
         addParameters("logo", logo);
@@ -56,12 +60,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
         addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
         addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
-        addParameters("poNo",po.getPoEntity().getOrderNumber());
+        addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());
-        addParameters("deliverablePoint",po.getPoEntity().getPoint());
+        addParameters("deliveryPoint",po.getPoEntity().getPoint());
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
-        addParameters("TIME_ZONE", configuration.getTimeZone());
+        if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
+            InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
+            addParameters("watermarkDraft",watermark);
+        }
         Date now = new Date();
         now.setHours(23);
         now.setMinutes(59);

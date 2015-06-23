@@ -41,6 +41,7 @@ public class PurchaseOrderEntity implements Serializable{
     private PurchaseOrderStatusEnum purchaseOrderStatus;
     private ProjectEntity projectEntity;
     private POEntity poEntity;
+    private Integer orderedVariation;
 
 
     private String poReference;
@@ -288,6 +289,14 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setPoEntity(POEntity poEntity) {
         this.poEntity = poEntity;
+    }
+
+    public Integer getOrderedVariation() {
+        return orderedVariation;
+    }
+
+    public void setOrderedVariation(Integer orderedVariation) {
+        this.orderedVariation = orderedVariation;
     }
 
     @Override
