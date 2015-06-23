@@ -35,6 +35,10 @@ public class BidListBean implements Serializable {
 
     private boolean categorySelection=true;
 
+    private String packageNo;
+    private String description;
+    private String comments;
+
     @PostConstruct
     public void create(){
         log.log(Level.FINE,"creating bidListBean");
@@ -80,5 +84,29 @@ public class BidListBean implements Serializable {
     }
     public void putModeSupplier(){
         categorySelection=false;
+    }
+
+    public String getPackageNo() {
+        return packageNo;
+    }
+
+    public void setPackageNo(String packageNo) {
+        this.packageNo = packageNo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }
