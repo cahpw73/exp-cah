@@ -160,48 +160,73 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionViewPOO(PurchaseOrderEntity entity) {
-        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
-            return true;
+        if(entity.getPoEntity().getPoProcStatus() != null){
+            if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())
+                    || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
+                return true;
+            }
+        }else{
+            return false;
         }
         return false;
     }
 
     public boolean actionEditPOO(PurchaseOrderEntity entity) {
-        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.ON_HOLD.ordinal())) {
+        if(entity.getPoEntity().getPoProcStatus() != null){
+            if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
+                    || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.ON_HOLD.ordinal())) {
+                return true;
+            }
+        }else {
             return true;
         }
         return false;
     }
 
     public boolean actionVarationPOO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
-            return true;
+        if(entity.getPoEntity().getPoProcStatus() != null){
+            if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
+                return true;
+            }
+        }else{
+            return false;
         }
+
         return false;
     }
 
     public boolean actionCommitPOO(PurchaseOrderEntity entity) {
-        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
-            return true;
+        if(entity.getPoEntity().getPoProcStatus() != null){
+            if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
+                    || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
+                return true;
+            }
+        }else{
+            return false;
         }
         return false;
     }
 
     public boolean actionReleasePOO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal()) {
-            return true;
+        if(entity.getPoEntity().getPoProcStatus() != null){
+            if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal()) {
+                return true;
+            }
+        }else{
+            return false;
         }
         return false;
     }
 
     public boolean actionPrintPOO(PurchaseOrderEntity entity) {
-        if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())
-                || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())) {
-            return true;
+        if(entity.getPoEntity().getPoProcStatus() != null){
+            if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
+                    || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())
+                    || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal())) {
+                return true;
+            }
+        }else{
+            return false;
         }
         return false;
     }

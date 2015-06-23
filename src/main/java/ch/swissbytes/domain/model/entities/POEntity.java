@@ -60,7 +60,7 @@ public class POEntity implements Serializable{
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="currency_id")
+    @JoinColumn(name="project_currency_id")
     public ProjectCurrencyEntity getCurrency() {
         return currency;
     }
