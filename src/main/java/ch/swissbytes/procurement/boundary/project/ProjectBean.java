@@ -12,6 +12,7 @@ import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
 import ch.swissbytes.procurement.boundary.purchaseOrder.PoTextBean;
 import ch.swissbytes.procurement.boundary.textSnippet.TextSnippetBean;
+import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 
@@ -83,12 +84,15 @@ public class ProjectBean implements Serializable {
 
     private Long temporaryId=-1L;
 
+    private final String DEFAULT_CURRENCY_FORMAT="#,###.00";
+
 
     @PostConstruct
     public void init (){
         log.info("ProjectBean created");
         projectEntity = new ProjectEntity();
         projectCurrencyEntity = new ProjectCurrencyEntity();
+        projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
         supplierProcList = new ArrayList<>();
         projectCurrencyList = new ArrayList<>();
         logoList = new ArrayList<>();
@@ -137,7 +141,7 @@ public class ProjectBean implements Serializable {
         log.info("do save");
         if(dataValidate()) {
             prepareToSaveProjectTextSnippet();
-            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList,globalStandardTextList);
+            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -148,7 +152,7 @@ public class ProjectBean implements Serializable {
         log.info("do update");
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
-            projectService.doUpdate(projectEntity,projectCurrencyList, projectTextSnippetList,globalStandardTextList);
+            projectService.doUpdate(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -157,12 +161,36 @@ public class ProjectBean implements Serializable {
 
     public void addCurrency(){
         log.info("add currency");
-        projectCurrencyEntity.setId(temporalId());
-        projectCurrencyEntity.setProjectDefault(false);
-        projectCurrencyEntity.setLastUpdate(new Date());
-        projectCurrencyEntity.setStatus(StatusEnum.ENABLE);
-        projectCurrencyList.add(projectCurrencyEntity);
-        projectCurrencyEntity = new ProjectCurrencyEntity();
+        if(validateCurrency()) {
+            projectCurrencyEntity.setId(temporalId());
+            projectCurrencyEntity.setProjectDefault(false);
+            projectCurrencyEntity.setLastUpdate(new Date());
+            projectCurrencyEntity.setStatus(StatusEnum.ENABLE);
+            projectCurrencyList.add(projectCurrencyEntity);
+            projectCurrencyEntity = new ProjectCurrencyEntity();
+            projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
+        }
+    }
+
+    private boolean validateCurrency(){
+        boolean validated=true;
+        if(StringUtils.isEmpty(projectCurrencyEntity.getFormat())&&StringUtils.isBlank(projectCurrencyEntity.getFormat())){
+            Messages.addError("format","Please enter Format");
+            validated=false;
+        }
+        if(projectCurrencyEntity.getCurrencyFactor()==null){
+            Messages.addError("currencyFactor","Please enter Currency Factor");
+            validated=false;
+        }
+        if(projectCurrencyEntity.getExchangeRate()==null){
+            Messages.addError("exchangeRate","Please enter Exchange Rate");
+            validated=false;
+        }
+        if(projectCurrencyEntity.getCurrency()==null){
+            Messages.addError("currencyId","Please enter Currency");
+            validated=false;
+        }
+        return validated;
     }
 
     private Long temporalId() {
@@ -172,14 +200,17 @@ public class ProjectBean implements Serializable {
 
     public void updateCurrencyList(){
         log.info("update currency list");
-        projectCurrencyEntity.setLastUpdate(new Date());
-        for(ProjectCurrencyEntity pc : projectCurrencyList){
-            if(pc.equals(projectCurrencyEntity)){
-                pc = projectCurrencyEntity;
+        if(validateCurrency()) {
+            projectCurrencyEntity.setLastUpdate(new Date());
+            for (ProjectCurrencyEntity pc : projectCurrencyList) {
+                if (pc.equals(projectCurrencyEntity)) {
+                    pc = projectCurrencyEntity;
+                }
             }
+            projectCurrencyEntity = new ProjectCurrencyEntity();
+            createCurrency = true;
+            projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
         }
-        projectCurrencyEntity = new ProjectCurrencyEntity();
-        createCurrency = true;
     }
 
     public void doDeleteCurrency(ProjectCurrencyEntity projectCurrency){
