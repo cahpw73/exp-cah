@@ -10,6 +10,7 @@ import ch.swissbytes.domain.types.PaymentTermsEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
         this.form = form;
     }
 
+    @Size(max = 1000)
     @Column(name = "order_value", length = 1000)
     public String getOrderValue() {
         return orderValue;
@@ -91,6 +93,7 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
         this.orderValue = orderValue;
     }
 
+    @Size(max = 1000)
     @Column(name = "balance", length = 1000)
     public String getBalance() {
         return balance;

@@ -57,7 +57,7 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-    @Size(max = 950)
+    @Size(max = 1000)
     @Column(name = "description", length = 1000)
     public String getDescription() {
         return description;

@@ -169,6 +169,7 @@
                     <div style="width: 180px; float: left;">
                         <p:inputTextarea id="orderValueCf"
                                          value="#{cashflowBean.cashflow.orderValue}"
+                                         maxlength="950"
                                          styleClass="form-control" style="height: 50px!important;"
                                          rendered="#{poBean.beingEdited}"/>
                         <h:inputTextarea id="orderValueCfVi" readonly="true" styleClass="form-control"
@@ -183,6 +184,7 @@
 
                     <div style="width: 180px; float: left;">
                         <p:inputTextarea id="balanceId" value="#{cashflowBean.cashflow.balance}"
+                                         maxlength="950"
                                          styleClass="form-control" style="height: 50px!important; "
                                          rendered="#{poBean.beingEdited}"/>
                         <h:inputTextarea id="balanceIdVi" readonly="true" styleClass="form-control"
