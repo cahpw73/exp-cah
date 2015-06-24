@@ -16,11 +16,11 @@
     <ui:define name="body">
         <h:form id="editPoForm" prependId="false" class="form-horizontal">
             <div class="col-md-8" style="margin-top: 25px;">
-                <h:panelGroup rendered="#{projectBean.createProject}">
-                    <div class="procurement-panel-header">#{msgs['project.detail.page.title.add']}</div>
+                <h:panelGroup rendered="#{poBean.beingCreated}">
+                    <div class="procurement-panel-header">#{msgs['purchase.order.new.po.title']}</div>
                 </h:panelGroup>
-                <h:panelGroup rendered="#{!projectBean.createProject}">
-                    <div class="procurement-panel-header">#{msgs['project.detail.page.title.edit']}</div>
+                <h:panelGroup rendered="#{poBean.beingOnlyEdited}">
+                    <div class="procurement-panel-header">#{msgs['purchase.order.edit.po.title']}</div>
                 </h:panelGroup>
 
                 <div class="col-md-8 panel-tab-users">
