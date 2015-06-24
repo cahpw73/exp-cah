@@ -15,7 +15,7 @@
             <br/>
             <div>
                 <h:form prependId="false">
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="padding-left: 0px!important;">
                         <div class="left-inner-addon">
                             <i class="fa fa-search fa-lg"></i>
                             <h:inputText styleClass="form-control input-search"
@@ -30,6 +30,8 @@
                     <h:link value="New supplier" outcome="edit" styleClass="btn btn-primary btn-sm"/>
                 </h:form>
             </div>
+            <div class="clearfix"></div>
+            <br/>
             <p:dataTable value="#{supplierProcList.list}" var="_supplier"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
@@ -48,16 +50,18 @@
                 </p:column>
                 <p:column headerText="#{msgs['lbl.actions']}">
                     <h:form prependId="false">
-                        <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-primary btn-sm color-btn-data-table">
+                        <h:link value="#{msgs['lbl.edit']}" outcome="edit"
+                                style="color: #428BCA; ">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
                         </h:link>
                         &#160;
-                        <h:link value="#{msgs['lbl.view']}" outcome="edit" styleClass="btn btn-primary btn-sm color-btn-data-table">
+                        <h:link value="#{msgs['lbl.view']}" outcome="edit"
+                                style=" color: #428BCA;">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
                             <f:param name="MODE" value="VIEW"/>
                         </h:link>
 
-                        <p:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                        <p:commandLink style=" color: #428BCA; "
                                        action="#{supplierProcBean.doDelete(_supplier.id)}"
                                        value="#{msgs['lbl.delete']}">
                             <p:confirm header="Removing Supplier"
