@@ -37,9 +37,9 @@
             <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.email}" styleClass="form-control"/>
         </p:column>
         <p:column headerText="#{msgs['lbl.actions']}" rendered="#{supplierProcBean.beingEdited or supplierProcBean.beingCreated}">
-            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_contact.isEditable}" process="@this"
+            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_contact.isEditable}" process=":#{FORM}:contactList"
                            action="#{contactBean.edit(_contact.id)}" update="contactList"/>
-            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_contact.isEditable}" process=":contactEditId:contactList"
+            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_contact.isEditable}" process=":#{FORM}:contactList"
                            action="#{contactBean.confirm(_contact.id)}" update="contactList"/>
             &#160;
             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}" process="@this"
