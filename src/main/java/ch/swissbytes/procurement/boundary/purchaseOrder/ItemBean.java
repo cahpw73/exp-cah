@@ -82,7 +82,6 @@ public class ItemBean implements Serializable {
     public void loadItemList(final Long poEntityId) {
         log.info("loading item list to edit");
         scopeSupplyList = itemService.findByPoId(poEntityId);
-        //itemList = itemService.findByPoId(poEntityId);
         sortBean.sortScopeSupplyEntity(scopeSupplyList);
     }
 
@@ -91,9 +90,6 @@ public class ItemBean implements Serializable {
             for(ScopeSupplyEntity s : scopeSupplyList){
                 s.setPoDeliveryDate(orderDate);
             }
-            /*for (ItemEntity i : itemList) {
-                i.setDeliveryDate(orderDate);
-            }*/
         }
     }
 
@@ -104,11 +100,6 @@ public class ItemBean implements Serializable {
             scopeSupplyList.set(index,entity);
             entity.stopEditing();
         }
-        /*if (itemNoIsNotEmpty(itemEntity)) {
-            int index = itemList.indexOf(itemEntity);
-            itemList.set(index, itemEntity);
-            itemEntity.stopEditing();
-        }*/
     }
 
     public void deleteItem(ScopeSupplyEntity entity) {
@@ -119,12 +110,6 @@ public class ItemBean implements Serializable {
             entity.setStatus(enumService.getStatusEnumDeleted());
         }
         sortBean.sortScopeSupplyEntity(scopeSupplyList);
-        /*if (itemEntity.getId() < 0L) {
-            itemList.remove(itemEntity);
-        } else {
-            itemEntity.setStatusEnum(StatusEnum.DELETED);
-        }
-        sortBean.sortItemEntity(itemList);*/
     }
 
     public void editItem(ScopeSupplyEntity entity) {
@@ -132,9 +117,6 @@ public class ItemBean implements Serializable {
         entity.startEditing();
         entity.storeOldValue(entity);
         sortBean.sortScopeSupplyEntity(scopeSupplyList);
-        /*itemEntity.startEditing();
-        itemEntity.storeOldValue(itemEntity);
-        sortBean.sortItemEntity(itemList);*/
     }
 
     public void cancelEditionItem(ScopeSupplyEntity entity) {
@@ -146,13 +128,6 @@ public class ItemBean implements Serializable {
             entity = entity.getValueCloned();
         }
         sortBean.sortScopeSupplyEntity(scopeSupplyList);
-        /*if (noHasData(itemEntity)) {
-            itemList.remove(itemEntity);
-        } else {
-            itemEntity.stopEditing();
-            itemEntity = (ItemEntity) itemEntity.getValueCloned();
-        }
-        sortBean.sortItemEntity(itemList);*/
     }
 
     public boolean hasNotStatusDeleted(ScopeSupplyEntity entity) {
@@ -161,13 +136,6 @@ public class ItemBean implements Serializable {
         else
             return true;
     }
-
-    /*public boolean hasNotStatusDeleted(ItemEntity itemEntity) {
-        if (itemEntity != null && itemEntity.getStatusEnum() != null)
-            return StatusEnum.DELETED.getId().intValue() != itemEntity.getStatusEnum().getId().intValue();
-        else
-            return true;
-    }*/
 
     private boolean noHasData(ScopeSupplyEntity entity) {
         if (entity.getCostCode() == null && entity.getPoDeliveryDate() == null
@@ -182,50 +150,18 @@ public class ItemBean implements Serializable {
         return false;
     }
 
-    /*private boolean noHasData(ItemEntity itemEntity) {
-        if (itemEntity.getCostCode() == null && itemEntity.getDeliveryDate() == null
-                && (StringUtils.isEmpty(itemEntity.getItemNo()) && StringUtils.isBlank(itemEntity.getItemNo()))
-                && (StringUtils.isEmpty(itemEntity.getQty()) && StringUtils.isBlank(itemEntity.getQty()))
-                && (StringUtils.isEmpty(itemEntity.getUnit()) && StringUtils.isBlank(itemEntity.getUnit()))
-                && (StringUtils.isEmpty(itemEntity.getDescription()) && StringUtils.isBlank(itemEntity.getDescription()))
-                && itemEntity.getTotalCost() == null && itemEntity.getUnitCost() == null
-                && itemEntity.getProjectCurrency() == null) {
-            return true;
-        }
-        return false;
-    }*/
-
     private boolean lastItemNoIsNotEmpty() {
         int index = scopeSupplyList.size();
         if (index > 0) {
             ScopeSupplyEntity lastItem = scopeSupplyList.get(index - 1);
             return itemNoIsNotEmpty(lastItem);
-            /*ItemEntity lastItem = itemList.get(index - 1);
-            return itemNoIsNotEmpty(lastItem);*/
         }
         return true;
     }
-
-    /*private boolean lastItemNoIsNotEmpty() {
-        int index = itemList.size();
-        if (index > 0) {
-            ItemEntity lastItem = itemList.get(index - 1);
-            return itemNoIsNotEmpty(lastItem);
-        }
-        return true;
-    }*/
-
     private boolean itemNoIsNotEmpty(ScopeSupplyEntity entity) {
         log.info("item is not empty");
         return StringUtils.isNotEmpty(entity.getCode()) && StringUtils.isNotBlank(entity.getCode());
-        //return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
     }
-
-    /*private boolean itemNoIsNotEmpty(ItemEntity entity) {
-        log.info("item is not empty");
-        return StringUtils.isNotEmpty(entity.getItemNo()) && StringUtils.isNotBlank(entity.getItemNo());
-    }*/
-
     public List<ItemEntity> getItemList() {
         return itemList;
     }

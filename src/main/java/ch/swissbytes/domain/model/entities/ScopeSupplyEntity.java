@@ -85,7 +85,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     }
 
     @Column(name="cost", precision=18, scale=5)
-    @DecimalMin(value = "0",message = "just positive values")
+//    @DecimalMin(value = "0",message = "just positive values")
     public BigDecimal getCost() {
         return cost;
     }
