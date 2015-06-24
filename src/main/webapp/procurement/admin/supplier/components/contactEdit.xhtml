@@ -92,7 +92,7 @@
                 <h:commandButton value="#{msgs['lbl.save']}"
                                  action="#{poBean.doSaveContact}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update="editContact :editPoForm:conactSupId" process="editContact"/>
+                    <p:ajax async="false" update="editContact :editPoForm:contactDetail" process="editContact"/>
                 </h:commandButton>
                 &#160;
                 <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">
