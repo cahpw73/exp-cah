@@ -12,6 +12,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
+            <p:messages closable="true"></p:messages>
             <div class="col-md-6">
                 <div class="panel panel-default panel-tab">
                     <div class="procurement-panel-header">Logos</div>
@@ -39,9 +40,10 @@
                             <h:link value="#{msgs['lbl.add']}" outcome="preview"
                                     styleClass="btn btn-sm btn-primary"/>
                             &#160;
-                            <p:commandLink styleClass="btn btn-primary btn-sm" id="deleteBtn"
+                            <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces" id="deleteBtn"
                                            action="#{logoBean.doDelete()}"
-                                           value="#{msgs['lbl.delete']}">
+                                           value="#{msgs['lbl.delete']}"
+                                           ajax="false" type="submit">
                                 <p:confirm header="Delete Logo"
                                            message="Are you sure delete this Logo?"/>
                             </p:commandLink>

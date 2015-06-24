@@ -1,7 +1,9 @@
 package ch.swissbytes.procurement.boundary.logo;
 
 import ch.swissbytes.Service.business.logo.LogoService;
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.model.entities.LogoEntity;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Messages;
@@ -27,6 +29,12 @@ public class LogoBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(LogoBean.class.getName());
 
+    @Inject
+    private LogoService service;
+
+    @Inject
+    private ProjectService projectService;
+
     private LogoEntity logo;
 
     private LogoEntity logoSelected;
@@ -34,9 +42,6 @@ public class LogoBean implements Serializable {
     private Long selected;
 
     private List<LogoEntity> logos;
-
-    @Inject
-    private LogoService service;
 
     @PostConstruct
     public void create() {
@@ -58,12 +63,10 @@ public class LogoBean implements Serializable {
     public void handleUpload(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
         new Util().enterFile(uf, logo);
-        //log.info("logo.data "+logo.getFile());
     }
 
     public String doSave() {
         log.info("trying to save new logo");
-        //logo.setDescription("new file " + new Date().getTime());
         if(!validate()){
             return "";
         }
@@ -105,10 +108,20 @@ public class LogoBean implements Serializable {
     public String doDelete() {
         log.info("removing component");
         if(logoSelected!=null){
-            service.delete(logoSelected);
-            log.info(String.format("logo has been removed [%s]", logo.getDescription()));
+            if(logIsUsedInReports()){
+                Messages.addFlashError("Can not delete Logo","You cannot delete "+logoSelected.getDescription()+" because it is already being used");
+            }else{
+                service.delete(logoSelected);
+                log.info(String.format("logo has been removed [%s]", logo.getDescription()));
+            }
         }
         return "logo?faces-redirect=true";
+    }
+
+    private boolean logIsUsedInReports() {
+        List<ProjectEntity> list = projectService.findByLogoId(logoSelected.getId());
+        boolean result  = !list.isEmpty();
+        return result;
     }
 
     public LogoEntity getLogo() {

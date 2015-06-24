@@ -128,4 +128,20 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
     }
+
+    public List<ProjectEntity> findByLogoId(Long logoId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND (p.reportLogo.id = :LOGO_ID  ");
+        sb.append(" OR p.clientLogo.id = :LOGO_ID  ");
+        sb.append(" OR p.clientFooter.id = :LOGO_ID  ");
+        sb.append(" OR p.defaultLogo.id = :LOGO_ID  ");
+        sb.append(" OR p.defaultFooter.id = :LOGO_ID) ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("LOGO_ID",logoId);
+        params.put("ENABLE", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),params);
+    }
 }

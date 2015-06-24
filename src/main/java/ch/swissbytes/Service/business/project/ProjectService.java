@@ -175,5 +175,8 @@ public class ProjectService implements Serializable {
         return projectTextSnippetService.findByProjectId(projectId);
     }
 
+    public List<ProjectEntity> findByLogoId(final Long logoId){
+        return projectDao.findByLogoId(logoId);
+    }
 
 }
