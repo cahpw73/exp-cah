@@ -7,11 +7,11 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
-import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
-import jdk.internal.util.xml.impl.Input;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -50,16 +50,20 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private void loadParamPurchaseOrder() {
         resourceUtils = new ResourceUtils();
-        InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
+        if(po.getProjectEntity().getReportLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
+            addParameters("logo", logo);
+        }
         addParameters("purchaseOrderId",po.getId());
-        addParameters("logo", logo);
-        addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
-        addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
-        addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
-        addParameters("postcode", po.getProjectEntity().getSupplierProcurement().getPostCode());
-        addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
-        addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
-        addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
+        if(po.getProjectEntity().getSupplierProcurement() != null){
+            addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
+            addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
+            addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
+            addParameters("postcode", po.getProjectEntity().getSupplierProcurement().getPostCode());
+            addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
+            addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
+            addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
+        }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());

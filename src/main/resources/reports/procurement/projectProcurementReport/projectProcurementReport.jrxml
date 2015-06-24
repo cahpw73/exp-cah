@@ -47,6 +47,7 @@
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="pooList" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="sortBy" class="java.lang.String"/>
 	<queryString language="plsql">
 		<![CDATA[select p.po,p.variation,p.orderedvariation,po.order_date,
 	sp.company,po.order_title,c.code,p.po_delivery_date,po.po_status

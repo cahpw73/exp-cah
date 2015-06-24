@@ -104,7 +104,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.code = code;
     }
 
-    @Column(name="quantity",nullable = false)
+    @Column(name="quantity")
     public Integer getQuantity() {
         return quantity;
     }

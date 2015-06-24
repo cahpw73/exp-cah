@@ -58,7 +58,7 @@
 		<![CDATA[select p.order_number,p.var_number,p.id
 from purchase_order po, p_order p
 where po.status_id = 1 and po.project_id = $P{projectIdFilter}
-      and po.po_id = p.id and p.order_number = $P{poNoFilter}]]>
+      and po.po_id = p.id or p.order_number = $P{poNoFilter}]]>
 	</queryString>
 	<field name="order_number" class="java.lang.String"/>
 	<field name="var_number" class="java.lang.String"/>

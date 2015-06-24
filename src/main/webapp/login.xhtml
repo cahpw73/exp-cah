@@ -74,7 +74,8 @@
                                             <p:commandLink type="submit" styleClass="btn btn-primary btn-sm"
                                                            action="#{authenticatorBean.login}"
                                                            value="#{msgs['login.button.label']}"
-                                                           style="  width: 170px; height: 30px;">
+                                                           style="  width: 170px; height: 30px;"
+                                                           update=":glbMsgs">
                                             </p:commandLink>
                                         </div>
                                     </div>
@@ -115,7 +116,9 @@
                 &#160;
                 <h:commandButton type="submit" action="#{authenticatorBean.cancel}"
                                  value="#{msgs['lbl.cancel']}"
-                                 styleClass="btn btn-primary btn-sm" />
+                                 styleClass="btn btn-primary btn-sm" >
+                    <p:ajax onsuccess="PF('pickSystemModal').hide();" update=":loginform :glbMsgs"/>
+                </h:commandButton>
             </div>
         </h:form>
     </p:dialog>

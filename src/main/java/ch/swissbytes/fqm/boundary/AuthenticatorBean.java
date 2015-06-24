@@ -3,12 +3,14 @@ package ch.swissbytes.fqm.boundary;
 import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
+import ch.swissbytes.fqmes.util.MessageProvider;
 import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 import org.primefaces.context.RequestContext;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
@@ -44,6 +46,8 @@ public class AuthenticatorBean {
             if (systemList.isEmpty()) {
                 identity.logout();
                 log.log(Level.WARNING, "this user has no access any module system");
+                //FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error","this user has no access any module system");
+
                 return "NONE";
             }
             if (systemList.size() == 1) {
@@ -91,9 +95,9 @@ public class AuthenticatorBean {
         if(identity.isLoggedIn()){
             identity.logout();
         }
-        RequestContext context = RequestContext.getCurrentInstance();
+        /*RequestContext context = RequestContext.getCurrentInstance();
         RequestContext.getCurrentInstance().update("pickSystemFormId");
-        context.execute("PF('pickSystemModal').hide();");
+        context.execute("PF('pickSystemModal').hide();");*/
     }
 
     public String validation(){
