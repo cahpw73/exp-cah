@@ -50,8 +50,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private void loadParamPurchaseOrder() {
         resourceUtils = new ResourceUtils();
+        //TODO Maybe this changes after we receive the client details
         if(po.getProjectEntity().getReportLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
+            addParameters("logo", logo);
+        }else if(po.getProjectEntity().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultLogo().getFile());
             addParameters("logo", logo);
         }
         addParameters("purchaseOrderId",po.getId());
