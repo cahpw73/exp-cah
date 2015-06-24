@@ -25,18 +25,19 @@
         <br/>
 
         <div class="col-md-5">
-            <h:panelGroup id="logoId">
+            <h:panelGroup id="logoId" style="width: 200px;height: 200px;">
                 <h:graphicImage library="img" name="NoImage.png" rendered="#{logoBean.logo.file==null}"
                                 width="#{logoBean.logo.file==null?'200':'0'}"
                                 styleClass="logo-procurement-preview"
                                 height="#{logoBean.logo.file==null?'200':'0'}"/>
                 <o:graphicImage id="graphicId" rendered="#{logoBean.logo.file!=null}" dataURI="true"
-                                styleClass="logo-procurement-preview"
-                                value="#{logoBean.logo.file}" width="#{logoBean.logo.file!=null?'200':'0'}"
-                                height="#{logoBean.logo.file!=null?'200':'0'}"/>
+                                styleClass="img-responsive"
+                                value="#{logoBean.logo.file}" />
                 <p:message for="graphicId"/>
             </h:panelGroup>
         </div>
+
+
         <div class="col-md-5">
             <h:inputText id="description" required="true"
                          value="#{logoBean.logo.description}">
@@ -45,6 +46,8 @@
             </h:inputText>
             <p:message for="description"/>
         </div>
+        <div class="clearfix"/>
+        <br/>
         <div class="col-md-12">
 
             <h:commandLink value="#{msgs['lbl.save']}" styleClass="btn btn-sm btn-primary"
