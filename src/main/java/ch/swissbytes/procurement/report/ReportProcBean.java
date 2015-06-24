@@ -2,9 +2,11 @@ package ch.swissbytes.procurement.report;
 
 
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
 
 import javax.annotation.PostConstruct;
@@ -81,6 +83,15 @@ public class ReportProcBean implements Serializable {
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", "Procurement.PurchaseOrder", messages, locale, configuration,po);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printProjectPurchaseOrder(final ProjectEntity project, final List<PurchaseOrderEntity> poList,final String strSortBy){
+        log.info("printProjectPurchaseOrder");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration,poList,project,strSortBy);
         reportView.printDocument(null);
         openReport = true;
     }

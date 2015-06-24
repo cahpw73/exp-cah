@@ -149,7 +149,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-   // public List<PurchaseOrderEntity> findByVariation(String variation, String poNumber,Long id){
    public List<PurchaseOrderEntity> findByVariation(PurchaseOrderEntity purchaseOrder){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
@@ -195,16 +194,16 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p.po, p.variation, po.orderDate,sp.company,po.orderTitle,c.code, p.poDeliveryDate,po.poProcStatus ");
         sb.append(" FROM PurchaseOrderEntity p ");
-        sb.append(" INNER JOIN po.poEntity po ");
+        sb.append(" INNER JOIN p.poEntity po ");
         sb.append(" LEFT JOIN po.supplier sp ");
         sb.append(" LEFT JOIN po.currency pc ");
         sb.append(" LEFT JOIN pc.currency c");
-        sb.append(" WHERE po.status.id=:ENABLED ");
-        sb.append(" AND po.projectEntity.id  = :PROJECT_ID");
+        sb.append(" WHERE p.status.id=:ENABLED ");
+        sb.append(" AND p.projectEntity.id  = :PROJECT_ID");
         if(poNo || varNo || supplier || deliveryDate) {
             sb.append(" ORDER BY " + strSort + " ");
         }
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("PROJECT_ID", projectId);
         return super.findBy(sb.toString(), map);

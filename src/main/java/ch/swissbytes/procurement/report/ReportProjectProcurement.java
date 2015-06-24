@@ -1,6 +1,8 @@
 package ch.swissbytes.procurement.report;
 
 
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
@@ -22,10 +24,10 @@ public class ReportProjectProcurement extends ReportView implements Serializable
     private final Logger log = Logger.getLogger(ReportProjectProcurement.class.getName());
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
     private Configuration configuration;
-    private List<DeliverableDto> dtos;
-    private PurchaseOrderEntity po;
-    private Long projectId;
-    private String poNo;
+    private List<PurchaseOrderEntity> poList;
+    private ProjectEntity project;
+    private String strSortBy;
+
 
 
     /**
@@ -35,13 +37,12 @@ public class ReportProjectProcurement extends ReportView implements Serializable
      * @param locale           {@link java.util.Locale}
      */
     public ReportProjectProcurement(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                    Configuration configuration, List<DeliverableDto> dtos, PurchaseOrderEntity po, Long projectId, String poNo) {
+                                    Configuration configuration, List<PurchaseOrderEntity> poList, ProjectEntity project, String strSortBy) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
-        this.dtos = dtos;
-        this.po = po;
-        this.projectId = projectId;
-        this.poNo = poNo;
+        this.poList = poList;
+        this.project = project;
+        this.strSortBy = strSortBy;
         LookupValueFactory lookupValueFactory = new LookupValueFactory();
         //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
         //addParameters("patternDecimal", configuration.getPatternDecimal());
@@ -53,16 +54,16 @@ public class ReportProjectProcurement extends ReportView implements Serializable
     }
 
     private void loadParamDeliverables() {
-        InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        addParameters("logo", logo);
-        addParameters("client", po.getProjectEntity().getSupplierProcurement().getCompany());
-        addParameters("projectCode", po.getProjectEntity().getSupplierProcurement().getStreet());
-        addParameters("projectName", po.getProjectEntity().getSupplierProcurement().getState());
-        addParameters("projectCurrency", po.getProjectEntity().getSupplierProcurement().getPostCode());
-        addParameters("sortedBy", po.getProjectEntity().getSupplierProcurement().getCountry());
-        addParameters("currentDate", po.getProjectEntity().getSupplierProcurement().getPhone());
-        addParameters("sortBy", po.getProjectEntity().getSupplierProcurement().getFax());
-        addParameters("sortBy", po.getProjectEntity().getSupplierProcurement().getFax());
+        //InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
+        //addParameters("logo", logo);
+        //addParameters("client", "");
+        addParameters("projectCode", project.getProjectNumber());
+        addParameters("projectName", project.getTitle());
+        addParameters("projectCurrency",getCurrencyDefault());
+        addParameters("sortedBy", strSortBy);
+        addParameters("currentDate", null);
+        addParameters("sortBy", null);
+        addParameters("sortBy", null);
         Date now = new Date();
         now.setHours(23);
         now.setMinutes(59);
@@ -80,4 +81,13 @@ public class ReportProjectProcurement extends ReportView implements Serializable
     }
 
 
+    public String getCurrencyDefault() {
+        String currencyDefault = "";
+        for(ProjectCurrencyEntity pc : project.getCurrencies()){
+            if(pc.getProjectDefault()){
+                currencyDefault = pc.getCurrency().getName();
+            }
+        }
+        return currencyDefault;
+    }
 }

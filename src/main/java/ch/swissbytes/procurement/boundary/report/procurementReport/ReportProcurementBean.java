@@ -37,6 +37,9 @@ public class ReportProcurementBean implements Serializable {
     @Inject
     private ProjectService projectService;
 
+    @Inject
+    private ReportProcBean reportProcBean;
+
     private List<ProjectEntity> projectList;
 
     private List<ProjectProcurementDto> ppdtos;
@@ -74,8 +77,31 @@ public class ReportProcurementBean implements Serializable {
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
         List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
+        reportProcBean.printProjectPurchaseOrder(selectedProject,list,getDescriptionSort(sortMap));
         log.info("");
+    }
 
+    private String getDescriptionSort(Map<String,Boolean> sortMap){
+        Boolean poNo = sortMap.get("poNo");
+        Boolean varNo = sortMap.get("varNo");
+        Boolean supplier = sortMap.get("supplier");
+        Boolean deliveryDate = sortMap.get("deliveryDate");
+        String strSort = "";
+        if(poNo){
+            strSort = strSort+"PO No,";
+        }
+        if(varNo){
+            strSort = strSort+"Var No,";
+        }
+        if (supplier){
+            strSort = strSort+"Supplier,";
+        }
+        if(deliveryDate){
+            strSort = strSort+"Delivery Date,";
+        }
+
+        strSort = strSort.substring(0,strSort.length() - 1);
+        return  strSort;
     }
 
     public List<ProjectEntity> getProjectList() {
