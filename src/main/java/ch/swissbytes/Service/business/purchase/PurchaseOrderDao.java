@@ -187,7 +187,9 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
             strSort = strSort+"p.poDeliveryDate,";
         }
 
-        strSort = strSort.substring(0,strSort.length() - 1);
+        if(strSort.length()>1){
+            strSort = strSort.substring(0,strSort.length() - 1);
+        }
 
         log.info(" sort by: " + strSort);
 

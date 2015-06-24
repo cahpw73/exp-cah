@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(1)}"/>
+        <f:viewParam name="reportName" value="#{reportProcurementBean.reportName}"/>
+        <f:viewAction action="#{reportProcurementBean.loadNameReport}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <div class="col-md-6">
+            <div class="panel panel-default panel-tab">
+                <div class="procurement-panel-header">#{reportProcurementBean.reportTitle}</div>
+                <!-- Default panel contents -->
+                <div class="panel-body">
+                    <h:form>
+                        <h:panelGroup id="projectProcGroupId">
+                            <div class="col-md-12">
+                                <div style="width: 340px!important; float: left!important;">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass=" control-label"
+                                                      style="text-align: left !important;direction: ltr !important;"
+                                                      value="#{msgs['project.list.lbl.msg.select.po']}"/>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h:outputLabel styleClass="col-sm-3 control-label "
+                                                           for="projectDelId"
+                                                           value="#{msgs['report.deliverables.lbl.project']}"/>
+
+                                            <div class="col-md-7" style="margin-left: -20px!important;">
+                                                <h:selectOneMenu id="projectDelId"
+                                                                 value="#{reportProcurementBean.selectedProject}"
+                                                                 styleClass="form-control" converter="projectConverter">
+                                                    <f:selectItem
+                                                            itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
+                                                            noSelectionOption="true"/>
+                                                    <f:selectItems value="#{reportProcurementBean.projectList}"
+                                                                   var="_p"
+                                                                   itemValue="#{_p}"
+                                                                   itemLabel="#{_p.title}"/>
+                                                    <p:ajax event="change" process="@this"/>
+                                                </h:selectOneMenu>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="control-label"
+                                                      style="text-align: left !important;direction: ltr !important;"
+                                                      value="#{msgs['project.list.lbl.msg.conf.print.po']}"/>
+                                    </div>
+                                    <br/>
+                                    <div class="form-group">
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <h:selectBooleanCheckbox id="poNoBoxId" value="#{reportProcurementBean.sortByPoNo}">
+                                                    <p:ajax event="change" process="@this"/>
+                                                </h:selectBooleanCheckbox> PO No
+                                            </label>
+                                        </div>
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <h:selectBooleanCheckbox id="varBoxId" value="#{reportProcurementBean.sortByVarNo}">
+                                                    <p:ajax event="change" process="@this"/>
+                                                </h:selectBooleanCheckbox> Var No
+                                            </label>
+                                        </div>
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <h:selectBooleanCheckbox id="supplierBoxId"
+                                                                         value="#{reportProcurementBean.sortBySupplier}">
+                                                    <p:ajax event="change" process="@this"/>
+                                                </h:selectBooleanCheckbox> Supplier
+                                            </label>
+                                        </div>
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <h:selectBooleanCheckbox id="deliveryBoxId"
+                                                                         value="#{reportProcurementBean.sortByDeliveryDate}">
+                                                    <p:ajax event="change" process="@this"/>
+                                                </h:selectBooleanCheckbox> Delivery Date
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br/>
+
+                                    <div class="form-group">
+                                        <div class="pull-right">
+
+                                            <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                                                           value="#{msgs['project.list.lbl.btn.print.po.final']}"
+                                                           action="#{reportProcurementBean.printProjectProcurementReport}"
+                                                           target="_blank" style="color: #ffffff">
+                                            </h:commandLink>
+                                            &#160;
+                                            <h:commandButton class="btn btn-primary btn-sm"
+                                                             immediate="true"
+                                                             action="#{reportProcurementBean.backToReports}"
+                                                             value="#{msgs['project.list.lbl.list.reports']}"/>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

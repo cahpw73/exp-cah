@@ -9,6 +9,8 @@ import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
+import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -51,6 +53,11 @@ public class ReportProcurementBean implements Serializable {
     private Boolean sortBySupplier;
     private Boolean sortByDeliveryDate;
 
+    private String reportName;
+
+    private String reportTitle;
+    private String projectProcurementReport = "Project Procurement Report";
+
     @PostConstruct
     public void create() {
         log.info("creating reportDeliverableBean");
@@ -76,9 +83,33 @@ public class ReportProcurementBean implements Serializable {
         sortMap.put("varNo", sortByVarNo);
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
-        List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
-        reportProcBean.printProjectPurchaseOrder(selectedProject,list,getDescriptionSort(sortMap));
-        log.info("");
+        if (selectedProject != null){
+            List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
+            reportProcBean.printProjectPurchaseOrder(selectedProject,list,getDescriptionSort(sortMap));
+        }else{
+            Messages.addFlashGlobalError("Select a project first");
+        }
+
+    }
+
+    public void resetValuesProjectProc(){
+        sortByPoNo = false;
+        sortByVarNo = false;
+        sortBySupplier = false;
+        sortByDeliveryDate = false;
+        selectedProject = new ProjectEntity();
+    }
+
+    public String backToReports(){
+        log.info("back to reports");
+        return "report?faces-redirect=true";
+    }
+
+    public void loadNameReport(){
+        switch (reportName){
+            case "ppr": reportTitle = projectProcurementReport;
+                break;
+        }
     }
 
     private String getDescriptionSort(Map<String,Boolean> sortMap){
@@ -99,8 +130,9 @@ public class ReportProcurementBean implements Serializable {
         if(deliveryDate){
             strSort = strSort+"Delivery Date,";
         }
-
-        strSort = strSort.substring(0,strSort.length() - 1);
+        if(strSort.length()>1){
+            strSort = strSort.substring(0,strSort.length() - 1);
+        }
         return  strSort;
     }
 
@@ -146,5 +178,21 @@ public class ReportProcurementBean implements Serializable {
 
     public void setSortByDeliveryDate(Boolean sortByDeliveryDate) {
         this.sortByDeliveryDate = sortByDeliveryDate;
+    }
+
+    public String getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
+    }
+
+    public String getReportTitle() {
+        return reportTitle;
+    }
+
+    public void setReportTitle(String reportTitle) {
+        this.reportTitle = reportTitle;
     }
 }

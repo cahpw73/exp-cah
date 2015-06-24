@@ -4,11 +4,13 @@ package ch.swissbytes.procurement.report;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
+import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -54,21 +56,35 @@ public class ReportProjectProcurement extends ReportView implements Serializable
     }
 
     private void loadParamDeliverables() {
+        List<ProjectProcurementDto> dtos = getProjectProcurementDtos();
         //InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
         //addParameters("logo", logo);
         //addParameters("client", "");
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
-        addParameters("sortedBy", strSortBy);
-        addParameters("currentDate", null);
-        addParameters("sortBy", null);
-        addParameters("sortBy", null);
+        addParameters("sortBy", strSortBy);
+        addParameters("pooList",createDataSource(dtos));
         Date now = new Date();
-        now.setHours(23);
-        now.setMinutes(59);
-        now.setSeconds(59);
-        addParameters("CURRENT_DATE", Util.convertUTC(now, TimeZone.getDefault().getID()));
+        addParameters("currentDate",now);
+    }
+
+    private List<ProjectProcurementDto> getProjectProcurementDtos() {
+        List<ProjectProcurementDto> dtos = new ArrayList<>();
+        for(Object element : poList){
+            Object []values = (Object []) element;
+            ProjectProcurementDto dto = new ProjectProcurementDto();
+            dto.setPo(((String)values[0]));
+            dto.setVariation(((String)values[1]));
+            dto.setOrderDate(((Date)values[2]));
+            dto.setCompany(((String)values[3]));
+            dto.setOrderTitle(((String)values[4]));
+            dto.setCurrency(((String)values[5]));
+            dto.setPoDeliveryDate(((Date)values[6]));
+            dto.setPoStatus(((POStatusEnum) values[7]).getLabel());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     @Override
