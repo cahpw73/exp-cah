@@ -14,7 +14,9 @@
     <ui:define name="body">
         <h:form id="contactEditId" prependId="false">
             <div class="col-md-8">
-                <ui:include src="components/templateSupplier.xhtml"/>
+                <ui:include src="components/templateSupplier.xhtml">
+                        <ui:param name="FORM" value="contactEditId"/>
+                </ui:include>
             </div>
         </h:form>
     </ui:define>

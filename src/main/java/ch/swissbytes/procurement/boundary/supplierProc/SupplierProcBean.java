@@ -81,6 +81,7 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public void start(){
         supplier=new SupplierProcEntity();
+        putModeSupplier();
     }
 
 
