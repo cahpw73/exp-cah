@@ -191,17 +191,15 @@ public class PoBean extends Bean {
 
     private boolean validate(){
         boolean validated=true;
-        //TODO @alvaro FIX ME
-        /*if(service.isVarNumberUsed(purchaseOrder.getVariation(),purchaseOrder.getPo(),purchaseOrder.getId())){
+        if(service.isVarNumberUsed(purchaseOrder)){
             Messages.addFlashError("poVarNumber","variation number is already being used");
             validated=false;
-        }*/
+        }
         return validated;
     }
 
     private void collectData(){
         purchaseOrder.getPoEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
-        //purchaseOrder.getPoEntity().getItemList().addAll(itemBean.getItemList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
         purchaseOrder.getPoEntity().setCashflow(cashflowBean.getCashflow());

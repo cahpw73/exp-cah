@@ -302,8 +302,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findByProjectCustomizedSort(projectId,sortByMap);
     }
 
-    public boolean isVarNumberUsed(String varNumber,String poNumber,Long id ){
-        List<PurchaseOrderEntity> list=dao.findByVariation(varNumber, poNumber,id);
+    public boolean isVarNumberUsed(PurchaseOrderEntity purchaseOrder ){
+        List<PurchaseOrderEntity> list=dao.findByVariation(purchaseOrder);
         return !list.isEmpty();
     }
 

@@ -149,7 +149,8 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-    public List<PurchaseOrderEntity> findByVariation(String variation, String poNumber,Long id){
+   // public List<PurchaseOrderEntity> findByVariation(String variation, String poNumber,Long id){
+   public List<PurchaseOrderEntity> findByVariation(PurchaseOrderEntity purchaseOrder){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po ");
@@ -157,11 +158,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" AND lower(po.variation)  = :VARIATION");
         sb.append(" AND lower(po.po) = :PO_NUMBER ");
         sb.append(" AND NOT po.id = :ID ");
+        sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        map.put("VARIATION", variation!=null?variation.trim().toLowerCase():"");
-        map.put("PO_NUMBER",poNumber==null?"":poNumber.trim().toLowerCase());
-        map.put("ID",id==null?-1L:id);
+        map.put("VARIATION", purchaseOrder.getVariation()!=null?purchaseOrder.getVariation().trim().toLowerCase():"");
+        map.put("PO_NUMBER",purchaseOrder.getPo()== null?"":purchaseOrder.getPo().trim().toLowerCase());
+        map.put("ID",purchaseOrder.getId()==null?-1L:purchaseOrder.getId());
+        map.put("PROJECT_ID",purchaseOrder.getProjectEntity().getId());
         return super.findBy(sb.toString(), map);
     }
 

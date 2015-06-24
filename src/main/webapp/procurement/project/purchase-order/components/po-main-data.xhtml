@@ -61,7 +61,7 @@
                                  value="#{poBean.purchaseOrder.poEntity.orderTitle}"
                                  maxlength="250"
                                  styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['project.detail.project.number.required']}"
+                                 requiredMessage="#{msgs['po.title.valid']}"
                                  rendered="#{poBean.beingEdited}"/>
                     <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
                     <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
@@ -80,7 +80,7 @@
                                  value="#{poBean.purchaseOrder.po}"
                                  maxlength="50"
                                  styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['project.detail.project.number.required']}"
+                                 requiredMessage="#{msgs['po.number.valid']}"
                                  rendered="#{poBean.beingEdited}"/>
                     <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
                     <h:inputText id="poOrderNumberVi" readonly="true" styleClass="form-control view-po"
@@ -100,7 +100,7 @@
                                  value="#{poBean.purchaseOrder.variation}"
                                  maxlength="50"
                                  styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['project.detail.project.number.required']}"
+                                 requiredMessage="#{msgs['po.variation.valid']}"
                                  rendered="#{poBean.beingEdited}"/>
                     <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
                     <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"
