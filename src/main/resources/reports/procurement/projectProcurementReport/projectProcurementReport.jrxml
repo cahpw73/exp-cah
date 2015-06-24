@@ -264,7 +264,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="303e1661-f615-4730-bfbb-6ab435e5b87c" x="0" y="0" width="53" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 							</textField>
@@ -275,7 +275,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="9cf615d2-6110-4e1b-bc8c-6f37e7c7a4b8" x="0" y="0" width="53" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 							</textField>
@@ -286,7 +286,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="c3f64ef4-ba80-4e75-934e-6cb843e145a8" x="0" y="0" width="93" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{orderDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{orderDate}.getTime())):null]]></textFieldExpression>
 							</textField>
@@ -297,7 +297,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="9f533b23-a960-4a48-8caa-ce02f80e4fe1" x="0" y="0" width="172" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 							</textField>
@@ -308,7 +308,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="da9b8f44-4514-4151-b03b-0117a44a64e9" x="0" y="0" width="172" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{orderTitle}]]></textFieldExpression>
 							</textField>
@@ -319,7 +319,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="b0c4ccbf-2ea6-4e68-8e44-862b624099a4" x="0" y="0" width="85" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
 							</textField>
@@ -330,7 +330,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="f4541e69-ca7e-49c6-911b-ae2c43d67ee5" x="0" y="0" width="86" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{poDeliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{poDeliveryDate}.getTime())):null]]></textFieldExpression>
 							</textField>
@@ -341,7 +341,7 @@ where p.project_id = 1]]>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="e394c080-c4e7-4311-812d-fbdf462ade41" x="0" y="0" width="85" height="15"/>
 								<textElement verticalAlignment="Middle">
-									<font size="7"/>
+									<font size="6"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{poStatus}]]></textFieldExpression>
