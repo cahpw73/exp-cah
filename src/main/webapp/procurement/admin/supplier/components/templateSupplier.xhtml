@@ -7,8 +7,10 @@
 
     <div class="col-sm-7" style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
-            <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.supplier.id']} *" style="padding-left: 0px;"/>
-            <div class="col-sm-8" >
+            <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.supplier.id']} *"
+                           style="padding-left: 0px;"/>
+
+            <div class="col-sm-8">
                 <h:inputText id="supplierID" maxlength="50"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.supplierId}"
@@ -31,11 +33,12 @@
                                  rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
                                  styleClass="btn btn-primary btn-sm"/>
             </h:panelGroup>
-            <h:panelGroup rendered="#{MODE eq 'PO'}">
+            <h:panelGroup rendered="#{MODE eq 'PO' and supplierProcBean.supplierMode}">
                 <h:commandButton value="#{msgs['lbl.save']}"
                                  action="#{poBean.saveSupplier}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="true" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId" process="@form"/>
+                    <p:ajax async="true" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId"
+                            process="@form"/>
                 </h:commandButton>
             </h:panelGroup>
             <h:commandButton value="#{msgs['lbl.save']}"
@@ -52,9 +55,10 @@
 
     <div class="col-sm-7" style="padding-left: 0px!important;">
         <div class="form-group">
-            <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.company']} *" style="padding-left: 0px;"/>
+            <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.company']} *"
+                           style="padding-left: 0px;"/>
 
-            <div class="col-sm-8" >
+            <div class="col-sm-8">
                 <h:inputText maxlength="50" id="companyId"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.company}"
@@ -68,13 +72,21 @@
 
     <div class="col-sm-2" style="margin-top: -12px!important;">
         <h:panelGroup id="idBtnCancel">
+            #{MODE}
             <h:panelGroup rendered="#{MODE eq 'PO'}">
-                <button type="button" class="btn btn-primary btn-sm" onclick="PF('supplierModal').hide()">
-                    #{msgs['lbl.cancel']}
-                </button>
+                <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="PF('supplierModal').hide()">
+                        #{msgs['lbl.cancel']}
+                    </button>
+                </h:panelGroup>
+                <h:commandButton value="#{msgs['lbl.cancel']}"
+                                 styleClass="btn btn-primary btn-sm"
+                                 rendered="#{not supplierProcBean.supplierMode}">
+                    <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
+                            immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
+                </h:commandButton>
             </h:panelGroup>
             <h:panelGroup rendered="#{MODE ==null}">
-
                 <h:link value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
                         outcome="list" styleClass="btn btn-primary btn-sm"/>
                 <h:commandButton value="#{msgs['lbl.cancel']}"
