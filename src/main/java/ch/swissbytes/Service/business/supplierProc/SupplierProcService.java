@@ -109,4 +109,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     public List<String> findCountriesByCategory(final Long id){
         return dao.findCountriesByCategory(id);
     }
+    public List<SupplierProcEntity> findSupplierByCountriesAndCategory(final Long id,final List<String> countries){
+        return dao.findSupplierByCountriesAndCategory(id, countries);
+    }
 }

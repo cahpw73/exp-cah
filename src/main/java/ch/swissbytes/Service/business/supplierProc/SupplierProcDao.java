@@ -104,14 +104,14 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         return super.findBy(sb.toString(),params);
     }
 
-    public List<String> findSupplierByCountriesAndCategory(final Long categoryId,List<String> countries){
+    public List<SupplierProcEntity> findSupplierByCountriesAndCategory(final Long categoryId,List<String> countries){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT sc.supplier ");
         sb.append(" FROM SupplierCategory sc ");
         sb.append(" WHERE sc.status = :ENABLE ");
         sb.append(" AND sc.category.id = :CATEGORY_ID ");
         if(countries!=null &&!countries.isEmpty()){
-            sb.append(" sc.supplier.country IN (:COUNTRIES)");
+            sb.append(" AND sc.supplier.country IN (:COUNTRIES)");
         }
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);

@@ -30,7 +30,6 @@
 
                             <div class="col-md-7">
                                 <div class="left-inner-addon">
-                                    <i class="fa fa-search fa-lg"></i>
                                     <h:inputText value="#{bidListBean.description}"/>
                                 </div>
                             </div>
@@ -51,22 +50,20 @@
                 <br/>
 
                 <div>
-                    <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
-                                 rows="#{configuration.defaultPageSize}" lazy="true">
+                    <p:dataTable id="deliverablesTblId" value="#{bidListBean.suppliers(categoryBean.selectedCategory)}" var="_supplier">
                         <p:column headerText="Supplier ID">
-                            #{_l.poNo}
+                            #{_supplier.supplierId}
                         </p:column>
                         <p:column headerText="Company">
-                            #{_l.varNo}
+                            #{_supplier.company}
                         </p:column>
                         <p:column headerText="state">
-                            #{_l.poDescription}
+                            #{_supplier.state}
                         </p:column>
                         <p:column headerText="Contact" >
-                            #{_l.delNo}
                         </p:column>
                         <p:column headerText="Print" >
-                            #{_l.description}
+                            <h:selectBooleanCheckbox/>
                         </p:column>
                     </p:dataTable>
                 </div>
