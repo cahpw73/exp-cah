@@ -523,3 +523,13 @@ label.checkbox{
     box-shadow: none!important;
 
 }
+
+.btn-commandLink-primeFaces, .btn-group-sm > .btn{
+    height: 18px!important;
+    line-height: 4px!important;
+    font-weight: lighter!important;
+    border-radius: 5px;
+    font-size: 11px!important;
+    padding: 0px 10px;
+    min-width: 62px!important;
+}
