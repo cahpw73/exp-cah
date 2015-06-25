@@ -11,99 +11,107 @@
         <f:viewAction action="#{mainMenuBean.select(1)}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="bidderForm" prependId="false">
-            <h:panelGroup rendered="#{bidListBean.categorySelection}">
+        <div class="col-md-6">
+            <h:form id="bidderForm" prependId="false">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['report.expediting.title']}</div>
+                    <!-- Default panel contents -->
+                    <div class="panel-body">
 
-                <div style="min-width: 500px;">
-                    <div class="panel panel-default panel-tab">
-                        <div class="procurement-panel-header">#{msgs['report.expediting.title']}</div>
-                        <!-- Default panel contents -->
-                        <div class="panel-body">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       value="#{msgs['report.expediting.lbl.project']}"/>
+                        <div class="row">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                               value="#{msgs['report.expediting.lbl.project']}"/>
 
-                                        <div class="col-md-7">
-                                            <h:selectOneMenu id="projectDelId"
-                                                             required="true"
-                                                             requiredMessage="Please select a project"
-                                                             value="#{bidListBean.project}"
-                                                             styleClass="form-control" converter="projectConverter">
-                                                <f:selectItem
-                                                        itemLabel="#{msgs['report.expediting.lbl.no.selection.project']}"
-                                                        noSelectionOption="true"/>
-                                                <f:selectItems value="#{projectListBean.projectList}"
-                                                               var="_p"
-                                                               itemValue="#{_p}"
-                                                               itemLabel="#{_p.title}"/>
-                                            </h:selectOneMenu>
-                                            <p:message for="projectDelId"/>
-                                        </div>
+                                <div class="col-md-4">
+                                    <h:selectOneMenu id="projectDelId"
+                                                     required="true"
+                                                     requiredMessage="Please select a project"
+                                                     value="#{bidListBean.project}"
+                                                     styleClass="form-control" converter="projectConverter">
+                                        <f:selectItem
+                                                itemLabel="#{msgs['report.expediting.lbl.no.selection.project']}"
+                                                noSelectionOption="true"/>
+                                        <f:selectItems value="#{projectListBean.projectList}"
+                                                       var="_p"
+                                                       itemValue="#{_p}"
+                                                       itemLabel="#{_p.title}"/>
+                                    </h:selectOneMenu>
+                                    <p:message for="projectDelId"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                               value="#{msgs['report.expediting.lbl.po.no']}"/>
+
+                                <div class="col-md-4">
+                                    <div class="left-inner-addon">
+                                        <i class="fa fa-search fa-lg"></i>
+                                        <h:inputText styleClass="form-control input-search"
+                                                     value="#{categoryBean.searchNameCategory}"
+                                                     jsf:placeholder="#{msgs['lbl.search']}">
+                                            <p:ajax event="keyup" process="@this"
+                                                    listener="#{categoryBean.searchCategory}" async="false"/>
+                                        </h:inputText>
                                     </div>
                                 </div>
-                                <br/>
-
-                                <div class="row">
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       value="#{msgs['report.expediting.lbl.po.no']}"/>
-
-                                        <div class="col-md-7">
-                                            <div class="left-inner-addon">
-                                                <i class="fa fa-search fa-lg"></i>
-                                                <h:inputText styleClass="form-control input-search"
-                                                             value="#{categoryBean.searchNameCategory}"
-                                                             jsf:placeholder="#{msgs['lbl.search']}">
-                                                    <p:ajax event="keyup" process="@this"
-                                                            listener="#{categoryBean.searchCategory}" async="false"/>
-                                                </h:inputText>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <br/>
-
-                                <div class="row">
-
-                                    <div>
-                                        <p:dataTable id="countries" var="_country"
-                                                     value="#{bidListBean.findCountriesByCategory(categoryBean.selectedCategory)}">
-                                            <p:column headerText="#{msgs['supplier.lbl.country']}">
-                                                #{_country}
-                                            </p:column>
-                                            <p:column headerText="Selected">
-                                                <h:selectBooleanCheckbox>
-                                                    <p:ajax async="false" process="@this"
-                                                            listener="#{bidListBean.selectCountry(_country)}"/>
-                                                </h:selectBooleanCheckbox>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </div>
-                                </div>
-
 
                             </div>
+                        </div>
+                        <br/>
 
-                            <div class="clearfix"/>
-                            <div>
-                                <h:commandLink styleClass="btn btn-primary btn-sm"
-                                               value="#{msgs['bid.list.btn']}"
-                                               action="#{bidListBean.putModeSupplier}">
-                                    <p:ajax async="false" process="@form" update="bidderForm"/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p:dataTable id="countries" var="_country"
+                                             value="#{bidListBean.findCountriesByCategory(categoryBean.selectedCategory)}">
+                                    <p:column headerText="#{msgs['report.expediting.column.po.no']}" width="80">
+                                        #{_country}
+                                    </p:column>
+                                    <p:column headerText="#{msgs['report.expediting.column.var.no']}" width="80">
+                                        #{_country}
+                                    </p:column>
+                                    <p:column headerText="#{msgs['report.expediting.column.item']}" width="80">
+                                        #{_country}
+                                    </p:column>
+                                    <p:column headerText="#{msgs['report.expediting.column.description']}">
+                                        #{_country}
+                                    </p:column>
+                                    <p:column
+                                            headerText="#{msgs['report.expediting.column.exclude.from.expediting']}">
+                                        <h:selectBooleanCheckbox>
+                                            <p:ajax async="false" process="@this"
+                                                    listener="#{bidListBean.selectCountry(_country)}"/>
+                                        </h:selectBooleanCheckbox>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"/>
+                        <br/>
+
+                        <div class="form-group">
+                            <div class="pull-left">
+
+                                <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                                               value="#{msgs['lbl.save']}"
+                                               action="#{reportProcurementBean.printProjectProcurementReport}"
+                                               target="_blank" style="color: #ffffff">
                                 </h:commandLink>
+                                &#160;
+                                <h:commandButton class="btn btn-primary btn-sm"
+                                                 immediate="true"
+                                                 action="#{reportProcurementBean.backToReports}"
+                                                 value="#{msgs['lbl.cancel']}"/>
                             </div>
-
-                            <br/>
-
                         </div>
                     </div>
                 </div>
-
-
-            </h:panelGroup>
-        </h:form>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>

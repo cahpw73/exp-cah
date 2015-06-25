@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6105100000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="192"/>
 	<parameter name="purchaseOrderId" class="java.lang.Long"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="footerLogo" class="java.io.InputStream"/>
@@ -358,8 +358,9 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 			</staticText>
 			<staticText>
 				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="171" y="1" width="200" height="16"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Description</style>]]></text>
 			</staticText>
@@ -422,7 +423,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{cost})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{cost}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="3f9a808b-1e24-4826-8457-74ca0c25dc17" x="475" y="1" width="80" height="12"/>
@@ -430,7 +431,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total_cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost}):null]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="8f8d885b-7185-49d9-8113-d4b85b0f62e1" positionType="Float" x="0" y="14" width="555" height="1"/>
