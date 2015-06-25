@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Report</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(1)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form id="bidderForm" prependId="false">
+            <h:panelGroup rendered="#{bidListBean.categorySelection}">
+
+                <div style="min-width: 500px;">
+                    <div class="panel panel-default panel-tab">
+                        <div class="procurement-panel-header">#{msgs['report.expediting.title']}</div>
+                        <!-- Default panel contents -->
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                       value="#{msgs['report.expediting.lbl.project']}"/>
+
+                                        <div class="col-md-7">
+                                            <h:selectOneMenu id="projectDelId"
+                                                             required="true"
+                                                             requiredMessage="Please select a project"
+                                                             value="#{bidListBean.project}"
+                                                             styleClass="form-control" converter="projectConverter">
+                                                <f:selectItem
+                                                        itemLabel="#{msgs['report.expediting.lbl.no.selection.project']}"
+                                                        noSelectionOption="true"/>
+                                                <f:selectItems value="#{projectListBean.projectList}"
+                                                               var="_p"
+                                                               itemValue="#{_p}"
+                                                               itemLabel="#{_p.title}"/>
+                                            </h:selectOneMenu>
+                                            <p:message for="projectDelId"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                       value="#{msgs['report.expediting.lbl.po.no']}"/>
+
+                                        <div class="col-md-7">
+                                            <div class="left-inner-addon">
+                                                <i class="fa fa-search fa-lg"></i>
+                                                <h:inputText styleClass="form-control input-search"
+                                                             value="#{categoryBean.searchNameCategory}"
+                                                             jsf:placeholder="#{msgs['lbl.search']}">
+                                                    <p:ajax event="keyup" process="@this"
+                                                            listener="#{categoryBean.searchCategory}" async="false"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br/>
+
+                                <div class="row">
+
+                                    <div>
+                                        <p:dataTable id="countries" var="_country"
+                                                     value="#{bidListBean.findCountriesByCategory(categoryBean.selectedCategory)}">
+                                            <p:column headerText="#{msgs['supplier.lbl.country']}">
+                                                #{_country}
+                                            </p:column>
+                                            <p:column headerText="Selected">
+                                                <h:selectBooleanCheckbox>
+                                                    <p:ajax async="false" process="@this"
+                                                            listener="#{bidListBean.selectCountry(_country)}"/>
+                                                </h:selectBooleanCheckbox>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="clearfix"/>
+                            <div>
+                                <h:commandLink styleClass="btn btn-primary btn-sm"
+                                               value="#{msgs['bid.list.btn']}"
+                                               action="#{bidListBean.putModeSupplier}">
+                                    <p:ajax async="false" process="@form" update="bidderForm"/>
+                                </h:commandLink>
+                            </div>
+
+                            <br/>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

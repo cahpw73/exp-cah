@@ -43,19 +43,22 @@ public class ProjectTextSnippetDao extends GenericDao<ProjectTextSnippetEntity> 
         return super.findBy(sb.toString(),params);
     }
 
-    public ProjectTextSnippetEntity findByTextSnippetId(Long id) {
+    public ProjectTextSnippetEntity findByTextSnippetId(Long id, final Long projectId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectTextSnippetEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" AND p.textSnippet.id = :TEXT_SNIPPET_ID ");
-        Query query = super.entityManager.createQuery(sb.toString());
+        sb.append(" AND p.project.id = :PROJECT_ID ");
+        /*Query query = super.entityManager.createQuery(sb.toString());
         query.setParameter("ENABLE",StatusEnum.ENABLE);
-        query.setParameter("TEXT_SNIPPET_ID",id);
-        /*Map<String,Object> params = new HashMap<>();
+        query.setParameter("TEXT_SNIPPET_ID",id);*/
+        Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
-        params.put("TEXT_SNIPPET_ID",id);*/
-        return (ProjectTextSnippetEntity) query.getSingleResult();
+        params.put("TEXT_SNIPPET_ID",id);
+        params.put("PROJECT_ID",projectId);
+        List<ProjectTextSnippetEntity> list = super.findBy(sb.toString(),params);
+        return list.get(0);
     }
 
     @Override

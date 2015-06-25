@@ -43,11 +43,13 @@ public class ProjectTextSnippetService implements Serializable {
     }
 
 
-    public List<ProjectTextSnippetEntity> findTextSnippetByClausesId(List<ClausesEntity> clausesEntities) {
+    public List<ProjectTextSnippetEntity> findTextSnippetByClausesId(List<ClausesEntity> clausesEntities,Long projectId) {
+        log.info("findTextSnippetByClausesId");
         List<ProjectTextSnippetEntity> list = new ArrayList<>();
         for(ClausesEntity entity : clausesEntities){
+            log.info("TextSnippetID "+entity.getTextSnippet().getId());
             ProjectTextSnippetEntity ps;
-            ps= dao.findByTextSnippetId(entity.getTextSnippet().getId());
+            ps= dao.findByTextSnippetId(entity.getTextSnippet().getId(),projectId);
             list.add(ps);
         }
         return list;
