@@ -40,12 +40,14 @@ public class BidListBean implements Serializable {
     private String packageNo;
     private String description;
     private String comments;
+    private List<Long>supplierSelected;
 
     @PostConstruct
     public void create() {
         log.log(Level.FINE, "creating bidListBean");
         countries = new ArrayList<>();
         countriesSelected = new ArrayList<>();
+        supplierSelected=new ArrayList<>();
     }
 
     @PreDestroy
@@ -74,8 +76,15 @@ public class BidListBean implements Serializable {
     }
 
     public void generateReport(){
-      //  reportProcBean.printReportDeliverables(deliverableDtoList, purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
-        //reportProcBean.printBidderList();
+        reportProcBean.printBidderList(supplierSelected,packageNo,description,comments,project.getProjectNumber(),project.getTitle());
+    }
+
+    public void selectSupplier(Long idSupplier){
+        if(supplierSelected.contains(idSupplier)){
+            supplierSelected.remove(idSupplier);
+        }else{
+            supplierSelected.add(idSupplier);
+        }
     }
 
     public void setProject(ProjectEntity project) {

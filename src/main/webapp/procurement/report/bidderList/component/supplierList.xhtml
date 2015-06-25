@@ -37,9 +37,10 @@
                             <div>
                                 <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
                                                value="OK"
-                                               action="#{reportDeliverableBean.printReportDeliverables}"/>
+                                               action="#{bidListBean.generateReport}">
+                                </h:commandLink>
                                 <h:commandLink styleClass="btn btn-primary btn-sm"
-                                               value="Close"
+                                               value="#{msgs['lbl.close']}"
                                                action="#{bidListBean.putModeCategory}">
                                     <p:ajax async="false" update="bidderForm"/>
                                 </h:commandLink>
@@ -65,7 +66,9 @@
                         <p:column headerText="Contact">
                         </p:column>
                         <p:column headerText="Print">
-                            <h:selectBooleanCheckbox/>
+                            <h:selectBooleanCheckbox>
+                                <p:ajax async="true" event="blur" listener="#{bidListBean.selectSupplier(_supplier.id)}"/>
+                            </h:selectBooleanCheckbox>
                         </p:column>
                     </p:dataTable>
                 </div>

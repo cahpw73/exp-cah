@@ -53,27 +53,32 @@ public class ReportDeliverables extends ReportView implements Serializable {
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
         //addParameters("COUNTRY_LOCALE", configuration.getCountry());
+        addParameters("SUBREPORT_DIR","reports/procurement/deliverables/");
         loadParamDeliverables();
     }
 
     private void loadParamDeliverables() {
-        InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        addParameters("logo", logo);
-        addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
-        addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
-        addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
-        addParameters("postcode", po.getProjectEntity().getSupplierProcurement().getPostCode());
-        addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
-        addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
-        addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
+        if(po.getProjectEntity().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClientLogo().getFile());
+            addParameters("logo", logo);
+        }else if(po.getProjectEntity().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultLogo().getFile());
+            addParameters("logo", logo);
+        }
+        if(po.getProjectEntity().getSupplierProcurement() != null){
+            addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
+            addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
+            addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
+            addParameters("postcode", po.getProjectEntity().getSupplierProcurement().getPostCode());
+            addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
+            addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
+            addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
+        }
         addParameters("projectIdFilter", projectId);
         addParameters("poNoFilter", poNo != null ? poNo : "");
         addParameters("TIME_ZONE", configuration.getTimeZone());
         Date now = new Date();
-        now.setHours(23);
-        now.setMinutes(59);
-        now.setSeconds(59);
-        addParameters("CURRENT_DATE", Util.convertUTC(now, TimeZone.getDefault().getID()));
+        addParameters("currentDate",now);
     }
 
     @Override

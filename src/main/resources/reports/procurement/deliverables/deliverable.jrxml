@@ -7,17 +7,17 @@
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select p.order_number,p.var_number,d.no_days,d.description,d.quantity,d.required_date
-from deliverable d, p_order p
+		<![CDATA[select po.po,po.variation,d.description,d.quantity,d.required_date,p.order_title
+from deliverable d, p_order p, purchase_order po
 where d.status = 0 and d.po_id = $P{poIdFilter}
-      and d.po_id = p.id]]>
+      and d.po_id = p.id and po.po_id=p.id]]>
 	</queryString>
-	<field name="order_number" class="java.lang.String"/>
-	<field name="var_number" class="java.lang.String"/>
-	<field name="no_days" class="java.lang.Integer"/>
+	<field name="po" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="quantity" class="java.lang.Integer"/>
 	<field name="required_date" class="java.sql.Timestamp"/>
+	<field name="order_title" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -33,23 +33,23 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="2" y="1" width="40" height="12"/>
+				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="1" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{order_number}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="43" y="1" width="40" height="12"/>
+				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="52" y="1" width="50" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{var_number}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="226" y="1" width="85" height="12"/>
+				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="206" y="1" width="100" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -57,15 +57,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3da85bcf-02bf-4906-985c-d2c9551448e6" x="185" y="1" width="40" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph rightIndent="3"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{no_days}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="312" y="1" width="30" height="12"/>
+				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="307" y="1" width="35" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -86,6 +78,13 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="96a965c1-cda8-4b86-a343-6c1750ac0b17" x="104" y="1" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

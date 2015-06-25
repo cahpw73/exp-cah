@@ -25,6 +25,8 @@ public class ReportBidderList extends ReportView implements Serializable {
     private String packageNumber;
     private String description;
     private String comments;
+    private String codeProject;
+    private String project;
 
 
 
@@ -35,13 +37,15 @@ public class ReportBidderList extends ReportView implements Serializable {
      * @param locale           {@link Locale}
      */
     public ReportBidderList(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,String comments) {
+                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,String comments,String codeProject,String project) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.suppliers=suppliers;
         this.packageNumber=packageNumber;
         this.description=description;
         this.comments=comments;
+        this.codeProject=codeProject;
+        this.project=project;
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         loadParamDeliverables();
@@ -52,6 +56,9 @@ public class ReportBidderList extends ReportView implements Serializable {
         addParameters("packageNumber", packageNumber);
         addParameters("description",description);
         addParameters("comments", comments);
+        addParameters("comments", comments);
+        addParameters("projectCode", codeProject);
+        addParameters("project", project);
         Date now = new Date();
         now.setHours(23);
         now.setMinutes(59);
@@ -62,9 +69,27 @@ public class ReportBidderList extends ReportView implements Serializable {
     @Override
     public void printDocument(Long documentId) {
         try {
+
             runReport(null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+
+    public String getCodeProject() {
+        return codeProject;
+    }
+
+    public void setCodeProject(String codeProject) {
+        this.codeProject = codeProject;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
     }
 }

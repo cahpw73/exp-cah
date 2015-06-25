@@ -78,12 +78,11 @@
                     <div class="form-group">
                         <div class="pull-right">
 
-                            <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                            <p:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
                                            value="#{msgs['project.list.lbl.btn.print.po.final']}"
                                            action="#{reportProcurementBean.printProjectProcurementReport}"
-                                           target="_blank" style="color: #ffffff"
-                                           onclick="PF('projectProcDlg').hide();">
-                            </h:commandLink>
+                                           target="_blank" style="color: #ffffff">
+                            </p:commandLink>
                             &#160;
                             <button class="btn btn-primary btn-sm" type="button"
                                     onclick="PF('projectProcDlg').hide();">
