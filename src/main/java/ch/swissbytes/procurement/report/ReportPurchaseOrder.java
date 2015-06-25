@@ -51,12 +51,20 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private void loadParamPurchaseOrder() {
         resourceUtils = new ResourceUtils();
         //TODO Maybe this changes after we receive the client details
-        if(po.getProjectEntity().getReportLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
+        if(po.getProjectEntity().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClientLogo().getFile());
             addParameters("logo", logo);
         }else if(po.getProjectEntity().getDefaultLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultLogo().getFile());
             addParameters("logo", logo);
+        }
+
+        if(po.getProjectEntity().getClientFooter()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClientFooter().getFile());
+            addParameters("footerLogo", logo);
+        }else if(po.getProjectEntity().getDefaultFooter()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultFooter().getFile());
+            addParameters("footerLogo", logo);
         }
         addParameters("purchaseOrderId",po.getId());
         if(po.getProjectEntity().getSupplierProcurement() != null){
@@ -73,15 +81,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryDate",po.getPoDeliveryDate());
         addParameters("deliveryPoint",po.getPoEntity().getPoint());
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
+        addParameters("procManager",po.getPoEntity().getProcManager());
+        addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             addParameters("watermarkDraft",watermark);
         }
         Date now = new Date();
-        now.setHours(23);
-        now.setMinutes(59);
-        now.setSeconds(59);
-        addParameters("CURRENT_DATE", Util.convertUTC(now, TimeZone.getDefault().getID()));
+        addParameters("currentDate",now);
     }
 
     @Override

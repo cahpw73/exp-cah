@@ -70,10 +70,7 @@ public class ReportDeliverables extends ReportView implements Serializable {
         addParameters("poNoFilter", poNo != null ? poNo : "");
         addParameters("TIME_ZONE", configuration.getTimeZone());
         Date now = new Date();
-        now.setHours(23);
-        now.setMinutes(59);
-        now.setSeconds(59);
-        addParameters("CURRENT_DATE", Util.convertUTC(now, TimeZone.getDefault().getID()));
+        addParameters("currentDate",now);
     }
 
     @Override

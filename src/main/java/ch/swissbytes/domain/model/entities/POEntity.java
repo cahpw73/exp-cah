@@ -29,6 +29,8 @@ public class POEntity implements Serializable{
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
     private String point;
+    private String procManager;
+    private String procManagerDetail;
     private ClassEnum clazz;
     private POStatusEnum poProcStatus;
     private List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
@@ -127,6 +129,26 @@ public class POEntity implements Serializable{
 
     public void setPoint(String point) {
         this.point = point;
+    }
+
+    @Size(max = 250)
+    @Column(name="proc_manager",length = 250)
+    public String getProcManager() {
+        return procManager;
+    }
+
+    public void setProcManager(String procManager) {
+        this.procManager = procManager;
+    }
+
+    @Size(max = 1000)
+    @Column(name="proc_manager_detail",length = 1000)
+    public String getProcManagerDetail() {
+        return procManagerDetail;
+    }
+
+    public void setProcManagerDetail(String procManagerDetail) {
+        this.procManagerDetail = procManagerDetail;
     }
 
     private SupplierProcEntity supplierHeader;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.zoom" value="1.210000000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -180,7 +180,7 @@ where p.project_id = 1]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="22" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="1" width="50" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -225,9 +225,6 @@ where p.project_id = 1]]>
 			</staticText>
 			<line>
 				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="1" width="802" height="1"/>
-			</line>
-			<line>
-				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="18" width="802" height="1"/>
 			</line>
 			<staticText>
 				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="629" y="1" width="90" height="16"/>
@@ -350,6 +347,9 @@ where p.project_id = 1]]>
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<line>
+				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="1" width="802" height="1"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
