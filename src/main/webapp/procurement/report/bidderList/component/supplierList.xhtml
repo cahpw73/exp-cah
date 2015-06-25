@@ -15,6 +15,7 @@
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            value="Package No"/>
+
                             <div class="col-md-7">
                                 <h:inputText value="#{bidListBean.packageNo}"/>
 
@@ -36,12 +37,12 @@
                             <div>
                                 <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
                                                value="OK"
-                                               action="#{reportDeliverableBean.printReportDeliverables}"
-                                               target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                               action="#{reportDeliverableBean.printReportDeliverables}"/>
                                 <h:commandLink styleClass="btn btn-primary btn-sm"
                                                value="Close"
-                                               action="#{reportDeliverableBean.printReportDeliverables}"
-                                               target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                               action="#{bidListBean.putModeCategory}">
+                                    <p:ajax async="false" update="bidderForm"/>
+                                </h:commandLink>
                             </div>
                         </div>
                     </div>
@@ -50,7 +51,8 @@
                 <br/>
 
                 <div>
-                    <p:dataTable id="deliverablesTblId" value="#{bidListBean.suppliers(categoryBean.selectedCategory)}" var="_supplier">
+                    <p:dataTable id="deliverablesTblId" value="#{bidListBean.suppliers(categoryBean.selectedCategory)}"
+                                 var="_supplier">
                         <p:column headerText="Supplier ID">
                             #{_supplier.supplierId}
                         </p:column>
@@ -60,9 +62,9 @@
                         <p:column headerText="state">
                             #{_supplier.state}
                         </p:column>
-                        <p:column headerText="Contact" >
+                        <p:column headerText="Contact">
                         </p:column>
-                        <p:column headerText="Print" >
+                        <p:column headerText="Print">
                             <h:selectBooleanCheckbox/>
                         </p:column>
                     </p:dataTable>

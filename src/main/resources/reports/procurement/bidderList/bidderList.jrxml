@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bidderList" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8ff8c66-de8e-404b-af1b-5d1ecc90ee9d">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="22"/>
+	<style name="ColumnHeader" isDefault="true" fill="Solid" fontSize="16"/>
+	<parameter name="supplier" class="java.util.List"/>
+	<parameter name="packageNumber" class="java.lang.String"/>
+	<parameter name="description" class="java.lang.String"/>
+	<parameter name="comments" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select company,suburb,street,phone,fax
+from supplier_proc]]>
+	</queryString>
+	<field name="company" class="java.lang.String"/>
+	<field name="suburb" class="java.lang.String"/>
+	<field name="street" class="java.lang.String"/>
+	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="122" splitType="Stretch">
+			<image>
+				<reportElement uuid="4f9c5480-d8f5-44b9-a3a9-62743420baeb" x="219" y="6" width="90" height="71"/>
+			</image>
+			<staticText>
+				<reportElement uuid="13b2b58b-1854-4e8f-81d7-0f60b1bef8ce" x="171" y="84" width="176" height="31"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Approved Bidder List]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1db61577-1968-4cfc-8d6b-1dcb9a98c109" x="22" y="4" width="38" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Project:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6834fab3-397d-49a2-8934-c83e5f711b11" x="22" y="19" width="62" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Package No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eba79316-9a68-48aa-aba8-a081ddc606fa" x="22" y="32" width="62" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="25e9f1e9-c700-4875-a83d-cef549d0db54" x="347" y="0" width="100" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fddea653-8f2c-4c2d-b69f-07617f08d35e" x="22" y="0" width="128" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name and Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="209" y="0" width="100" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telephone]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="209" y="1" width="100" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="db1fd75b-70e0-4e71-a5cc-62d6011cfbf9" x="347" y="2" width="100" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="932da991-ad63-4538-b8b8-02080d489b4d" x="22" y="1" width="128" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="207fb81e-83c9-4992-8719-99c43c523d4c" x="22" y="13" width="128" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{suburb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="27c5ece3-064c-490f-8f98-0db483495fbf" x="22" y="27" width="128" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{street}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

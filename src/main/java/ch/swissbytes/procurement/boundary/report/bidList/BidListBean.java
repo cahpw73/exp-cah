@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import ch.swissbytes.procurement.report.ReportProcBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -29,6 +30,8 @@ public class BidListBean implements Serializable {
 
     @Inject
     private SupplierProcService supplierService;
+    @Inject
+    private ReportProcBean reportProcBean;
 
     private ProjectEntity project;
     private List<String> countries;
@@ -68,6 +71,11 @@ public class BidListBean implements Serializable {
         } else {
             countriesSelected.remove(country);
         }
+    }
+
+    public void generateReport(){
+      //  reportProcBean.printReportDeliverables(deliverableDtoList, purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
+        //reportProcBean.printBidderList();
     }
 
     public void setProject(ProjectEntity project) {

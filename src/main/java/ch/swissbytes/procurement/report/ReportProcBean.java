@@ -4,6 +4,7 @@ package ch.swissbytes.procurement.report;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
@@ -92,6 +93,14 @@ public class ReportProcBean implements Serializable {
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration,poList,project,strSortBy);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printBidderList(List<Long>suppliers,String packageNumber,String description,String comments){
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportBidderList("/procurement/bidderList/bidderList", "Procurement.bidder list", messages, locale, configuration,suppliers,packageNumber,description,comments);
         reportView.printDocument(null);
         openReport = true;
     }
