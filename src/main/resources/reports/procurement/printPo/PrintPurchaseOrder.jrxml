@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6105100000000019"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="purchaseOrderId" class="java.lang.Long"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="footerLogo" class="java.io.InputStream"/>
@@ -254,20 +254,6 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" x="2" y="3" width="90" height="71"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement uuid="6ad6f0d1-60b8-4ca4-b6b5-9d1dd7cc026c" x="381" y="44" width="53" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Current Date:]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="70c08c11-9229-495b-908b-da0ea269ccb8" x="434" y="44" width="77" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
-			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="660d8272-5c99-4652-9f7f-edf4f1123250" x="98" y="3" width="170" height="20"/>
 				<textElement>
@@ -411,7 +397,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="6e767873-880c-49d3-9fa7-56531b379b27" x="171" y="1" width="200" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="html">
 					<font size="6"/>
 					<paragraph leftIndent="3"/>
 				</textElement>

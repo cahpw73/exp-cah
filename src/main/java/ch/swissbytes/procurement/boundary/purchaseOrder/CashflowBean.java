@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.types.PaymentTermsEnum;
+import ch.swissbytes.domain.types.RetentionFormEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
@@ -152,6 +153,14 @@ public class CashflowBean implements Serializable {
             paymentTerms.add(s);
         }
         return paymentTerms;
+    }
+
+    public List<RetentionFormEnum> getRetentionForms(){
+        List<RetentionFormEnum> retentionForms = new ArrayList<>();
+        for(RetentionFormEnum s : RetentionFormEnum.values()){
+            retentionForms.add(s);
+        }
+        return retentionForms;
     }
 
     public CashflowEntity getCashflow() {

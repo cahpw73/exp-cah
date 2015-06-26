@@ -137,8 +137,26 @@ public class ProjectBean implements Serializable {
         globalStandardTextList.removeAll(projectStandardTextList);
     }
 
-    public String doSave(){
+    public void doSave(){
         log.info("do save");
+        if(dataValidate()) {
+            prepareToSaveProjectTextSnippet();
+            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
+        }
+        mainMenuBean.select(0);
+    }
+
+    public void doUpdate(){
+        log.info("do update");
+        if(dataValidateToUpdate()) {
+            prepareToUpdateProjectTextSnippet();
+            projectService.doUpdate(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
+        }
+        mainMenuBean.select(0);
+    }
+
+    public String doSaveAndClose(){
+        log.info("do save and close");
         if(dataValidate()) {
             prepareToSaveProjectTextSnippet();
             projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
@@ -148,8 +166,8 @@ public class ProjectBean implements Serializable {
         return "";
     }
 
-    public String doUpdate(){
-        log.info("do update");
+    public String doUpdateAndClose(){
+        log.info("do update and close");
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
             projectService.doUpdate(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);

@@ -6,6 +6,7 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
     <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <ui:remove>
         <div style="margin-left: 0px!important; margin-right: 15px!important;">
             <div style="width: 440px!important; float: left!important;">
                 <div class="form-group">
@@ -32,8 +33,9 @@
                 </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <br/>
+            <div class="clearfix"></div>
+            <br/>
+        </ui:remove>
 
         <div class="panel panel-default panel-tab">
             <div class="procurement-panel-header">#{msgs['po.cashflow.lbl.panel.retention.title']}</div>
@@ -108,7 +110,13 @@
                                 <p:selectOneMenu id="formCf" editable="true"
                                                  value="#{cashflowBean.cashflow.form}"
                                                  styleClass="menu-ddp" rendered="#{poBean.beingEdited}">
-                                    <f:selectItem itemLabel="Bank Guarantee" itemValue="Bank Guarantee"/>
+                                    <f:selectItem
+                                            itemLabel="#{msgs['lbl.select']}"
+                                            noSelectionOption="true"/>
+                                    <f:selectItems value="#{cashflowBean.retentionForms}"
+                                                   var="_r"
+                                                   itemValue="#{_r}"
+                                                   itemLabel="#{_r.label}"/>
                                     <p:ajax async="true" process="@this" event="change"/>
                                 </p:selectOneMenu>
                                 <h:inputText id="formCfVi" readonly="true" styleClass="form-control view-po"
