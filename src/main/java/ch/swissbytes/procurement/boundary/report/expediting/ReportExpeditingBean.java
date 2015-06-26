@@ -1,11 +1,14 @@
 package ch.swissbytes.procurement.boundary.report.expediting;
 
 import ch.swissbytes.Service.business.deliverable.DeliverableDao;
+import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
 import ch.swissbytes.procurement.report.ReportProcBean;
 
@@ -40,6 +43,9 @@ public class ReportExpeditingBean implements Serializable {
     @Inject
     private ReportProcBean reportProcBean;
 
+    @Inject
+    private ItemService itemService;
+
     private List<ProjectEntity> projectList;
 
     private List<PurchaseOrderEntity> purchaseOrderList;
@@ -48,8 +54,7 @@ public class ReportExpeditingBean implements Serializable {
 
     private String termsPoNo;
 
-
-    private List<DeliverableDto> deliverableDtoList;
+    private List<ExpeditingDto> expeditingDtosList;
 
     @PostConstruct
     public void create() {
@@ -57,7 +62,7 @@ public class ReportExpeditingBean implements Serializable {
         selectedProject = new ProjectEntity();
         projectList = new ArrayList<>();
         purchaseOrderList = new ArrayList<>();
-        deliverableDtoList = new ArrayList<>();
+        expeditingDtosList = new ArrayList<>();
         loadProjects();
     }
 
@@ -74,35 +79,55 @@ public class ReportExpeditingBean implements Serializable {
     public void searchPurchaseOrder() {
         log.info("searching purchase order");
         if (selectedProject != null) {
-            loadDeliverablesDtoList(selectedProject.getId(), null);
+            loadExpeditingDtoList(selectedProject.getId(), null);
         } else {
             purchaseOrderList.clear();
-            deliverableDtoList.clear();
+            expeditingDtosList.clear();
+        }
+        termsPoNo = "";
+    }
+
+    public void filterExpeditingDtoListByPoNo() {
+        log.info("filtering by project id and poNo");
+        loadExpeditingDtoList(selectedProject.getId(), termsPoNo != null ? termsPoNo : "");
+
+    }
+
+    public void printReportExpediting(){
+        log.info("printing report expediting");
+        reportProcBean.printReportExpediting(purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
+    }
+
+    public String backToReports(){
+        return "report/report?faces-redirect=true";
+    }
+
+    public void doSave(){
+        log.info("saving changes to scope supply entity");
+        for(ExpeditingDto dto : expeditingDtosList){
+            ScopeSupplyEntity supplyEntity = itemService.findById(dto.getItemId());
+            supplyEntity.setExcludeFromExpediting(dto.getExcludeFromExpediting());
+            itemService.doUpdate(supplyEntity);
         }
     }
 
-    public void filterDeliverableDtoListByPoNo() {
-        log.info("filtering by project id and poNo");
-        loadDeliverablesDtoList(selectedProject.getId(), termsPoNo != null ? termsPoNo : "");
-
+    public boolean hasStatusCommited(POStatusEnum status){
+        return POStatusEnum.COMMITED.ordinal() == status.ordinal();
     }
 
-    public void printReportDeliverables() {
-        reportProcBean.printReportDeliverables(deliverableDtoList, purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
-    }
-
-    private void loadDeliverablesDtoList(Long projectId, String poNo) {
+    private void loadExpeditingDtoList(Long projectId, String poNo) {
         purchaseOrderList.clear();
         purchaseOrderList = purchaseOrderService.purchaseListByProjectIdAnPoNo(projectId, poNo);
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            p.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(p.getPoEntity().getId()));
+            p.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(p.getId()));
         }
-        deliverableDtoList.clear();
+        expeditingDtosList.clear();
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            for (DeliverableEntity d : p.getPoEntity().getDeliverables()) {
-                DeliverableDto dto = new DeliverableDto(p, d);
-                deliverableDtoList.add(dto);
+            for(ScopeSupplyEntity s : p.getPoEntity().getScopeSupplyList()){
+                ExpeditingDto dto = new ExpeditingDto(p,s);
+                expeditingDtosList.add(dto);
             }
+            log.info("POEntity id: " + p.getPoEntity().getId());
         }
     }
 
@@ -122,8 +147,8 @@ public class ReportExpeditingBean implements Serializable {
         return projectList;
     }
 
-    public List<DeliverableDto> getDeliverableDtoList() {
-        return deliverableDtoList;
+    public List<ExpeditingDto> getExpeditingDtosList() {
+        return expeditingDtosList;
     }
 
     public String getTermsPoNo() {

@@ -25,19 +25,18 @@
 
                                 <div class="col-md-4">
                                     <h:selectOneMenu id="projectDelId"
-                                                     required="true"
-                                                     requiredMessage="Please select a project"
-                                                     value="#{bidListBean.project}"
+                                                     value="#{reportExpeditingBean.selectedProject}"
                                                      styleClass="form-control" converter="projectConverter">
                                         <f:selectItem
-                                                itemLabel="#{msgs['report.expediting.lbl.no.selection.project']}"
+                                                itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
                                                 noSelectionOption="true"/>
-                                        <f:selectItems value="#{projectListBean.projectList}"
+                                        <f:selectItems value="#{reportExpeditingBean.projectList}"
                                                        var="_p"
                                                        itemValue="#{_p}"
                                                        itemLabel="#{_p.title}"/>
+                                        <p:ajax async="false" process="@this" event="change" update="expeditingTblId printBtnId poNoDelId"
+                                                listener="#{reportExpeditingBean.searchPurchaseOrder}"/>
                                     </h:selectOneMenu>
-                                    <p:message for="projectDelId"/>
                                 </div>
                             </div>
                         </div>
@@ -46,46 +45,54 @@
                         <div class="row">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                               value="#{msgs['report.expediting.lbl.po.no']}"/>
+                                               for="poNoDelId" value="#{msgs['report.expediting.lbl.po.no']}"/>
 
                                 <div class="col-md-4">
                                     <div class="left-inner-addon">
                                         <i class="fa fa-search fa-lg"></i>
-                                        <h:inputText styleClass="form-control input-search"
-                                                     value="#{categoryBean.searchNameCategory}"
+                                        <h:inputText id="poNoDelId" styleClass="form-control input-search"
+                                                     value="#{reportExpeditingBean.termsPoNo}"
                                                      jsf:placeholder="#{msgs['lbl.search']}">
-                                            <p:ajax event="keyup" process="@this"
-                                                    listener="#{categoryBean.searchCategory}" async="false"/>
+                                            <p:ajax event="keyup" process="@this" update="expeditingTblId"
+                                                    listener="#{reportExpeditingBean.filterExpeditingDtoListByPoNo}" async="false"/>
                                         </h:inputText>
                                     </div>
                                 </div>
-
+                                <div>
+                                    <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['lbl.print']}"
+                                                   action="#{reportExpeditingBean.printReportExpediting}"
+                                                   target="_blank" disabled="#{!reportExpeditingBean.projectSelected}"/>
+                                </div>
                             </div>
                         </div>
                         <br/>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <p:dataTable id="countries" var="_country"
-                                             value="#{bidListBean.findCountriesByCategory(categoryBean.selectedCategory)}">
+                                <p:dataTable id="expeditingTblId" var="_l" lazy="true"
+                                             value="#{reportExpeditingBean.expeditingDtosList}">
                                     <p:column headerText="#{msgs['report.expediting.column.po.no']}" width="80">
-                                        #{_country}
+                                        #{_l.poNo}
                                     </p:column>
                                     <p:column headerText="#{msgs['report.expediting.column.var.no']}" width="80">
-                                        #{_country}
+                                        #{_l.varNo}
                                     </p:column>
                                     <p:column headerText="#{msgs['report.expediting.column.item']}" width="80">
-                                        #{_country}
+                                        #{_l.item}
                                     </p:column>
                                     <p:column headerText="#{msgs['report.expediting.column.description']}">
-                                        #{_country}
+                                        <h:inputTextarea readonly="true" styleClass="form-control"
+                                                         value="#{_l.description}"/>
                                     </p:column>
-                                    <p:column
+                                    <p:column style="text-align: center!important;"
                                             headerText="#{msgs['report.expediting.column.exclude.from.expediting']}">
-                                        <h:selectBooleanCheckbox>
-                                            <p:ajax async="false" process="@this"
-                                                    listener="#{bidListBean.selectCountry(_country)}"/>
-                                        </h:selectBooleanCheckbox>
+                                        <div style="vertical-align: middle; text-align: center;">
+                                            <h:selectBooleanCheckbox value="#{_l.excludeFromExpediting}"
+                                                                     disabled="#{reportExpeditingBean.hasStatusCommited(_l.poStatusEnum)}">
+                                                <p:ajax async="false" process="@this" event="change"/>
+                                            </h:selectBooleanCheckbox>
+                                        </div>
                                     </p:column>
                                 </p:dataTable>
                             </div>
@@ -97,15 +104,14 @@
                         <div class="form-group">
                             <div class="pull-left">
 
-                                <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                                <h:commandButton id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
                                                value="#{msgs['lbl.save']}"
-                                               action="#{reportProcurementBean.printProjectProcurementReport}"
-                                               target="_blank" style="color: #ffffff">
-                                </h:commandLink>
+                                               action="#{reportExpeditingBean.doSave}">
+                                </h:commandButton>
                                 &#160;
                                 <h:commandButton class="btn btn-primary btn-sm"
                                                  immediate="true"
-                                                 action="#{reportProcurementBean.backToReports}"
+                                                 action="#{reportExpeditingBean.backToReports}"
                                                  value="#{msgs['lbl.cancel']}"/>
                             </div>
                         </div>

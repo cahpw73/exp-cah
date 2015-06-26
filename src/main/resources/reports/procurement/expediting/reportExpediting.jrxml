@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testDeliverables" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc1c7f62-39ff-4368-b661-3741ffdc9cfb">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expediting" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc1c7f62-39ff-4368-b661-3741ffdc9cfb">
 	<property name="ireport.zoom" value="1.6105100000000012"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -150,14 +150,14 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 				<reportElement uuid="44e049db-565f-4258-b9d2-c10221c96a81" x="0" y="0" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="69e91f1f-d46e-4a78-8bec-ac58225f3b36" x="422" y="61" width="53" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="69e91f1f-d46e-4a78-8bec-ac58225f3b36" x="432" y="61" width="53" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Current Date:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="d4d33c0f-a80c-4bf9-ad98-07923cc54ffa" x="475" y="61" width="77" height="12"/>
+				<reportElement uuid="d4d33c0f-a80c-4bf9-ad98-07923cc54ffa" x="485" y="61" width="65" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -168,60 +168,39 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 	<columnHeader>
 		<band height="23" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="99445596-ba52-4e38-80fa-ac9b348940a6" x="52" y="5" width="50" height="16"/>
+				<reportElement uuid="99445596-ba52-4e38-80fa-ac9b348940a6" x="72" y="5" width="70" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="85fe0f1e-04a7-4e6d-83c2-b184f530563f" x="206" y="5" width="100" height="16"/>
+				<reportElement uuid="85fe0f1e-04a7-4e6d-83c2-b184f530563f" x="216" y="5" width="200" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Description</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="98fdd2fd-ba8b-4ef2-8f09-c990b05f54dc" x="343" y="5" width="70" height="16"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Required Date</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="40aa10e8-ef7b-47f6-9b77-074273155223" x="1" y="5" width="50" height="16"/>
+				<reportElement uuid="40aa10e8-ef7b-47f6-9b77-074273155223" x="1" y="5" width="70" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Po No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="39ff3434-b8bd-4e43-a039-5080e2c1dcac" x="104" y="5" width="100" height="16"/>
+				<reportElement uuid="39ff3434-b8bd-4e43-a039-5080e2c1dcac" x="144" y="5" width="70" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Po Description</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3c970962-6b32-4a25-9567-406aec9cc471" x="414" y="5" width="70" height="16"/>
+				<reportElement uuid="2aaae375-b85a-41ba-ba74-4e1e6b0a3124" x="420" y="5" width="120" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Forecast Date</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="2aaae375-b85a-41ba-ba74-4e1e6b0a3124" x="307" y="5" width="35" height="16"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="29428c2b-61dd-4db2-ba00-8cf2264c69bc" x="485" y="5" width="70" height="16"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Required Date</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Exclude from Expediting</style>]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="4c4df347-33c0-4e7c-b46b-369f8f152c46" x="0" y="5" width="555" height="1"/>
@@ -234,18 +213,12 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 	<detail>
 		<band height="16" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="75bcff3e-0ce9-4abb-a4ad-ac2294da9a92" x="0" y="0" width="555" height="16" isRemoveLineWhenBlank="true"/>
-				<subreportParameter name="FORMAT_DATE">
-					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement uuid="03db841a-6754-4bd2-9d82-88c1cb387720" x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="poIdFilter">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="TIME_ZONE">
-					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "deliverable.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "expediting.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

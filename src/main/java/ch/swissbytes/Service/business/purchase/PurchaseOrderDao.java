@@ -110,7 +110,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
             map.put("PROJECT_ID", projectId);
         }
         if (StringUtils.isNotEmpty(poNo) && StringUtils.isNotBlank(poNo)) {
-            sb.append(" AND LOWER(po.poEntity.orderNumber) LIKE :ORDER_NUMBER");
+            sb.append(" AND LOWER(po.po) LIKE :ORDER_NUMBER");
             map.put("ORDER_NUMBER", "%" + poNo.toLowerCase().trim() + "%");
         }
         sb.append(" ORDER BY po.po ");

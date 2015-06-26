@@ -35,10 +35,9 @@
                                                            var="_p"
                                                            itemValue="#{_p}"
                                                            itemLabel="#{_p.title}"/>
-                                            <p:ajax async="false" process="@this" event="change" update="deliverablesTblId printBtnId"
+                                            <p:ajax async="false" process="@this" event="change" update="deliverablesTblId printBtnId poNoDelId"
                                                     listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
                                         </h:selectOneMenu>
-
                                     </div>
                                 </div>
                             </div>
@@ -74,8 +73,7 @@
 
                         <div>
                             <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
-                                         rows="#{configuration.defaultPageSize}" lazy="true"
-                                         rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}">
+                                         lazy="true">
                                 <p:column headerText="#{msgs['report.deliverables.column.po.no']}" width="50">
                                     #{_l.poNo}
                                 </p:column>

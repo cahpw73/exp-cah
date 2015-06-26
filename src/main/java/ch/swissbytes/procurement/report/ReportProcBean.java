@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
+import ch.swissbytes.procurement.boundary.report.expediting.ExpeditingDto;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -69,11 +70,20 @@ public class ReportProcBean implements Serializable {
         log.info("Report Bean destroyed!");
     }
 
-    public void printReportDeliverables(final List<DeliverableDto> dtos, final PurchaseOrderEntity po,final Long projectId,final String termsPoNo) {
+    public void printReportDeliverables(final PurchaseOrderEntity po,final Long projectId,final String termsPoNo) {
         log.info("public void printReportDeliverables()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDeliverables("/procurement/deliverables/reportDeliverables", "Procurement.Deliverables", messages, locale, configuration,dtos,po,projectId,termsPoNo);
+        ReportView reportView = new ReportDeliverables("/procurement/deliverables/reportDeliverables", "Procurement.Deliverables", messages, locale, configuration,po,projectId,termsPoNo);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printReportExpediting(final PurchaseOrderEntity po,final Long projectId,final String termsPoNo) {
+        log.info("public void printReportExpediting()");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Deliverables", messages, locale, configuration,po,projectId,termsPoNo);
         reportView.printDocument(null);
         openReport = true;
     }

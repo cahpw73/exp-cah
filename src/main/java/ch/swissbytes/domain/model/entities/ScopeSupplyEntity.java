@@ -62,6 +62,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     //new fields
     private BigDecimal totalCost;
     private BigDecimal costCode;
+    private Boolean excludeFromExpediting;
     //@TODO change this value replace to currency
     private ProjectCurrencyEntity projectCurrency;
 
@@ -468,6 +469,15 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
 
     public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
         this.projectCurrency = projectCurrency;
+    }
+
+    @Column(name = "exclude_from_expediting")
+    public Boolean getExcludeFromExpediting() {
+        return excludeFromExpediting;
+    }
+
+    public void setExcludeFromExpediting(Boolean excludeFromExpediting) {
+        this.excludeFromExpediting = excludeFromExpediting;
     }
 
     @Override
