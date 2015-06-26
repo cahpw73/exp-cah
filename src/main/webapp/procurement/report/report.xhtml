@@ -30,6 +30,7 @@
                     </h:link>
                 </li>
                 <li>
+                    <!--project procurement report-->
                     <h:link
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.project.procurement']}
                         <f:param name="reportName" value="ppr"/>
@@ -48,8 +49,11 @@
                     <a class="link-disabled" href="#">#{msgs['lbl.report.project.supplier.contact']}</a>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.required.retention']}</a>
+                    <!--required retentions report-->
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.required.retention']}
+                        <f:param name="reportName" value="rrr"/>
+                    </h:link>
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->

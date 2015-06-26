@@ -57,6 +57,7 @@ public class ReportProcurementBean implements Serializable {
 
     private String reportTitle;
     private String projectProcurementReport = "Project Procurement Report";
+    private String requiredRetentionReport = "Required Retentions Report";
 
     @PostConstruct
     public void create() {
@@ -84,8 +85,13 @@ public class ReportProcurementBean implements Serializable {
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
         if (selectedProject != null){
-            List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
-            reportProcBean.printProjectPurchaseOrder(selectedProject,list,getDescriptionSort(sortMap));
+            switch (reportName){
+                case "ppr" : List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
+                             reportProcBean.printProjectPurchaseOrder(selectedProject,list,getDescriptionSort(sortMap));
+                    break;
+                case "rrr" : reportProcBean.printRequiredRetentions(selectedProject,sortMap);
+                    break;
+            }
         }else{
             Messages.addFlashGlobalError("Select a project first");
         }
@@ -107,9 +113,12 @@ public class ReportProcurementBean implements Serializable {
 
     public void loadNameReport(){
         switch (reportName){
-            case "ppr": reportTitle = projectProcurementReport;
+            case "ppr" : reportTitle = projectProcurementReport;
+                break;
+            case "rrr" : reportTitle = requiredRetentionReport;
                 break;
         }
+        log.info("report title: " + reportTitle);
     }
 
     private String getDescriptionSort(Map<String,Boolean> sortMap){

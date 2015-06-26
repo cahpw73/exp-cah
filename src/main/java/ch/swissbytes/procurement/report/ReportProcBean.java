@@ -106,6 +106,15 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
+    public void printRequiredRetentions(final ProjectEntity project,final Map<String, Boolean> sortMap){
+        log.info("printRequiredRetentions");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportRequiredRetentions("/procurement/RequiredRetentionReport/requiredRetentionReport", "Procurement.PurchaseOrder", messages, locale, configuration,project,sortMap);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
     private void initializeParametersToJasperReport() {
         locale = new Locale(Locale.ENGLISH.getLanguage());
         messages = new HashMap<String, String>();
