@@ -9,6 +9,7 @@ import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -32,7 +33,8 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
         this.id = id;
     }
 
-    @Column(name = "clauses")
+    @Size(max = 1000)
+    @Column(name = "clauses",length = 1000)
     public String getClauses() {
         return clauses;
     }
