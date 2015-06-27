@@ -52,10 +52,13 @@ public class ReportBidderList extends ReportView implements Serializable {
     }
 
     private void loadParamDeliverables() {
+        if(suppliers==null||suppliers.isEmpty()){
+            suppliers=new ArrayList<>();
+            suppliers.add(0L);
+        }
         addParameters("supplier",suppliers);
         addParameters("packageNumber", packageNumber);
         addParameters("description",description);
-        addParameters("comments", comments);
         addParameters("comments", comments);
         addParameters("projectCode", codeProject);
         addParameters("project", project);
@@ -69,8 +72,7 @@ public class ReportBidderList extends ReportView implements Serializable {
     @Override
     public void printDocument(Long documentId) {
         try {
-
-            runReport(null);
+            runReport();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
