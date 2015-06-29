@@ -33,7 +33,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="1" y="1" width="50" height="12"/>
+				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="1" y="1" width="50" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -41,7 +41,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="52" y="1" width="50" height="12"/>
+				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="52" y="1" width="50" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -49,7 +49,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="206" y="1" width="100" height="12"/>
+				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="206" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -57,7 +57,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="307" y="1" width="35" height="12"/>
+				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="307" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -65,7 +65,7 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="343" y="1" width="70" height="12"/>
+				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="343" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -78,8 +78,8 @@ where d.status = 0 and d.po_id = $P{poIdFilter}
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="96a965c1-cda8-4b86-a343-6c1750ac0b17" x="104" y="1" width="100" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="96a965c1-cda8-4b86-a343-6c1750ac0b17" x="104" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>

@@ -80,6 +80,7 @@ public class ReportDeliverableBean implements Serializable {
             purchaseOrderList.clear();
             deliverableDtoList.clear();
         }
+        termsPoNo = "";
     }
 
     public void filterDeliverableDtoListByPoNo() {
@@ -89,7 +90,7 @@ public class ReportDeliverableBean implements Serializable {
     }
 
     public void printReportDeliverables() {
-        reportProcBean.printReportDeliverables(deliverableDtoList, purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
+        reportProcBean.printReportDeliverables(purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
     }
 
     private void loadDeliverablesDtoList(Long projectId, String poNo) {

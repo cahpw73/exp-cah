@@ -30,10 +30,12 @@
                     </h:link>
                 </li>
                 <li>
+                    <!--project procurement report-->
                     <h:link
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.project.procurement']}
                         <f:param name="reportName" value="ppr"/>
                     </h:link>
+<<<<<<< HEAD
                     <ui:remove>
                         <p:commandLink value="#{msgs['lbl.report.project.procurement']}"
                                        action="#{reportProcurementBean.resetValuesProjectProc}"
@@ -42,6 +44,8 @@
                                        style=" color: #428BCA; padding-left: 0px!important;">
                         </p:commandLink>
                     </ui:remove>
+=======
+>>>>>>> 715edeeed24b2bf40b7cd772ea631eae0647d112
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->
@@ -56,8 +60,11 @@
                     <a class="link-disabled" href="#">#{msgs['lbl.report.project.supplier.contact']}</a>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.required.retention']}</a>
+                    <!--required retentions report-->
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.required.retention']}
+                        <f:param name="reportName" value="rrr"/>
+                    </h:link>
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->
@@ -77,11 +84,14 @@
                 </li>
             </ul>
         </div>
+<<<<<<< HEAD
         <h:panelGroup id="reportProjectProcId">
             <p:dialog id="POOReportId" header="Project Procurement Report" widgetVar="projectProcDlg"
                       resizable="false">
                 <ui:include src="components/modalSortPo.xhtml"></ui:include>
             </p:dialog>
         </h:panelGroup>
+=======
+>>>>>>> 715edeeed24b2bf40b7cd772ea631eae0647d112
     </ui:define>
 </ui:composition>

@@ -32,14 +32,6 @@ public class ItemDao extends GenericDao<ScopeSupplyEntity> implements Serializab
         super.update(detachedEntity);
     }
 
-    /*public void doSave(ItemEntity entity){
-        super.save(entity);
-    }
-
-    public void doUpdate(ItemEntity detachedEntity){
-       super.update(detachedEntity);
-    }*/
-
     public List<ItemEntity> findAll() {
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
@@ -62,19 +54,6 @@ public class ItemDao extends GenericDao<ScopeSupplyEntity> implements Serializab
         map.put("PO_ID", poEntityId);
         return super.findBy(sb.toString(),map);
     }
-
-    /*public List<ItemEntity> findByPoId(Long poEntityId) {
-        StringBuilder sb=new StringBuilder();
-        sb.append(" SELECT x ");
-        sb.append(" FROM ItemEntity x ");
-        sb.append(" WHERE x.statusEnum = :ENABLED ");
-        sb.append(" AND x.po.id = :PO_ID ");
-        sb.append(" ORDER BY x.id ");
-        Map<String,Object> map=new HashMap<String,Object>();
-        map.put("ENABLED", StatusEnum.ENABLE);
-        map.put("PO_ID", poEntityId);
-        return super.findBy(sb.toString(),map);
-    }*/
 
 
     @Override

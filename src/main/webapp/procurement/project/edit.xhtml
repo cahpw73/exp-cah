@@ -513,10 +513,12 @@
                         <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.createProject}"
                                          action="#{projectBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
                         &#160;
-                        <h:commandButton value="#{msgs['lbl.cancel']}"
-                                         action="list?faces-redirect=true"
-                                         styleClass="btn btn-primary btn-sm"
-                                         immediate="true"/>
+                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{projectBean.createProject}"
+                                         action="#{projectBean.doSaveAndClose}"
+                                         styleClass="btn btn-primary btn-sm"/>
+                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{!projectBean.createProject}"
+                                         action="#{projectBean.doUpdateAndClose}"
+                                         styleClass="btn btn-primary btn-sm"/>
                     </div>
                 </div>
             </div>

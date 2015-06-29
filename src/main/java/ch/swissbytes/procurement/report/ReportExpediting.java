@@ -1,18 +1,13 @@
 package ch.swissbytes.procurement.report;
 
 
-import ch.swissbytes.Service.business.deliverable.DeliverableDao;
-import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
-import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
+import ch.swissbytes.procurement.boundary.report.expediting.ExpeditingDto;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -22,9 +17,9 @@ import java.util.logging.Logger;
 /**
  * Created by christian on 11/06/14.
  */
-public class ReportDeliverables extends ReportView implements Serializable {
+public class ReportExpediting extends ReportView implements Serializable {
 
-    private final Logger log = Logger.getLogger(ReportDeliverables.class.getName());
+    private final Logger log = Logger.getLogger(ReportExpediting.class.getName());
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
     private Configuration configuration;
     private PurchaseOrderEntity po;
@@ -38,8 +33,8 @@ public class ReportDeliverables extends ReportView implements Serializable {
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportDeliverables(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                              Configuration configuration, PurchaseOrderEntity po, Long projectId, String poNo) {
+    public ReportExpediting(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
+                            Configuration configuration, PurchaseOrderEntity po, Long projectId, String poNo) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -51,7 +46,7 @@ public class ReportDeliverables extends ReportView implements Serializable {
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
         //addParameters("COUNTRY_LOCALE", configuration.getCountry());
-        addParameters("SUBREPORT_DIR","reports/procurement/deliverables/");
+        addParameters("SUBREPORT_DIR","reports/procurement/expediting/");
         loadParamDeliverables();
     }
 
