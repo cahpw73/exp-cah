@@ -85,7 +85,7 @@ order by $P{sortBy}]]>
 				<reportElement uuid="bc959b40-128a-4870-b635-8db8e64e6bc9" x="451" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
-					<paragraph rightIndent="5"/>
+					<paragraph rightIndent="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amt}]]></textFieldExpression>
 			</textField>
@@ -118,7 +118,7 @@ order by $P{sortBy}]]>
 				<reportElement uuid="bbc8de78-0803-4cd0-b5b2-a5e115209d3a" x="451" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
-					<paragraph rightIndent="5"/>
+					<paragraph rightIndent="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{poTotal}]]></textFieldExpression>
 			</textField>
