@@ -4,7 +4,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
-                template="../../WEB-INF/layout/template-prmt.xhtml">
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Project</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
@@ -18,7 +18,7 @@
                         <div class="left-inner-addon">
                             <i class="fa fa-search fa-lg"></i>
                             <h:inputText id="searchTermId" styleClass="form-control input-search"
-                                         value="#{projectListBean.searchTerm}"
+                                         value="#{clientListBean.term}"
                                          jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
                             </h:inputText>
                         </div>
@@ -26,59 +26,43 @@
                     <div class="col-md-3">
                         <div>
                             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this,searchTermId" update="projectListId"
+                                <p:ajax process="@this,searchTermId" update="clienttListId"
                                         listener="#{projectListBean.doSearch}"/>
                             </h:commandButton>
                             &#160;
-                            <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this,searchTermId" update="projectListId,searchTermId"
-                                        listener="#{projectListBean.doClean}"/>
-                            </h:commandButton>
+                            <h:link value="#{msgs['lbl.clean']}" outcome="list" styleClass="btn btn-primary btn-sm"/>
                         </div>
                     </div>
                     <div class="pull-right">
                         <div class="col-md-3">
                             <div>
-                                <h:commandButton value="#{msgs['project.list.add.project']}"
+                                <h:commandButton value="#{msgs['client.add']}"
                                                  styleClass="btn btn-primary btn-sm"
                                                  action="edit?faces-redirect=true&amp;isCreateProject=true"/>
                             </div>
                         </div>
                     </div>
                 </div>
-                <p:dataTable id="projectListId" value="#{projectListBean.projectList}" var="_p"
-                             paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
-                             rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}"
-                             paginatorPosition="bottom">
+                <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
                     <p:column headerText="#{msgs['project.list.column.number']}" width="100">
-                        #{_p.projectNumber}
-                    </p:column>
-                    <p:column headerText="#{msgs['project.list.column.title']}" width="90">
-                        #{_p.title}
-                    </p:column>
-                    <p:column headerText="#{msgs['project.list.column.company']}" width="90">
-
 
                     </p:column>
                     <p:column headerText="#{msgs['project.list.column.report.logo']}" width="90">
-                        #{_p.reportLogo.fileName}
+
                     </p:column>
                     <p:column headerText="#{msgs['project.list.column.company.logo']}" width="90">
-                        #{_p.clientLogo.fileName}
-                    </p:column>
-                    <p:column headerText="#{msgs['project.list.column.company.footer']}" width="90">
-                        #{_p.clientFooter.fileName}
+
                     </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                         <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                             <f:param name="isCreateProject" value="false"/>
-                            <f:param name="projectId" value="#{_p.id}"/>
+                            <f:param name="projectId" value="#{_cl.id}"/>
                         </h:link>
                         &#160;
-                        <h:link id="posId" value="#{msgs['project.list.action.pos']}" outcome="purchase-order/list"
+                        <h:link id="posId" value="#{msgs['project.list.action.pos']}" outcome="list"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                            <f:param name="projectId" value="#{_p.id}"/>
+                            <f:param name="projectId" value="#{_cl.id}"/>
                         </h:link>
                     </p:column>
                 </p:dataTable>

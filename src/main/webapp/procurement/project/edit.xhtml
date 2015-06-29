@@ -72,8 +72,9 @@
                                                    for="clientId" value="#{msgs['project.detail.client']}"/>
 
                                     <div class="col-sm-5">
+                                        <ui:remove>
                                         <h:selectOneMenu id="clientId"
-                                                         value="#{projectBean.projectEntity.supplierProcurement}"
+                                                         value="#{projectBean.projectEntity.client}"
                                                          styleClass="form-control" converter="supplierProcurementConv">
                                             <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                                             <f:selectItems value="#{projectBean.supplierProcList}"
@@ -81,7 +82,9 @@
                                                            itemValue="#{_sp}"
                                                            itemLabel="#{_sp.company}"/>
                                         </h:selectOneMenu>
-                                        <p:message for="clientId" id="msgClientId"/>
+                                            <p:message for="clientId" id="msgClientId"/>
+                                        </ui:remove>
+
                                     </div>
                                 </div>
                                 <h:panelGroup id="logoGroupId">
