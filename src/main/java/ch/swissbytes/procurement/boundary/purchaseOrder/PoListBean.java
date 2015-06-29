@@ -50,6 +50,8 @@ public class PoListBean implements Serializable {
 
     private List<PurchaseOrderEntity> pOrderList;
 
+    private List<PurchaseOrderEntity> maxVariationsList;
+
     private String newVariationNumber;
 
     private PurchaseOrderEntity purchaseOrderToVariation;
@@ -61,6 +63,7 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = new PurchaseOrderEntity();
         purchaseOrderToVariation = new PurchaseOrderEntity();
         pOrderList = new ArrayList<>();
+        maxVariationsList = new ArrayList<>();
     }
 
     public void load() {
@@ -75,6 +78,7 @@ public class PoListBean implements Serializable {
                 throw new IllegalArgumentException("project Id invalid");
             }
             list = service.purchaseListByProject(Long.parseLong(projectId));
+            maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
         } else {
             throw new IllegalArgumentException("project Id invalid");
         }
@@ -88,7 +92,20 @@ public class PoListBean implements Serializable {
     public void doSavePOO(){
         log.info("do save POO with variation");
         service.savePOOnProcurement(purchaseOrderToVariation);
+        sortPurchaseListByVariationAndDoUpdate();
+        maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
         list = service.purchaseListByProject(Long.parseLong(projectId));
+    }
+
+    private void sortPurchaseListByVariationAndDoUpdate(){
+        List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrderToVariation.getProjectEntity().getId(),purchaseOrderToVariation.getPo());
+        sortBean.sortPurchaseOrderEntity(poList);
+        int index = 1;
+        for(PurchaseOrderEntity po : poList){
+            po.setOrderedVariation(index);
+            service.doUpdatePurchaseOrder(po);
+            index++;
+        }
     }
 
     public void createVarNumberToPO(PurchaseOrderEntity entity) {
@@ -151,6 +168,8 @@ public class PoListBean implements Serializable {
         log.info("do commit purchase order");
         currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
         currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+        list = service.purchaseListByProject(Long.parseLong(projectId));
+        maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
     }
 
     public void doReleasePo() {
@@ -184,7 +203,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionVarationPOO(PurchaseOrderEntity entity) {
-        if(entity.getPoEntity().getPoProcStatus() != null){
+        /*if(entity.getPoEntity().getPoProcStatus() != null){
             if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
                 return true;
             }
@@ -192,6 +211,24 @@ public class PoListBean implements Serializable {
             return false;
         }
 
+        return false;*/
+        return canCreateVariation(entity);
+    }
+
+    private boolean canCreateVariation(PurchaseOrderEntity entity){
+        log.info("Entity po["+entity.getPo()+"], orderedVariation["+entity.getOrderedVariation()+"]");
+        if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
+            for(Object po : maxVariationsList){
+                Object []values=(Object [])po;
+                PurchaseOrderEntity poe = new PurchaseOrderEntity();
+                poe.setPo((String)values[0]);
+                poe.setOrderedVariation((Integer)values[1]);
+                log.info("POE po["+poe.getPo()+"], orderedVariation["+poe.getOrderedVariation()+"]");
+                if(entity.getPo().equals(poe.getPo()) && entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue()){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
