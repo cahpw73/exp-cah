@@ -15,6 +15,7 @@
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            value="Package No"/>
+
                             <div class="col-md-7">
                                 <h:inputText value="#{bidListBean.packageNo}"/>
 
@@ -30,19 +31,19 @@
 
                             <div class="col-md-7">
                                 <div class="left-inner-addon">
-                                    <i class="fa fa-search fa-lg"></i>
                                     <h:inputText value="#{bidListBean.description}"/>
                                 </div>
                             </div>
                             <div>
                                 <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
                                                value="OK"
-                                               action="#{reportDeliverableBean.printReportDeliverables}"
-                                               target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                               action="#{bidListBean.generateReport}">
+                                </h:commandLink>
                                 <h:commandLink styleClass="btn btn-primary btn-sm"
-                                               value="Close"
-                                               action="#{reportDeliverableBean.printReportDeliverables}"
-                                               target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                               value="#{msgs['lbl.close']}"
+                                               action="#{bidListBean.putModeCategory}">
+                                    <p:ajax async="false" update="bidderForm"/>
+                                </h:commandLink>
                             </div>
                         </div>
                     </div>
@@ -51,22 +52,23 @@
                 <br/>
 
                 <div>
-                    <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
-                                 rows="#{configuration.defaultPageSize}" lazy="true">
+                    <p:dataTable id="deliverablesTblId" value="#{bidListBean.suppliers(categoryBean.selectedCategory)}"
+                                 var="_supplier">
                         <p:column headerText="Supplier ID">
-                            #{_l.poNo}
+                            #{_supplier.supplierId}
                         </p:column>
                         <p:column headerText="Company">
-                            #{_l.varNo}
+                            #{_supplier.company}
                         </p:column>
                         <p:column headerText="state">
-                            #{_l.poDescription}
+                            #{_supplier.state}
                         </p:column>
-                        <p:column headerText="Contact" >
-                            #{_l.delNo}
+                        <p:column headerText="Contact">
                         </p:column>
-                        <p:column headerText="Print" >
-                            #{_l.description}
+                        <p:column headerText="Print">
+                            <h:selectBooleanCheckbox>
+                                <p:ajax async="true" event="blur" listener="#{bidListBean.selectSupplier(_supplier.id)}"/>
+                            </h:selectBooleanCheckbox>
                         </p:column>
                     </p:dataTable>
                 </div>

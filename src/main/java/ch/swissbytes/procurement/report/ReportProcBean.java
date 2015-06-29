@@ -4,6 +4,7 @@ package ch.swissbytes.procurement.report;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
@@ -70,47 +71,56 @@ public class ReportProcBean implements Serializable {
         log.info("Report Bean destroyed!");
     }
 
-    public void printReportDeliverables(final PurchaseOrderEntity po,final Long projectId,final String termsPoNo) {
+    public void printReportDeliverables(final PurchaseOrderEntity po, final Long projectId, final String termsPoNo) {
         log.info("public void printReportDeliverables()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDeliverables("/procurement/deliverables/reportDeliverables", "Procurement.Deliverables", messages, locale, configuration,po,projectId,termsPoNo);
+        ReportView reportView = new ReportDeliverables("/procurement/deliverables/reportDeliverables", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo);
         reportView.printDocument(null);
         openReport = true;
     }
 
-    public void printReportExpediting(final PurchaseOrderEntity po,final Long projectId,final String termsPoNo) {
+    public void printReportExpediting(final PurchaseOrderEntity po, final Long projectId, final String termsPoNo) {
         log.info("public void printReportExpediting()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Deliverables", messages, locale, configuration,po,projectId,termsPoNo);
+        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo);
         reportView.printDocument(null);
         openReport = true;
     }
 
-    public void printPurchaseOrder(final PurchaseOrderEntity po){
-        log.info("printPurchaseOrder(purchaseOrderId["+po.getId()+"])");
+    public void printPurchaseOrder(final PurchaseOrderEntity po) {
+        log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", "Procurement.PurchaseOrder", messages, locale, configuration,po);
+        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", "Procurement.PurchaseOrder", messages, locale, configuration, po);
         reportView.printDocument(null);
         openReport = true;
     }
 
-    public void printProjectPurchaseOrder(final ProjectEntity project, final List<PurchaseOrderEntity> poList,final String strSortBy){
+    public void printProjectPurchaseOrder(final ProjectEntity project, final List<PurchaseOrderEntity> poList, final String strSortBy) {
         log.info("printProjectPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration,poList,project,strSortBy);
+        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration, poList, project, strSortBy);
         reportView.printDocument(null);
         openReport = true;
     }
 
-    public void printRequiredRetentions(final ProjectEntity project,final Map<String, Boolean> sortMap){
+
+    public void printBidderList(List<Long> suppliers, String packageNumber, String description, String comments, String codeProject, String project) {
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportBidderList("/procurement/bidderList/bidderList", "Procurement.bidder list", messages, locale, configuration, suppliers, packageNumber, description, comments, codeProject, project);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printRequiredRetentions(final ProjectEntity project, final Map<String, Boolean> sortMap) {
         log.info("printRequiredRetentions");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportRequiredRetentions("/procurement/RequiredRetentionReport/requiredRetentionReport", "Procurement.PurchaseOrder", messages, locale, configuration,project,sortMap);
+        ReportView reportView = new ReportRequiredRetentions("/procurement/RequiredRetentionReport/requiredRetentionReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }

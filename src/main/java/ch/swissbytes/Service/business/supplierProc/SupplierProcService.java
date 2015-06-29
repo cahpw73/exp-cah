@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.ArrayUtils;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -108,5 +109,8 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
 
     public List<String> findCountriesByCategory(final Long id){
         return dao.findCountriesByCategory(id);
+    }
+    public List<SupplierProcEntity> findSupplierByCountriesAndCategory(final Long id,final List<String> countries){
+        return countries==null||countries.isEmpty()?new ArrayList<SupplierProcEntity>():dao.findSupplierByCountriesAndCategory(id, countries);
     }
 }

@@ -35,6 +35,14 @@
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.project.procurement']}
                         <f:param name="reportName" value="ppr"/>
                     </h:link>
+                    <ui:remove>
+                        <p:commandLink value="#{msgs['lbl.report.project.procurement']}"
+                                       action="#{reportProcurementBean.resetValuesProjectProc}"
+                                       oncomplete="PF('projectProcDlg').show();"
+                                       update=":reportProjectProcId" async="false"
+                                       style=" color: #428BCA; padding-left: 0px!important;">
+                        </p:commandLink>
+                    </ui:remove>
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->
@@ -73,5 +81,11 @@
                 </li>
             </ul>
         </div>
+        <h:panelGroup id="reportProjectProcId">
+            <p:dialog id="POOReportId" header="Project Procurement Report" widgetVar="projectProcDlg"
+                      resizable="false">
+                <ui:include src="components/modalSortPo.xhtml"></ui:include>
+            </p:dialog>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

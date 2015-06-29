@@ -3,6 +3,8 @@ package ch.swissbytes.procurement.boundary.report.bidList;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import ch.swissbytes.procurement.report.ReportProcBean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -25,49 +27,63 @@ public class BidListBean implements Serializable {
 
     public static final Logger log = Logger.getLogger(BidListBean.class.getName());
 
-    private ProjectEntity project;
-
-    private List<String> countries;
-    private List<String>countriesSelected;
 
     @Inject
     private SupplierProcService supplierService;
+    @Inject
+    private ReportProcBean reportProcBean;
 
-    private boolean categorySelection=true;
-
+    private ProjectEntity project;
+    private List<String> countries;
+    private List<String> countriesSelected;
+    private boolean categorySelection = true;
     private String packageNo;
     private String description;
     private String comments;
+    private List<Long>supplierSelected;
 
     @PostConstruct
-    public void create(){
-        log.log(Level.FINE,"creating bidListBean");
-        countries=new ArrayList<>();
-        countriesSelected=new ArrayList<>();
+    public void create() {
+        log.log(Level.FINE, "creating bidListBean");
+        countries = new ArrayList<>();
+        countriesSelected = new ArrayList<>();
+        supplierSelected=new ArrayList<>();
     }
 
     @PreDestroy
-    public void destroy(){
-        log.log(Level.FINE,"destroying bidListBean");
+    public void destroy() {
+        log.log(Level.FINE, "destroying bidListBean");
     }
 
     public ProjectEntity getProject() {
         return project;
     }
 
-    public List<String> findCountriesByCategory(CategoryEntity categoryEntity){
-        if(categoryEntity!=null){
-           countries= supplierService.findCountriesByCategory(categoryEntity.getId());
+    public List<String> findCountriesByCategory(CategoryEntity categoryEntity) {
+        if (categoryEntity != null) {
+            countries = supplierService.findCountriesByCategory(categoryEntity.getId());
         }
         Collections.sort(countriesSelected);
         return countries;
     }
 
-    public void selectCountry(String country){
-        if(!countriesSelected.contains(country)){
+    public void selectCountry(String country) {
+        if (!countriesSelected.contains(country)) {
             countriesSelected.add(country);
-        }else{
+        } else {
             countriesSelected.remove(country);
+        }
+    }
+
+    public void generateReport(){
+        reportProcBean.printBidderList(supplierSelected,packageNo,description,comments,project.getProjectNumber(),project.getTitle());
+    }
+
+    public void selectSupplier(Long idSupplier){
+        if(supplierSelected.contains(idSupplier)){
+            supplierSelected.remove(idSupplier);
+        }else{
+            supplierSelected.add(idSupplier);
         }
     }
 
@@ -79,11 +95,12 @@ public class BidListBean implements Serializable {
         return categorySelection;
     }
 
-    public void putModeCategory(){
-        categorySelection=true;
+    public void putModeCategory() {
+        categorySelection = true;
     }
-    public void putModeSupplier(){
-        categorySelection=false;
+
+    public void putModeSupplier() {
+        categorySelection = false;
     }
 
     public String getPackageNo() {
@@ -108,5 +125,9 @@ public class BidListBean implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public List<SupplierProcEntity> suppliers(CategoryEntity categoryEntity) {
+        return supplierService.findSupplierByCountriesAndCategory(categoryEntity!=null?categoryEntity.getId():null,countriesSelected);
     }
 }
