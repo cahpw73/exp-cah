@@ -58,7 +58,8 @@ public class ReportExpediting extends ReportView implements Serializable {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultLogo().getFile());
             addParameters("logo", logo);
         }
-        if(po.getProjectEntity().getSupplierProcurement() != null){
+        //TODO CHeck this @alvaro
+       /* if(po.getProjectEntity().getSupplierProcurement() != null){
             addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
             addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
             addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
@@ -66,7 +67,7 @@ public class ReportExpediting extends ReportView implements Serializable {
             addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
             addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
             addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
-        }
+        }*/
         addParameters("projectIdFilter", projectId);
         addParameters("poNoFilter", poNo != null ? "%"+poNo+"%" : "");
         addParameters("TIME_ZONE", configuration.getTimeZone());

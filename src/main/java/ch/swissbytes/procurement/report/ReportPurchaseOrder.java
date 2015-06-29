@@ -67,7 +67,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("footerLogo", logo);
         }
         addParameters("purchaseOrderId",po.getId());
-        if(po.getProjectEntity().getSupplierProcurement() != null){
+        //TODo @check this @alvaro
+        /*if(po.getProjectEntity().getSupplierProcurement() != null){
             addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
             addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
             addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
@@ -75,7 +76,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
             addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
             addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
-        }
+        }*/
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());

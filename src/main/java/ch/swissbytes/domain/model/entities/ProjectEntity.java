@@ -27,7 +27,8 @@ public class ProjectEntity implements Serializable{
     private LogoEntity defaultLogo;
     private LogoEntity defaultFooter;
     private String deliveryInstructions;
-    private SupplierProcEntity supplierProcurement;
+    //private SupplierProcEntity supplierProcurement;
+    private ClientEntity client;
     private StatusEnum status;
     private Date lastUpdate;
 
@@ -125,13 +126,13 @@ public class ProjectEntity implements Serializable{
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="supplier_procurement_id", nullable = true)
-    public SupplierProcEntity getSupplierProcurement() {
-        return supplierProcurement;
+    @JoinColumn(name="client_id")
+    public ClientEntity getClient() {
+        return client;
     }
 
-    public void setSupplierProcurement(SupplierProcEntity supplier) {
-        this.supplierProcurement = supplier;
+    public void setClient(ClientEntity client) {
+        this.client = client;
     }
 
     @Column (name = "status",nullable = false)
