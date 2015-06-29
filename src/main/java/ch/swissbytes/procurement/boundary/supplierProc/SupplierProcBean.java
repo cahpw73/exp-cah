@@ -1,9 +1,6 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
-import ch.swissbytes.domain.model.entities.BrandEntity;
-import ch.swissbytes.domain.model.entities.CategoryEntity;
-import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -16,7 +13,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -43,7 +39,7 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     private boolean addingCategory = false;
     private boolean addingBrand = false;
-    private boolean editing =false;
+    private boolean editing = false;
     private String mode;
 
 
@@ -63,7 +59,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
         if (id != null && id > 0) {
             supplier = service.findById(id);
-            editing =true;
+            editing = true;
             putModeEdition();
         }
         if (supplier == null) {
@@ -74,21 +70,19 @@ public class SupplierProcBean extends Bean implements Serializable {
         supplier.getContacts().addAll(service.getContacts(id));
         contactBean.getList().clear();
         contactBean.getList().addAll(supplier.getContacts());
-        if(StringUtils.isNotBlank(mode)&&StringUtils.isNotBlank(mode)&&mode.equalsIgnoreCase(ModeOperationEnum.VIEW.name())){
+        if (StringUtils.isNotBlank(mode) && StringUtils.isNotBlank(mode) && mode.equalsIgnoreCase(ModeOperationEnum.VIEW.name())) {
             putModeView();
         }
     }
 
-    public void start(){
-        supplier=new SupplierProcEntity();
+    public void start() {
+        supplier = new SupplierProcEntity();
         putModeSupplier();
     }
 
 
-
     public String doSave() {
-        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
-            Messages.addFlashError("supplierID","supplier id is already being used");
+        if (!validate()) {
             return "";
         }
         supplier.getContacts().clear();
@@ -96,9 +90,9 @@ public class SupplierProcBean extends Bean implements Serializable {
         service.save(supplier);
         return "list?faces-redirect=true";
     }
-    public SupplierProcEntity save(){
-        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
-            Messages.addFlashError("supplierID","supplier id is already being used");
+
+    public SupplierProcEntity save() {
+        if (!validate()) {
             return null;
         }
         supplier.getContacts().clear();
@@ -108,8 +102,7 @@ public class SupplierProcBean extends Bean implements Serializable {
     }
 
     public String doUpdate() {
-        if(service.isAlreadyBeingUsed(supplier.getSupplierId(),supplier.getId())){
-            Messages.addFlashError("supplierID","supplier id is already being used");
+        if (!validate()) {
             return "";
         }
         supplier.getContacts().clear();
@@ -118,15 +111,32 @@ public class SupplierProcBean extends Bean implements Serializable {
         return "list?faces-redirect=true";
     }
 
+    private boolean validate() {
+        boolean validated = true;
+        if (service.isAlreadyBeingUsed(supplier.getSupplierId(), supplier.getId())) {
+            Messages.addFlashError("supplierID", "supplier id is already being used");
+            validated = false;
+        }
+        if (!hasEitherAtLeastOneCategoryOrOneBrand()) {
+            Messages.addGlobalError("You must select either a category or a brand");
+            validated = false;
+        }
+        return validated;
+    }
+
+    private boolean hasEitherAtLeastOneCategoryOrOneBrand() {
+        return (categoryBrandBean.getBrands()!=null?categoryBrandBean.getBrands().getTarget().size():0) + (categoryBrandBean.getCategories()!=null?categoryBrandBean.getCategories().getTarget().size():0) >= 1;
+    }
+
     public String doDelete(Long id) {
-        supplier=service.findById(id);
+        supplier = service.findById(id);
         service.doDelete(supplier);
         return "list?faces-redirect=true";
     }
 
     public void putModeCategory() {
         addingCategory = true;
-        categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
+        categoryBrandBean.addListLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
     public boolean isSupplierMode() {
@@ -135,7 +145,7 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public void putModeBrand() {
         addingBrand = true;
-        categoryBrandBean.addlistLoaded(supplier.getCategories(), supplier.getBrands());
+        categoryBrandBean.addListLoaded(supplier.getCategories(), supplier.getBrands());
     }
 
     public void putModeSupplier() {
