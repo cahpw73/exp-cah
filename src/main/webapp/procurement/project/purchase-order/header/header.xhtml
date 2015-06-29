@@ -17,8 +17,8 @@
                                      value="#{requisitionBean.filteredList()}">
                             <p:column headerText="#{msgs['po.header.column.req.no']}">
                                 <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
-                                <h:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
-                                             required="true"
+                                <p:inputText rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
+                                             required="true" requiredMessage="Enter a Req No"
                                              maxlength="250"
                                              styleClass="form-control"/>
                             </p:column>
@@ -45,11 +45,12 @@
                             </p:column>
                             <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_req.isEditable}"
-                                               process="@this"
-                                               action="#{requisitionBean.edit(_req.id)}" update="requisitionDt"/>
+                                               process="@this" action="#{requisitionBean.edit(_req.id)}"
+                                               update="requisitionDt :editPoForm:msgPoMainData"/>
                                 <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_req.isEditable}"
                                                process=":editPoForm:requisitionsGroup"
-                                               action="#{requisitionBean.confirm(_req.id)}" update="requisitionDt"/>
+                                               action="#{requisitionBean.confirm(_req.id)}"
+                                               update="requisitionDt :editPoForm:msgPoMainData"/>
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_req.isEditable}"
                                                process="@this"
