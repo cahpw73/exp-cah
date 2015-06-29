@@ -17,6 +17,7 @@ import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Purchase;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -203,6 +204,10 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     public List<PurchaseOrderEntity> purchaseListByProject(final Long projectId){
         return dao.findPOByProject(projectId);
+    }
+
+    public List<PurchaseOrderEntity> findPOMaxVariations(final Long projectId){
+        return dao.findPOMaxVariations(projectId);
     }
 
     public List<PurchaseOrderEntity> purchaseListByProjectIdAnPoNo(final Long projectId, final String poNo){

@@ -2,10 +2,12 @@ package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.POEntity;
+import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Purchase;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
@@ -90,10 +92,26 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id=:PROJECT_ID ");
-        sb.append(" ORDER BY po.po ");
+        sb.append(" ORDER BY po.po,po.orderedVariation ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), map);
+    }
+
+    public List<PurchaseOrderEntity> findPOMaxVariations(Long projectId){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po.po,MAX(po.orderedVariation) ");
+        sb.append(" FROM PurchaseOrderEntity po, POEntity p ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id=:PROJECT_ID ");
+        sb.append(" AND po.poEntity.id = p.id ");
+        sb.append(" AND p.poProcStatus = :COMMITTED ");
+        sb.append(" GROUP BY po.po ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PROJECT_ID", projectId);
+        map.put("COMMITTED", POStatusEnum.COMMITED);
         return super.findBy(sb.toString(), map);
     }
 
