@@ -182,7 +182,8 @@
                                 <h:outputText value="#{_l.item}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edItem" rendered="#{_l.isEditable}">
-                                <h:inputText id="itemNo" value="#{_l.item}" styleClass="form-control"/>
+                                <p:inputText id="itemNo" value="#{_l.item}" styleClass="form-control"
+                                             requiredMessage="Enter a Item" required="true"/>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}"
@@ -287,11 +288,11 @@
                         <p:column headerText="#{msgs['lbl.actions']}"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.editCashflowDetail(_l)}" update="forecastDt"
-                                           async="false"/>
+                                           action="#{cashflowBean.editCashflowDetail(_l)}"
+                                           update="forecastDt :editPoForm:msgPoMainData" async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}" process="forecastDt"
-                                           action="#{cashflowBean.confirmCashflowDetail(_l)}" update="forecastDt"
-                                           async="false"/>
+                                           action="#{cashflowBean.confirmCashflowDetail(_l)}"
+                                           update="forecastDt :editPoForm:msgPoMainData" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_l.isEditable}" process="@this"
                                            action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt"
