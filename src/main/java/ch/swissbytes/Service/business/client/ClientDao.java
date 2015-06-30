@@ -38,7 +38,7 @@ public class ClientDao extends GenericDao<ClientEntity> implements Serializable 
         sb.append("WHERE cl.status=:ENABLED ");
 
         if(StringUtils.isNotEmpty(term)&&StringUtils.isNotBlank(term)){
-            sb.append(" lower(cl.title) like :TERM ");
+            sb.append(" AND lower(cl.title) like :TERM ");
         }
         sb.append("ORDER BY cl.title ");
         Map<String,Object> map=new HashMap<String,Object>();

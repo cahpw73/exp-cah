@@ -14,12 +14,13 @@ import java.util.List;
 /**
  * Created by alvaro on 6/29/2015.
  */
-//@Named
-//@ViewScoped
+@Named
+@ViewScoped
 public class ClientListBean implements Serializable {
 
-   /* @Inject
-    private ClientService service;*/
+    @Inject
+    private ClientService service;
+
     private String term;
 
     @PostConstruct
@@ -31,9 +32,9 @@ public class ClientListBean implements Serializable {
 
     }
 
-  /*  public List<ClientEntity> getClients(){
+   public List<ClientEntity> getClients(){
         return service.findAll(term);
-    }*/
+    }
 
     public String getTerm() {
         return term;
