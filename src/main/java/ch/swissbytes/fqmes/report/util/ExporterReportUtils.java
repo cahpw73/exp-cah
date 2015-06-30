@@ -136,8 +136,4 @@ public class ExporterReportUtils {
         return fileFormat;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getOnlyReportNameFormat("hola como\\estas/bien:ok*que\"bien<aja>ja|ja"));
-    }
-
 }
