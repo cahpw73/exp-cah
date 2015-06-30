@@ -18,6 +18,7 @@ public class ClientEntity implements Serializable {
 
     private Long id;
     private String title;
+    private String name;
     private LogoEntity reportLogo;
     private LogoEntity clientLogo;
     private StatusEnum status;
@@ -36,8 +37,18 @@ public class ClientEntity implements Serializable {
     }
 
 
-    @Size(max = 255)
-    @Column(name = "title", nullable = true, length = 250)
+    @Size(max = 250)
+    @Column(name = "name", length = 250)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Size(max = 1000)
+    @Column(name = "title", nullable = true, length = 1000)
     public String getTitle() {
         return title;
     }

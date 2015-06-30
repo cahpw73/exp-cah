@@ -106,9 +106,7 @@ public class ClientBean extends Bean implements Serializable {
     }
 
     public void saveLogo(){
-        //log.info("saving logo......");
         if(logoBean.saveForProject()) {
-            //loadLogoList();
             switch (currentLogo) {
                 case 0://report logo
                     client.setReportLogo(logoBean.getLogo());

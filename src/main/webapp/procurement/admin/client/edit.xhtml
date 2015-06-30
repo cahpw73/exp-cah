@@ -19,7 +19,20 @@
                     <div class="procurement-panel-header">#{clientBean.beingCreated?'Add Client':'Edit Client'}</div>
                 </h:panelGroup>
                 <div class="col-md-8 panel-tab-users">
+
                     <div class="row">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="name"
+                                           value="Name"/>
+                            <div class="col-sm-5">
+                                <p:inputText id="name"
+                                             value="#{clientBean.client.name}"
+                                             maxlength="250"
+                                             styleClass="form-control"/>
+                                <p:message for="name"/>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
