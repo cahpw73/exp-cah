@@ -8,6 +8,7 @@ package ch.swissbytes.domain.model.entities;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,6 +18,8 @@ import java.util.Date;
 public class ProjectTextSnippetEntity implements Serializable{
 
     private Long id;
+    private String code;
+    private String description;
     private StatusEnum status;
     private Date lastUpdate;
     private ProjectEntity project;
@@ -31,6 +34,26 @@ public class ProjectTextSnippetEntity implements Serializable{
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Size(max = 250)
+    @Column(name = "code", nullable = false, length = 250)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Size(max = 1000)
+    @Column(name = "description", nullable = false, length = 1000)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Column (name = "status",nullable = false)
