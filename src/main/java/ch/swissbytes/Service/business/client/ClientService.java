@@ -49,7 +49,8 @@ public class ClientService extends Service<ClientEntity> implements Serializable
     }
 
     @Transactional
-    public ClientEntity delete(ClientEntity client){
+    public ClientEntity delete(Long clientId){
+        ClientEntity client=findById(clientId);
         client.setLastUpdate(new Date());
         client.setStatus(StatusEnum.DELETED);
         return super.update(client);

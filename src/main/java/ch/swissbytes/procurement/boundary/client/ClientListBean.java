@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.boundary.client;
 
 import ch.swissbytes.Service.business.client.ClientService;
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.model.entities.ClientEntity;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,8 @@ public class ClientListBean implements Serializable {
 
     @Inject
     private ClientService service;
+
+
 
     private String term;
 

@@ -1,9 +1,11 @@
 package ch.swissbytes.procurement.boundary.client;
 
 import ch.swissbytes.Service.business.client.ClientService;
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.model.entities.ClientEntity;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -25,13 +27,14 @@ public class ClientBean extends Bean implements Serializable {
     private ClientEntity client;
     private String idClient;
 
+    @Inject
+    private ProjectService projectService;
+
 
     @Override
     public void initialize(){
         client=new ClientEntity();
     }
-
-
 
     public void load(){
         if(StringUtils.isNotEmpty(idClient)&&StringUtils.isNotBlank(idClient)){
@@ -59,22 +62,33 @@ public class ClientBean extends Bean implements Serializable {
 
     public String doSave(){
         client=service.save(client);
+        Messages.addFlashGlobalInfo("The client was created!");
         return "edit?faces-redirect=true&clientId="+client.getId();
     }
     public String doUpdate(){
         service.update(client);
+        Messages.addFlashGlobalInfo("The client was updated!");
         return "edit?faces-redirect=true&clientId="+client.getId();
 
     }
     public String saveAndClose(){
+        Messages.addFlashGlobalInfo("The client was created!");
         service.save(client);
         return "list?faces-redirect=true";
 
     }
     public String updateAndClose(){
+        Messages.addFlashGlobalInfo("The client was updated!");
         service.update(client);
         return "list?faces-redirect=true";
+    }
 
+    public void delete(Long id){
+        if(!projectService.isClientBeingUsed(id)) {
+            service.delete(id);
+        }else{
+            Messages.addGlobalError("Client is being used by a project");
+        }
     }
 
 

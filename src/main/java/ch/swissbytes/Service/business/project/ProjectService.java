@@ -179,4 +179,9 @@ public class ProjectService implements Serializable {
         return projectDao.findByLogoId(logoId);
     }
 
+    public boolean isClientBeingUsed(final Long clientId){
+
+        return !projectDao.findByClient(clientId).isEmpty();
+    }
+
 }

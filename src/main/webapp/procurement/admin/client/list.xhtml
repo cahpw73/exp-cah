@@ -40,7 +40,7 @@
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
                     <p:column headerText="Description" width="100">
-                        #{_cl.title}
+                        <h:outputText value="#{_cl.title}"/>
                     </p:column>
                     <p:column headerText="Logo" width="90">
                         #{_cl.clientLogo.fileName}
@@ -53,6 +53,14 @@
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                             <f:param name="clientId" value="#{_cl.id}"/>
                         </h:link>
+                        <p:commandLink value="#{msgs['lbl.delete']}"
+                                       style="color: #428BCA;"
+                                       styleClass="btn-commandLink-primeFaces"
+                                       update="clienttListId"
+                                       action="#{clientBean.delete(_cl.id)}">
+                            <p:confirm header="Delete client"
+                                       message="Are you sure delete this Client?"/>
+                        </p:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>
