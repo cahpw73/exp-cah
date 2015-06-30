@@ -60,16 +60,16 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{projectBean.createProject}"
+                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doSave}" styleClass="btn btn-primary btn-sm"
                                          type="submit"/>
-                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.createProject}"
+                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
                         &#160;
-                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{projectBean.createProject}"
+                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{!projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doSaveAndClose}"
                                          styleClass="btn btn-primary btn-sm"/>
-                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{!projectBean.createProject}"
+                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doUpdateAndClose}"
                                          styleClass="btn btn-primary btn-sm"/>
                     </div>

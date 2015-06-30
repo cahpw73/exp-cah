@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "project")
-public class ProjectEntity implements Serializable{
+public class ProjectEntity implements Serializable {
 
     private Long id;
     private String projectNumber;
@@ -32,7 +32,10 @@ public class ProjectEntity implements Serializable{
     private StatusEnum status;
     private Date lastUpdate;
 
-    private List<ProjectCurrencyEntity> currencies=new ArrayList<>();
+    private List<ProjectCurrencyEntity> currencies = new ArrayList<>();
+    private List<ProjectTextSnippetEntity> projectTextSnippetList = new ArrayList<>();
+    private List<TextSnippetEntity> globalStandardTextList = new ArrayList<>();
+
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -41,6 +44,7 @@ public class ProjectEntity implements Serializable{
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -65,8 +69,8 @@ public class ProjectEntity implements Serializable{
         this.title = title;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="report_logo_id", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "report_logo_id", nullable = true)
     public LogoEntity getReportLogo() {
         return reportLogo;
     }
@@ -75,8 +79,8 @@ public class ProjectEntity implements Serializable{
         this.reportLogo = reportLogo;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="client_logo_id", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_logo_id", nullable = true)
     public LogoEntity getClientLogo() {
         return clientLogo;
     }
@@ -85,8 +89,8 @@ public class ProjectEntity implements Serializable{
         this.clientLogo = clientLogo;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="client_footer_id", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_footer_id", nullable = true)
     public LogoEntity getClientFooter() {
         return clientFooter;
     }
@@ -95,8 +99,8 @@ public class ProjectEntity implements Serializable{
         this.clientFooter = clientFooter;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="default_logo_id", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "default_logo_id", nullable = true)
     public LogoEntity getDefaultLogo() {
         return defaultLogo;
     }
@@ -105,8 +109,8 @@ public class ProjectEntity implements Serializable{
         this.defaultLogo = defaultLogo;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="default_footer_id", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "default_footer_id", nullable = true)
     public LogoEntity getDefaultFooter() {
         return defaultFooter;
     }
@@ -115,7 +119,7 @@ public class ProjectEntity implements Serializable{
         this.defaultFooter = defaultFooter;
     }
 
-    @Size(max = 950,message = "It must contain 950 characters at most")
+    @Size(max = 950, message = "It must contain 950 characters at most")
     @Column(name = "delivery_instructions", nullable = true, length = 1000)
     public String getDeliveryInstructions() {
         return deliveryInstructions;
@@ -125,8 +129,8 @@ public class ProjectEntity implements Serializable{
         this.deliveryInstructions = deliveryInstructions;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="client_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
     public ClientEntity getClient() {
         return client;
     }
@@ -135,7 +139,7 @@ public class ProjectEntity implements Serializable{
         this.client = client;
     }
 
-    @Column (name = "status",nullable = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     public StatusEnum getStatus() {
         return status;
@@ -145,7 +149,7 @@ public class ProjectEntity implements Serializable{
         this.status = status;
     }
 
-    @Column(name = "last_update",nullable = false)
+    @Column(name = "last_update", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
         return lastUpdate;
@@ -158,6 +162,28 @@ public class ProjectEntity implements Serializable{
     @Transient
     public List<ProjectCurrencyEntity> getCurrencies() {
         return currencies;
+    }
+
+    public void setCurrencies(List<ProjectCurrencyEntity> currencies) {
+        this.currencies = currencies;
+    }
+
+    @Transient
+    public List<ProjectTextSnippetEntity> getProjectTextSnippetList() {
+        return projectTextSnippetList;
+    }
+
+    public void setProjectTextSnippetList(List<ProjectTextSnippetEntity> projectTextSnippetList) {
+        this.projectTextSnippetList = projectTextSnippetList;
+    }
+
+    @Transient
+    public List<TextSnippetEntity> getGlobalStandardTextList() {
+        return globalStandardTextList;
+    }
+
+    public void setGlobalStandardTextList(List<TextSnippetEntity> globalStandardTextList) {
+        this.globalStandardTextList = globalStandardTextList;
     }
 
     @Override
