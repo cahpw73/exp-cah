@@ -26,8 +26,7 @@
                     <div class="col-md-3">
                         <div>
                             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this,searchTermId" update="clienttListId"
-                                        listener="#{projectListBean.doSearch}"/>
+                                <p:ajax process="@this,searchTermId" update="clienttListId"/>
                             </h:commandButton>
                             &#160;
                             <h:link value="#{msgs['lbl.clean']}" outcome="list" styleClass="btn btn-primary btn-sm"/>
@@ -35,23 +34,19 @@
                     </div>
                     <div class="pull-right">
                         <div class="col-md-3">
-                            <div>
-                                <h:commandButton value="#{msgs['client.add']}"
-                                                 styleClass="btn btn-primary btn-sm"
-                                                 action="edit?faces-redirect=true&amp;isCreateProject=true"/>
-                            </div>
+                            <h:link value="#{msgs['client.add']}" outcome="edit" styleClass="btn btn-primary btn-sm"/>
                         </div>
                     </div>
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
-                    <p:column headerText="#{msgs['project.list.column.number']}" width="100">
-
+                    <p:column headerText="Description" width="100">
+                        #{_cl.title}
                     </p:column>
-                    <p:column headerText="#{msgs['project.list.column.report.logo']}" width="90">
-
+                    <p:column headerText="Logo" width="90">
+                        #{_cl.clientLogo.fileName}
                     </p:column>
-                    <p:column headerText="#{msgs['project.list.column.company.logo']}" width="90">
-
+                    <p:column headerText="Report Logo" width="90">
+                        #{_cl.reportLogo.fileName}
                     </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                         <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"

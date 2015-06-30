@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Admin - project</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(0)}"/>
+        <f:viewParam name="isCreateProject" value="#{projectBean.createProject}"/>
+        <f:viewParam name="projectId" value="#{projectBean.projectId}"/>
+        <f:viewAction action="#{projectBean.loadActionCrud}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form id="editUserForm" prependId="false" class="form-horizontal">
+            <div class="col-md-8" style="margin-top: 25px;">
+                <h:panelGroup rendered="#{projectBean.createProject}">
+                    <div class="procurement-panel-header">#{msgs['project.detail.page.title.add']}</div>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{!projectBean.createProject}">
+                    <div class="procurement-panel-header">#{msgs['project.detail.page.title.edit']}</div>
+                </h:panelGroup>
+
+                <div class="col-md-8 panel-tab-users">
+                    <div class="row">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
+
+                            <div class="col-sm-5">
+                                <h:selectOneMenu id="clientLogo"
+                                                 value="#{projectBean.projectEntity.clientLogo}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{projectBean.logoList}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.fileName}"/>
+                                </h:selectOneMenu>
+                                <p:message for="clientLogo" id="msgClientLogo"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="pull-right">
+                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     value="#{msgs['project.detail.btn.new.logo']}">
+                                        <p:ajax process="logoGroupId"
+                                                async="false"
+                                                listener="#{projectBean.startClientLogo}"
+                                                update=":logoModalId"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                        <h:panelGroup id="logoGroupId">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                               for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
+
+                                <div class="col-sm-5">
+                                    <h:selectOneMenu id="reportLogo"
+                                                     value="#{projectBean.projectEntity.reportLogo}"
+                                                     styleClass="form-control" converter="logoConverter">
+                                        <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                      noSelectionOption="true"/>
+                                        <f:selectItems value="#{projectBean.logoList}"
+                                                       var="_l"
+                                                       itemValue="#{_l}"
+                                                       itemLabel="#{_l.fileName}"/>
+                                    </h:selectOneMenu>
+                                    <p:message for="reportLogo" id="msgReportLogo"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="pull-right">
+                                        <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                       type="button" onclick="PF('logoModal').show();"
+                                                       value="#{msgs['project.detail.btn.new.logo']}">
+                                            <p:ajax process="logoGroupId"
+                                                    async="false"
+                                                    listener="#{projectBean.startReportLogo}"
+                                                    update=":logoModalId"/>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </h:panelGroup>
+
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="instructions"
+                                           value="Title"/>
+                            <div class="col-sm-5">
+                                <p:inputTextarea id="instructions"
+                                                 value="#{projectBean.projectEntity.deliveryInstructions}"
+                                                 maxlength="950"
+                                                 styleClass="form-control"
+                                                 style="height: 135px!important; width: 366px!important"/>
+                                <p:message for="instructions" id="msgInstruction"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{projectBean.createProject}"
+                                         action="#{projectBean.doSave}" styleClass="btn btn-primary btn-sm"
+                                         type="submit"/>
+                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.createProject}"
+                                         action="#{projectBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
+                        &#160;
+                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{projectBean.createProject}"
+                                         action="#{projectBean.doSaveAndClose}"
+                                         styleClass="btn btn-primary btn-sm"/>
+                        <h:commandButton value="#{msgs['lbl.close']}" rendered="#{!projectBean.createProject}"
+                                         action="#{projectBean.doUpdateAndClose}"
+                                         styleClass="btn btn-primary btn-sm"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <p:dialog header="New Logo" widgetVar="logoModal"
+                  resizable="false" height="400" width="600">
+            <h:panelGroup id="logoModalId">
+                <div class="col-md-12">
+                    <ui:include src="../../admin/logo/component/previewTemplate.xhtml">
+                        <ui:param name="MODE" value="PROJECT"/>
+                        <ui:param name="MODAL" value="logoModal"/>
+                        <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo"/>
+                    </ui:include>
+                </div>
+            </h:panelGroup>
+        </p:dialog>
+
+
+    </ui:define>
+</ui:composition>

@@ -73,7 +73,8 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         log.info("Search Term: " + searchTerm);
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
-        sb.append(" FROM ProjectEntity p LEFT JOIN p.supplierProcurement sp ");
+      //  sb.append(" FROM ProjectEntity p LEFT JOIN p.supplierProcurement sp ");
+        sb.append(" FROM ProjectEntity p  ");
         sb.append(" LEFT JOIN p.reportLogo rl ");
         sb.append(" LEFT JOIN p.clientLogo cl ");
         sb.append(" LEFT JOIN p.clientFooter cf ");
@@ -86,7 +87,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
             sb.append(" AND (  ");
             sb.append(" LOWER(p.projectNumber) like :PROJECT_NUMBER ");
             sb.append(" OR LOWER(p.title) like :TITLE ");
-            sb.append(" OR LOWER(sp.company) like :SUPPLIER ");
+            //sb.append(" OR LOWER(sp.company) like :SUPPLIER ");
             sb.append(" OR LOWER(rl.fileName) like :FILE_NAME ");
             sb.append(" OR LOWER(cl.fileName) like :FILE_NAME ");
             sb.append(" OR LOWER(cf.fileName) like :FILE_NAME ");
