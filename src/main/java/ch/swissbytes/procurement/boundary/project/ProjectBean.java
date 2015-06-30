@@ -141,9 +141,17 @@ public class ProjectBean implements Serializable {
         log.info("do save");
         if(dataValidate()) {
             prepareToSaveProjectTextSnippet();
+            collectionAllData();
             projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
         }
         mainMenuBean.select(0);
+    }
+
+    private void collectionAllData() {
+        log.info("collecting data");
+        projectEntity.getCurrencies().addAll(projectCurrencyList);
+        projectEntity.getProjectTextSnippetList().addAll(projectTextSnippetList);
+        projectEntity.getGlobalStandardTextList().addAll(globalStandardTextList);
     }
 
     public void doUpdate(){

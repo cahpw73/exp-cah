@@ -33,6 +33,9 @@ public class ProjectEntity implements Serializable{
     private Date lastUpdate;
 
     private List<ProjectCurrencyEntity> currencies=new ArrayList<>();
+    private List<ProjectTextSnippetEntity> projectTextSnippetList;
+    private List<TextSnippetEntity> globalStandardTextList;
+
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -158,6 +161,28 @@ public class ProjectEntity implements Serializable{
     @Transient
     public List<ProjectCurrencyEntity> getCurrencies() {
         return currencies;
+    }
+
+    public void setCurrencies(List<ProjectCurrencyEntity> currencies) {
+        this.currencies = currencies;
+    }
+
+    @Transient
+    public List<ProjectTextSnippetEntity> getProjectTextSnippetList() {
+        return projectTextSnippetList;
+    }
+
+    public void setProjectTextSnippetList(List<ProjectTextSnippetEntity> projectTextSnippetList) {
+        this.projectTextSnippetList = projectTextSnippetList;
+    }
+
+    @Transient
+    public List<TextSnippetEntity> getGlobalStandardTextList() {
+        return globalStandardTextList;
+    }
+
+    public void setGlobalStandardTextList(List<TextSnippetEntity> globalStandardTextList) {
+        this.globalStandardTextList = globalStandardTextList;
     }
 
     @Override
