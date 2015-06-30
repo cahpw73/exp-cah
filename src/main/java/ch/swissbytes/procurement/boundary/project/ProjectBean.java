@@ -142,32 +142,31 @@ public class ProjectBean implements Serializable {
         if(dataValidate()) {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
-            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
+            projectEntity = projectService.doSave(projectEntity);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was store correctly", null);
         }
         mainMenuBean.select(0);
-    }
-
-    private void collectionAllData() {
-        log.info("collecting data");
-        projectEntity.getCurrencies().addAll(projectCurrencyList);
-        projectEntity.getProjectTextSnippetList().addAll(projectTextSnippetList);
-        projectEntity.getGlobalStandardTextList().addAll(globalStandardTextList);
     }
 
     public void doUpdate(){
         log.info("do update");
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
-            projectService.doUpdate(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
+            collectionAllData();
+            projectEntity =  projectService.doUpdate(projectEntity);
+            Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was update correctly",null);
         }
         mainMenuBean.select(0);
     }
 
     public String doSaveAndClose(){
         log.info("do save and close");
+        log.info("ProjectEntity Id:" + (projectEntity.getId()!= null?projectEntity.getId():"null"));
         if(dataValidate()) {
             prepareToSaveProjectTextSnippet();
-            projectService.doSave(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
+            collectionAllData();
+            projectEntity =   projectService.doSave(projectEntity);
+            Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was store correctly",null);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -176,13 +175,23 @@ public class ProjectBean implements Serializable {
 
     public String doUpdateAndClose(){
         log.info("do update and close");
+        log.info("ProjectEntity Id:" + (projectEntity.getId()!= null?projectEntity.getId():"null"));
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
-            projectService.doUpdate(projectEntity, projectCurrencyList, projectTextSnippetList, globalStandardTextList);
+            collectionAllData();
+            projectEntity =  projectService.doUpdate(projectEntity);
+            Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was update correctly",null);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
         return "";
+    }
+
+    private void collectionAllData() {
+        log.info("collecting data");
+        projectEntity.getCurrencies().addAll(projectCurrencyList);
+        projectEntity.getProjectTextSnippetList().addAll(projectTextSnippetList);
+        projectEntity.getGlobalStandardTextList().addAll(globalStandardTextList);
     }
 
     public void addCurrency(){
@@ -300,6 +309,10 @@ public class ProjectBean implements Serializable {
         }
         projectStandardTextList.removeAll(selectedGlobalTexts);
         selectedGlobalTexts.clear();
+    }
+
+    public boolean isNewProjectEntityToSave(){
+        return projectEntity.getId() != null ? true : false;
     }
 
     private void prepareToSaveProjectTextSnippet() {

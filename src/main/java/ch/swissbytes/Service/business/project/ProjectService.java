@@ -36,34 +36,33 @@ public class ProjectService implements Serializable {
     private TextSnippetService textSnippetService;
 
 
-
     @Transactional
-    public void doSave(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList,List<ProjectTextSnippetEntity> projectTextSnippetList,List<TextSnippetEntity> globals){
-        if(entity != null){
+    public ProjectEntity doSave(ProjectEntity entity) {
+        if (entity != null) {
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             projectDao.doSave(entity);
-            for(ProjectCurrencyEntity pc : projectCurrencyList){
-                if(pc.getId() < 0){
+            for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
+                if (pc.getId() < 0) {
                     pc.setId(null);
                 }
                 pc.setProject(entity);
                 projectCurrencyService.doSave(pc);
             }
-            for(ProjectTextSnippetEntity pt : projectTextSnippetList){
-                if(pt.getId()==null){
+            for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
+                if (pt.getId() == null) {
 
                 }
                 pt.setProject(entity);
-                if(pt.getTextSnippet().getId()<0){
+                if (pt.getTextSnippet().getId() < 0) {
                     pt.getTextSnippet().setId(null);
                     pt.getTextSnippet().setProject(entity);
-                    TextSnippetEntity textSnippetEntity=textSnippetService.save(pt.getTextSnippet());
+                    TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
                     pt.setTextSnippet(textSnippetEntity);
                 }
                 projectTextSnippetService.doSave(pt);
-                for(TextSnippetEntity ts:globals){
-                    if(ts.getId()<0){
+                for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
+                    if (ts.getId() < 0) {
                         ts.setId(null);
                         ts.setProject(entity);
                         textSnippetService.save(ts);
@@ -71,50 +70,52 @@ public class ProjectService implements Serializable {
                 }
             }
         }
+        return entity;
     }
 
     @Transactional
-    public void doUpdate(ProjectEntity entity,List<ProjectCurrencyEntity> projectCurrencyList,List<ProjectTextSnippetEntity> projectTextSnippetList,List<TextSnippetEntity> globals){
-        if(entity != null){
+    public ProjectEntity doUpdate(ProjectEntity entity) {
+        if (entity != null) {
             entity.setLastUpdate(new Date());
             projectDao.doUpdate(entity);
-            for(ProjectCurrencyEntity pc : projectCurrencyList){
-                if(pc.getId() < 0){
+            for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
+                if (pc.getId() < 0) {
                     pc.setId(null);
                     pc.setProject(entity);
                 }
                 projectCurrencyService.doUpdate(pc);
             }
-            for(ProjectTextSnippetEntity pt : projectTextSnippetList){
-                if(pt.getId() == null){
+            for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
+                if (pt.getId() == null) {
                     pt.setProject(entity);
                     pt.setStatus(StatusEnum.ENABLE);
                 }
-                if(pt.getTextSnippet().getId()<0){
+                if (pt.getTextSnippet().getId() < 0) {
                     pt.getTextSnippet().setId(null);
                     pt.getTextSnippet().setProject(entity);
-                    TextSnippetEntity textSnippetEntity=textSnippetService.save(pt.getTextSnippet());
+                    TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
                     pt.setTextSnippet(textSnippetEntity);
                 }
                 pt.setLastUpdate(new Date());
                 projectTextSnippetService.doUpdate(pt);
             }
-            for(TextSnippetEntity ts:globals){
-                if(ts.getId()<0){
+            for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
+                if (ts.getId() < 0) {
                     ts.setId(null);
                     ts.setProject(entity);
                     textSnippetService.save(ts);
                 }
             }
         }
+        return entity;
     }
 
     @Transactional
-    public ProjectTextSnippetEntity addNewTextSnippet(ProjectEntity projectEntity,TextSnippetEntity textSnippetEntity){
+    public ProjectTextSnippetEntity addNewTextSnippet(ProjectEntity projectEntity, TextSnippetEntity textSnippetEntity) {
         textSnippetEntity.setId(null);
         textSnippetEntity.setProject(projectEntity);
-        textSnippetEntity=textSnippetService.save(textSnippetEntity);
-        ProjectTextSnippetEntity projectTextSnippetEntity=new ProjectTextSnippetEntity();
+        textSnippetEntity = textSnippetService.save(textSnippetEntity);
+        ProjectTextSnippetEntity projectTextSnippetEntity = new ProjectTextSnippetEntity();
         projectTextSnippetEntity.setLastUpdate(new Date());
         projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
         projectTextSnippetEntity.setProject(projectEntity);
@@ -126,9 +127,9 @@ public class ProjectService implements Serializable {
 
 
     public ProjectEntity findProjectById(Long projectId) {
-        List<ProjectEntity> list = projectDao.findById(ProjectEntity.class,projectId);
+        List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, projectId);
         ProjectEntity entity = null;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             entity = list.get(0);
             entity.getCurrencies().addAll(findProjectCurrencyByProjectId(projectId));
         }
@@ -145,9 +146,9 @@ public class ProjectService implements Serializable {
     }
 
     public ProjectEntity findByProjectNumber(String projectNumber) {
-        List<ProjectEntity> list = projectDao.findByProjectNumber(projectNumber) ;
+        List<ProjectEntity> list = projectDao.findByProjectNumber(projectNumber);
         ProjectEntity entity = null;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             entity = list.get(0);
         }
         return entity;
@@ -158,16 +159,16 @@ public class ProjectService implements Serializable {
         return project != null ? true : false;
     }
 
-    public boolean validateDuplicityProjectNumber(final String projectNumber,final Long id) {
-        List<ProjectEntity> list = projectDao.findDuplicityProjectNumber(projectNumber,id);
+    public boolean validateDuplicityProjectNumber(final String projectNumber, final Long id) {
+        List<ProjectEntity> list = projectDao.findDuplicityProjectNumber(projectNumber, id);
         boolean result = false;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             result = true;
         }
         return result;
     }
 
-    public List<ProjectCurrencyEntity> findProjectCurrencyByProjectId(final Long id){
+    public List<ProjectCurrencyEntity> findProjectCurrencyByProjectId(final Long id) {
         return projectCurrencyService.findByProjectId(id);
     }
 
@@ -175,7 +176,7 @@ public class ProjectService implements Serializable {
         return projectTextSnippetService.findByProjectId(projectId);
     }
 
-    public List<ProjectEntity> findByLogoId(final Long logoId){
+    public List<ProjectEntity> findByLogoId(final Long logoId) {
         return projectDao.findByLogoId(logoId);
     }
 
