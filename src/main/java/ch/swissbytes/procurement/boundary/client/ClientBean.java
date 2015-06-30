@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.client.ClientService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.model.entities.ClientEntity;
 import ch.swissbytes.procurement.boundary.Bean;
+import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
@@ -29,6 +30,10 @@ public class ClientBean extends Bean implements Serializable {
 
     @Inject
     private ProjectService projectService;
+
+    @Inject
+    private LogoBean logoBean;
+    private Integer currentLogo;
 
 
     @Override
@@ -98,5 +103,29 @@ public class ClientBean extends Bean implements Serializable {
 
     public void setIdClient(String idClient) {
         this.idClient = idClient;
+    }
+
+    public void saveLogo(){
+        //log.info("saving logo......");
+        if(logoBean.saveForProject()) {
+            //loadLogoList();
+            switch (currentLogo) {
+                case 0://report logo
+                    client.setReportLogo(logoBean.getLogo());
+                    break;
+                case 1: //client logo
+                    client.setClientLogo(logoBean.getLogo());
+                    break;
+
+            }
+        }
+    }
+    public void startClientLogo(){
+        currentLogo=0;
+        logoBean.restart();
+    }
+    public void startReportLogo(){
+        currentLogo=1;
+        logoBean.restart();
     }
 }

@@ -18,14 +18,11 @@
                 <h:panelGroup rendered="#{clientBean.beingCreated}">
                     <div class="procurement-panel-header">#{clientBean.beingCreated?'Add Client':'Edit Client'}</div>
                 </h:panelGroup>
-
-
                 <div class="col-md-8 panel-tab-users">
                     <div class="row">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
-
                             <div class="col-sm-5">
                                 <h:selectOneMenu id="clientLogo"
                                                  value="#{clientBean.client.clientLogo}"
@@ -35,7 +32,7 @@
                                     <f:selectItems value="#{logoBean.logos}"
                                                    var="_l"
                                                    itemValue="#{_l}"
-                                                   itemLabel="#{_l.fileName}"/>
+                                                   itemLabel="#{_l.description}"/>
                                 </h:selectOneMenu>
                                 <p:message for="clientLogo" id="msgClientLogo"/>
                             </div>
@@ -43,10 +40,10 @@
                                 <div class="pull-right">
                                     <h:commandButton type="button" onclick="PF('logoModal').show();"
                                                      styleClass="btn btn-primary btn-sm"
+                                                     action="#{clientBean.startClientLogo}"
                                                      value="#{msgs['project.detail.btn.new.logo']}">
-                                        <p:ajax process="logoGroupId"
+                                        <p:ajax
                                                 async="false"
-                                                listener="#{projectBean.startClientLogo}"
                                                 update=":logoModalId"/>
                                     </h:commandButton>
                                 </div>
@@ -66,7 +63,7 @@
                                         <f:selectItems value="#{logoBean.logos}"
                                                        var="_l"
                                                        itemValue="#{_l}"
-                                                       itemLabel="#{_l.fileName}"/>
+                                                       itemLabel="#{_l.description}"/>
                                     </h:selectOneMenu>
                                     <p:message for="reportLogo" id="msgReportLogo"/>
                                 </div>
@@ -74,10 +71,10 @@
                                     <div class="pull-right">
                                         <h:commandLink styleClass="btn btn-primary btn-sm"
                                                        type="button" onclick="PF('logoModal').show();"
+                                                       action="#{clientBean.startReportLogo}"
                                                        value="#{msgs['project.detail.btn.new.logo']}">
-                                            <p:ajax process="logoGroupId"
+                                            <p:ajax
                                                     async="false"
-                                                    listener="#{projectBean.startReportLogo}"
                                                     update=":logoModalId"/>
                                         </h:commandLink>
                                     </div>
@@ -133,7 +130,7 @@
                     <ui:include src="../../admin/logo/component/previewTemplate.xhtml">
                         <ui:param name="MODE" value="CLIENT"/>
                         <ui:param name="MODAL" value="logoModal"/>
-                        <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo"/>
+                        <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo :editUserForm:clientLogo"/>
                     </ui:include>
                 </div>
             </h:panelGroup>

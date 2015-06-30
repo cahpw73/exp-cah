@@ -39,14 +39,17 @@
                     </div>
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
-                    <p:column headerText="Description" width="100">
-                        <h:outputText value="#{_cl.title}"/>
+                    <p:column headerText="Description">
+                        <ui:remove>
+                        <p:editor value="#{_cl.title}" disabled="true"  controls="" height="70" width="250"/>
+                        </ui:remove>
+                        <h:outputText value="#{_cl.title}" escape="false"/>
                     </p:column>
                     <p:column headerText="Logo" width="90">
-                        #{_cl.clientLogo.fileName}
+                        #{_cl.clientLogo.description}
                     </p:column>
                     <p:column headerText="Report Logo" width="90">
-                        #{_cl.reportLogo.fileName}
+                        #{_cl.reportLogo.description}
                     </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
