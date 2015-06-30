@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
-    <ui:define name="title">Admin - Project</ui:define>
+    <ui:define name="title">Admin - Client</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
@@ -49,15 +49,9 @@
                         #{_cl.reportLogo.fileName}
                     </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
-                        <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
+                        <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                            <f:param name="isCreateProject" value="false"/>
-                            <f:param name="projectId" value="#{_cl.id}"/>
-                        </h:link>
-                        &#160;
-                        <h:link id="posId" value="#{msgs['project.list.action.pos']}" outcome="list"
-                                style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                            <f:param name="projectId" value="#{_cl.id}"/>
+                            <f:param name="clientId" value="#{_cl.id}"/>
                         </h:link>
                     </p:column>
                 </p:dataTable>

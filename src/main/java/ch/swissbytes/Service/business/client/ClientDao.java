@@ -49,4 +49,17 @@ public class ClientDao extends GenericDao<ClientEntity> implements Serializable 
         return super.findBy(sb.toString(),map);
     }
 
+    public ClientEntity findById(Long id){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT cl ");
+        sb.append("FROM ClientEntity cl ");
+        sb.append("WHERE cl.status=:ENABLED ");
+        sb.append(" AND cl.id=:ID");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("ID",id!=null?id:0);
+        List<ClientEntity>list=super.findBy(sb.toString(), map);
+        return list.isEmpty()?null:list.get(0);
+    }
+
 }
