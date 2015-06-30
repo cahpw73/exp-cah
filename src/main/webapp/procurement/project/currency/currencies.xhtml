@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel panel-default panel-tab">
+                <!-- Default panel contents -->
+                <div class="panel-body">
+                    <h:panelGroup id="currencyGroup">
+                        <div class="row">
+                            <div class="col-sm-8" style="padding-right: 0px!important;">
+                                <h:selectOneMenu id="currencyId"
+                                                 value="#{projectBean.projectCurrencyEntity.currency}"
+                                                 styleClass="form-control"
+                                                 converter="currencyConverter">
+                                    <f:selectItem
+                                            itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
+                                            noSelectionOption="true"/>
+                                    <f:selectItems value="#{projectBean.currencyList}"
+                                                   var="_c"
+                                                   itemValue="#{_c}"
+                                                   itemLabel="#{_c.name}"/>
+                                </h:selectOneMenu>
+                                <p:message for="currencyId"/>
+                            </div>
+                            <div class="col-sm-3">
+                                <h:commandButton
+                                        value="#{msgs['project.currencies.lbl.btn.new.currency']}"
+                                        onclick="PF('currencyModal').show();"
+                                        action="#{currencyBean.restart}"
+                                        styleClass="btn btn-primary btn-sm">
+                                    <p:ajax update=":currencyModalId" async="false"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <h:outputLabel
+                                        styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                        for="exchangeRate"
+                                        value="#{msgs['project.currencies.lbl.exchange.rate']}"/>
+
+                                <div class="col-sm-7" style="width: 268px!important;">
+                                    <h:inputText id="exchangeRate"
+                                                 value="#{projectBean.projectCurrencyEntity.exchangeRate}"
+                                                 styleClass="form-control"/>
+                                    <p:message for="exchangeRate" id="msgExchangeRate"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel
+                                        styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                        for="currencyFactor"
+                                        value="#{msgs['project.currencies.lbl.currency.factor']}"/>
+
+                                <div class="col-sm-7" style="width: 268px!important;">
+                                    <h:inputText id="currencyFactor"
+                                                 value="#{projectBean.projectCurrencyEntity.currencyFactor}"
+                                                 styleClass="form-control"/>
+                                    <p:message for="currencyFactor" id="msgCurrencyFactor"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h:outputLabel
+                                        styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                        for="format"
+                                        value="#{msgs['project.currencies.lbl.format']}"/>
+
+                                <div class="col-sm-7" style="width: 268px!important;">
+                                    <h:inputText id="format"
+                                                 value="#{projectBean.projectCurrencyEntity.format}"
+                                                 styleClass="form-control"/>
+                                    <p:message for="format" id="msgFormat"/>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <h:commandButton value="#{msgs['lbl.add']}"
+                                                 action="#{projectBean.addCurrency}"
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 rendered="#{projectBean.createCurrency}">
+                                    <p:ajax update="currencyListId,currencyGroup"
+                                            process="currencyGroup" async="false"/>
+                                </h:commandButton>
+                                <h:commandButton value="#{msgs['lbl.update']}"
+                                                 action="#{projectBean.updateCurrencyList}"
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 rendered="#{!projectBean.createCurrency}">
+                                    <p:ajax update="currencyListId,currencyGroup"
+                                            process="currencyGroup" async="false"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <p:dataTable id="currencyListId" value="#{projectBean.projectCurrencyList}" var="_p">
+                <p:column headerText="#{msgs['project.currencies.column.project.currency']}"
+                          width="180" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    #{_p.currency.name}
+                </p:column>
+                <p:column headerText="#{msgs['project.currencies.column.exchange.rate']}"
+                          width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    #{_p.exchangeRate}
+                </p:column>
+                <p:column headerText="#{msgs['project.currencies.column.currency.factor']}"
+                          width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    #{_p.currencyFactor}
+                </p:column>
+                <p:column headerText="#{msgs['project.currencies.column.format.po']}" width="90"
+                          rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    #{_p.format}
+                </p:column>
+                <p:column headerText="#{msgs['project.currencies.column.date.updated']}"
+                          width="120" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    #{util.toLocal(_p.lastUpdate)}
+                </p:column>
+                <p:column headerText="#{msgs['project.currencies.column.project.default']}"
+                          width="50" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    <p:selectBooleanCheckbox
+                            value="#{projectBean.projectCurrencyEntity.projectDefault}">
+                        <p:ajax process="@this" event="change"
+                                listener="#{projectBean.updateDefaultStatusCurrency(_p)}" update="currencyListId" />
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140"
+                          rendered="#{projectBean.isCurrencyEnable(_p)}">
+                    <p:commandLink value="Edit" update=":editUserForm:currencyGroup"
+                                   process="@this"
+                                   action="#{projectBean.doUpdateCurrency(_p)}"
+                                   immediate="true"/>
+                    &#160;
+                    <p:commandLink value="Remove"
+                                   update=":editUserForm:currencyGroup,currencyListId"
+                                   process="@this"
+                                   action="#{projectBean.doDeleteCurrency(_p)}"
+                                   immediate="true">
+                        <p:confirm header="Delete currency"
+                                   message="Are you sure delete this Currency?"/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+
+        </div>
+    </div>
+</ui:composition>
