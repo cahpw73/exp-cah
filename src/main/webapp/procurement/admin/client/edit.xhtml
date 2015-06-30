@@ -3,8 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
-                template="../../WEB-INF/layout/template-prmt.xhtml">
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - project</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
@@ -24,484 +23,83 @@
                 </h:panelGroup>
 
                 <div class="col-md-8 panel-tab-users">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#projectDetail" role="tab"
-                                              data-toggle="tab">#{msgs['project.detail.title.tab']}</a></li>
-                        <li><a href="#standardText" role="tab"
-                               data-toggle="tab">#{msgs['project.standard.text.title.tab']}</a>
-                        </li>
-                        <li><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
-                        </li>
-                    </ul>
+                    <div class="row">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
 
-                    <!-- Tab Projects -->
-                    <div class="tab-content">
-                        <!-- Tab Project Detail -->
-                        <div class="tab-pane active" id="projectDetail">
-                            <br/>
-
-                            <div class="row">
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="projectNumber"
-                                                   value="#{msgs['project.detail.project.number']}"/>
-
-                                    <div class="col-sm-5">
-                                        <h:inputText id="projectNumber"
-                                                     value="#{projectBean.projectEntity.projectNumber}"
-                                                     styleClass="form-control" required="true"
-                                                     requiredMessage="#{msgs['project.detail.project.number.required']}"/>
-                                        <p:message for="projectNumber" id="msgInputProjectNumber"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="titleId" value="#{msgs['project.detail.title']}"/>
-
-                                    <div class="col-sm-5">
-                                        <h:inputText id="titleId" value="#{projectBean.projectEntity.title}"
-                                                     styleClass="form-control" required="true"
-                                                     maxlength="255"
-                                                     requiredMessage="#{msgs['project.detail.title.required']}"/>
-                                        <p:message for="titleId" id="msgtitle"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="clientId" value="#{msgs['project.detail.client']}"/>
-
-                                    <div class="col-sm-5">
-                                        <ui:remove>
-                                        <h:selectOneMenu id="clientId"
-                                                         value="#{projectBean.projectEntity.client}"
-                                                         styleClass="form-control" converter="supplierProcurementConv">
-                                            <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
-                                            <f:selectItems value="#{projectBean.supplierProcList}"
-                                                           var="_sp"
-                                                           itemValue="#{_sp}"
-                                                           itemLabel="#{_sp.company}"/>
-                                        </h:selectOneMenu>
-                                            <p:message for="clientId" id="msgClientId"/>
-                                        </ui:remove>
-
-                                    </div>
-                                </div>
-                                <h:panelGroup id="logoGroupId">
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
-
-                                        <div class="col-sm-5">
-                                            <h:selectOneMenu id="reportLogo"
-                                                             value="#{projectBean.projectEntity.reportLogo}"
-                                                             styleClass="form-control" converter="logoConverter">
-                                                <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                              noSelectionOption="true"/>
-                                                <f:selectItems value="#{projectBean.logoList}"
-                                                               var="_l"
-                                                               itemValue="#{_l}"
-                                                               itemLabel="#{_l.fileName}"/>
-                                            </h:selectOneMenu>
-                                            <p:message for="reportLogo" id="msgReportLogo"/>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="pull-right">
-                                                <h:commandLink styleClass="btn btn-primary btn-sm"
-                                                               type="button" onclick="PF('logoModal').show();"
-                                                               value="#{msgs['project.detail.btn.new.logo']}">
-                                                    <p:ajax process="logoGroupId"
-                                                            async="false"
-                                                            listener="#{projectBean.startReportLogo}"
-                                                            update=":logoModalId"/>
-                                                </h:commandLink>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
-
-                                        <div class="col-sm-5">
-                                            <h:selectOneMenu id="clientLogo"
-                                                             value="#{projectBean.projectEntity.clientLogo}"
-                                                             styleClass="form-control" converter="logoConverter">
-                                                <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                              noSelectionOption="true"/>
-                                                <f:selectItems value="#{projectBean.logoList}"
-                                                               var="_l"
-                                                               itemValue="#{_l}"
-                                                               itemLabel="#{_l.fileName}"/>
-                                            </h:selectOneMenu>
-                                            <p:message for="clientLogo" id="msgClientLogo"/>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="pull-right">
-                                                <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                                 styleClass="btn btn-primary btn-sm"
-                                                                 value="#{msgs['project.detail.btn.new.logo']}">
-                                                    <p:ajax process="logoGroupId"
-                                                            async="false"
-                                                            listener="#{projectBean.startClientLogo}"
-                                                            update=":logoModalId"/>
-                                                </h:commandButton>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       for="clientFooter"
-                                                       value="#{msgs['project.detail.client.footer']}"/>
-
-                                        <div class="col-sm-5">
-                                            <h:selectOneMenu id="clientFooter"
-                                                             value="#{projectBean.projectEntity.clientFooter}"
-                                                             styleClass="form-control" converter="logoConverter">
-                                                <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                              noSelectionOption="true"/>
-                                                <f:selectItems value="#{projectBean.logoList}"
-                                                               var="_l"
-                                                               itemValue="#{_l}"
-                                                               itemLabel="#{_l.fileName}"/>
-                                            </h:selectOneMenu>
-                                            <p:message for="clientFooter" id="msgClientFooter"/>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="pull-right">
-                                                <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                                 styleClass="btn btn-primary btn-sm"
-                                                                 value="#{msgs['project.detail.btn.new.logo']}">
-                                                    <p:ajax process="logoGroupId"
-                                                            async="false"
-                                                            listener="#{projectBean.startClientFooter}"
-                                                            update=":logoModalId"/>
-                                                </h:commandButton>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       for="defaultLogo"
-                                                       value="#{msgs['project.detail.default.logo']}"/>
-
-                                        <div class="col-sm-5">
-                                            <h:selectOneMenu id="defaultLogo"
-                                                             value="#{projectBean.projectEntity.defaultLogo}"
-                                                             styleClass="form-control" converter="logoConverter">
-                                                <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                              noSelectionOption="true"/>
-                                                <f:selectItems value="#{projectBean.logoList}"
-                                                               var="_l"
-                                                               itemValue="#{_l}"
-                                                               itemLabel="#{_l.fileName}"/>
-                                            </h:selectOneMenu>
-                                            <p:message for="defaultLogo" id="msgDefaultLogo"/>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="pull-right">
-                                                <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                                 styleClass="btn btn-primary btn-sm"
-                                                                 value="#{msgs['project.detail.btn.new.logo']}">
-                                                    <p:ajax process="logoGroupId"
-                                                            async="false"
-                                                            listener="#{projectBean.startDefaultLogo}"
-                                                            update=":logoModalId"/>
-                                                </h:commandButton>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                       for="defaultFooter"
-                                                       value="#{msgs['project.detail.default.footer']}"/>
-
-                                        <div class="col-sm-5">
-                                            <h:selectOneMenu id="defaultFooter"
-                                                             value="#{projectBean.projectEntity.defaultFooter}"
-                                                             styleClass="form-control" converter="logoConverter">
-                                                <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                              noSelectionOption="true"/>
-                                                <f:selectItems value="#{projectBean.logoList}"
-                                                               var="_l"
-                                                               itemValue="#{_l}"
-                                                               itemLabel="#{_l.fileName}"/>
-                                            </h:selectOneMenu>
-                                            <p:message for="defaultFooter" id="msgDefaultFooter"/>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="pull-right">
-                                                <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                                 styleClass="btn btn-primary btn-sm"
-                                                                 value="#{msgs['project.detail.btn.new.logo']}">
-                                                    <p:ajax process="logoGroupId"
-                                                            async="false"
-                                                            listener="#{projectBean.startDefaultFooter}"
-                                                            update=":logoModalId"/>
-                                                </h:commandButton>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </h:panelGroup>
-
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="instructions"
-                                                   value="#{msgs['project.detail.delivery.instruction']}"/>
-
-                                    <div class="col-sm-5">
-                                        <p:inputTextarea id="instructions"
-                                                         value="#{projectBean.projectEntity.deliveryInstructions}"
-                                                         maxlength="950"
-                                                         styleClass="form-control"
-                                                         style="height: 135px!important; width: 366px!important"/>
-                                        <p:message for="instructions" id="msgInstruction"/>
-                                    </div>
-                                </div>
+                            <div class="col-sm-5">
+                                <h:selectOneMenu id="clientLogo"
+                                                 value="#{projectBean.projectEntity.clientLogo}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{projectBean.logoList}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.fileName}"/>
+                                </h:selectOneMenu>
+                                <p:message for="clientLogo" id="msgClientLogo"/>
                             </div>
-                        </div>
-                        <!-- Tab Standard Text-->
-                        <div class="tab-pane " id="standardText">
-                            <br/>
-
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="left-inner-addon">
-                                        <i class="fa fa-search fa-lg"></i>
-                                        <h:inputText id="searchTermId" styleClass="form-control input-search"
-                                                     value="#{projectListBean.searchTerm}"
-                                                     jsf:placeholder="#{msgs['project.standard.text.lbl.search.global.text']}"
-                                                     type="search" maxlength="250"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
-                                        <p:ajax process="@this"
-                                                listener="#{projectListBean.doSearch}"/>
+                            <div class="col-sm-2">
+                                <div class="pull-right">
+                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     value="#{msgs['project.detail.btn.new.logo']}">
+                                        <p:ajax process="logoGroupId"
+                                                async="false"
+                                                listener="#{projectBean.startClientLogo}"
+                                                update=":logoModalId"/>
                                     </h:commandButton>
                                 </div>
                             </div>
-                            <br/>
-
-                            <div class="row">
-                                <div style="width: 1000px!important;">
-
-                                    <div style="width: 315px!important; float: left!important; margin-left: 15px!important;">
-                                        <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
-                                        <br/>
-                                        <p:dataTable id="globalTextDt" var="_gt"
-                                                     value="#{projectBean.globalStandardTextList}"
-                                                     selectionMode="multiple" scrollable="true" scrollHeight="150"
-                                                     selection="#{projectBean.selectedGlobalTexts}"
-                                                     rowKey="#{_gt.id}">
-                                            <p:column headerText="#{msgs['project.standard.text.column.code']}"
-                                                      width="50">
-                                                #{_gt.code}
-                                            </p:column>
-                                            <p:column
-                                                    headerText="#{msgs['project.standard.text.column.description']}"
-                                                    width="60    ">
-                                                #{_gt.textSnippet}
-                                            </p:column>
-                                        </p:dataTable>
-                                    </div>
-                                    <div style="width: 135px!important; float: left!important; margin-left: 46px!important; top: 100px!important; position: relative;">
-                                        <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
-                                                         action="#{projectBean.addToProjectText}"
-                                                         styleClass="btn btn-primary btn-sm"
-                                                         style="margin-bottom: 20px!important;">
-                                            <p:ajax update="globalTextDt,projectTextDt"
-                                                    process="@this,globalTextDt" async="false"/>
-                                        </h:commandButton>
-                                        <br/>
-                                        <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
-                                                         action="#{projectBean.removeFromProjectText}"
-                                                         styleClass="btn btn-primary btn-sm">
-                                            <p:ajax update="globalTextDt,projectTextDt"
-                                                    process="@this,projectTextDt" async="false"/>
-                                        </h:commandButton>
-                                    </div>
-                                    <div style="width: 315px!important; float: left!important;">
-                                        <h:outputText value="#{msgs['project.standard.text.lbl.project.text']}"/>
-                                        <br/>
-                                        <p:dataTable id="projectTextDt" var="_pt"
-                                                     value="#{projectBean.projectStandardTextList}"
-                                                     selectionMode="multiple" scrollable="true" scrollHeight="150"
-                                                     selection="#{projectBean.selectedGlobalTexts}"
-                                                     rowKey="#{_pt.id}">
-                                            <p:column headerText="#{msgs['project.standard.text.column.code']}">
-                                                #{_pt.code}
-                                            </p:column>
-                                            <p:column headerText="#{msgs['project.standard.text.column.description']}">
-                                                #{_pt.textSnippet}
-                                            </p:column>
-                                        </p:dataTable>
-                                        <br/>
-
-                                        <h:commandButton
-                                                value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
-                                                onclick="PF('textSnippetModal').show();"
-                                                action="#{textSnippetBean.clear}"
-                                                styleClass="btn btn-primary btn-sm">
-                                            <p:ajax async="false" update=":textSnippetModalId" process="@this"/>
-                                        </h:commandButton>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                        <div class="clearfix"/>
-                        <!-- Tab Currency-->
-                        <div class="tab-pane " id="currency">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="panel panel-default panel-tab">
-                                        <!-- Default panel contents -->
-                                        <div class="panel-body">
-                                            <h:panelGroup id="currencyGroup">
-                                                <div class="row">
-                                                    <div class="col-sm-8" style="padding-right: 0px!important;">
-                                                        <h:selectOneMenu id="currencyId"
-                                                                         value="#{projectBean.projectCurrencyEntity.currency}"
-                                                                         styleClass="form-control"
-                                                                         converter="currencyConverter">
-                                                            <f:selectItem
-                                                                    itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
-                                                                    noSelectionOption="true"/>
-                                                            <f:selectItems value="#{projectBean.currencyList}"
-                                                                           var="_c"
-                                                                           itemValue="#{_c}"
-                                                                           itemLabel="#{_c.name}"/>
-                                                        </h:selectOneMenu>
-                                                        <p:message for="currencyId"/>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <h:commandButton
-                                                                value="#{msgs['project.currencies.lbl.btn.new.currency']}"
-                                                                onclick="PF('currencyModal').show();"
-                                                                action="#{currencyBean.restart}"
-                                                                styleClass="btn btn-primary btn-sm">
-                                                            <p:ajax update=":currencyModalId" async="false"/>
-                                                        </h:commandButton>
-                                                    </div>
-                                                </div>
-                                                <br/>
+                        <h:panelGroup id="logoGroupId">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                               for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
 
-                                                <div class="row">
-                                                    <div class="form-group">
-                                                        <h:outputLabel
-                                                                styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                                                for="exchangeRate"
-                                                                value="#{msgs['project.currencies.lbl.exchange.rate']}"/>
-
-                                                        <div class="col-sm-7" style="width: 268px!important;">
-                                                            <h:inputText id="exchangeRate"
-                                                                         value="#{projectBean.projectCurrencyEntity.exchangeRate}"
-                                                                         styleClass="form-control"/>
-                                                            <p:message for="exchangeRate" id="msgExchangeRate"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <h:outputLabel
-                                                                styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                                                for="currencyFactor"
-                                                                value="#{msgs['project.currencies.lbl.currency.factor']}"/>
-
-                                                        <div class="col-sm-7" style="width: 268px!important;">
-                                                            <h:inputText id="currencyFactor"
-                                                                         value="#{projectBean.projectCurrencyEntity.currencyFactor}"
-                                                                         styleClass="form-control"/>
-                                                            <p:message for="currencyFactor" id="msgCurrencyFactor"/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <h:outputLabel
-                                                                styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                                                for="format"
-                                                                value="#{msgs['project.currencies.lbl.format']}"/>
-
-                                                        <div class="col-sm-7" style="width: 268px!important;">
-                                                            <h:inputText id="format"
-                                                                         value="#{projectBean.projectCurrencyEntity.format}"
-                                                                         styleClass="form-control"/>
-                                                            <p:message for="format" id="msgFormat"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br/>
-
-                                                <div class="row">
-                                                    <div class="col-sm-5">
-                                                        <h:commandButton value="#{msgs['lbl.add']}"
-                                                                         action="#{projectBean.addCurrency}"
-                                                                         styleClass="btn btn-primary btn-sm"
-                                                                         rendered="#{projectBean.createCurrency}">
-                                                            <p:ajax update="currencyListId,currencyGroup"
-                                                                    process="currencyGroup" async="false"/>
-                                                        </h:commandButton>
-                                                        <h:commandButton value="#{msgs['lbl.update']}"
-                                                                         action="#{projectBean.updateCurrencyList}"
-                                                                         styleClass="btn btn-primary btn-sm"
-                                                                         rendered="#{!projectBean.createCurrency}">
-                                                            <p:ajax update="currencyListId,currencyGroup"
-                                                                    process="currencyGroup" async="false"/>
-                                                        </h:commandButton>
-                                                    </div>
-                                                </div>
-                                            </h:panelGroup>
-                                        </div>
-
-                                    </div>
+                                <div class="col-sm-5">
+                                    <h:selectOneMenu id="reportLogo"
+                                                     value="#{projectBean.projectEntity.reportLogo}"
+                                                     styleClass="form-control" converter="logoConverter">
+                                        <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                      noSelectionOption="true"/>
+                                        <f:selectItems value="#{projectBean.logoList}"
+                                                       var="_l"
+                                                       itemValue="#{_l}"
+                                                       itemLabel="#{_l.fileName}"/>
+                                    </h:selectOneMenu>
+                                    <p:message for="reportLogo" id="msgReportLogo"/>
                                 </div>
-                                <div class="col-sm-4">
-                                    <p:dataTable id="currencyListId" value="#{projectBean.projectCurrencyList}" var="_p">
-                                        <p:column headerText="#{msgs['project.currencies.column.project.currency']}"
-                                                  width="180" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            #{_p.currency.name}
-                                        </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.exchange.rate']}"
-                                                  width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            #{_p.exchangeRate}
-                                        </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.currency.factor']}"
-                                                  width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            #{_p.currencyFactor}
-                                        </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.format.po']}" width="90"
-                                                  rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            #{_p.format}
-                                        </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.date.updated']}"
-                                                  width="120" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            #{util.toLocal(_p.lastUpdate)}
-                                        </p:column>
-                                        <p:column headerText="#{msgs['project.currencies.column.project.default']}"
-                                                  width="50" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            <p:selectBooleanCheckbox
-                                                    value="#{projectBean.projectCurrencyEntity.projectDefault}">
-                                                <p:ajax process="@this" event="change"
-                                                        listener="#{projectBean.updateDefaultStatusCurrency(_p)}" update="currencyListId" />
-                                            </p:selectBooleanCheckbox>
-                                        </p:column>
-                                        <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140"
-                                                  rendered="#{projectBean.isCurrencyEnable(_p)}">
-                                            <p:commandLink value="Edit" update=":editUserForm:currencyGroup"
-                                                           process="@this"
-                                                           action="#{projectBean.doUpdateCurrency(_p)}"
-                                                           immediate="true"/>
-                                            &#160;
-                                            <p:commandLink value="Remove"
-                                                           update=":editUserForm:currencyGroup,currencyListId"
-                                                           process="@this"
-                                                           action="#{projectBean.doDeleteCurrency(_p)}"
-                                                           immediate="true">
-                                                <p:confirm header="Delete currency"
-                                                           message="Are you sure delete this Currency?"/>
-                                            </p:commandLink>
-                                        </p:column>
-                                    </p:dataTable>
-
+                                <div class="col-sm-2">
+                                    <div class="pull-right">
+                                        <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                       type="button" onclick="PF('logoModal').show();"
+                                                       value="#{msgs['project.detail.btn.new.logo']}">
+                                            <p:ajax process="logoGroupId"
+                                                    async="false"
+                                                    listener="#{projectBean.startReportLogo}"
+                                                    update=":logoModalId"/>
+                                        </h:commandLink>
+                                    </div>
                                 </div>
                             </div>
 
+                        </h:panelGroup>
+
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="instructions"
+                                           value="Title"/>
+                            <div class="col-sm-5">
+                                <p:inputTextarea id="instructions"
+                                                 value="#{projectBean.projectEntity.deliveryInstructions}"
+                                                 maxlength="950"
+                                                 styleClass="form-control"
+                                                 style="height: 135px!important; width: 366px!important"/>
+                                <p:message for="instructions" id="msgInstruction"/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -530,7 +128,7 @@
                   resizable="false" height="400" width="600">
             <h:panelGroup id="logoModalId">
                 <div class="col-md-12">
-                    <ui:include src="../admin/logo/component/previewTemplate.xhtml">
+                    <ui:include src="../../admin/logo/component/previewTemplate.xhtml">
                         <ui:param name="MODE" value="PROJECT"/>
                         <ui:param name="MODAL" value="logoModal"/>
                         <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo"/>
@@ -538,26 +136,7 @@
                 </div>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog header="New Currency" widgetVar="currencyModal"
-                  resizable="false" height="200" width="300">
-            <h:panelGroup id="currencyModalId">
-                <div class="col-md-12">
-                    <ui:include src="../admin/currency/component/edit.xhtml">
-                        <ui:param name="MODE" value="PROJECT"/>
-                    </ui:include>
-                </div>
-            </h:panelGroup>
-        </p:dialog>
-        <p:dialog header="New Custom Text" widgetVar="textSnippetModal"
-                  resizable="false">
-            <h:panelGroup id="textSnippetModalId">
-                <div class="col-md-12">
-                    <ui:include src="component/textSnippet.xhtml">
-                        <ui:param name="MODE" value="PROJECT"/>
-                    </ui:include>
-                </div>
-            </h:panelGroup>
-        </p:dialog>
+
 
     </ui:define>
 </ui:composition>

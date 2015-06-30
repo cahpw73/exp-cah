@@ -34,11 +34,7 @@
                     </div>
                     <div class="pull-right">
                         <div class="col-md-3">
-                            <div>
-                                <h:commandButton value="#{msgs['client.add']}"
-                                                 styleClass="btn btn-primary btn-sm"
-                                                 action="edit?faces-redirect=true&amp;isCreateProject=true"/>
-                            </div>
+                            <h:link value="#{msgs['client.add']}" outcome="edit" styleClass="btn btn-primary btn-sm"/>
                         </div>
                     </div>
                 </div>
