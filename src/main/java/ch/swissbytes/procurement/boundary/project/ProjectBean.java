@@ -137,26 +137,30 @@ public class ProjectBean implements Serializable {
         globalStandardTextList.removeAll(projectStandardTextList);
     }
 
-    public void doSave(){
+    public String doSave(){
         log.info("do save");
+        mainMenuBean.select(0);
         if(dataValidate()) {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
             Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was store correctly", null);
+            return "edit?faces-redirect=true&isCreateProject=false&projectId="+projectEntity.getId()+"";
         }
-        mainMenuBean.select(0);
+        return "";
     }
 
-    public void doUpdate(){
+    public String doUpdate(){
         log.info("do update");
+        mainMenuBean.select(0);
         if(dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity =  projectService.doUpdate(projectEntity);
             Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was update correctly",null);
+            return "edit?faces-redirect=true&isCreateProject=false&projectId="+projectEntity.getId()+"";
         }
-        mainMenuBean.select(0);
+        return "";
     }
 
     public String doSaveAndClose(){
@@ -321,11 +325,20 @@ public class ProjectBean implements Serializable {
             projectTextSnippet.setLastUpdate(new Date());
             projectTextSnippet.setStatus(StatusEnum.ENABLE);
             projectTextSnippet.setTextSnippet(ts);
+            projectTextSnippet.setCode(ts.getCode());
+            projectTextSnippet.setDescription(ts.getTextSnippet());
             projectTextSnippetList.add(projectTextSnippet);
         }
     }
 
     private void prepareToUpdateProjectTextSnippet() {
+        for(ProjectTextSnippetEntity pt : projectTextSnippetList){
+            log.info("ProjectTextSnippetEntity ID: " + (pt.getId()!=null?pt.getId():"null"));
+            //log.info("ProjectTextSnippetEntity textSnippet ID: " + (pt.getTextSnippet().getId()!=null?pt.getTextSnippet().getId():"null"));
+        }
+        for(TextSnippetEntity ts : projectStandardTextList){
+            log.info("TextSnippetEntity ID: " + (ts.getId()!=null?ts.getId():"null"));
+        }
         for(ProjectTextSnippetEntity pt : projectTextSnippetList){
             boolean isTextDeleted = true;
             for(TextSnippetEntity ts : projectStandardTextList){
@@ -344,6 +357,8 @@ public class ProjectBean implements Serializable {
             projectTextSnippet.setLastUpdate(new Date());
             projectTextSnippet.setStatus(StatusEnum.ENABLE);
             projectTextSnippet.setTextSnippet(ts);
+            projectTextSnippet.setCode(ts.getCode());
+            projectTextSnippet.setDescription(ts.getTextSnippet());
             projectTextSnippetList.add(projectTextSnippet);
         }
 
