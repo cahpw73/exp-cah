@@ -145,4 +145,15 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
     }
+    public List<ProjectEntity> findByClient(Long clientId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND p.client.id = :ID  ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ID",clientId);
+        params.put("ENABLE", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(),params);
+    }
 }

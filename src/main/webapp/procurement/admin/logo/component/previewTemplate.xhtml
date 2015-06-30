@@ -57,11 +57,24 @@
             &#160;
             <h:link styleClass="btn btn-primary btn-sm" rendered="#{MODE == null}" value="#{msgs['lbl.cancel']}"
                     outcome="logo"/>
-            <h:panelGroup rendered="#{MODE == 'PROJECT'}">
+            <h:panelGroup rendered="#{MODE eq 'PROJECT'}">
                 <h:commandLink value="#{msgs['lbl.save']}" process="@this"
                                  action="#{projectBean.saveLogo}"
                                  styleClass="btn btn-sm btn-primary">
                     <p:ajax async="false" update="description logoId :editUserForm:logoGroupId"/>
+                </h:commandLink>
+                &#160;
+                <button onclick="PF('logoModal').hide('#{MODAL}');"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    #{msgs['lbl.cancel']}
+                </button>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{MODE eq 'CLIENT'}">
+                <h:commandLink value="#{msgs['lbl.save']}" process="@this"
+                               action="#{clientBean.saveLogo}"
+                               styleClass="btn btn-sm btn-primary">
+                    <p:ajax async="false" update="description logoId #{COMPONENT_UPDATE}"/>
                 </h:commandLink>
                 &#160;
                 <button onclick="PF('logoModal').hide('#{MODAL}');"

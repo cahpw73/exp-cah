@@ -35,18 +35,19 @@
                            for="clientId" value="#{msgs['project.detail.client']}"/>
 
             <div class="col-sm-5">
-                <ui:remove>
+
                     <h:selectOneMenu id="clientId"
                                      value="#{projectBean.projectEntity.client}"
-                                     styleClass="form-control" converter="supplierProcurementConv">
+                                     converter="clientConverter"
+                                     styleClass="form-control" >
                         <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
-                        <f:selectItems value="#{projectBean.supplierProcList}"
-                                       var="_sp"
-                                       itemValue="#{_sp}"
-                                       itemLabel="#{_sp.company}"/>
+                        <f:selectItems value="#{clientListBean.clients}"
+                                       var="_cl"
+                                       itemValue="#{_cl}"
+                                       itemLabel="#{_cl.name}"/>
                     </h:selectOneMenu>
                     <p:message for="clientId" id="msgClientId"/>
-                </ui:remove>
+
 
             </div>
         </div>

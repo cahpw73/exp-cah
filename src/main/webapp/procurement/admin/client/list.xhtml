@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
-    <ui:define name="title">Admin - Project</ui:define>
+    <ui:define name="title">Admin - Client</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
@@ -39,26 +39,31 @@
                     </div>
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
-                    <p:column headerText="Description" width="100">
-                        #{_cl.title}
+                    <p:column headerText="Description">
+                        <ui:remove>
+                        <p:editor value="#{_cl.title}" disabled="true"  controls="" height="70" width="250"/>
+                        </ui:remove>
+                        <h:outputText value="#{_cl.title}" escape="false"/>
                     </p:column>
                     <p:column headerText="Logo" width="90">
-                        #{_cl.clientLogo.fileName}
+                        #{_cl.clientLogo.description}
                     </p:column>
                     <p:column headerText="Report Logo" width="90">
-                        #{_cl.reportLogo.fileName}
+                        #{_cl.reportLogo.description}
                     </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
-                        <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
+                        <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                            <f:param name="isCreateProject" value="false"/>
-                            <f:param name="projectId" value="#{_cl.id}"/>
+                            <f:param name="clientId" value="#{_cl.id}"/>
                         </h:link>
-                        &#160;
-                        <h:link id="posId" value="#{msgs['project.list.action.pos']}" outcome="list"
-                                style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                            <f:param name="projectId" value="#{_cl.id}"/>
-                        </h:link>
+                        <p:commandLink value="#{msgs['lbl.delete']}"
+                                       style="color: #428BCA;"
+                                       styleClass="btn-commandLink-primeFaces"
+                                       update="clienttListId"
+                                       action="#{clientBean.delete(_cl.id)}">
+                            <p:confirm header="Delete client"
+                                       message="Are you sure delete this Client?"/>
+                        </p:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>
