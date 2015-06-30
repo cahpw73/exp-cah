@@ -76,6 +76,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("phone", po.getPoEntity().getSupplier().getPhone());
             addParameters("fax", po.getPoEntity().getSupplier().getFax());
         }
+        if(po.getProjectEntity().getClient()!=null) {
+            addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
+            addParameters("clientDetail", po.getProjectEntity().getClient().getTitle().trim());
+        }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());

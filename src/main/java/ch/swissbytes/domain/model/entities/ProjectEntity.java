@@ -27,7 +27,6 @@ public class ProjectEntity implements Serializable {
     private LogoEntity defaultLogo;
     private LogoEntity defaultFooter;
     private String deliveryInstructions;
-    //private SupplierProcEntity supplierProcurement;
     private ClientEntity client;
     private StatusEnum status;
     private Date lastUpdate;
