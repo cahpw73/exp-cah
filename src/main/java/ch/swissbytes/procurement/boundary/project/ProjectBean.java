@@ -552,7 +552,7 @@ public class ProjectBean extends Bean implements Serializable {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal1').hide();");
             ProjectTextSnippetEntity ptse = projectService.addNewTextSnippet(project, textSnippet);
-            poTextBean.getDroppedTextSnippetList().add(ptse);
+            //poTextBean.getDroppedTextSnippetList().add(ptse);
         }
         log.info("end..");
     }
@@ -642,12 +642,6 @@ public class ProjectBean extends Bean implements Serializable {
         List<ProjectTextSnippetEntity> list = new ArrayList<>();
         for (ProjectTextSnippetEntity r : this.projectTextSnippetList) {
             //RecordEditable record =  r;
-            if(r.getStatus()!=null) {
-                System.out.println("r.getStatusEnum().getId().intValue() " + r.getStatus().getId().intValue());
-                System.out.println("StatusEnum.ENABLE.getId().intValue() " + StatusEnum.ENABLE.getId().intValue());
-            }else{
-                System.out.println("ooops something wrong!");
-            }
             if (r.getStatus() != null && r.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
                 //ProjectTextSnippetEntity object = (ProjectTextSnippetEntity) record;
                 list.add(r);

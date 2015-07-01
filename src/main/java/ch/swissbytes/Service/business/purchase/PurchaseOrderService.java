@@ -295,7 +295,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
             po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
             List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
-            po.getPoEntity().getTextEntity().getClausesList().addAll(projectTextSnippetService.findTextSnippetByClausesId(clausesEntities,po.getProjectEntity().getId()));
+            po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);
         }
         return list.isEmpty()?null:list.get(0);
     }

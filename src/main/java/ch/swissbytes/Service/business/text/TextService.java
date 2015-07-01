@@ -29,47 +29,24 @@ public class TextService implements Serializable {
         entity.setStatus(StatusEnum.ENABLE);
         entity.setPo(po);
         dao.doSave(entity);
-        for(ProjectTextSnippetEntity ps: entity.getClausesList()){
-            ClausesEntity clausesEntity = new ClausesEntity();
-            clausesEntity.setStatusEnum(StatusEnum.ENABLE);
-            clausesEntity.setId(null);
-            clausesEntity.setTextSnippet(ps.getTextSnippet());
-            clausesEntity.setText(entity);
-            clausesEntity.setClauses(ps.getTextSnippet().getTextSnippet());
-            textClausesDao.doSave(clausesEntity);
+        for(ClausesEntity ps: entity.getClausesList()){
+            ps.setId(null);
+            ps.setText(entity);
+            //ps.setClauses(ps.getTextSnippet().getTextSnippet());
+            textClausesDao.doSave(ps);
         }
     }
 
     public void doUpdate(TextEntity entity) {
         entity.setLastUpdate(new Date());
         dao.doUpdate(entity);
-        List<ClausesEntity> clausesList = textClausesDao.findByTextId(entity.getId());
-        if(!entity.getClausesList().isEmpty()){
-            for(ProjectTextSnippetEntity ps: entity.getClausesList()){
-                ClausesEntity clausesEntity = new ClausesEntity();
-                clausesEntity.setId(null);
-                clausesEntity.setTextSnippet(ps.getTextSnippet());
-                clausesEntity.setText(entity);
-                clausesEntity.setClauses(ps.getTextSnippet().getTextSnippet());
-                textClausesDao.doSave(clausesEntity);
+        for(ClausesEntity ps: entity.getClausesList()){
+            if(ps.getId() >= 1000){
+                ps.setId(null);
+                ps.setText(entity);
             }
-            ClausesEntity clauses;
-            for(ClausesEntity cl : clausesList){
-                clauses = cl;
-                if(!entity.getClausesList().contains(cl)){
-                    log.info("removing clauses");
-                    textClausesDao.doDelete(clauses);
-                }
-            }
-        }else if(!clausesList.isEmpty() && entity.getClausesList().isEmpty()){
-            ClausesEntity clauses;
-            for(ClausesEntity cl : clausesList){
-                clauses = cl;
-                if(!entity.getClausesList().contains(cl)){
-                    log.info("removing clauses");
-                    textClausesDao.doDelete(clauses);
-                }
-            }
+            ps.setLastUpdate(new Date());
+            textClausesDao.doUpdate(ps);
         }
     }
 

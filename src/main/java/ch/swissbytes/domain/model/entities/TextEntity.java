@@ -25,7 +25,7 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
     private StatusEnum status;
     private Date lastUpdate;
     private POEntity po;
-    private List<ProjectTextSnippetEntity> clausesList = new ArrayList<>();
+    private List<ClausesEntity> clausesList = new ArrayList<>();
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -79,7 +79,7 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
     }
 
     @Transient
-    public List<ProjectTextSnippetEntity> getClausesList() {
+    public List<ClausesEntity> getClausesList() {
         return clausesList;
     }
 

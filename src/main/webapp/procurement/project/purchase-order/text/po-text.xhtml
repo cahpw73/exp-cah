@@ -41,15 +41,38 @@
 
                 <div style="margin-top: 0px;">
                     <p:dataTable id="clausesAuxDt" var="_dt" draggableRows="true"
-                                 value="#{poTextBean.droppedTextSnippetList}"
+                                 value="#{poTextBean.filteredList()}"
                                  selectionMode="multiple" selection="#{poTextBean.selectedClausesTextList}"
                                  rowKey="#{_dt.id}">
                         <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}"/>
                         <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
-                            <h:outputText value="#{_dt.textSnippet.code}"/>
+                            <h:panelGroup id="viCode" rendered="#{!_dt.isEditable}">
+                                <h:outputText value="#{_dt.code}"/>
+                            </h:panelGroup>
+                            <h:panelGroup id="edCostCode" rendered="#{_dt.isEditable}">
+                                <h:inputText id="costCodeItem" value="#{_dt.code}" styleClass="form-control">
+                                </h:inputText>
+                            </h:panelGroup>
+
                         </p:column>
                         <p:column id="textAuxCl" headerText="#{msgs['po.text.lbl.standard.column.text']}">
-                            <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
+                            <h:panelGroup id="viDescription" rendered="#{!_dt.isEditable}">
+                                <h:outputText value="#{_dt.clauses}"/>
+                            </h:panelGroup>
+                            <h:panelGroup id="edDescription" rendered="#{_dt.isEditable}">
+                                <h:inputTextarea id="description" value="#{_dt.clauses}" styleClass="form-control"
+                                                 required="true" requiredMessage="Enter a description in Project Text">
+                                </h:inputTextarea>
+                            </h:panelGroup>
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}" >
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
+                                           action="#{poTextBean.editItem(_dt)}" update="clausesAuxDt :glbMsgs :editPoForm:bbtnt" async="false"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dt.isEditable}" process="clausesAuxDt"
+                                           action="#{poTextBean.confirmItem(_dt)}" update="clausesAuxDt :glbMsgs :editPoForm:bbtnt" async="false"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dt.isEditable}" process="@this"
+                                           action="#{poTextBean.cancelEditionItem(_dt)}" update="clausesAuxDt :editPoForm:bbtnt" async="false"/>
                         </p:column>
                     </p:dataTable>
                 </div>

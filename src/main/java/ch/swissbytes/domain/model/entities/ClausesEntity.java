@@ -18,9 +18,12 @@ import java.util.Date;
 public class ClausesEntity extends RecordEditable<ClausesEntity> implements Serializable{
 
     private Long id;
+    private String code;
     private String clauses;
+    private StatusEnum status;
+    private Date lastUpdate;
     private TextEntity text;
-    private TextSnippetEntity textSnippet;
+    private ProjectTextSnippetEntity projectTextSnippet;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -33,6 +36,16 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
         this.id = id;
     }
 
+    @Size(max = 250)
+    @Column(name = "code", nullable = false, length = 250)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Size(max = 1000)
     @Column(name = "clauses",length = 1000)
     public String getClauses() {
@@ -41,6 +54,26 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
 
     public void setClauses(String clauses) {
         this.clauses = clauses;
+    }
+
+    @Column (name = "status",nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    @Column(name = "last_update",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -55,14 +88,13 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="text_snippet_id")
-    public TextSnippetEntity getTextSnippet() {
-        return textSnippet;
+    @JoinColumn(name="project_text_snippet_id")
+    public ProjectTextSnippetEntity getProjectTextSnippet() {
+        return projectTextSnippet;
     }
 
-
-    public void setTextSnippet(TextSnippetEntity textSnippet) {
-        this.textSnippet = textSnippet;
+    public void setProjectTextSnippet(ProjectTextSnippetEntity projectTextSnippet) {
+        this.projectTextSnippet = projectTextSnippet;
     }
 
     @Override
