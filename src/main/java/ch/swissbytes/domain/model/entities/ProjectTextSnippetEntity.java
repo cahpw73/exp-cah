@@ -104,7 +104,6 @@ public class ProjectTextSnippetEntity implements Serializable{
         ProjectTextSnippetEntity that = (ProjectTextSnippetEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-
         return true;
     }
 

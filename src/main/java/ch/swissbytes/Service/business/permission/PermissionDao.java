@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.permission;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.model.entities.OptionsEntity;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
 
@@ -59,6 +60,11 @@ public class PermissionDao extends GenericDao<PermissionGrantedEntity> implement
         Query query=entityManager.createQuery(sb.toString());
         query.setParameter("USER_ID",userId);
         return query.getResultList();
+    }
+
+    public List<OptionsEntity>findPermissions(String user,Integer module){
+
+        return null;
     }
 
 }
