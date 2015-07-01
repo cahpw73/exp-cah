@@ -63,16 +63,15 @@ public class ReportDeliverables extends ReportView implements Serializable {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultLogo().getFile());
             addParameters("logo", logo);
         }
-        //TODO check this @alvaro
-        /*if(po.getProjectEntity().getSupplierProcurement() != null){
-            addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
-            addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
-            addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
-            addParameters("postcode", po.getProjectEntity().getSupplierProcurement().getPostCode());
-            addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
-            addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
-            addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
-        }*/
+        if(po.getPoEntity().getSupplier() != null){
+            addParameters("company", po.getPoEntity().getSupplier().getCompany());
+            addParameters("street", po.getPoEntity().getSupplier().getStreet());
+            addParameters("state", po.getPoEntity().getSupplier().getState());
+            addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
+            addParameters("country", po.getPoEntity().getSupplier().getCountry());
+            addParameters("phone", po.getPoEntity().getSupplier().getPhone());
+            addParameters("fax", po.getPoEntity().getSupplier().getFax());
+        }
         addParameters("projectIdFilter", projectId);
         addParameters("poNoFilter", poNo != null ? "%"+poNo+"%" : "");
         addParameters("TIME_ZONE", configuration.getTimeZone());

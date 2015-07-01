@@ -50,7 +50,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private void loadParamPurchaseOrder() {
         resourceUtils = new ResourceUtils();
-        //TODO Maybe this changes after we receive the client details
         if(po.getProjectEntity().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClientLogo().getFile());
             addParameters("logo", logo);
@@ -67,16 +66,20 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("footerLogo", logo);
         }
         addParameters("purchaseOrderId",po.getId());
-        //TODo @check this @alvaro
-        /*if(po.getProjectEntity().getSupplierProcurement() != null){
-            addParameters("company", po.getProjectEntity().getSupplierProcurement().getCompany());
-            addParameters("street", po.getProjectEntity().getSupplierProcurement().getStreet());
-            addParameters("state", po.getProjectEntity().getSupplierProcurement().getState());
-            addParameters("postcode", po.getProjectEntity().getSupplierProcurement().getPostCode());
-            addParameters("country", po.getProjectEntity().getSupplierProcurement().getCountry());
-            addParameters("phone", po.getProjectEntity().getSupplierProcurement().getPhone());
-            addParameters("fax", po.getProjectEntity().getSupplierProcurement().getFax());
-        }*/
+
+        if(po.getPoEntity().getSupplier() != null){
+            addParameters("company", po.getPoEntity().getSupplier().getCompany());
+            addParameters("street", po.getPoEntity().getSupplier().getStreet());
+            addParameters("state", po.getPoEntity().getSupplier().getState());
+            addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
+            addParameters("country", po.getPoEntity().getSupplier().getCountry());
+            addParameters("phone", po.getPoEntity().getSupplier().getPhone());
+            addParameters("fax", po.getPoEntity().getSupplier().getFax());
+        }
+        if(po.getProjectEntity().getClient()!=null) {
+            addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
+            addParameters("clientDetail", po.getProjectEntity().getClient().getTitle().trim());
+        }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());
