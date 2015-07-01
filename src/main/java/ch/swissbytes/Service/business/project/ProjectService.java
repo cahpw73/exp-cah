@@ -50,9 +50,7 @@ public class ProjectService implements Serializable {
                 projectCurrencyService.doSave(pc);
             }
             for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
-                if (pt.getId() == null) {
 
-                }
                 pt.setProject(entity);
                 if (pt.getTextSnippet().getId() < 0) {
                     pt.getTextSnippet().setId(null);
@@ -88,11 +86,11 @@ public class ProjectService implements Serializable {
             for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
                 if (pt.getId() == null) {
                     pt.setProject(entity);
-                    pt.setStatus(StatusEnum.ENABLE);
                 }
-                if (pt.getTextSnippet().getId() < 0) {
-                    pt.getTextSnippet().setId(null);
+                if (pt.getTextSnippet().getId() == null) {
                     pt.getTextSnippet().setProject(entity);
+                    pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
+                    pt.getTextSnippet().setLastUpdate(new Date());
                     TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
                     pt.setTextSnippet(textSnippetEntity);
                 }

@@ -121,7 +121,7 @@ public class ItemBean implements Serializable {
 
     public void cancelEditionItem(ScopeSupplyEntity entity) {
         log.info("cancel item");
-        if(true){
+        if(!itemNoIsNotEmpty(entity)){
             scopeSupplyList.remove(entity);
         }else{
             entity.stopEditing();
