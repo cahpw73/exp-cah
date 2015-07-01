@@ -5,8 +5,10 @@ import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.currency.CurrencyBean;
 import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
@@ -32,7 +34,7 @@ import java.util.logging.Logger;
  */
 @Named
 @ViewScoped
-public class ProjectBean implements Serializable {
+public class ProjectBean extends Bean implements Serializable {
 
     public static final Logger log = Logger.getLogger(ProjectBean.class.getName());
 
@@ -70,6 +72,8 @@ public class ProjectBean implements Serializable {
 
     private List<ProjectTextSnippetEntity> projectTextSnippetList;
 
+    private List<ProjectTextSnippetEntity> selectedProjectTexts;
+
     private ProjectEntity projectEntity;
 
     private ProjectCurrencyEntity projectCurrencyEntity;
@@ -82,13 +86,15 @@ public class ProjectBean implements Serializable {
 
     private Long temporalCurrencyId = -1L;
 
-    private Long temporaryId=-1L;
+    private Long temporaryId = -1L;
 
-    private final String DEFAULT_CURRENCY_FORMAT="#,###.00";
+    private Long tempProjectTextId = 1000L;
+
+    private final String DEFAULT_CURRENCY_FORMAT = "#,###.00";
 
 
     @PostConstruct
-    public void init (){
+    public void init() {
         log.info("ProjectBean created");
         projectEntity = new ProjectEntity();
         projectCurrencyEntity = new ProjectCurrencyEntity();
@@ -102,6 +108,7 @@ public class ProjectBean implements Serializable {
         selectedGlobalTexts = new ArrayList<>();
         projectStandardTextList = new ArrayList<>();
         projectTextSnippetList = new ArrayList<>();
+        selectedProjectTexts = new ArrayList<>();
         loadSupplierProcList();
         loadLogoList();
         loadCurrencyList();
@@ -109,15 +116,15 @@ public class ProjectBean implements Serializable {
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("ProjectBean destroying");
     }
 
-    public void loadActionCrud(){
+    public void loadActionCrud() {
         log.info("load action crud");
-        if(isCreateProject){
+        if (isCreateProject) {
             loadGlobalStandardTextList();
-        }else{
+        } else {
             projectEntity = projectService.findProjectById(projectId);
             projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
             projectTextSnippetList = projectService.findProjectTextSnippetByProjectId(projectId);
@@ -127,9 +134,9 @@ public class ProjectBean implements Serializable {
     }
 
     private void loadAllStandardText() {
-        for(ProjectTextSnippetEntity pt : projectTextSnippetList){
-            for(TextSnippetEntity ts : globalStandardTextList){
-                if(pt.getTextSnippet().getId().intValue() == ts.getId().intValue()){
+        for (ProjectTextSnippetEntity pt : projectTextSnippetList) {
+            for (TextSnippetEntity ts : globalStandardTextList) {
+                if (pt.getTextSnippet().getId().intValue() == ts.getId().intValue()) {
                     projectStandardTextList.add(ts);
                 }
             }
@@ -137,54 +144,52 @@ public class ProjectBean implements Serializable {
         globalStandardTextList.removeAll(projectStandardTextList);
     }
 
-    public String doSave(){
+    public String doSave() {
         log.info("do save");
         mainMenuBean.select(0);
-        if(dataValidate()) {
+        if (dataValidate()) {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
             Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was store correctly", null);
-            return "edit?faces-redirect=true&isCreateProject=false&projectId="+projectEntity.getId()+"";
+            return "edit?faces-redirect=true&isCreateProject=false&projectId=" + projectEntity.getId() + "";
         }
         return "";
     }
 
-    public String doUpdate(){
+    public String doUpdate() {
         log.info("do update");
         mainMenuBean.select(0);
-        if(dataValidateToUpdate()) {
+        if (dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
-            projectEntity =  projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was update correctly",null);
-            return "edit?faces-redirect=true&isCreateProject=false&projectId="+projectEntity.getId()+"";
+            projectEntity = projectService.doUpdate(projectEntity);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was update correctly", null);
+            return "edit?faces-redirect=true&isCreateProject=false&projectId=" + projectEntity.getId() + "";
         }
         return "";
     }
 
-    public String doSaveAndClose(){
+    public String doSaveAndClose() {
         log.info("do save and close");
-        log.info("ProjectEntity Id:" + (projectEntity.getId()!= null?projectEntity.getId():"null"));
-        if(dataValidate()) {
+        if (dataValidate()) {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
-            projectEntity =   projectService.doSave(projectEntity);
-            Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was store correctly",null);
+            projectEntity = projectService.doSave(projectEntity);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was store correctly", null);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
         return "";
     }
 
-    public String doUpdateAndClose(){
+    public String doUpdateAndClose() {
         log.info("do update and close");
-        log.info("ProjectEntity Id:" + (projectEntity.getId()!= null?projectEntity.getId():"null"));
-        if(dataValidateToUpdate()) {
+        if (dataValidateToUpdate()) {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
-            projectEntity =  projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project "+projectEntity.getTitle()+" was update correctly",null);
+            projectEntity = projectService.doUpdate(projectEntity);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was update correctly", null);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -198,9 +203,9 @@ public class ProjectBean implements Serializable {
         projectEntity.getGlobalStandardTextList().addAll(globalStandardTextList);
     }
 
-    public void addCurrency(){
+    public void addCurrency() {
         log.info("add currency");
-        if(validateCurrency()) {
+        if (validateCurrency()) {
             projectCurrencyEntity.setId(temporalId());
             projectCurrencyEntity.setProjectDefault(false);
             projectCurrencyEntity.setLastUpdate(new Date());
@@ -211,23 +216,23 @@ public class ProjectBean implements Serializable {
         }
     }
 
-    private boolean validateCurrency(){
-        boolean validated=true;
-        if(StringUtils.isEmpty(projectCurrencyEntity.getFormat())&&StringUtils.isBlank(projectCurrencyEntity.getFormat())){
-            Messages.addError("format","Please enter Format");
-            validated=false;
+    private boolean validateCurrency() {
+        boolean validated = true;
+        if (StringUtils.isEmpty(projectCurrencyEntity.getFormat()) && StringUtils.isBlank(projectCurrencyEntity.getFormat())) {
+            Messages.addError("format", "Please enter Format");
+            validated = false;
         }
-        if(projectCurrencyEntity.getCurrencyFactor()==null){
-            Messages.addError("currencyFactor","Please enter Currency Factor");
-            validated=false;
+        if (projectCurrencyEntity.getCurrencyFactor() == null) {
+            Messages.addError("currencyFactor", "Please enter Currency Factor");
+            validated = false;
         }
-        if(projectCurrencyEntity.getExchangeRate()==null){
-            Messages.addError("exchangeRate","Please enter Exchange Rate");
-            validated=false;
+        if (projectCurrencyEntity.getExchangeRate() == null) {
+            Messages.addError("exchangeRate", "Please enter Exchange Rate");
+            validated = false;
         }
-        if(projectCurrencyEntity.getCurrency()==null){
-            Messages.addError("currencyId","Please enter Currency");
-            validated=false;
+        if (projectCurrencyEntity.getCurrency() == null) {
+            Messages.addError("currencyId", "Please enter Currency");
+            validated = false;
         }
         return validated;
     }
@@ -237,9 +242,9 @@ public class ProjectBean implements Serializable {
         return temporalCurrencyId;
     }
 
-    public void updateCurrencyList(){
+    public void updateCurrencyList() {
         log.info("update currency list");
-        if(validateCurrency()) {
+        if (validateCurrency()) {
             projectCurrencyEntity.setLastUpdate(new Date());
             for (ProjectCurrencyEntity pc : projectCurrencyList) {
                 if (pc.equals(projectCurrencyEntity)) {
@@ -252,12 +257,12 @@ public class ProjectBean implements Serializable {
         }
     }
 
-    public void doDeleteCurrency(ProjectCurrencyEntity projectCurrency){
-        int index=projectCurrencyList.indexOf(projectCurrency);
-        if(index>=0){
-            if(projectCurrencyList.get(index).getId()<0){
+    public void doDeleteCurrency(ProjectCurrencyEntity projectCurrency) {
+        int index = projectCurrencyList.indexOf(projectCurrency);
+        if (index >= 0) {
+            if (projectCurrencyList.get(index).getId() < 0) {
                 projectCurrencyList.remove(index);
-            }else{
+            } else {
                 projectCurrencyList.get(index).setStatus(StatusEnum.DELETED);
                 projectCurrencyList.get(index).setLastUpdate(new Date());
             }
@@ -266,14 +271,14 @@ public class ProjectBean implements Serializable {
         createCurrency = true;
     }
 
-    public void doUpdateCurrency(ProjectCurrencyEntity projectCurrency){
+    public void doUpdateCurrency(ProjectCurrencyEntity projectCurrency) {
         projectCurrencyEntity = projectCurrency;
         createCurrency = false;
     }
 
     private boolean dataValidate() {
         boolean result = true;
-        if(projectService.existsProjectNumber(projectEntity.getProjectNumber())){
+        if (projectService.existsProjectNumber(projectEntity.getProjectNumber())) {
             Messages.addFlashError("projectNumber", "Project number was already registered!");
             result = false;
         }
@@ -282,77 +287,73 @@ public class ProjectBean implements Serializable {
 
     private boolean dataValidateToUpdate() {
         boolean result = true;
-        if(projectService.validateDuplicityProjectNumber(projectEntity.getProjectNumber(), projectEntity.getId())){
+        if (projectService.validateDuplicityProjectNumber(projectEntity.getProjectNumber(), projectEntity.getId())) {
             Messages.addError("projectNumber", "Project number was already registered!");
             result = false;
         }
         return result;
     }
 
-    public boolean isCurrencyEnable(ProjectCurrencyEntity projectCurrency){
-        if(projectCurrency != null) {
+    public boolean isCurrencyEnable(ProjectCurrencyEntity projectCurrency) {
+        if (projectCurrency != null) {
             return StatusEnum.ENABLE.getId().intValue() == projectCurrency.getStatus().getId().intValue();
-        }else{
+        } else {
             return true;
         }
     }
 
-    public void addToProjectText(){
+    public void addToProjectText() {
         log.info("add standard text to project");
-        for(TextSnippetEntity ts : selectedGlobalTexts){
-            projectStandardTextList.add(ts);
+        for (TextSnippetEntity ts : selectedGlobalTexts) {
+            //projectStandardTextList.add(ts);
+            ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
+            entity.setId(tempProjectTextId);
+            entity.setTextSnippet(ts);
+            entity.setCode(ts.getCode());
+            entity.setDescription(ts.getTextSnippet());
+            entity.setLastUpdate(new Date());
+            entity.setStatus(StatusEnum.ENABLE);
+            projectTextSnippetList.add(entity);
+            tempProjectTextId++;
         }
         globalStandardTextList.removeAll(selectedGlobalTexts);
         selectedGlobalTexts.clear();
     }
 
-    public void removeFromProjectText(){
+    public void removeFromProjectText() {
         log.info("remove standard text from project text");
-        for(TextSnippetEntity ts : selectedGlobalTexts){
-            globalStandardTextList.add(ts);
+        for (ProjectTextSnippetEntity ts : selectedProjectTexts) {
+            globalStandardTextList.add(textSnippetService.findById(ts.getTextSnippet().getId()));
+            if(ts.getId() > 0 && ts.getId() < 1000){
+                for(ProjectTextSnippetEntity pl : projectTextSnippetList){
+                    if(ts.getId().intValue() == pl.getId().intValue()){
+                        pl.setStatus(StatusEnum.DELETED);
+                    }
+                }
+            }else {
+                projectTextSnippetList.removeAll(selectedProjectTexts);
+            }
         }
-        projectStandardTextList.removeAll(selectedGlobalTexts);
-        selectedGlobalTexts.clear();
+        selectedProjectTexts.clear();
     }
 
-    public boolean isNewProjectEntityToSave(){
+    public boolean isNewProjectEntityToSave() {
         return projectEntity.getId() != null ? true : false;
     }
 
     private void prepareToSaveProjectTextSnippet() {
-        for(TextSnippetEntity ts : projectStandardTextList){
-            ProjectTextSnippetEntity projectTextSnippet = new ProjectTextSnippetEntity();
-            projectTextSnippet.setLastUpdate(new Date());
-            projectTextSnippet.setStatus(StatusEnum.ENABLE);
-            projectTextSnippet.setTextSnippet(ts);
-            projectTextSnippet.setCode(ts.getCode());
-            projectTextSnippet.setDescription(ts.getTextSnippet());
-            projectTextSnippetList.add(projectTextSnippet);
+        for (ProjectTextSnippetEntity p : projectTextSnippetList){
+            p.setId(null);
         }
     }
 
     private void prepareToUpdateProjectTextSnippet() {
-        for(ProjectTextSnippetEntity pt : projectTextSnippetList){
-            log.info("ProjectTextSnippetEntity ID: " + (pt.getId()!=null?pt.getId():"null"));
-            //log.info("ProjectTextSnippetEntity textSnippet ID: " + (pt.getTextSnippet().getId()!=null?pt.getTextSnippet().getId():"null"));
-        }
-        for(TextSnippetEntity ts : projectStandardTextList){
-            log.info("TextSnippetEntity ID: " + (ts.getId()!=null?ts.getId():"null"));
-        }
-        for(ProjectTextSnippetEntity pt : projectTextSnippetList){
-            boolean isTextDeleted = true;
-            for(TextSnippetEntity ts : projectStandardTextList){
-                if(pt.getId().intValue() == ts.getId().intValue()){
-                    isTextDeleted = false;
-                    break;
-                }
-            }
-            if(isTextDeleted){
-                pt.setLastUpdate(new Date());
-                pt.setStatus(StatusEnum.DELETED);
+        for (ProjectTextSnippetEntity p : projectTextSnippetList){
+            if(p.getId() >= 1000){
+                p.setId(null);
             }
         }
-        for(TextSnippetEntity ts : projectStandardTextList){
+        /*for (TextSnippetEntity ts : projectStandardTextList) {
             ProjectTextSnippetEntity projectTextSnippet = new ProjectTextSnippetEntity();
             projectTextSnippet.setLastUpdate(new Date());
             projectTextSnippet.setStatus(StatusEnum.ENABLE);
@@ -360,15 +361,14 @@ public class ProjectBean implements Serializable {
             projectTextSnippet.setCode(ts.getCode());
             projectTextSnippet.setDescription(ts.getTextSnippet());
             projectTextSnippetList.add(projectTextSnippet);
-        }
-
+        }*/
     }
 
-    private void loadSupplierProcList(){
+    private void loadSupplierProcList() {
         supplierProcList = supplierProcService.findAll();
     }
 
-    private void loadLogoList(){
+    private void loadLogoList() {
         logoList = logoService.findAll();
     }
 
@@ -459,31 +459,34 @@ public class ProjectBean implements Serializable {
     private Integer currentLogo;
 
 
-
-   public void startReportLogo(){
-       currentLogo=0;
-       logoBean.restart();
-   }
-    public void startClientLogo(){
-        currentLogo=1;
-        logoBean.restart();
-    }
-    public void startClientFooter(){
-        currentLogo=2;
-        logoBean.restart();
-    }
-    public void startDefaultLogo(){
-        currentLogo=3;
-        logoBean.restart();
-    }
-    public void startDefaultFooter(){
-        currentLogo=4;
+    public void startReportLogo() {
+        currentLogo = 0;
         logoBean.restart();
     }
 
-    public void saveLogo(){
+    public void startClientLogo() {
+        currentLogo = 1;
+        logoBean.restart();
+    }
+
+    public void startClientFooter() {
+        currentLogo = 2;
+        logoBean.restart();
+    }
+
+    public void startDefaultLogo() {
+        currentLogo = 3;
+        logoBean.restart();
+    }
+
+    public void startDefaultFooter() {
+        currentLogo = 4;
+        logoBean.restart();
+    }
+
+    public void saveLogo() {
         log.info("saving logo......");
-        if(logoBean.saveForProject()) {
+        if (logoBean.saveForProject()) {
             loadLogoList();
             switch (currentLogo) {
                 case 0://report logo
@@ -509,8 +512,8 @@ public class ProjectBean implements Serializable {
     @Inject
     private CurrencyBean currencyBean;
 
-    public void addNewCurrency(){
-        if(currencyBean.save()) {
+    public void addNewCurrency() {
+        if (currencyBean.save()) {
             projectCurrencyEntity.setCurrency(currencyBean.getCurrency());
             loadCurrencyList();
         }
@@ -519,12 +522,19 @@ public class ProjectBean implements Serializable {
     @Inject
     private TextSnippetBean standartText;
 
-    public void addNewCustomText(){
+    public void addNewCustomText() {
         log.info("addNewCustomText");
-        if(standartText.addProject(true)) {
-            TextSnippetEntity textSnippet=standartText.getTextSnippet();
-            textSnippet.setId(temporaryId--);
-            projectStandardTextList.add(textSnippet);
+        if (standartText.addProject(true)) {
+            TextSnippetEntity ts = standartText.getTextSnippet();
+            ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
+            entity.setId(tempProjectTextId);
+            entity.setTextSnippet(ts);
+            entity.setCode(ts.getCode());
+            entity.setDescription(ts.getTextSnippet());
+            entity.setLastUpdate(new Date());
+            entity.setStatus(StatusEnum.ENABLE);
+            projectTextSnippetList.add(entity);
+            tempProjectTextId++;
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal').hide();");
         }
@@ -534,29 +544,117 @@ public class ProjectBean implements Serializable {
     @Inject
     private PoTextBean poTextBean;
 
-    public void saveNewCustomText(Long projectId){
+    public void saveNewCustomText(Long projectId) {
         log.info("saveNewCustomText");
-        ProjectEntity project=projectService.findProjectById(projectId);
-        if(project!=null&&standartText.addProject(false)) {
-            TextSnippetEntity textSnippet=standartText.getTextSnippet();
+        ProjectEntity project = projectService.findProjectById(projectId);
+        if (project != null && standartText.addProject(false)) {
+            TextSnippetEntity textSnippet = standartText.getTextSnippet();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal1').hide();");
-            ProjectTextSnippetEntity ptse=projectService.addNewTextSnippet(project, textSnippet);
+            ProjectTextSnippetEntity ptse = projectService.addNewTextSnippet(project, textSnippet);
             poTextBean.getDroppedTextSnippetList().add(ptse);
         }
         log.info("end..");
     }
 
-    public void updateDefaultStatusCurrency(ProjectCurrencyEntity currencyEntity){
-        for(ProjectCurrencyEntity pce:projectCurrencyList){
-            if(currencyEntity.getId().longValue()!=pce.getId().longValue()){
+    public void updateDefaultStatusCurrency(ProjectCurrencyEntity currencyEntity) {
+        for (ProjectCurrencyEntity pce : projectCurrencyList) {
+            if (currencyEntity.getId().longValue() != pce.getId().longValue()) {
                 pce.setProjectDefault(false);
-            }else{
+            } else {
                 pce.setProjectDefault(true);
             }
         }
-        for(ProjectCurrencyEntity pce:projectCurrencyList){
+        for (ProjectCurrencyEntity pce : projectCurrencyList) {
             log.info("status : " + pce.getProjectDefault());
         }
+    }
+
+    public boolean hasNotStatusDeleted(TextSnippetEntity entity) {
+        if (entity != null && entity.getStatus() != null)
+            return entity.getStatus().getId().intValue() != StatusEnum.DELETED.getId().intValue();
+        else
+            return true;
+    }
+
+    public void editItem(ProjectTextSnippetEntity entity) {
+        log.info("edit item");
+        entity.startEditing();
+        entity.storeOldValue(entity);
+        ///sortBean.sortScopeSupplyEntity(scopeSupplyList);
+    }
+
+    public void confirmItem(ProjectTextSnippetEntity entity) {
+        log.info("confirm text");
+        // if(itemNoIsNotEmpty(entity)){
+        int index = projectTextSnippetList.indexOf(entity);
+        projectTextSnippetList.set(index,entity);
+        entity.stopEditing();
+        //}
+    }
+
+    public void deleteItem(ProjectTextSnippetEntity entity) {
+        log.info("delete item");
+        if (entity.getId() < 0L) {
+            projectTextSnippetList.remove(entity);
+        } else {
+            entity.setStatus(StatusEnum.DELETED);
+        }
+    }
+
+    public void cancelEditionItem(ProjectTextSnippetEntity entity) {
+        log.info("cancel item");
+        if (!itemNoIsNotEmpty(entity)) {
+            projectStandardTextList.remove(entity);
+        } else {
+            entity.stopEditing();
+            entity = entity.getValueCloned();
+        }
+    }
+
+    private boolean itemNoIsNotEmpty(ProjectTextSnippetEntity entity) {
+        return StringUtils.isNotEmpty(entity.getDescription()) && StringUtils.isNotBlank(entity.getDescription());
+    }
+
+    public List<ProjectTextSnippetEntity> getProjectTextSnippetList() {
+        return projectTextSnippetList;
+    }
+
+    public List<ProjectTextSnippetEntity> getSelectedProjectTexts() {
+        return selectedProjectTexts;
+    }
+
+    public void setSelectedProjectTexts(List<ProjectTextSnippetEntity> selectedProjectTexts) {
+        this.selectedProjectTexts = selectedProjectTexts;
+    }
+
+    public boolean  isProjectTextSnippetEnable(ProjectTextSnippetEntity entity){
+        log.info("isProjectTextSnippetEnable");
+        projectTextSnippetList.size();
+        if(entity != null && entity.getStatusEnum() != null){
+            log.info("Status " +  entity.getStatusEnum().getLabel());
+            return StatusEnum.ENABLE.ordinal() == entity.getStatusEnum().ordinal();
+        }
+        return true;
+    }
+    public List<ProjectTextSnippetEntity> filteredList() {
+        log.info("filteredList()");
+        List<ProjectTextSnippetEntity> list = new ArrayList<>();
+        for (ProjectTextSnippetEntity r : this.projectTextSnippetList) {
+            //RecordEditable record =  r;
+            if(r.getStatus()!=null) {
+                System.out.println("r.getStatusEnum().getId().intValue() " + r.getStatus().getId().intValue());
+                System.out.println("StatusEnum.ENABLE.getId().intValue() " + StatusEnum.ENABLE.getId().intValue());
+            }else{
+                System.out.println("ooops something wrong!");
+            }
+            if (r.getStatus() != null && r.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
+                //ProjectTextSnippetEntity object = (ProjectTextSnippetEntity) record;
+                list.add(r);
+            }
+
+        }
+        log.info("list size: " + list.size());
+        return list;
     }
 }

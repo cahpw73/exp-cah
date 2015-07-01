@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "text_snippet")
-public class TextSnippetEntity implements Serializable{
+public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> implements Serializable{
 
     private Long id;
     private String textSnippet;
