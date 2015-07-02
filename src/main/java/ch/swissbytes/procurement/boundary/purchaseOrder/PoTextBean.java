@@ -119,9 +119,6 @@ public class PoTextBean implements Serializable {
 
     public void onRowReorder(ReorderEvent event) {
         log.info("on row reorder");
-        for(ProjectTextSnippetEntity p : textSnippetList){
-            log.info("text Id: " + p.getId());
-        }
     }
 
     public void removeClauses(){
@@ -173,11 +170,9 @@ public class PoTextBean implements Serializable {
 
     public void confirmItem(ClausesEntity entity) {
         log.info("confirm text");
-        // if(itemNoIsNotEmpty(entity)){
         int index = droppedTextSnippetList.indexOf(entity);
         droppedTextSnippetList.set(index,entity);
         entity.stopEditing();
-        //}
     }
 
     public void cancelEditionItem(ClausesEntity entity) {
@@ -190,17 +185,30 @@ public class PoTextBean implements Serializable {
         }
     }
 
+    public boolean hasStatusEnable(ClausesEntity entity){
+        if(entity != null && entity.getStatus() != null){
+            return StatusEnum.ENABLE.ordinal() == entity.getStatus().ordinal();
+        }
+        return true;
+    }
+
     private boolean itemNoIsNotEmpty(ClausesEntity entity) {
         return StringUtils.isNotEmpty(entity.getClauses()) && StringUtils.isNotBlank(entity.getClauses());
     }
 
     public List<ClausesEntity> filteredList() {
         log.info("filteredList()");
+        for(ClausesEntity c : droppedTextSnippetList){
+            log.info("drooped text Id: " + c.getId()+" code: "+ c.getCode());
+        }
         List<ClausesEntity> list = new ArrayList<>();
         for (ClausesEntity r : this.droppedTextSnippetList) {
             if (r.getStatus() != null && r.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
                 list.add(r);
             }
+        }
+        for(ClausesEntity c : list){
+            log.info("list text Id: " + c.getId()+" code: "+ c.getCode());
         }
         log.info("list size: " + list.size());
         return list;

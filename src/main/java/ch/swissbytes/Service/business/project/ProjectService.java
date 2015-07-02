@@ -120,9 +120,23 @@ public class ProjectService implements Serializable {
         projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
         projectTextSnippetEntity.setProject(projectEntity);
         projectTextSnippetEntity.setStatus(StatusEnum.ENABLE);
+        projectTextSnippetEntity.setCode(textSnippetEntity.getCode());
+        projectTextSnippetEntity.setDescription(textSnippetEntity.getTextSnippet());
         projectTextSnippetService.doSave(projectTextSnippetEntity);
         return projectTextSnippetEntity;
 
+    }
+
+    @Transactional
+    public ClausesEntity addNewClausesSnippet(ProjectTextSnippetEntity projectTextSnippetEntity){
+        ClausesEntity entity = new ClausesEntity();
+        entity.setId(null);
+        entity.setLastUpdate(new Date());
+        entity.setStatus(StatusEnum.ENABLE);
+        entity.setProjectTextSnippet(projectTextSnippetEntity);
+        entity.setClauses(projectTextSnippetEntity.getDescription());
+        entity.setCode(projectTextSnippetEntity.getCode());
+        return entity;
     }
 
 

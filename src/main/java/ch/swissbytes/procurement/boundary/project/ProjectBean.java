@@ -90,6 +90,8 @@ public class ProjectBean extends Bean implements Serializable {
 
     private Long tempProjectTextId = 1000L;
 
+    private Long tempClausesId = -1L;
+
     private final String DEFAULT_CURRENCY_FORMAT = "#,###.00";
 
 
@@ -554,7 +556,10 @@ public class ProjectBean extends Bean implements Serializable {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal1').hide();");
             ProjectTextSnippetEntity ptse = projectService.addNewTextSnippet(project, textSnippet);
-            //poTextBean.getDroppedTextSnippetList().add(ptse);
+            ClausesEntity clausesEntity = projectService.addNewClausesSnippet(ptse);
+            clausesEntity.setId(tempClausesId);
+            tempClausesId--;
+            poTextBean.getDroppedTextSnippetList().add(clausesEntity);
         }
         log.info("end..");
     }
