@@ -56,8 +56,6 @@ public class SecurityService implements Serializable{
         boolean hasPermission=false;
         loadPermissions(user);
         for(OptionsEntity optionsEntity:permissions){
-            //System.out.println("url "+url+" == "+optionsEntity.getUrl());
-            //System.out.println("");
             if(StringUtils.isNotEmpty(optionsEntity.getUrl())&&StringUtils.isNotBlank(optionsEntity.getUrl())&&optionsEntity.getUrl().equalsIgnoreCase(url.trim())) {
                 hasPermission=true;
                 break;
