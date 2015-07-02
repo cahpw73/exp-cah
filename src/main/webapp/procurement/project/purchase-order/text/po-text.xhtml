@@ -4,28 +4,31 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
-    <div style="width: 1100px!important;">
+    <div style="width: 1500px!important;">
         <div style="width: 400px!important; float: left!important; ">
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.standard']}" for="standardTextDt"/>
-                <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}">
+                <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}" scrollable="true" scrollHeight="300">
                     <p:column style="width:20px" rendered="#{poBean.beingEdited}">
                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4"/>
                         <p:draggable id="draggable" for="dragIcon"
                                      scope="textSnippetScope"
                                      revert="true" helper="clone"/>
                     </p:column>
-                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
+                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}"
+                              style="width: 100px!important;">
                         <h:outputText id="textSnippetCode" value="#{_t.textSnippet.code}"/>
                     </p:column>
                     <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
-                        <h:outputText id="texSnippetSt" value="#{_t.textSnippet.textSnippet}"/>
+                        <div class="content-big-text">
+                            <h:outputText id="texSnippetSt" value="#{_t.textSnippet.textSnippet}"/>
+                        </div>
                     </p:column>
                 </p:dataTable>
             </div>
         </div>
 
-        <div style="width: 400px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
+        <div style="width: 650px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.preamble']}" for="preambleTxtId"/>
                 <p:inputTextarea id="preambleTxtId" styleClass="form-control"
@@ -40,16 +43,47 @@
                 <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesAuxDt"/>
 
                 <div style="margin-top: 0px;">
+
                     <p:dataTable id="clausesAuxDt" var="_dt" draggableRows="true"
                                  value="#{poTextBean.droppedTextSnippetList}"
                                  selectionMode="multiple" selection="#{poTextBean.selectedClausesTextList}"
-                                 rowKey="#{_dt.id}">
+                                 rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
                         <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}"/>
-                        <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
-                            <h:outputText value="#{_dt.textSnippet.code}"/>
+                        <ui:remove>
+                            <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}"
+                                      rendered="#{poTextBean.hasStatusEnable(_dt)}">
+                                <h:panelGroup id="viCode" rendered="#{!_dt.isEditable}">
+                                    <h:outputText value="#{_dt.code}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edCostCode" rendered="#{_dt.isEditable}">
+                                    <h:inputText id="costCodeItem" value="#{_dt.code}" styleClass="form-control">
+                                    </h:inputText>
+                                </h:panelGroup>
+
+                            </p:column>
+                        </ui:remove>
+                        <p:column id="textAuxCl" headerText="#{msgs['po.text.lbl.standard.column.text']}"
+                                  rendered="#{poTextBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
+                            <h:panelGroup id="viDescription" rendered="#{!_dt.isEditable}">
+                                <div class="content-big-text">
+                                    <h:outputText value="#{_dt.clauses}"/>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup id="edDescription" rendered="#{_dt.isEditable}">
+                                <p:inputTextarea id="description" value="#{_dt.clauses}" styleClass="form-control"
+                                                 required="true" requiredMessage="Enter a description in Project Text"
+                                                 style="height: 180px!important;">
+                                </p:inputTextarea>
+                            </h:panelGroup>
                         </p:column>
-                        <p:column id="textAuxCl" headerText="#{msgs['po.text.lbl.standard.column.text']}">
-                            <h:outputText value="#{_dt.textSnippet.textSnippet}"/>
+                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poTextBean.hasStatusEnable(_dt)}">
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
+                                           action="#{poTextBean.editItem(_dt)}" update="clausesAuxDt :editPoForm:msgPoMainData :editPoForm:bbtnt" async="false"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dt.isEditable}" process="clausesAuxDt"
+                                           action="#{poTextBean.confirmItem(_dt)}" update="clausesAuxDt edDescription :editPoForm:msgPoMainData :editPoForm:bbtnt" async="false"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dt.isEditable}" process="@this"
+                                           action="#{poTextBean.cancelEditionItem(_dt)}" update="clausesAuxDt :editPoForm:bbtnt" async="false"/>
                         </p:column>
                     </p:dataTable>
                 </div>

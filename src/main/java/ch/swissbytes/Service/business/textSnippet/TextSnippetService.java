@@ -49,11 +49,13 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         return super.save(textSnippetEntity);
     }
 
+    @Transactional
     public TextSnippetEntity findById(Long id) {
         List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;
     }
 
+    @Transactional
     public List<TextSnippetEntity> getTextSnippetList() {
         log.info("getTextSnippetList");
         return dao.getTextSnippetList();
@@ -68,7 +70,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         return dao.findByText(text);
     }
 
-
+    @Transactional
     public List findGlobalAndByProject(Long id) {
         return dao.findGlobalAndByProject(id);
     }

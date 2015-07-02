@@ -98,7 +98,7 @@ public class PoBean extends Bean {
                 purchaseOrder=service.findById(Long.valueOf(poId));
                 itemBean.loadItemList(purchaseOrder.getId());
                 cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
-                poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+                //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
                 poTextBean.loadText(purchaseOrder.getPoEntity(),purchaseOrder.getProjectEntity().getId());
                 if(purchaseOrder==null){
                     throw new IllegalArgumentException("invalid purchase order Id");

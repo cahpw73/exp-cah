@@ -24,28 +24,28 @@
     <br/>
 
     <div class="row">
-        <div style="width: 1000px!important;">
+        <div style="width: 1500px!important;">
 
-            <div style="width: 315px!important; float: left!important; margin-left: 15px!important;">
+            <div style="width: 415px!important; float: left!important; margin-left: 15px!important;">
                 <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
                 <br/>
                 <p:dataTable id="globalTextDt" var="_gt"
                              value="#{projectBean.globalStandardTextList}"
-                             selectionMode="multiple" scrollable="true" scrollHeight="150"
+                             selectionMode="multiple" scrollable="true" scrollHeight="300"
                              selection="#{projectBean.selectedGlobalTexts}"
                              rowKey="#{_gt.id}">
                     <p:column headerText="#{msgs['project.standard.text.column.code']}"
-                              width="50">
-                        #{_gt.code}
+                              style="width: 100px!important;">
+                            #{_gt.code}
                     </p:column>
-                    <p:column
-                            headerText="#{msgs['project.standard.text.column.description']}"
-                            width="60    ">
-                        #{_gt.textSnippet}
+                    <p:column headerText="#{msgs['project.standard.text.column.description']}">
+                        <div class="content-big-text">
+                            #{_gt.textSnippet}
+                        </div>
                     </p:column>
                 </p:dataTable>
             </div>
-            <div style="width: 135px!important; float: left!important; margin-left: 46px!important; top: 100px!important; position: relative;">
+            <div style="width: 100px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
                 <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
                                  action="#{projectBean.addToProjectText}"
                                  styleClass="btn btn-primary btn-sm"
@@ -61,39 +61,46 @@
                             process="@this,projectTextDt" async="false"/>
                 </h:commandButton>
             </div>
-            <div style="width: 315px!important; float: left!important;">
+            <div style="width: 650px!important; float: left!important;">
                 <h:outputText value="#{msgs['project.standard.text.lbl.project.text']}"/>
                 <br/>
                 <h:panelGroup id="itemsGroup">
                     <p:dataTable id="projectTextDt" var="_pt"
                                  value="#{projectBean.filteredList()}"
-                                 selectionMode="multiple" scrollable="true" scrollHeight="150"
+                                 selectionMode="multiple" scrollable="true" scrollHeight="300"
                                  selection="#{projectBean.selectedProjectTexts}"
                                  rowKey="#{_pt.id}">
-                        <p:column headerText="#{msgs['project.standard.text.column.code']}">
-                            <h:panelGroup id="viCostCode" rendered="#{!_pt.isEditable}">
-                                <h:outputText value="#{_pt.code}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edCostCode" rendered="#{_pt.isEditable}">
-                                <h:inputText id="costCodeItem" value="#{_pt.code}" styleClass="form-control">
-                                </h:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['project.standard.text.column.description']}">
+                        <ui:remove>
+                            <p:column headerText="#{msgs['project.standard.text.column.code']}">
+
+                                <h:panelGroup id="viCostCode" rendered="#{!_pt.isEditable}">
+                                    <h:outputText value="#{_pt.code}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edCostCode" rendered="#{_pt.isEditable}">
+                                    <h:inputText id="costCodeItem" value="#{_pt.code}" styleClass="form-control">
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                        </ui:remove>
+                        <p:column headerText="#{msgs['project.standard.text.column.description']}"
+                                  style="width: 80%!important;">
                             <h:panelGroup id="viDescription" rendered="#{!_pt.isEditable}">
-                                <h:outputText value="#{_pt.description}"/>
+                                <div class="content-big-text">
+                                    <h:outputText value="#{_pt.description}"/>
+                                </div>
                             </h:panelGroup>
                             <h:panelGroup id="edDescription" rendered="#{_pt.isEditable}">
-                                <h:inputTextarea id="description" value="#{_pt.description}" styleClass="form-control"
-                                                 required="true" requiredMessage="Enter a description in Project Text">
-                                </h:inputTextarea>
+                                <p:inputTextarea id="description" value="#{_pt.description}" styleClass="form-control"
+                                                 required="true" requiredMessage="Enter a description in Project Text"
+                                                 style="height: 180px!important;">
+                                </p:inputTextarea>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}" >
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
                                            action="#{projectBean.editItem(_pt)}" update="projectTextDt :glbMsgs" async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}" process=":editUserForm:itemsGroup"
-                                           action="#{projectBean.confirmItem(_pt)}" update="projectTextDt :glbMsgs" async="false"/>
+                                           action="#{projectBean.confirmItem(_pt)}" update="projectTextDt :editUserForm:projectGlobalMsg" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
                                            action="#{projectBean.cancelEditionItem(_pt)}" update="projectTextDt" async="false"/>

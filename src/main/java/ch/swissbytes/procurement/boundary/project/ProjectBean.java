@@ -86,9 +86,11 @@ public class ProjectBean extends Bean implements Serializable {
 
     private Long temporalCurrencyId = -1L;
 
-    private Long temporaryId = -1L;
+    private Long temporaryTextId = -1L;
 
     private Long tempProjectTextId = 1000L;
+
+    private Long tempClausesId = -1L;
 
     private final String DEFAULT_CURRENCY_FORMAT = "#,###.00";
 
@@ -526,6 +528,8 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("addNewCustomText");
         if (standartText.addProject(true)) {
             TextSnippetEntity ts = standartText.getTextSnippet();
+            ts.setId(temporaryTextId);
+            temporaryTextId--;
             ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
             entity.setId(tempProjectTextId);
             entity.setTextSnippet(ts);
@@ -552,7 +556,10 @@ public class ProjectBean extends Bean implements Serializable {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal1').hide();");
             ProjectTextSnippetEntity ptse = projectService.addNewTextSnippet(project, textSnippet);
-            poTextBean.getDroppedTextSnippetList().add(ptse);
+            ClausesEntity clausesEntity = projectService.addNewClausesSnippet(ptse);
+            clausesEntity.setId(tempClausesId);
+            tempClausesId--;
+            poTextBean.getDroppedTextSnippetList().add(clausesEntity);
         }
         log.info("end..");
     }
@@ -642,12 +649,6 @@ public class ProjectBean extends Bean implements Serializable {
         List<ProjectTextSnippetEntity> list = new ArrayList<>();
         for (ProjectTextSnippetEntity r : this.projectTextSnippetList) {
             //RecordEditable record =  r;
-            if(r.getStatus()!=null) {
-                System.out.println("r.getStatusEnum().getId().intValue() " + r.getStatus().getId().intValue());
-                System.out.println("StatusEnum.ENABLE.getId().intValue() " + StatusEnum.ENABLE.getId().intValue());
-            }else{
-                System.out.println("ooops something wrong!");
-            }
             if (r.getStatus() != null && r.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
                 //ProjectTextSnippetEntity object = (ProjectTextSnippetEntity) record;
                 list.add(r);

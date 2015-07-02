@@ -55,6 +55,8 @@ public class ProjectService implements Serializable {
                 if (pt.getTextSnippet().getId() < 0) {
                     pt.getTextSnippet().setId(null);
                     pt.getTextSnippet().setProject(entity);
+                    pt.getTextSnippet().setLastUpdate(new Date());
+                    pt.getTextSnippet().setStatus(StatusEnum.ENABLE);
                     TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
                     pt.setTextSnippet(textSnippetEntity);
                 }
@@ -118,9 +120,23 @@ public class ProjectService implements Serializable {
         projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
         projectTextSnippetEntity.setProject(projectEntity);
         projectTextSnippetEntity.setStatus(StatusEnum.ENABLE);
+        projectTextSnippetEntity.setCode(textSnippetEntity.getCode());
+        projectTextSnippetEntity.setDescription(textSnippetEntity.getTextSnippet());
         projectTextSnippetService.doSave(projectTextSnippetEntity);
         return projectTextSnippetEntity;
 
+    }
+
+    @Transactional
+    public ClausesEntity addNewClausesSnippet(ProjectTextSnippetEntity projectTextSnippetEntity){
+        ClausesEntity entity = new ClausesEntity();
+        entity.setId(null);
+        entity.setLastUpdate(new Date());
+        entity.setStatus(StatusEnum.ENABLE);
+        entity.setProjectTextSnippet(projectTextSnippetEntity);
+        entity.setClauses(projectTextSnippetEntity.getDescription());
+        entity.setCode(projectTextSnippetEntity.getCode());
+        return entity;
     }
 
 
@@ -170,6 +186,7 @@ public class ProjectService implements Serializable {
         return projectCurrencyService.findByProjectId(id);
     }
 
+    @Transactional
     public List<ProjectTextSnippetEntity> findProjectTextSnippetByProjectId(Long projectId) {
         return projectTextSnippetService.findByProjectId(projectId);
     }

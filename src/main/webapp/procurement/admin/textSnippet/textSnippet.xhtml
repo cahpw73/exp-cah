@@ -11,13 +11,13 @@
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="panel panel-default panel-tab">
                 <div class="procurement-panel-header">#{msgs['lbl.standard.text.title']}</div>
                 <!-- Default panel contents -->
                 <div class="panel-body">
                     <div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="left-inner-addon">
                                 <i class="fa fa-search fa-lg"></i>
                                 <h:form prependId="false">
@@ -36,11 +36,11 @@
                                     <h:selectOneListbox id="textSnippetList" value="#{textSnippetBean.selected}"
                                                         converter="textSnippetConverter"
                                                         styleClass="form-control"
-                                                        style="min-height: 230px;"
+                                                        style="min-height: 200px;"
 
                                                         size="2">
                                         <f:selectItems value="#{textSnippetBean.list}" var="_tsb"
-                                                       itemLabel="#{_tsb.textSnippet}" itemValue="#{_tsb}"/>
+                                                       itemLabel="#{_tsb.code}" itemValue="#{_tsb}"/>
                                         <f:ajax render="standardTextForm" execute="@this"/>
                                     </h:selectOneListbox>
 
@@ -48,7 +48,7 @@
                                 </h:form>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <div>
                                 <h:form prependId="false">
                                     <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
@@ -59,18 +59,45 @@
                                     <p:message for="codeTS"/>
                                     <br/>
                                     <h:inputTextarea id="textTS" value="#{textSnippetBean.textSnippet.textSnippet}"
-                                                     required="true"
+                                                     required="true" style="height: 200px;"
                                                      requiredMessage="Enter Text Snippet"
                                                      jsf:placeholder="Enter text snippet"
-                                                     styleClass="form-control" maxlength="1000"/>
+                                                     styleClass="form-control" maxlength="20000"/>
                                     <p:message for="textTS"/>
                                     <br/>
                                     <h:commandButton value="#{msgs['lbl.add']}" action="#{textSnippetBean.doSave}"
                                                      styleClass="btn btn-primary btn-sm"/>
                                 </h:form>
                             </div>
-                            <br/>
 
+                        </div>
+                        <div class="clearfix"/>
+
+                    </div>
+                    <br/>
+                    <div>
+                        <div class="col-md-4" style="margin-top: -25px!important;">
+                            <div class="panel panel-default panel-tab" style="height: 246px!important;">
+                                <div class="procurement-panel-header">Help</div>
+                                The following formatting options are available
+                                <br/>
+                                &lt;i&gt;&#160;&#160;&#160;&#160;- italics
+                                <br/>
+                                &lt;b&gt;&#160;&#160;&#160;- bold
+                                <br/>
+                                &lt;u&gt;&#160;&#160;&#160;- underline
+                                <br/>
+                                &lt;h1&gt;&#160;- header size 1
+                                <br/>
+                                &lt;h2&gt;&#160;- header size 2
+                                <br/>
+                                &lt;h3&gt;&#160;- header size 3
+                                <br/>
+                                &lt;p&gt;&#160;&#160;&#160;- paragraph
+                                <br/>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
                             <div>
                                 <h:form id="standardTextForm">
 
@@ -83,7 +110,8 @@
                                     <h:inputTextarea id="textTS2" value="#{textSnippetBean.selected.textSnippet}"
                                                      disabled="#{textSnippetBean.selected eq null}"
                                                      jsf:placeholder="Enter text snippet"
-                                                     styleClass="form-control" maxlength="1000"/>
+                                                     style="height: 200px;"
+                                                     styleClass="form-control" maxlength="20000"/>
                                     <p:message for="textTS2"/>
                                     <br/>
                                     <h:commandButton value="#{msgs['lbl.update']}" action="#{textSnippetBean.doUpdate}"
@@ -92,7 +120,7 @@
                                     &#160;
                                     <p:commandLink value="#{msgs['lbl.delete']}" action="#{textSnippetBean.doDelete}"
                                                    disabled="#{textSnippetBean.selected eq null}"
-                                                   styleClass="btn btn-primary btn-sm">
+                                                   styleClass="btn btn-primary btn-commandLink-primeFaces">
                                         <p:confirm header="Delete Standard Text"
                                                    message="Are you sure delete this Standard Text?"/>
                                     </p:commandLink>
@@ -103,29 +131,6 @@
                                             outcome="textSnippet"/>
                                 </h:form>
                             </div>
-                        </div>
-                        <div class="clearfix"/>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-default panel-tab">
-                            <div class="procurement-panel-header">Help</div>
-                            The following formatting options are available
-                            <br/>
-                            &lt;i&gt;&#160;&#160;&#160;&#160;- italics
-                            <br/>
-                            &lt;b&gt;&#160;&#160;&#160;- bold
-                            <br/>
-                            &lt;u&gt;&#160;&#160;&#160;- underline
-                            <br/>
-                            &lt;h1&gt;&#160;- header size 1
-                            <br/>
-                            &lt;h2&gt;&#160;- header size 2
-                            <br/>
-                            &lt;h3&gt;&#160;- header size 3
-                            <br/>
-                            &lt;p&gt;&#160;&#160;&#160;- paragraph
-                            <br/>
                         </div>
                     </div>
                 </div>

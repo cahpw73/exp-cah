@@ -15,6 +15,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editUserForm" prependId="false" class="form-horizontal">
+            <p:messages id="projectGlobalMsg"></p:messages>
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{projectBean.createProject}">
                     <div class="procurement-panel-header">#{msgs['project.detail.page.title.add']}</div>
