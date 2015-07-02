@@ -33,6 +33,7 @@
 	<parameter name="clientCountry" class="java.lang.String"/>
 	<parameter name="clientPhone" class="java.lang.String"/>
 	<parameter name="clientFax" class="java.lang.String"/>
+	<parameter name="clientDetail" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select ss.code, ss.quantity, ss.unit, ss.description, ss.cost, ss.total_cost
 from scope_supply ss
@@ -266,7 +267,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{clientAddress}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{clientDetail}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

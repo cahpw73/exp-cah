@@ -82,6 +82,8 @@ public class PermissionBean implements Serializable {
         return ids;
     }
 
+
+
     @PreDestroy
     public void destroy(){
         //log.info("Permission Bean destroy...");
