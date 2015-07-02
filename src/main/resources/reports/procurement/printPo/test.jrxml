@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ecff2d4f-bcbb-4331-adb8-31de2047b226">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5571d52d-6515-4bd7-91ac-25060a975f69" x="70" y="14" width="433" height="96" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[This is a <style isBold="true" isItalic="true" isUnderline="true">static text</style>
+	element containing styled text. <style backcolor="yellow" isBold="true" isItalic="true">Styled text</style>
+	elements are introduced by setting the <style forecolor="blue" isItalic="true">markup</style> attribute
+	available for the <style isBold="true" forecolor="magenta">textElement</style> tag to
+	<style forecolor="red" isItalic="true">styled</style> and by formatting the text content using nested
+	<style isBold="true" forecolor="green">style</style> tags and simple HTML tags.	]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement uuid="5819e6eb-a8a2-43f1-879a-870399dbcb35" x="70" y="46" width="392" height="51"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA["<style isBold='true' isItalic='true' isUnderline='true'>"+$P{REPORT_PARAMETERS_MAP}+"</style> "]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
