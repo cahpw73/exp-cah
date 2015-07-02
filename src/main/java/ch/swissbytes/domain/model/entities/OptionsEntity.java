@@ -19,6 +19,7 @@ public class OptionsEntity implements Serializable {
      private Integer id;
      private String name;
      private ModuleEntity module;
+     private String url;
 
     public OptionsEntity() {
     }
@@ -58,9 +59,16 @@ public class OptionsEntity implements Serializable {
         this.module = module;
     }
 
+    @Column(name="url", nullable=false, length=500)
+    public String getUrl() {
+        return url;
+    }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-  // The following is extra code specified in the hbm.xml files
+// The following is extra code specified in the hbm.xml files
 
 		    private static final long serialVersionUID = 1L;
 		

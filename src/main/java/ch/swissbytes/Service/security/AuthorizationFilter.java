@@ -33,7 +33,7 @@ public class AuthorizationFilter implements Filter {
         User user= (User)identity.getAccount();
         if (user!=null) {
             final String url = ((HttpServletRequest) servletRequest).getRequestURI();
-            if (securityService.canAccess(url.substring(context.length()),user.getLoginName())) {
+            if (securityService.canAccess(url.substring(context.length()+1),user.getLoginName())) {
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         } else {
