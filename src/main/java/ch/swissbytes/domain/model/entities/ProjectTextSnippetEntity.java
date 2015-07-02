@@ -47,8 +47,9 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
         this.code = code;
     }
 
-    @Size(max = 1000)
-    @Column(name = "description", nullable = false, length = 1000)
+    @Lob
+    @Size(max = 20000)
+    @Column(name = "description", nullable = false, length = 20000)
     public String getDescription() {
         return description;
     }

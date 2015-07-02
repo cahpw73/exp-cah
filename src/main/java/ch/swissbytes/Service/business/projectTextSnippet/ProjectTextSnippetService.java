@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class ProjectTextSnippetService implements Serializable {
         }
     }
 
+    @Transactional
     public List<ProjectTextSnippetEntity> findByProjectId(final Long id) {
         return dao.findByProjectId(id);
     }
@@ -55,6 +57,7 @@ public class ProjectTextSnippetService implements Serializable {
         return list;
     }
 
+    @Transactional
     public ProjectTextSnippetEntity findById(Long id) {
         List<ProjectTextSnippetEntity> list = dao.findById(ProjectTextSnippetEntity.class,id);
         ProjectTextSnippetEntity entity = null;

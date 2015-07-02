@@ -49,6 +49,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         return super.save(textSnippetEntity);
     }
 
+    @Transactional
     public TextSnippetEntity findById(Long id) {
         List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;

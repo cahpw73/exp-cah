@@ -533,3 +533,10 @@ label.checkbox{
     padding: 0px 10px;
     min-width: 62px!important;
 }
+
+.content-big-text {
+    width:90%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}

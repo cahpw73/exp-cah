@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.Date;
@@ -56,6 +57,7 @@ public class TextService implements Serializable {
         return !list.isEmpty() ? list.get(0) : null;
     }
 
+    @Transactional
     public List<ClausesEntity> findClausesByTextId(Long id) {
         return textClausesDao.findClausesByTextId(id);
     }

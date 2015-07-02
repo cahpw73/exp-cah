@@ -186,6 +186,7 @@ public class ProjectService implements Serializable {
         return projectCurrencyService.findByProjectId(id);
     }
 
+    @Transactional
     public List<ProjectTextSnippetEntity> findProjectTextSnippetByProjectId(Long projectId) {
         return projectTextSnippetService.findByProjectId(projectId);
     }
