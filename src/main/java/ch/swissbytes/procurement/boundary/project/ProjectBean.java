@@ -86,7 +86,7 @@ public class ProjectBean extends Bean implements Serializable {
 
     private Long temporalCurrencyId = -1L;
 
-    private Long temporaryId = -1L;
+    private Long temporaryTextId = -1L;
 
     private Long tempProjectTextId = 1000L;
 
@@ -526,6 +526,8 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("addNewCustomText");
         if (standartText.addProject(true)) {
             TextSnippetEntity ts = standartText.getTextSnippet();
+            ts.setId(temporaryTextId);
+            temporaryTextId--;
             ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
             entity.setId(tempProjectTextId);
             entity.setTextSnippet(ts);
