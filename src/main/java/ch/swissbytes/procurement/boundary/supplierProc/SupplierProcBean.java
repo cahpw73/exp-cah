@@ -125,7 +125,7 @@ public class SupplierProcBean extends Bean implements Serializable {
     }
 
     private boolean hasEitherAtLeastOneCategoryOrOneBrand() {
-        return (categoryBrandBean.getBrands()!=null?categoryBrandBean.getBrands().getTarget().size():0) + (categoryBrandBean.getCategories()!=null?categoryBrandBean.getCategories().getTarget().size():0) >= 1;
+        return supplier.getCategories().size()+supplier.getBrands().size()+ (categoryBrandBean.getBrands()!=null?categoryBrandBean.getBrands().getTarget().size():0) + (categoryBrandBean.getCategories()!=null?categoryBrandBean.getCategories().getTarget().size():0) >= 1;
     }
 
     public String doDelete(Long id) {
