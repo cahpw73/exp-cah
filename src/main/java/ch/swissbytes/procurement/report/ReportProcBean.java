@@ -125,6 +125,8 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
+
+
     private void initializeParametersToJasperReport() {
         locale = new Locale(Locale.ENGLISH.getLanguage());
         messages = new HashMap<String, String>();
@@ -144,6 +146,14 @@ public class ReportProcBean implements Serializable {
 
     public void setMessages(Map<String, String> messages) {
         this.messages = messages;
+    }
+    public void printSupplierContactInformation(final ProjectEntity project, final Map<String, Boolean> sortMap) {
+        log.info("printSupplierContactInformation");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportSupplierContactInformation("/procurement/supplierContactInformation/SupplierContactInformation", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        reportView.printDocument(null);
+        openReport = true;
     }
 
 }

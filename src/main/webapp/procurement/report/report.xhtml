@@ -56,8 +56,10 @@
                     <a class="link-disabled" href="#">#{msgs['lbl.report.summary.purchase.order']}</a>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.project.supplier.contact']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.project.supplier.contact']}
+                        <f:param name="reportName" value="sci"/>
+                    </h:link>
                 </li>
                 <li>
                     <!--required retentions report-->

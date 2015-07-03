@@ -91,6 +91,7 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "rrr" : reportProcBean.printRequiredRetentions(selectedProject,sortMap);
                     break;
+                case "sci":reportProcBean.printSupplierContactInformation(selectedProject,sortMap);
             }
         }else{
             Messages.addFlashGlobalError("Select a project first");
