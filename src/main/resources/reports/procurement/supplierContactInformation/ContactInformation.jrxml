@@ -27,22 +27,22 @@ ORDER BY sur_name]]>
 	</columnHeader>
 	<detail>
 		<band height="16" splitType="Stretch">
-			<textField>
-				<reportElement uuid="24b98385-1672-40e0-b3cc-033ccbe84bde" x="0" y="0" width="68" height="15" isPrintWhenDetailOverflows="true"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="24b98385-1672-40e0-b3cc-033ccbe84bde" x="0" y="0" width="68" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{first_name}+" "+$F{sur_name}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="b43d4346-e9fb-483e-a5f0-551b49b86846" x="76" y="0" width="73" height="15" isPrintWhenDetailOverflows="true"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b43d4346-e9fb-483e-a5f0-551b49b86846" x="76" y="0" width="73" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="6abd48d1-833d-4340-b073-58e402c7e908" x="161" y="0" width="59" height="15" isPrintWhenDetailOverflows="true"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6abd48d1-833d-4340-b073-58e402c7e908" x="161" y="0" width="59" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>

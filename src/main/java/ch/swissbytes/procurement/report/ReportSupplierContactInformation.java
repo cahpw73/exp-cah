@@ -67,16 +67,11 @@ public class ReportSupplierContactInformation extends ReportView implements Seri
 
     private String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
-      //  Boolean varNo = sortMap.get("varNo");
         Boolean supplier = sortMap.get("supplier");
-      //  Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
         if(poNo){
             strSort = strSort+"po,";
         }
-       /* if(varNo){
-            strSort = strSort+"po.orderedVariation,";
-        }*/
         if (supplier){
             strSort = strSort+"company,";
         }
