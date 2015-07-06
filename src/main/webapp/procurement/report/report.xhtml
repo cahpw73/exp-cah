@@ -25,12 +25,9 @@
 
                 </li>
                 <li>
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.bidder.list']}</a>
-                    <ui:remove>
                     <h:link
                             outcome="/procurement/report/bidderList/categorySelection">#{msgs['lbl.report.bidder.list']}
                     </h:link>
-                    </ui:remove>
                 </li>
                 <li>
                     <!--project procurement report-->
@@ -82,7 +79,10 @@
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.detailed.supplier']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.detailed.supplier']}
+                        <f:param name="reportName" value="dsi"/>
+                    </h:link>
                 </li>
             </ul>
         </div>

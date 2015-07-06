@@ -46,7 +46,7 @@ public class ReportDetailedSupplierInformation extends ReportView implements Ser
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("SUBREPORT_DIR","reports/procurement/supplierContactInformation/");
+        addParameters("SUBREPORT_DIR","reports/procurement/DetailedSupplierInformation/");
         loadParamDeliverables();
     }
 
