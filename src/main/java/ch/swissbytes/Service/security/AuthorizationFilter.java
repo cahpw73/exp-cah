@@ -37,7 +37,7 @@ public class AuthorizationFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
             }
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect(context + "/login.xhtml");
+            ((HttpServletResponse) servletResponse).sendRedirect(context + "/login.jsf");
         }
     }
 

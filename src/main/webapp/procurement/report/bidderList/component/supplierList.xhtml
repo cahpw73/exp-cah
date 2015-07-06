@@ -1,9 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:p="http://primefaces.org/ui">
 
     <div class="col-md-8">
         <div class="panel panel-default panel-tab">
@@ -16,7 +14,6 @@
                                        value="Package No"/>
                         <div class="col-md-7">
                             <h:inputText value="#{bidListBean.packageNo}"/>
-
                         </div>
                     </div>
                 </div>
@@ -24,9 +21,7 @@
                     <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                    value="Description"/>
                     <div class="col-md-7">
-                        <div class="left-inner-addon">
-                            <h:inputText value="#{bidListBean.description}"/>
-                        </div>
+                        <h:inputText value="#{bidListBean.description}"/>
                     </div>
                 </div>
 
@@ -38,7 +33,7 @@
                     </h:commandLink>
                 </div>
                 <div class="clearfix"/>
-                <div class="col-md-10">
+                <div class="col-md-6">
                     <div class="procurement-text-lbl-ltr">
                         <p:dataTable id="deliverablesTblId"
                                      value="#{bidListBean.suppliers(categoryBean.selectedCategory)}"
@@ -67,14 +62,17 @@
                 <div class="col-md-2">
                     <h:commandLink styleClass="btn btn-primary btn-sm"
                                    value="OK"
+                                   target="_blank"
                                    action="#{bidListBean.generateReport}">
                     </h:commandLink>
                 </div>
                 <div class="clearfix"/>
                 <br/>
+
                 <div class="form-group col-md-10">
-                    <label class="procurement-text-lbl-ltr" >Supplier Comments</label>
-                    <h:inputTextarea styleClass="form-control procurement-text-lbl-ltr" value="#{bidListBean.comments}"/>
+                    <label class="procurement-text-lbl-ltr">Supplier Comments</label>
+                    <h:inputTextarea styleClass="form-control procurement-text-lbl-ltr"
+                                     value="#{bidListBean.comments}"/>
                 </div>
             </div>
         </div>
