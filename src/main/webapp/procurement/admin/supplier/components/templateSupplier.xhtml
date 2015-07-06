@@ -2,14 +2,12 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
-    <!-- Nav tabs -->
     <br/>
 
     <div class="col-sm-7" style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.supplier.id']} *"
                            style="padding-left: 0px;"/>
-
             <div class="col-sm-8">
                 <h:inputText id="supplierID" maxlength="50"
                              readonly="#{supplierProcBean.beingViewed}"
