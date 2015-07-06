@@ -289,10 +289,10 @@
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_l.isEditable}" process="@this"
                                            action="#{cashflowBean.editCashflowDetail(_l)}"
-                                           update="forecastDt :editPoForm:msgPoMainData" async="false"/>
+                                           update="forecastDt " async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}" process="forecastDt"
                                            action="#{cashflowBean.confirmCashflowDetail(_l)}"
-                                           update="forecastDt :editPoForm:msgPoMainData" async="false"/>
+                                           update="forecastDt " async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_l.isEditable}" process="@this"
                                            action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt"

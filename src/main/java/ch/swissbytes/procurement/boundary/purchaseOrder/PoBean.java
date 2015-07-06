@@ -135,6 +135,22 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+            log.info("Project Id: " + purchaseOrder);
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
+            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+        }
+        return "";
+    }
+
+    public String doSaveAndClose(){
+        log.info("trying to save and close purchase order on procurement module");
+        if(validate()) {
+            collectData();
+            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder = service.savePOOnProcurement(purchaseOrder);
+            log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            sortPurchaseListByVariationAndDoUpdate();
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
             return backToList();
         }
         return "";
@@ -148,6 +164,22 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+            log.info("Project Id: " + poId);
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
+            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+        }
+        return "";
+    }
+
+    public String doUpdateAndClose() {
+        log.info("trying to update purchase order on procurement module");
+        if(validate()) {
+            collectData();
+            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
+            log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+            sortPurchaseListByVariationAndDoUpdate();
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
             return backToList();
         }
         return "";

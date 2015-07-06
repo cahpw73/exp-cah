@@ -18,10 +18,14 @@
                                  value="#{msgs['lbl.save']}">
                 </h:commandButton>
                 &#160;
-                <h:commandButton type="submit" action="#{poBean.backToList}"
-                                 styleClass="btn btn-primary btn-sm" immediate="true"
-                                 value="#{msgs['lbl.cancel']}">
-                </h:commandButton>
+                <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"
+                                 styleClass="btn btn-primary btn-sm"
+                                 value="#{msgs['lbl.close']}"
+                                 rendered="#{poBean.beingCreated}"/>
+                <h:commandButton type="submit" action="#{poBean.doUpdateAndClose}"
+                                 styleClass="btn btn-primary btn-sm"
+                                 value="#{msgs['lbl.close']}"
+                                 rendered="#{poBean.beingUpdated}"/>
                 &#160;
                 <h:commandButton type="submit"
                                  styleClass="btn btn-primary btn-sm"

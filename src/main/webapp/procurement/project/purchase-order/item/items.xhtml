@@ -19,7 +19,6 @@
                                 <p:inputText id="itemNo" value="#{_i.code}" maxlength="50" styleClass="form-control"
                                              onkeypress="return isNumberFormat(event);"
                                              required="true" requiredMessage="Enter a Item No">
-
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -162,9 +161,9 @@
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}" rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
-                                           action="#{itemBean.editItem(_i)}" update="itemsDt :editPoForm:msgPoMainData" async="false"/>
+                                           action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}" process=":editPoForm:itemsGroup"
-                                           action="#{itemBean.confirmItem(_i)}" update="itemsDt :editPoForm:msgPoMainData" async="false"/>
+                                           action="#{itemBean.confirmItem(_i)}" update="itemsDt " async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.deleteItem(_i)}" update="itemsDt" async="false">
