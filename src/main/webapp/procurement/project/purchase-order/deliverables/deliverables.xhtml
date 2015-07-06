@@ -66,11 +66,11 @@
                     <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
                         <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dv.isEditable}" process="@this"
                                        action="#{deliverableBean.edit(_dv.id)}"
-                                       update="deliverableDt :editPoForm:msgPoMainData"/>
+                                       update="deliverableDt "/>
                         <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dv.isEditable}"
                                        process=":editPoForm:deliverableDt"
                                        action="#{deliverableBean.confirm(_dv.id)}"
-                                       update="deliverableDt :editPoForm:msgPoMainData"/>
+                                       update="deliverableDt "/>
                         &#160;
                         <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_dv.isEditable}" process="@this"
                                        action="#{deliverableBean.delete(_dv.id)}" update="deliverableDt">

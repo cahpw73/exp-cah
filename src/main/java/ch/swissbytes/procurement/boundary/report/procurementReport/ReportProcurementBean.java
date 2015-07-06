@@ -58,6 +58,7 @@ public class ReportProcurementBean implements Serializable {
     private String reportTitle;
     private String projectProcurementReport = "Project Procurement Report";
     private String requiredRetentionReport = "Required Retentions Report";
+    private String summaryPOReport = "Summary Purchase Order Report";
 
     @PostConstruct
     public void create() {
@@ -99,6 +100,8 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "mrr":reportProcBean.printMaterialRequisition(selectedProject,sortMap);
                     break;
+                case "spor" : reportProcBean.printSummaryPurchaseOrder(selectedProject,sortMap);
+                    break;
             }
         }else{
             Messages.addFlashGlobalError("Select a project first");
@@ -124,6 +127,8 @@ public class ReportProcurementBean implements Serializable {
             case "ppr" : reportTitle = projectProcurementReport;
                 break;
             case "rrr" : reportTitle = requiredRetentionReport;
+                break;
+            case "spor": reportTitle = summaryPOReport;
                 break;
         }
         log.info("report title: " + reportTitle);
