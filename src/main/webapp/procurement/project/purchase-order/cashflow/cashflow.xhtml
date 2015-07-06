@@ -45,13 +45,13 @@
                 </div>
                 <!--COL3-->
                 <div style="float: left; margin-left: -34px;">
-                    <div style="width: 200px!important;">
+                    <div style="width: 204px!important;">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            for="amtCf" value="#{msgs['po.cashflow.lbl.retention.amt']}"
                                            style="padding-left: 17px !important;"/>
 
-                            <div style="width: 150px; float: left;">
+                            <div style="width: 150px; float: left; margin-left: 21px;">
                                 <h:inputText id="amtCf" rendered="#{poBean.beingEdited}"
                                              value="#{cashflowBean.cashflow.amt}"
                                              styleClass="form-control">
@@ -96,10 +96,10 @@
                     </div>
                 </div>
                 <!--COL5-->
-                <div style="float: left; margin-left: 25px;">
-                    <div style="width: 255px!important;">
+                <div style="float: left; margin-left: 0px;">
+                    <div style="width: 280px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                            for="expDateCf" value="#{msgs['po.cashflow.lbl.retention.exp.date']}"/>
 
                             <div style="width: 150px; float: left;">
@@ -177,6 +177,7 @@
                     <p:dataTable id="forecastDt" var="_l"
                                  value="#{cashflowBean.cashflowDetailList}">
                         <p:column headerText="#{msgs['po.cashflow.column.item']}"
+                                  width="70"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viItem" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.item}"/>
@@ -187,6 +188,7 @@
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}"
+                                  width="250"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viDescrip" rendered="#{!_l.isEditable}">
                                 <h:outputText value="#{_l.milestone}"/>

@@ -55,25 +55,6 @@
                 </div>
             </div>
         </div>
-        <div style="width: 280px!important; float: left!important; margin-left: 25px;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poOrderTitle" value="#{msgs['po.main.data.lbl.order.title']}"/>
-
-                <div style="width: 145px; float: left;">
-                    <h:inputText id="poOrderTitle"
-                                 value="#{poBean.purchaseOrder.poEntity.orderTitle}"
-                                 maxlength="250"
-                                 styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['po.title.valid']}"
-                                 rendered="#{poBean.beingEdited}"/>
-                    <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
-                    <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.poEntity.orderTitle}"
-                                 rendered="#{poBean.beingViewed}"/>
-                </div>
-            </div>
-        </div>
         <div style="width: 290px!important; float: left!important;">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
@@ -93,13 +74,32 @@
                 </div>
             </div>
         </div>
+        <div style="width: 280px!important; float: left!important; margin-left: -10px;">
+            <div class="form-group">
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               for="poOrderTitle" value="#{msgs['po.main.data.lbl.order.title']}"/>
 
-        <div style="width: 290px!important; float: left!important;">
+                <div style="width: 198px; float: left;margin-left: -19px;">
+                    <h:inputText id="poOrderTitle"
+                                 value="#{poBean.purchaseOrder.poEntity.orderTitle}"
+                                 maxlength="250"
+                                 styleClass="form-control" required="true"
+                                 requiredMessage="#{msgs['po.title.valid']}"
+                                 rendered="#{poBean.beingEdited}"/>
+                    <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
+                    <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
+                                 value="#{poBean.purchaseOrder.poEntity.orderTitle}"
+                                 rendered="#{poBean.beingViewed}"/>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 290px!important; float: left!important; margin-left: 35px;">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                for="poVarNumber" value="#{msgs['po.main.data.lbl.var.number']}"/>
 
-                <div style="width: 145px; float: left;">
+                <div style="width: 100px; float: left;">
                     <h:inputText id="poVarNumber"
                                  value="#{poBean.purchaseOrder.variation}"
                                  maxlength="50"

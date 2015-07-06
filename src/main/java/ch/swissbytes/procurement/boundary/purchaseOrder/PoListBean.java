@@ -203,15 +203,6 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionVarationPOO(PurchaseOrderEntity entity) {
-        /*if(entity.getPoEntity().getPoProcStatus() != null){
-            if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
-                return true;
-            }
-        }else{
-            return false;
-        }
-
-        return false;*/
         return canCreateVariation(entity);
     }
 
@@ -225,7 +216,9 @@ public class PoListBean implements Serializable {
                     poe.setPo((String)values[0]);
                     poe.setOrderedVariation((Integer)values[1]);
                     log.info("POE po["+poe.getPo()+"], orderedVariation["+poe.getOrderedVariation()+"]");
-                    if(entity.getPo().equals(poe.getPo()) && entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue()){
+                    if(entity.getPo().equals(poe.getPo()) &&
+                            entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue() &&
+                            entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()){
                         return true;
                     }
                 }

@@ -11,7 +11,7 @@
                 <p:dataTable id="deliverableDt" var="_dv"
                              value="#{deliverableBean.filteredList()}">
 
-                    <p:column headerText="#{msgs['po.deliverables.column.description']}">
+                    <p:column headerText="#{msgs['po.deliverables.column.description']}" width="300">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
                         <p:selectOneMenu id="descriptions" value="#{_dv.description}"
                                          required="true"
@@ -24,7 +24,7 @@
                         </p:selectOneMenu>
                     </p:column>
 
-                    <p:column headerText="#{msgs['po.deliverables.column.Qty']}">
+                    <p:column headerText="#{msgs['po.deliverables.column.Qty']}" width="70">
                         <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
                         <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control">
                             <p:ajax async="false" process="@this" event="change"/>
