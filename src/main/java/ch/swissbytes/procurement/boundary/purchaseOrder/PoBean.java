@@ -16,6 +16,7 @@ import org.primefaces.context.RequestContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -85,6 +86,7 @@ public class PoBean extends Bean {
                     purchaseOrder.setProjectEntity(projectEntity);
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
                     purchaseOrder.setPoEntity(new POEntity());
+                    purchaseOrder.getPoEntity().setOrderDate(new Date());
                     putModeCreation();
                     poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
                 }else{
