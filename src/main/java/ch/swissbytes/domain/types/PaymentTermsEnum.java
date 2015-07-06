@@ -9,10 +9,11 @@ public enum PaymentTermsEnum implements Serializable {
 
 
     NET_30(0,"Net 30 Days from receipt of invoice"),
-    NET_14(1,"Net 14 Days from receipt of invoice"),
+    NET_14(1,"Net 15 Days from receipt of invoice"),
     NET_7(2,"Net 7 Days from receipt of invoice"),
-    NET_CASH(3,"Net Cash prior to delivery"),
-    CASH(4,"Cash with Order");
+    NET_CASH_DELIVERY(3,"Net Cash prior to delivery"),
+    CASH(4,"Cash with Order"),
+    NET_CASH_INVOICE(5,"Net Cash on receipt of invoice");
 
     private Integer id;
     private String label;

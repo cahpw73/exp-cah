@@ -10,123 +10,184 @@
             <div class="procurement-panel-header">#{msgs['po.cashflow.lbl.panel.retention.title']}</div>
             <!-- Default panel contents -->
             <div class="panel-body">
-                <!--COL1-->
-                <div style="float: left; margin-left: 15px;">
-                    <div style="width: 120px!important;">
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <h:selectBooleanCheckbox id="retentionCf"
-                                                             value="#{cashflowBean.cashflow.applyRetention}"
-                                                             disabled="#{!poBean.beingEdited}">
-                                    </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
-                                </label>
+                <div class="row">
+                    <!--COL1-->
+                    <div style="float: left; margin-left: 99px;">
+                        <div style="width: 120px!important;">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <h:selectBooleanCheckbox id="retentionCf"
+                                                                 value="#{cashflowBean.cashflow.applyRetention}"
+                                                                 disabled="#{!poBean.beingEdited}">
+                                        </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--COL2-->
-                <div style="float: left;">
-                    <div style="width: 200px!important;">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           for="percentageCf" value="#{msgs['po.cashflow.lbl.retention.percentage']}"/>
+                    <!--COL2-->
+                    <div style="float: left; margin-left: 103px;">
+                        <div style="width: 200px!important;">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                               for="percentageCf" value="#{msgs['po.cashflow.lbl.retention.percentage']}"/>
 
-                            <div style="width: 100px; float: left;">
-                                <h:inputText id="percentageCf"
-                                             value="#{cashflowBean.cashflow.percentage}"
-                                             styleClass="form-control" rendered="#{poBean.beingEdited}"/>
-                                <h:inputText id="percentageCfVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{cashflowBean.cashflow.percentage}"
-                                             rendered="#{poBean.beingViewed}"/>
+                                <div style="width: 110px; float: left; margin-left: 13px;">
+                                    <h:inputText id="percentageCf"
+                                                 value="#{cashflowBean.cashflow.percentage}"
+                                                 styleClass="form-control" rendered="#{poBean.beingEdited}"/>
+                                    <h:inputText id="percentageCfVi" readonly="true" styleClass="form-control view-po"
+                                                 value="#{cashflowBean.cashflow.percentage}"
+                                                 rendered="#{poBean.beingViewed}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--COL3-->
-                <div style="float: left; margin-left: -34px;">
-                    <div style="width: 204px!important;">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           for="amtCf" value="#{msgs['po.cashflow.lbl.retention.amt']}"
-                                           style="padding-left: 17px !important;"/>
+                    <!--COL3-->
+                    <div style="float: left;">
+                        <div style="width: 204px!important;">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                               for="amtCf" value="#{msgs['po.cashflow.lbl.retention.amt']}"
+                                               style="padding-left: 17px !important;"/>
 
-                            <div style="width: 150px; float: left; margin-left: 21px;">
-                                <h:inputText id="amtCf" rendered="#{poBean.beingEdited}"
-                                             value="#{cashflowBean.cashflow.amt}"
-                                             styleClass="form-control">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:inputText>
-                                <h:inputText id="amtCfVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{cashflowBean.cashflow.amt}"
-                                             rendered="#{poBean.beingViewed}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:inputText>
+                                <div style="width: 150px; float: left; margin-left: 21px;">
+                                    <h:inputText id="amtCf" rendered="#{poBean.beingEdited}"
+                                                 value="#{cashflowBean.cashflow.amt}"
+                                                 styleClass="form-control">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:inputText>
+                                    <h:inputText id="amtCfVi" readonly="true" styleClass="form-control view-po"
+                                                 value="#{cashflowBean.cashflow.amt}"
+                                                 rendered="#{poBean.beingViewed}">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:inputText>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--COL4-->
-                <div style="float: left; margin-left: 13px;">
-                    <div style="width: 270px!important;">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           for="formCf" value="#{msgs['po.cashflow.lbl.retention.form']}"/>
+                    <!--COL4-->
+                    <div style="float: left; margin-left: 13px;">
+                        <div style="width: 270px!important;">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                               for="formCf" value="#{msgs['po.cashflow.lbl.retention.form']}"/>
 
-                            <div style="width: 200px; float: left;">
-                                <p:selectOneMenu id="formCf" editable="true"
+                                <div style="width: 200px; float: left;">
+                                    <p:selectOneMenu id="formCf" editable="true"
+                                                     value="#{cashflowBean.cashflow.form}"
+                                                     styleClass="menu-ddp" rendered="#{poBean.beingEdited}">
+                                        <f:selectItem
+                                                itemLabel="#{msgs['lbl.select']}"
+                                                noSelectionOption="true"/>
+                                        <f:selectItems value="#{cashflowBean.retentionForms}"
+                                                       var="_r"
+                                                       itemValue="#{_r}"
+                                                       itemLabel="#{_r.label}"/>
+                                        <p:ajax async="true" process="@this" event="change"/>
+                                    </p:selectOneMenu>
+                                    <h:inputText id="formCfVi" readonly="true" styleClass="form-control view-po"
                                                  value="#{cashflowBean.cashflow.form}"
-                                                 styleClass="menu-ddp" rendered="#{poBean.beingEdited}">
-                                    <f:selectItem
-                                            itemLabel="#{msgs['lbl.select']}"
-                                            noSelectionOption="true"/>
-                                    <f:selectItems value="#{cashflowBean.retentionForms}"
-                                                   var="_r"
-                                                   itemValue="#{_r}"
-                                                   itemLabel="#{_r.label}"/>
-                                    <p:ajax async="true" process="@this" event="change"/>
-                                </p:selectOneMenu>
-                                <h:inputText id="formCfVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{cashflowBean.cashflow.form}"
-                                             rendered="#{poBean.beingViewed}"/>
+                                                 rendered="#{poBean.beingViewed}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--COL5-->
-                <div style="float: left; margin-left: 0px;">
-                    <div style="width: 280px!important;">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                           for="expDateCf" value="#{msgs['po.cashflow.lbl.retention.exp.date']}"/>
 
-                            <div style="width: 150px; float: left;">
-                                <p:calendar id="expDateCf" type="text" styleClass="calendar"
-                                            navigator="true" mask="#{configuration.mask}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            jsf:placeholder="#{configuration.formatDate}"
-                                            converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{cashflowBean.cashflow.expDate}"
-                                            timeZone="#{configuration.timeZone}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();"
-                                            rendered="#{poBean.beingEdited}">
-                                </p:calendar>
-                                <h:inputText id="expDateCfVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{cashflowBean.cashflow.expDate}"
-                                             rendered="#{poBean.beingViewed}">
-                                    <f:convertDateTime timeZone="#{configuration.timeZone}"
-                                                       pattern="#{configuration.formatDate}"/>
-                                </h:inputText>
+                </div>
+                <div class="row">
+                    <div style="float: left; margin-left: 0px;">
+                        <div style="width: 280px!important;">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                               for="expDateCf" value="#{msgs['po.cashflow.lbl.retention.exp.date']}"/>
+
+                                <div style="width: 150px; float: left;">
+                                    <p:calendar id="expDateCf" type="text" styleClass="calendar"
+                                                navigator="true" mask="#{configuration.mask}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                jsf:placeholder="#{configuration.formatDate}"
+                                                converterMessage="#{msgs['validator.date.invalid']}"
+                                                value="#{cashflowBean.cashflow.expDate}"
+                                                timeZone="#{configuration.timeZone}"
+                                                onselect="calendarChanges();" onchange="calendarChanges();"
+                                                rendered="#{poBean.beingEdited}">
+                                    </p:calendar>
+                                    <h:inputText id="expDateCfVi" readonly="true" styleClass="form-control view-po"
+                                                 value="#{cashflowBean.cashflow.expDate}"
+                                                 rendered="#{poBean.beingViewed}">
+                                        <f:convertDateTime timeZone="#{configuration.timeZone}"
+                                                           pattern="#{configuration.formatDate}"/>
+                                    </h:inputText>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div style="width: 345px!important; float: left!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="defaultCurrencyId" value="#{msgs['po.cashflow.column.currency.retention']}"/>
+
+                            <div style="width: 110px; float: left; margin-left: 20px;">
+                                <h:selectOneMenu id="retentionCurrencyId"
+                                                 value="#{cashflowBean.cashflow.projectCurrency}"
+                                                 styleClass="form-control" rendered="#{poBean.beingEdited}"
+                                                 converter="projectCurrencyConverter">
+                                    <p:ajax event="change" update="conversionRateId" process="@this"/>
+                                    <f:selectItem
+                                            itemLabel="Select one"
+                                            noSelectionOption="true"/>
+                                    <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
+                                                   var="_pc"
+                                                   itemValue="#{_pc}"
+                                                   itemLabel="#{_pc.currency.code}"/>
+                                </h:selectOneMenu>
+                                <h:inputText id="retentionCurrencyViId" readonly="true" styleClass="form-control view-po"
+                                             value="#{cashflowBean.cashflow.projectCurrency}"
+                                             rendered="#{poBean.beingViewed}"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+            <div style="margin-left: 0px!important; margin-right: 15px!important;">
+                <div style="width: 440px!important; float: left!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                       for="termCfId" value="#{msgs['po.cashflow.lbl.payment.terms']}"/>
+
+                        <div style="width: 200px; float: left;">
+                            <h:selectOneMenu id="termCfId"
+                                             value="#{cashflowBean.cashflow.paymentTerms}"
+                                             styleClass="form-control" rendered="#{poBean.beingEdited}">
+                                <f:selectItem
+                                        itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
+                                        noSelectionOption="true"/>
+                                <f:selectItems value="#{cashflowBean.paymentTerms}"
+                                               var="_p"
+                                               itemValue="#{_p}"
+                                               itemLabel="#{_p.label}"/>
+                                <p:ajax async="true" process="@this" event="change"/>
+                            </h:selectOneMenu>
+                            <h:inputText id="termCfIdVi" readonly="true" styleClass="form-control view-po"
+                                         value="#{cashflowBean.cashflow.paymentTerms.label}"
+                                         rendered="#{poBean.beingViewed}"/>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            <br/>
         <!--Forecast cashflow -->
         <div style="margin-left: 0px!important; margin-right: 15px!important;">
             <div style="width: 240px!important; float: left!important;">

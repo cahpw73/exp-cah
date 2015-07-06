@@ -30,6 +30,8 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     private String balance;
     private Date expDate;
     private StatusEnum statusEnum;
+    private PaymentTermsEnum paymentTerms;
+    private ProjectCurrencyEntity projectCurrency;
     private Date lastUpdate;
     private POEntity po;
     private List<CashflowDetailEntity> cashflowDetailList = new ArrayList<>();
@@ -140,6 +142,26 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
 
     public void setPo(POEntity po) {
         this.po = po;
+    }
+
+    @Column (name = "payment_terms")
+    @Enumerated(EnumType.ORDINAL)
+    public PaymentTermsEnum getPaymentTerms() {
+        return paymentTerms;
+    }
+
+    public void setPaymentTerms(PaymentTermsEnum paymentTerms) {
+        this.paymentTerms = paymentTerms;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="project_currency_id")
+    public ProjectCurrencyEntity getProjectCurrency() {
+        return projectCurrency;
+    }
+
+    public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
+        this.projectCurrency = projectCurrency;
     }
 
 
