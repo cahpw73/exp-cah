@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bidderList" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8ff8c66-de8e-404b-af1b-5d1ecc90ee9d">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="16"/>
 	<style name="ColumnHeader" isDefault="true" fill="Solid" fontSize="16"/>
 	<subDataset name="dataset1" uuid="6d7d3fba-e737-462e-b1ce-b85589b839ec"/>
 	<parameter name="supplier" class="java.util.List"/>
@@ -33,11 +33,11 @@ ORDER BY $P{sortBy}]]>
 				<reportElement uuid="4f9c5480-d8f5-44b9-a3a9-62743420baeb" x="219" y="6" width="90" height="71"/>
 			</image>
 			<staticText>
-				<reportElement uuid="13b2b58b-1854-4e8f-81d7-0f60b1bef8ce" x="171" y="84" width="176" height="25"/>
-				<textElement>
+				<reportElement uuid="13b2b58b-1854-4e8f-81d7-0f60b1bef8ce" x="171" y="84" width="223" height="25" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
 					<font size="18"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Approved Bidder List</style>]]></text>
+				<text><![CDATA[<style size="18" isBold="true" pdfFontName="Helvetica-Bold">Approved Bidder List</style>]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -45,21 +45,21 @@ ORDER BY $P{sortBy}]]>
 		<band height="50" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="1db61577-1968-4cfc-8d6b-1dcb9a98c109" x="22" y="4" width="38" height="16"/>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project:</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="6834fab3-397d-49a2-8934-c83e5f711b11" x="22" y="19" width="62" height="16"/>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Package No:</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="eba79316-9a68-48aa-aba8-a081ddc606fa" x="22" y="32" width="62" height="16"/>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Description:</style>]]></text>
@@ -92,27 +92,55 @@ ORDER BY $P{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{description}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="56fdce41-607e-42db-bcc5-1297fe443349" x="462" y="2" width="28" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Page:]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement uuid="24b86ef5-9759-489b-ae1d-1575f5312e29" x="520" y="2" width="30" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ca064e1a-8625-4c05-9334-cec2ebc63341" x="510" y="2" width="9" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[of]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dbe8b1e0-46ba-4d8e-8dfc-2ea409a02243" x="493" y="2" width="16" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="25e9f1e9-c700-4875-a83d-cef549d0db54" x="347" y="0" width="100" height="16"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Fax</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="fddea653-8f2c-4c2d-b69f-07617f08d35e" x="22" y="0" width="128" height="16"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Name and Address</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="209" y="0" width="100" height="16"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Telephone</style>]]></text>
@@ -143,10 +171,10 @@ ORDER BY $P{sortBy}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="932da991-ad63-4538-b8b8-02080d489b4d" x="22" y="1" width="128" height="10"/>
-				<textElement>
+				<textElement markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}!=null?$F{company}:""+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="207fb81e-83c9-4992-8719-99c43c523d4c" x="22" y="11" width="128" height="10" isRemoveLineWhenBlank="true"/>
