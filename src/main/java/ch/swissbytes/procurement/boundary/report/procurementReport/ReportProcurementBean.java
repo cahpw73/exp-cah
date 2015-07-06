@@ -88,11 +88,16 @@ public class ReportProcurementBean implements Serializable {
         if (selectedProject != null){
             switch (reportName){
                 case "ppr" : List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
-                             reportProcBean.printProjectPurchaseOrder(selectedProject,list,getDescriptionSort(sortMap));
+                             reportProcBean.printProjectPurchaseOrder(selectedProject, list, getDescriptionSort(sortMap));
                     break;
-                case "rrr" : reportProcBean.printRequiredRetentions(selectedProject,sortMap);
+                case "rrr" : reportProcBean.printRequiredRetentions(selectedProject, sortMap);
+                    break;
+                case "sci":reportProcBean.printSupplierContactInformation(selectedProject, sortMap);
+                    break;
+                case "dsi":reportProcBean.printDetailedSupplierInformation(selectedProject,sortMap);
                     break;
                 case "spor" : reportProcBean.printSummaryPurchaseOrder(selectedProject,sortMap);
+                    break;
             }
         }else{
             Messages.addFlashGlobalError("Select a project first");

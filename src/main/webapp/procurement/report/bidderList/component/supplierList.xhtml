@@ -7,70 +7,74 @@
 
     <div class="col-md-8">
         <div class="panel panel-default panel-tab">
-            <div class="procurement-panel-header">#{msgs['report.deliverables.title']}</div>
+            <div class="procurement-panel-header">Bidder List</div>
             <!-- Default panel contents -->
             <div class="panel-body">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           value="Package No"/>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                       value="Package No"/>
+                        <div class="col-md-7">
+                            <h:inputText value="#{bidListBean.packageNo}"/>
 
-                            <div class="col-md-7">
-                                <h:inputText value="#{bidListBean.packageNo}"/>
-
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-
-                    <div class="row">
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           value="Description"/>
-
-                            <div class="col-md-7">
-                                <div class="left-inner-addon">
-                                    <h:inputText value="#{bidListBean.description}"/>
-                                </div>
-                            </div>
-                            <div>
-                                <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
-                                               value="OK"
-                                               action="#{bidListBean.generateReport}">
-                                </h:commandLink>
-                                <h:commandLink styleClass="btn btn-primary btn-sm"
-                                               value="#{msgs['lbl.close']}"
-                                               action="#{bidListBean.putModeCategory}">
-                                    <p:ajax async="false" update="bidderForm"/>
-                                </h:commandLink>
-                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-5">
+                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                   value="Description"/>
+                    <div class="col-md-7">
+                        <div class="left-inner-addon">
+                            <h:inputText value="#{bidListBean.description}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <h:commandLink styleClass="btn btn-primary btn-sm"
+                                   value="#{msgs['lbl.close']}"
+                                   action="#{bidListBean.putModeCategory}">
+                        <p:ajax async="false" update="bidderForm"/>
+                    </h:commandLink>
+                </div>
+                <div class="clearfix"/>
+                <div class="col-md-10">
+                    <div class="procurement-text-lbl-ltr">
+                        <p:dataTable id="deliverablesTblId"
+                                     value="#{bidListBean.suppliers(categoryBean.selectedCategory)}"
+                                     var="_supplier">
+                            <p:column headerText="Supplier ID">
+                                #{_supplier.supplierId}
+                            </p:column>
+                            <p:column headerText="Company">
+                                #{_supplier.company}
+                            </p:column>
+                            <p:column headerText="state">
+                                #{_supplier.state}
+                            </p:column>
+                            <p:column headerText="Contact">
+                            </p:column>
+                            <p:column headerText="Print">
+                                <h:selectBooleanCheckbox>
+                                    <p:ajax async="true" event="blur"
+                                            listener="#{bidListBean.selectSupplier(_supplier.id)}"/>
+                                </h:selectBooleanCheckbox>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <h:commandLink styleClass="btn btn-primary btn-sm"
+                                   value="OK"
+                                   action="#{bidListBean.generateReport}">
+                    </h:commandLink>
+                </div>
                 <div class="clearfix"/>
                 <br/>
-
-                <div>
-                    <p:dataTable id="deliverablesTblId" value="#{bidListBean.suppliers(categoryBean.selectedCategory)}"
-                                 var="_supplier">
-                        <p:column headerText="Supplier ID">
-                            #{_supplier.supplierId}
-                        </p:column>
-                        <p:column headerText="Company">
-                            #{_supplier.company}
-                        </p:column>
-                        <p:column headerText="state">
-                            #{_supplier.state}
-                        </p:column>
-                        <p:column headerText="Contact">
-                        </p:column>
-                        <p:column headerText="Print">
-                            <h:selectBooleanCheckbox>
-                                <p:ajax async="true" event="blur" listener="#{bidListBean.selectSupplier(_supplier.id)}"/>
-                            </h:selectBooleanCheckbox>
-                        </p:column>
-                    </p:dataTable>
+                <div class="form-group col-md-10">
+                    <label class="procurement-text-lbl-ltr" >Supplier Comments</label>
+                    <h:inputTextarea styleClass="form-control procurement-text-lbl-ltr" value="#{bidListBean.comments}"/>
                 </div>
             </div>
         </div>

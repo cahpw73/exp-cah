@@ -94,7 +94,7 @@ group by po.po]]>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement uuid="3dfbe9e2-8e19-44ab-bde1-b32a4408a818" x="275" y="7" width="318" height="31"/>
+				<reportElement uuid="3dfbe9e2-8e19-44ab-bde1-b32a4408a818" x="297" y="7" width="318" height="31"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="16" isBold="true"/>
 				</textElement>
@@ -122,7 +122,7 @@ group by po.po]]>
 				<text><![CDATA[Project Name:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="279" y="46" width="150" height="15"/>
+				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="301" y="46" width="150" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
@@ -153,14 +153,14 @@ group by po.po]]>
 				<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="286826a9-ab34-40b5-836b-4e995d4d8712" x="653" y="47" width="141" height="16"/>
+				<reportElement uuid="286826a9-ab34-40b5-836b-4e995d4d8712" x="675" y="47" width="141" height="16"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="430" y="46" width="154" height="15"/>
+				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="452" y="46" width="154" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
