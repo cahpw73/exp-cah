@@ -52,8 +52,10 @@
                     <a class="link-disabled" href="#">#{msgs['lbl.report.detailed.procurement']}</a>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.summary.purchase.order']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.summary.purchase.order']}
+                        <f:param name="reportName" value="spor"/>
+                    </h:link>
                 </li>
                 <li>
                     <!--Remove link-disabled when this page is done-->

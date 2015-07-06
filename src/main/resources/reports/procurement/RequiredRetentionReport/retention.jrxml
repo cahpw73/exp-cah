@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="retention" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bb9e1961-3cbe-48bd-813f-1e1b1924ee48">
-	<property name="ireport.zoom" value="1.9487171000000019"/>
-	<property name="ireport.x" value="223"/>
+	<property name="ireport.zoom" value="1.948717100000002"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -13,11 +13,11 @@
 	<queryString>
 		<![CDATA[select po.po, po.variation,sp.company,c.code,cf.percentage,cf.amt,cf.form,cf.exp_date
 from purchase_order po inner join p_order p on po.po_id=p.id
-     inner join supplier_proc sp on sp.id=p.supplier_id
-     inner join cashflow cf on cf.po_id=p.id
-     inner join project_currency pc on pc.id=p.currency_id
-     inner join currency c on c.id=pc.currency_id
-inner join project pr on pr.id=po.project_id
+     left outer join supplier_proc sp on sp.id=p.supplier_id
+     left outer join cashflow cf on cf.po_id=p.id
+     left outer join project_currency pc on pc.id=p.currency_id
+     left outer join currency c on c.id=pc.currency_id
+     left outer join project pr on pr.id=po.project_id
 where po.po=$P{poNoFilter} and pr.id=$P{projectIdFilter}
 order by $P{sortBy}]]>
 	</queryString>
@@ -81,13 +81,13 @@ order by $P{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="bc959b40-128a-4870-b635-8db8e64e6bc9" x="451" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{amt}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="fa313712-5381-4451-85f7-c8649ae5e3c7" x="536" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
@@ -120,7 +120,7 @@ order by $P{sortBy}]]>
 					<font size="6" isBold="true"/>
 					<paragraph rightIndent="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{poTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{poTotal}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{poTotal}):null]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="2929fea8-3e81-44a8-9bf6-e8d5b1c2399e" x="0" y="14" width="802" height="1" isRemoveLineWhenBlank="true"/>
