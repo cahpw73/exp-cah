@@ -93,4 +93,12 @@ public class LookupValueFactory implements Serializable {
         return map;
     }
 
+    public Map<Integer,String> getStatusPOProcurement(){
+        Map<Integer,String> result = new HashMap<>();
+        for(POStatusEnum poStatusEnum : POStatusEnum.values()){
+            result.put(poStatusEnum.ordinal(),bundle.getString("popstatus." + poStatusEnum.name().toUpperCase()));
+        }
+        return result;
+    }
+
 }

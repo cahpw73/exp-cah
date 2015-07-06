@@ -7,7 +7,7 @@
 	<queryString>
 		<![CDATA[select first_name,sur_name,phone,fax,job_title
  from contact
-WHERE SUPPLIER_ID=$P{SUPPLIER_ID}
+WHERE SUPPLIER_ID=$P{SUPPLIER_ID} and status=0
 ORDER BY sur_name]]>
 	</queryString>
 	<field name="first_name" class="java.lang.String"/>

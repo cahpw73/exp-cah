@@ -72,15 +72,18 @@
                     <a class="link-disabled" href="#">#{msgs['lbl.report.commited.currency']}</a>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.material.requisition']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.material.requisition']}
+                        <f:param name="reportName" value="mrr"/>
+                    </h:link>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.uncommited.data']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.uncommited.data']}
+                        <f:param name="reportName" value="udr"/>
+                    </h:link>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
                     <h:link
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.detailed.supplier']}
                         <f:param name="reportName" value="dsi"/>
