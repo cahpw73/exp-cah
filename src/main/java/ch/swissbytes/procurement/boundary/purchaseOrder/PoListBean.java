@@ -202,7 +202,7 @@ public class PoListBean implements Serializable {
         return false;
     }
 
-    public boolean actionVarationPOO(PurchaseOrderEntity entity) {
+    public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
         return canCreateVariation(entity);
     }
 
@@ -250,7 +250,7 @@ public class PoListBean implements Serializable {
         return false;
     }
 
-    public boolean actionPrintPOO(PurchaseOrderEntity entity) {
+    public boolean isPossiblePrintPO(PurchaseOrderEntity entity) {
         if(entity.getPoEntity().getPoProcStatus() != null){
             if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
                     || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())

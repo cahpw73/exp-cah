@@ -37,7 +37,7 @@
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
-                                        rendered="#{poListBean.actionEditPOO(_p)}"
+                                        rendered="#{poListBean.actionEditPOO(_p) and permissionBean.hasPermission(1402) }"
                                         style="float: left!important; color: #428BCA; margin-right:5px;">
                                     <f:param name="poId" value="#{_p.id}"/>
                                 </h:link>
@@ -51,14 +51,14 @@
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.print.po']}"
                                                action="#{poListBean.loadCurrentPo(_p)}"
-                                               rendered="#{poListBean.actionPrintPOO(_p)}"
+                                               rendered="#{poListBean.isPossiblePrintPO(_p)and permissionBean.hasPermission(1406)}"
                                                oncomplete="PF('printPoDlg').show();"
                                                update=":printPoGroupId" async="false"
                                                style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                                 </p:commandLink>
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.variation']}"
-                                               rendered="#{poListBean.actionVarationPOO(_p)}"
+                                               rendered="#{poListBean.isPossibleCreateVariation(_p)and permissionBean.hasPermission(1407)}"
                                                oncomplete="PF('variationModal').show();"
                                                action="#{poListBean.createVarNumberToPO(_p)}"
                                                update=":variationGroupId" async="false"
@@ -70,7 +70,7 @@
                                         value="#{msgs['project.list.action.commit']}"
                                         action="#{poListBean.doCommitPo}"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.actionCommitPOO(_p)}">
+                                        rendered="#{poListBean.actionCommitPOO(_p) and permissionBean.hasPermission(1405)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -84,7 +84,7 @@
                                         value="#{msgs['project.list.action.release']}"
                                         action="#{poListBean.doReleasePo}"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.actionReleasePOO(_p) and }">
+                                        rendered="#{poListBean.actionReleasePOO(_p) and permissionBean.hasPermission(1407)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -105,7 +105,7 @@
                 </div>
             </div>
         </h:form>
-        <p:dialog id="variationModalId" header="Create Varation" widgetVar="variationModal"
+        <p:dialog id="variationModalId" header="Create Variation" widgetVar="variationModal"
                   resizable="false">
             <h:panelGroup id="variationGroupId">
                 <div class="col-md-12">

@@ -119,7 +119,7 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1204,'REPORT_DETAILED_PROCUREM
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1205,'REPORT_SUMMARY_PO',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1207,'REPORT_PROJECT_SUPPLIER_CONTACTS',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1208,'REPORT_REQUIRED_RETENTIONS',1,'procurement/report/print-reports.jsf');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1209,'REPORT_COMMITED_CURRENCIES',1,'procurement/report/print-reports.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1209,'REPORT_COMMITTED_CURRENCIES',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1210,'REPORT_MATERIALS_REQUISITION',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1211,'REPORT_UNCOMMITTED_DATA',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1212,'REPORT_DETAILED_SUPPLIER',1,'procurement/report/print-reports.jsf');
@@ -135,6 +135,9 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1402,'PO_EDIT',1,'procurement/
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1403,'PO_DELETE',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1404,'PO_VIEW',1,'procurement/project/purchase-order/edit.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1405,'PO_COMMIT',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1406,'PO_PRINT',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1407,'PO_RELEASE',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1408,'PO_VARIATION',1,'');
 
 
 
@@ -228,6 +231,9 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(458,1402,14);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(459,1403,14);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(460,1404,14);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(461,1405,14);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(462,1406,14);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(463,1407,14);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(464,1408,14);
 
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(500,400,15);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(501,401,15);
@@ -290,6 +296,9 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(557,1401,15);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(558,1402,15);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(559,1403,15);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(560,1404,15);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(561,1406,15);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(562,1407,15);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(563,1408,15);
 
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(600,1200,16);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(601,1201,16);
