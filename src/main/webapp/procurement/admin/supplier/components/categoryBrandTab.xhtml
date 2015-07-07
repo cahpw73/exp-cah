@@ -16,7 +16,7 @@
                                        itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
                     </h:selectOneListbox>
                 </div>
-                <h:commandButton value="#{msgs['lbl.plus']}"
+                <h:commandButton value="#{msgs['lbl.plus.less']}"
                                  rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}"
                                  styleClass="col-sm-2">
                     <p:ajax update="bodySupplier idBtnSave idBtnCancel" process="@form"
@@ -39,7 +39,7 @@
                                        itemLabel="#{_br.name}" itemValue="#{_br}"/>
                     </h:selectOneListbox>
                 </div>
-                <h:commandButton value="#{msgs['lbl.plus']}" styleClass="col-sm-2"
+                <h:commandButton value="#{msgs['lbl.plus.less']}" styleClass="col-sm-2"
                                  rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}"
                                  action="#{supplierProcBean.putModeBrand}">
                     <p:ajax update="bodySupplier idBtnSave idBtnCancel"

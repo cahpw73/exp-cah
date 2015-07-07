@@ -20,7 +20,7 @@ public class ModuleGrantedAccessEntity {
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "MODULE_GRANTED_ACCESS_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "MODULE_GRANTED_ACCESS_ID_SEQ", allocationSize = 1, initialValue = 100)
     public Integer getId() {
         return id;
     }
