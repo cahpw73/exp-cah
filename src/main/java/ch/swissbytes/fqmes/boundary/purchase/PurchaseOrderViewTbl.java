@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
-import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
+import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -23,12 +23,12 @@ public class PurchaseOrderViewTbl extends LazyDataModel<VPurchaseOrder> {
 
     private Long total;
 
-    public PurchaseOrderViewTbl(PurchaseOrderViewDao dao, Filter filter){
+    public PurchaseOrderViewTbl(PurchaseOrderViewDao dao, Filter filter) {
         log.info("creating tbl ");
-        log.info((dao!=null?"dao has value":"dao has no value"));
-        this.filter=filter;
-        this.dao=dao;
-        total=0L;
+        log.info((dao != null ? "dao has value" : "dao has no value"));
+        this.filter = filter;
+        this.dao = dao;
+        total = 0L;
     }
 
     public Long getTotal() {
@@ -37,26 +37,29 @@ public class PurchaseOrderViewTbl extends LazyDataModel<VPurchaseOrder> {
 
     @Override
     public List<VPurchaseOrder> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-      //  log.info("loading data... "+sortField);
-        List<VPurchaseOrder> purchaseOrderEntityList=new ArrayList<>();
-        if(sortField!=null){
-            purchaseOrderEntityList= dao.findByPage(first, pageSize,filter,sortField,sortOrder.ordinal()==SortOrder.ASCENDING.ordinal());
-        }else{
-            purchaseOrderEntityList= dao.findByPage(first, pageSize,filter);
+        List<VPurchaseOrder> purchaseOrderEntityList = new ArrayList<>();
+        if (sortField != null) {
+            purchaseOrderEntityList = dao.findByPage(first, pageSize, filter, sortField, sortOrder.ordinal() == SortOrder.ASCENDING.ordinal());
+        } else {
+            purchaseOrderEntityList = dao.findByPage(first, pageSize, filter);
         }
-        if(super.getRowCount()<=0){
-            Long total= dao.findTotal(null);
+        if (super.getRowCount() <= 0) {
+            Long total = dao.findTotal(null);
             this.setRowCount(total.intValue());
-            this.total=total;
+            this.total = total;
         }
         this.setPageSize(pageSize);
-        if(sortField!=null&&sortField.equals("po")){
+        if (sortField != null && sortField.equals("po")) {
             Collections.sort(purchaseOrderEntityList);
-            if(sortOrder.ordinal()==SortOrder.DESCENDING.ordinal()){
+            if (sortOrder.ordinal() == SortOrder.DESCENDING.ordinal()) {
                 Collections.reverse(purchaseOrderEntityList);
             }
         }
         return purchaseOrderEntityList;
+    }
+
+    public List<VPurchaseOrder> getAllFiltered() {
+        return dao.findByPage(0, getTotal().intValue(), filter);
     }
 
 }

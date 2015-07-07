@@ -35,14 +35,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale, EntityManager entityManager, final List<PurchaseOrderEntity> orders,Configuration configuration) {
+    public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale, EntityManager entityManager, final List<Long> ids,Configuration configuration) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.entityManager=entityManager;
-         Collection<Long>ids=new ArrayList<>();
+       /*  Collection<Long>ids=new ArrayList<>();
         for(PurchaseOrderEntity entity:orders ){
             ids.add(entity.getId());
-        }
+        }*/
         if(ids.size()>0){
             addParameters("purchaseID",ids);
         }

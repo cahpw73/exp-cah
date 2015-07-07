@@ -160,4 +160,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         //}
         return hashCode;
     }
+
+    public VPurchaseOrder findVPOById(Long id){
+        return dao.findVPOById(id);
+    }
 }

@@ -12,7 +12,8 @@
     </f:metadata>
 
     <ui:define name="body">
-        <h:form>
+        <h:outputScript name="js/submitSearch.js"/>
+        <h:form id="searchForm" prependId="false">
             <div class="title-page">
                 <h4 class="page-header">#{msgs['purchase.order.filter.title.page']}</h4>
             </div>

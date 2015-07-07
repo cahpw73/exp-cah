@@ -2,7 +2,8 @@ package ch.swissbytes.fqmes.report;
 
 
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.VPurchaseOrder;
+import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 
@@ -37,7 +38,7 @@ public class ReportBean implements Serializable {
     private Boolean openReport = false;
 
 
-    private List<PurchaseOrderEntity> selected;
+    private List<VPurchaseOrder> selected;
 
 
     private String typeId;
@@ -58,17 +59,33 @@ public class ReportBean implements Serializable {
     public void init() {
         log.info("ReportBean init!");
         selected = new ArrayList<>();
-
-
     }
 
-    public List<PurchaseOrderEntity> getSelected() {
+    public List<VPurchaseOrder> getSelected() {
         return selected;
     }
 
     public void addPurchaseOrder(final Long id) {
         log.info("public void addPurchaseOrder(final Long id=" + id + ")");
-        selected.add(service.load(id));
+        boolean isAdded = false;
+        for (VPurchaseOrder po : selected) {
+            if (po.getId().longValue() == id.longValue()) {
+                isAdded = true;
+                break;
+            }
+        }
+        if (!isAdded) {
+            selected.add(service.findVPOById(id));
+        }
+    }
+
+    public void addAllPOFiltered(PurchaseOrderViewTbl list) {
+        log.info("all filtered");
+        cleanPurchaseSelected();
+        List<VPurchaseOrder> poList=list.getAllFiltered();
+        for(VPurchaseOrder po:poList){
+            selected.add(po);
+        }
     }
 
     public void cleanPurchaseSelected() {
@@ -84,7 +101,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportReceivableManifest()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, selected,configuration);
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -93,9 +110,17 @@ public class ReportBean implements Serializable {
         log.info("public void printReportJobSummary()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, selected,configuration);
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration);
         reportView.printDocument(null);
         openReport = true;
+    }
+
+    public List<Long> collectIds(){
+        List<Long> ids=new ArrayList<>();
+        for(VPurchaseOrder vpo:selected){
+            ids.add(vpo.getId());
+        }
+        return ids;
     }
 
 

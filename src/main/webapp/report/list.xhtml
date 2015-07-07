@@ -15,7 +15,8 @@
 
 <ui:define name="body">
 <h:outputScript name="js/multipleSelection.js"/>
-<h:form id="filterReport" prependId="false">
+<h:outputScript name="js/submitSearch.js"/>
+<h:form id="searchForm" prependId="false">
     <div class="title-page">
         <h4 class="page-header">#{msgs['report.purchase.order.filter.title.page']}</h4>
     </div>
@@ -182,6 +183,8 @@
                          class="btn btn-primary btn-sm"></h:commandButton>
         &#160;
         <h:commandButton value="#{msgs['lbl.search']}" action="#{reportListBean.doSearch}"
+                         id="srch"
+                         type="submit"
                          class="btn btn-primary btn-sm"></h:commandButton>
     </div>
     <div class="clearfix"></div>
@@ -213,7 +216,8 @@
         <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
             #{_purchase.supplier}
         </p:column>
-        <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.purchaseOrderStatus}" styleClass="column-list-header-po"
+        <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.purchaseOrderStatus}"
+                  styleClass="column-list-header-po"
                   width="100">
             <div class="column-list-po">
                 #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
@@ -235,6 +239,14 @@
         </p:column>
     </p:dataTable>
     <br/>
+    <div class="pull-right">
+        <h:commandLink styleClass="btn btn-primary btn-sm"
+                       action="#{reportBean.addAllPOFiltered(reportListBean.list)}"
+                       value="#{msgs['lbl.add.all']}">
+            <p:ajax async="false" update=":purchaseList:listSelected"/>
+        </h:commandLink>
+    </div>
+    <br/>
     <p:dataTable id="listSelected"
                  styleClass="data-table-po-sc"
                  value="#{reportBean.selected}" var="_po">
@@ -246,6 +258,7 @@
         </p:column>
     </p:dataTable>
     <br/>
+
 
     <div class="pull-right">
         <h:commandLink styleClass="btn btn-primary btn-sm"
@@ -260,7 +273,7 @@
         &#160;
         <h:commandLink styleClass="btn btn-primary btn-sm"
                        value="#{msgs['report.purchase.order.btn.clear.selection.for.report']}">
-            <p:ajax update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
+            <p:ajax async="false" update=":purchaseList:listSelected" listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
         </h:commandLink>
     </div>
 

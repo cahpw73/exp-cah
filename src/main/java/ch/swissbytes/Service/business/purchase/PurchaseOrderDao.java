@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
+import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -9,6 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -82,4 +86,15 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return "ORDER BY "+field;
     }
 
+
+    public VPurchaseOrder findVPOById(Long id){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT v ");
+        sb.append("FROM VPurchaseOrder v ");
+        sb.append("WHERE v.id=:ID ");
+        Map<String,Object> parameters=new HashMap<>();
+        parameters.put("ID",id);
+        List<VPurchaseOrder>list=this.findBy(sb.toString(), parameters);
+        return list.isEmpty()?null:list.get(0);
+    }
 }
