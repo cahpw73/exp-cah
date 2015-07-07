@@ -87,6 +87,7 @@ public class PoBean extends Bean {
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
                     purchaseOrder.setPoEntity(new POEntity());
                     purchaseOrder.getPoEntity().setOrderDate(new Date());
+                    purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions()!=null?projectEntity.getDeliveryInstructions():"");
                     putModeCreation();
                     poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
                 }else{

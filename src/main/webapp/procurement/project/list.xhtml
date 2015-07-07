@@ -70,7 +70,8 @@
                     </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                         <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
-                                style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;"
+                                rendered="#{permissionBean.canAccess(300)}">
                             <f:param name="isCreateProject" value="false"/>
                             <f:param name="projectId" value="#{_p.id}"/>
                         </h:link>
