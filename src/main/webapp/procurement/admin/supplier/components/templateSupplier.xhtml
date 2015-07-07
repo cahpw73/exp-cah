@@ -3,7 +3,9 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
     <br/>
-
+    <h:panelGroup rendered="#{MODE eq 'PO'}">
+        <p:messages globalOnly="true" closable="true" id="globalMessage" />
+    </h:panelGroup>
     <div class="col-sm-7" style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.supplier.id']} *"
@@ -35,7 +37,7 @@
                 <h:commandButton value="#{msgs['lbl.save']}"
                                  action="#{poBean.saveSupplier}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="true" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId"
+                    <p:ajax async="true" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
                             process="@form"/>
                 </h:commandButton>
             </h:panelGroup>
