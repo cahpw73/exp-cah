@@ -44,8 +44,8 @@ public class CategoryBrandBean implements Serializable {
 
 
     public void restart(){
-        //this.categories = new DualListModel<CategoryEntity>(categoryService.getCategoryList(),new ArrayList<>());
-        //this.brands = new DualListModel<BrandEntity>(diffBrandList(brandService.getBrandList(),lb), lb);
+        this.categories = new DualListModel<CategoryEntity>(categoryService.getCategoryList(),new ArrayList<CategoryEntity>());
+        this.brands = new DualListModel<BrandEntity>(brandService.getBrandList(),new ArrayList<BrandEntity>());
     }
     public void addListLoaded(List<CategoryEntity> categories, List<BrandEntity> brands) {
         List<CategoryEntity>lc= categories != null ? categories : new ArrayList<CategoryEntity>();
