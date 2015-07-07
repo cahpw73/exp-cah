@@ -4,10 +4,11 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="poIdFilter" class="java.lang.Long"/>
+	<parameter name="poNoFilter" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select sum(sp.total_cost) as total_cost
 from purchase_order po left outer join scope_supply sp on sp.purchase_order_id = po.id
-where po.id = $P{poIdFilter}]]>
+where po.po = $P{poNoFilter}]]>
 	</queryString>
 	<field name="total_cost" class="java.math.BigDecimal"/>
 	<variable name="variable1" class="java.lang.String"/>
