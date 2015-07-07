@@ -2,8 +2,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:p="http://primefaces.org/ui">
     <div class="row">
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
@@ -32,7 +31,7 @@
         </div>
         <div class="form-group">
             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                           for="clientId" value="#{msgs['project.detail.client']}"/>
+                           for="clientId" value="#{msgs['project.detail.company']}"/>
 
             <div class="col-sm-5">
 
@@ -84,7 +83,7 @@
             </div>
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                               for="clientLogo" value="#{msgs['project.detail.client.logo']}"/>
+                               for="clientLogo" value="#{msgs['project.detail.company.logo']}"/>
 
                 <div class="col-sm-5">
                     <h:selectOneMenu id="clientLogo"
@@ -115,7 +114,7 @@
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                for="clientFooter"
-                               value="#{msgs['project.detail.client.footer']}"/>
+                               value="#{msgs['project.detail.company.footer']}"/>
 
                 <div class="col-sm-5">
                     <h:selectOneMenu id="clientFooter"

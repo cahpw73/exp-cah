@@ -329,9 +329,10 @@ public class PoBean extends Bean {
             }
             supplierHeaderMode=supplierMode=false;
             list.updateSupplierList();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('supplierModal').hide();");
         }
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('supplierModal').hide();");
+
 
     }
 }
