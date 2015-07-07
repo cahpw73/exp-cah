@@ -113,7 +113,7 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1103,'CLIENT_DELETE',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1200,'REPORT_LIST',1,'procurement/report/report.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1201,'REPORT_DELIVERABLE',1,'procurement/report/deliverables/deliverables.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1202,'REPORT_BIDDER_LIST',1,'procurement/report/bidderList/categorySelection.jsf');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1203,'REPORT_PROJECT_PROCUREMET',1,'procurement/report/print-reports.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1203,'REPORT_PROJECT_PROCUREMENT',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1204,'REPORT_DETAILED_PROCUREMENT',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1205,'REPORT_SUMMARY_PO',1,'procurement/report/print-reports.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1207,'REPORT_PROJECT_SUPPLIER_CONTACTS',1,'procurement/report/print-reports.jsf');
