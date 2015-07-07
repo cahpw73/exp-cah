@@ -72,6 +72,7 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(201,'REPORT_RECEIVABLE_MANIFES
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(202,'REPORT_JOB_SUMMARY',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(300,'EDIT_PROJECT',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(301,'EDIT_PO_REFERENCE',1,'');
+--Starts permission for procurement
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(400,'ADMIN',1,'procurement/admin/admin.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(401,'SUPPLIER_LIST',1,'procurement/admin/supplier/list.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(402,'SUPPLIER_CREATE',1,'procurement/admin/supplier/edit.jsf');

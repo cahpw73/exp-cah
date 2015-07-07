@@ -84,7 +84,7 @@
                                         value="#{msgs['project.list.action.release']}"
                                         action="#{poListBean.doReleasePo}"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.actionReleasePOO(_p)}">
+                                        rendered="#{poListBean.actionReleasePOO(_p) and }">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -96,6 +96,7 @@
                         </p:dataTable>
                         <br/>
                         <h:link outcome="edit"
+                                rendered="#{permissionBean.hasPermission(1401)}"
                                 styleClass="btn btn-primary btn-sm"
                                 value="#{msgs['project.purchase.order.btn.new.purchase.order']}">
                             <f:param name="projectId" value="#{poListBean.projectId}"/>
