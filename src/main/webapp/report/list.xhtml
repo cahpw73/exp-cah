@@ -233,9 +233,8 @@
             <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                            action="#{reportBean.addPurchaseOrder(_purchase.poId)}"
                            value="#{msgs['report.purchase.order.link.add']}">
-                <f:ajax execute="@this" render="listSelected"/>
+                <p:ajax async="false" process="@this" update=":purchaseList:listSelected"/>
             </h:commandLink>
-
         </p:column>
     </p:dataTable>
     <br/>

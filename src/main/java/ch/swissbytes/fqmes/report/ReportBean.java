@@ -69,21 +69,24 @@ public class ReportBean implements Serializable {
         log.info("public void addPurchaseOrder(final Long id=" + id + ")");
         boolean isAdded = false;
         for (VPurchaseOrder po : selected) {
-            if (po.getId().longValue() == id.longValue()) {
+            if (po.getPoId().longValue() == id.longValue()) {
                 isAdded = true;
                 break;
             }
         }
         if (!isAdded) {
-            selected.add(service.findVPOById(id));
+            VPurchaseOrder po = service.findVPOById(id);
+            if (po != null) {
+                selected.add(po);
+            }
         }
     }
 
     public void addAllPOFiltered(PurchaseOrderViewTbl list) {
         log.info("all filtered");
         cleanPurchaseSelected();
-        List<VPurchaseOrder> poList=list.getAllFiltered();
-        for(VPurchaseOrder po:poList){
+        List<VPurchaseOrder> poList = list.getAllFiltered();
+        for (VPurchaseOrder po : poList) {
             selected.add(po);
         }
     }
@@ -115,10 +118,10 @@ public class ReportBean implements Serializable {
         openReport = true;
     }
 
-    public List<Long> collectIds(){
-        List<Long> ids=new ArrayList<>();
-        for(VPurchaseOrder vpo:selected){
-            ids.add(vpo.getId());
+    public List<Long> collectIds() {
+        List<Long> ids = new ArrayList<>();
+        for (VPurchaseOrder vpo : selected) {
+            ids.add(vpo.getPoId());
         }
         return ids;
     }

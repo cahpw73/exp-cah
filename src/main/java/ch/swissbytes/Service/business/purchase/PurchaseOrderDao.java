@@ -91,7 +91,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT v ");
         sb.append("FROM VPurchaseOrder v ");
-        sb.append("WHERE v.id=:ID ");
+        sb.append("WHERE v.poId=:ID ");
         Map<String,Object> parameters=new HashMap<>();
         parameters.put("ID",id);
         List<VPurchaseOrder>list=this.findBy(sb.toString(), parameters);

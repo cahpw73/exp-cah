@@ -39,11 +39,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.entityManager=entityManager;
-       /*  Collection<Long>ids=new ArrayList<>();
-        for(PurchaseOrderEntity entity:orders ){
-            ids.add(entity.getId());
-        }*/
-        if(ids.size()>0){
+        if(ids!=null&&ids.size()>0){
             addParameters("purchaseID",ids);
         }
         addParameters("SUBREPORT_DIR","reports/jobSummary/");
