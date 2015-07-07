@@ -74,8 +74,8 @@ order by $P{sortBy}]]>
 			</textField>
 			<subreport>
 				<reportElement uuid="6d9c54ed-8ac8-4be3-928d-31b9ed600b49" x="458" y="1" width="80" height="12"/>
-				<subreportParameter name="poIdFilter">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$P{poNoFilter}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryPOTotalCostSubreport.jasper"]]></subreportExpression>

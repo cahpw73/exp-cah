@@ -64,15 +64,14 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select po.po,sp.company,po.id
+		<![CDATA[select po.po,sp.company
 from purchase_order po, p_order p,supplier_proc sp
 where po.status_id = 1 and po.project_id = $P{projectIdFilter}
       and po.po_id = p.id and sp.id=p.supplier_id
-group by po.po,sp.company,po.id]]>
+group by po.po,sp.company]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
-	<field name="id" class="java.lang.Long"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -282,9 +281,9 @@ group by po.po,sp.company,po.id]]>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement uuid="081416b5-425d-4d43-9038-d6f032bd8016" x="458" y="27" width="80" height="12"/>
-				<subreportParameter name="poIdFilter">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				<reportElement uuid="081416b5-425d-4d43-9038-d6f032bd8016" positionType="Float" stretchType="RelativeToTallestObject" x="458" y="27" width="80" height="12" isPrintWhenDetailOverflows="true"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryPOTotalSubreport1.jasper"]]></subreportExpression>
