@@ -114,6 +114,15 @@ public class ClientBean extends Bean implements Serializable {
                 case 1: //client logo
                     client.setClientLogo(logoBean.getLogo());
                     break;
+                case 2:
+                    client.setClientFooter(logoBean.getLogo());
+                    break;
+                case 3:
+                    client.setDefaultLogo(logoBean.getLogo());
+                    break;
+                case 4:
+                    client.setDefaultFooter(logoBean.getLogo());
+                    break;
 
             }
         }
@@ -124,6 +133,19 @@ public class ClientBean extends Bean implements Serializable {
     }
     public void startReportLogo(){
         currentLogo=1;
+        logoBean.restart();
+    }
+    public void startClientFooter() {
+        currentLogo = 2;
+        logoBean.restart();
+    }
+    public void startDefaultLogo() {
+        currentLogo = 3;
+        logoBean.restart();
+    }
+
+    public void startDefaultFooter() {
+        currentLogo = 4;
         logoBean.restart();
     }
 }

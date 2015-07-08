@@ -40,18 +40,18 @@
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
                     <p:column headerText="Description">
-                        <ui:remove>
-                        <p:editor value="#{_cl.title}" disabled="true"  controls="" height="70" width="250"/>
-                        </ui:remove>
                         <h:outputText value="#{_cl.title}" escape="false"/>
                     </p:column>
-                    <p:column headerText="Logo" width="90">
-                        #{_cl.clientLogo.description}
-                    </p:column>
-                    <p:column headerText="Report Logo" width="90">
+                    <p:column headerText="Report Logo" width="150">
                         #{_cl.reportLogo.description}
                     </p:column>
-                    <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                    <p:column headerText="Company Logo" width="150">
+                        #{_cl.clientLogo.description}
+                    </p:column>
+                    <p:column headerText="Company Footer" width="150">
+                        #{_cl.clientFooter.description}
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="150">
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                             <f:param name="clientId" value="#{_cl.id}"/>

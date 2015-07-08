@@ -21,6 +21,9 @@ public class ClientEntity implements Serializable {
     private String name;
     private LogoEntity reportLogo;
     private LogoEntity clientLogo;
+    private LogoEntity clientFooter;
+    private LogoEntity defaultLogo;
+    private LogoEntity defaultFooter;
     private StatusEnum status;
     private Date lastUpdate;
 
@@ -75,6 +78,36 @@ public class ClientEntity implements Serializable {
 
     public void setClientLogo(LogoEntity clientLogo) {
         this.clientLogo = clientLogo;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_footer_id", nullable = true)
+    public LogoEntity getClientFooter() {
+        return clientFooter;
+    }
+
+    public void setClientFooter(LogoEntity clientFooter) {
+        this.clientFooter = clientFooter;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "default_logo_id", nullable = true)
+    public LogoEntity getDefaultLogo() {
+        return defaultLogo;
+    }
+
+    public void setDefaultLogo(LogoEntity defaultLogo) {
+        this.defaultLogo = defaultLogo;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "default_footer_id", nullable = true)
+    public LogoEntity getDefaultFooter() {
+        return defaultFooter;
+    }
+
+    public void setDefaultFooter(LogoEntity defaultFooter) {
+        this.defaultFooter = defaultFooter;
     }
 
     @Column(name = "status", nullable = false)

@@ -16,7 +16,7 @@
         <h:form id="editUserForm" prependId="false" class="form-horizontal">
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{clientBean.beingCreated}">
-                    <div class="procurement-panel-header">#{clientBean.beingCreated?'Add Client':'Edit Client'}</div>
+                    <div class="procurement-panel-header">#{clientBean.beingCreated?'New Client':'Edit Client'}</div>
                 </h:panelGroup>
                 <div class="col-md-8 panel-tab-users">
 
@@ -31,35 +31,6 @@
                                              maxlength="250"
                                              styleClass="form-control"/>
                                 <p:message for="name"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           for="clientLogo" value="#{msgs['project.detail.company.logo']}"/>
-                            <div class="col-sm-5">
-                                <h:selectOneMenu id="clientLogo"
-                                                 value="#{clientBean.client.clientLogo}"
-                                                 styleClass="form-control" converter="logoConverter">
-                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                  noSelectionOption="true"/>
-                                    <f:selectItems value="#{logoBean.logos}"
-                                                   var="_l"
-                                                   itemValue="#{_l}"
-                                                   itemLabel="#{_l.description}"/>
-                                </h:selectOneMenu>
-                                <p:message for="clientLogo" id="msgClientLogo"/>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="pull-right">
-                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
-                                                     styleClass="btn btn-primary btn-sm"
-                                                     action="#{clientBean.startClientLogo}"
-                                                     value="#{msgs['project.detail.btn.new.logo']}">
-                                        <p:ajax
-                                                async="false"
-                                                update=":logoModalId"/>
-                                    </h:commandButton>
-                                </div>
                             </div>
                         </div>
                         <h:panelGroup id="logoGroupId">
@@ -93,8 +64,129 @@
                                     </div>
                                 </div>
                             </div>
-
                         </h:panelGroup>
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="clientLogo" value="#{msgs['project.detail.company.logo']}"/>
+                            <div class="col-sm-5">
+                                <h:selectOneMenu id="clientLogo"
+                                                 value="#{clientBean.client.clientLogo}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{logoBean.logos}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.description}"/>
+                                </h:selectOneMenu>
+                                <p:message for="clientLogo" id="msgClientLogo"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="pull-right">
+                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     action="#{clientBean.startClientLogo}"
+                                                     value="#{msgs['project.detail.btn.new.logo']}">
+                                        <p:ajax
+                                                async="false"
+                                                update=":logoModalId"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="clientFooter"
+                                           value="#{msgs['project.detail.company.footer']}"/>
+
+                            <div class="col-sm-5">
+                                <h:selectOneMenu id="clientFooter"
+                                                 value="#{clientBean.client.clientFooter}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{logoBean.logos}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.description}"/>
+                                </h:selectOneMenu>
+                                <p:message for="clientFooter" id="msgClientFooter"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="pull-right">
+                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     value="#{msgs['project.detail.btn.new.logo']}">
+                                        <p:ajax process="logoGroupId"
+                                                async="false"
+                                                listener="#{clientBean.startClientFooter}"
+                                                update=":logoModalId"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="defaultLogo"
+                                           value="#{msgs['project.detail.default.logo']}"/>
+
+                            <div class="col-sm-5">
+                                <h:selectOneMenu id="defaultLogo"
+                                                 value="#{clientBean.client.defaultLogo}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{logoBean.logos}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.description}"/>
+                                </h:selectOneMenu>
+                                <p:message for="defaultLogo" id="msgDefaultLogo"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="pull-right">
+                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     value="#{msgs['project.detail.btn.new.logo']}">
+                                        <p:ajax process="logoGroupId"
+                                                async="false"
+                                                listener="#{clientBean.startDefaultLogo}"
+                                                update=":logoModalId"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="defaultFooter"
+                                           value="#{msgs['project.detail.default.footer']}"/>
+
+                            <div class="col-sm-5">
+                                <h:selectOneMenu id="defaultFooter"
+                                                 value="#{clientBean.client.defaultFooter}"
+                                                 styleClass="form-control" converter="logoConverter">
+                                    <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                  noSelectionOption="true"/>
+                                    <f:selectItems value="#{logoBean.logos}"
+                                                   var="_l"
+                                                   itemValue="#{_l}"
+                                                   itemLabel="#{_l.description}"/>
+                                </h:selectOneMenu>
+                                <p:message for="defaultFooter" id="msgDefaultFooter"/>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="pull-right">
+                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     value="#{msgs['project.detail.btn.new.logo']}">
+                                        <p:ajax process="logoGroupId"
+                                                async="false"
+                                                listener="#{clientBean.startDefaultFooter}"
+                                                update=":logoModalId"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
