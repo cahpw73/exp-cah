@@ -62,60 +62,60 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 	<pageHeader>
 		<band height="197" splitType="Stretch">
 			<line>
-				<reportElement uuid="104c421e-90f8-4d59-b5c9-b27e3079e11b" positionType="Float" x="0" y="76" width="519" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="104c421e-90f8-4d59-b5c9-b27e3079e11b" x="0" y="76" width="519" height="1" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="80abe0f3-22d2-475e-af01-856b98921527" positionType="Float" stretchType="RelativeToBandHeight" x="518" y="0" width="1" height="196" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="80abe0f3-22d2-475e-af01-856b98921527" x="518" y="0" width="1" height="196" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="94443197-13f3-4ac2-9447-978ec9bb6503" positionType="Float" x="0" y="0" width="519" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="94443197-13f3-4ac2-9447-978ec9bb6503" x="0" y="0" width="519" height="1" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="eabaad39-3a01-4a22-a5ed-1f5eac0fb875" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="196" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="eabaad39-3a01-4a22-a5ed-1f5eac0fb875" x="0" y="0" width="1" height="196" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="d024fdf9-60fe-4587-97f2-f631fc43b351" x="341" y="0" width="1" height="76" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="d024fdf9-60fe-4587-97f2-f631fc43b351" x="341" y="0" width="1" height="76" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="c3958164-addb-4335-ae71-ef3d98a8b5aa" positionType="Float" x="298" y="106" width="220" height="1" isRemoveLineWhenBlank="true">
+				<reportElement uuid="c3958164-addb-4335-ae71-ef3d98a8b5aa" x="298" y="106" width="220" height="1" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement uuid="7c50837a-89be-4cdc-bfb5-bc5bdee2b136" positionType="Float" x="298" y="166" width="220" height="1" isRemoveLineWhenBlank="true">
+				<reportElement uuid="7c50837a-89be-4cdc-bfb5-bc5bdee2b136" x="298" y="166" width="220" height="1" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="d6363a91-406c-4444-a263-6de8b370e5e6" positionType="Float" x="13" y="79" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="d6363a91-406c-4444-a263-6de8b370e5e6" x="13" y="79" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" positionType="Float" x="13" y="92" width="269" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" x="13" y="92" width="269" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" positionType="Float" x="13" y="105" width="79" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" x="13" y="105" width="79" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{postcode}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="fe32763c-6833-45d8-bc9e-056f13542186" positionType="Float" x="13" y="118" width="155" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="fe32763c-6833-45d8-bc9e-056f13542186" x="13" y="118" width="155" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{state}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" positionType="Float" x="13" y="131" width="155" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" x="13" y="131" width="155" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -178,7 +178,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<text><![CDATA[Page:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4bb55097-0301-4b84-be1c-2ebff5fa264c" positionType="Float" x="301" y="79" width="100" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="4bb55097-0301-4b84-be1c-2ebff5fa264c" x="301" y="79" width="100" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -187,7 +187,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<text><![CDATA[DELIVERY POINT:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="93107e8d-c532-4937-bde0-99c6977ddc56" positionType="Float" x="301" y="92" width="191" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="93107e8d-c532-4937-bde0-99c6977ddc56" x="301" y="92" width="191" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -196,7 +196,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textFieldExpression><![CDATA[$P{deliveryPoint}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" positionType="Float" x="301" y="108" width="116" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" x="301" y="108" width="116" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -205,7 +205,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<text><![CDATA[DELIVERYINSTRUCTIONS:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" positionType="Float" x="301" y="121" width="190" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" x="301" y="121" width="190" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -214,7 +214,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textFieldExpression><![CDATA[$P{deliveryInstructions}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="56b28a0c-c319-46c9-98bd-0c1ae7e9904c" positionType="Float" x="302" y="169" width="100" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="56b28a0c-c319-46c9-98bd-0c1ae7e9904c" x="302" y="169" width="100" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -223,7 +223,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<text><![CDATA[DELIVERY DATE:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" positionType="Float" x="302" y="182" width="190" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" x="302" y="182" width="190" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -250,7 +250,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textFieldExpression><![CDATA[$P{clientDetail}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" positionType="Float" x="296" y="77" width="1" height="120" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" x="296" y="77" width="1" height="120" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 			</line>
