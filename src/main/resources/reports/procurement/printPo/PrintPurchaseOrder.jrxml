@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.7715610000000075"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="173"/>
+	<property name="ireport.y" value="509"/>
 	<parameter name="purchaseOrderId" class="java.lang.Long"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="footerLogo" class="java.io.InputStream"/>
@@ -317,7 +317,13 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total</style>]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="1" width="519" height="1"/>
+				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="0" width="519" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="8eca8b36-1890-493c-8289-568753071466" x="0" y="0" width="1" height="18"/>
+			</line>
+			<line>
+				<reportElement uuid="06437dad-ad07-4668-9c13-b44477307c94" x="518" y="0" width="1" height="18"/>
 			</line>
 		</band>
 	</columnHeader>
@@ -369,7 +375,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<textFieldExpression><![CDATA[$F{total_cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost}):null]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="8f8d885b-7185-49d9-8113-d4b85b0f62e1" positionType="Float" x="0" y="15" width="519" height="1"/>
+				<reportElement uuid="8f8d885b-7185-49d9-8113-d4b85b0f62e1" positionType="Float" x="0" y="16" width="519" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
@@ -381,7 +387,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<reportElement uuid="0aeffda7-4742-4c53-8b4c-f27a2185318f" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="1" height="17" isPrintWhenDetailOverflows="true"/>
 			</line>
 			<line>
-				<reportElement uuid="b81fad11-a957-4214-ac6e-eabc5ccc94a0" positionType="Float" stretchType="RelativeToTallestObject" x="519" y="0" width="1" height="17" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="b81fad11-a957-4214-ac6e-eabc5ccc94a0" positionType="Float" stretchType="RelativeToTallestObject" x="518" y="0" width="1" height="17" isPrintWhenDetailOverflows="true"/>
 			</line>
 		</band>
 	</detail>
@@ -422,10 +428,10 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 				<reportElement uuid="e257ef08-cc2f-4ba4-a447-3c3f7645dcdf" x="0" y="0" width="519" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="76febbc4-eca9-40dc-90bf-2a934d7349c7" x="0" y="91" width="519" height="1"/>
+				<reportElement uuid="76febbc4-eca9-40dc-90bf-2a934d7349c7" x="0" y="92" width="519" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="9baf3616-d343-45d7-8bfd-af55e61d0377" x="519" y="0" width="1" height="92"/>
+				<reportElement uuid="9baf3616-d343-45d7-8bfd-af55e61d0377" x="518" y="0" width="1" height="92"/>
 			</line>
 			<line>
 				<reportElement uuid="4ed1019a-63a9-4495-88ab-d00d1d54976d" x="0" y="0" width="1" height="92"/>
