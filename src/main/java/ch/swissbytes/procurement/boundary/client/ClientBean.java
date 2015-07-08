@@ -148,4 +148,9 @@ public class ClientBean extends Bean implements Serializable {
         currentLogo = 4;
         logoBean.restart();
     }
+
+    public String getTitlePage(){
+        System.out.println("Mode Crud: " + modeOperationEnum.toString());
+        return isBeingCreated()?"New Client" : "Edit Client";
+    }
 }

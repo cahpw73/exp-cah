@@ -60,17 +60,15 @@
                     <p:column headerText="#{msgs['project.list.column.company']}" width="90">
                         #{_p.client.name}
                     </p:column>
-                    <ui:remove>
-                        <p:column headerText="#{msgs['project.list.column.report.logo']}" width="90">
-                            #{_p.reportLogo.fileName}
-                        </p:column>
-                        <p:column headerText="#{msgs['project.list.column.company.logo']}" width="90">
-                            #{_p.clientLogo.fileName}
-                        </p:column>
-                        <p:column headerText="#{msgs['project.list.column.company.footer']}" width="90">
-                            #{_p.clientFooter.fileName}
-                        </p:column>
-                    </ui:remove>
+                    <p:column headerText="#{msgs['project.list.column.report.logo']}" width="90">
+                        #{_p.client.reportLogo.description}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.list.column.company.logo']}" width="90">
+                        #{_p.client.clientLogo.description}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.list.column.company.footer']}" width="90">
+                        #{_p.client.clientFooter.description}
+                    </p:column>
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                         <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;"

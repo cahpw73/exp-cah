@@ -39,19 +39,22 @@
                     </div>
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
-                    <p:column headerText="Description">
+                    <p:column headerText="Name" width="120">
+                        <h:outputText value="#{_cl.name}" escape="false"/>
+                    </p:column>
+                    <p:column headerText="Description" style="padding-right: 10px;">
                         <h:outputText value="#{_cl.title}" escape="false"/>
                     </p:column>
-                    <p:column headerText="Report Logo" width="150">
+                    <p:column headerText="Report Logo" width="130">
                         #{_cl.reportLogo.description}
                     </p:column>
-                    <p:column headerText="Company Logo" width="150">
+                    <p:column headerText="Company Logo" width="130">
                         #{_cl.clientLogo.description}
                     </p:column>
-                    <p:column headerText="Company Footer" width="150">
+                    <p:column headerText="Company Footer" width="130">
                         #{_cl.clientFooter.description}
                     </p:column>
-                    <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="150">
+                    <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="130">
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
                             <f:param name="clientId" value="#{_cl.id}"/>
