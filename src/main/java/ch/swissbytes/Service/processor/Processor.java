@@ -20,7 +20,7 @@ public class Processor {
         snippets = new ArrayList<>();
     }
 
-    public String htmlToJasperPdfStyle(String html) {
+    public String htmlToJasperPdfStyle(final String html) {
         StringBuilder pdfJasperStyle = new StringBuilder();
         String copy = html;
         while (copy.length() > 0) {
