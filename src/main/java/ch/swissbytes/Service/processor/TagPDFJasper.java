@@ -6,11 +6,13 @@ package ch.swissbytes.Service.processor;
 public enum TagPDFJasper {
 
     STYLE("<style>", "</style>"),
-   // H2("<h2>", "</h2>"),
-    //H3("<h3>", "</h3>"),
-    ITALIC("isItalic='true'", "</i>"),
+    H1("size='18'", ""),//18
+    H2("size='14'", ""),//14
+    H3("size='12'", ""),//12
+
+    ITALIC("isItalic='true'", ""),
     BOLD("isBold='true'", ""),
-    UNDERLINED("isUnderlined='true'", "");
+    UNDERLINED("isUnderline='true'", "");
     //PARAGRAPH("<p>", "</p>");
 
     final String open;
