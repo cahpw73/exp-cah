@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f1961799-d15e-4453-99fc-fbf1d2957f04">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from category]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="last_update" class="java.sql.Timestamp"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="status" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="584368eb-3812-42fa-a2bf-e2139ce18bec" x="150" y="23" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4954454a-2af7-4af4-8746-6bca9491592a" x="271" y="23" width="100" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[algo algo <style isBold='true'>xxx<style isUnderlined='true'>xx</style></style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f402343a-1c99-423f-8daa-102390a6eee7" x="34" y="23" width="100" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[algo algo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0f9d51b9-d7cc-492f-820e-639ff3107c82" x="34" y="16" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
