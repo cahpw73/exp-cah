@@ -27,9 +27,9 @@
 				<text><![CDATA[name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4954454a-2af7-4af4-8746-6bca9491592a" x="271" y="23" width="100" height="20"/>
+				<reportElement uuid="4954454a-2af7-4af4-8746-6bca9491592a" x="271" y="23" width="284" height="38"/>
 				<textElement markup="styled"/>
-				<text><![CDATA[algo algo <style isBold='true'>xxx<style isUnderlined='true'>xx</style></style>]]></text>
+				<text><![CDATA[algo algo <style size='14'>xxxxx</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="f402343a-1c99-423f-8daa-102390a6eee7" x="34" y="23" width="100" height="20"/>
