@@ -31,7 +31,7 @@
             </p:column>
             <p:column headerText="#{msgs['lbl.attachment']}" width="95">
                 <div class="icon-container-attachment">
-                    <p:commandLink styleClass="icon-attachment">
+                    <p:commandLink styleClass="icon-attachment" onclick="doChange();">
                         <h:graphicImage
                                 url="#{_comment.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}"
                                 width="20" height="20"/>
@@ -43,12 +43,15 @@
             </p:column>
             <p:column headerText="#{msgs['lbl.action']}" width="150">
                 <div class="pull-right">
-                    <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table">
+                    <h:commandLink value="#{msgs['lbl.edit']}"
+                                   onclick="doChange();"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
                                 process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
                     </h:commandLink>
                     &#160;
                     <h:commandLink value="#{msgs['lbl.delete']}"
+                                   onclick="doChange();"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax update="commentList" process="@this"
                                 listener="#{purchaseOrderEdit.deleteComment(_comment.id)}"/>
@@ -60,6 +63,7 @@
         <div class="action-button-po">
             <div class="pull-right">
                 <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right"
+                                 onclick="doChange();"
                                  value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}">
                     <p:ajax update=":commentModalId" oncomplete="PF('commentEditModal').show();"/>
                 </h:commandButton>

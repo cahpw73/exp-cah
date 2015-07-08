@@ -1,15 +1,16 @@
 package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
+
 import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Purchase;
 import org.apache.commons.lang3.StringUtils;
-
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -190,21 +191,21 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         Boolean supplier = sortByMap.get("supplier");
         Boolean deliveryDate = sortByMap.get("deliveryDate");
         String strSort = "";
-        if(poNo){
-            strSort = strSort+"p.po,";
+        if (poNo) {
+            strSort = strSort + "p.po,";
         }
-        if(varNo){
-            strSort = strSort+"p.orderedVariation,";
+        if (varNo) {
+            strSort = strSort + "p.orderedVariation,";
         }
-        if (supplier){
-            strSort = strSort+"sp.company,";
+        if (supplier) {
+            strSort = strSort + "sp.company,";
         }
-        if(deliveryDate){
-            strSort = strSort+"p.poDeliveryDate,";
+        if (deliveryDate) {
+            strSort = strSort + "p.poDeliveryDate,";
         }
 
-        if(strSort.length()>1){
-            strSort = strSort.substring(0,strSort.length() - 1);
+        if (strSort.length() > 1) {
+            strSort = strSort.substring(0, strSort.length() - 1);
         }
 
         log.info(" sort by: " + strSort);
@@ -218,12 +219,23 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" LEFT JOIN pc.currency c");
         sb.append(" WHERE p.status.id=:ENABLED ");
         sb.append(" AND p.projectEntity.id  = :PROJECT_ID");
-        if(poNo || varNo || supplier || deliveryDate) {
+        if (poNo || varNo || supplier || deliveryDate) {
             sb.append(" ORDER BY " + strSort + " ");
         }
         Map<String, Object> map = new HashMap<>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("PROJECT_ID", projectId);
         return super.findBy(sb.toString(), map);
+    }
+
+    public VPurchaseOrder findVPOById(Long id){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT v ");
+        sb.append("FROM VPurchaseOrder v ");
+        sb.append("WHERE v.poId=:ID ");
+        Map<String,Object> parameters=new HashMap<>();
+        parameters.put("ID",id);
+        List<VPurchaseOrder>list=this.findBy(sb.toString(), parameters);
+        return list.isEmpty()?null:list.get(0);
     }
 }
