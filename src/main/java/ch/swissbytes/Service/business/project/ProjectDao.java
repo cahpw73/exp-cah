@@ -76,9 +76,9 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" SELECT p ");
       //  sb.append(" FROM ProjectEntity p LEFT JOIN p.supplierProcurement sp ");
         sb.append(" FROM ProjectEntity p  ");
-        sb.append(" LEFT JOIN p.reportLogo rl ");
-        sb.append(" LEFT JOIN p.clientLogo cl ");
-        sb.append(" LEFT JOIN p.clientFooter cf ");
+        sb.append(" LEFT JOIN p.client.reportLogo rl ");
+        sb.append(" LEFT JOIN p.client.clientLogo cl ");
+        sb.append(" LEFT JOIN p.client.clientFooter cf ");
         sb.append(" WHERE NOT p.status = :DELETED ");
 
         Map<String,Object> parameters = new HashMap<>();
@@ -89,15 +89,14 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
             sb.append(" LOWER(p.projectNumber) like :PROJECT_NUMBER ");
             sb.append(" OR LOWER(p.title) like :TITLE ");
             //sb.append(" OR LOWER(sp.company) like :SUPPLIER ");
-            sb.append(" OR LOWER(rl.fileName) like :FILE_NAME ");
-            sb.append(" OR LOWER(cl.fileName) like :FILE_NAME ");
-            sb.append(" OR LOWER(cf.fileName) like :FILE_NAME ");
+            sb.append(" OR LOWER(rl.description) like :DESCRIPTION ");
+            sb.append(" OR LOWER(cl.description) like :DESCRIPTION ");
+            sb.append(" OR LOWER(cf.description) like :DESCRIPTION ");
             sb.append(" )");
 
             parameters.put("PROJECT_NUMBER", "%" + searchTerm.toLowerCase().trim() + "%");
             parameters.put("TITLE", "%" + searchTerm.toLowerCase().trim() + "%");
-            parameters.put("SUPPLIER", "%" + searchTerm.toLowerCase().trim() + "%");
-            parameters.put("FILE_NAME", "%" + searchTerm.toLowerCase().trim() + "%");
+            parameters.put("DESCRIPTION", "%" + searchTerm.toLowerCase().trim() + "%");
         }
         return super.findBy(sb.toString(),parameters);
     }
@@ -136,11 +135,11 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
-        sb.append(" AND (p.reportLogo.id = :LOGO_ID  ");
-        sb.append(" OR p.clientLogo.id = :LOGO_ID  ");
-        sb.append(" OR p.clientFooter.id = :LOGO_ID  ");
-        sb.append(" OR p.defaultLogo.id = :LOGO_ID  ");
-        sb.append(" OR p.defaultFooter.id = :LOGO_ID) ");
+        sb.append(" AND (p.client.reportLogo.id = :LOGO_ID  ");
+        sb.append(" OR p.client.clientLogo.id = :LOGO_ID  ");
+        sb.append(" OR p.client.clientFooter.id = :LOGO_ID  ");
+        sb.append(" OR p.client.defaultLogo.id = :LOGO_ID  ");
+        sb.append(" OR p.client.defaultFooter.id = :LOGO_ID) ");
         Map<String,Object> params = new HashMap<>();
         params.put("LOGO_ID",logoId);
         params.put("ENABLE", StatusEnum.ENABLE);
