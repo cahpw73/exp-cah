@@ -108,14 +108,14 @@ public class Processor {
         int minorIndex = Integer.MAX_VALUE;
         for (TagHTML tag : TagHTML.values()) {
             if(tag.ordinal()!=TagHTML.ITALIC_BOLD.ordinal()) {
-                int index = source.toLowerCase().indexOf(tag.open.toLowerCase());
+                int index = tag.open!=null?source.toLowerCase().indexOf(tag.open.toLowerCase()):-1;
                 if (index >= 0) {
                     if (index < minorIndex) {
                         minorIndex = index;
                         tagFound = tag.open;
                     }
                 } else {
-                    index = source.toLowerCase().indexOf(tag.close.toLowerCase());
+                    index = tag.close!=null?source.toLowerCase().indexOf(tag.close.toLowerCase()):-1;
                     if (index >= 0) {
                         if (index < minorIndex) {
                             minorIndex = index;
@@ -145,7 +145,6 @@ public class Processor {
             if(snippet.isItalic()&&snippet.isBold()){
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.ITALIC_BOLD, style);
-                //style=insertProperty(style,"pdfFontName='Helvetica-BoldOblique'");
             }
             if (snippet.isUnderlined()) {
                 hasAnyStyle = true;
@@ -164,11 +163,11 @@ public class Processor {
                 style = creatingProperty(TagHTML.H3, style);
             }
 
-            style = style/* + (snippet.isOpenParagraph()?System.getProperty("line.separator"):"")*/+snippet.getSnippet();
+            style = style + (snippet.isOpenParagraph()?System.getProperty("line.separator"):"")+snippet.getSnippet();
             if (hasAnyStyle) {
                 style = style + TagPDFJasper.STYLE.close;
             }
-            //style=style+(snippet.isCloseParagraph()?System.getProperty("line.separator"):"");
+            style=style+(snippet.isCloseParagraph()?System.getProperty("line.separator"):"");
             sb.append(style);
         }
         return sb.toString();
@@ -225,9 +224,4 @@ public class Processor {
         return StringUtils.isEmpty(text)||StringUtils.isBlank(text)?"": text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
     }
 
-    public static void main(String[] args) {
-        String s = "<h1>Eum hinc argumentum te<h1>,<h2>no sit percipit adversarium, ne qui feugiat persecuti. Odio omnes scripserit ad est,<b> uct <i>vidit lorem</i> maiestatis his</b><h2>";
-        System.out.println(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(s));
-        System.out.println("end !");
-    }
 }
