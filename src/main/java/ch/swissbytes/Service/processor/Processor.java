@@ -2,7 +2,6 @@ package ch.swissbytes.Service.processor;
 
 import org.apache.commons.lang.StringUtils;
 
-import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -15,112 +14,133 @@ public class Processor {
     private Stack<TagHTML> tags;
     private List<DTOSnippet> snippets;
 
+
     public Processor() {
         tags = new Stack<>();
         snippets = new ArrayList<>();
     }
 
-    public String htmlToJasperPdfStyle(final String html) {
-        StringBuilder pdfJasperStyle = new StringBuilder();
+    public void processSnippetText(final String html) {
         String copy = html;
         while (copy.length() > 0) {
-            Integer index = processTagHTML(copy);
-            if (index > 0) {
-                DTOSnippet dto = new DTOSnippet();
-                dto.setSnippet(copy.substring(0, index));
-                snippets.add(dto);
-                copy = moveOn(index, copy);
+            String tagFound = findNextTag(copy);
+            String textInBetween = getTextInBetween(tagFound, copy);
+            if(StringUtils.isNotEmpty(textInBetween)){
+                snippets.add(registerTextInBetween(textInBetween));
             }
-            TagHTML tag = tags.peek();
-            String textInBetween = getTextInBetween(tag, copy);
-            snippets.add(registerTextInBetween(textInBetween, tag));
-            copy = moveOn2(textInBetween.length() + tag.close.length(), copy);
+            if (StringUtils.isNotEmpty(tagFound)) {
+                TagHTML target = TagHTML.findTag(tagFound);
+                if (target.open.equalsIgnoreCase(tagFound)) {
+                    tags.push(TagHTML.findTag(tagFound));
+                } else if (tags.size() > 0) {
+                    TagHTML topElement = tags.peek();
+                    if (topElement.close.equalsIgnoreCase(tagFound)) {
+                        tags.pop();
+                    }
+                }
+            }
+            if(StringUtils.isNotEmpty(tagFound)) {
+                Integer index = copy.toLowerCase().indexOf(tagFound.toLowerCase());
+                copy = moveOn(index + tagFound.length(), copy);
+            }else{
+                copy="";
+            }
         }
-        return pdfJasperStyle.toString();
     }
 
-    private DTOSnippet registerTextInBetween(String textInBetween, TagHTML tag) {
+    private DTOSnippet registerTextInBetween(String textInBetween) {
+        List<TagHTML> list = tags.subList(0, tags.size());
         DTOSnippet dto = new DTOSnippet();
-        switch (tag) {
-            case BOLD:
-                dto.setIsBold(true);
-                break;
-            case ITALIC:
-                dto.setIsItalic(true);
-                break;
-            case UNDERLINED:
-                dto.setIsUnderlined(true);
-                break;
-            case H1:
-                dto.setIsH1(true);
-                break;
-            case H2:
-                dto.setIsH2(true);
-                break;
-            case H3:
-                dto.setIsH3(true);
-                break;
+        for (TagHTML tag : list) {
+            switch (tag) {
+                case BOLD:
+                    dto.setIsBold(true);
+                    break;
+                case ITALIC:
+                    dto.setIsItalic(true);
+                    break;
+                case UNDERLINED:
+                    dto.setIsUnderlined(true);
+                    break;
+                case H1:
+                    dto.setIsH1(true);
+                    break;
+                case H2:
+                    dto.setIsH2(true);
+                    break;
+                case H3:
+                    dto.setIsH3(true);
+                    break;
+            }
         }
         dto.setSnippet(textInBetween);
         return dto;
     }
 
     private String moveOn(Integer index, String html) {
-        return index < 0 ? "" : html.substring(index + tags.peek().open.length(), html.length());
-    }
-
-    private String moveOn2(Integer index, String html) {
         return index < 0 ? "" : html.substring(index, html.length());
     }
 
-    private String getTextInBetween(TagHTML tag, String text) {
-        int index = text.toLowerCase().indexOf(tag.close.toLowerCase());
+    private String getTextInBetween(String tag, String text) {
+        int index =StringUtils.isNotEmpty(tag)? text.toLowerCase().indexOf(tag.toLowerCase()):text.length();
         return text.substring(0, index);
     }
 
-    private Integer processTagHTML(String source) {
-        int index = -1;
+    private String findNextTag(String source) {
+        String tagFound = "";
+        int minorIndex = Integer.MAX_VALUE;
         for (TagHTML tag : TagHTML.values()) {
-            index = source.toLowerCase().indexOf(tag.open.toLowerCase());
+            int index = source.toLowerCase().indexOf(tag.open.toLowerCase());
             if (index >= 0) {
-                tags.push(tag);
-                break;
+                if (index < minorIndex) {
+                    minorIndex = index;
+                    tagFound = tag.open;
+                }
+            } else {
+                index = source.toLowerCase().indexOf(tag.close.toLowerCase());
+                if (index >= 0) {
+                    if (index < minorIndex) {
+                        minorIndex = index;
+                        tagFound = tag.close;
+                    }
+                }
             }
+
         }
-        return index;
+        return tagFound;
     }
 
     public String getStyledText() {
         StringBuilder sb = new StringBuilder();
         for (DTOSnippet snippet : snippets) {
             String style = "";
-            boolean hasAnyStyle=false;
+            boolean hasAnyStyle = false;
             if (snippet.isBold()) {
-                hasAnyStyle=true;
+                hasAnyStyle = true;
                 style = creatingProperty(TagHTML.BOLD, style);
             }
             if (snippet.isItalic()) {
-                hasAnyStyle=true;
+                hasAnyStyle = true;
                 style = creatingProperty(TagHTML.ITALIC, style);
             }
             if (snippet.isUnderlined()) {
-                hasAnyStyle=true;
+                hasAnyStyle = true;
                 style = creatingProperty(TagHTML.UNDERLINED, style);
             }
             if (snippet.isH1()) {
-                hasAnyStyle=true;
+                hasAnyStyle = true;
                 style = creatingProperty(TagHTML.H1, style);
             }
             if (snippet.isH2()) {
-                hasAnyStyle=true;
+                hasAnyStyle = true;
                 style = creatingProperty(TagHTML.H2, style);
             }
             if (snippet.isH3()) {
-                hasAnyStyle=true;
+                hasAnyStyle = true;
                 style = creatingProperty(TagHTML.H3, style);
             }
             style = style + snippet.getSnippet();
-            if(hasAnyStyle) {
+            if (hasAnyStyle) {
                 style = style + TagPDFJasper.STYLE.close;
             }
             sb.append(style);
@@ -166,9 +186,10 @@ public class Processor {
     }
 
     public static void main(String[] args) {
-        String s = "algo algo <h2>xxxxx</h2>";
+       // String s = "algo algo <h2>xxx <b> bold <i>italic<u>underline</u>ppppp</i>abcdef</b>mmmmmmmm</h2>something extra";
+        String s = "algo algo <h2>xxx mmmmmmmm<b> more text <i>italic</i> something in the middle last bold </b>";
         Processor processor = new Processor();
-        processor.htmlToJasperPdfStyle(s);
+        processor.processSnippetText(s);
         System.out.println(processor.getStyledText());
         System.out.println("end !");
     }

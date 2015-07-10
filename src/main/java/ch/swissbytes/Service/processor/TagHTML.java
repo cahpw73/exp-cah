@@ -1,5 +1,7 @@
 package ch.swissbytes.Service.processor;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Created by alvaro on 7/2/2015.
  */
@@ -20,4 +22,18 @@ public enum TagHTML {
         this.open = open;
         this.close = close;
     }
+
+    public static TagHTML findTag(String tag){
+        TagHTML tagFound=null;
+        if(StringUtils.isNotEmpty(tag)&&StringUtils.isNotBlank(tag)) {
+            for (TagHTML tagHTML : TagHTML.values()) {
+                if (tagHTML.open.equalsIgnoreCase(tag)||tagHTML.close.equalsIgnoreCase(tag)){
+                    tagFound=tagHTML;
+                    break;
+                }
+            }
+        }
+        return tagFound;
+    }
+
 }
