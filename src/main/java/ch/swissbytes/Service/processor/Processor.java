@@ -56,9 +56,7 @@ public class Processor {
     private DTOSnippet registerTextInBetween(String textInBetween) {
         List<TagHTML> list = tags.subList(0, tags.size());
         DTOSnippet dto = new DTOSnippet();
-        System.out.println("processing text "+textInBetween);
         for (TagHTML tag : list) {
-            System.out.println("tag "+tag.name());
             switch (tag) {
                 case BOLD:
                     dto.setIsBold(true);
@@ -109,18 +107,20 @@ public class Processor {
         String tagFound = "";
         int minorIndex = Integer.MAX_VALUE;
         for (TagHTML tag : TagHTML.values()) {
-            int index = source.toLowerCase().indexOf(tag.open.toLowerCase());
-            if (index >= 0) {
-                if (index < minorIndex) {
-                    minorIndex = index;
-                    tagFound = tag.open;
-                }
-            } else {
-                index = source.toLowerCase().indexOf(tag.close.toLowerCase());
+            if(tag.ordinal()!=TagHTML.ITALIC_BOLD.ordinal()) {
+                int index = source.toLowerCase().indexOf(tag.open.toLowerCase());
                 if (index >= 0) {
                     if (index < minorIndex) {
                         minorIndex = index;
-                        tagFound = tag.close;
+                        tagFound = tag.open;
+                    }
+                } else {
+                    index = source.toLowerCase().indexOf(tag.close.toLowerCase());
+                    if (index >= 0) {
+                        if (index < minorIndex) {
+                            minorIndex = index;
+                            tagFound = tag.close;
+                        }
                     }
                 }
             }
@@ -134,13 +134,18 @@ public class Processor {
         for (DTOSnippet snippet : snippets) {
             String style = "";
             boolean hasAnyStyle = false;
-            if (snippet.isBold()) {
+            if (snippet.isBold()&&!snippet.isItalic()) {
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.BOLD, style);
             }
-            if (snippet.isItalic()) {
+            if (snippet.isItalic()&&!snippet.isBold()) {
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.ITALIC, style);
+            }
+            if(snippet.isItalic()&&snippet.isBold()){
+                hasAnyStyle = true;
+                style = creatingProperty(TagHTML.ITALIC_BOLD, style);
+                //style=insertProperty(style,"pdfFontName='Helvetica-BoldOblique'");
             }
             if (snippet.isUnderlined()) {
                 hasAnyStyle = true;
@@ -191,6 +196,16 @@ public class Processor {
                 break;
             case ITALIC:
                 newText = insertProperty(text, TagPDFJasper.ITALIC.open);
+                if(isPdf){
+                    newText = insertProperty(newText, TagPDFJasper.ITALIC.close);
+                }
+                break;
+            case ITALIC_BOLD:
+                newText = insertProperty(text, TagPDFJasper.ITALIC.open);
+                newText = insertProperty(newText, TagPDFJasper.BOLD.open);
+                if(isPdf){
+                    newText = insertProperty(newText, TagPDFJasper.ITALIC_BOLD.open);
+                }
                 break;
             case H1:
                 newText = insertProperty(text, TagPDFJasper.H1.open);
@@ -207,12 +222,11 @@ public class Processor {
     }
 
     private String insertProperty(String text, String property) {
-        return text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
+        return StringUtils.isEmpty(text)||StringUtils.isBlank(text)?"": text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
     }
 
     public static void main(String[] args) {
-        String s = "<h1>Eum hinc argumentum te<h1>, \n" +
-                "<h2>no sit percipit adversarium, ne qui feugiat persecuti. Odio omnes scripserit ad est,<b> uct <i>vidit lorem</i> maiestatis his</b><h2>";
+        String s = "<h1>Eum hinc argumentum te<h1>,<h2>no sit percipit adversarium, ne qui feugiat persecuti. Odio omnes scripserit ad est,<b> uct <i>vidit lorem</i> maiestatis his</b><h2>";
         System.out.println(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(s));
         System.out.println("end !");
     }

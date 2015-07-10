@@ -14,7 +14,10 @@ public enum TagHTML {
     BOLD("<b>", "</b>"),
     UNDERLINED("<u>", "</u>"),
     PARAGRAPH_OPENING("<paragraph>", "<paraaaaa"),
-    PARAGRAPH_CLOSING("</paragraph>", "</parrra");
+    PARAGRAPH_CLOSING("</paragraph>", "</parrra"),
+    ITALIC_BOLD("","");
+
+
 
     final String open;
     final String close;
