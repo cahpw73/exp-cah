@@ -13,8 +13,8 @@ public enum TagHTML {
     ITALIC("<i>", "</i>"),
     BOLD("<b>", "</b>"),
     UNDERLINED("<u>", "</u>"),
-    PARAGRAPH_OPENING("<paragraph>", "<paraaaaa"),
-    PARAGRAPH_CLOSING("</paragraph>", "</parrra"),
+    PARAGRAPH_OPENING("<p>", null),
+    PARAGRAPH_CLOSING("</p>", null),
     ITALIC_BOLD("","");
 
 
@@ -31,7 +31,7 @@ public enum TagHTML {
         TagHTML tagFound=null;
         if(StringUtils.isNotEmpty(tag)&&StringUtils.isNotBlank(tag)) {
             for (TagHTML tagHTML : TagHTML.values()) {
-                if (tagHTML.open.equalsIgnoreCase(tag)||tagHTML.close.equalsIgnoreCase(tag)){
+                if ((tagHTML.open!=null&&tagHTML.open.equalsIgnoreCase(tag))||(tagHTML.close!=null&&tagHTML.close.equalsIgnoreCase(tag))){
                     tagFound=tagHTML;
                     break;
                 }
