@@ -8,6 +8,7 @@ import ch.swissbytes.domain.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -148,5 +149,14 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
                 }
                 previous=tdpService.clone( ss.getTdpList().get(i));
             }
+    }
+
+    public List<ScopeSupplyEntity> scopeSupplyListByPOId(final Long purchaseOrderId){
+        return dao.findByPurchaseOrder(purchaseOrderId);
+    }
+
+    @Transactional
+    public void doUpdate(ScopeSupplyEntity scopeSupply){
+        dao.doUpdate(scopeSupply);
     }
 }

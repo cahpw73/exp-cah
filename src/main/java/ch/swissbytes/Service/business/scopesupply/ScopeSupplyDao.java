@@ -105,6 +105,11 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
         }
     }
 
+    public void doUpdate(ScopeSupplyEntity detachedEntity){
+        ScopeSupplyEntity entity = super.merge(detachedEntity);
+        super.update(entity);
+    }
+
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
     }

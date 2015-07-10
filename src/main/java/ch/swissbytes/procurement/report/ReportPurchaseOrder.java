@@ -78,7 +78,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
-            addParameters("clientDetail",new ch.swissbytes.Service.processor.Processor().processSnippetText(po.getProjectEntity().getClient().getTitle()));
+            addParameters("clientDetail",Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(po.getProjectEntity().getClient().getTitle())));
         }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
@@ -89,7 +89,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
-            addParameters("watermarkDraft",watermark);
+           // addParameters("watermarkDraft",watermark);
         }
         Date now = new Date();
         addParameters("currentDate",now);

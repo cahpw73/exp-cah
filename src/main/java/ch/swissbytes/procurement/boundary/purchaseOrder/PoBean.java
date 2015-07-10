@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -73,6 +74,9 @@ public class PoBean extends Bean {
     @Inject
     private SupplierProcList list;
 
+    @Inject
+    private ScopeSupplyService scopeSupplyService;
+
     private boolean supplierHeaderMode=false;
     private boolean supplierMode=false;
 
@@ -138,6 +142,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+           // sortScopeSupplyAndDoUpdate();
             log.info("Project Id: " + purchaseOrder);
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
             return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
@@ -153,6 +158,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+            //sortScopeSupplyAndDoUpdate();
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
             return backToList();
         }
@@ -167,6 +173,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+           // sortScopeSupplyAndDoUpdate();
             log.info("Project Id: " + poId);
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
             return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
@@ -182,6 +189,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+           // sortScopeSupplyAndDoUpdate();
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
             return backToList();
         }
@@ -195,6 +203,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
+           // sortScopeSupplyAndDoUpdate();
             return backToList();
         }
         return "";
@@ -206,6 +215,7 @@ public class PoBean extends Bean {
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
         log.info("purchase order created ["+purchaseOrder.getId()+"]");
         sortPurchaseListByVariationAndDoUpdate();
+       // sortScopeSupplyAndDoUpdate();
         return backToList();
     }
 
@@ -220,6 +230,18 @@ public class PoBean extends Bean {
         for(PurchaseOrderEntity po : poList){
             po.setOrderedVariation(index);
             service.doUpdatePurchaseOrder(po);
+            index++;
+        }
+    }
+
+    private void sortScopeSupplyAndDoUpdate(){
+        List<ScopeSupplyEntity> sspList = scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
+        sortBean.sortScopeSupplyEntity(sspList);
+        int index =  1;
+        for(ScopeSupplyEntity ssp : sspList){
+            ssp.setOrdered(index);
+
+            scopeSupplyService.doUpdate(ssp);
             index++;
         }
     }

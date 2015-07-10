@@ -13,11 +13,12 @@ public class Processor {
 
     private Stack<TagHTML> tags;
     private List<DTOSnippet> snippets;
+    private boolean isPdf=false;
 
-
-    public Processor() {
+    public Processor(boolean isPdf) {
         tags = new Stack<>();
         snippets = new ArrayList<>();
+        this.isPdf=isPdf;
     }
 
     public String processSnippetText(final String html) {
@@ -55,7 +56,9 @@ public class Processor {
     private DTOSnippet registerTextInBetween(String textInBetween) {
         List<TagHTML> list = tags.subList(0, tags.size());
         DTOSnippet dto = new DTOSnippet();
+        System.out.println("processing text "+textInBetween);
         for (TagHTML tag : list) {
+            System.out.println("tag "+tag.name());
             switch (tag) {
                 case BOLD:
                     dto.setIsBold(true);
@@ -68,12 +71,24 @@ public class Processor {
                     break;
                 case H1:
                     dto.setIsH1(true);
+                    dto.setIsH2(false);
+                    dto.setIsH3(false);
                     break;
                 case H2:
                     dto.setIsH2(true);
+                    dto.setIsH1(false);
+                    dto.setIsH3(false);
                     break;
                 case H3:
                     dto.setIsH3(true);
+                    dto.setIsH1(false);
+                    dto.setIsH2(false);
+                    break;
+                case PARAGRAPH_OPENING:
+                    dto.setOpenParagraph(true);
+                    break;
+                case PARAGRAPH_CLOSING:
+                    dto.setCloseParagraph(true);
                     break;
             }
         }
@@ -143,10 +158,12 @@ public class Processor {
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.H3, style);
             }
-            style = style + snippet.getSnippet();
+
+            style = style/* + (snippet.isOpenParagraph()?System.getProperty("line.separator"):"")*/+snippet.getSnippet();
             if (hasAnyStyle) {
                 style = style + TagPDFJasper.STYLE.close;
             }
+            //style=style+(snippet.isCloseParagraph()?System.getProperty("line.separator"):"");
             sb.append(style);
         }
         return sb.toString();
@@ -165,6 +182,9 @@ public class Processor {
         switch (tag) {
             case BOLD:
                 newText = insertProperty(text, TagPDFJasper.BOLD.open);
+                if(isPdf){
+                    newText = insertProperty(newText, TagPDFJasper.BOLD.close);
+                }
                 break;
             case UNDERLINED:
                 newText = insertProperty(text, TagPDFJasper.UNDERLINED.open);
@@ -181,6 +201,7 @@ public class Processor {
             case H3:
                 newText = insertProperty(text, TagPDFJasper.H3.open);
                 break;
+
         }
         return newText;
     }
@@ -190,11 +211,9 @@ public class Processor {
     }
 
     public static void main(String[] args) {
-       // String s = "algo algo <h2>xxx <b> bold <i>italic<u>underline</u>ppppp</i>abcdef</b>mmmmmmmm</h2>something extra";
         String s = "<h1>Eum hinc argumentum te<h1>, \n" +
                 "<h2>no sit percipit adversarium, ne qui feugiat persecuti. Odio omnes scripserit ad est,<b> uct <i>vidit lorem</i> maiestatis his</b><h2>";
-        System.out.println(new ch.swissbytes.Service.processor.Processor().processSnippetText(s));
-        //System.out.println(processor.getStyledText());
+        System.out.println(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(s));
         System.out.println("end !");
     }
 }
