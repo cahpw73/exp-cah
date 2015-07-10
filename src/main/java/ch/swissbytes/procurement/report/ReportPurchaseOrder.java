@@ -89,7 +89,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
-           // addParameters("watermarkDraft",watermark);
+            log.info("InputStream watermark: " + watermark.toString());
+            //addParameters("watermarkDraft", watermark);
         }
         Date now = new Date();
         addParameters("currentDate",now);

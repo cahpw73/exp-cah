@@ -33,6 +33,20 @@
                                 <p:message for="name"/>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           for="title"
+                                           value="Header Text"/>
+
+                            <div class="col-sm-5">
+                                <p:inputTextarea id="title"
+                                                 value="#{clientBean.client.title}"
+                                                 maxlength="950"
+                                                 styleClass="form-control"
+                                                 style="height: 135px!important; width: 366px!important"/>
+                                <p:message for="title"/>
+                            </div>
+                        </div>
                         <h:panelGroup id="logoGroupId">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
@@ -185,21 +199,6 @@
                                                 update=":logoModalId"/>
                                     </h:commandButton>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                           for="title"
-                                           value="Header Text"/>
-
-                            <div class="col-sm-5">
-                                <p:inputTextarea id="title"
-                                                 value="#{clientBean.client.title}"
-                                                 maxlength="950"
-                                                 styleClass="form-control"
-                                                 style="height: 135px!important; width: 366px!important"/>
-                                <p:message for="title"/>
                             </div>
                         </div>
                     </div>
