@@ -11,9 +11,9 @@ public enum TagPDFJasper {
     H3("size='12'", ""),//12
 
     ITALIC("isItalic='true'", ""),
-    BOLD("isBold='true'", ""),
-    UNDERLINED("isUnderline='true'", "");
-    //PARAGRAPH("<p>", "</p>");
+    BOLD("isBold='true' pdfFontName='Helvetica-Bold'", ""),
+    UNDERLINED("isUnderline='true'", ""),
+    PARAGRAPH("<p>", "</p>");
 
     final String open;
     final String close;
