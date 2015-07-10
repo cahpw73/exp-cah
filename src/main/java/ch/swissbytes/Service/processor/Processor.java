@@ -20,7 +20,10 @@ public class Processor {
         snippets = new ArrayList<>();
     }
 
-    public void processSnippetText(final String html) {
+    public String processSnippetText(final String html) {
+        if(StringUtils.isEmpty(html)||StringUtils.isBlank(html)){
+            return "";
+        }
         String copy = html;
         while (copy.length() > 0) {
             String tagFound = findNextTag(copy);
@@ -46,6 +49,7 @@ public class Processor {
                 copy="";
             }
         }
+        return getStyledText();
     }
 
     private DTOSnippet registerTextInBetween(String textInBetween) {
@@ -110,7 +114,7 @@ public class Processor {
         return tagFound;
     }
 
-    public String getStyledText() {
+    private String getStyledText() {
         StringBuilder sb = new StringBuilder();
         for (DTOSnippet snippet : snippets) {
             String style = "";
@@ -188,9 +192,8 @@ public class Processor {
     public static void main(String[] args) {
        // String s = "algo algo <h2>xxx <b> bold <i>italic<u>underline</u>ppppp</i>abcdef</b>mmmmmmmm</h2>something extra";
         String s = "algo algo <h2>xxx mmmmmmmm<b> more text <i>italic</i> something in the middle last bold </b>";
-        Processor processor = new Processor();
-        processor.processSnippetText(s);
-        System.out.println(processor.getStyledText());
+        System.out.println(new ch.swissbytes.Service.processor.Processor().processSnippetText(s));
+        //System.out.println(processor.getStyledText());
         System.out.println("end !");
     }
 }

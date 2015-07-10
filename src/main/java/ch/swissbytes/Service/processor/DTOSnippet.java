@@ -12,6 +12,8 @@ public class DTOSnippet {
     private boolean isH2;
     private boolean isH3;
     private boolean isItalic;
+    private boolean openParagraph;
+    private boolean closeParagraph;
 
     public String getSnippet() {
         return snippet;
@@ -67,5 +69,21 @@ public class DTOSnippet {
 
     public void setIsItalic(boolean isItalic) {
         this.isItalic = isItalic;
+    }
+
+    public boolean isOpenParagraph() {
+        return openParagraph;
+    }
+
+    public void setOpenParagraph(boolean openParagraph) {
+        this.openParagraph = openParagraph;
+    }
+
+    public boolean isCloseParagraph() {
+        return closeParagraph;
+    }
+
+    public void setCloseParagraph(boolean closeParagraph) {
+        this.closeParagraph = closeParagraph;
     }
 }
