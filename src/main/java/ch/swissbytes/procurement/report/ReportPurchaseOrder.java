@@ -50,18 +50,18 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private void loadParamPurchaseOrder() {
         resourceUtils = new ResourceUtils();
-        if(po.getProjectEntity().getClient().getClientLogo()!=null){
+        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
             addParameters("logo", logo);
-        }else if(po.getProjectEntity().getClient().getDefaultLogo()!=null){
+        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
             addParameters("logo", logo);
         }
 
-        if(po.getProjectEntity().getClient().getClientFooter()!=null){
+        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientFooter()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientFooter().getFile());
             addParameters("footerLogo", logo);
-        }else if(po.getProjectEntity().getClient().getDefaultFooter()!=null){
+        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultFooter()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultFooter().getFile());
             addParameters("footerLogo", logo);
         }

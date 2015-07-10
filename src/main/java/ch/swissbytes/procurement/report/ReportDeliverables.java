@@ -56,11 +56,11 @@ public class ReportDeliverables extends ReportView implements Serializable {
     }
 
     private void loadParamDeliverables() {
-        if(po.getProjectEntity().getClientLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClientLogo().getFile());
+        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
             addParameters("logo", logo);
-        }else if(po.getProjectEntity().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getDefaultLogo().getFile());
+        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
             addParameters("logo", logo);
         }
         if(po.getPoEntity().getSupplier() != null){
@@ -87,6 +87,4 @@ public class ReportDeliverables extends ReportView implements Serializable {
             ex.printStackTrace();
         }
     }
-
-
 }

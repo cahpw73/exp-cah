@@ -57,9 +57,6 @@ public class ReportProjectProcurement extends ReportView implements Serializable
 
     private void loadParamDeliverables() {
         List<ProjectProcurementDto> dtos = getProjectProcurementDtos();
-        //InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        //addParameters("logo", logo);
-        //addParameters("client", "");
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());

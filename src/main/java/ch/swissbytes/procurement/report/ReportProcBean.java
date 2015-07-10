@@ -136,7 +136,7 @@ public class ReportProcBean implements Serializable {
 
     private void initializeParametersToJasperReport() {
         locale = new Locale(Locale.ENGLISH.getLanguage());
-        messages = new HashMap<String, String>();
+        messages = new HashMap<>();
     }
 
     public Locale getLocale() {

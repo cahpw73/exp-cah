@@ -51,10 +51,6 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
     }
 
     private void loadParamDeliverables() {
-
-        //InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        //addParameters("logo", logo);
-        //addParameters("client", "");
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
