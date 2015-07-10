@@ -191,7 +191,8 @@ public class Processor {
 
     public static void main(String[] args) {
        // String s = "algo algo <h2>xxx <b> bold <i>italic<u>underline</u>ppppp</i>abcdef</b>mmmmmmmm</h2>something extra";
-        String s = "algo algo <h2>xxx mmmmmmmm<b> more text <i>italic</i> something in the middle last bold </b>";
+        String s = "<h1>Eum hinc argumentum te<h1>, \n" +
+                "<h2>no sit percipit adversarium, ne qui feugiat persecuti. Odio omnes scripserit ad est,<b> uct <i>vidit lorem</i> maiestatis his</b><h2>";
         System.out.println(new ch.swissbytes.Service.processor.Processor().processSnippetText(s));
         //System.out.println(processor.getStyledText());
         System.out.println("end !");
