@@ -20,21 +20,11 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="174" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="584368eb-3812-42fa-a2bf-e2139ce18bec" x="150" y="23" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="4954454a-2af7-4af4-8746-6bca9491592a" x="271" y="23" width="284" height="38"/>
+				<reportElement uuid="4954454a-2af7-4af4-8746-6bca9491592a" x="0" y="13" width="567" height="149"/>
 				<textElement markup="styled"/>
-				<text><![CDATA[algo algo <style size='14'>xxxxx</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="f402343a-1c99-423f-8daa-102390a6eee7" x="34" y="23" width="100" height="20"/>
-				<textElement markup="styled"/>
-				<text><![CDATA[algo algo]]></text>
+				<text><![CDATA[<style size='32'>Eum hinc argumentum te</style><style size='32'>,</style><style size='24'>no sit percipit adversarium, ne qui feugiat persecuti. Odio omnes scripserit ad est,</style><style isBold='true' pdfFontName='Helvetica-Bold' size='24'> uct </style><style isBold='true' pdfFontName='Helvetica-Bold' isItalic='true' size='24'>vidit lorem</style><style isBold='true' pdfFontName='Helvetica-Bold' size='24'> maiestatis his</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

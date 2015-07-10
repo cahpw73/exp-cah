@@ -6,14 +6,14 @@ package ch.swissbytes.Service.processor;
 public enum TagPDFJasper {
 
     STYLE("<style>", "</style>"),
-    H1("size='18'", ""),//18
-    H2("size='14'", ""),//14
-    H3("size='12'", ""),//12
+    H1("size='32'", ""),//32
+    H2("size='24'", ""),//24
+    H3("size='18'", ""),//18
 
     ITALIC("isItalic='true'", ""),
-    BOLD("isBold='true' pdfFontName='Helvetica-Bold'", ""),
+    BOLD("isBold='true'", "pdfFontName='Helvetica-Bold'"),
     UNDERLINED("isUnderline='true'", ""),
-    PARAGRAPH("<p>", "</p>");
+    PARAGRAPH("<paragraph>", "</paragraph>");
 
     final String open;
     final String close;
