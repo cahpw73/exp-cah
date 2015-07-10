@@ -78,7 +78,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
-            addParameters("clientDetail", po.getProjectEntity().getClient().getTitle().trim());
+            addParameters("clientDetail",new ch.swissbytes.Service.processor.Processor().processSnippetText(po.getProjectEntity().getClient().getTitle()));
         }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());

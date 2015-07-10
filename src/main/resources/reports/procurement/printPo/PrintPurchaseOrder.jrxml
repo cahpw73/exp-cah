@@ -254,11 +254,6 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 			</line>
-			<staticText>
-				<reportElement uuid="0f0fe056-793d-4a23-8c53-630f532d39be" x="98" y="44" width="198" height="20"/>
-				<textElement markup="styled"/>
-				<text><![CDATA[<style size='12'>Parque </style><style isBold='true' size='12'>Tecnológico</style><style size='12'> de Asturias</style>]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -349,7 +344,7 @@ where ss.purchase_order_id = $P{purchaseOrderId}]]>
 					<font size="6"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new ch.swissbytes.Service.processor.Processor().processSnippetText($F{description})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="89b5cb2e-dc34-4983-b159-0b8370b31076" x="375" y="2" width="70" height="12"/>

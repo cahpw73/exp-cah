@@ -14,7 +14,7 @@
 
                     <div class="col-sm-8">
                         <p:inputTextarea id="streetId" type="text" class="form-control"
-                                         style="max-height:54px;max-width: 130px;"
+                                         style="max-height:54px;max-width: 339px; margin-left: -24px;"
                                          maxlength="950"
                                          readonly="#{supplierProcBean.beingViewed}"
                                          value="#{supplierProcBean.supplier.street}"/>
@@ -31,7 +31,7 @@
 
                     <div class="col-sm-8">
                         <h:inputText id="suburbId" maxlength="50"
-                                     style="max-width: 130px;"
+                                     style="max-width: 181px; margin-left: -24px;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.suburb}"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "/>
@@ -43,34 +43,39 @@
 
             <div class="row">
                 <div class="form-group">
-                    <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.state']}" for="streetId"/>
+                    <h:outputLabel class="control-label col-sm-2"
+                                   value="#{msgs['supplier.lbl.state']}"
+                                   for="streetId"
+                                   style="width: 152px;"/>
 
-                    <div class="form-inline" style="padding-left: 125px;">
-                        <h:inputText id="supStateId" maxlength="50"
-                                     style="max-width: 130px;"
-                                     readonly="#{supplierProcBean.beingViewed}"
-                                     value="#{supplierProcBean.supplier.state}"
-                                     class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}  "/>
-                        &#160;
-                        <h:outputLabel class="control-label"
-                                       for="postCode"
-                                       value="#{msgs['supplier.lbl.postcode']}"/>
-                        &#160;
+                    <div class="form-inline">
+                            <h:inputText id="supStateId" maxlength="50"
+                                         style="max-width: 181px;"
+                                         readonly="#{supplierProcBean.beingViewed}"
+                                         value="#{supplierProcBean.supplier.state}"
+                                         class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}  "/>
+                            &#160;
+                            <h:outputLabel class="control-label"
+                                           for="postCode"
+                                           style="margin-left: 5px;"
+                                           value="#{msgs['supplier.lbl.postcode']}"/>
+                            &#160;
 
-                        <h:inputText id="postCode" maxlength="50"
-                                     style="max-width: 100px;"
-                                     readonly="#{supplierProcBean.beingViewed}"
-                                     value="#{supplierProcBean.supplier.postCode}"
-                                     class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "/>
-                        <h:outputLabel class="control-label" style="padding-left: 5px;"
-                                       value="#{msgs['supplier.lbl.country']}"/>
-                        &#160;
+                            <h:inputText id="postCode" maxlength="50"
+                                         style="max-width: 184px; margin-left: 4px;"
+                                         readonly="#{supplierProcBean.beingViewed}"
+                                         value="#{supplierProcBean.supplier.postCode}"
+                                         class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "/>
 
-                        <h:inputText maxlength="50"
-                                     style="max-width: 100px;"
-                                     readonly="#{supplierProcBean.beingViewed}"
-                                     value="#{supplierProcBean.supplier.country}"
-                                     class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "/>
+                            <h:outputLabel class="control-label" style="margin-left: 15px;"
+                                           value="#{msgs['supplier.lbl.country']}"/>
+                            &#160;
+
+                            <h:inputText maxlength="50"
+                                         style="max-width: 176px;"
+                                         readonly="#{supplierProcBean.beingViewed}"
+                                         value="#{supplierProcBean.supplier.country}"
+                                         class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "/>
                     </div>
                 </div>
 
@@ -86,7 +91,7 @@
                          class="form-control col-sm-3 #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "/>
         </div>
         <div class="form-inline">
-            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.fax']}"/>
+            <h:outputLabel class="control-label col-sm-1" value="#{msgs['supplier.lbl.fax']}"/>
             <h:inputText maxlength="50"
                          value="#{supplierProcBean.supplier.fax}"
                          readonly="#{supplierProcBean.beingViewed}"
