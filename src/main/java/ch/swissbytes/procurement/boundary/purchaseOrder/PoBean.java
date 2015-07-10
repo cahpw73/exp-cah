@@ -142,7 +142,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
-           // sortScopeSupplyAndDoUpdate();
+            sortScopeSupplyAndDoUpdate();
             log.info("Project Id: " + purchaseOrder);
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
             return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
@@ -158,7 +158,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
-            //sortScopeSupplyAndDoUpdate();
+            sortScopeSupplyAndDoUpdate();
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
             return backToList();
         }
@@ -173,7 +173,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
-           // sortScopeSupplyAndDoUpdate();
+            sortScopeSupplyAndDoUpdate();
             log.info("Project Id: " + poId);
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
             return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
@@ -189,7 +189,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
-           // sortScopeSupplyAndDoUpdate();
+            sortScopeSupplyAndDoUpdate();
             Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
             return backToList();
         }
@@ -203,7 +203,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
-           // sortScopeSupplyAndDoUpdate();
+            sortScopeSupplyAndDoUpdate();
             return backToList();
         }
         return "";
@@ -215,7 +215,7 @@ public class PoBean extends Bean {
         purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
         log.info("purchase order created ["+purchaseOrder.getId()+"]");
         sortPurchaseListByVariationAndDoUpdate();
-       // sortScopeSupplyAndDoUpdate();
+        sortScopeSupplyAndDoUpdate();
         return backToList();
     }
 
