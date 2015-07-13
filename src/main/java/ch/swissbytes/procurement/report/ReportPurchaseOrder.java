@@ -2,11 +2,13 @@ package ch.swissbytes.procurement.report;
 
 
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
 
 import java.io.ByteArrayInputStream;
@@ -25,6 +27,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private Configuration configuration;
     private ResourceUtils resourceUtils;
     private PurchaseOrderEntity po;
+    private List<ScopeSupplyEntity> scopeSupplyList;
+    private String preamble;
 
 
     /**
@@ -34,10 +38,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               Configuration configuration,PurchaseOrderEntity po) {
+                               Configuration configuration,PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList, String preamble) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
+        this.scopeSupplyList = scopeSupplyList;
+        this.preamble = preamble;
         LookupValueFactory lookupValueFactory = new LookupValueFactory();
         //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
         addParameters("patternDecimal", configuration.getPatternDecimal());
@@ -45,7 +51,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("TIME_ZONE", configuration.getTimeZone());
         //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
         //addParameters("COUNTRY_LOCALE", configuration.getCountry());
+        addParameters("SUBREPORT_DIR","reports/procurement/printPo/");
         loadParamPurchaseOrder();
+        loadItems();
+    }
+
+    private void loadItems() {
+
+        //ScopeSupplyEntity scopeSupply =
     }
 
     private void loadParamPurchaseOrder() {
@@ -92,14 +105,27 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             log.info("InputStream watermark: " + watermark.toString());
             //addParameters("watermarkDraft", watermark);
         }
+        List<PurchaseOrderReportDto> dtos = getPOReportDto();
+        addParameters("poList",createDataSource(dtos));
+        addParameters("poTitle","<h3><b>"+po.getPoEntity().getOrderTitle()+"</b></h3>");
         Date now = new Date();
         addParameters("currentDate",now);
+    }
+
+    private List<PurchaseOrderReportDto> getPOReportDto() {
+        List<PurchaseOrderReportDto> dtos = new ArrayList<>();
+        dtos.add(new PurchaseOrderReportDto(this.po,this.preamble));
+        for(ScopeSupplyEntity entity : this.scopeSupplyList){
+            PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     @Override
     public void printDocument(Long documentId) {
         try {
-            runReport();
+            runReport(null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

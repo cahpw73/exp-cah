@@ -14,7 +14,9 @@ import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alvaro on 9/12/14.
@@ -108,6 +110,19 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
     public void doUpdate(ScopeSupplyEntity detachedEntity){
         ScopeSupplyEntity entity = super.merge(detachedEntity);
         super.update(entity);
+    }
+
+    public List<ScopeSupplyEntity> findByPOOId(Long poEntityId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ScopeSupplyEntity x ");
+        sb.append(" WHERE x.status.id = :ENABLED ");
+        sb.append(" AND x.purchaseOrder.id = :PO_ID ");
+        sb.append(" ORDER BY x.id ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PO_ID", poEntityId);
+        return super.findBy(sb.toString(),map);
     }
 
     @Override

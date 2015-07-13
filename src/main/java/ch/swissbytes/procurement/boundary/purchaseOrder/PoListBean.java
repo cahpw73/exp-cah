@@ -2,6 +2,8 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
+import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -39,6 +41,12 @@ public class PoListBean implements Serializable {
 
     @Inject
     private ReportProcBean reportProcBean;
+
+    @Inject
+    private ScopeSupplyService scopeSupplyService;
+
+    @Inject
+    private TextService textService;
 
     private String projectId;
 
@@ -288,7 +296,10 @@ public class PoListBean implements Serializable {
     }
 
     private void printPo(POStatusEnum poStatusEnum){
-        reportProcBean.printPurchaseOrder(currentPurchaseOrder);
+        List<ScopeSupplyEntity> scopeSupplyEntities = scopeSupplyService.scopeSupplyListByPOOId(currentPurchaseOrder.getId());
+        TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPoEntity().getId());
+        String preamble = textEntity != null ? textEntity.getPreamble() : "";
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder,scopeSupplyEntities,preamble);
     }
 
     public List<PurchaseOrderEntity> getList() {
