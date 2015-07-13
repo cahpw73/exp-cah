@@ -136,13 +136,13 @@
                 </p:column>
                 <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140"
                           rendered="#{projectBean.isCurrencyEnable(_p)}">
-                    <p:commandLink value="Edit" update=":editUserForm:currencyGroup"
+                    <p:commandLink value="Edit" update=":editForm:currencyGroup"
                                    process="@this"
                                    action="#{projectBean.doUpdateCurrency(_p)}"
                                    immediate="true"/>
                     &#160;
                     <p:commandLink value="Remove"
-                                   update=":editUserForm:currencyGroup,currencyListId"
+                                   update=":editForm:currencyGroup,currencyListId"
                                    process="@this"
                                    action="#{projectBean.doDeleteCurrency(_p)}"
                                    immediate="true">

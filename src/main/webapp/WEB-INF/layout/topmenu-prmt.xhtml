@@ -90,6 +90,51 @@
             </div>
         </nav>
     </h:form>
+
+    <script language="JavaScript" type="text/javascript">
+
+        $("#purchaseOrderId").click(function(e){
+            console.log("click purchase order....")
+            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
+                console.log("is create or edit..");
+                leavePageToPurchaseList(e);
+            }else{
+                /*if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
+                    console.log("is create scope supply");
+                    toLeavePageFromModalToPurchaseList(e)
+                }else if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is create scope supply editing");
+                    toLeavePageFromModalToPurchaseList(e)
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
+                    console.log("is edit scope supply")
+                    toLeavePageFromModalToPurchaseList(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is edit scope supply editing")
+                    toLeavePageFromModalToPurchaseList(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
+                    console.log("is edit split scope supply")
+                    toLeavePageFromModalToPurchaseList(e);
+                }*/
+            }
+        })
+
+
+        function leavePageToPurchaseList(e){
+            e.preventDefault();
+            var sw;
+            console.log("toLeavePageFromModal");
+            if(hasChanges){
+                console.log("hasChanges true");
+                PF('confCancelPurchaseList').show();
+            }else{
+                window.location = "../../purchase/list.jsf"
+            }
+
+        }
+
+    </script>
+
+
     <p:dialog id="changePassDlgId" widgetVar="changePassDlg">
         <ui:include src="/user/change_password.xhtml"/>
     </p:dialog>

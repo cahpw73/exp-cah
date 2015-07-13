@@ -14,7 +14,12 @@
         <f:viewAction action="#{projectBean.loadActionCrud}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editUserForm" prependId="false" class="form-horizontal">
+        <h:form id="editForm" prependId="false" class="form-horizontal">
+            <script >
+                $(document).ready(function() {
+                    hasChanges=true;
+                });
+            </script>
             <p:messages id="projectGlobalMsg"></p:messages>
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{projectBean.createProject}">
@@ -84,7 +89,7 @@
                     <ui:include src="../admin/logo/component/previewTemplate.xhtml">
                         <ui:param name="MODE" value="PROJECT"/>
                         <ui:param name="MODAL" value="logoModal"/>
-                        <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo"/>
+                        <ui:param name="COMPONENT_UPDATE" value=":editForm:reportLogo"/>
                     </ui:include>
                 </div>
             </h:panelGroup>
