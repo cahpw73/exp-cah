@@ -6,9 +6,9 @@ package ch.swissbytes.Service.processor;
 public enum TagPDFJasper {
 
     STYLE("<style>", "</style>"),
-    H1("size='32'", ""),//32
-    H2("size='24'", ""),//24
-    H3("size='18'", ""),//18
+    H1("size='24'", ""),//32--24
+    H2("size='18'", ""),//24--18
+    H3("size='16'", ""),//18--16
 
     ITALIC("isItalic='true'", "pdfFontName='Helvetica-Oblique'"),
     BOLD("isBold='true'", "pdfFontName='Helvetica-Bold'"),

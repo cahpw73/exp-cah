@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="receivableManifest" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1fb189a7-77ee-4550-aa38-66303c165570">
 	<property name="ireport.zoom" value="1.8627639691774651"/>
-	<property name="ireport.x" value="73"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="purchaseID" class="java.util.Collection"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
@@ -211,7 +211,7 @@ order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po
 				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="55b865ca-6d5e-45a6-a6d8-8e2c8f5318ab" x="515" y="0" width="63" height="12"/>
