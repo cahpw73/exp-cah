@@ -106,18 +106,18 @@
 				<reportElement uuid="d024fdf9-60fe-4587-97f2-f631fc43b351" stretchType="RelativeToBandHeight" x="339" y="0" width="1" height="76" isRemoveLineWhenBlank="true"/>
 			</line>
 			<staticText>
-				<reportElement uuid="65d8c27d-db0d-4504-aa31-4605bc168071" x="345" y="1" width="93" height="17" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="65d8c27d-db0d-4504-aa31-4605bc168071" x="345" y="1" width="130" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PURCHASE ORDER No:]]></text>
+				<text><![CDATA[<style size='10' isBold='true' pdfFontName='Helvetica-Bold'>PURCHASE ORDER No:</style>]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="3b54a608-4c42-4fd4-8701-48160bef9e01" x="438" y="1" width="80" height="17" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="3b54a608-4c42-4fd4-8701-48160bef9e01" x="477" y="1" width="40" height="17" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{poNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='10' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{poNo}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" x="345" y="19" width="28" height="12" isRemoveLineWhenBlank="true"/>
@@ -162,7 +162,7 @@
 				<text><![CDATA[Page:]]></text>
 			</staticText>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true" evaluationTime="Report">
-				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" x="2" y="3" width="90" height="71"/>
+				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" mode="Opaque" x="2" y="3" width="90" height="71" backcolor="#000000"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
@@ -186,38 +186,38 @@
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="d6363a91-406c-4444-a263-6de8b370e5e6" positionType="Float" x="13" y="5" width="100" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{company}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" positionType="Float" x="13" y="18" width="269" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{street}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" positionType="Float" x="13" y="31" width="79" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{postcode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{postcode}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="fe32763c-6833-45d8-bc9e-056f13542186" positionType="Float" x="13" y="44" width="155" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{state}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{state}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" positionType="Float" x="13" y="57" width="155" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{country}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{country}+"</style>"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="c3958164-addb-4335-ae71-ef3d98a8b5aa" positionType="Float" x="299" y="32" width="220" height="1" isRemoveLineWhenBlank="true"/>
@@ -236,10 +236,10 @@
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="93107e8d-c532-4937-bde0-99c6977ddc56" positionType="Float" x="302" y="18" width="191" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{deliveryPoint}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryPoint}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" positionType="Float" x="302" y="34" width="116" height="12" isRemoveLineWhenBlank="true"/>
@@ -250,10 +250,10 @@
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" positionType="Float" x="302" y="47" width="190" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{deliveryInstructions}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryInstructions}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="56b28a0c-c319-46c9-98bd-0c1ae7e9904c" positionType="Float" x="303" y="95" width="100" height="12" isRemoveLineWhenBlank="true"/>
@@ -264,10 +264,10 @@
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" positionType="Float" x="303" y="108" width="190" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{deliveryDate}.getTime())):null]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{deliveryDate}.getTime())):null+"</style>"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" positionType="Float" stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="124" isRemoveLineWhenBlank="true"/>
@@ -404,7 +404,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="28" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="0" y="14" width="200" height="12"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="0" y="14" width="200" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -417,7 +417,7 @@
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{poTitle}))]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{poTitle}!=null?"<style size='10' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{poTitle}+"</style>":""]]></textFieldExpression>
 							</textField>
 							<line>
 								<reportElement uuid="77566b8b-922d-4b10-8a6b-b0326dedf2b8" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="28"/>
