@@ -30,8 +30,8 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String context = ((HttpServletRequest) servletRequest).getContextPath();
         User user= (User)identity.getAccount();
+        final String url = ((HttpServletRequest) servletRequest).getRequestURI();
         if (user!=null) {
-            final String url = ((HttpServletRequest) servletRequest).getRequestURI();
             if (securityService.canAccess(url.substring(context.length()+1),user.getLoginName())) {
                 filterChain.doFilter(servletRequest, servletResponse);
             }else{

@@ -47,8 +47,6 @@ public class SecurityService implements Serializable{
             }
             permissions = dao.findPermissions(idRoles);
             moduleSystemEnum=currentModule;
-        }else{
-            System.out.println("already loaded ");
         }
     }
 
