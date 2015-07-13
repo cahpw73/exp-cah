@@ -104,7 +104,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             log.info("InputStream watermark: " + watermark.toString());
-            //addParameters("watermarkDraft", watermark);
+            addParameters("watermarkDraft", watermark);
         }
         List<PurchaseOrderReportDto> dtos = getPOReportDto();
         addParameters("poList",createDataSource(dtos));
