@@ -64,7 +64,7 @@
                                 <li>
                                     <p:commandLink id="logout" value="#{msgs['close.session']}"
                                                    style="padding-left: 15px!important"
-                                                   actionListener="#{identity.logout}" process="@this"
+                                                   actionListener="#{userSession.logout}" process="@this"
                                                    action="/login?faces-redirect=true" rendered="#{identity.loggedIn}">
                                         <f:param name="nocid" value="true"/>
                                     </p:commandLink>

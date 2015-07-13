@@ -1,22 +1,13 @@
 package ch.swissbytes.fqm.boundary;
 
-import ch.swissbytes.Service.business.user.UserService;
-import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
-import org.picketlink.idm.model.Attribute;
-import org.picketlink.idm.model.basic.User;
-import org.primefaces.context.RequestContext;
 
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -31,6 +22,8 @@ public class UserSession implements Serializable{
     private String currentModule;
     private String currentHome;
     private boolean hasAccessBoth;
+    @Inject
+    private Identity identity;
 
     public boolean isProcurement() {
         if (StringUtils.isNotEmpty(currentModule) && StringUtils.isNotBlank(currentModule)) {
@@ -63,6 +56,13 @@ public class UserSession implements Serializable{
         log.info("switch to procurement");
         currentModule = ModuleSystemEnum.PROCUREMENT.name();
         return currentModule;
+    }
+
+    public void logout(){
+        if(identity.isLoggedIn()) {
+            identity.logout();
+            currentModule=null;
+        }
     }
 
     public String getCurrentModule() {
