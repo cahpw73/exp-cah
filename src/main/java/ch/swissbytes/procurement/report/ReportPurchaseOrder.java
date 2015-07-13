@@ -96,6 +96,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());
+        addParameters("deliveryDateStr",po.getPoDeliveryDate()!=null?new java.text.SimpleDateFormat(configuration.getFormatDate(),new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())):"");
         addParameters("deliveryPoint",po.getPoEntity().getPoint());
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager",po.getPoEntity().getProcManager());
@@ -107,7 +108,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         List<PurchaseOrderReportDto> dtos = getPOReportDto();
         addParameters("poList",createDataSource(dtos));
-        addParameters("poTitle","<h3><b>"+po.getPoEntity().getOrderTitle()+"</b></h3>");
+        addParameters("poTitle",po.getPoEntity().getOrderTitle());
         Date now = new Date();
         addParameters("currentDate",now);
     }

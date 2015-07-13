@@ -71,6 +71,7 @@
 	<parameter name="poList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="poTitle" class="java.lang.String"/>
 	<parameter name="preamble" class="java.lang.String"/>
+	<parameter name="deliveryDateStr" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -91,7 +92,7 @@
 	<pageHeader>
 		<band height="77" splitType="Stretch">
 			<line>
-				<reportElement uuid="104c421e-90f8-4d59-b5c9-b27e3079e11b" positionType="Float" x="0" y="76" width="519" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="104c421e-90f8-4d59-b5c9-b27e3079e11b" positionType="FixRelativeToBottom" x="0" y="76" width="519" height="1" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
 				<reportElement uuid="80abe0f3-22d2-475e-af01-856b98921527" stretchType="RelativeToBandHeight" x="518" y="0" width="1" height="77" isRemoveLineWhenBlank="true"/>
@@ -120,42 +121,42 @@
 				<textFieldExpression><![CDATA["<style size='10' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{poNo}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" x="345" y="19" width="28" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" x="345" y="26" width="28" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement uuid="a5f0e2e2-1481-4279-85ff-5f34f778ed8f" x="403" y="32" width="30" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a5f0e2e2-1481-4279-85ff-5f34f778ed8f" x="402" y="44" width="30" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2f17b573-1c5b-4dd7-b4f7-ac7a8b2871e0" x="393" y="32" width="9" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2f17b573-1c5b-4dd7-b4f7-ac7a8b2871e0" x="392" y="44" width="9" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="aee23e51-51bc-4626-ba8c-f22adc399559" x="376" y="32" width="16" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="aee23e51-51bc-4626-ba8c-f22adc399559" x="375" y="44" width="16" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6818e7b2-2a61-45a0-87b2-36d1ebe3aab3" x="375" y="19" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="6818e7b2-2a61-45a0-87b2-36d1ebe3aab3" x="375" y="26" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{orderDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{orderDate}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="518d82ec-737e-47d8-9bbc-348bc8e543ab" x="345" y="32" width="28" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="518d82ec-737e-47d8-9bbc-348bc8e543ab" x="345" y="44" width="28" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -199,7 +200,7 @@
 				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{street}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" positionType="Float" x="13" y="31" width="79" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" positionType="Float" x="13" y="31" width="79" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
@@ -267,7 +268,7 @@
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{deliveryDate}.getTime())):null+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryDateStr}+"</style>"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" positionType="Float" stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="124" isRemoveLineWhenBlank="true"/>
