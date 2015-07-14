@@ -111,7 +111,7 @@
                 <div class="form-group">
                     <h:commandButton
                             value="#{msgs['po.header.lbl.panel.delivery.add.new.supplier']}"
-                            onclick="PF('supplierModal').show();"
+                            onclick="PF('supplierModal').show(); doChangeProc();"
                             action="#{poBean.addingSupplierHeader}"
                             styleClass="btn btn-primary btn-sm"
                             rendered="#{poBean.beingEdited}">

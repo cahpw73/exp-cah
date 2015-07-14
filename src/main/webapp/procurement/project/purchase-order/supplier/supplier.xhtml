@@ -19,7 +19,7 @@
                                                for="supplierSupId" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                                 <div style="width: 200px; float: left;">
-                                    <h:selectOneMenu id="supplierSupId"
+                                    <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
                                                      value="#{poBean.purchaseOrder.poEntity.supplier}"
                                                      styleClass="form-control" rendered="#{poBean.beingEdited}"
                                                      converter="supplierConverter">
@@ -139,7 +139,7 @@
                             <div class="form-group">
                                 <h:commandButton
                                         value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
-                                        onclick="PF('supplierModal').show();"
+                                        onclick="PF('supplierModal').show(); doChangeProc();"
                                         action="#{poBean.addingSupplier}"
                                         styleClass="btn btn-primary btn-sm"
                                         rendered="#{poBean.beingEdited}">
@@ -179,7 +179,7 @@
                             <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
                                              value="#{poBean.purchaseOrder.poEntity.contactEntity}"
                                              converter="contactConverter"
-                                             styleClass="form-control">
+                                             styleClass="form-control" onclick="doChangeProc();">
                                 <f:selectItem
                                         itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
                                         noSelectionOption="true"/>
@@ -203,7 +203,7 @@
                                 value="#{msgs['po.supplier.lbl.btn.add.contact']}"
                                 disabled="#{poBean.purchaseOrder.poEntity.supplier==null}"
                                 action="#{contactBean.start(poBean.purchaseOrder.poEntity.supplier.id)}"
-                                onclick="PF('contactModal').show();"
+                                onclick="PF('contactModal').show(); doChangeProc();"
                                 styleClass="btn btn-primary btn-sm"
                                 rendered="#{poBean.beingEdited}">
                             <p:ajax async="false" update=":editContact"/>

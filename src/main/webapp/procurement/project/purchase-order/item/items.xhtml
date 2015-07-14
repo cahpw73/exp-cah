@@ -186,7 +186,7 @@
             <div class="form-group">
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.add.item']}"
-                        action="#{itemBean.addItem}"
+                        action="#{itemBean.addItem}" onclick="doChangeProc();"
                         styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
@@ -194,7 +194,8 @@
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.copy.date']}"
                         action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.poEntity.orderDate)}"
-                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
+                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}"
+                        onclick="doChangeProc();">
                     <p:ajax async="false" update="itemsDt" process="@this"/>
                 </h:commandButton>
             </div>

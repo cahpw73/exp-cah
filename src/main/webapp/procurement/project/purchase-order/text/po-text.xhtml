@@ -8,7 +8,8 @@
         <div style="width: 400px!important; float: left!important; ">
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.standard']}" for="standardTextDt"/>
-                <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}" scrollable="true" scrollHeight="300">
+                <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}" scrollable="true"
+                             scrollHeight="300">
                     <p:column style="width:20px" rendered="#{poBean.beingEdited}">
                         <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4"/>
                         <p:draggable id="draggable" for="dragIcon"
@@ -78,12 +79,18 @@
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poTextBean.hasStatusEnable(_dt)}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
-                                           action="#{poTextBean.editItem(_dt)}" update="clausesAuxDt :editPoForm:msgPoMainData :editPoForm:bbtnt" async="false"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dt.isEditable}" process="clausesAuxDt"
-                                           action="#{poTextBean.confirmItem(_dt)}" update="clausesAuxDt edDescription :editPoForm:msgPoMainData :editPoForm:bbtnt" async="false"/>
+                                           action="#{poTextBean.editItem(_dt)}"
+                                           update="clausesAuxDt :editPoForm:msgPoMainData :editPoForm:bbtnt"
+                                           async="false"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dt.isEditable}"
+                                           process="clausesAuxDt"
+                                           action="#{poTextBean.confirmItem(_dt)}"
+                                           update="clausesAuxDt edDescription :editPoForm:msgPoMainData :editPoForm:bbtnt"
+                                           async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dt.isEditable}" process="@this"
-                                           action="#{poTextBean.cancelEditionItem(_dt)}" update="clausesAuxDt :editPoForm:bbtnt" async="false"/>
+                                           action="#{poTextBean.cancelEditionItem(_dt)}"
+                                           update="clausesAuxDt :editPoForm:bbtnt" async="false"/>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -99,7 +106,7 @@
         </div>
         <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
             <h:panelGroup rendered="#{poBean.beingEdited}">
-                <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('textSnippetModal1').show();"
+                <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('textSnippetModal1').show(); doChangeProc();"
                                process="@this" update=":textSnippetModalId"
                                action="#{textSnippetBean.clear}"
                                styleClass="btn btn-primary btn-sm">
@@ -107,9 +114,10 @@
                 </h:commandLink>
                 <br/>
                 <p:commandLink value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
-                                 disabled=""
-                                 update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"
-                                 styleClass="btn btn-primary btn-sm" style="margin-top: 20px!important;">
+                               onclick="doChangeProc();"
+                               update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"
+                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                               style="margin-top: 20px!important;">
                     <p:confirm header="#{msgs['lbl.confirmation']}"
                                message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
                                icon="ui-icon-alert">

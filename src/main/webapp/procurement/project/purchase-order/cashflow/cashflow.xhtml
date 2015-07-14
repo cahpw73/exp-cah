@@ -17,7 +17,7 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        <h:selectBooleanCheckbox id="retentionCf"
+                                        <h:selectBooleanCheckbox id="retentionCf" onselect="doChangeProc();"
                                                                  value="#{cashflowBean.cashflow.applyRetention}"
                                                                  disabled="#{!poBean.beingEdited}">
                                         </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
@@ -78,6 +78,7 @@
 
                                 <div style="width: 200px; float: left;">
                                     <p:selectOneMenu id="formCf" editable="true"
+                                                     onchange="doChangeProc();"
                                                      value="#{cashflowBean.cashflow.form}"
                                                      styleClass="menu-ddp" rendered="#{poBean.beingEdited}">
                                         <f:selectItem
@@ -115,6 +116,7 @@
                                                 value="#{cashflowBean.cashflow.expDate}"
                                                 timeZone="#{configuration.timeZone}"
                                                 onselect="calendarChanges();" onchange="calendarChanges();"
+                                                onclick="doChangeProc()"
                                                 rendered="#{poBean.beingEdited}">
                                     </p:calendar>
                                     <h:inputText id="expDateCfVi" readonly="true" styleClass="form-control view-po"
@@ -136,7 +138,7 @@
                                 <h:selectOneMenu id="retentionCurrencyId"
                                                  value="#{cashflowBean.cashflow.projectCurrency}"
                                                  styleClass="form-control" rendered="#{poBean.beingEdited}"
-                                                 converter="projectCurrencyConverter">
+                                                 converter="projectCurrencyConverter" onclick="doChangeProc();">
                                     <p:ajax event="change" update="conversionRateId" process="@this"/>
                                     <f:selectItem
                                             itemLabel="Select one"
@@ -167,7 +169,7 @@
                                        for="termCfId" value="#{msgs['po.cashflow.lbl.payment.terms']}"/>
 
                         <div style="width: 200px; float: left;">
-                            <h:selectOneMenu id="termCfId"
+                            <h:selectOneMenu id="termCfId" onclick="doChangeProc();"
                                              value="#{cashflowBean.cashflow.paymentTerms}"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}">
                                 <f:selectItem
@@ -380,7 +382,7 @@
                     <h:commandButton
                             value="#{msgs['po.items.lbl.btn.add.item']}"
                             action="#{cashflowBean.addItem}" styleClass="btn btn-primary btn-sm"
-                            rendered="#{poBean.beingEdited}">
+                            rendered="#{poBean.beingEdited}" onclick="doChangeProc();">
                         <p:ajax async="false" update="forecastDt" process="@this"/>
                     </h:commandButton>
                 </div>
