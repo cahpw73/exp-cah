@@ -19,8 +19,7 @@
                                 <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
                                 <p:inputText id="requisitionNoTxt" rendered="#{_req.isEditable}" value="#{_req.requisitionNumber}"
                                              required="true" requiredMessage="Enter a Req No"
-                                             maxlength="250"
-                                             styleClass="form-control"/>
+                                             maxlength="250" styleClass="form-control" />
                             </p:column>
                             <p:column headerText="#{msgs['po.header.column.originator']}">
                                 <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>
@@ -40,7 +39,8 @@
                                             converterMessage="#{msgs['validator.date.invalid']}"
                                             value="#{_req.requisitionDate}"
                                             timeZone="#{configuration.timeZone}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();">
+                                            onselect="calendarChangesProc();" onchange="calendarChangesProc();"
+                                            onclick="doChangeProc();">
                                 </p:calendar>
                             </p:column>
                             <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
@@ -73,6 +73,7 @@
         <div style="margin-left: 114px!important;">
             <h:commandButton
                     value="#{msgs['lbl.add']}"
+                    onclick="doChangeProc();"
                     action="#{requisitionBean.add()}"
                     styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
                 <p:ajax async="false" update="requisitionsGroup"/>
@@ -90,7 +91,7 @@
                     <div style="width: 210px; float: left; margin-left: -15px;">
                         <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
                                          value="#{poBean.purchaseOrder.poEntity.supplierHeader}"
-                                         styleClass="form-control"
+                                         styleClass="form-control" onclick="doChangeProc();"
                                          converter="supplierConverter">
                             <f:selectItem
                                     itemLabel="#{msgs['po.header.selection.choose.supplier']}"
@@ -124,7 +125,7 @@
                                    for="headerClass" value="#{msgs['po.header.lbl.class']}"/>
 
                     <div style="width: 145px; float: left;">
-                        <h:selectOneMenu id="headerClass"
+                        <h:selectOneMenu id="headerClass" onclick="doChangeProc();"
                                          value="#{poBean.purchaseOrder.poEntity.clazz}"
                                          styleClass="form-control" rendered="#{poBean.beingEdited}">
                             <f:selectItem
@@ -165,7 +166,8 @@
                                             value="#{poBean.purchaseOrder.poDeliveryDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();"
-                                            rendered="#{poBean.beingEdited}">
+                                            rendered="#{poBean.beingEdited}"
+                                            onclick="doChangeProc();">
                                     <p:ajax process="@this" event="dateSelect" rendered="#{poBean.beingEdited}"/>
                                 </p:calendar>
                                 <p:message for="headerDate" id="msgHeaderDate"/>
@@ -234,7 +236,8 @@
                             <h:selectOneMenu id="defaultCurrencyId"
                                              value="#{poBean.purchaseOrder.poEntity.currency}"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}"
-                                             converter="projectCurrencyConverter">
+                                             converter="projectCurrencyConverter"
+                                             onclick="doChangeProc();">
                                 <p:ajax event="change" update="conversionRateId" process="@this"/>
                                 <f:selectItem
                                         itemLabel="Select one"

@@ -60,7 +60,7 @@ function leavePageToAdminList(e){
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");
-        PF('confCancelReportList').show();
+        PF('confCancelAdminList').show();
     }else{
         window.location = "../../procurement/admin/admin.jsf"
     }
@@ -81,7 +81,7 @@ function leavePageToProfileList(e){
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");
-        PF('confCancelReportList').show();
+        PF('confCancelProfile').show();
     }else{
         window.location = "../../procurement/profile/profile.jsf"
     }

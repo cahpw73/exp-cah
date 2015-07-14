@@ -38,7 +38,7 @@
                     <h:selectOneMenu id="clientId"
                                      value="#{projectBean.projectEntity.client}"
                                      converter="clientConverter"
-                                     styleClass="form-control" >
+                                     styleClass="form-control" onclick="doChangeProc()">
                         <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                         <f:selectItems value="#{clientListBean.clients}"
                                        var="_cl"

@@ -15,7 +15,7 @@
                                 <h:selectOneMenu id="currencyId"
                                                  value="#{projectBean.projectCurrencyEntity.currency}"
                                                  styleClass="form-control"
-                                                 converter="currencyConverter">
+                                                 converter="currencyConverter" onclick="doChangeProc()">
                                     <f:selectItem
                                             itemLabel="#{msgs['project.currencies.lbl.choose.or.enter.currency']}"
                                             noSelectionOption="true"/>

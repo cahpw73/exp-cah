@@ -129,7 +129,8 @@
                                 converterMessage="#{msgs['validator.date.invalid']}"
                                 value="#{poBean.purchaseOrder.poEntity.orderDate}"
                                 timeZone="#{configuration.timeZone}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"
+                                onselect="calendarChangesProc();" onchange="calendarChangesProc();"
+                                onclick="doChangeProc();"
                                 rendered="#{poBean.beingEdited}">
                         <p:ajax event="dateSelect" update="deliverableDt"
                                 listener="#{poBean.updateDeliverables}"
