@@ -40,6 +40,7 @@
                     <div style="border-width: 1px;border-color: #DBDBDB; border-radius:10px;
                                 border-style: solid; padding: 15px 15px 15px 15px;">
                         <h:form role="form" id="loginform">
+
                             <p:remoteCommand name="onload" action="#{authenticatorBean.validationLogin}"
                                              autoRun="true"/>
                             <h:inputHidden id="localeLanguage" value="#{languagePreference.language}"/>
@@ -72,6 +73,7 @@
                                     <div class="col-md-12">
                                         <div class="pull-right">
                                             <p:commandLink type="submit" styleClass="btn btn-primary btn-sm"
+                                                           id="loginBtn"
                                                            action="#{authenticatorBean.login}"
                                                            value="#{msgs['login.button.label']}"
                                                            style="  width: 170px; height: 30px;"
@@ -95,6 +97,7 @@
         <h:outputScript name="js/bootstrap-multiselect.js"/>
         <h:outputScript name="js/jstz.min.js"/>
         <h:outputScript name="js/localeLanguage.js"/>
+        <h:outputScript name="js/submitLogin.js"/>
     </h:body>
     <p:dialog id="pickSystemId" header="Select subsystem" closable="false" widgetVar="pickSystemModal"
               resizable="false"
