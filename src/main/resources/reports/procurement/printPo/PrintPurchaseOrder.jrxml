@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="720"/>
+	<property name="ireport.y" value="1004"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -79,9 +79,9 @@
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
 	<background>
-		<band height="500" splitType="Stretch">
-			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank" evaluationTime="Page">
-				<reportElement uuid="d1610eaa-4a75-467b-a1ae-ce01a5661a49" positionType="Float" x="111" y="130" width="297" height="240" isPrintWhenDetailOverflows="true"/>
+		<band height="794" splitType="Stretch">
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank" evaluationTime="Report">
+				<reportElement uuid="d1610eaa-4a75-467b-a1ae-ce01a5661a49" positionType="Float" x="94" y="35" width="331" height="426" isPrintWhenDetailOverflows="true"/>
 				<imageExpression><![CDATA[$P{watermarkDraft}]]></imageExpression>
 			</image>
 		</band>
