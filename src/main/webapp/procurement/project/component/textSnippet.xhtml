@@ -25,7 +25,7 @@
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.addNewCustomText}"
                                      rendered="#{MODE eq 'PROJECT'}"
                                      styleClass="btn btn-primary btn-sm">
-                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editUserForm:projectTextDt"/>
+                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editForm:projectTextDt"/>
                     </h:commandButton>
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.saveNewCustomText(poBean.purchaseOrder.projectEntity.id)}"
                                      rendered="#{MODE eq 'PO'}"

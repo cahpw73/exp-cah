@@ -33,22 +33,22 @@
                 <div class="navbar-header "
                      style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
                     <span class="link-navigation-label">
-                        <h:link styleClass="lbl-color-df"
+                        <h:link id="projectListLinkId" styleClass="lbl-color-df"
                                 outcome="/procurement/project/list">#{msgs['lbl.project']}
                         </h:link>
                     </span>
                     <span class="link-navigation-label">
-                        <h:link styleClass="lbl-color-df"
+                        <h:link id="reportListLinkId" styleClass="lbl-color-df"
                                 outcome="/procurement/report/report">#{msgs['lbl.report']}
                         </h:link>
                     </span>
                     <span class="link-navigation-label">
-                        <h:link styleClass="lbl-color-df"
+                        <h:link id="adminListLinkId" styleClass="lbl-color-df"
                                 outcome="/procurement/admin/admin">#{msgs['lbl.admin']}
                         </h:link>
                     </span>
                     <span class="link-navigation-label">
-                            <h:link styleClass="lbl-color-df"
+                            <h:link id="profileLinkId" styleClass="lbl-color-df"
                                     outcome="/procurement/profile/profile">#{msgs['lbl.profile']}
                             </h:link>
                     </span>
@@ -91,49 +91,8 @@
         </nav>
     </h:form>
 
-    <script language="JavaScript" type="text/javascript">
-
-        $("#purchaseOrderId").click(function(e){
-            console.log("click purchase order....")
-            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
-                console.log("is create or edit..");
-                leavePageToPurchaseList(e);
-            }else{
-                /*if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
-                    console.log("is create scope supply");
-                    toLeavePageFromModalToPurchaseList(e)
-                }else if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
-                    console.log("is create scope supply editing");
-                    toLeavePageFromModalToPurchaseList(e)
-                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
-                    console.log("is edit scope supply")
-                    toLeavePageFromModalToPurchaseList(e);
-                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
-                    console.log("is edit scope supply editing")
-                    toLeavePageFromModalToPurchaseList(e);
-                }else if(window.location.href.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
-                    console.log("is edit split scope supply")
-                    toLeavePageFromModalToPurchaseList(e);
-                }*/
-            }
-        })
-
-
-        function leavePageToPurchaseList(e){
-            e.preventDefault();
-            var sw;
-            console.log("toLeavePageFromModal");
-            if(hasChanges){
-                console.log("hasChanges true");
-                PF('confCancelPurchaseList').show();
-            }else{
-                window.location = "../../purchase/list.jsf"
-            }
-
-        }
-
-    </script>
-
+    <h:outputScript name="js/redirectionOfPage.js"/>
+    <ui:include src="confirmDialogs/confirm-dialogs.xhtml"></ui:include>
 
     <p:dialog id="changePassDlgId" widgetVar="changePassDlg">
         <ui:include src="/user/change_password.xhtml"/>

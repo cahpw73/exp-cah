@@ -15,11 +15,6 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editForm" prependId="false" class="form-horizontal">
-            <script >
-                $(document).ready(function() {
-                    hasChanges=true;
-                });
-            </script>
             <p:messages id="projectGlobalMsg"></p:messages>
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{projectBean.createProject}">

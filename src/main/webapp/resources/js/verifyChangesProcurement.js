@@ -5,7 +5,12 @@
 var hasChanges = false;
 
 $('#editForm input').on( 'input change keyup paste', function() {
-    console.log("Into create or edit");
+    console.log("Into create or edit from procurement");
+    hasChanges=true;
+});
+
+$('#editPoForm input').on( 'input change keyup paste', function() {
+    console.log("Into create or edit from PO");
     hasChanges=true;
 });
 

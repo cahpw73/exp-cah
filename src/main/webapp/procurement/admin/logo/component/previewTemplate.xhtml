@@ -61,7 +61,7 @@
                 <h:commandLink value="#{msgs['lbl.save']}" process="@this"
                                  action="#{projectBean.saveLogo}"
                                  styleClass="btn btn-sm btn-primary">
-                    <p:ajax async="false" update="description logoId :editUserForm:logoGroupId"/>
+                    <p:ajax async="false" update="description logoId :editForm:logoGroupId"/>
                 </h:commandLink>
                 &#160;
                 <button onclick="PF('logoModal').hide('#{MODAL}');"
