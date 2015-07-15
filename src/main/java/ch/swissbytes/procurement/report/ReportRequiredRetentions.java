@@ -75,25 +75,25 @@ public class ReportRequiredRetentions extends ReportView implements Serializable
         Boolean poNo = sortMap.get("poNo");
         Boolean varNo = sortMap.get("varNo");
         Boolean supplier = sortMap.get("supplier");
-        Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
         if(poNo){
-            strSort = strSort+"po.po,";
+            strSort = strSort+"po.po, ";
             sortByName = sortByName + "Po No, ";
         }
         if(varNo){
-            strSort = strSort+"po.orderedVariation, ";
+            strSort = strSort+"po.orderedvariation, ";
             sortByName = sortByName +  "Var No,";
         }
         if (supplier){
-            strSort = strSort+"sp.company,";
+            strSort = strSort+"sp.company, ";
             sortByName = sortByName +  "Supplier, ";
         }
-        sortByName = sortByName.substring(0,sortByName.length()-1);
 
         if(strSort.length()>1){
+            sortByName = sortByName.substring(0,sortByName.length()-2);
             strSort = strSort.substring(0,strSort.length() - 1);
         }
+        System.out.println("sortBy create: " + strSort);
         return strSort;
     }
 

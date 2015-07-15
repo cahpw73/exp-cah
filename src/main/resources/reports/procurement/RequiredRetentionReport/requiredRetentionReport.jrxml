@@ -141,7 +141,7 @@ group by po.po]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="392" y="45" width="154" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
