@@ -15,7 +15,12 @@ $("#projectListLinkId").click(function(e){
         leavePageToProjectList(e);
     }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
         leavePageToProjectList(e);
+    }else if(window.location.href.indexOf("/category/category") != -1){
+        leavePageToProjectList(e);
+    }else if(window.location.href.indexOf("/brands/brands") != -1){
+        leavePageToProjectList(e);
     }
+
 })
 
 function leavePageToProjectList(e){
@@ -43,6 +48,10 @@ $("#reportListLinkId").click(function(e){
         leavePageToReportList(e);
     }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
         leavePageToReportList(e);
+    }else if(window.location.href.indexOf("/category/category") != -1){
+        leavePageToReportList(e);
+    }else if(window.location.href.indexOf("/brands/brands") != -1){
+        leavePageToReportList(e);
     }
 })
 
@@ -61,8 +70,8 @@ $("#adminListLinkId").click(function(e){
     console.log("click admin list....")
     if(window.location.href.indexOf("project/edit.jsf")  != -1) {
         console.log("is create or edit..");
-        leavePageToAdminList(e);
     }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
+        leavePageToAdminList(e);
         console.log("is create or edit PO..");
         leavePageToAdminList(e);
     }else if(window.location.href.indexOf("/client/edit") != -1){
@@ -70,6 +79,10 @@ $("#adminListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/logo/preview") != -1){
         leavePageToAdminList(e);
     }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
+        leavePageToAdminList(e);
+    }else if(window.location.href.indexOf("/category/category") != -1){
+        leavePageToAdminList(e);
+    }else if(window.location.href.indexOf("/brands/brands") != -1){
         leavePageToAdminList(e);
     }
 })
@@ -97,6 +110,10 @@ $("#profileLinkId").click(function(e){
     }else if(window.location.href.indexOf("/logo/preview") != -1){
         leavePageToProfileList(e);
     }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
+        leavePageToProfileList(e);
+    }else if(window.location.href.indexOf("/category/category") != -1){
+        leavePageToProfileList(e);
+    }else if(window.location.href.indexOf("/brands/brands") != -1){
         leavePageToProfileList(e);
     }
 })

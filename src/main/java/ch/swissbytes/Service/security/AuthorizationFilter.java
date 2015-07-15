@@ -20,7 +20,6 @@ public class AuthorizationFilter implements Filter {
     @Inject
     private Identity identity;
 
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
