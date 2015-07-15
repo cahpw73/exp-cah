@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expediting" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc1c7f62-39ff-4368-b661-3741ffdc9cfb">
-	<property name="ireport.zoom" value="1.6105100000000012"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -38,15 +38,8 @@
 		<field name="forecastDate" class="java.util.Date"/>
 		<field name="receivedDate" class="java.util.Date"/>
 	</subDataset>
-	<parameter name="logo" class="java.io.InputStream"/>
 	<parameter name="company" class="java.lang.String"/>
 	<parameter name="deliverableList" class="net.sf.jasperreports.engine.JRDataSource"/>
-	<parameter name="street" class="java.lang.String"/>
-	<parameter name="state" class="java.lang.String"/>
-	<parameter name="postcode" class="java.lang.String"/>
-	<parameter name="country" class="java.lang.String"/>
-	<parameter name="phone" class="java.lang.String"/>
-	<parameter name="fax" class="java.lang.String"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -55,6 +48,12 @@
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="currentDate" class="java.util.Date"/>
+	<parameter name="client" class="java.lang.String"/>
+	<parameter name="projectCode" class="java.lang.String"/>
+	<parameter name="projectName" class="java.lang.String"/>
+	<parameter name="projectCurrency" class="java.lang.String"/>
+	<parameter name="logoFooter" class="java.io.InputStream"/>
+	<parameter name="logoFooterName" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select p.id
 from purchase_order po, p_order p
@@ -69,100 +68,89 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="80" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="4eab82b1-7d54-4369-be28-6c787aca0147" x="96" y="3" width="153" height="20"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style size='12' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{company}!=null?$P{company}:""+"</style>"]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="1e558c16-f0a6-4c29-a06f-1505fecbe87c" x="96" y="49" width="100" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{country}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="45a1ace9-6b7d-40b6-9b52-bd968d2a86ea" x="96" y="36" width="52" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{postcode}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="8fbe4ec2-a4e7-4677-8029-7b862dba18b5" x="204" y="62" width="70" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{fax}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b5048da1-7900-474e-9509-7ecb850e908d" x="96" y="23" width="290" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="78cc9e54-1cff-445c-a6b2-13a143b6dadb" x="149" y="36" width="100" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{state}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="295ef102-253c-4eb1-b287-62d7b6c390fa" x="111" y="62" width="70" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{phone}]]></textFieldExpression>
-			</textField>
-			<image scaleImage="FillFrame" evaluationTime="Report">
-				<reportElement uuid="fb29157f-da01-4a26-a3f9-04f028661651" x="2" y="3" width="90" height="71"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement uuid="7f9947b2-dd6b-419e-b652-71bcbc900fac" x="96" y="62" width="16" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Tel:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="21d5e939-0451-4927-981e-5b2122906b4c" x="186" y="62" width="18" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Fax:]]></text>
-			</staticText>
+		<band height="109" splitType="Stretch">
 			<line>
-				<reportElement uuid="f14c0566-a9a5-422f-8eac-79a302df5ed9" x="0" y="79" width="555" height="1"/>
+				<reportElement uuid="f14c0566-a9a5-422f-8eac-79a302df5ed9" x="0" y="108" width="555" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="2562a892-240b-42e0-8f45-47221a4b3ba5" x="555" y="0" width="1" height="79"/>
+				<reportElement uuid="2562a892-240b-42e0-8f45-47221a4b3ba5" x="555" y="0" width="1" height="109"/>
 			</line>
 			<line>
-				<reportElement uuid="e30653dd-5d5e-4b7c-abee-1ad51cbab846" x="0" y="0" width="1" height="79"/>
+				<reportElement uuid="e30653dd-5d5e-4b7c-abee-1ad51cbab846" x="0" y="0" width="1" height="109"/>
 			</line>
 			<line>
 				<reportElement uuid="44e049db-565f-4258-b9d2-c10221c96a81" x="0" y="0" width="555" height="1"/>
 			</line>
-			<staticText>
-				<reportElement uuid="69e91f1f-d46e-4a78-8bec-ac58225f3b36" x="432" y="61" width="53" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Current Date:]]></text>
-			</staticText>
 			<textField>
-				<reportElement uuid="d4d33c0f-a80c-4bf9-ad98-07923cc54ffa" x="485" y="61" width="65" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="d4d33c0f-a80c-4bf9-ad98-07923cc54ffa" x="437" y="52" width="113" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2bf5c633-e040-4e4f-92f0-04fa2e970fa3" x="92" y="52" width="200" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{client}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5f2177ba-abec-4a24-8211-cc78b6fab8ce" x="92" y="65" width="200" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{projectCode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3981dd15-a77a-48b2-a08c-fc8bc453254a" x="119" y="8" width="318" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">EXPEDITING REPORT</style>]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ff6148a2-4ef7-4ce3-b109-4a451dbcc6bb" x="92" y="79" width="200" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1f605483-0f9c-45c3-a57b-eb44d51ef924" x="92" y="92" width="200" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f405ca70-b1c3-4edd-a264-94d0f6e87a61" x="10" y="92" width="80" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Project Currency:</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d32b08a6-23ed-46ad-a33c-fb6a5432c326" x="10" y="52" width="80" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Client:</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="80ef75f4-6073-4a63-8d74-7646f88ca844" x="10" y="65" width="80" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Project Code:</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a55257b-c73f-4953-a2e5-7456ab3bd5c2" x="10" y="79" width="80" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Project Name:</style>]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -226,7 +214,47 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="72a68ac5-a045-4206-90b4-acafb9622dea" x="90" y="10" width="160" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{logoFooterName}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="0c0eae12-ad27-4010-9349-b6709c100bff" x="524" y="2" width="32" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="31cfe9e4-70e8-4baa-b648-ad06b8ed43d7" x="466" y="2" width="30" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Page:]]></text>
+			</staticText>
+			<image isUsingCache="true" evaluationTime="Report">
+				<reportElement uuid="19734ced-778f-4e52-a74d-b0216988512f" x="0" y="2" width="85" height="50" isPrintWhenDetailOverflows="true"/>
+				<imageExpression><![CDATA[$P{logoFooter}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="d98f38f0-5b42-4097-8a03-e64a489b6844" x="497" y="2" width="18" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="399c62b2-7dd8-4ad4-86b1-9ba621ec613a" x="514" y="2" width="11" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[of]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

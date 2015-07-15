@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.report;
 
 
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
@@ -51,27 +52,33 @@ public class ReportExpediting extends ReportView implements Serializable {
     }
 
     private void loadParamDeliverables() {
+        addParameters("projectCode", po.getProjectEntity().getProjectNumber());
+        addParameters("projectName", po.getProjectEntity().getTitle());
+        addParameters("projectCurrency",getCurrencyDefault());
+        addParameters("client", po.getProjectEntity().getClient().getName());
         if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
-            addParameters("logo", logo);
+            addParameters("logoFooter", logo);
         }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
-            addParameters("logo", logo);
+            addParameters("logoFooter", logo);
         }
-        if(po.getPoEntity().getSupplier() != null){
-            addParameters("company", po.getPoEntity().getSupplier().getCompany());
-            addParameters("street", po.getPoEntity().getSupplier().getStreet());
-            addParameters("state", po.getPoEntity().getSupplier().getState());
-            addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
-            addParameters("country", po.getPoEntity().getSupplier().getCountry());
-            addParameters("phone", po.getPoEntity().getSupplier().getPhone());
-            addParameters("fax", po.getPoEntity().getSupplier().getFax());
-        }
+
         addParameters("projectIdFilter", projectId);
         addParameters("poNoFilter", poNo != null ? "%"+poNo+"%" : "");
         addParameters("TIME_ZONE", configuration.getTimeZone());
         Date now = new Date();
         addParameters("currentDate",now);
+    }
+
+    public String getCurrencyDefault() {
+        String currencyDefault = "";
+        for(ProjectCurrencyEntity pc : po.getProjectEntity().getCurrencies()){
+            if(pc.getProjectDefault()){
+                currencyDefault = pc.getCurrency().getName();
+            }
+        }
+        return currencyDefault;
     }
 
     @Override

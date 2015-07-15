@@ -5,6 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="poIdFilter" class="java.lang.Long"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
+	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select sum(sp.total_cost) as total_cost
 from purchase_order po left outer join scope_supply sp on sp.purchase_order_id = po.id
@@ -31,7 +32,7 @@ where po.po = $P{poNoFilter}]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total_cost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{total_cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost}):null]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
