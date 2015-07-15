@@ -45,6 +45,7 @@
                                 <h:outputLabel value="#{msgs['lbl.admin.brand.new']}" styleClass="control-label"/>
                                 <br/>
                                 <h:inputText id="nameBrand" value="#{brandBean.brandName}"
+                                             onchange="doChangeProc();"
                                              styleClass="form-control" maxlength="50"/>
                                 <p:message for="nameBrand" id="msgnBrand"/>
                                     <br/>

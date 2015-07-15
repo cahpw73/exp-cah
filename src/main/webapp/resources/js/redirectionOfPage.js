@@ -37,7 +37,6 @@ function leavePageToProjectList(e){
 
 $("#reportListLinkId").click(function(e){
     console.log("click report list.... "+window.location.href);
-    alert(window.location.href);
     if(window.location.href.indexOf("project/edit.jsf")  != -1) {
         console.log("is create or edit..");
         leavePageToReportList(e);
@@ -66,7 +65,7 @@ function leavePageToReportList(e){
         console.log("hasChanges true");
         PF('confCancelReportList').show();
     }else{
-        window.location = "../../procurement/report/report.jsf"
+        window.location = "../../procurement/report/report.jsf";
     }
 }
 
