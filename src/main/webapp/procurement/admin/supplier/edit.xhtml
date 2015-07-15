@@ -12,10 +12,10 @@
         <f:viewAction action="#{supplierProcBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="contactEditId" prependId="false">
+        <h:form id="editForm" prependId="false">
             <div class="col-md-8">
                 <ui:include src="components/templateSupplier.xhtml">
-                        <ui:param name="FORM" value="contactEditId"/>
+                        <ui:param name="FORM" value="editForm"/>
                 </ui:include>
             </div>
         </h:form>

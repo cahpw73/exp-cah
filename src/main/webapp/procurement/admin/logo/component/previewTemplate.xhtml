@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
     <br/>
-    <h:form id="previewFormId" prependId="false" enctype="multipart/form-data">
+    <h:form id="previewForm" prependId="false" enctype="multipart/form-data">
         <div class="col-md-5">
             <h:inputText id="logoFileName" style="width: 200px;" styleClass="view-po"
                          value="#{logoBean.logo.fileName}"
@@ -14,6 +14,7 @@
             <p:fileUpload mode="advanced"
                           label="#{msgs['attachment.btn.add.logo']}"
                           process="@this"
+                          onstart="doChangeProc();"
                           styleClass="upload-logo"
                           update="logoId, logoFileName"
                           fileUploadListener="#{logoBean.handleUpload}"

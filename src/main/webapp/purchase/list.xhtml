@@ -119,25 +119,28 @@
                     </div>
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="209">
-                    <div class="center-button">
+
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                style="margin-bottom: 5px;"
                                 rendered="#{permissionBean.hasPermission(102)}"
                                 value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
                             <f:param name="poId" value="#{_purchase.poId}"/>
                         </h:link>
                         &#160;
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.view']}"
+                                style="margin-bottom: 5px;"
                                 rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
                             <f:param name="poId" value="#{_purchase.poId}"/>
                         </h:link>
                         &#160;
                         <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                       style="margin-bottom: 5px;"
                                        value="#{msgs['lbl.delete']}">
                             <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
                                     oncomplete="PF('deleteDlg').show();"
                                     update=":purchaseListForm:deleteDlgId"/>
                         </h:commandLink>
-                    </div>
+
                 </p:column>
             </p:dataTable>
 

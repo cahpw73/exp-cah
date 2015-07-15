@@ -13,6 +13,7 @@
                 <h:inputText maxlength="50" type="text"
                              required="true"
                              id="currencyName"
+                             onchange="doChangeProc();"
                              requiredMessage="Enter valid Name"
                              value="#{currencyBean.currency.name}"
                              class="form-control"/>
@@ -29,6 +30,7 @@
             <div class="col-sm-4"><h:inputText maxlength="50" type="text"
                                                id="currencyCode"
                                                required="true"
+                                               onchange="doChangeProc();"
                                                requiredMessage="Enter Valid Code"
                                                value="#{currencyBean.currency.code}"
                                                class="form-control"/>

@@ -20,7 +20,6 @@ public class AuthorizationFilter implements Filter {
     @Inject
     private Identity identity;
 
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -29,9 +28,12 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String context = ((HttpServletRequest) servletRequest).getContextPath();
+        System.out.println("contexto "+context);
         User user= (User)identity.getAccount();
         final String url = ((HttpServletRequest) servletRequest).getRequestURI();
+        System.out.println("url "+url);
         if (user!=null) {
+            System.out.println("url "+url.substring(context.length()+1));
             if (securityService.canAccess(url.substring(context.length()+1),user.getLoginName())) {
                 filterChain.doFilter(servletRequest, servletResponse);
             }else{

@@ -53,7 +53,7 @@
                                                for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
 
                                 <div class="col-sm-5">
-                                    <h:selectOneMenu id="reportLogo" onclick="doChangeProc();"
+                                    <h:selectOneMenu id="reportLogo" onchange="doChangeProc();"
                                                      value="#{clientBean.client.reportLogo}"
                                                      styleClass="form-control" converter="logoConverter">
                                         <f:selectItem itemLabel="#{msgs['lbl.select']}"
@@ -68,7 +68,7 @@
                                 <div class="col-sm-2">
                                     <div class="pull-right">
                                         <h:commandLink styleClass="btn btn-primary btn-sm"
-                                                       type="button" onclick="PF('logoModal').show();"
+                                                       type="button" onclick="doChangeProc();PF('logoModal').show();"
                                                        action="#{clientBean.startReportLogo}"
                                                        value="#{msgs['project.detail.btn.new.logo']}">
                                             <p:ajax
@@ -85,6 +85,7 @@
                             <div class="col-sm-5">
                                 <h:selectOneMenu id="clientLogo"
                                                  value="#{clientBean.client.clientLogo}"
+                                                 onchange="doChangeProc();"
                                                  styleClass="form-control" converter="logoConverter">
                                     <f:selectItem itemLabel="#{msgs['lbl.select']}"
                                                   noSelectionOption="true"/>
@@ -97,7 +98,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="pull-right">
-                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                    <h:commandButton type="button" onclick="doChangeProc();PF('logoModal').show();"
                                                      styleClass="btn btn-primary btn-sm"
                                                      action="#{clientBean.startClientLogo}"
                                                      value="#{msgs['project.detail.btn.new.logo']}">
@@ -116,6 +117,7 @@
                             <div class="col-sm-5">
                                 <h:selectOneMenu id="clientFooter"
                                                  value="#{clientBean.client.clientFooter}"
+                                                 onchange="doChangeProc();"
                                                  styleClass="form-control" converter="logoConverter">
                                     <f:selectItem itemLabel="#{msgs['lbl.select']}"
                                                   noSelectionOption="true"/>
@@ -128,7 +130,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="pull-right">
-                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                    <h:commandButton type="button" onclick="doChangeProc();PF('logoModal').show();"
                                                      styleClass="btn btn-primary btn-sm"
                                                      value="#{msgs['project.detail.btn.new.logo']}">
                                         <p:ajax process="logoGroupId"
@@ -147,6 +149,7 @@
                             <div class="col-sm-5">
                                 <h:selectOneMenu id="defaultLogo"
                                                  value="#{clientBean.client.defaultLogo}"
+                                                 onchange="doChangeProc();"
                                                  styleClass="form-control" converter="logoConverter">
                                     <f:selectItem itemLabel="#{msgs['lbl.select']}"
                                                   noSelectionOption="true"/>
@@ -159,7 +162,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="pull-right">
-                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                    <h:commandButton type="button" onclick="doChangeProc();PF('logoModal').show();"
                                                      styleClass="btn btn-primary btn-sm"
                                                      value="#{msgs['project.detail.btn.new.logo']}">
                                         <p:ajax process="logoGroupId"
@@ -177,6 +180,7 @@
 
                             <div class="col-sm-5">
                                 <h:selectOneMenu id="defaultFooter"
+                                                 onchange="doChangeProc();"
                                                  value="#{clientBean.client.defaultFooter}"
                                                  styleClass="form-control" converter="logoConverter">
                                     <f:selectItem itemLabel="#{msgs['lbl.select']}"
@@ -190,7 +194,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <div class="pull-right">
-                                    <h:commandButton type="button" onclick="PF('logoModal').show();"
+                                    <h:commandButton type="button" onclick="doChangeProc();PF('logoModal').show();"
                                                      styleClass="btn btn-primary btn-sm"
                                                      value="#{msgs['project.detail.btn.new.logo']}">
                                         <p:ajax process="logoGroupId"
