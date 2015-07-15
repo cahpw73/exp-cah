@@ -13,6 +13,8 @@ $("#projectListLinkId").click(function(e){
         leavePageToProjectList(e);
     }else if(window.location.href.indexOf("/logo/preview") != -1){
         leavePageToProjectList(e);
+    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
+        leavePageToProjectList(e);
     }
 })
 
@@ -38,7 +40,9 @@ $("#reportListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/client/edit") != -1){
         leavePageToReportList(e);
     }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToProjectList(e);
+        leavePageToReportList(e);
+    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
+        leavePageToReportList(e);
     }
 })
 
@@ -64,7 +68,9 @@ $("#adminListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/client/edit") != -1){
         leavePageToAdminList(e);
     }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToProjectList(e);
+        leavePageToAdminList(e);
+    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
+        leavePageToAdminList(e);
     }
 })
 
@@ -89,7 +95,9 @@ $("#profileLinkId").click(function(e){
     }else if(window.location.href.indexOf("/client/edit") != -1){
         leavePageToProfileList(e);
     }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToProjectList(e);
+        leavePageToProfileList(e);
+    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
+        leavePageToProfileList(e);
     }
 })
 
