@@ -91,10 +91,9 @@ public class MaterialRequisition extends ReportView implements Serializable {
             strSort = strSort+"sp.company,";
             sortByName = sortByName +  "Supplier, ";
         }
-        sortByName = sortByName.substring(0,sortByName.length()-2);
-        System.out.println("SortByName: " + sortByName);
 
         if(strSort.length()>1){
+            sortByName = sortByName.substring(0,sortByName.length()-2);
             strSort = strSort.substring(0,strSort.length() - 1);
         }
 
