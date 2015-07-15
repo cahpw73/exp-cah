@@ -23,6 +23,8 @@ $("#projectListLinkId").click(function(e){
         leavePageToProjectList(e,"../../../");
     }else if(window.location.href.indexOf("/user/edit") != -1){
         leavePageToProjectList(e,"../../../");
+    }else if(window.location.href.indexOf("/supplier/edit") != -1){
+        leavePageToProjectList(e,"../../../");
     }
 })
 
@@ -58,6 +60,8 @@ $("#reportListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/currency/currency") != -1){
         leavePageToReportList(e,"../../../");
     }else if(window.location.href.indexOf("/user/edit") != -1){
+        leavePageToReportList(e,"../../../");
+    }else if(window.location.href.indexOf("/supplier/edit") != -1){
         leavePageToReportList(e,"../../../");
     }
 
@@ -96,6 +100,8 @@ $("#adminListLinkId").click(function(e){
         leavePageToAdminList(e,"../../../");
     }else if(window.location.href.indexOf("/user/edit") != -1){
         leavePageToAdminList(e,"../../../");
+    }else if(window.location.href.indexOf("/supplier/edit") != -1){
+        leavePageToAdminList(e,"../../../");
     }
 })
 
@@ -130,6 +136,8 @@ $("#profileLinkId").click(function(e){
     }else if(window.location.href.indexOf("/currency/currency") != -1){
         leavePageToProfileList(e,"../../../");
     }else if(window.location.href.indexOf("/user/edit") != -1){
+        leavePageToProfileList(e,"../../../");
+    }else if(window.location.href.indexOf("/supplier/edit") != -1){
         leavePageToProfileList(e,"../../../");
     }
 })
