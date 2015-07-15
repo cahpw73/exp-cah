@@ -9,6 +9,8 @@ $("#projectListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
         console.log("is create or edit PO..");
         leavePageToProjectList(e);
+    }else if(window.location.href.indexOf("/client/edit") != -1){
+        leavePageToProjectList(e);
     }
 })
 
@@ -30,6 +32,8 @@ $("#reportListLinkId").click(function(e){
         leavePageToReportList(e);
     }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
         console.log("is create or edit PO..");
+        leavePageToReportList(e);
+    }else if(window.location.href.indexOf("/client/edit") != -1){
         leavePageToReportList(e);
     }
 })
@@ -53,6 +57,8 @@ $("#adminListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
         console.log("is create or edit PO..");
         leavePageToAdminList(e);
+    }else if(window.location.href.indexOf("/client/edit") != -1){
+        leavePageToAdminList(e);
     }
 })
 
@@ -73,6 +79,8 @@ $("#profileLinkId").click(function(e){
         leavePageToProfileList(e);
     }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
         console.log("is create or edit PO..");
+        leavePageToProfileList(e);
+    }else if(window.location.href.indexOf("/client/edit") != -1){
         leavePageToProfileList(e);
     }
 })

@@ -48,7 +48,8 @@
 		<field name="poDeliveryDate" class="java.util.Date"/>
 		<field name="poStatus" class="java.lang.String"/>
 	</subDataset>
-	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="logoFooter" class="java.io.InputStream"/>
+	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="client" class="java.lang.String"/>
 	<parameter name="projectCode" class="java.lang.String"/>
 	<parameter name="projectName" class="java.lang.String"/>
@@ -356,7 +357,7 @@ where p.project_id = 1]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="21" splitType="Stretch">
+		<band height="62" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="1bc9add7-0934-4369-a434-683b7ace2aa3" x="760" y="2" width="9" height="17" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -385,6 +386,17 @@ where p.project_id = 1]]>
 				</textElement>
 				<text><![CDATA[Page:]]></text>
 			</staticText>
+			<image evaluationTime="Report">
+				<reportElement uuid="917f59c0-1c3c-4874-9678-4105e8f120eb" x="5" y="5" width="83" height="50"/>
+				<imageExpression><![CDATA[$P{logoFooter}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cdecbc1f-f4de-41a7-aa57-b3585c426d7d" x="94" y="22" width="307" height="13"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{logoFooterName}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>

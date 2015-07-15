@@ -13,7 +13,7 @@
     </f:metadata>
     <ui:define name="body">
 
-        <h:form id="editUserForm" prependId="false" class="form-horizontal">
+        <h:form id="editForm" prependId="false" class="form-horizontal">
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup>
                     <div class="procurement-panel-header">#{clientBean.titlePage}</div>
@@ -53,7 +53,7 @@
                                                for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
 
                                 <div class="col-sm-5">
-                                    <h:selectOneMenu id="reportLogo"
+                                    <h:selectOneMenu id="reportLogo" onclick="doChangeProc();"
                                                      value="#{clientBean.client.reportLogo}"
                                                      styleClass="form-control" converter="logoConverter">
                                         <f:selectItem itemLabel="#{msgs['lbl.select']}"
@@ -234,7 +234,7 @@
                     <ui:include src="../../admin/logo/component/previewTemplate.xhtml">
                         <ui:param name="MODE" value="CLIENT"/>
                         <ui:param name="MODAL" value="logoModal"/>
-                        <ui:param name="COMPONENT_UPDATE" value=":editUserForm:reportLogo :editUserForm:clientLogo"/>
+                        <ui:param name="COMPONENT_UPDATE" value=":editForm:reportLogo :editForm:clientLogo"/>
                     </ui:include>
                 </div>
             </h:panelGroup>
