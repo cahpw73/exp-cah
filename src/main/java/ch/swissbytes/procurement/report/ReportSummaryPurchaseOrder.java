@@ -7,6 +7,8 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
@@ -54,6 +56,14 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
+        addParameters("client", project.getClient().getName());
+        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
+            addParameters("logoFooter", logo);
+        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
+            addParameters("logoFooter", logo);
+        }
         addParameters("sortBy", getStrSort());
         addParameters("projectIdFilter",project.getId());
         Date now = new Date();

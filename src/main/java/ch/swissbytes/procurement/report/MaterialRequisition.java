@@ -7,6 +7,8 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
@@ -24,6 +26,7 @@ public class MaterialRequisition extends ReportView implements Serializable {
     private Configuration configuration;
     private ProjectEntity project;
     Map<String, Boolean> sortMap;
+    private String sortByName="";
 
 
 
@@ -51,15 +54,20 @@ public class MaterialRequisition extends ReportView implements Serializable {
     }
 
     private void loadParamDeliverables() {
-
-        //InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        //addParameters("logo", logo);
+        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
+            addParameters("logoFooter", logo);
+        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
+            addParameters("logoFooter", logo);
+        }
         addParameters("client", project.getClient()!=null?project.getClient().getTitle():"");
         addParameters("PROJECT_ID", project.getId());
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
         addParameters("sortBy", getStrSort());
+        addParameters("sortByName",sortByName);
         addParameters("projectIdFilter",project.getId());
         Date now = new Date();
         addParameters("currentDate", now);
@@ -69,20 +77,26 @@ public class MaterialRequisition extends ReportView implements Serializable {
     private String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
         Boolean supplier = sortMap.get("supplier");
+        Boolean varNo = sortMap.get("varNo");
         String strSort = "";
         if(poNo){
-            strSort = strSort+"po,";
+            strSort = strSort+"po.po,";
+            sortByName = sortByName + "Po No, ";
+        }
+        if(varNo){
+            strSort = strSort+"po.orderedVariation, ";
+            sortByName = sortByName +  "Var No,";
         }
         if (supplier){
-            strSort = strSort+"company,";
+            strSort = strSort+"sp.company,";
+            sortByName = sortByName +  "Supplier, ";
         }
 
         if(strSort.length()>1){
+            sortByName = sortByName.substring(0,sortByName.length()-2);
             strSort = strSort.substring(0,strSort.length() - 1);
         }
-        if(strSort.isEmpty()){
-            strSort ="id";
-        }
+
         return strSort;
     }
 

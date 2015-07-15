@@ -60,6 +60,7 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
+        addParameters("client", project.getClient().getName());
         addParameters("sortBy", strSortBy);
         addParameters("pooList",createDataSource(dtos));
         Date now = new Date();

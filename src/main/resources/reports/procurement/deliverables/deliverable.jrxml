@@ -10,7 +10,8 @@
 		<![CDATA[select po.po,po.variation,d.description,d.quantity,d.required_date,p.order_title
 from deliverable d, p_order p, purchase_order po
 where d.status = 0 and d.po_id = $P{poIdFilter}
-      and d.po_id = p.id and po.po_id=p.id]]>
+      and d.po_id = p.id and po.po_id=p.id
+order by po.orderedvariation]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>

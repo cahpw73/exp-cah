@@ -77,6 +77,9 @@ order by $P{sortBy}]]>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$P{poNoFilter}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryPOTotalCostSubreport.jasper"]]></subreportExpression>
 			</subreport>

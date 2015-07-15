@@ -7,6 +7,8 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
@@ -51,9 +53,13 @@ public class ReportSupplierContactInformation extends ReportView implements Seri
     }
 
     private void loadParamDeliverables() {
-
-        //InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getReportLogo().getFile());
-        //addParameters("logo", logo);
+        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
+            addParameters("logoFooter", logo);
+        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
+            addParameters("logoFooter", logo);
+        }
         addParameters("client", project.getClient()!=null?project.getClient().getTitle():"");
         addParameters("PROJECT_ID", project.getId());
         addParameters("projectCode", project.getProjectNumber());
