@@ -10,6 +10,8 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -24,6 +26,7 @@ public class ReportRequiredRetentions extends ReportView implements Serializable
     private Configuration configuration;
     private ProjectEntity project;
     Map<String, Boolean> sortMap;
+    private String sortByName="";
 
 
 
@@ -51,10 +54,18 @@ public class ReportRequiredRetentions extends ReportView implements Serializable
     }
 
     private void loadParamDeliverables() {
+        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
+            addParameters("logoFooter", logo);
+        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
+            addParameters("logoFooter", logo);
+        }
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
         addParameters("sortBy", getStrSort());
+        addParameters("sortByName",sortByName);
         addParameters("projectIdFilter",project.getId());
         Date now = new Date();
         addParameters("currentDate",now);
@@ -68,13 +79,17 @@ public class ReportRequiredRetentions extends ReportView implements Serializable
         String strSort = "";
         if(poNo){
             strSort = strSort+"po.po,";
+            sortByName = sortByName + "Po No, ";
         }
         if(varNo){
-            strSort = strSort+"po.orderedVariation,";
+            strSort = strSort+"po.orderedVariation, ";
+            sortByName = sortByName +  "Var No,";
         }
         if (supplier){
             strSort = strSort+"sp.company,";
+            sortByName = sortByName +  "Supplier, ";
         }
+        sortByName = sortByName.substring(0,sortByName.length()-1);
 
         if(strSort.length()>1){
             strSort = strSort.substring(0,strSort.length() - 1);
