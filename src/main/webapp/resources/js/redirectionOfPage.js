@@ -19,8 +19,9 @@ $("#projectListLinkId").click(function(e){
         leavePageToProjectList(e);
     }else if(window.location.href.indexOf("/brands/brands") != -1){
         leavePageToProjectList(e);
+    }else if(window.location.href.indexOf("/currency/currency") != -1){
+        leavePageToProjectList(e);
     }
-
 })
 
 function leavePageToProjectList(e){
@@ -35,7 +36,8 @@ function leavePageToProjectList(e){
 }
 
 $("#reportListLinkId").click(function(e){
-    console.log("click report list....")
+    console.log("click report list.... "+window.location.href);
+    alert(window.location.href);
     if(window.location.href.indexOf("project/edit.jsf")  != -1) {
         console.log("is create or edit..");
         leavePageToReportList(e);
@@ -51,6 +53,8 @@ $("#reportListLinkId").click(function(e){
     }else if(window.location.href.indexOf("/category/category") != -1){
         leavePageToReportList(e);
     }else if(window.location.href.indexOf("/brands/brands") != -1){
+        leavePageToReportList(e);
+    }else if(window.location.href.indexOf("/currency/currency") != -1){
         leavePageToReportList(e);
     }
 })
@@ -84,6 +88,8 @@ $("#adminListLinkId").click(function(e){
         leavePageToAdminList(e);
     }else if(window.location.href.indexOf("/brands/brands") != -1){
         leavePageToAdminList(e);
+    }else if(window.location.href.indexOf("/currency/currency") != -1){
+        leavePageToAdminList(e);
     }
 })
 
@@ -114,6 +120,8 @@ $("#profileLinkId").click(function(e){
     }else if(window.location.href.indexOf("/category/category") != -1){
         leavePageToProfileList(e);
     }else if(window.location.href.indexOf("/brands/brands") != -1){
+        leavePageToProfileList(e);
+    }else if(window.location.href.indexOf("/currency/currency") != -1){
         leavePageToProfileList(e);
     }
 })
