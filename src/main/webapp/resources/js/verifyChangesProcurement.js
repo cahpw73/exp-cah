@@ -51,6 +51,16 @@ $('#previewForm textarea').on("change keyup paste", function() {
     hasChanges=true;
 });
 
+$('#editUserForm input').on( 'input change keyup paste', function() {
+    console.log("Into create or edit from PO");
+    hasChanges=true;
+});
+
+$('#editUserForm textarea').on("change keyup paste", function() {
+    console.log("textArea create or edit");
+    hasChanges=true;
+});
+
 function calendarChangesProc(){
     console.log("calendar create or edit");
     hasChanges=true;
