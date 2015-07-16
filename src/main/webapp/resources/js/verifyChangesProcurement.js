@@ -7,6 +7,7 @@ var hasChanges = false;
 $('#editForm input').on( 'input change keyup paste', function() {
     console.log("Into create or edit from procurement");
     hasChanges=true;
+    console.log("hasChanges: " + hasChanges);
 });
 
 $('#editForm textarea').on("change keyup paste", function() {
