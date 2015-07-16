@@ -21,9 +21,7 @@
                         <h:outputText id="textSnippetCode" value="#{_t.textSnippet.code}"/>
                     </p:column>
                     <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
-                        <div class="content-big-text">
-                            <h:outputText id="texSnippetSt" value="#{_t.textSnippet.textSnippet}"/>
-                        </div>
+                        <h:outputText id="texSnippetSt" value="#{_t.textSnippet.textSnippet}" styleClass="content-big-text"/>
                     </p:column>
                 </p:dataTable>
             </div>
@@ -66,9 +64,7 @@
                         <p:column id="textAuxCl" headerText="#{msgs['po.text.lbl.standard.column.text']}"
                                   rendered="#{poTextBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
                             <h:panelGroup id="viDescription" rendered="#{!_dt.isEditable}">
-                                <div class="content-big-text">
-                                    <h:outputText value="#{_dt.clauses}"/>
-                                </div>
+                                <h:outputText value="#{_dt.clauses}" styleClass="content-big-text"/>
                             </h:panelGroup>
                             <h:panelGroup id="edDescription" rendered="#{_dt.isEditable}">
                                 <p:inputTextarea id="description" value="#{_dt.clauses}" styleClass="form-control"
@@ -77,15 +73,15 @@
                                 </p:inputTextarea>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poTextBean.hasStatusEnable(_dt)}">
+                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poTextBean.hasStatusEnable(_dt)}" style="padding-left: 8px!important;">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
                                            action="#{poTextBean.editItem(_dt)}"
-                                           update="clausesAuxDt :editPoForm:msgPoMainData :editPoForm:bbtnt"
+                                           update="clausesAuxDt  :editPoForm:bbtnt"
                                            async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dt.isEditable}"
                                            process="clausesAuxDt"
                                            action="#{poTextBean.confirmItem(_dt)}"
-                                           update="clausesAuxDt edDescription :editPoForm:msgPoMainData :editPoForm:bbtnt"
+                                           update="clausesAuxDt edDescription  :editPoForm:bbtnt"
                                            async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dt.isEditable}" process="@this"

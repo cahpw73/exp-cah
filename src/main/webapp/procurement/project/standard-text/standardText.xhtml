@@ -36,12 +36,10 @@
                              rowKey="#{_gt.id}">
                     <p:column headerText="#{msgs['project.standard.text.column.code']}"
                               style="width: 100px!important;">
-                            #{_gt.code}
+                        #{_gt.code}
                     </p:column>
                     <p:column headerText="#{msgs['project.standard.text.column.description']}">
-                        <div class="content-big-text">
-                            #{_gt.textSnippet}
-                        </div>
+                        <h:outputText value="#{_gt.textSnippet}" styleClass="content-big-text"></h:outputText>
                     </p:column>
                 </p:dataTable>
             </div>
@@ -85,9 +83,9 @@
                         <p:column headerText="#{msgs['project.standard.text.column.description']}"
                                   style="width: 80%!important;">
                             <h:panelGroup id="viDescription" rendered="#{!_pt.isEditable}">
-                                <div class="content-big-text">
-                                    <h:outputText value="#{_pt.description}"/>
-                                </div>
+
+                                <h:outputText value="#{_pt.description}" styleClass="content-big-text"/>
+
                             </h:panelGroup>
                             <h:panelGroup id="edDescription" rendered="#{_pt.isEditable}">
                                 <p:inputTextarea id="description" value="#{_pt.description}" styleClass="form-control"
@@ -96,14 +94,20 @@
                                 </p:inputTextarea>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" >
+                        <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
+
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
-                                           action="#{projectBean.editItem(_pt)}" update="projectTextDt :glbMsgs" async="false"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}" process=":editForm:itemsGroup"
-                                           action="#{projectBean.confirmItem(_pt)}" update="projectTextDt :editForm:projectGlobalMsg" async="false"/>
+                                           action="#{projectBean.editItem(_pt)}" update="projectTextDt :glbMsgs"
+                                           async="false"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
+                                           process=":editForm:itemsGroup"
+                                           action="#{projectBean.confirmItem(_pt)}"
+                                           update="projectTextDt :editForm:projectGlobalMsg" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
-                                           action="#{projectBean.cancelEditionItem(_pt)}" update="projectTextDt" async="false"/>
+                                           action="#{projectBean.cancelEditionItem(_pt)}" update="projectTextDt"
+                                           async="false"/>
+
                         </p:column>
                     </p:dataTable>
                 </h:panelGroup>
