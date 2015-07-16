@@ -38,7 +38,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" FROM ProjectEntity p ");
         sb.append(" LEFT JOIN p.client c ");
         sb.append(" WHERE p.status = :ENABLE ");
-        //sb.append(" ORDER BY p.projectNumber, p.title, p.supplierProcurement.company ");
+        sb.append(" ORDER BY p.projectNumber");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
