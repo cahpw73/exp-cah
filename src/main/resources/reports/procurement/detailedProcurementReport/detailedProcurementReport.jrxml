@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.4641000000000037"/>
-	<property name="ireport.x" value="20"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.593742460100008"/>
+	<property name="ireport.x" value="894"/>
+	<property name="ireport.y" value="145"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -36,18 +36,6 @@
 			<bottomPen lineWidth="0.5" lineColor="#999999"/>
 		</box>
 	</style>
-	<subDataset name="posDataSet" uuid="e46b3f93-cc56-4fe8-8c88-899a353c4398">
-		<parameter name="TIME_ZONE" class="java.lang.String"/>
-		<parameter name="FORMAT_DATE" class="java.lang.String"/>
-		<field name="po" class="java.lang.String"/>
-		<field name="variation" class="java.lang.String"/>
-		<field name="orderDate" class="java.util.Date"/>
-		<field name="company" class="java.lang.String"/>
-		<field name="orderTitle" class="java.lang.String"/>
-		<field name="currency" class="java.lang.String"/>
-		<field name="poDeliveryDate" class="java.util.Date"/>
-		<field name="poStatus" class="java.lang.String"/>
-	</subDataset>
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="client" class="java.lang.String"/>
@@ -61,15 +49,19 @@
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="pooList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="sortByName" class="java.lang.String"/>
-	<queryString language="plsql">
-		<![CDATA[select p.po,p.variation,p.orderedvariation,po.order_date,
-	sp.company,po.order_title,c.code,p.po_delivery_date,po.po_status
-from purchase_order p inner join p_order po on p.po_id = po.id
-left join supplier_proc sp on po.supplier_id=sp.id
-left join project_currency pc on po.project_currency_id = pc.id
-left join currency c on pc.currency_id=c.id
-where p.project_id = 1]]>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\detailedProcurementReport\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select po.po
+from purchase_order po, p_order p
+where po.status_id = 1 and po.project_id = $P{projectIdFilter}
+      and po.po_id = p.id
+group by po.po
+order by po.po]]>
 	</queryString>
+	<field name="po" class="java.lang.String"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -141,7 +133,7 @@ where p.project_id = 1]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="399" y="46" width="186" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
@@ -182,7 +174,7 @@ where p.project_id = 1]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="50" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="3" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -198,21 +190,21 @@ where p.project_id = 1]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="104" y="3" width="90" height="12"/>
+				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="122" y="3" width="100" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="104" y="16" width="60" height="12"/>
+				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="106" y="16" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Cost Code</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="234" y="3" width="170" height="12"/>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="301" y="3" width="153" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -230,13 +222,13 @@ where p.project_id = 1]]>
 			</line>
 			<staticText>
 				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="656" y="16" width="45" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit Cost</style>]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="41" width="802" height="1"/>
+				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="30" width="802" height="1"/>
 			</line>
 			<staticText>
 				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="536" y="3" width="70" height="12"/>
@@ -281,23 +273,68 @@ where p.project_id = 1]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total Cost</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="397cbe38-6f80-4d11-b682-a6fe56f061b1" x="166" y="16" width="40" height="12"/>
+				<reportElement uuid="397cbe38-6f80-4d11-b682-a6fe56f061b1" x="167" y="16" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="be88f018-84da-4661-920d-3221adac7b64" x="206" y="16" width="40" height="12"/>
+				<reportElement uuid="be88f018-84da-4661-920d-3221adac7b64" x="228" y="16" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="08d0ee5d-b3f2-4d62-ade7-d3bf2f83da88" x="273" y="16" width="210" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item Description</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="26" splitType="Stretch"/>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="9c30ef75-9ba2-412a-8de8-60dd104c0db5" positionType="Float" x="1" y="28" width="801" height="13" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<subreport>
+				<reportElement uuid="99463bcb-f81d-42f2-a381-d1b9493b3e37" positionType="Float" x="0" y="0" width="802" height="26"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedPOSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="faa4882f-e8b5-4ce1-950b-6963bb26702a" positionType="Float" x="0" y="28" width="800" height="12"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "totalOfOrderSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="0b566802-83c7-449a-830d-1e02f131c2d5" positionType="Float" mode="Transparent" x="519" y="28" width="100" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="7"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total of Order:</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b7191232-12e3-4667-961a-9c8f02e59822" positionType="Float" mode="Transparent" x="620" y="28" width="35" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po}!=null?$F{po}:null+"</style>"]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>

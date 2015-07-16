@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subTotalCostItem" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6ad67150-fc73-486f-a193-e04215e7441c">
+	<property name="ireport.zoom" value="2.593742460100003"/>
+	<property name="ireport.x" value="1102"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="poIdFilter" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select sum(ss.total_cost) as total_cost
+from scope_supply ss left join purchase_order po on ss.purchase_order_id=po.id
+where ss.status_id=1 and po.id = $P{poIdFilter}]]>
+	</queryString>
+	<field name="total_cost" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="90dab90d-e364-4d85-a6f5-61b20d650cb1" positionType="Float" x="656" y="1" width="45" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{total_cost}!=null?$F{total_cost}:null+"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d67b72ce-aebd-49de-8833-85659226df0c" positionType="Float" x="579" y="1" width="74" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[<style size="6" isBold="true" pdfFontName="Helvetica-Bold">SubTotal:</style>]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="02e10217-b972-4723-ac8f-2b6f0705f57b" x="655" y="0" width="46" height="1"/>
+				<graphicElement>
+					<pen lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

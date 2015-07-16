@@ -25,15 +25,10 @@
                         <p:column headerText="#{msgs['po.items.dt.column.cost.code']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viCostCode" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.costCode}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edCostCode" rendered="#{_i.isEditable}">
                                 <h:inputText id="costCodeItem" value="#{_i.costCode}" styleClass="form-control">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>

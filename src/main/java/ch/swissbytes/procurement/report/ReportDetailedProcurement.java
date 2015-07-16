@@ -44,20 +44,23 @@ public class ReportDetailedProcurement extends ReportView implements Serializabl
         this.sortMap = sortMap;
         LookupValueFactory lookupValueFactory = new LookupValueFactory();
         //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
-        //addParameters("patternDecimal", configuration.getPatternDecimal());
-        addParameters("FORMAT_DATE", configuration.getFormatDate());
-        addParameters("TIME_ZONE", configuration.getTimeZone());
         //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
         //addParameters("COUNTRY_LOCALE", configuration.getCountry());
-        loadParamDeliverables();
+        addParameters("patternDecimal", configuration.getPatternDecimal());
+        addParameters("FORMAT_DATE", configuration.getFormatDate());
+        addParameters("TIME_ZONE", configuration.getTimeZone());
+        addParameters("SUBREPORT_DIR","reports/procurement/detailedProcurementReport/");
+        loadParam();
     }
 
-    private void loadParamDeliverables() {
+    private void loadParam() {
+        addParameters("projectIdFilter",project.getId());
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
         addParameters("client", project.getClient().getName());
         addParameters("sortBy", getStrSort());
+        addParameters("sortByName",sortByName);
         Date now = new Date();
         addParameters("currentDate",now);
 
@@ -70,12 +73,10 @@ public class ReportDetailedProcurement extends ReportView implements Serializabl
         }
     }
 
-
-
     @Override
     public void printDocument(Long documentId) {
         try {
-            runReport(null);
+            runReport();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -90,7 +91,6 @@ public class ReportDetailedProcurement extends ReportView implements Serializabl
         }
         return currencyDefault;
     }
-
 
     private String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
