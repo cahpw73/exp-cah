@@ -1,7 +1,15 @@
 
+23/jul/2015
+1.3.1
 
+1.-Fixed mistake with button that did not show modal asking for possible changes before leaving current page (4799)
 
 7/Jul/2015
+V1.3.2
 
--Added function to allow search after enter key is pressed on filter screens (report,po) (4841 rm)
--
+1.-Added function to allow search after enter key is pressed on filter screens (report,po) (4841 rm)
+2.-Added Button "add all" on filter report screen to add al po filtered using it.
+
+16/jul/2015
+V1.3.3
+1. Added property to queue ajax requests on components where upload files are being managed (folder green/yellow)
