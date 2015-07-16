@@ -59,6 +59,11 @@ public class ReportProcurementBean implements Serializable {
     private String projectProcurementReport = "Project Procurement Report";
     private String requiredRetentionReport = "Required Retentions Report";
     private String summaryPOReport = "Summary Purchase Order Report";
+    private String detailProcurementReport = "Detail Procurement Report";
+    private String supplierContactInformation = "Supplier Contact Information";
+    private String detailedSupplierReport = "Detailed Supplier Report";
+    private String uncommitedDataReport = "Uncommitted Data Report";
+    private String materialRequisitionReport = "Materials Requisition Report";
 
     @PostConstruct
     public void create() {
@@ -102,11 +107,36 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "spor" : reportProcBean.printSummaryPurchaseOrder(selectedProject,sortMap);
                     break;
+                case "pdp": reportProcBean.printDetailedProcurementReport(selectedProject,sortMap);
+                    break;
             }
         }else{
             Messages.addFlashGlobalError("Select a project first");
         }
 
+    }
+
+    public void loadNameReport(){
+        switch (reportName){
+            case "ppr" : reportTitle = projectProcurementReport;
+                break;
+            case "rrr" : reportTitle = requiredRetentionReport;
+                break;
+            case "spor": reportTitle = summaryPOReport;
+                break;
+            case "pdp": reportTitle = detailProcurementReport;
+                break;
+            case "sci": reportTitle  = supplierContactInformation;
+                break;
+            case "dsi": reportTitle = detailedSupplierReport;
+                break;
+            case "udr": reportTitle = uncommitedDataReport;
+                break;
+            case "mrr": reportTitle = materialRequisitionReport;
+                break;
+
+        }
+        log.info("report title: " + reportTitle);
     }
 
     public void resetValuesProjectProc(){
@@ -120,18 +150,6 @@ public class ReportProcurementBean implements Serializable {
     public String backToReports(){
         log.info("back to reports");
         return "report?faces-redirect=true";
-    }
-
-    public void loadNameReport(){
-        switch (reportName){
-            case "ppr" : reportTitle = projectProcurementReport;
-                break;
-            case "rrr" : reportTitle = requiredRetentionReport;
-                break;
-            case "spor": reportTitle = summaryPOReport;
-                break;
-        }
-        log.info("report title: " + reportTitle);
     }
 
     private String getDescriptionSort(Map<String,Boolean> sortMap){

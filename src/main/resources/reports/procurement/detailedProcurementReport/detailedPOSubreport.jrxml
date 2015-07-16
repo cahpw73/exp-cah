@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedPOSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="858d46b2-620c-4e2a-9685-a346bf5fdf9e">
+	<property name="ireport.zoom" value="1.7715610000000022"/>
+	<property name="ireport.x" value="359"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="poNoFilter" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\detailedProcurementReport\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
+	<queryString>
+		<![CDATA[select p.po,p.variation,sp.company,po.order_title,c.code,po.po_status,p.orderedvariation,p.id
+from purchase_order p inner join p_order po on p.po_id = po.id
+left join supplier_proc sp on po.supplier_id=sp.id
+left join project_currency pc on po.currency_id = pc.id
+left join currency c on pc.currency_id=c.id
+where p.po = $P{poNoFilter}]]>
+	</queryString>
+	<field name="po" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="order_title" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="po_status" class="java.lang.Integer"/>
+	<field name="orderedvariation" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="41" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="27a407a1-a859-4044-83ff-d253f414aea5" positionType="Float" x="0" y="0" width="50" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po}+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="15ebb039-2d47-4326-bf6c-df04afab24b9" positionType="Float" x="52" y="0" width="50" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{variation}+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="399cb36c-c757-4f82-a9b1-ae50cb8485c6" positionType="Float" x="122" y="0" width="100" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}!=null?$F{company}:""+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="3cec5e63-8f2e-427c-900b-91b4e5b61c4d" positionType="Float" x="301" y="0" width="153" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{order_title}!=null?$F{order_title}:""+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fd6bfb72-7737-4710-addc-98595e04dbb3" positionType="Float" x="609" y="0" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{code}!=null?$F{code}:""+"</style>"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="4819981d-c290-4c8e-a2d1-7359c2d4d3b4" positionType="Float" x="0" y="12" width="802" height="15"/>
+				<subreportParameter name="poIdFilter">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedItemSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="93c4777a-009f-401e-891d-5e29457349dc" positionType="Float" x="0" y="27" width="802" height="13"/>
+				<subreportParameter name="poIdFilter">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subTotalCostItem.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="31fd72f5-76af-4bb8-a435-43f20b7f08ca" x="547" y="0" width="60" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_status} != null ? $P{STATUS_PROCUREMENT}.get($F{po_status}) : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

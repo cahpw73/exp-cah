@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedItemSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f08510a1-4d03-4892-b8f0-4857c77586f0">
+	<property name="ireport.zoom" value="1.6105100000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="poIdFilter" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select ss.cost_code,ss.quantity,ss.unit,ss.description,ss.cost,ss.total_cost
+from scope_supply ss left join purchase_order po on ss.purchase_order_id=po.id
+where ss.status_id = 1 and po.id = $P{poIdFilter}
+order by ss.ordered]]>
+	</queryString>
+	<field name="cost_code" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="cost" class="java.math.BigDecimal"/>
+	<field name="total_cost" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="29c9c6bb-ba77-4115-8c1a-b192347194a3" positionType="Float" x="106" y="0" width="60" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost_code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="58a991d7-1f8d-4c49-82fc-644d8676a832" positionType="Float" x="167" y="0" width="40" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="4aea4457-c211-453b-ae54-54fbc86c40ff" positionType="Float" x="228" y="0" width="40" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="1af5bb20-32fe-4052-b6d4-f20bc715e8fd" positionType="Float" x="273" y="0" width="210" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:""))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="703f00b5-59f7-4dcb-b60e-7dd73c8a3afc" positionType="Float" x="656" y="0" width="45" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7c297fde-dc17-4025-a9ab-daf4e6d12c2d" positionType="Float" x="705" y="0" width="45" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_cost}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -35,18 +35,12 @@
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.project.procurement']}
                         <f:param name="reportName" value="ppr"/>
                     </h:link>
-                    <ui:remove>
-                        <p:commandLink value="#{msgs['lbl.report.project.procurement']}"
-                                       action="#{reportProcurementBean.resetValuesProjectProc}"
-                                       oncomplete="PF('projectProcDlg').show();"
-                                       update=":reportProjectProcId" async="false"
-                                       style=" color: #428BCA; padding-left: 0px!important;">
-                        </p:commandLink>
-                    </ui:remove>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.detailed.procurement']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.detailed.procurement']}
+                        <f:param name="reportName" value="pdp"/>
+                    </h:link>
                 </li>
                 <li>
                     <h:link

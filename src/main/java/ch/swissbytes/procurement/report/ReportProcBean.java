@@ -108,6 +108,15 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
+    public void printDetailedProcurementReport(final ProjectEntity project,final Map<String, Boolean> sortMap) {
+        log.info("printDetailedProcurementReport");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportDetailedProcurement("/procurement/detailedProcurementReport/detailedProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration,  project, sortMap);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
 
     public void printBidderList(List<Long> suppliers, String packageNumber, String description, String comments, String codeProject, String project) {
         openReport = false;

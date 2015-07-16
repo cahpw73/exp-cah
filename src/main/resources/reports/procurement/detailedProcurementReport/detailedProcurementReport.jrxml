@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.2100000000000022"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.9487171000000065"/>
+	<property name="ireport.x" value="677"/>
+	<property name="ireport.y" value="87"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -36,18 +36,6 @@
 			<bottomPen lineWidth="0.5" lineColor="#999999"/>
 		</box>
 	</style>
-	<subDataset name="posDataSet" uuid="e46b3f93-cc56-4fe8-8c88-899a353c4398">
-		<parameter name="TIME_ZONE" class="java.lang.String"/>
-		<parameter name="FORMAT_DATE" class="java.lang.String"/>
-		<field name="po" class="java.lang.String"/>
-		<field name="variation" class="java.lang.String"/>
-		<field name="orderDate" class="java.util.Date"/>
-		<field name="company" class="java.lang.String"/>
-		<field name="orderTitle" class="java.lang.String"/>
-		<field name="currency" class="java.lang.String"/>
-		<field name="poDeliveryDate" class="java.util.Date"/>
-		<field name="poStatus" class="java.lang.String"/>
-	</subDataset>
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="client" class="java.lang.String"/>
@@ -60,15 +48,21 @@
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="pooList" class="net.sf.jasperreports.engine.JRDataSource"/>
-	<queryString language="plsql">
-		<![CDATA[select p.po,p.variation,p.orderedvariation,po.order_date,
-	sp.company,po.order_title,c.code,p.po_delivery_date,po.po_status
-from purchase_order p inner join p_order po on p.po_id = po.id
-left join supplier_proc sp on po.supplier_id=sp.id
-left join project_currency pc on po.project_currency_id = pc.id
-left join currency c on pc.currency_id=c.id
-where p.project_id = 1]]>
+	<parameter name="sortByName" class="java.lang.String"/>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\detailedProcurementReport\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
+	<queryString>
+		<![CDATA[select po.po
+from purchase_order po, p_order p
+where po.status_id = 1 and po.project_id = $P{projectIdFilter}
+      and po.po_id = p.id
+group by po.po
+order by po.po]]>
 	</queryString>
+	<field name="po" class="java.lang.String"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -93,14 +87,14 @@ where p.project_id = 1]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">PROJECT PROCUREMENT REPORT</style>]]></text>
+				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">DETAILED PROCUREMENT REPORT</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="279" y="46" width="150" height="12"/>
+				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="356" y="46" width="42" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Purchase Orders and Contracts Sorted By]]></text>
+				<text><![CDATA[Sorted By]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="dd7c0244-9235-4c12-95cb-503d677c506e" x="801" y="0" width="1" height="103" isRemoveLineWhenBlank="true"/>
@@ -140,12 +134,12 @@ where p.project_id = 1]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="430" y="46" width="154" height="12"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="399" y="46" width="186" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{sortBy}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{sortByName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="b812cd39-61ac-4c91-848f-204901600c9b" x="7" y="47" width="80" height="12"/>
@@ -181,176 +175,169 @@ where p.project_id = 1]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="4" width="50" height="16"/>
+				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="3" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="52" y="4" width="50" height="16"/>
+				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="52" y="3" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="104" y="4" width="90" height="16"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Date</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="198" y="4" width="170" height="16"/>
+				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="122" y="3" width="100" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="369" y="4" width="170" height="16"/>
+				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="106" y="16" width="60" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Cost Code</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="301" y="3" width="153" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="546" y="4" width="80" height="16"/>
+				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="609" y="16" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Currency</style>]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="1" width="802" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="656" y="16" width="45" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Currency</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit Cost</style>]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="4" width="802" height="1"/>
+				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="30" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="629" y="4" width="90" height="16"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Delivery Date</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="719" y="4" width="80" height="16"/>
+				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="547" y="3" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Status</style>]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="fc1eb6cc-76a8-4af1-8825-10d150c7059f" x="609" y="3" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="63882a48-d613-40dd-a325-9b38a4632fc0" x="705" y="3" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1fe69226-f15b-4a71-89c1-26440fa292e3" x="754" y="3" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b5562917-018f-46f7-bf65-9fa6019dc490" x="754" y="16" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Value</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="46cc527b-7f19-4be5-a92c-664fd2c4c516" x="705" y="16" width="45" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total Cost</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="397cbe38-6f80-4d11-b682-a6fe56f061b1" x="167" y="16" width="40" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="be88f018-84da-4661-920d-3221adac7b64" x="228" y="16" width="40" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="08d0ee5d-b3f2-4d62-ade7-d3bf2f83da88" x="273" y="16" width="210" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item Description</style>]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
-			<componentElement>
-				<reportElement uuid="a15d503e-9e36-4e5d-b385-3c1163d68040" key="table" x="0" y="1" width="802" height="15"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="posDataSet" uuid="1d2d5d87-8155-41c9-8293-60d905807bc6">
-						<datasetParameter name="TIME_ZONE">
-							<datasetParameterExpression><![CDATA[$P{TIME_ZONE}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="FORMAT_DATE">
-							<datasetParameterExpression><![CDATA[$P{FORMAT_DATE}]]></datasetParameterExpression>
-						</datasetParameter>
-						<dataSourceExpression><![CDATA[$P{pooList}]]></dataSourceExpression>
-					</datasetRun>
-					<jr:column width="53" uuid="1cd696aa-34bd-4825-8a06-91b27d38a82e">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="303e1661-f615-4730-bfbb-6ab435e5b87c" x="0" y="0" width="53" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="53" uuid="ebfb68aa-eb5b-4ecb-8b88-75ed36096129">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="9cf615d2-6110-4e1b-bc8c-6f37e7c7a4b8" x="0" y="0" width="53" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="93" uuid="93ab5d34-c1d4-4062-8e4f-558115ba32fb">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="c3f64ef4-ba80-4e75-934e-6cb843e145a8" x="0" y="0" width="93" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{orderDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{orderDate}.getTime())):null]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="172" uuid="19216acf-87c1-43a3-9e0d-3dbb46467ea9">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="9f533b23-a960-4a48-8caa-ce02f80e4fe1" x="0" y="0" width="172" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="172" uuid="34250c8c-0881-491d-a3b0-306e8dc98817">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="da9b8f44-4514-4151-b03b-0117a44a64e9" x="0" y="0" width="172" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{orderTitle}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="85" uuid="6eaf93dd-a953-474d-a183-2e260f91b0f8">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="b0c4ccbf-2ea6-4e68-8e44-862b624099a4" x="0" y="0" width="85" height="15"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="86" uuid="0067ade5-45e4-4c30-a113-422bab645c9d">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="f4541e69-ca7e-49c6-911b-ae2c43d67ee5" x="0" y="0" width="86" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{poDeliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{poDeliveryDate}.getTime())):null]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="85" uuid="a4e71538-d0d7-4e84-a316-ae2895728d3b">
-						<jr:detailCell style="UnderLineTD" height="18" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="e394c080-c4e7-4311-812d-fbdf462ade41" x="0" y="0" width="85" height="15"/>
-								<textElement verticalAlignment="Middle">
-									<font size="6"/>
-									<paragraph leftIndent="5"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{poStatus}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
-			<line>
-				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="1" width="802" height="1"/>
-			</line>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="9c30ef75-9ba2-412a-8de8-60dd104c0db5" positionType="Float" x="1" y="28" width="801" height="13" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<subreport>
+				<reportElement uuid="99463bcb-f81d-42f2-a381-d1b9493b3e37" positionType="Float" x="0" y="0" width="802" height="26"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STATUS_PROCUREMENT">
+					<subreportParameterExpression><![CDATA[$P{STATUS_PROCUREMENT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedPOSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="faa4882f-e8b5-4ce1-950b-6963bb26702a" positionType="Float" x="0" y="28" width="800" height="12"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "totalOfOrderSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement uuid="0b566802-83c7-449a-830d-1e02f131c2d5" positionType="Float" mode="Transparent" x="519" y="28" width="100" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="7"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total of Order:</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b7191232-12e3-4667-961a-9c8f02e59822" positionType="Float" mode="Transparent" x="620" y="28" width="35" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po}!=null?$F{po}:null+"</style>"]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

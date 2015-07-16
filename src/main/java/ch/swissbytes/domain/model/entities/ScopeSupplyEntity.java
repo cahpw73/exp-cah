@@ -61,7 +61,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     private String descriptionAttachment;
     //new fields
     private BigDecimal totalCost;
-    private BigDecimal costCode;
+    private String costCode;
     private Boolean excludeFromExpediting;
     //@TODO change this value replace to currency
     private ProjectCurrencyEntity projectCurrency;
@@ -452,12 +452,12 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.totalCost = totalCost;
     }
 
-    @Column(name="cost_code", precision=18, scale=5)
-    public BigDecimal getCostCode() {
+    @Column(name="cost_code")
+    public String getCostCode() {
         return costCode;
     }
 
-    public void setCostCode(BigDecimal costCode) {
+    public void setCostCode(String costCode) {
         this.costCode = costCode;
     }
 
