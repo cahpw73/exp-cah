@@ -150,7 +150,7 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(4,4,13);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(5,5,13);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(6,106,13);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(100,100,10);
-INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(101,101,10);
+--INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(101,101,10);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(102,102,10);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(103,103,10);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(104,104,10);

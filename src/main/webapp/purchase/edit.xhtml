@@ -70,7 +70,7 @@
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project" value="#{msgs['po.lbl.project.type.required']}"/>
                                 <div class="inputText-general-po">
                                     <h:inputText id="project" jsf:placeholder="#{msgs['po.ph.project']}" maxlength="50"
-                                                 disabled="#{not permissionBean.hasPermission(300)}"
+                                                 disabled="true"
                                                  value="#{purchaseOrderEdit.poEdit.project}" class="form-control" required="true"
                                                  requiredMessage="#{msgs['po.lbl.project.required']}"/>
                                     <p:message for="project" id="msgProject"/>

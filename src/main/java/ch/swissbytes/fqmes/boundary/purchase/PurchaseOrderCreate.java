@@ -120,7 +120,9 @@ public class PurchaseOrderCreate implements Serializable {
         newComment = new CommentEntity();
     }
 
+    @Deprecated
     public String doSave() {
+        //TODO probably it should be deleted (all this method)
         savePurchase();
         if (!conversation.isTransient()) {
             conversation.end();
@@ -128,8 +130,9 @@ public class PurchaseOrderCreate implements Serializable {
         return "view?faces-redirect=true&poId=" + newPurchaseOrder.getId();
     }
 
-
+    @Deprecated
     public String doSaveAndAdd() {
+        //TODO probably it should be deleted (all this method)
         savePurchase();
         reset();
         if (!conversation.isTransient()) {

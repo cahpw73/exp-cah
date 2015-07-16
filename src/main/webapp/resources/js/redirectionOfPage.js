@@ -37,7 +37,6 @@ $("#reportListLinkId").click(function(e){
             break;
         }
     }
-
 })
 
 function leavePageToReportList(e,level){
@@ -83,4 +82,3 @@ function leavingPage(e,target){
         window.location = target;
     }
 }
-
