@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="2.593742460100008"/>
-	<property name="ireport.x" value="894"/>
-	<property name="ireport.y" value="145"/>
+	<property name="ireport.zoom" value="1.9487171000000065"/>
+	<property name="ireport.x" value="677"/>
+	<property name="ireport.y" value="87"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -53,6 +53,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\detailedProcurementReport\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
 	<queryString>
 		<![CDATA[select po.po
 from purchase_order po, p_order p
@@ -231,8 +232,8 @@ order by po.po]]>
 				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="30" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="536" y="3" width="70" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="547" y="3" width="60" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Status</style>]]></text>
@@ -307,6 +308,9 @@ order by po.po]]>
 				<reportElement uuid="99463bcb-f81d-42f2-a381-d1b9493b3e37" positionType="Float" x="0" y="0" width="802" height="26"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STATUS_PROCUREMENT">
+					<subreportParameterExpression><![CDATA[$P{STATUS_PROCUREMENT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedPOSubreport.jasper"]]></subreportExpression>

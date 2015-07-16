@@ -50,6 +50,7 @@ public class ReportDetailedProcurement extends ReportView implements Serializabl
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("SUBREPORT_DIR","reports/procurement/detailedProcurementReport/");
+        addParameters("STATUS_PROCUREMENT",lookupValueFactory.getStatusPOProcurement());
         loadParam();
     }
 
