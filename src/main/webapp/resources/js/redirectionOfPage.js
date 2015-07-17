@@ -2,153 +2,83 @@
  * Created by Christian on 14/7/15.
  */
 
+navigator ={};
+navigator.urls =new Array ();
+navigator.urls[0]={"url":"project/edit.jsf","level":"../../"};
+navigator.urls[1]={"url":"/purchase-order/edit","level":"../../../"};
+navigator.urls[2]={"url":"/client/edit","level":"../../../"};
+navigator.urls[3]={"url":"/logo/preview","level":"../../../"};
+navigator.urls[4]={"url":"/textSnippet/textSnippet","level":"../../../"};
+navigator.urls[5]={"url":"/category/category","level":"../../../"};
+navigator.urls[6]={"url":"/brands/brands","level":"../../../"};
+navigator.urls[7]={"url":"/currency/currency","level":"../../../"};
+navigator.urls[8]={"url":"/user/edit","level":"../../../"};
+navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
+
 $("#projectListLinkId").click(function(e){
-    if(window.location.href.indexOf("project/edit.jsf")  != -1) {
-        console.log("is create or edit project..");
-        leavePageToProjectList(e,"../../");
-    }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
-        console.log("is create or edit PO..");
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/client/edit") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/category/category") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/brands/brands") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/currency/currency") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/user/edit") != -1){
-        leavePageToProjectList(e,"../../../");
-    }else if(window.location.href.indexOf("/supplier/edit") != -1){
-        leavePageToProjectList(e,"../../../");
+    for (var i = 0; i < navigator.urls.length; i++) {
+        if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+            leavePageToProjectList(e,navigator.urls[i].level);
+            break;
+        }
     }
 })
 
 function leavePageToProjectList(e,level){
-    e.preventDefault();
-    console.log("toLeavePageFromModal");
-    if(hasChanges){
-        console.log("hasChanges true");
-        PF('confCancelPurchaseList').show();
-    }else{
-        window.location = level+"procurement/project/list.jsf"
-    }
+    target=level+"procurement/project/list.jsf";
+    leavingPage(e,target);
 }
 
 $("#reportListLinkId").click(function(e){
     console.log("click report list.... "+window.location.href);
-    if(window.location.href.indexOf("project/edit.jsf")  != -1) {
-        console.log("is create or edit..");
-        leavePageToReportList(e,"../../");
-    }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
-        console.log("is create or edit PO..");
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/client/edit") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/category/category") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/brands/brands") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/currency/currency") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/user/edit") != -1){
-        leavePageToReportList(e,"../../../");
-    }else if(window.location.href.indexOf("/supplier/edit") != -1){
-        leavePageToReportList(e,"../../../");
+    for (var i = 0; i < navigator.urls.length; i++) {
+        if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+            leavePageToReportList(e,navigator.urls[i].level);
+            break;
+        }
     }
-
 })
 
 function leavePageToReportList(e,level){
-    e.preventDefault();
-    console.log("toLeavePageFromModal");
-    if(hasChanges){
-        console.log("hasChanges true");
-        PF('confCancelReportList').show();
-    }else{
-        window.location = level+"procurement/report/report.jsf";
-    }
+    target=level+"procurement/report/report.jsf";
+    leavingPage(e,target);
 }
 
 $("#adminListLinkId").click(function(e){
     console.log("click admin list....")
-    if(window.location.href.indexOf("project/edit.jsf")  != -1) {
-        console.log("is create or edit..");
-        leavePageToAdminList(e,"../../");
-    }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
-        console.log("is create or edit PO..");
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/client/edit") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/category/category") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/brands/brands") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/currency/currency") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/user/edit") != -1){
-        leavePageToAdminList(e,"../../../");
-    }else if(window.location.href.indexOf("/supplier/edit") != -1){
-        leavePageToAdminList(e,"../../../");
+    for (var i = 0; i < navigator.urls.length; i++) {
+        if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+            leavePageToAdminList(e,navigator.urls[i].level);
+            break;
+        }
     }
 })
 
 function leavePageToAdminList(e,level){
-    e.preventDefault();
-    if(hasChanges){
-        console.log("hasChanges true");
-        PF('confCancelAdminList').show();
-    }else{
-        window.location = level+"procurement/admin/admin.jsf"
-    }
+    target=level+"procurement/admin/admin.jsf";
+    leavingPage(e,target);
 }
 
 $("#profileLinkId").click(function(e){
-    console.log("click profile....")
-    if(window.location.href.indexOf("project/edit.jsf")  != -1) {
-        console.log("is create or edit..");
-        leavePageToProfileList(e,"../../");
-    }else if(window.location.href.indexOf("/purchase-order/edit") != -1){
-        console.log("is create or edit PO..");
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/client/edit") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/logo/preview") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/textSnippet/textSnippet") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/category/category") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/brands/brands") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/currency/currency") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/user/edit") != -1){
-        leavePageToProfileList(e,"../../../");
-    }else if(window.location.href.indexOf("/supplier/edit") != -1){
-        leavePageToProfileList(e,"../../../");
+    console.log("click profile....");
+    for (var i = 0; i < navigator.urls.length; i++) {
+        if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+            leavePageToProfileList(e,navigator.urls[i].level);
+            break;
+        }
     }
 })
 
 function leavePageToProfileList(e,level){
+    target=level+"procurement/profile/profile.jsf";
+    leavingPage(e,target);
+}
+function leavingPage(e,target){
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");
         PF('confCancelProfile').show();
     }else{
-        window.location = level+"procurement/profile/profile.jsf"
+        window.location = target;
     }
 }
-

@@ -1,5 +1,7 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
+import ch.swissbytes.domain.types.ModuleSystemEnum;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
 import ch.swissbytes.Service.business.comment.CommentService;
 import ch.swissbytes.Service.business.enumService.EnumService;
@@ -11,6 +13,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
+import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -52,6 +55,8 @@ public class PurchaseOrderCreate implements Serializable {
 
     @Inject
     private SortBean sortBean;
+    @Inject
+    private UserSession userSession;
 
     private PurchaseOrderEntity newPurchaseOrder;
 
@@ -120,7 +125,14 @@ public class PurchaseOrderCreate implements Serializable {
         newComment = new CommentEntity();
     }
 
+    @Deprecated
     public String doSave() {
+        //TODO probably it should be deleted (all this method)
+        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+            log.log(Level.SEVERE, "Somebody is trying to save a PO from expediting module and this is not allowed");
+            Messages.addGlobalError("you cannot save a PO");
+            return "";
+        }
         savePurchase();
         if (!conversation.isTransient()) {
             conversation.end();
@@ -128,8 +140,14 @@ public class PurchaseOrderCreate implements Serializable {
         return "view?faces-redirect=true&poId=" + newPurchaseOrder.getId();
     }
 
-
+    @Deprecated
     public String doSaveAndAdd() {
+        //TODO probably it should be deleted (all this method)
+        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+            log.log(Level.SEVERE,"Somebody is trying to save a PO from expediting module and this is not allowed");
+            Messages.addGlobalError("you cannot save a PO");
+            return "";
+        }
         savePurchase();
         reset();
         if (!conversation.isTransient()) {

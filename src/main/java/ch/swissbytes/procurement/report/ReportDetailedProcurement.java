@@ -93,6 +93,7 @@ public class ReportDetailedProcurement extends ReportView implements Serializabl
         return currencyDefault;
     }
 
+
     private String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
         Boolean supplier = sortMap.get("supplier");
@@ -115,7 +116,6 @@ public class ReportDetailedProcurement extends ReportView implements Serializabl
             sortByName = sortByName.substring(0,sortByName.length()-2);
             strSort = strSort.substring(0,strSort.length() - 2);
         }
-        System.out.println("sortBy create: " + strSort);
         return strSort;
     }
 }

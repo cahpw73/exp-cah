@@ -5,12 +5,8 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.Purchase;
-import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
-import ch.swissbytes.procurement.boundary.report.expediting.ExpeditingDto;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -116,6 +112,14 @@ public class ReportProcBean implements Serializable {
         reportView.printDocument(null);
         openReport = true;
     }
+    public void printCommittedCurrenciesReport(final ProjectEntity project,final Map<String, Boolean> sortMap) {
+        log.info("printDetailedProcurementReport");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportCommittedCurrencies("/procurement/committedCurrenciesReport/committedCurrenciesReport", "Procurement.PurchaseOrder", messages, locale, configuration,  project, sortMap);
+        reportView.printDocument(null);
+        openReport = true;
+    }
 
 
     public void printBidderList(List<Long> suppliers, String packageNumber, String description, String comments, String codeProject, String project) {
@@ -184,7 +188,7 @@ public class ReportProcBean implements Serializable {
         log.info("printUncommittedData");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new UncommitedData("/procurement/uncommitedDataReport/UncommitedDataReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportUncommittedData("/procurement/uncommittedDataReport/UncommittedDataReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -192,7 +196,7 @@ public class ReportProcBean implements Serializable {
         log.info("printMaterialRequisition");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new MaterialRequisition("/procurement/MaterialRequisitions/MaterialRequisitions", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportMaterialRequisition("/procurement/MaterialRequisitions/MaterialRequisitions", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
