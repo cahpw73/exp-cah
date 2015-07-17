@@ -24,7 +24,7 @@ public class ReportProject extends ReportView implements Serializable {
     private final Logger log = Logger.getLogger(ReportProject.class.getName());
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
     private Configuration configuration;
-    private ProjectEntity project;
+    protected ProjectEntity project;
     Map<String, Boolean> sortMap;
     private String sortByName = "";
 
@@ -94,7 +94,7 @@ public class ReportProject extends ReportView implements Serializable {
         return currencyDefault;
     }
 
-    private String getStrSort(){
+    protected String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
         Boolean supplier = sortMap.get("supplier");
         Boolean varNo = sortMap.get("varNo");

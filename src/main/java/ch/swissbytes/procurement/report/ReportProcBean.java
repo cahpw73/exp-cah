@@ -196,7 +196,7 @@ public class ReportProcBean implements Serializable {
         log.info("printMaterialRequisition");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new MaterialRequisition("/procurement/MaterialRequisitions/MaterialRequisitions", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportMaterialRequisition("/procurement/MaterialRequisitions/MaterialRequisitions", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
