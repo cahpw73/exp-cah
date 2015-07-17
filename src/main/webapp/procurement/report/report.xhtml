@@ -55,15 +55,16 @@
                     </h:link>
                 </li>
                 <li>
-                    <!--required retentions report-->
                     <h:link
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.required.retention']}
                         <f:param name="reportName" value="rrr"/>
                     </h:link>
                 </li>
                 <li>
-                    <!--Remove link-disabled when this page is done-->
-                    <a class="link-disabled" href="#">#{msgs['lbl.report.commited.currency']}</a>
+                    <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.commited.currency']}
+                        <f:param name="reportName" value="cc"/>
+                    </h:link>
                 </li>
                 <li>
                     <h:link

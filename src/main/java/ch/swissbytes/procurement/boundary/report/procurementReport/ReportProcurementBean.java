@@ -103,11 +103,13 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "udr":reportProcBean.printUncommittedData(selectedProject, sortMap);
                     break;
-                case "mrr":reportProcBean.printMaterialRequisition(selectedProject,sortMap);
+                case "mrr":reportProcBean.printMaterialRequisition(selectedProject, sortMap);
                     break;
-                case "spor" : reportProcBean.printSummaryPurchaseOrder(selectedProject,sortMap);
+                case "spor" : reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap);
                     break;
-                case "pdp": reportProcBean.printDetailedProcurementReport(selectedProject,sortMap);
+                case "pdp": reportProcBean.printDetailedProcurementReport(selectedProject, sortMap);
+                    break;
+                case "cc": reportProcBean.printCommittedCurrenciesReport(selectedProject,sortMap);
                     break;
             }
         }else{
