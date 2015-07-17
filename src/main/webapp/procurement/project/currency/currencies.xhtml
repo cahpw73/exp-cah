@@ -129,8 +129,9 @@
                 <p:column headerText="#{msgs['project.currencies.column.project.default']}"
                           width="50">
                     <p:selectBooleanCheckbox id="defaultCurrencyId"
-                            value="#{projectBean.projectCurrencyEntity.projectDefault}">
+                                             value="#{_p.projectDefault}">
                         <p:ajax process="@this" event="change" update="currencyListId"
+                                async="false"
                                 listener="#{projectBean.updateDefaultStatusCurrency(_p)}" />
                     </p:selectBooleanCheckbox>
                 </p:column>
