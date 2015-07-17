@@ -9,15 +9,17 @@
             <div class="left-inner-addon">
                 <i class="fa fa-search fa-lg"></i>
                 <h:inputText id="searchTermId" styleClass="form-control input-search"
-                             value="#{projectListBean.searchTerm}"
+                             value="#{projectBean.searchTerm}"
                              jsf:placeholder="#{msgs['project.standard.text.lbl.search.global.text']}"
-                             type="search" maxlength="250"/>
+                             type="search" maxlength="250">
+                    <p:ajax event="keyup" process="@this" listener="#{projectBean.doSearchGlobalText}" update="globalTextDt" async="false"/>
+                </h:inputText>
             </div>
         </div>
         <div class="col-sm-3">
             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
-                <p:ajax process="@this"
-                        listener="#{projectListBean.doSearch}"/>
+                <p:ajax process="@this searchTermId" update="globalTextDt" async="false"
+                        listener="#{projectBean.doSearchGlobalText}"/>
             </h:commandButton>
         </div>
     </div>
