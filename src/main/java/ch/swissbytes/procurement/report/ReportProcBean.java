@@ -188,7 +188,7 @@ public class ReportProcBean implements Serializable {
         log.info("printUncommittedData");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new UncommittedData("/procurement/uncommittedDataReport/UncommittedDataReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportUncommittedData("/procurement/uncommittedDataReport/UncommittedDataReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }

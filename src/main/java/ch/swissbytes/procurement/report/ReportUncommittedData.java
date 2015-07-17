@@ -19,9 +19,9 @@ import java.util.logging.Logger;
 /**
  * Created by christian on 11/06/14.
  */
-public class UncommittedData extends ReportView implements Serializable {
+public class ReportUncommittedData extends ReportView implements Serializable {
 
-    private final Logger log = Logger.getLogger(UncommittedData.class.getName());
+    private final Logger log = Logger.getLogger(ReportUncommittedData.class.getName());
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
     private Configuration configuration;
     private ProjectEntity project;
@@ -36,8 +36,8 @@ public class UncommittedData extends ReportView implements Serializable {
      * @param messages
      * @param locale           {@link Locale}
      */
-    public UncommittedData(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                           Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
+    public ReportUncommittedData(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
+                                 Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.project = project;
@@ -49,7 +49,7 @@ public class UncommittedData extends ReportView implements Serializable {
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("SUBREPORT_DIR","reports/procurement/uncommitedDataReport/");
+        addParameters("SUBREPORT_DIR","reports/procurement/uncommittedDataReport/");
         loadParamDeliverables();
     }
 
