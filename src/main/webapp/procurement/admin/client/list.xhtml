@@ -42,8 +42,8 @@
                     <p:column headerText="Name" width="120">
                         <h:outputText value="#{_cl.name}" escape="false"/>
                     </p:column>
-                    <p:column headerText="Description" style="padding-right: 10px;">
-                        <h:outputText value="#{_cl.title}" escape="false"/>
+                    <p:column headerText="Description">
+                        <p:editor id="descriptionClId" value="#{_cl.title}" controls="" styleClass="view-description"/>
                     </p:column>
                     <p:column headerText="Report Logo" width="130">
                         #{_cl.reportLogo.description}

@@ -349,21 +349,23 @@ public class ProjectBean extends Bean implements Serializable {
         }
     }
 
+    public List<ProjectCurrencyEntity> filteredProjectCurrencies(){
+        List<ProjectCurrencyEntity> list = new ArrayList<>();
+        for(ProjectCurrencyEntity p : projectCurrencyList){
+            log.info("currency default: " + p.getProjectDefault());
+            if(p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
+                list.add(p);
+            }
+        }
+        return list;
+    }
+
     private void prepareToUpdateProjectTextSnippet() {
         for (ProjectTextSnippetEntity p : projectTextSnippetList){
             if(p.getId() >= 1000){
                 p.setId(null);
             }
         }
-        /*for (TextSnippetEntity ts : projectStandardTextList) {
-            ProjectTextSnippetEntity projectTextSnippet = new ProjectTextSnippetEntity();
-            projectTextSnippet.setLastUpdate(new Date());
-            projectTextSnippet.setStatus(StatusEnum.ENABLE);
-            projectTextSnippet.setTextSnippet(ts);
-            projectTextSnippet.setCode(ts.getCode());
-            projectTextSnippet.setDescription(ts.getTextSnippet());
-            projectTextSnippetList.add(projectTextSnippet);
-        }*/
     }
 
     private void loadSupplierProcList() {
@@ -415,7 +417,6 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public List<ProjectCurrencyEntity> getProjectCurrencyList() {
-
         return projectCurrencyList;
     }
 
@@ -565,15 +566,17 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public void updateDefaultStatusCurrency(ProjectCurrencyEntity currencyEntity) {
+        log.info("updateDefaultStatusCurrency");
         for (ProjectCurrencyEntity pce : projectCurrencyList) {
-            if (currencyEntity.getId().longValue() != pce.getId().longValue()) {
+            if(pce.getId().longValue() == currencyEntity.getId().longValue()){
+                if(pce.getProjectDefault()){
+                    pce.setProjectDefault(false);
+                }else{
+                    pce.setProjectDefault(true);
+                }
+            }else{
                 pce.setProjectDefault(false);
-            } else {
-                pce.setProjectDefault(true);
             }
-        }
-        for (ProjectCurrencyEntity pce : projectCurrencyList) {
-            log.info("status : " + pce.getProjectDefault());
         }
     }
 
@@ -645,17 +648,12 @@ public class ProjectBean extends Bean implements Serializable {
         return true;
     }
     public List<ProjectTextSnippetEntity> filteredList() {
-        log.info("filteredList()");
         List<ProjectTextSnippetEntity> list = new ArrayList<>();
         for (ProjectTextSnippetEntity r : this.projectTextSnippetList) {
-            //RecordEditable record =  r;
             if (r.getStatus() != null && r.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
-                //ProjectTextSnippetEntity object = (ProjectTextSnippetEntity) record;
                 list.add(r);
             }
-
         }
-        log.info("list size: " + list.size());
         return list;
     }
 }

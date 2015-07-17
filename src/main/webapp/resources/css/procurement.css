@@ -98,3 +98,8 @@
     border: 1px inset;
     width: 1120px!important;
 }
+
+.view-description
+.ui-editor-toolbar{
+    display: none!important;
+}
