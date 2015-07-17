@@ -26,7 +26,7 @@ public class ReportProject extends ReportView implements Serializable {
     private Configuration configuration;
     protected ProjectEntity project;
     Map<String, Boolean> sortMap;
-    private String sortByName = "";
+    protected String sortByName = "";
 
 
 
