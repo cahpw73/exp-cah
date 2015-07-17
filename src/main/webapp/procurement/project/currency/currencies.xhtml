@@ -105,17 +105,17 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <p:dataTable id="currencyListId" value="#{projectBean.projectCurrencyList}" var="_p">
+            <p:dataTable id="currencyListId" value="#{projectBean.filteredProjectCurrencies()}" var="_p">
                 <p:column headerText="#{msgs['project.currencies.column.project.currency']}"
-                          width="180" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                          width="180">
                     #{_p.currency.name}
                 </p:column>
                 <p:column headerText="#{msgs['project.currencies.column.exchange.rate']}"
-                          width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                          width="90">
                     #{_p.exchangeRate}
                 </p:column>
                 <p:column headerText="#{msgs['project.currencies.column.currency.factor']}"
-                          width="90" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                          width="90">
                     #{_p.currencyFactor}
                 </p:column>
                 <p:column headerText="#{msgs['project.currencies.column.format.po']}" width="90"
@@ -123,19 +123,18 @@
                     #{_p.format}
                 </p:column>
                 <p:column headerText="#{msgs['project.currencies.column.date.updated']}"
-                          width="120" rendered="#{projectBean.isCurrencyEnable(_p)}">
+                          width="120">
                     #{util.toLocal(_p.lastUpdate)}
                 </p:column>
                 <p:column headerText="#{msgs['project.currencies.column.project.default']}"
-                          width="50" rendered="#{projectBean.isCurrencyEnable(_p)}">
-                    <p:selectBooleanCheckbox
+                          width="50">
+                    <p:selectBooleanCheckbox id="defaultCurrencyId"
                             value="#{projectBean.projectCurrencyEntity.projectDefault}">
-                        <p:ajax process="@this" event="change"
-                                listener="#{projectBean.updateDefaultStatusCurrency(_p)}" update="currencyListId" />
+                        <p:ajax process="@this" event="change" update="currencyListId"
+                                listener="#{projectBean.updateDefaultStatusCurrency(_p)}" />
                     </p:selectBooleanCheckbox>
                 </p:column>
-                <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140"
-                          rendered="#{projectBean.isCurrencyEnable(_p)}">
+                <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140">
                     <p:commandLink value="Edit" update=":editForm:currencyGroup"
                                    process="@this"
                                    action="#{projectBean.doUpdateCurrency(_p)}"
