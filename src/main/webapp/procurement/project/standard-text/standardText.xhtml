@@ -68,18 +68,6 @@
                                  selectionMode="multiple" scrollable="true" scrollHeight="300"
                                  selection="#{projectBean.selectedProjectTexts}"
                                  rowKey="#{_pt.id}">
-                        <ui:remove>
-                            <p:column headerText="#{msgs['project.standard.text.column.code']}">
-
-                                <h:panelGroup id="viCostCode" rendered="#{!_pt.isEditable}">
-                                    <h:outputText value="#{_pt.code}"/>
-                                </h:panelGroup>
-                                <h:panelGroup id="edCostCode" rendered="#{_pt.isEditable}">
-                                    <h:inputText id="costCodeItem" value="#{_pt.code}" styleClass="form-control">
-                                    </h:inputText>
-                                </h:panelGroup>
-                            </p:column>
-                        </ui:remove>
                         <p:column headerText="#{msgs['project.standard.text.column.description']}"
                                   style="width: 80%!important;">
                             <h:panelGroup id="viDescription" rendered="#{!_pt.isEditable}">
