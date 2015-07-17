@@ -98,6 +98,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
             parameters.put("TITLE", "%" + searchTerm.toLowerCase().trim() + "%");
             parameters.put("DESCRIPTION", "%" + searchTerm.toLowerCase().trim() + "%");
         }
+        sb.append(" ORDER BY p.projectNumber ");
         return super.findBy(sb.toString(),parameters);
     }
 

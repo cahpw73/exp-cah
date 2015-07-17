@@ -57,18 +57,18 @@ public class TextSnippetDao extends GenericDao<TextSnippetEntity> implements Ser
         return super.findBy(sb.toString(),map);
     }
 
-    public List<TextSnippetEntity> findByText(final String text){
+    public List<TextSnippetEntity> findByText(final String code){
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM TextSnippetEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
-        if(StringUtils.isNotEmpty(text)&&StringUtils.isNotBlank(text)){
-            sb.append("AND trim(lower(x.textSnippet)) LIKE :TEXT ");
+        if(StringUtils.isNotEmpty(code)&&StringUtils.isNotBlank(code)){
+            sb.append("AND lower(x.code) LIKE :CODE ");
         }
-        Map<String,Object> map=new HashMap<String,Object>();
+        Map<String,Object> map=new HashMap<>();
         map.put("ENABLED", StatusEnum.ENABLE);
-        if(StringUtils.isNotEmpty(text)&&StringUtils.isNotBlank(text)){
-            map.put("TEXT", "%"+text.toLowerCase().trim()+"%");
+        if(StringUtils.isNotEmpty(code)&&StringUtils.isNotBlank(code)){
+            map.put("CODE", "%"+code.toLowerCase().trim()+"%");
         }
         return super.findBy(sb.toString(),map);
     }

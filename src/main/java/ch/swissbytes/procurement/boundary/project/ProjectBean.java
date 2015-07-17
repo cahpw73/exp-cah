@@ -94,6 +94,8 @@ public class ProjectBean extends Bean implements Serializable {
 
     private final String DEFAULT_CURRENCY_FORMAT = "#,###.00";
 
+    private String searchTerm;
+
 
     @PostConstruct
     public void init() {
@@ -650,5 +652,20 @@ public class ProjectBean extends Bean implements Serializable {
             }
         }
         return list;
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public void doSearchGlobalText(){
+        log.info("before search globalStext: " + globalStandardTextList.size());
+        globalStandardTextList.clear();
+        globalStandardTextList = textSnippetService.findByText(searchTerm);
+        log.info("after search globalStext: " + globalStandardTextList.size());
     }
 }
