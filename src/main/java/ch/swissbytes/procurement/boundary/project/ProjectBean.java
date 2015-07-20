@@ -568,16 +568,11 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public void updateDefaultStatusCurrency(ProjectCurrencyEntity currencyEntity) {
-        log.info("updateDefaultStatusCurrency");
+        log.info("updateDefaultStatusCurrency "+currencyEntity.getId());
         for (ProjectCurrencyEntity pce : projectCurrencyList) {
+            pce.setProjectDefault(false);
             if(pce.getId().longValue() == currencyEntity.getId().longValue()){
-                if(pce.getProjectDefault()){
-                    pce.setProjectDefault(false);
-                }else{
                     pce.setProjectDefault(true);
-                }
-            }else{
-                pce.setProjectDefault(false);
             }
         }
     }

@@ -26,7 +26,7 @@ $("#projectListLinkId").click(function(e){
 
 function leavePageToProjectList(e,level){
     target=level+"procurement/project/list.jsf";
-    leavingPage(e,target);
+    leavingPage(e,target,"confCancelPurchaseList");
 }
 
 $("#reportListLinkId").click(function(e){
@@ -41,7 +41,7 @@ $("#reportListLinkId").click(function(e){
 
 function leavePageToReportList(e,level){
     target=level+"procurement/report/report.jsf";
-    leavingPage(e,target);
+    leavingPage(e,target,"confCancelReportList");
 }
 
 $("#adminListLinkId").click(function(e){
@@ -56,7 +56,7 @@ $("#adminListLinkId").click(function(e){
 
 function leavePageToAdminList(e,level){
     target=level+"procurement/admin/admin.jsf";
-    leavingPage(e,target);
+    leavingPage(e,target,"confCancelAdminList");
 }
 
 $("#profileLinkId").click(function(e){
@@ -71,13 +71,13 @@ $("#profileLinkId").click(function(e){
 
 function leavePageToProfileList(e,level){
     target=level+"procurement/profile/profile.jsf";
-    leavingPage(e,target);
+    leavingPage(e,target,"confCancelProfile");
 }
-function leavingPage(e,target){
+function leavingPage(e,target,dialog){
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");
-        PF('confCancelProfile').show();
+        PF(dialog).show();
     }else{
         window.location = target;
     }
