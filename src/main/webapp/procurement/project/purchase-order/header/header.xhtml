@@ -248,7 +248,7 @@
                                                itemLabel="#{_pc.currency.code}"/>
                             </h:selectOneMenu>
                             <h:inputText id="defaultCurrencyViId" readonly="true" styleClass="form-control view-po"
-                                         value="#{poBean.purchaseOrder.poEntity.currency}"
+                                         value="#{poBean.purchaseOrder.poEntity.currency.currency.code}"
                                          rendered="#{poBean.beingViewed}"/>
                         </div>
 

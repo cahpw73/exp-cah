@@ -64,7 +64,7 @@ public class TextSnippetBean implements Serializable {
     private boolean validate(TextSnippetEntity textSnippet) {
         boolean valid = true;
         if (service.isCodeDuplicated(textSnippet.getId(), textSnippet.getCode())) {
-            Messages.addFlashError("currencyCode", String.format("Code [%s] is duplicated ", textSnippet.getCode()));
+            Messages.addFlashError("codeTS", String.format("Code [%s] is duplicated ", textSnippet.getCode()));
             valid = false;
         }
         return valid;

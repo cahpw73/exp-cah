@@ -35,7 +35,7 @@
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
                                     <h:inputText id="supplierSupViId" readonly="true" styleClass="form-control view-po"
-                                                 value="#{poBean.purchaseOrder.poEntity.supplier}"
+                                                 value="#{poBean.purchaseOrder.poEntity.supplier.company}"
                                                  rendered="#{poBean.beingViewed}"/>
                                 </div>
                             </div>

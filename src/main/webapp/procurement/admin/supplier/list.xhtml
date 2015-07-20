@@ -73,7 +73,9 @@
                 </p:column>
             </p:dataTable>
             <br/>
-            <a class="link-disabled" href="#">Create bidder list</a>
+            <h:link
+                    outcome="/procurement/report/bidderList/categorySelection">#{msgs['supplier.create.bidder.list']}
+            </h:link>
         </div>
     </ui:define>
 </ui:composition>

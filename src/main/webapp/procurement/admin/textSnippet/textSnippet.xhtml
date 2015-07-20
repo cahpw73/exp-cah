@@ -128,7 +128,7 @@
                                     &#160;
                                     <h:link value="#{msgs['lbl.cancel']}"
                                             disabled="#{textSnippetBean.selected eq null}"
-                                            styleClass="btn btn-primary btn-sm"
+                                            styleClass="btn btn-primary btn-sm #{textSnippetBean.selected eq null?'disabled':''}"
                                             outcome="textSnippet"/>
                                 </h:form>
                             </div>

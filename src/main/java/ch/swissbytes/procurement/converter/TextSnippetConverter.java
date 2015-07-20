@@ -25,7 +25,6 @@ public class TextSnippetConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
                               String value) {
-        System.out.println("value " + value);
         if (value == null) {
             return null;
         }
@@ -36,7 +35,6 @@ public class TextSnippetConverter implements Converter {
                 break;
             }
         }
-        System.out.println("returning " + textSnippetEntity!=null?textSnippetEntity.getTextSnippet():"nothing found");
         return textSnippetEntity;
     }
 
@@ -47,7 +45,6 @@ public class TextSnippetConverter implements Converter {
         if (value instanceof TextSnippetEntity) {
             string = ((TextSnippetEntity) value).getId().toString();
         }
-        System.out.println("getAsString "+string);
         return string;
     }
 }

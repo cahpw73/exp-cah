@@ -72,11 +72,11 @@ public class CurrencyBean implements Serializable {
     private boolean validate() {
         boolean valid = true;
         if (service.isCodeDuplicated(currency.getId(), currency.getCode())) {
-            Messages.addFlashError("currencyCode", String.format("Name [%s] is duplicated ", currency.getCode()));
+            Messages.addFlashError("currencyCode", String.format("Code [%s] is duplicated ", currency.getCode()));
             valid = false;
         }
         if (service.isNameDuplicated(currency.getId(), currency.getName())){
-            Messages.addFlashError("currencyName", String.format("Code [%s] is duplicated ", currency.getName()));
+            Messages.addFlashError("currencyName", String.format("Name [%s] is duplicated ", currency.getName()));
             valid = false;
         }
 
