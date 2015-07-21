@@ -46,33 +46,32 @@ public class ReportProject extends ReportView implements Serializable {
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-       // addParameters("SUBREPORT_DIR","reports/procurement/detailedProcurementReport/");
         addParameters("STATUS_PROCUREMENT",lookupValueFactory.getStatusPOProcurement());
         loadParameters();
         loadAdditionalParameters();
     }
     protected void loadAdditionalParameters(){
-        // i
     }
 
     private void loadParameters() {
-        addParameters("projectIdFilter",project.getId());
-        addParameters("projectCode", project.getProjectNumber());
-        addParameters("projectName", project.getTitle());
-        addParameters("projectCurrency",getCurrencyDefault());
-        addParameters("client", project.getClient().getName());
+        if(project.getClient()!=null) {
+            addParameters("projectIdFilter", project.getId());
+            addParameters("projectCode", project.getProjectNumber());
+            addParameters("projectName", project.getTitle());
+            addParameters("projectCurrency", getCurrencyDefault());
+            addParameters("client", project.getClient() != null ? project.getClient().getName() : "");
+            if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+                InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
+                addParameters("logoFooter", logo);
+            }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
+                InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
+                addParameters("logoFooter", logo);
+            }
+        }
         addParameters("sortBy", getStrSort());
         addParameters("sortByName",sortByName);
         Date now = new Date();
         addParameters("currentDate",now);
-
-        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
-            addParameters("logoFooter", logo);
-        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
-            addParameters("logoFooter", logo);
-        }
     }
 
     @Override
@@ -115,6 +114,8 @@ public class ReportProject extends ReportView implements Serializable {
         if(strSort.length()>1){
             sortByName = sortByName.substring(0,sortByName.length()-2);
             strSort = strSort.substring(0,strSort.length() - 2);
+        }else{
+            strSort = "po.id";
         }
         return strSort;
     }

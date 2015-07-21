@@ -27,8 +27,7 @@
                                 #{_p.variation}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="150">
-                                <p:editor id="descriptionClId" value="#{_p.poEntity.deliveryInstruction}" controls=""
-                                           styleClass="view-description" height="100"/>
+                                <h:outputText value="#{_p.poEntity.deliveryInstruction}"/>
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110">
                                 #{_p.poEntity.supplier.company}
