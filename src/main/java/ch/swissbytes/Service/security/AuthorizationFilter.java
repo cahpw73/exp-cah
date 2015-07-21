@@ -36,6 +36,9 @@ public class AuthorizationFilter implements Filter {
             System.out.println("url "+url.substring(context.length()+1));
             if (securityService.canAccess(url.substring(context.length()+1),user.getLoginName())) {
                 filterChain.doFilter(servletRequest, servletResponse);
+            //TODO Borrar luego esta condincion que solo es de TEST
+            }else if(url.equals("/procurement/procurement/report/spreadsheetTest.jsf")){
+                filterChain.doFilter(servletRequest, servletResponse);
             }else{
                 ((HttpServletResponse) servletResponse).sendRedirect(context + "/login.jsf");
             }
