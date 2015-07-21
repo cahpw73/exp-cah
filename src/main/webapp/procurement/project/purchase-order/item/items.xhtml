@@ -70,8 +70,7 @@
 
                         <p:column headerText="#{msgs['po.items.dt.column.description']}" width="500" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
-                                <p:editor  value="#{_i.description}"
-                                          styleClass="view-description" height="180" style="width: 100%"/>
+                                #{_i.description}
                             </h:panelGroup>
                             <h:panelGroup id="edDescription" rendered="#{_i.isEditable}">
                                 <p:inputTextarea id="descripItem" value="#{_i.description}"
