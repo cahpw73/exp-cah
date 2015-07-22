@@ -13,7 +13,7 @@
     <ui:define name="body">
         <h:form prependId="false">
 
-            <div class="col-md-8 panel-tab-users">
+            <div class="col-md-9 panel-tab-users">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#procurement" role="tab"
@@ -52,19 +52,20 @@
                                 #{usersBean.getAccessLevelProcurement(_u.id)}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
-                                <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
-                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
-                                    <f:param name="isCreateUser" value="false"/>
-                                    <f:param name="userId" value="#{_u.id}"/>
-                                </h:link>
-                                &#160;
-                                <h:commandButton value="#{msgs['lbl.reset']}" action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}"
-                                            styleClass="btn btn-link btn-sm"
-                                            style="float: left!important; color: #428BCA ; padding-left: 0px!important; padding-right: 0px!important;">
-                                    <p:ajax  process="@this" update=":glbMsgs"
-                                             onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
-                                    <p:ajax process="@this"  event="change" update=":glbMsgs"/>
-                                </h:commandButton>
+                                <div>
+                                    <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
+                                            style="color: #428BCA; ">
+                                        <f:param name="isCreateUser" value="false"/>
+                                        <f:param name="userId" value="#{_u.id}"/>
+                                    </h:link>
+                                    <p:commandLink style=" color: #428BCA; "
+                                                   value="#{msgs['lbl.reset']}"
+                                                   action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}">
+                                        <p:ajax  process="@this" update=":glbMsgs"
+                                                 onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
+                                        <p:ajax process="@this" update=":glbMsgs"/>
+                                    </p:commandLink>
+                                </div>
                             </p:column>
                         </p:dataTable>
                         <div class="clearfix"/>
@@ -132,18 +133,16 @@
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
-                                        style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">
+                                        style="color: #428BCA;">
                                     <f:param name="isCreateUser" value="false"/>
                                     <f:param name="userId" value="#{_u.id}"/>
                                 </h:link>
-                                &#160;
-                                <h:commandButton value="#{msgs['lbl.reset']}" action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}"
-                                                 styleClass="btn btn-link btn-sm"
-                                                 style="float: left!important; color: #428BCA ; padding-left: 0px!important; padding-right: 0px!important;">
+                                <p:commandLink style=" color: #428BCA; " value="#{msgs['lbl.reset']}"
+                                               action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}">
                                     <p:ajax  process="@this" update=":glbMsgs"
                                              onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
-                                    <p:ajax process="@this"  event="change" update=":glbMsgs"/>
-                                </h:commandButton>
+                                    <p:ajax process="@this"  update=":glbMsgs"/>
+                                </p:commandLink>
                             </p:column>
                         </p:dataTable>
                         <div class="clearfix"/>

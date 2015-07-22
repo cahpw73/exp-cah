@@ -40,7 +40,7 @@
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="username" value="#{msgs['lbl.crud.user.username']} *"/>
                                 <div class="col-sm-5">
                                     <h:inputText id="username" value="#{userBean.userEntity.username}"
-                                                 styleClass="form-control" required="true"
+                                                 styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.user.name.required']}"/>
                                     <p:message for="username" id="msgInputUsername"/>
                                 </div>
@@ -49,7 +49,7 @@
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.name']} *"/>
                                 <div class="col-sm-5">
                                     <h:inputText id="name" value="#{userBean.userEntity.firstName}"
-                                                 styleClass="form-control" required="true"
+                                                 styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                                     <p:message for="name" id="msgname"/>
                                 </div>
@@ -58,7 +58,7 @@
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.surname']} *"/>
                                 <div class="col-sm-5">
                                     <h:inputText id="surname" value="#{userBean.userEntity.name}"
-                                                 styleClass="form-control" required="true"
+                                                 styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                                     <p:message for="surname" id="msgsurname"/>
                                 </div>
@@ -68,7 +68,7 @@
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="email" value="#{msgs['lbl.crud.user.email']} *"/>
                                 <div class="col-sm-5">
                                     <h:inputText id="email" value="#{userBean.userEntity.email}"
-                                                 styleClass="form-control" required="true"
+                                                 styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.email.required']}"/>
                                     <p:message for="email" id="msgemail"/>
                                 </div>
@@ -77,7 +77,7 @@
                                 <p:outputLabel class="col-sm-3 control-label procurement-text-lbl-ltr" for="pwd1" value="#{msgs['user.create.lbl.pwd.hash']}" />
                                 <div class="col-sm-5">
                                     <p:password id="pwd1" value="#{userBean.userEntity.password}"  required="true"
-                                                autocomplete="off" redisplay="true"
+                                                autocomplete="off" redisplay="true" maxlength="100"
                                                 jsf:placeholder="#{msgs['user.create.lbl.pwd.hash']}"
                                                 requiredMessage="#{msgs['user.lbl.password.required']}" />
                                     <p:message id="msgPwd1" for="pwd1"/>
@@ -88,7 +88,7 @@
                                 <div class="col-sm-5">
                                     <p:password id="pwd2" value="#{userBean.confirmPass}" jsf:placeholder="#{msgs['user.create.lbl.pwd.hash.confirm']}"
                                                 required="true" requiredMessage="#{msgs['user.lbl.password.required']}"
-                                                autocomplete="off" redisplay="true"/>
+                                                autocomplete="off" redisplay="true" maxlength="100"/>
                                     <p:message id="msgPwd2" for="pwd2"/>
                                 </div>
                             </div>
