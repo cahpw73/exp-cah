@@ -114,8 +114,8 @@ public class SupplierProcEntity implements Serializable {
         this.company = company;
     }
 
-    @Size(max = 250)
-    @Column(name = "STREET", length = 250)
+    @Size(max = 1000)
+    @Column(name = "STREET", length = 1000)
     public String getStreet() {
         return street;
     }

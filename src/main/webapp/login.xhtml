@@ -51,18 +51,19 @@
                                 <div class="form-group">
                                     <h:inputText name="email" id="email" value="#{loginCredentials.userId}"
                                                  class="form-control" type='text'
-                                                 jsf:placeholder="#{msgs['login.placeholder.user']}"/>
+                                                 jsf:placeholder="#{msgs['login.placeholder.user']}"
+                                                 jsf:autofocus="true" tabindex="1"/>
                                 </div>
                                 <div class="form-group">
                                     <h:inputSecret type="password" name="password" id="password"
                                                    value="#{loginCredentials.password}"
-                                                   class="form-control"
+                                                   class="form-control" tabindex="2"
                                                    jsf:placeholder="#{msgs['login.placeholder.password']}"/>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-6 col-md-6 pull-right">
                                 <span class="button-checkbox">
-                                    <h:link styleClass="btn btn-link pull-right"
+                                    <h:link styleClass="btn btn-link pull-right" tabindex="4"
                                             value="#{msgs['login.forgot.password']}"
                                             outcome="forgotpassword?faces-redirect=true"/>
                                 </span>
@@ -73,7 +74,7 @@
                                     <div class="col-md-12">
                                         <div class="pull-right">
                                             <p:commandLink type="submit" styleClass="btn btn-primary btn-sm"
-                                                           id="loginBtn"
+                                                           id="loginBtn" tabindex="3"
                                                            action="#{authenticatorBean.login}"
                                                            value="#{msgs['login.button.label']}"
                                                            style="  width: 170px; height: 30px;"

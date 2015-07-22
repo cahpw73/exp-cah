@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:p="http://primefaces.org/ui">
     <br/>
     <h:panelGroup rendered="#{MODE eq 'PO'}">
@@ -15,7 +16,8 @@
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.supplierId}"
                              class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
-                             required="true" requiredMessage="#{msgs['supplier.lbl.supplier.id']} is required"/>
+                             required="true" requiredMessage="#{msgs['supplier.lbl.supplier.id']} is required"
+                             jsf:autofocus="true" tabindex="1"/>
                 <p:message for="supplierID"/>
             </div>
         </div>
@@ -64,7 +66,8 @@
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.company}"
                              class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
-                             required="true" requiredMessage="#{msgs['supplier.lbl.company']} is required"/>
+                             required="true" requiredMessage="#{msgs['supplier.lbl.company']} is required"
+                             tabindex="2"/>
                 <p:message for="companyId"/>
             </div>
 
@@ -118,7 +121,9 @@
                 <div class="tab-content">
                     <!-- Tab Supplier -->
                     <div class="tab-pane active" id="supplier">
-                        <ui:include src="supplierTab.xhtml"/>
+                        <ui:include src="supplierTab.xhtml">
+                            <ui:param name="tabIndex" value="3"/>
+                        </ui:include>
                     </div>
                     <!-- Tab Categories -->
                     <div class="tab-pane" id="categories">
