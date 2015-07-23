@@ -38,6 +38,8 @@
                     <h:selectOneMenu id="clientId"
                                      value="#{projectBean.projectEntity.client}"
                                      converter="clientConverter"
+                                     required="true"
+                                     requiredMessage="Company is required"
                                      styleClass="form-control" onclick="doChangeProc()">
                         <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                         <f:selectItems value="#{clientListBean.clients}"
