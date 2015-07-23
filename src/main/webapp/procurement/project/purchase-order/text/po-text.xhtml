@@ -30,9 +30,11 @@
                                  value="#{poTextBean.textEntity.preamble}"
                                  style=" height:70px!important; max-height: 70px; width: 100%!important;"
                                  scrollHeight="71" maxlength="950" rendered="#{poBean.beingEdited}"/>
-                <h:inputTextarea readonly="true" styleClass="form-control" rendered="#{poBean.beingViewed}"
+
+                <p:inputTextarea styleClass="form-control" readonly="true"
                                  value="#{poTextBean.textEntity.preamble}"
-                                 style="height: 70px;  max-height: 70px; width: 100%!important;"/>
+                                 style=" height:70px!important; max-height: 70px; width: 100%!important;"
+                                 scrollHeight="71" rendered="#{poBean.beingViewed}"/>
             </div>
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesAuxDt"/>

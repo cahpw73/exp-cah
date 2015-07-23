@@ -37,7 +37,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "user_name", unique = true, nullable = false, length = 50)
+    @Column(name = "user_name", unique = true, nullable = false, length = 250)
     public String getUsername() {
         return username;
     }
@@ -46,7 +46,7 @@ public class UserEntity implements Serializable {
         this.username = username;
     }
 
-    @Column(name = "pwd_hash", nullable = false, length = 100)
+    @Column(name = "pwd_hash", nullable = false, length = 250)
     @Size(min = 6, message = "Length must be greater than or equal to 6")
     public String getPassword() {
         return password;
@@ -56,7 +56,7 @@ public class UserEntity implements Serializable {
         this.password = password;
     }
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name", length = 250)
     public String getName() {
         return name;
     }
@@ -66,7 +66,7 @@ public class UserEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "email", length = 50)
+    @Column(name = "email", length = 250)
     @Pattern(regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",message = "Enter a valid email account")
     public String getEmail() {
         return email;
@@ -91,7 +91,7 @@ public class UserEntity implements Serializable {
         return username;
     }
 
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false, length = 250)
     public String getFirstName() {
         return firstName;
     }

@@ -50,10 +50,13 @@ public class SpreadsheetService implements Serializable {
         int rowNo = 1;
         for (PurchaseOrderEntity entity : list) {
             processor.createRow(rowNo);
-            while (i < 10) {
+            while (i <= 10) {
                 switch (i) {
                     case 1:
                         processor.writeStringValue(i, entity.getPo());
+                        break;
+                    case 2:
+                        processor.writeStringValue(i, entity.getVariation());
                         break;
                     case 3:
                         if (entity.getPoDeliveryDate() != null) {
@@ -95,10 +98,13 @@ public class SpreadsheetService implements Serializable {
             List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
             for (ScopeSupplyEntity ss: scopeSupplyList){
                 processor.createRow(rowNo);
-                while (i < 26) {
+                while (i <= 26) {
                     switch (i) {
                         case 0:
                             processor.writeStringValue(i, entity.getPo());
+                            break;
+                        case 1:
+                            processor.writeStringValue(i, entity.getVariation());
                             break;
                         case 3:
                             processor.writeStringValue(i, ss.getCode());
