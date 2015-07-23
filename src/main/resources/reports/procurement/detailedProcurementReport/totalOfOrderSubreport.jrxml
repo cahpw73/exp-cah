@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totalOfOrderSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4103b2f4-fa66-4fe6-92e5-9357090839bd">
 	<property name="ireport.zoom" value="2.357947691000002"/>
-	<property name="ireport.x" value="908"/>
+	<property name="ireport.x" value="614"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -28,11 +28,12 @@ where ss.status_id=1 and po.po = $P{poNoFilter}]]>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="a43e9486-e070-4e16-94ea-9795106834fb" positionType="Float" x="656" y="0" width="45" height="12"/>
+				<reportElement uuid="a43e9486-e070-4e16-94ea-9795106834fb" positionType="Float" x="705" y="0" width="45" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{total_cost}!=null?$F{total_cost}:null+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{total_cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost}):null+"</style>"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

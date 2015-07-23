@@ -87,6 +87,7 @@ public class PoBean extends Bean {
             try {
                 ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
                 if (projectEntity != null) {
+                    List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
                     purchaseOrder.setProjectEntity(projectEntity);
                     purchaseOrder.setProject(projectEntity.getProjectNumber());
                     purchaseOrder.setPoEntity(new POEntity());
@@ -94,6 +95,9 @@ public class PoBean extends Bean {
                     purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions()!=null?projectEntity.getDeliveryInstructions():"");
                     putModeCreation();
                     poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+                    if(projectCurrencyList.size() == 1){
+                        purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
+                    }
                 }else{
                     throw new IllegalArgumentException(" project invalid");
                 }

@@ -237,7 +237,8 @@
                                              value="#{poBean.purchaseOrder.poEntity.currency}"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}"
                                              converter="projectCurrencyConverter"
-                                             onclick="doChangeProc();">
+                                             onclick="doChangeProc();" required="true"
+                                             requiredMessage="Enter a default currency">
                                 <p:ajax event="change" update="conversionRateId" process="@this"/>
                                 <f:selectItem
                                         itemLabel="Select one"
@@ -247,6 +248,7 @@
                                                itemValue="#{_pc}"
                                                itemLabel="#{_pc.currency.code}"/>
                             </h:selectOneMenu>
+                            <p:message for="defaultCurrencyId"/>
                             <h:inputText id="defaultCurrencyViId" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.poEntity.currency.currency.code}"
                                          rendered="#{poBean.beingViewed}"/>
@@ -291,9 +293,8 @@
                                      value="#{configuration.getPOProcStatus(poBean.purchaseOrder.poEntity.poProcStatus)}" style="width: 200px; float: left;"/>
                         <ui:remove>
                             <div style="width: 200px; float: left;">
-                                <h:selectOneMenu id="headerStatusId"
-                                                 value="#{poBean.purchaseOrder.poEntity.poProcStatus}"
-                                                 styleClass="form-control">
+                                <h:selectOneMenu id="headerStatusId" styleClass="form-control"
+                                                 value="#{poBean.purchaseOrder.poEntity.poProcStatus}">
                                     <f:selectItem
                                             itemLabel="Select one"
                                             noSelectionOption="true"/>
