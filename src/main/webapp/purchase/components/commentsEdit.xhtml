@@ -68,7 +68,7 @@
                 <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right"
                                  onclick="doChange();"
                                  value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}">
-                    <p:ajax update=":commentModalId" oncomplete="PF('commentEditModal').show();"/>
+                    <p:ajax update=":commentModalId" async="false" oncomplete="PF('commentEditModal').show();"/>
                 </h:commandButton>
             </div>
         </div>

@@ -3,7 +3,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:form id="atachmentScopeSupplyModal" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
+    <h:form id="atachmentScopeSupplyModal" role="form" prependId="false" enctype="multipart/form-data"
+            acceptcharset="UTF-8"
             styleClass="form-horizontal">
 
         <label>
@@ -13,6 +14,7 @@
         <div class="col-sm-12" style="margin-bottom: 10px;">
             <h:outputLabel class="col-sm-3 control-label"
                            value="#{msgs['po.attach.tbl.column.from']}"/>
+
             <div class="col-sm-9">
                 <h:inputText type="text" value="#{purchaseOrderCreate.currentScopeSupplyForAttachment().from}">
                     <p:ajax event="blur" async="false" process="@this"/>
@@ -21,14 +23,16 @@
         </div>
         <div class="col-sm-12" style="margin-bottom: 10px;">
             <h:outputLabel class="col-sm-3 control-label" value="#{msgs['po.attach.tbl.column.to']}"/>
+
             <div class="col-sm-9">
-                <h:inputText type="text" value="#{purchaseOrderCreate.currentScopeSupplyForAttachment().to}" >
+                <h:inputText type="text" value="#{purchaseOrderCreate.currentScopeSupplyForAttachment().to}">
                     <p:ajax event="blur" async="false" process="@this"/>
                 </h:inputText>
             </div>
         </div>
         <div class="col-sm-12" style="margin-bottom: 10px;">
             <h:outputLabel class="col-sm-3 control-label" value="#{msgs['lbl.date']}"/>
+
             <div class="col-sm-9">
                 <p:calendar mask="#{configuration.mask}" styleClass="col-sm-7"
                             style="padding-left: 0px; min-width: 95px; padding-right: 0px;max-width: 169px;"
@@ -47,18 +51,20 @@
         <div class="col-sm-12" style="margin-bottom: 10px;">
             <h:outputLabel class="col-sm-3 control-label"
                            value="#{msgs['lbl.comment']}"/>
+
             <div class="col-sm-9">
                 <p:inputTextarea style="max-height: 29px;max-width: 169px;"
                                  maxlength="950" type="text"
                                  value="#{purchaseOrderCreate.currentScopeSupplyForAttachment().descriptionAttachment}"
                                  class="form-control">
                     <p:ajax event="blur" async="false" process="@this"/>
-                        </p:inputTextarea>
+                </p:inputTextarea>
             </div>
         </div>
         <br/>
         <h:panelGroup id="attachmentSS">
-            <p:dataTable value="#{purchaseOrderCreate.scopeSupplyAttachments}"  binding="#{attachmentSS}" var="_attachment">
+            <p:dataTable value="#{purchaseOrderCreate.scopeSupplyAttachments}" binding="#{attachmentSS}"
+                         var="_attachment">
                 <p:column style="background-color:#ffffff!important;">
                     #{_attachment.fileName}
                 </p:column>
@@ -66,8 +72,11 @@
                     <p:commandLink styleClass="btn btn-primary btn-sm"
                                    style="color: #ffffff;"
                                    action="#{purchaseOrderCreate.deleteAttachmentScopeSupply(attachmentSS.rowIndex)}"
-                                   process="@this" update=":atachmentScopeSupplyModal:attachmentSS, :empForm:scopeSupplyList" value="#{msgs['lbl.delete']}">
-                        <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
+                                   process="@this"
+                                   async="false"
+                                   update=":atachmentScopeSupplyModal:attachmentSS, :empForm:scopeSupplyList"
+                                   value="#{msgs['lbl.delete']}">
+                        <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?"/>
                     </p:commandLink>
                 </p:column>
             </p:dataTable>
@@ -81,9 +90,10 @@
                       sizeLimit="#{configuration.maxFileSize}"
                       dragDropSupport="false" auto="true">
         </p:fileUpload>
+
         <div class="pull-right">
-        <button  type="button" class="btn btn-primary btn-sm"
-                 onclick="PF('attachmentScopeSupply').hide();">#{msgs['lbl.close']}</button>
+            <button type="button" class="btn btn-primary btn-sm"
+                    onclick="PF('attachmentScopeSupply').hide();">#{msgs['lbl.close']}</button>
         </div>
     </h:form>
 </ui:composition>

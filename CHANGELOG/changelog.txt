@@ -1,5 +1,5 @@
 
-23/jul/2015
+23/jun/2015
 1.3.1
 
 1.-Fixed mistake with button that did not show modal asking for possible changes before leaving current page (4799)
@@ -13,3 +13,7 @@ V1.3.2
 16/jul/2015
 V1.3.3
 1. Added property to queue ajax requests on components where upload files are being managed (folder green/yellow)
+
+23/jul/2015
+V1.3.4 
+1.-Fixed mistake with overdue items that they're supposed to be showed in red.

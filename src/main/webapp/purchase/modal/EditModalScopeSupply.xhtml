@@ -475,6 +475,7 @@
                             <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.scopeSupplyEdit.isForecastSiteDateManual}"
                                                       style="margin-left: 12px;">
                                 <p:ajax update=":scopeSupplyFormId:forescastSiteDateEdit"
+                                        async="false"
                                         listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
                             </p:selectBooleanCheckbox>
                             &#160;
@@ -529,7 +530,7 @@
             <h:commandButton onclick="PF('confCancelDlg').show();"
                              value="#{msgs['lbl.cancel']}"
                              styleClass="btn btn-primary btn-sm">
-                <p:ajax process="@this"/>
+                <p:ajax process="@this" async="false"/>
             </h:commandButton>
         </div>
     </div>

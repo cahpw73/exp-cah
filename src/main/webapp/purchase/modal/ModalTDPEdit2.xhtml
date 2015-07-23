@@ -46,12 +46,13 @@
                         disabled="#{not scopeSupplyBean.editTdp.isForecastSiteDateManual}"
                         converterMessage="#{msgs['validator.date.invalid']}"
                         jsf:placeholder="#{configuration.formatDate}">
-                <p:ajax event="dateSelect" process="@this"/>
+                <p:ajax event="dateSelect" process="@this" async="false"/>
                     </p:calendar>
             <div>
                 &#160;
                 <p:selectBooleanCheckbox  value="#{scopeSupplyBean.editTdp.isForecastSiteDateManual}">
                     <p:ajax event="change" update=":TDPEdit:forecastDeliveryDateTdp4"
+                            async="false"
                             listener="#{scopeSupplyBean.switchModeForecastSiteDateForTdp(true)}"/>
                 </p:selectBooleanCheckbox>
                 &#160;
@@ -83,6 +84,7 @@
                 <h:commandButton  value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
                                   actionListener="#{scopeSupplyBean.doUpdateTdpOnEdition()}">
                     <p:ajax onsuccess="PF('edittdp').hide();"
+                            async="false"
                             process="TDPEdit"
                             update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forecastSiteDateEdit"/>
                 </h:commandButton>

@@ -54,13 +54,14 @@
                         value="#{scopeSupplyBean.tdp.forecastDeliveryDate}"
                         converterMessage="#{msgs['validator.date.invalid']}"
                         jsf:placeholder="#{configuration.formatDate}">
-                <p:ajax event="dateSelect" process="@this"/>
+                <p:ajax event="dateSelect" process="@this" async="false"/>
                     </p:calendar>
 
             <div>
                 &#160;
                 <p:selectBooleanCheckbox value="#{scopeSupplyBean.tdp.isForecastSiteDateManual}">
                     <p:ajax event="change" update=":TDP:forecastDeliveryDateTdp1"
+                            async="false"
                             listener="#{scopeSupplyBean.switchModeForecastSiteDateForTdp(false)}"/>
                 </p:selectBooleanCheckbox>
                 &#160;
@@ -96,6 +97,7 @@
                                  actionListener="#{scopeSupplyBean.addTransitDeliveryPoint}">
                     <p:ajax onsuccess="PF('tdp').hide();"
                             process="TDP"
+                            async="false"
                             update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forecastSiteDateCreate"/>
                 </h:commandButton>
                 <button type="button" class="btn btn-primary btn-sm"

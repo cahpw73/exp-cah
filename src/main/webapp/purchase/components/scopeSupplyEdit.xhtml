@@ -9,6 +9,7 @@
     <div class="fq-form-table">
         <p:dataTable id="scopeSupplyList" var="_scopeSupply"
                      styleClass="data-table-po-sc data-table-po-lists"
+
                      value="#{purchaseOrderEdit.activeScopeSupplies}" rowKey="#{_index+1}"
                      rowIndexVar="_index">
             <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="70"

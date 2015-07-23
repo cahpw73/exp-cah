@@ -73,6 +73,7 @@
                     <p:commandLink styleClass="btn btn-primary btn-sm"
                                    style="color: #ffffff;"
                                    action="#{purchaseOrderEdit.deleteAttachmentComment(_attachment.id)}"
+                                   async="false"
                                    process="@this" update=":commentEditFormId:attachmentCMT" value="#{msgs['lbl.delete']}">
                         <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />
                     </p:commandLink>
@@ -94,6 +95,7 @@
             <h:commandButton id="addEditComment" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm">
                 <p:ajax onsuccess="PF('commentUpdateModal').hide();" update=":empForm:commentList"
                         listener="#{purchaseOrderEdit.doUpdateComment()}"
+                        async="false"
                         process="nameEditComment, descriptionEditComment, reasonEditComment, addEditComment, fieldTo"/>
             </h:commandButton>
             <button type="button" onclick="PF('commentUpdateModal').hide();" class="btn btn-primary btn-sm">
