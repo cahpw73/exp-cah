@@ -60,7 +60,7 @@ public class POEntity implements Serializable{
     public void setDeliveryInstruction(String deliveryInstruction) {
         this.deliveryInstruction = deliveryInstruction;
     }
-    
+
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="currency_id", nullable = false)
     public ProjectCurrencyEntity getCurrency() {

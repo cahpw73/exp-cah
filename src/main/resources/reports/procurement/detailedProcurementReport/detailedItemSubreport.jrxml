@@ -67,7 +67,7 @@ order by ss.ordered]]>
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{cost})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="7c297fde-dc17-4025-a9ab-daf4e6d12c2d" positionType="Float" x="705" y="0" width="45" height="12"/>
@@ -75,7 +75,7 @@ order by ss.ordered]]>
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total_cost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
