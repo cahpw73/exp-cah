@@ -38,8 +38,11 @@ public class SupplierProcBean extends Bean implements Serializable {
     private String supplierId;
 
     private boolean addingCategory = false;
+
     private boolean addingBrand = false;
+
     private boolean editing = false;
+
     private String mode;
 
 
@@ -118,15 +121,15 @@ public class SupplierProcBean extends Bean implements Serializable {
             Messages.addFlashError("supplierID", "supplier id is already being used");
             validated = false;
         }
-        if (!hasEitherAtLeastOneCategoryOrOneBrand()) {
-            Messages.addGlobalError("You must select either a category or a brand");
+        if (!hasEitherAtLeastOneCategory()) {
+            Messages.addGlobalError("You must select at least one category");
             validated = false;
         }
         return validated;
     }
 
-    private boolean hasEitherAtLeastOneCategoryOrOneBrand() {
-        return supplier.getCategories().size()+supplier.getBrands().size()+ (categoryBrandBean.getBrands()!=null?categoryBrandBean.getBrands().getTarget().size():0) + (categoryBrandBean.getCategories()!=null?categoryBrandBean.getCategories().getTarget().size():0) >= 1;
+    private boolean hasEitherAtLeastOneCategory() {
+        return supplier.getCategories().size()+ (categoryBrandBean.getCategories()!=null?categoryBrandBean.getCategories().getTarget().size():0) >= 1;
     }
 
     public String doDelete(Long id) {
