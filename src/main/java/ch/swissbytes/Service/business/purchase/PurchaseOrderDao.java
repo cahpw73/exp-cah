@@ -146,6 +146,21 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return entityManaged;
     }
 
+    public POEntity findPOEntityById(final Long poId){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM  POEntity p ");
+        sb.append(" WHERE p.id = :PO_ID ");
+        Map<String, Object> map = new HashMap<>();
+        map.put("PO_ID",poId);
+        List<POEntity> list = super.findBy(sb.toString(),map);
+        POEntity entity = null;
+        if(list.isEmpty()){
+            entity = list.get(0);
+        }
+        return  entity;
+    }
+
     @Override
     public String orderBy(String field, boolean ascending) {
         return "ORDER BY " + field;

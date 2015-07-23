@@ -54,6 +54,7 @@
 		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\detailedProcurementReport\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
+	<parameter name="exchangeRateDefaultPO" class="java.math.BigDecimal"/>
 	<queryString>
 		<![CDATA[select po.po
 from purchase_order po, p_order p

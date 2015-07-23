@@ -317,4 +317,8 @@ public class PurchaseOrderService extends Service implements Serializable {
     public VPurchaseOrder findVPOById(Long id){
         return dao.findVPOById(id);
     }
+
+    public POEntity findPOEntityById(final Long poId){
+        return dao.findPOEntityById(poId);
+    }
 }
