@@ -27,8 +27,7 @@
                                 #{_p.variation}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="150">
-                                <p:editor id="descriptionClId" value="#{_p.poEntity.deliveryInstruction}" controls=""
-                                           styleClass="view-description" height="100" disabled="true"/>
+                                <h:outputText value="#{_p.poEntity.deliveryInstruction}"/>
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110">
                                 #{_p.poEntity.supplier.company}
@@ -84,6 +83,7 @@
                                         update="@form" ajax="true"
                                         value="#{msgs['project.list.action.release']}"
                                         action="#{poListBean.doReleasePo}"
+                                        async="false"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                         rendered="#{poListBean.actionReleasePOO(_p) and permissionBean.hasPermission(1407)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"

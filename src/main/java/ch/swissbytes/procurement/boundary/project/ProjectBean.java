@@ -286,6 +286,10 @@ public class ProjectBean extends Bean implements Serializable {
             Messages.addFlashError("projectNumber", "Project number was already registered!");
             result = false;
         }
+        if (filteredProjectCurrencies().size()==0) {
+            Messages.addFlashGlobalError("You must add at least 1 currency");
+            result = false;
+        }
         return result;
     }
 
@@ -293,6 +297,10 @@ public class ProjectBean extends Bean implements Serializable {
         boolean result = true;
         if (projectService.validateDuplicityProjectNumber(projectEntity.getProjectNumber(), projectEntity.getId())) {
             Messages.addError("projectNumber", "Project number was already registered!");
+            result = false;
+        }
+        if (filteredProjectCurrencies().size()==0) {
+            Messages.addFlashGlobalError("You must add at least 1 currency");
             result = false;
         }
         return result;
