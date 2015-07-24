@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.4641000000000033"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000048"/>
+	<property name="ireport.x" value="396"/>
+	<property name="ireport.y" value="87"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -63,15 +63,29 @@
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="pooList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
-	<queryString language="plsql">
-		<![CDATA[select p.po,p.variation,p.orderedvariation,po.order_date,
-	sp.company,po.order_title,c.code,p.po_delivery_date,po.po_status
-from purchase_order p inner join p_order po on p.po_id = po.id
-left join supplier_proc sp on po.supplier_id=sp.id
-left join project_currency pc on po.project_currency_id = pc.id
-left join currency c on pc.currency_id=c.id
-where p.project_id = 1]]>
+	<parameter name="PROJECT_ID" class="java.lang.Long"/>
+	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\projectProcurementReport\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select po,po.variation,order_date,sp.company,p.order_title,c.code,po_delivery_date,p.po_status,p.id as po_id
+from purchase_order po inner join p_order p on p.id=po.po_id
+     left join supplier_proc sp on sp.id = p.supplier_id
+     left join project_currency pc on p.currency_id = pc.id
+     left join currency c on pc.currency_id=c.id
+where po.project_id=$P{PROJECT_ID}
+order by po.orderedvariation]]>
 	</queryString>
+	<field name="po" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Timestamp"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="order_title" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="po_delivery_date" class="java.sql.Timestamp"/>
+	<field name="po_status" class="java.lang.Integer"/>
+	<field name="po_id" class="java.lang.Long"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -192,6 +206,9 @@ where p.project_id = 1]]>
 	</pageHeader>
 	<columnHeader>
 		<band height="28" splitType="Stretch">
+			<line>
+				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="27" width="802" height="1"/>
+			</line>
 			<staticText>
 				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="4" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -289,10 +306,80 @@ where p.project_id = 1]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="17" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="103c46e8-97ea-4be6-9bc4-a5850d2fcaa5" positionType="Float" x="0" y="2" width="50" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0412d82d-3455-4b91-9206-d00b45f12c38" positionType="Float" x="52" y="2" width="50" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="49dd09e1-aec2-488c-92d2-f0f8a90a1d4d" positionType="Float" x="104" y="2" width="90" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{order_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="77cd2fe4-8907-4dec-9699-c41fbc2d133f" positionType="Float" x="196" y="2" width="150" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8eab6a20-dccf-4f85-aab1-d0735b42c60a" positionType="Float" x="350" y="2" width="153" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_title}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="df194389-75a7-4032-bbb7-a0cb6f4a52ab" positionType="Float" x="528" y="2" width="58" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="12a80dde-4677-4dd4-98e4-b6ac1918a2e4" positionType="Float" x="697" y="2" width="50" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{po_delivery_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d28d0ed9-baca-443f-a215-43bf3e9d6c5b" positionType="Float" x="751" y="2" width="50" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_status}!=null?$P{STATUS_PROCUREMENT}.get($F{po_status}):""]]></textFieldExpression>
+			</textField>
 			<line>
-				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="1" width="802" height="1"/>
+				<reportElement uuid="9fffdfcc-d57e-47d0-a6d2-395e8d19bf5f" positionType="Float" x="0" y="15" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75" lineColor="#999999"/>
+				</graphicElement>
 			</line>
+			<subreport>
+				<reportElement uuid="05a8aed2-d8d0-4675-8cc9-3ded0a24e98d" x="588" y="1" width="57" height="12"/>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{po_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "POValue.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

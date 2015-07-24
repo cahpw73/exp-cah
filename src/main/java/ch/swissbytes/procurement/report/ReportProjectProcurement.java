@@ -49,17 +49,18 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("FORMAT_DATE_TIME", configuration.getFormatDateTime());
+        addParameters("STATUS_PROCUREMENT",lookupValueFactory.getStatusPOProcurement());
+        addParameters("SUBREPORT_DIR", "reports/procurement/uncommittedDataReport/");
         loadParamDeliverables();
     }
 
     private void loadParamDeliverables() {
-        List<ProjectProcurementDto> dtos = getProjectProcurementDtos();
+        addParameters("PROJECT_ID", project.getId());
         addParameters("projectCode", project.getProjectNumber());
         addParameters("projectName", project.getTitle());
         addParameters("projectCurrency",getCurrencyDefault());
         addParameters("client", project.getClient().getName());
         addParameters("sortBy", strSortBy);
-        addParameters("pooList",createDataSource(dtos));
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
 
@@ -72,33 +73,14 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         }
     }
 
-    private List<ProjectProcurementDto> getProjectProcurementDtos() {
-        List<ProjectProcurementDto> dtos = new ArrayList<>();
-        for(Object element : poList){
-            Object []values = (Object []) element;
-            ProjectProcurementDto dto = new ProjectProcurementDto();
-            dto.setPo(((String)values[0]));
-            dto.setVariation(((String)values[1]));
-            dto.setOrderDate(((Date)values[2]));
-            dto.setCompany(((String)values[3]));
-            dto.setOrderTitle(((String)values[4]));
-            dto.setCurrency(((String)values[5]));
-            dto.setPoDeliveryDate(((Date)values[6]));
-            dto.setPoStatus(((POStatusEnum) values[7]).getLabel());
-            dtos.add(dto);
-        }
-        return dtos;
-    }
-
     @Override
     public void printDocument(Long documentId) {
         try {
-            runReport(null);
+            runReport();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
 
     public String getCurrencyDefault() {
         String currencyDefault = "";
