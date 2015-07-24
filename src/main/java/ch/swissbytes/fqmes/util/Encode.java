@@ -4,6 +4,7 @@ import sun.misc.BASE64Encoder;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -33,11 +34,17 @@ public class Encode {
     }
 
     public static void main(String[] args) {
-        BigDecimal amountIni = new BigDecimal(10);
-        BigDecimal exchangeRateIni = new BigDecimal(3.18772);
-        BigDecimal exchangeRateEnd = new BigDecimal(0.91529);
+        BigDecimal amountIni = new BigDecimal("1500");
+        BigDecimal exchangeRateIni = new BigDecimal("6.89965");
+        BigDecimal exchangeRateEnd = new BigDecimal("1.37389");
         Util util = new Util();
-        System.out.println("Currency convert to other Currency: "  + util.currencyToCurrency(amountIni,exchangeRateIni,exchangeRateEnd));
+        System.out.println("Currency convert BigDecimal: "  + util.currencyToCurrency(amountIni, exchangeRateIni, exchangeRateEnd).setScale(5, RoundingMode.CEILING));
+
+        Double amountIni2 = 1500D;
+        Double exchangeRateIni2 = 6.89965D;
+        Double exchangeRateEnd2 = 1.37389D;
+
+        System.out.println("Currency convert Double: "  + util.currencyToCurrency2(amountIni2, exchangeRateIni2, exchangeRateEnd2));
     }
 
 }

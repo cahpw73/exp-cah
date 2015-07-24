@@ -40,7 +40,7 @@ where p.po = $P{poNoFilter}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="41" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="27a407a1-a859-4044-83ff-d253f414aea5" positionType="Float" x="0" y="0" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -86,17 +86,6 @@ where p.po = $P{poNoFilter}]]>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedItemSubreport.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="93c4777a-009f-401e-891d-5e29457349dc" positionType="Float" x="0" y="27" width="802" height="13"/>
-				<subreportParameter name="poIdFilter">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="patternDecimal">
-					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subTotalCostItem.jasper"]]></subreportExpression>
 			</subreport>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="31fd72f5-76af-4bb8-a435-43f20b7f08ca" x="547" y="0" width="60" height="12"/>
