@@ -8,6 +8,7 @@ import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
+import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
 
 import java.io.ByteArrayInputStream;
@@ -48,6 +49,7 @@ public class ReportRequiredRetentions extends ReportView implements Serializable
         //addParameters("COUNTRY_LOCALE", configuration.getCountry());
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
+        addParameters("FORMAT_DATE_TIME", configuration.getFormatDateTime());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("SUBREPORT_DIR","reports/procurement/RequiredRetentionReport/");
         loadParamDeliverables();
@@ -68,7 +70,7 @@ public class ReportRequiredRetentions extends ReportView implements Serializable
         addParameters("sortByName",sortByName);
         addParameters("projectIdFilter",project.getId());
         Date now = new Date();
-        addParameters("currentDate",now);
+        addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
     }
 
     private String getStrSort(){
