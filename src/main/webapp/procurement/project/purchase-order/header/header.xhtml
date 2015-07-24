@@ -268,8 +268,8 @@
                                           value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"
                                           styleClass="form-control"
                                           style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none">
-                                <f:convertDateTime timeZone="#{configuration.timeZone}"
-                                                   pattern="#{configuration.formatDate}"/>
+                                <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                 locale="#{configuration.langLocalDecimal}"/>
                             </h:outputText>
                         </div>
                     </div>
