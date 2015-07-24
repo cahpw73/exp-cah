@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.report.dtos;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,6 +16,8 @@ public class ProjectProcurementDto implements Serializable {
     private String currency;
     private Date poDeliveryDate;
     private String poStatus;
+    private BigDecimal poValue;
+    private BigDecimal projectValue;
 
     public String getPo() {
         return po;
@@ -78,5 +81,21 @@ public class ProjectProcurementDto implements Serializable {
 
     public void setPoStatus(String poStatus) {
         this.poStatus = poStatus;
+    }
+
+    public BigDecimal getPoValue() {
+        return poValue;
+    }
+
+    public void setPoValue(BigDecimal poValue) {
+        this.poValue = poValue;
+    }
+
+    public BigDecimal getProjectValue() {
+        return projectValue;
+    }
+
+    public void setProjectValue(BigDecimal projectValue) {
+        this.projectValue = projectValue;
     }
 }

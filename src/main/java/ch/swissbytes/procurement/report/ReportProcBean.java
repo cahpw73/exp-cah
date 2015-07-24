@@ -31,20 +31,11 @@ public class ReportProcBean implements Serializable {
     @PersistenceContext(unitName = "fqmPU")
     private EntityManager entityManager;
 
-
     private Locale locale;
 
     private Map<String, String> messages;
 
     private Boolean openReport = false;
-
-
-    private List<PurchaseOrderEntity> selected;
-
-
-    private String typeId;
-
-    private boolean isAllProviders;
 
     @Inject
     private PurchaseOrderService service;
@@ -59,7 +50,6 @@ public class ReportProcBean implements Serializable {
     @PostConstruct
     public void init() {
         log.info("ReportBean init!");
-        selected = new ArrayList<>();
     }
 
 
@@ -72,7 +62,7 @@ public class ReportProcBean implements Serializable {
         log.info("public void printReportDeliverables()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDeliverables("/procurement/deliverables/reportDeliverables", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo);
+        ReportView reportView = new ReportDeliverables("/procurement/deliverables/reportDeliverables", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo,entityManager);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -81,7 +71,7 @@ public class ReportProcBean implements Serializable {
         log.info("public void printReportExpediting()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo);
+        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo,entityManager);
         reportView.printDocument(null);
         openReport = true;
     }

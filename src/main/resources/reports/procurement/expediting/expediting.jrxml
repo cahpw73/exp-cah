@@ -53,10 +53,10 @@ order by po.po,po.orderedvariation]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="428d927a-9f14-4590-8d18-eb9751ccc1e9" x="216" y="1" width="200" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:""))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="bf75645c-1109-46b6-a0f8-70c12d90e5a2" x="420" y="1" width="120" height="12" isRemoveLineWhenBlank="true"/>

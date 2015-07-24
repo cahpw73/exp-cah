@@ -51,11 +51,11 @@ order by po.orderedvariation]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="206" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:""))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="307" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>

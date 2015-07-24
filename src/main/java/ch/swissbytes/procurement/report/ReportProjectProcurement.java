@@ -46,12 +46,9 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         this.project = project;
         this.strSortBy = strSortBy;
         LookupValueFactory lookupValueFactory = new LookupValueFactory();
-        //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
-        //addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-        //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
-        //addParameters("COUNTRY_LOCALE", configuration.getCountry());
+        addParameters("FORMAT_DATE_TIME", configuration.getFormatDateTime());
         loadParamDeliverables();
     }
 
@@ -64,7 +61,7 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         addParameters("sortBy", strSortBy);
         addParameters("pooList",createDataSource(dtos));
         Date now = new Date();
-        addParameters("currentDate",now);
+        addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
 
         if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());

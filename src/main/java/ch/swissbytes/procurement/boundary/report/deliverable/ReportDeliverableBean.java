@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -90,7 +91,12 @@ public class ReportDeliverableBean implements Serializable {
     }
 
     public void printReportDeliverables() {
-        reportProcBean.printReportDeliverables(purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
+        if(!purchaseOrderList.isEmpty()){
+            reportProcBean.printReportDeliverables(purchaseOrderList.get(0), selectedProject.getId(), termsPoNo);
+        }else{
+            Messages.addFlashGlobalError("No Deliverables for this report" , null);
+        }
+
     }
 
     private void loadDeliverablesDtoList(Long projectId, String poNo) {
