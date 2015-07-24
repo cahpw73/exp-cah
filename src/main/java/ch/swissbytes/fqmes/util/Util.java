@@ -66,7 +66,6 @@ public class Util {
         if(utcDate!=null){
             DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
             long local = zone.convertUTCToLocal(utcDate.getTime());
-            //return new Date(local);
             SimpleDateFormat sdf=new SimpleDateFormat(configuration.getFormatDate(),new Locale("en"));
             return sdf.format(new Date(local));
         }
@@ -78,11 +77,21 @@ public class Util {
         if(utcDate!=null){
             DateTimeZone zone = DateTimeZone.forID(timeZone);
             long local = zone.convertUTCToLocal(utcDate.getTime());
-            //return new Date(local);
             SimpleDateFormat sdf=new SimpleDateFormat(formatDate,new Locale("en"));
             return sdf.format(new Date(local));
         }
         return "";
+    }
+    public static Date toLocal(Date date,String timeZone){
+        DateTimeZone dtz= DateTimeZone.getDefault();
+        Date utcDate=convertUTC(date,dtz.toTimeZone().getID());
+        if(utcDate!=null){
+            DateTimeZone zone = DateTimeZone.forID(timeZone);
+            long local = zone.convertUTCToLocal(utcDate.getTime());
+            Date localDate=new Date(local);
+            return localDate;
+        }
+        return null;
     }
     public static String removeSpecialCharactersForJasperReport(String target){
         String value=target!=null?target:"";

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,6 +101,20 @@ public class Configuration implements Serializable {
             locale=new Locale(parts[0],"");
         }
         DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        String localPattern  = ((SimpleDateFormat)formatter).toPattern();
+        return localPattern;
+    }
+    public String getFormatDateTime(){
+        log.log(Level.FINE,"format date time");
+        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+        String[] parts = string.split("-");
+        Locale locale;
+        if(parts.length>1){
+            locale=new Locale(parts[0],parts[1]);
+        }else{
+            locale=new Locale(parts[0],"");
+        }
+        DateFormat formatter = DateFormat.getTimeInstance(DateFormat.DATE_FIELD, locale);
         String localPattern  = ((SimpleDateFormat)formatter).toPattern();
         return localPattern;
     }

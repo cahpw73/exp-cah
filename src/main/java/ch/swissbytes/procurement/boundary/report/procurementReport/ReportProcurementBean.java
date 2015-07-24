@@ -1,16 +1,14 @@
 package ch.swissbytes.procurement.boundary.report.procurementReport;
 
-import ch.swissbytes.Service.business.deliverable.DeliverableDao;
+
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
+import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -119,24 +117,33 @@ public class ReportProcurementBean implements Serializable {
     }
 
     public void loadNameReport(){
-        switch (reportName){
-            case "ppr" : reportTitle = projectProcurementReport;
-                break;
-            case "rrr" : reportTitle = requiredRetentionReport;
-                break;
-            case "spor": reportTitle = summaryPOReport;
-                break;
-            case "pdp": reportTitle = detailProcurementReport;
-                break;
-            case "sci": reportTitle  = supplierContactInformation;
-                break;
-            case "dsi": reportTitle = detailedSupplierReport;
-                break;
-            case "udr": reportTitle = uncommitedDataReport;
-                break;
-            case "mrr": reportTitle = materialRequisitionReport;
-                break;
-
+        if(StringUtils.isNotEmpty(reportName)) {
+            switch (reportName) {
+                case "ppr":
+                    reportTitle = projectProcurementReport;
+                    break;
+                case "rrr":
+                    reportTitle = requiredRetentionReport;
+                    break;
+                case "spor":
+                    reportTitle = summaryPOReport;
+                    break;
+                case "pdp":
+                    reportTitle = detailProcurementReport;
+                    break;
+                case "sci":
+                    reportTitle = supplierContactInformation;
+                    break;
+                case "dsi":
+                    reportTitle = detailedSupplierReport;
+                    break;
+                case "udr":
+                    reportTitle = uncommitedDataReport;
+                    break;
+                case "mrr":
+                    reportTitle = materialRequisitionReport;
+                    break;
+            }
         }
         log.info("report title: " + reportTitle);
     }

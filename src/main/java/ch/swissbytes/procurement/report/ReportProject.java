@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
+import ch.swissbytes.fqmes.util.Util;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -45,6 +46,7 @@ public class ReportProject extends ReportView implements Serializable {
         LookupValueFactory lookupValueFactory = new LookupValueFactory();
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
+        addParameters("FORMAT_DATE_TIME", configuration.getFormatDateTime());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("STATUS_PROCUREMENT",lookupValueFactory.getStatusPOProcurement());
         loadParameters();
@@ -71,7 +73,7 @@ public class ReportProject extends ReportView implements Serializable {
         addParameters("sortBy", getStrSort());
         addParameters("sortByName",sortByName);
         Date now = new Date();
-        addParameters("currentDate",now);
+        addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
     }
 
     @Override
