@@ -1,7 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.interfaces.ManageFile;
 import org.apache.commons.io.IOUtils;
@@ -74,12 +73,7 @@ public class Util {
         if (utcDate != null) {
             DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
             long local = zone.convertUTCToLocal(utcDate.getTime());
-<<<<<<< HEAD
             SimpleDateFormat sdf=new SimpleDateFormat(configuration.getFormatDate(),new Locale("en"));
-=======
-            //return new Date(local);
-            SimpleDateFormat sdf = new SimpleDateFormat(configuration.getFormatDate(), new Locale("en"));
->>>>>>> 259068ffa6fffa1d04c814e4bcaf5c10775c1c7f
             return sdf.format(new Date(local));
         }
         return "";
@@ -91,17 +85,11 @@ public class Util {
         if (utcDate != null) {
             DateTimeZone zone = DateTimeZone.forID(timeZone);
             long local = zone.convertUTCToLocal(utcDate.getTime());
-<<<<<<< HEAD
             SimpleDateFormat sdf=new SimpleDateFormat(formatDate,new Locale("en"));
-=======
-            //return new Date(local);
-            SimpleDateFormat sdf = new SimpleDateFormat(formatDate, new Locale("en"));
->>>>>>> 259068ffa6fffa1d04c814e4bcaf5c10775c1c7f
             return sdf.format(new Date(local));
         }
         return "";
     }
-<<<<<<< HEAD
     public static Date toLocal(Date date,String timeZone){
         DateTimeZone dtz= DateTimeZone.getDefault();
         Date utcDate=convertUTC(date,dtz.toTimeZone().getID());
@@ -116,12 +104,6 @@ public class Util {
     public static String removeSpecialCharactersForJasperReport(String target){
         String value=target!=null?target:"";
         value=value.replaceAll("&\\s+", "&amp; ");
-=======
-
-    public static String removeSpecialCharactersForJasperReport(String target) {
-        String value = target != null ? target : "";
-        value = value.replaceAll("&\\s+", "&amp; ");
->>>>>>> 259068ffa6fffa1d04c814e4bcaf5c10775c1c7f
         return value;
     }
 

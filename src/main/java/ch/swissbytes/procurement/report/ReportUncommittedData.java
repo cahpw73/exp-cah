@@ -19,5 +19,6 @@ public class ReportUncommittedData extends ReportProject {
 
     protected void loadAdditionalParameters() {
         addParameters("PROJECT_ID", project.getId());
+        addParameters("SUBREPORT_DIR", "reports/procurement/uncommittedDataReport/");
     }
 }
