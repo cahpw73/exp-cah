@@ -39,12 +39,6 @@ public class Encode {
         BigDecimal exchangeRateEnd = new BigDecimal("1.37389");
         Util util = new Util();
         System.out.println("Currency convert BigDecimal: "  + util.currencyToCurrency(amountIni, exchangeRateIni, exchangeRateEnd).setScale(5, RoundingMode.CEILING));
-
-        Double amountIni2 = 1500D;
-        Double exchangeRateIni2 = 6.89965D;
-        Double exchangeRateEnd2 = 1.37389D;
-
-        System.out.println("Currency convert Double: "  + util.currencyToCurrency2(amountIni2, exchangeRateIni2, exchangeRateEnd2));
     }
 
 }
