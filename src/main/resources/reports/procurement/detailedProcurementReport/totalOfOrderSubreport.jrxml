@@ -44,7 +44,7 @@ order by ss.ordered]]>
 				<reportElement uuid="4e9b287a-9549-4c5b-a488-73de91d93799" x="705" y="0" width="45" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
-					<paragraph rightIndent="3"/>
+					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+ new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1}) +"</style>"]]></textFieldExpression>
 			</textField>
