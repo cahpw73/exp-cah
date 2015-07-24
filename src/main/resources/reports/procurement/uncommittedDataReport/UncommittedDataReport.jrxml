@@ -289,6 +289,11 @@ order by $P{sortBy}]]>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<subreport>
+				<reportElement uuid="bcbeb8af-5eed-4c32-bf88-91c3b3f5da7f" x="402" y="1" width="53" height="12"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "POValue.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

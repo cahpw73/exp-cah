@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.util;
 import sun.misc.BASE64Encoder;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -29,6 +30,14 @@ public class Encode {
             log.log(Level.SEVERE, nsa.getMessage());
         }
         return encodedBytes;
+    }
+
+    public static void main(String[] args) {
+        BigDecimal amountIni = new BigDecimal(10);
+        BigDecimal exchangeRateIni = new BigDecimal(3.18772);
+        BigDecimal exchangeRateEnd = new BigDecimal(0.91529);
+        Util util = new Util();
+        System.out.println("Currency convert to other Currency: "  + util.currencyToCurrency(amountIni,exchangeRateIni,exchangeRateEnd));
     }
 
 }

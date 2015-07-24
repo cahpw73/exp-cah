@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="POValue" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fc7b4e89-3d7c-40f0-ae28-362224012aba">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PO_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select ss.quantity,ss.cost,ss.total_cost, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
+from scope_supply ss left join purchase_order po on ss.purchase_order_id=po.id
+     left join p_order p on p.id=po.po_id
+     left join project_currency pc on pc.id=ss.project_currency_id
+     left join project_currency pc2 on p.currency_id=pc2.id
+where ss.status_id = 1 and po.id = $P{PO_ID}]]>
+	</queryString>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="cost" class="java.math.BigDecimal"/>
+	<field name="total_cost" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="variable2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
