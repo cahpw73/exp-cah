@@ -66,6 +66,7 @@
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="sortByName" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select po.po
 from purchase_order po, p_order p
@@ -134,13 +135,6 @@ group by po.po]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="286826a9-ab34-40b5-836b-4e995d4d8712" x="680" y="49" width="114" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
-			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="392" y="45" width="154" height="12"/>
 				<textElement verticalAlignment="Middle">
@@ -169,6 +163,20 @@ group by po.po]]>
 				</textElement>
 				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Project Code:</style>]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="837a09e0-23bc-4e4d-b9dd-46554db4c639" x="772" y="45" width="25" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE_TIME},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="584e4b3a-e6ee-4bad-a93b-011796f2099c" x="723" y="45" width="48" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

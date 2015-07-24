@@ -1,11 +1,8 @@
 package ch.swissbytes.Service.business.project;
 
-import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
 import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
-import ch.swissbytes.Service.business.user.UserDao;
-import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 

@@ -17,9 +17,12 @@ import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Util;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -320,5 +323,23 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     public POEntity findPOEntityById(final Long poId){
         return dao.findPOEntityById(poId);
+    }
+
+    public BigDecimal calculateProjectValue (List<ScopeSupplyEntity> items,ProjectCurrencyEntity currency){
+        BigDecimal poValue=calculatePOValue(items,currency);
+        return poValue!=null?poValue.multiply(currency.getCurrencyFactor()):null;
+    }
+    public BigDecimal calculatePOValue(List<ScopeSupplyEntity> list,ProjectCurrencyEntity currency){
+        BigDecimal poValue=new BigDecimal("0");
+        if(currency==null){
+            return poValue;
+        }
+        for(ScopeSupplyEntity item:list){
+            BigDecimal amount=item.getCost()!=null?item.getCost():new BigDecimal("0");
+            BigDecimal exchangeRateSource=item.getProjectCurrency()!=null?item.getProjectCurrency().getExchangeRate():new BigDecimal("0");
+            BigDecimal exchangeRateTarget=currency.getExchangeRate();
+            poValue=poValue.add(Util.currencyToCurrency(amount, exchangeRateSource, exchangeRateTarget));
+        }
+        return poValue;
     }
 }

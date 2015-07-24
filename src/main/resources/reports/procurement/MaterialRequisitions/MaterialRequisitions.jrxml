@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MaterialRequisition" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.8627639691774651"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="202"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
@@ -18,12 +18,14 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="logoFooter" class="java.io.InputStream"/>
+	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po,po.variation,order_date,po_delivery_date,por.order_title,sp.company,po_status,por.id
+		<![CDATA[select po,po.variation,order_date,po_delivery_date,por.order_title,sp.company,po_status,por.id,po.id
 from purchase_order po inner join p_order por on por.id=po.po_id
 inner join supplier_proc sp on sp.id=por.supplier_id
 where status_id=1 and po.project_id=$P{PROJECT_ID}
-ORDER BY $P{sortBy}]]>
+ORDER BY $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
@@ -83,13 +85,6 @@ ORDER BY $P{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{client}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="ebb023e6-d070-4f9b-a84a-3458c255d660" x="453" y="51" width="97" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="5d14bf78-dac3-4fcb-bc66-1602e5fa4148" x="242" y="36" width="38" height="12"/>
 				<textElement verticalAlignment="Middle">
@@ -135,6 +130,20 @@ ORDER BY $P{sortBy}]]>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement uuid="1e56b68a-d40a-4baa-80d4-3af393dda423" x="528" y="51" width="25" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE_TIME},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c497b1a3-710b-4812-bb33-5e84ff89c177" x="479" y="51" width="48" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -300,6 +309,17 @@ ORDER BY $P{sortBy}]]>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<subreport>
+				<reportElement uuid="dd7fb1bb-6c52-4850-9cbd-c5fc429e6694" x="362" y="0" width="45" height="12"/>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PO_Value.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
