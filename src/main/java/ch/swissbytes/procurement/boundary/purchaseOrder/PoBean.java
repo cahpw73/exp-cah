@@ -17,6 +17,7 @@ import org.primefaces.context.RequestContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -360,5 +361,9 @@ public class PoBean extends Bean {
         }
 
 
+    }
+
+    public BigDecimal calculateProjectValue(){
+        return service.calculateProjectValue(itemBean.getScopeSupplyList(),purchaseOrder.getPoEntity().getCurrency());
     }
 }
