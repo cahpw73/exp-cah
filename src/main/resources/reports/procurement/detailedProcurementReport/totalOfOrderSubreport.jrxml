@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totalOfOrderSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4103b2f4-fa66-4fe6-92e5-9357090839bd">
-	<property name="ireport.zoom" value="2.357947691000002"/>
-	<property name="ireport.x" value="614"/>
+	<property name="ireport.zoom" value="1.9487171000000016"/>
+	<property name="ireport.x" value="678"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[select sum(ss.total_cost) as total_cost
+		<![CDATA[select ss.total_cost, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
 from scope_supply ss left join purchase_order po on ss.purchase_order_id=po.id
-where ss.status_id=1 and po.po = $P{poNoFilter}]]>
+     left join p_order p on p.id=po.po_id
+     left join project_currency pc on pc.id=ss.project_currency_id
+     left join project_currency pc2 on p.currency_id=pc2.id
+where ss.status_id = 1 and po.po = $P{poNoFilter} and po.project_id=$P{projectIdFilter}
+order by ss.ordered]]>
 	</queryString>
 	<field name="total_cost" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{total_cost},$F{exchange_rate_ini},$F{exchange_rate_default})]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -26,19 +36,19 @@ where ss.status_id=1 and po.po = $P{poNoFilter}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="12" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="a43e9486-e070-4e16-94ea-9795106834fb" positionType="Float" x="705" y="0" width="45" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-					<paragraph rightIndent="3"/>
-				</textElement>
-				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{total_cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total_cost}):null+"</style>"]]></textFieldExpression>
-			</textField>
-		</band>
+		<band splitType="Stretch"/>
 	</detail>
 	<columnFooter>
-		<band splitType="Stretch"/>
+		<band height="12" splitType="Stretch">
+			<textField pattern="">
+				<reportElement uuid="4e9b287a-9549-4c5b-a488-73de91d93799" x="705" y="0" width="45" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="true"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+ new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1}) +"</style>"]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>

@@ -170,7 +170,7 @@ public class Util {
 
     private static BigDecimal currencyToUSDCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni) {
         log.info("currencyToUSDCurrency");
-        BigDecimal amountUSD = new BigDecimal(0.0000000000);
+        BigDecimal amountUSD = new BigDecimal("0.00000").setScale(5,RoundingMode.CEILING);
         if(exchangeRateIni == null && amountIni!=null){
             log.info("Return amount: " + amountIni);
             return amountIni;
@@ -178,7 +178,7 @@ public class Util {
             log.info("Return amount: " + amountUSD);
             return amountUSD;
         }else if(exchangeRateIni != null && amountIni != null){
-            amountUSD = amountIni.divide(exchangeRateIni, 10, RoundingMode.CEILING);
+            amountUSD = amountIni.divide(exchangeRateIni, 5, RoundingMode.CEILING);
             log.info("amount USD: " + amountUSD);
             return amountUSD;
         }
@@ -187,11 +187,51 @@ public class Util {
 
     private static BigDecimal usdCurrencyToCurrencyDefault(BigDecimal amountUSD, BigDecimal exchangeRateIni, BigDecimal exchangeRateEnd) {
         log.info("usdCurrencyToCurrencyDefault");
-        BigDecimal currencyEnd = new BigDecimal(0.00000);
+        BigDecimal currencyEnd = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         if(exchangeRateIni == null && amountUSD!=null){
             return amountUSD;
         }else if (amountUSD != null && exchangeRateEnd != null) {
             currencyEnd = amountUSD.multiply(exchangeRateEnd);
+        }
+        log.info("amount currency default: " + currencyEnd);
+        return currencyEnd;
+    }
+
+
+    public static Double currencyToCurrency2(Double amountIni, Double exchangeRateIni, Double exchangeRateDefault) {
+        log.info("CurrencyToCurrency");
+        log.info("amountIni: " + amountIni);
+        log.info("exchangeRateIni: " + exchangeRateIni );
+        log.info("exchangeRateDefault: " + exchangeRateDefault);
+        Double amountUSD = currencyToUSDCurrency2(amountIni, exchangeRateIni);
+        Double currencyEnd = usdCurrencyToCurrencyDefault2(amountUSD, exchangeRateIni, exchangeRateDefault);
+        return currencyEnd;
+    }
+
+    private static Double currencyToUSDCurrency2(Double amountIni, Double exchangeRateIni) {
+        log.info("currencyToUSDCurrency");
+        Double amountUSD = 0D;
+        if(exchangeRateIni == null && amountIni!=null){
+            log.info("Return amount: " + amountIni);
+            return amountIni;
+        }else if ( amountIni == null) {
+            log.info("Return amount: " + amountUSD);
+            return amountUSD;
+        }else if(exchangeRateIni != null && amountIni != null){
+            amountUSD = amountIni/exchangeRateIni;
+            log.info("amount USD: " + amountUSD);
+            return amountUSD;
+        }
+        return amountUSD;
+    }
+
+    private static Double usdCurrencyToCurrencyDefault2(Double amountUSD, Double exchangeRateIni, Double exchangeRateEnd) {
+        log.info("usdCurrencyToCurrencyDefault");
+        Double currencyEnd = 0D;
+        if(exchangeRateIni == null && amountUSD!=null){
+            return amountUSD;
+        }else if (amountUSD != null && exchangeRateEnd != null) {
+            currencyEnd = amountUSD * exchangeRateEnd;
         }
         log.info("amount currency default: " + currencyEnd);
         return currencyEnd;

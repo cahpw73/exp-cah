@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedItemSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f08510a1-4d03-4892-b8f0-4857c77586f0">
-	<property name="ireport.zoom" value="1.6105100000000017"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.4641000000000015"/>
+	<property name="ireport.x" value="280"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -25,6 +25,9 @@ order by ss.ordered]]>
 	<field name="total_cost" class="java.math.BigDecimal"/>
 	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
 	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{total_cost},$F{exchange_rate_ini},$F{exchange_rate_default})]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -86,7 +89,27 @@ order by ss.ordered]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band splitType="Stretch"/>
+		<band height="13" splitType="Stretch">
+			<textField pattern="">
+				<reportElement uuid="d2ec72f5-1c58-4721-aea7-47a44a679fd1" x="705" y="2" width="45" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="true"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+ new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1}) +"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ceb94b6a-c8b9-46f3-a812-35ffd5557e7f" x="627" y="2" width="74" height="11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled"/>
+				<text><![CDATA[<style size="6" isBold="true" pdfFontName="Helvetica-Bold">SubTotal:</style>]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="808c67fe-3aa9-4c7d-9811-828c6c30f23f" x="705" y="1" width="46" height="1"/>
+				<graphicElement>
+					<pen lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band splitType="Stretch"/>

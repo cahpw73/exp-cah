@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.771561000000007"/>
-	<property name="ireport.x" value="218"/>
-	<property name="ireport.y" value="1"/>
+	<property name="ireport.zoom" value="1.331000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -323,6 +323,9 @@ order by po.po]]>
 				<reportElement uuid="faa4882f-e8b5-4ce1-950b-6963bb26702a" positionType="Float" x="0" y="28" width="800" height="12"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="projectIdFilter">
+					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
