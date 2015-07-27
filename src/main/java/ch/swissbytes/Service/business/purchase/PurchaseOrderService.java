@@ -335,8 +335,8 @@ public class PurchaseOrderService extends Service implements Serializable {
             return poValue;
         }
         for(ScopeSupplyEntity item:list){
-            BigDecimal amount=item.getCost()!=null?item.getCost():new BigDecimal("0");
-            BigDecimal exchangeRateSource=item.getProjectCurrency()!=null?item.getProjectCurrency().getExchangeRate():new BigDecimal("0");
+            BigDecimal amount=item.getCost()!=null?item.getCost():null;
+            BigDecimal exchangeRateSource=item.getProjectCurrency()!=null?item.getProjectCurrency().getExchangeRate():null;
             BigDecimal exchangeRateTarget=currency.getExchangeRate();
             poValue=poValue.add(Util.currencyToCurrency(amount, exchangeRateSource, exchangeRateTarget));
         }
