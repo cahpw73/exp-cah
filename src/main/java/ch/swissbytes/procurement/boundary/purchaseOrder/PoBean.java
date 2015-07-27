@@ -366,4 +366,5 @@ public class PoBean extends Bean {
     public BigDecimal calculateProjectValue(){
         return service.calculateProjectValue(itemBean.getScopeSupplyList(),purchaseOrder.getPoEntity().getCurrency());
     }
+
 }

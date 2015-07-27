@@ -19,7 +19,7 @@ public class UserRoleEntity {
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "USER_ROLE_ID_SEQ", allocationSize = 1, initialValue = 10)
+    @SequenceGenerator(name = "generator", sequenceName = "USER_ROLE_ID_SEQ", allocationSize = 1, initialValue = 1000)
     public Integer getId() {
         return id;
     }
