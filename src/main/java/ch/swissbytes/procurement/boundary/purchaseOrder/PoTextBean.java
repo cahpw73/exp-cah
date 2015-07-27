@@ -82,13 +82,6 @@ public class PoTextBean implements Serializable {
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
         droppedTextSnippetList = clausesEntities;
         List<ProjectTextSnippetEntity> listToRemove = new ArrayList<>();
-        /*for(ProjectTextSnippetEntity ps : droppedTextSnippetList){
-            for (ProjectTextSnippetEntity t : textSnippetList){
-                if(t.getId().intValue() == ps.getId().intValue()){
-                    listToRemove.add(t);
-                }
-            }
-        }*/
         for(ClausesEntity ce : droppedTextSnippetList){
             if(ce.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
                 ProjectTextSnippetEntity pt =  projectTextSnippetService.findById(ce.getProjectTextSnippet().getId());

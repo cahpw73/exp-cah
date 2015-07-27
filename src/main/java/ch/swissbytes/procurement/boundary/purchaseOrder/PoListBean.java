@@ -299,7 +299,15 @@ public class PoListBean implements Serializable {
         List<ScopeSupplyEntity> scopeSupplyEntities = scopeSupplyService.scopeSupplyListByPOOId(currentPurchaseOrder.getId());
         TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPoEntity().getId());
         String preamble = textEntity != null ? textEntity.getPreamble() : "";
-        reportProcBean.printPurchaseOrder(currentPurchaseOrder,scopeSupplyEntities,preamble);
+        List<ClausesEntity> clausesEntityList = getClausesEntitiesByPOid(textEntity);
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder,scopeSupplyEntities,preamble,clausesEntityList);
+    }
+    private List<ClausesEntity> getClausesEntitiesByPOid(TextEntity textEntity){
+        List<ClausesEntity> clausesEntities = new ArrayList<>();
+        if(textEntity != null) {
+            clausesEntities = textService.findClausesByTextId(textEntity.getId());
+        }
+        return clausesEntities;
     }
 
     public List<PurchaseOrderEntity> getList() {
