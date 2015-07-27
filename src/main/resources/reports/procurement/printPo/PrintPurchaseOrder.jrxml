@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -192,35 +192,35 @@
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{company}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{company}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{company}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" positionType="Float" x="13" y="18" width="269" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{street}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{street}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{street}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" positionType="Float" x="13" y="31" width="79" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{postcode}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{postcode}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{postcode}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="fe32763c-6833-45d8-bc9e-056f13542186" positionType="Float" x="13" y="44" width="155" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{state}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{state}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{state}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" positionType="Float" x="13" y="57" width="155" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{country}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{country}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{country}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="c3958164-addb-4335-ae71-ef3d98a8b5aa" positionType="Float" x="299" y="32" width="220" height="1" isRemoveLineWhenBlank="true"/>
@@ -388,10 +388,10 @@
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="283" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
+					<jr:column width="263" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" positionType="Float" x="0" y="0" width="283" height="15"/>
+								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" positionType="Float" x="0" y="0" width="263" height="15"/>
 								<textElement verticalAlignment="Middle" markup="styled">
 									<font isBold="true"/>
 									<paragraph leftIndent="3"/>
@@ -402,12 +402,12 @@
 								<reportElement uuid="57bf7b90-461a-44f5-ba8f-190752cebaa5" x="0" y="0" width="1" height="16"/>
 							</line>
 							<line>
-								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="283" height="1"/>
+								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="263" height="1"/>
 							</line>
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="0" y="14" width="283" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="1" y="14" width="262" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -415,7 +415,7 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" x="0" y="1" width="283" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" x="0" y="1" width="263" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -427,17 +427,17 @@
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50" uuid="041b3746-ba33-4592-a13c-c9655929d00c">
+					<jr:column width="60" uuid="041b3746-ba33-4592-a13c-c9655929d00c">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="c4da0cb6-1604-4d57-ab58-92561fc0ab4a" positionType="Float" x="0" y="0" width="50" height="15"/>
+								<reportElement uuid="c4da0cb6-1604-4d57-ab58-92561fc0ab4a" positionType="Float" x="1" y="0" width="59" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit Price</style>]]></text>
 							</staticText>
 							<line>
-								<reportElement uuid="ade10ac4-b66a-4a8d-8f7e-a828963c5c94" x="0" y="15" width="50" height="1"/>
+								<reportElement uuid="ade10ac4-b66a-4a8d-8f7e-a828963c5c94" x="0" y="15" width="60" height="1"/>
 							</line>
 							<line>
 								<reportElement uuid="d3e5eca2-5f27-4c17-a506-c8d96594d60d" x="0" y="0" width="1" height="15"/>
@@ -445,7 +445,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" x="0" y="14" width="50" height="12"/>
+								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" x="0" y="14" width="60" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
@@ -456,26 +456,25 @@
 								<reportElement uuid="daf8fe82-b8d8-4c8a-95dd-e7d67343ecba" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="37"/>
 							</line>
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="84abf470-d3ba-48e2-ae66-db94ad4fbf8f" x="0" y="25" width="50" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right">
+								<reportElement uuid="84abf470-d3ba-48e2-ae66-db94ad4fbf8f" x="0" y="25" width="60" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" markup="styled">
 									<font size="7"/>
-									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{strTotalCost}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{strTotalCost}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{strTotalCost}+"</style>":null]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="50" uuid="9a4b29d1-b3f6-4583-aa39-399420671397">
+					<jr:column width="60" uuid="9a4b29d1-b3f6-4583-aa39-399420671397">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="edc7f1b9-247f-4114-8e3f-222ba9388e73" positionType="Float" x="0" y="0" width="50" height="15"/>
+								<reportElement uuid="edc7f1b9-247f-4114-8e3f-222ba9388e73" positionType="Float" x="0" y="0" width="60" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total</style>]]></text>
 							</staticText>
 							<line>
-								<reportElement uuid="d5ea7b03-f062-49ee-a99a-95d56aef5d84" x="0" y="15" width="50" height="1"/>
+								<reportElement uuid="d5ea7b03-f062-49ee-a99a-95d56aef5d84" x="0" y="15" width="60" height="1"/>
 							</line>
 							<line>
 								<reportElement uuid="befb7a79-4785-417c-9507-4c92ad61b9ca" x="0" y="0" width="1" height="15"/>
@@ -483,7 +482,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" x="0" y="14" width="50" height="12"/>
+								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" x="0" y="14" width="60" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
@@ -494,12 +493,12 @@
 								<reportElement uuid="ad142079-098f-429e-aee7-0f2e41b7d7e0" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="37"/>
 							</line>
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" x="0" y="25" width="50" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right">
+								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" x="0" y="25" width="60" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{totalAmount}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalAmount}):null]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{totalAmount}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalAmount})+"</style>":null]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

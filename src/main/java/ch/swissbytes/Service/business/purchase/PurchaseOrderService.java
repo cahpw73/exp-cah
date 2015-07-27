@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -326,8 +327,12 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public BigDecimal calculateProjectValue (List<ScopeSupplyEntity> items,ProjectCurrencyEntity currency){
-        BigDecimal poValue=calculatePOValue(items,currency);
-        return poValue!=null?poValue.multiply(currency.getCurrencyFactor()):null;
+        BigDecimal poValue = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
+        if(currency !=null){
+            poValue = calculatePOValue(items,currency);
+            poValue = poValue!=null?poValue.multiply(currency.getCurrencyFactor()):null;
+        }
+        return poValue;
     }
     public BigDecimal calculatePOValue(List<ScopeSupplyEntity> list,ProjectCurrencyEntity currency){
         BigDecimal poValue=new BigDecimal("0");

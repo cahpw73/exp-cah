@@ -64,7 +64,9 @@ public class LogoBean implements Serializable {
         UploadedFile uf = event.getFile();
         new Util().enterFile(uf, logo);
     }
-
+    public void reloadList(){
+        logos = service.getLogoList();
+    }
     public String doSave() {
         log.info("trying to save new logo");
         if(!validate()){
@@ -80,7 +82,7 @@ public class LogoBean implements Serializable {
         log.info("saving logo for project");
         boolean saved=false;
         if(!validate()){
-
+//this is empty
         }else {
             logo=service.save(logo);
             RequestContext context = RequestContext.getCurrentInstance();
