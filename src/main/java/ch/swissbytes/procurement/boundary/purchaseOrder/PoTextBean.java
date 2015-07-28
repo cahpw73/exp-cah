@@ -78,7 +78,11 @@ public class PoTextBean implements Serializable {
         //check this if we can improve. it takes about 1 second.
         log.info("loadText");
         textEntity = textService.findByPoId(poEntity.getId());
-        clausesEntities = textService.findClausesByTextId(textEntity.getId());
+        if(textEntity!=null) {
+            clausesEntities = textService.findClausesByTextId(textEntity.getId());
+        }else{
+            textEntity=new TextEntity();
+        }
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
         droppedTextSnippetList = clausesEntities;
         List<ProjectTextSnippetEntity> listToRemove = new ArrayList<>();

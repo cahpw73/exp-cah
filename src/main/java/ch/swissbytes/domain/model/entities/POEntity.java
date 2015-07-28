@@ -62,7 +62,7 @@ public class POEntity implements Serializable{
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="currency_id", nullable = false)
+    @JoinColumn(name="currency_id")
     public ProjectCurrencyEntity getCurrency() {
         return currency;
     }
@@ -183,7 +183,8 @@ public class POEntity implements Serializable{
 
     private ContactEntity contactEntity;
 
-    @Column(name = "contact_id")
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="contact_id")
     public ContactEntity getContactEntity() {
         return contactEntity;
     }

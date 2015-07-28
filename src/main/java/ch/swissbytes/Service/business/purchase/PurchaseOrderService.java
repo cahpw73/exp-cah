@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -292,11 +293,16 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
             po.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
             //po.getPoEntity().getItemList().addAll(itemService.findByPoId(po.getPoEntity().getId()));
-            po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
-            po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            List<CashflowEntity> cashflows =cashflowService.findByPoId(po.getPoEntity().getId());
+            po.getPoEntity().setCashflow(!cashflows.isEmpty()?cashflows.get(0):null);
+            if(po.getPoEntity().getCashflow()!=null) {
+                po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            }
             po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
-            List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
-            po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);
+            if(po.getPoEntity().getTextEntity()!=null) {
+                List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
+                po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);
+            }
         }
         return list.isEmpty()?null:list.get(0);
     }
@@ -327,7 +333,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     public BigDecimal calculateProjectValue (List<ScopeSupplyEntity> items,ProjectCurrencyEntity currency){
         BigDecimal poValue=calculatePOValue(items,currency);
-        return poValue!=null?poValue.multiply(currency.getCurrencyFactor()):null;
+        return poValue!=null&&currency!=null?poValue.multiply(currency.getCurrencyFactor()):null;
     }
     public BigDecimal calculatePOValue(List<ScopeSupplyEntity> list,ProjectCurrencyEntity currency){
         BigDecimal poValue=new BigDecimal("0");
