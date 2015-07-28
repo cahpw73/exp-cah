@@ -56,20 +56,22 @@ public class LogoBean implements Serializable {
     }
 
 
-    public void restart(){
-        logo=new LogoEntity();
+    public void restart() {
+        logo = new LogoEntity();
     }
 
     public void handleUpload(FileUploadEvent event) {
         UploadedFile uf = event.getFile();
         new Util().enterFile(uf, logo);
     }
-    public void reloadList(){
+
+    public void reloadList() {
         logos = service.getLogoList();
     }
+
     public String doSave() {
         log.info("trying to save new logo");
-        if(!validate()){
+        if (!validate()) {
             return "";
         }
 
@@ -78,30 +80,31 @@ public class LogoBean implements Serializable {
         return "logo?faces-redirect=true";
     }
 
-    public boolean saveForProject(){
+    public boolean saveForProject() {
         log.info("saving logo for project");
-        boolean saved=false;
-        if(!validate()){
+        boolean saved = false;
+        if (!validate()) {
 //this is empty
-        }else {
-            logo=service.save(logo);
+        } else {
+            logo = service.save(logo);
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('logoModal').hide();");
-            saved=true;
+            saved = true;
 
         }
         return saved;
     }
-    private boolean validate(){
+
+    private boolean validate() {
         log.info("validating...");
-        boolean valid=true;
-        if(logo.getFile()==null){
-            Messages.addFlashError("graphicId","Please choose an image");
-            valid=false;
+        boolean valid = true;
+        if (logo.getFile() == null) {
+            Messages.addFlashError("graphicId", "Please choose an image");
+            valid = false;
         }
-        if(StringUtils.isEmpty(logo.getDescription())&&StringUtils.isBlank(logo.getDescription())){
-            Messages.addFlashError("description","Please enter description");
-            valid=false;
+        if (StringUtils.isEmpty(logo.getDescription()) && StringUtils.isBlank(logo.getDescription())) {
+            Messages.addFlashError("description", "Please enter description");
+            valid = false;
         }
         return valid;
 
@@ -109,10 +112,10 @@ public class LogoBean implements Serializable {
 
     public String doDelete() {
         log.info("removing component");
-        if(logoSelected!=null){
-            if(logIsUsedInReports()){
-                Messages.addFlashError("Can not delete Logo","You cannot delete "+logoSelected.getDescription()+" because it is already being used");
-            }else{
+        if (logoSelected != null) {
+            if (logIsUsedInReports()) {
+                Messages.addFlashError("Can not delete Logo", "You cannot delete " + logoSelected.getDescription() + " because it is already being used");
+            } else {
                 service.delete(logoSelected);
                 log.info(String.format("logo has been removed [%s]", logo.getDescription()));
             }
@@ -122,7 +125,7 @@ public class LogoBean implements Serializable {
 
     private boolean logIsUsedInReports() {
         List<ProjectEntity> list = projectService.findByLogoId(logoSelected.getId());
-        boolean result  = !list.isEmpty();
+        boolean result = !list.isEmpty();
         return result;
     }
 
@@ -144,7 +147,7 @@ public class LogoBean implements Serializable {
     }
 
     public List<LogoEntity> getLogos() {
-        log.info("getting size of logos "+logos.size());
+        log.info("getting size of logos " + logos.size());
         return logos;
     }
 

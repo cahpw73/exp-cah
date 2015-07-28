@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
@@ -251,16 +252,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
-        //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
-        //items
-        //itemService.doSave(po.getScopeSupplyList(),purchaseOrderEntity);
-        //deliverable
         deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
-        //CashFlow
         cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
-        //Text
-        //textService.doSave(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
 
         return purchaseOrderEntity;
     }
@@ -273,7 +267,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
         //requisition daos
-        requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
+       requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //items
         itemService.doUpdate(po.getScopeSupplyList(), purchaseOrderEntity);
         //deliverable
@@ -282,6 +276,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
         textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
+
 
 
         return purchaseOrderEntity;
@@ -317,8 +312,11 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
             po.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
             //po.getPoEntity().getItemList().addAll(itemService.findByPoId(po.getPoEntity().getId()));
-            po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
-            po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            List<CashflowEntity> cashflows =cashflowService.findByPoId(po.getPoEntity().getId());
+            po.getPoEntity().setCashflow(!cashflows.isEmpty()?cashflows.get(0):null);
+            if(po.getPoEntity().getCashflow()!=null) {
+                po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            }
             po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
             if(po.getPoEntity().getTextEntity()!=null) {
                 List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
@@ -338,12 +336,12 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
             po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));
             po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
-            //po.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
-            po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
-            po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
-           /* po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
-            List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
-            po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);*/
+            List<CashflowEntity> cashflows =cashflowService.findByPoId(po.getPoEntity().getId());
+            if(!cashflows.isEmpty()) {
+                po.getPoEntity().setCashflow(cashflows.get(0));
+                po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            }
+
         }
         return list.isEmpty()?null:list.get(0);
     }

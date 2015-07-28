@@ -58,8 +58,6 @@ public class ProjectBean extends Bean implements Serializable {
 
     private List<SupplierProcEntity> supplierProcList;
 
-    private List<LogoEntity> logoList;
-
     private List<ProjectCurrencyEntity> projectCurrencyList;
 
     private List<CurrencyEntity> currencyList;
@@ -105,7 +103,6 @@ public class ProjectBean extends Bean implements Serializable {
         projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
         supplierProcList = new ArrayList<>();
         projectCurrencyList = new ArrayList<>();
-        logoList = new ArrayList<>();
         currencyList = new ArrayList<>();
         globalStandardTextList = new ArrayList<>();
         projectStandardTextList = new ArrayList<>();
@@ -114,7 +111,6 @@ public class ProjectBean extends Bean implements Serializable {
         projectTextSnippetList = new ArrayList<>();
         selectedProjectTexts = new ArrayList<>();
         loadSupplierProcList();
-        loadLogoList();
         loadCurrencyList();
 
     }
@@ -155,7 +151,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was store correctly", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
             return "edit?faces-redirect=true&isCreateProject=false&projectId=" + projectEntity.getId() + "";
         }
         return "";
@@ -168,7 +164,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was update correctly", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
             return "edit?faces-redirect=true&isCreateProject=false&projectId=" + projectEntity.getId() + "";
         }
         return "";
@@ -180,7 +176,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was store correctly", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -193,7 +189,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " was update correctly", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -382,10 +378,6 @@ public class ProjectBean extends Bean implements Serializable {
         supplierProcList = supplierProcService.findAll();
     }
 
-    private void loadLogoList() {
-        logoList = logoService.findAll();
-    }
-
     private void loadCurrencyList() {
         currencyList = currencyService.findAll();
     }
@@ -420,10 +412,6 @@ public class ProjectBean extends Bean implements Serializable {
 
     public List<SupplierProcEntity> getSupplierProcList() {
         return supplierProcList;
-    }
-
-    public List<LogoEntity> getLogoList() {
-        return logoList;
     }
 
     public List<ProjectCurrencyEntity> getProjectCurrencyList() {
@@ -466,61 +454,6 @@ public class ProjectBean extends Bean implements Serializable {
         this.selectedGlobalTexts = selectedGlobalTexts;
     }
 
-    @Inject
-    private LogoBean logoBean;
-
-    private Integer currentLogo;
-
-
-    public void startReportLogo() {
-        currentLogo = 0;
-        logoBean.restart();
-    }
-
-    public void startClientLogo() {
-        currentLogo = 1;
-        logoBean.restart();
-    }
-
-    public void startClientFooter() {
-        currentLogo = 2;
-        logoBean.restart();
-    }
-
-    public void startDefaultLogo() {
-        currentLogo = 3;
-        logoBean.restart();
-    }
-
-    public void startDefaultFooter() {
-        currentLogo = 4;
-        logoBean.restart();
-    }
-
-    public void saveLogo() {
-        log.info("saving logo......");
-        if (logoBean.saveForProject()) {
-            loadLogoList();
-            switch (currentLogo) {
-                case 0://report logo
-                    projectEntity.setReportLogo(logoBean.getLogo());
-                    break;
-                case 1: //client logo
-                    projectEntity.setClientLogo(logoBean.getLogo());
-                    break;
-                case 2: //client footer
-                    projectEntity.setClientFooter(logoBean.getLogo());
-                    break;
-                case 3://default logo
-                    projectEntity.setDefaultLogo(logoBean.getLogo());
-                    break;
-                case 4:// default footer
-                    projectEntity.setDefaultFooter(logoBean.getLogo());
-                    break;
-
-            }
-        }
-    }
 
     @Inject
     private CurrencyBean currencyBean;

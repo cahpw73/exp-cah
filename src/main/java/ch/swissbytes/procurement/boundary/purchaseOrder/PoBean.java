@@ -145,12 +145,7 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            log.info("purchase order created [" + purchaseOrder.getId() + "]");
-            sortPurchaseListByVariationAndDoUpdate();
-            sortScopeSupplyAndDoUpdate();
-            log.info("Project Id: " + purchaseOrder);
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
-            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+            return doLastOperationsOverPO(true);
         }
         return "";
     }
@@ -161,11 +156,7 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            log.info("purchase order created [" + purchaseOrder.getId() + "]");
-            sortPurchaseListByVariationAndDoUpdate();
-            sortScopeSupplyAndDoUpdate();
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
-            return backToList();
+            return doLastOperationsOverPO(false);
         }
         return "";
     }
@@ -176,12 +167,7 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            log.info("purchase order updated [" + purchaseOrder.getId() + "]");
-            sortPurchaseListByVariationAndDoUpdate();
-            sortScopeSupplyAndDoUpdate();
-            log.info("Project Id: " + poId);
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
-            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+            doLastOperationsOverPO(true);
         }
         return "";
     }
@@ -192,13 +178,16 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            log.info("purchase order updated [" + purchaseOrder.getId() + "]");
-            sortPurchaseListByVariationAndDoUpdate();
-            sortScopeSupplyAndDoUpdate();
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
-            return backToList();
+            return doLastOperationsOverPO(false);
         }
         return "";
+    }
+    private String doLastOperationsOverPO(boolean edit){
+        log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+        sortPurchaseListByVariationAndDoUpdate();
+        sortScopeSupplyAndDoUpdate();
+        Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved.", null);
+        return !edit?backToList():"edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
     }
 
     public String doSaveView(){
@@ -229,7 +218,7 @@ public class PoBean extends Bean {
     }
 
     private void sortPurchaseListByVariationAndDoUpdate(){
-        List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(),purchaseOrder.getPo());
+        List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(), purchaseOrder.getPo());
         sortBean.sortPurchaseOrderEntity(poList);
         int index = 1;
         for(PurchaseOrderEntity po : poList){
@@ -359,8 +348,6 @@ public class PoBean extends Bean {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");
         }
-
-
     }
 
     public BigDecimal calculateProjectValue(){

@@ -59,10 +59,13 @@ public class CashflowBean implements Serializable {
     }
 
     public void loadCashflow(final Long poId){
-        cashflow = cashflowService.findByPoId(poId).get(0);
-        cashflowDetailList = cashflowService.findDetailByCashflowId(cashflow.getId());
-        if(!cashflowDetailList.isEmpty()) {
-            sortBean.sortCashFlowDetailEntity(cashflowDetailList);
+        List<CashflowEntity> list=cashflowService.findByPoId(poId);
+        if(!list.isEmpty()) {
+            cashflow = list.get(0);
+            cashflowDetailList = cashflowService.findDetailByCashflowId(cashflow.getId());
+            if (!cashflowDetailList.isEmpty()) {
+                sortBean.sortCashFlowDetailEntity(cashflowDetailList);
+            }
         }
     }
 

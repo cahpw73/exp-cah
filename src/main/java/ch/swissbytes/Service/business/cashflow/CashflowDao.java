@@ -22,9 +22,11 @@ public class CashflowDao extends GenericDao<CashflowEntity> implements Serializa
     private static final Logger log = Logger.getLogger(CashflowDao.class.getName());
 
 
-    public void doSave(CashflowEntity entity){
+    public CashflowEntity doSave(CashflowEntity entity){
         super.save(entity);
+        return entity;
     }
+
 
     public void doUpdate(CashflowEntity detachedEntity){
        super.update(detachedEntity);
