@@ -50,7 +50,7 @@ public class TextService implements Serializable {
             dao.doSave(entity);
         }
         for(ClausesEntity ps: entity.getClausesList()){
-            if(ps.getId() >= 1000){
+            if(ps.getId() >= 1000 || ps.getId() < 0){
                 ps.setId(null);
                 ps.setText(entity);
             }
