@@ -252,16 +252,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         dao.save(purchaseOrderEntity);
-        //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
-        //items
-        //itemService.doSave(po.getScopeSupplyList(),purchaseOrderEntity);
-        //deliverable
         deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
-        //CashFlow
         cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
-        //Text
-        //textService.doSave(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
 
         return purchaseOrderEntity;
     }
@@ -280,10 +273,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         //deliverable
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //cashFlow
-        /*cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
+        cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
         textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
-*/
+
 
 
         return purchaseOrderEntity;

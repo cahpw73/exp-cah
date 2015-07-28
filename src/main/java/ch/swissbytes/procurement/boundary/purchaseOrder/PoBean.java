@@ -145,12 +145,13 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            /*log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
             log.info("Project Id: " + purchaseOrder);
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
-            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved", null);
+            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";*/
+            return doLastOperationsOverPO(true);
         }
         return "";
     }
@@ -161,11 +162,12 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            /*log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was save correctly", null);
-            return backToList();
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved", null);
+            return backToList();*/
+            return doLastOperationsOverPO(false);
         }
         return "";
     }
@@ -176,12 +178,13 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+            doLastOperationsOverPO(true);
+            /*log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
             log.info("Project Id: " + poId);
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
-            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved", null);
+            return "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";*/
         }
         return "";
     }
@@ -192,13 +195,21 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+           /* log.info("purchase order updated [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
-            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " was update correctly", null);
-            return backToList();
+            Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved", null);
+            return backToList();*/
+            return doLastOperationsOverPO(false);
         }
         return "";
+    }
+    private String doLastOperationsOverPO(boolean edit){
+        log.info("purchase order updated [" + purchaseOrder.getId() + "]");
+        sortPurchaseListByVariationAndDoUpdate();
+        sortScopeSupplyAndDoUpdate();
+        Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved", null);
+        return !edit?backToList():"edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
     }
 
     public String doSaveView(){
