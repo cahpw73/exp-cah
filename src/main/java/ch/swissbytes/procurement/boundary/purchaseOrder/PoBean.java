@@ -240,7 +240,7 @@ public class PoBean extends Bean {
     }
 
     private void sortPurchaseListByVariationAndDoUpdate(){
-        List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(),purchaseOrder.getPo());
+        List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(), purchaseOrder.getPo());
         sortBean.sortPurchaseOrderEntity(poList);
         int index = 1;
         for(PurchaseOrderEntity po : poList){

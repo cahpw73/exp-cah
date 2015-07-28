@@ -46,10 +46,15 @@ public class CashflowService implements Serializable {
 
     public void doUpdate(CashflowEntity entity,POEntity po){
         entity.setLastUpdate(new Date());
-        if(entity.getStatusEnum()==null){
+        if(entity.getId()!=null){
+            dao.doUpdate(entity);
+        }else{
             entity.setStatusEnum(StatusEnum.ENABLE);
+            entity.setPo(po);
+            dao.doSave(entity);
         }
-        dao.doUpdate(entity);
+
+
         for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
             if(cf.getId() < 0L) {
                 cf.setId(null);
