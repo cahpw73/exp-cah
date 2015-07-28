@@ -38,9 +38,17 @@ public class TextService implements Serializable {
         }
     }
 
-    public void doUpdate(TextEntity entity) {
-        entity.setLastUpdate(new Date());
-        dao.doUpdate(entity);
+    public void doUpdate(TextEntity entity, POEntity po) {
+        if(entity.getId()!=null){
+            entity.setLastUpdate(new Date());
+            dao.doUpdate(entity);
+
+        }else{
+            entity.setLastUpdate(new Date());
+            entity.setStatus(StatusEnum.ENABLE);
+            entity.setPo(po);
+            dao.doSave(entity);
+        }
         for(ClausesEntity ps: entity.getClausesList()){
             if(ps.getId() >= 1000){
                 ps.setId(null);
@@ -54,7 +62,7 @@ public class TextService implements Serializable {
 
     public TextEntity findByPoId(Long poEntityId) {
         List<TextEntity> list = dao.findByPoId(poEntityId);
-        return !list.isEmpty() ? list.get(0) : null;
+        return !list.isEmpty() ? list.get(0) : new TextEntity();
     }
 
     @Transactional

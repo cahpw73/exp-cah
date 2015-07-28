@@ -105,6 +105,14 @@ public class PoListBean implements Serializable {
         list = service.purchaseListByProject(Long.parseLong(projectId));
     }
 
+    public void doSavePOONewVariation(){
+        log.info("do save POO with variation");
+        service.savePOOnProcurementNewVariation(purchaseOrderToVariation);
+        sortPurchaseListByVariationAndDoUpdate();
+        maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+        list = service.purchaseListByProject(Long.parseLong(projectId));
+    }
+
     private void sortPurchaseListByVariationAndDoUpdate(){
         List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrderToVariation.getProjectEntity().getId(),purchaseOrderToVariation.getPo());
         sortBean.sortPurchaseOrderEntity(poList);
@@ -123,7 +131,7 @@ public class PoListBean implements Serializable {
         sortBean.sortPurchaseOrderEntity(pOrderList);
         String lastVarNumber = pOrderList.get(pOrderList.size()-1).getVariation();
         generateVariationNumber(lastVarNumber);
-        purchaseOrderToVariation = service.findById(entity.getId());
+        purchaseOrderToVariation = service.findPOToCrateVarition(entity.getId());
         prepareToSaveWithNewVariation(purchaseOrderToVariation);
 
     }
@@ -133,12 +141,9 @@ public class PoListBean implements Serializable {
         purchaseOrderToVariation.getPoEntity().setId(null);
         purchaseOrderToVariation.getPoEntity().setPoProcStatus(POStatusEnum.READY);
         purchaseOrderToVariation.setVariation(newVariationNumber);
-        purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
+        //purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
         purchaseOrderToVariation.getPoEntity().getCashflow().setId(null);
         for(CashflowDetailEntity entity : purchaseOrderToVariation.getPoEntity().getCashflow().getCashflowDetailList()){
-            entity.setId(null);
-        }
-        for(ItemEntity entity : purchaseOrderToVariation.getPoEntity().getItemList()){
             entity.setId(null);
         }
         for(DeliverableEntity entity : purchaseOrderToVariation.getPoEntity().getDeliverables()){

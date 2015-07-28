@@ -243,6 +243,29 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
+    public PurchaseOrderEntity savePOOnProcurementNewVariation(PurchaseOrderEntity purchaseOrderEntity){
+        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+        purchaseOrderEntity.setPoEntity(po);
+
+        purchaseOrderEntity.setLastUpdate(new Date());
+        purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
+        purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        dao.save(purchaseOrderEntity);
+        //requisition daos
+        requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
+        //items
+        //itemService.doSave(po.getScopeSupplyList(),purchaseOrderEntity);
+        //deliverable
+        deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
+        //CashFlow
+        cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
+        //Text
+        //textService.doSave(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
+
+        return purchaseOrderEntity;
+    }
+
+    @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
@@ -258,7 +281,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //cashFlow
         cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
-        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity());
+        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
 
 
         return purchaseOrderEntity;
@@ -281,6 +304,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.setCashflow(poe.getPoEntity().getCashflow());
         po.setTextEntity(poe.getPoEntity().getTextEntity());
     }
+
     public PurchaseOrderEntity findById(Long id){
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
@@ -296,11 +320,34 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
             po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
             po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
-            List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
-            po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);
+            if(po.getPoEntity().getTextEntity()!=null) {
+                List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
+                po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);
+            }
         }
         return list.isEmpty()?null:list.get(0);
     }
+
+    public PurchaseOrderEntity findPOToCrateVarition(Long id){
+        List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
+        PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
+        if(po.getPoEntity().getSupplier()!=null){
+            po.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPoEntity().getSupplier().getId()));
+        }
+        if(po!= null) {
+            po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
+            po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));
+            po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
+            //po.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
+            po.getPoEntity().setCashflow(cashflowService.findByPoId(po.getPoEntity().getId()).get(0));
+            po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+           /* po.getPoEntity().setTextEntity(textService.findByPoId(po.getPoEntity().getId()));
+            List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPoEntity().getTextEntity().getId());
+            po.getPoEntity().getTextEntity().getClausesList().addAll(clausesEntities);*/
+        }
+        return list.isEmpty()?null:list.get(0);
+    }
+
     public List<PurchaseOrderEntity> findByProjectIdAndPo(final Long projectId, final String poNo){
         return dao.findByProjectAndPo(projectId,poNo);
     }
