@@ -107,13 +107,13 @@
                     <p:ajax process="@this" update=":textSnippetDlg"/>
                 </h:commandLink>
                 <br/>
-                <p:commandLink value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
+                <p:commandLink  id="removeClausesId" value="#{msgs['lbl.remove']}" action="#{poTextBean.removeClauses}"
                                onclick="doChangeProc();"
                                update="clausesAuxDt,standardTextDt,bbtnt" process="@this,clausesAuxDt"
                                styleClass="btn btn-primary btn-commandLink-primeFaces"
                                style="margin-top: 20px!important;">
                     <p:confirm header="#{msgs['lbl.confirmation']}"
-                               message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                               message="#{msgs['po.text.lbl.message.remove']}"
                                icon="ui-icon-alert">
                     </p:confirm>
                 </p:commandLink>

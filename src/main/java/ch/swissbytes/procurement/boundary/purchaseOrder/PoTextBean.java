@@ -78,21 +78,21 @@ public class PoTextBean implements Serializable {
         //check this if we can improve. it takes about 1 second.
         log.info("loadText");
         textEntity = textService.findByPoId(poEntity.getId());
-        if(textEntity!=null) {
-            clausesEntities = textService.findClausesByTextId(textEntity.getId());
-        }else{
-            textEntity=new TextEntity();
-        }
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
-        droppedTextSnippetList = clausesEntities;
-        List<ProjectTextSnippetEntity> listToRemove = new ArrayList<>();
-        for(ClausesEntity ce : droppedTextSnippetList){
-            if(ce.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
-                ProjectTextSnippetEntity pt =  projectTextSnippetService.findById(ce.getProjectTextSnippet().getId());
-                listToRemove.add(pt);
+        if(textEntity!=null){
+            clausesEntities = textService.findClausesByTextId(textEntity.getId());
+
+            droppedTextSnippetList = clausesEntities;
+            List<ProjectTextSnippetEntity> listToRemove = new ArrayList<>();
+            for(ClausesEntity ce : droppedTextSnippetList){
+                if(ce.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
+                    ProjectTextSnippetEntity pt =  projectTextSnippetService.findById(ce.getProjectTextSnippet().getId());
+                    listToRemove.add(pt);
+                }
             }
+            textSnippetList.removeAll(listToRemove);
         }
-        textSnippetList.removeAll(listToRemove);
+
     }
 
     public void onStandardTextDrop(DragDropEvent ddEvent) {

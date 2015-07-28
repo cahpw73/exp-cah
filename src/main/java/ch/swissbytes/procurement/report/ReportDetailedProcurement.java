@@ -15,4 +15,8 @@ public class ReportDetailedProcurement extends ReportProject {
                                      Configuration configuration, ProjectEntity project,  final Map<String, Boolean> sortMap) {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
     }
+
+    protected void loadAdditionalParameters() {
+        addParameters("SUBREPORT_DIR", "reports/procurement/detailedProcurementReport/");
+    }
 }

@@ -8,7 +8,7 @@
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\detailedProcurementReport\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
 	<queryString>

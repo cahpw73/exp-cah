@@ -92,7 +92,7 @@
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
                                            process=":editForm:itemsGroup"
                                            action="#{projectBean.confirmItem(_pt)}"
-                                           update="projectTextDt :editForm:projectGlobalMsg" async="false"/>
+                                           update="projectTextDt :glbMsgs" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
                                            action="#{projectBean.cancelEditionItem(_pt)}" update="projectTextDt"

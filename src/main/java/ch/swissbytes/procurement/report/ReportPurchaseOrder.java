@@ -142,10 +142,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private BigDecimal getSumTotalCost(){
         BigDecimal totalAmount = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         for(ScopeSupplyEntity entity : this.scopeSupplyList){
-            if(entity.getProjectCurrency()!=null){
-                totalAmount = totalAmount.add(Util.currencyToCurrency(entity.getTotalCost(),entity.getProjectCurrency().getExchangeRate(),po.getPoEntity().getCurrency().getExchangeRate()));
-            }else{
-                totalAmount = totalAmount.add(entity.getTotalCost());
+            if(entity.getTotalCost()!=null){
+                if(entity.getProjectCurrency()!=null){
+                    totalAmount = totalAmount.add(Util.currencyToCurrency(entity.getTotalCost(),entity.getProjectCurrency().getExchangeRate(),po.getPoEntity().getCurrency().getExchangeRate()));
+                }else{
+                    totalAmount = totalAmount.add(entity.getTotalCost());
+                }
             }
         }
         return totalAmount;

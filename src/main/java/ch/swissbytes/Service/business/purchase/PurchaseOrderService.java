@@ -24,6 +24,7 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -243,6 +244,29 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
+    public PurchaseOrderEntity savePOOnProcurementNewVariation(PurchaseOrderEntity purchaseOrderEntity){
+        POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
+        purchaseOrderEntity.setPoEntity(po);
+
+        purchaseOrderEntity.setLastUpdate(new Date());
+        purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
+        purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        dao.save(purchaseOrderEntity);
+        //requisition daos
+        requisitionDao.doSave(purchaseOrderEntity.getPoEntity(),po.getRequisitions());
+        //items
+        //itemService.doSave(po.getScopeSupplyList(),purchaseOrderEntity);
+        //deliverable
+        deliverableDao.doSave(purchaseOrderEntity.getPoEntity(),po.getDeliverables());
+        //CashFlow
+        cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(),po);
+        //Text
+        //textService.doSave(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
+
+        return purchaseOrderEntity;
+    }
+
+    @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
@@ -250,15 +274,16 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
         //requisition daos
-       /* requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
+       requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //items
         itemService.doUpdate(po.getScopeSupplyList(), purchaseOrderEntity);
         //deliverable
         deliverableDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //cashFlow
-        cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
+        /*cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
-        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity());*/
+        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
+*/
 
 
         return purchaseOrderEntity;
@@ -281,6 +306,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.setCashflow(poe.getPoEntity().getCashflow());
         po.setTextEntity(poe.getPoEntity().getTextEntity());
     }
+
     public PurchaseOrderEntity findById(Long id){
         List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
@@ -306,6 +332,27 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return list.isEmpty()?null:list.get(0);
     }
+
+    public PurchaseOrderEntity findPOToCrateVarition(Long id){
+        List<PurchaseOrderEntity>list=dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
+        PurchaseOrderEntity po=list.isEmpty()?null:list.get(0);
+        if(po.getPoEntity().getSupplier()!=null){
+            po.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPoEntity().getSupplier().getId()));
+        }
+        if(po!= null) {
+            po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
+            po.getPoEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPoEntity().getId()));
+            po.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPoEntity().getId()));
+            List<CashflowEntity> cashflows =cashflowService.findByPoId(po.getPoEntity().getId());
+            if(!cashflows.isEmpty()) {
+                po.getPoEntity().setCashflow(cashflows.get(0));
+                po.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPoEntity().getCashflow().getId()));
+            }
+
+        }
+        return list.isEmpty()?null:list.get(0);
+    }
+
     public List<PurchaseOrderEntity> findByProjectIdAndPo(final Long projectId, final String poNo){
         return dao.findByProjectAndPo(projectId,poNo);
     }
@@ -332,8 +379,12 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public BigDecimal calculateProjectValue (List<ScopeSupplyEntity> items,ProjectCurrencyEntity currency){
-        BigDecimal poValue=calculatePOValue(items,currency);
-        return poValue!=null&&currency!=null?poValue.multiply(currency.getCurrencyFactor()):null;
+        BigDecimal poValue = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
+        if(currency !=null){
+            poValue = calculatePOValue(items,currency);
+            poValue = poValue!=null?poValue.multiply(currency.getCurrencyFactor()):null;
+        }
+        return poValue;
     }
     public BigDecimal calculatePOValue(List<ScopeSupplyEntity> list,ProjectCurrencyEntity currency){
         BigDecimal poValue=new BigDecimal("0");
