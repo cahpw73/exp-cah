@@ -250,7 +250,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         dao.update(purchaseOrderEntity);
         //requisition daos
-        requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
+       /* requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //items
         itemService.doUpdate(po.getScopeSupplyList(), purchaseOrderEntity);
         //deliverable
@@ -258,7 +258,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //cashFlow
         cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
-        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity());
+        textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity());*/
 
 
         return purchaseOrderEntity;
