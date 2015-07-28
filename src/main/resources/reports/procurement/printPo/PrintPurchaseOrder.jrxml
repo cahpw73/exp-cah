@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="144"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -457,7 +457,7 @@
 							</line>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="84abf470-d3ba-48e2-ae66-db94ad4fbf8f" x="0" y="25" width="60" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" markup="styled">
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{strTotalCost}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{strTotalCost}+"</style>":null]]></textFieldExpression>
@@ -494,7 +494,7 @@
 							</line>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" x="0" y="25" width="60" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" markup="styled">
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
