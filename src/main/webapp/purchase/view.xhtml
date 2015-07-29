@@ -41,7 +41,7 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.project.type.required']}"/>
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.project}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.projectEntity.projectNumber}"/>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.supplier']}"/>
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.supplier}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.company}"/>
                                 </div>
                             </div>
                         </div>
@@ -110,14 +110,14 @@
                                 <div class="inputText-general-po">
                                     <h:inputTextarea style="height: 90px;" readonly="true"
                                                      styleClass="form-control"
-                                                     value="#{purchaseOrderView.supplierView.address}"/>
+                                                     value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.street}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
                                              style="height: 90px;"
-                                             value="#{purchaseOrderView.supplierView.contactDetail}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.phone}"/>
                         </div>
                     </div>
                     <div class="row">
@@ -135,13 +135,13 @@
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.supplierView.contactName}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poEntity.contactEntity.fullName}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true"  styleClass="form-control"
-                                             value="#{purchaseOrderView.supplierView.emailAddress}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.poEntity.contactEntity.email}"/>
                         </div>
                     </div>
                     <div class="row">

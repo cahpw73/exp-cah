@@ -101,11 +101,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, SupplierEntity supplierEntity, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities) {
+        //por.setProject(por.getProjectEntity().getProjectNumber());
         PurchaseOrderEntity entity = dao.update(por);
+        dao.updatePOEntity(por.getPoEntity());
         supplierDao.update(supplierEntity);
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
-       // attachmentDao.update(attachmentEntities, entity);
         return por;
     }
 
@@ -121,8 +122,6 @@ public class PurchaseOrderService extends Service implements Serializable {
             PurchaseOrderEntity entity = list.get(0);
             entity.setStatus(getStatusDelete());
             dao.update(entity);
-            
-         //   deleteAttachment(purchaseOrderId);
             deleteComment(purchaseOrderId);
             deleteScopeSupply(purchaseOrderId);
             deleteSupplier(purchaseOrderId);

@@ -71,7 +71,7 @@
                                 <div class="inputText-general-po">
                                     <h:inputText id="project" jsf:placeholder="#{msgs['po.ph.project']}" maxlength="50"
                                                  disabled="true"
-                                                 value="#{purchaseOrderEdit.poEdit.project}" class="form-control" required="true"
+                                                 value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}" class="form-control" required="true"
                                                  requiredMessage="#{msgs['po.lbl.project.required']}"/>
                                     <p:message for="project" id="msgProject"/>
                                 </div>
