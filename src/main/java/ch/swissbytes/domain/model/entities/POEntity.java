@@ -190,7 +190,6 @@ public class POEntity implements Serializable{
     }
 
     public void setContactEntity(ContactEntity contactEntity) {
-        System.out.println("contact entity "+contactEntity);
         this.contactEntity = contactEntity;
     }
 

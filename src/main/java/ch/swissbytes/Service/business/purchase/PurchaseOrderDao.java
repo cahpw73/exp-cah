@@ -3,17 +3,13 @@ package ch.swissbytes.Service.business.purchase;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 
 import ch.swissbytes.domain.model.entities.POEntity;
-import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
-import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.types.StatusEnum;
-import ch.swissbytes.fqmes.util.Purchase;
 import org.apache.commons.lang3.StringUtils;
 import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +34,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         query.setParameter("DELETED", StatusEnum.DELETED.getId());
         if (f != null) {
             log.info("filtering.....");
-            SearchPurchase filter = (SearchPurchase) f;
+          /*  SearchPurchase filter = (SearchPurchase) f;
             if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject())) {
                 query.setParameter("PROJECT", "%" + filter.getProject().trim() + "%");
             }
@@ -50,7 +46,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
             }
             if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
                 query.setParameter("PO_TITLE", "%" + filter.getPoTitle().trim() + "%");
-            }
+            }*/
         } else {
             log.info("filter is null");
         }
@@ -66,7 +62,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb = new StringBuilder();
         sb.append(" AND x.status.id<>:DELETED ");
         if (f != null) {
-            log.info("filtering.....");
+           /* log.info("filtering.....");
             SearchPurchase filter = (SearchPurchase) f;
             if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject())) {
                 sb.append(" AND lower(x.project) like lower(:PROJECT)");
@@ -79,7 +75,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
             }
             if (StringUtils.isNotBlank(filter.getVariation()) && StringUtils.isNotEmpty(filter.getVariation())) {
                 sb.append(" AND lower(x.variation) like lower(:VARIATION)");
-            }
+            }*/
         } else {
             log.info("filter is null");
         }
@@ -163,7 +159,8 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     @Override
     public String orderBy(String field, boolean ascending) {
-        return "ORDER BY " + field;
+        //return "ORDER BY " + field;
+        return "ORDER BY po,orderedVariation";
     }
 
     public List<PurchaseOrderEntity> findByProjectAndPo(Long projectId, String poNo) {

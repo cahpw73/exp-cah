@@ -1,11 +1,14 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
+import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
@@ -47,6 +50,8 @@ public class PoListBean implements Serializable {
 
     @Inject
     private TextService textService;
+    @Inject
+    private PurchaseOrderDao dao;
 
     private String projectId;
 
@@ -64,6 +69,10 @@ public class PoListBean implements Serializable {
 
     private PurchaseOrderEntity purchaseOrderToVariation;
 
+    private PurchaseOrderTbl poList;
+
+
+
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
@@ -72,6 +81,7 @@ public class PoListBean implements Serializable {
         purchaseOrderToVariation = new PurchaseOrderEntity();
         pOrderList = new ArrayList<>();
         maxVariationsList = new ArrayList<>();
+        poList=new PurchaseOrderTbl(dao,new Filter());
     }
 
     public void load() {
@@ -354,5 +364,9 @@ public class PoListBean implements Serializable {
 
     public void setNewVariationNumber(String newVariationNumber) {
         this.newVariationNumber = newVariationNumber;
+    }
+
+    public PurchaseOrderTbl getPoList() {
+        return poList;
     }
 }

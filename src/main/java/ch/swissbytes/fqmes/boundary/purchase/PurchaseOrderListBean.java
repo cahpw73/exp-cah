@@ -1,5 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
+import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -26,9 +27,11 @@ public class PurchaseOrderListBean implements Serializable {
     private PurchaseOrderViewDao dao;
 
     @Inject
+    private PurchaseOrderDao poDao;
+
+    @Inject
     private PurchaseOrderService purchaseOrderService;
 
-    private PurchaseOrderTbl tbl;
 
     private PurchaseOrderViewTbl vTbl;
 
@@ -45,14 +48,12 @@ public class PurchaseOrderListBean implements Serializable {
     public void create(){
         log.info("creating bean purchase list");
         log.log(Level.FINER, "FINER log");
-        //tbl=new PurchaseOrderTbl(dao,searchPurchase);
         vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
         searchPurchase=new SearchPurchase();
     }
 
     private void  search(){
         log.info("search..."+searchPurchase);
-        //tbl= new PurchaseOrderTbl(dao,searchPurchase);
         vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
     }
 
@@ -77,10 +78,6 @@ public class PurchaseOrderListBean implements Serializable {
     @PreDestroy
     public void destroy(){
         log.info("destroying bean");
-    }
-
-    public PurchaseOrderTbl getList(){
-        return tbl;
     }
 
     public PurchaseOrderViewTbl getListView() {
