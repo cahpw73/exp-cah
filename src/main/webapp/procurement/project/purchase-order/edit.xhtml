@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Users</ui:define>
     <f:metadata>
@@ -30,7 +31,7 @@
                             <a href="#headerPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.header']}</a>
                         </li>
                         <li>
-                            <a href="#supplierPo" role="tab"
+                            <a href="#supplierPo" role="tab" jsfc="#{poBean.loadPaneActive}"
                                data-toggle="tab">#{msgs['purchase.order.tab.supplier']}</a>
                         </li>
                         <li>
