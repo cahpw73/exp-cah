@@ -217,6 +217,10 @@ public class PoBean extends Bean {
         return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
+    public void loadPaneActive(){
+        log.info("cargando pane active");
+    }
+
     private void sortPurchaseListByVariationAndDoUpdate(){
         List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(), purchaseOrder.getPo());
         sortBean.sortPurchaseOrderEntity(poList);

@@ -100,9 +100,8 @@
                                for="poVarNumber" value="#{msgs['po.main.data.lbl.var.number']}"/>
 
                 <div style="width: 100px; float: left;">
-                    <h:inputText id="poVarNumber"
+                    <h:inputText id="poVarNumber" maxlength="50"
                                  value="#{poBean.purchaseOrder.variation}"
-                                 maxlength="50"
                                  styleClass="form-control" required="true"
                                  requiredMessage="#{msgs['po.variation.valid']}"
                                  rendered="#{poBean.beingEdited}"/>
