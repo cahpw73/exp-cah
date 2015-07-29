@@ -348,3 +348,16 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(701,1304,17);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(702,1400,17);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(703,1404,17);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(704,506,17);
+
+
+
+insert into supplier_proc (id,company,street,last_update,status,supplier_id,phone)
+select id,supplier,address,current_date,0,'',contact_detail
+from supplier 
+where status_id=1;
+
+delete from contact;
+insert into contact (id,first_name,email,status,last_update,supplier_id,sur_name)
+select id,contact_name,email_address,0,CURRENT_DATE,id,''
+from supplier 
+where status_id=1;

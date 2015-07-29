@@ -129,8 +129,17 @@
                         <div class="form-group input-general-po">
                             <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
                             <div class="inputText-general-po">
-                                <h:inputText jsf:placeholder="#{msgs['po.ph.supplier']}"  maxlength="50"
-                                             value="#{purchaseOrderEdit.supplierEdit.supplier}" class="form-control" />
+                                <p:selectOneMenu styleClass="menu-po-status"
+                                                 filter="true"
+                                                 style="max-width: 300px;"
+                                                 filterMatchMode="startsWith"
+                                                 value="#{purchaseOrderEdit.poEdit.poEntity.supplier}"
+                                        converter="supplierConverter">
+                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItems var="_supplier" value="#{supplierProcList.suppliers}"
+                                                   itemLabel="#{_supplier.company}" itemValue="#{_supplier}" />
+                                    <p:ajax async="false" event="change" update="supplierAddress supplierPhone"/>
+                                </p:selectOneMenu>
                             </div>
                         </div>
                     </div>
@@ -149,15 +158,18 @@
                                 <h:outputLabel  class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="inputText-general-po">
-                                    <p:inputTextarea maxlength="450" jsf:placeholder="#{msgs['po.ph.address']}"
+                                    <p:inputTextarea id="supplierAddress" maxlength="450" jsf:placeholder="#{msgs['po.ph.address']}"
                                                      style="height: 90px;"
-                                                     value="#{purchaseOrderEdit.supplierEdit.address}" class="form-control" />
+                                                     readonly="true"
+                                                     value="#{purchaseOrderEdit.poEdit.poEntity.supplier.street}" class="form-control" />
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                                <p:inputTextarea maxlength="950" type="text" value="#{purchaseOrderEdit.supplierEdit.contactDetail}"
+                                <p:inputTextarea maxlength="950" type="text" value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
+                                                 id="supplierPhone"
                                                  style="height: 90px;"
+                                                 readonly="true"
                                                  jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
                             </div>
                     </div>
