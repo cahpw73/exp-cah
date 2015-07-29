@@ -131,14 +131,14 @@
                             <div class="inputText-general-po">
                                 <p:selectOneMenu styleClass="menu-po-status"
                                                  filter="true"
-                                                 style="max-width: 300px;"
+                                                 style="min-width:300px;max-width: 300px;"
                                                  filterMatchMode="startsWith"
                                                  value="#{purchaseOrderEdit.poEdit.poEntity.supplier}"
                                         converter="supplierConverter">
                                     <f:selectItem itemLabel="Select One" itemValue="" />
                                     <f:selectItems var="_supplier" value="#{supplierProcList.suppliers}"
                                                    itemLabel="#{_supplier.company}" itemValue="#{_supplier}" />
-                                    <p:ajax async="false" event="change" update="supplierAddress supplierPhone"/>
+                                    <p:ajax async="false" event="change" update="supplierAddress supplierPhone contactId contactEmail"/>
                                 </p:selectOneMenu>
                             </div>
                         </div>
@@ -188,14 +188,27 @@
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText maxlength="100" value="#{purchaseOrderEdit.supplierEdit.contactName}"
-                                                 jsf:placeholder="#{msgs['po.ph.contact.name']}" class="form-control"/>
+
+                                    <p:selectOneMenu styleClass="menu-po-status"
+                                                     filter="true"
+                                                     id="contactId"
+                                                     style="min-width:300px;max-width: 300px;"
+                                                     filterMatchMode="startsWith"
+                                                     value="#{purchaseOrderEdit.poEdit.poEntity.contactEntity}"
+                                                     converter="contactConverter">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems var="_contact" value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contacts}"
+                                                       itemLabel="#{_contact.fullName}" itemValue="#{_contact}" />
+                                        <p:ajax async="false" event="change" update="contactEmail"/>
+                                    </p:selectOneMenu>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <p:inputTextarea style="max-height: 29px;"
-                                             maxlength="950" value="#{purchaseOrderEdit.supplierEdit.emailAddress}"
+                                             id="contactEmail"
+                                             readonly="true"
+                                             maxlength="950" value="#{purchaseOrderEdit.poEdit.poEntity.contactEntity.email}"
                                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}" class="form-control"/>
                         </div>
                     </div>
