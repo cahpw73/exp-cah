@@ -46,7 +46,6 @@ public class SupplierProcList implements Serializable {
         if(suppliers==null||suppliers.size()==0){
             suppliers=service.findAll();
         }
-        System.out.println("size "+suppliers.size());
         return suppliers;
     }
 

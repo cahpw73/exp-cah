@@ -66,7 +66,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
 
     @Override
     public String orderBy(){
-        return " ORDER BY x.supplierId , x.company";
+        return " ORDER BY  x.company";
     }
 
     public List<SupplierProcEntity> findByCompany(String company) {
@@ -86,6 +86,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         sb.append(" SELECT s ");
         sb.append(" FROM SupplierProcEntity s ");
         sb.append(" WHERE s.status = :ENABLE ");
+        sb.append(" ORDER BY s.company ");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);
@@ -97,7 +98,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         sb.append(" FROM SupplierCategory sc ");
         sb.append(" WHERE sc.status = :ENABLE ");
         sb.append(" AND sc.category.id = :CATEGORY_ID ");
-        sb.append(" AND sc.supplier.country IS NOT NULL ");
+        sb.append(" AND sc.supplier.country IS NOT NULL and length(trim(sc.supplier.country))>0");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         params.put("CATEGORY_ID",categoryId!=null?categoryId:0);
