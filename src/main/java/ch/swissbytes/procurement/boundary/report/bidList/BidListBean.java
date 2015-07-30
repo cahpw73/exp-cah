@@ -76,7 +76,7 @@ public class BidListBean implements Serializable {
     }
 
     public void generateReport(){
-        reportProcBean.printBidderList(supplierSelected,packageNo,description,comments,project.getProjectNumber(),project.getTitle());
+        reportProcBean.printBidderList(supplierSelected,packageNo,description,comments,project);
     }
 
     public void selectSupplier(Long idSupplier){

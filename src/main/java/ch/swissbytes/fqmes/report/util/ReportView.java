@@ -29,7 +29,7 @@ public abstract class ReportView implements Serializable {
 
     private final Map<String, Object> parameters = new HashMap<String, Object>();
 
-    private final String DATA_SOURCE="java:/fqm/procurementDS";
+    private final String DATA_SOURCE="java:/fqm/migrateDS";
 
     /***
      *

@@ -1,14 +1,13 @@
 package ch.swissbytes.procurement.report;
 
 
-import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -25,8 +24,8 @@ public class ReportBidderList extends ReportView implements Serializable {
     private String packageNumber;
     private String description;
     private String comments;
-    private String codeProject;
-    private String project;
+   // private String codeProject;
+    private ProjectEntity project;
 
 
 
@@ -37,31 +36,38 @@ public class ReportBidderList extends ReportView implements Serializable {
      * @param locale           {@link Locale}
      */
     public ReportBidderList(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,String comments,String codeProject,String project) {
+                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,String comments,ProjectEntity project) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.suppliers=suppliers;
         this.packageNumber=packageNumber;
         this.description=description;
         this.comments=comments;
-        this.codeProject=codeProject;
+       // this.codeProject=codeProject;
         this.project=project;
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-        loadParamDeliverables();
+        loadParameters();
     }
 
-    private void loadParamDeliverables() {
+    private void loadParameters() {
         if(suppliers==null||suppliers.isEmpty()){
             suppliers=new ArrayList<>();
             suppliers.add(0L);
+        }
+        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
+            addParameters("logo", logo);
+        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(project.getDefaultLogo().getFile());
+            addParameters("logo", logo);
         }
         addParameters("supplier",suppliers);
         addParameters("packageNumber", packageNumber);
         addParameters("description",description);
         addParameters("comments", comments);
-        addParameters("projectCode", codeProject);
-        addParameters("project", project);
+        addParameters("projectCode", project.getProjectNumber());
+        addParameters("project", project.getTitle());
         Date now = new Date();
         now.setHours(23);
         now.setMinutes(59);
@@ -79,19 +85,6 @@ public class ReportBidderList extends ReportView implements Serializable {
     }
 
 
-    public String getCodeProject() {
-        return codeProject;
-    }
 
-    public void setCodeProject(String codeProject) {
-        this.codeProject = codeProject;
-    }
 
-    public String getProject() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project = project;
-    }
 }
