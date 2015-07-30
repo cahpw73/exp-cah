@@ -31,15 +31,15 @@ WHERE STATUS_ID=1;
 
 DELETE FROM MODULE_GRANTED_ACCESS;
 INSERT INTO MODULE_GRANTED_ACCESS (ID,USER_ID,MODULE_SYSTEM,MODULE_ACCESS)
-SELECT row_number() over(),ID,0,TRUE
+SELECT ROW_NUMBER() OVER() ,ID,MS,AC
+FROM (
+SELECT ID,0 AS MS ,TRUE AS AC
 FROM USERS
-WHERE STATUS_ID=1;
-
-INSERT INTO MODULE_GRANTED_ACCESS (ID,USER_ID,MODULE_SYSTEM,MODULE_ACCESS)
-SELECT row_number()  over()+26,ID,1,FALSE
+WHERE STATUS_ID=1
+UNION
+SELECT ID,1 AS MS ,FALSE AS AC
 FROM USERS
-WHERE STATUS_ID=1;
---take care with 26  because it should be calculated according the total of active users; 
+WHERE STATUS_ID=1) TMP_TBL;
 
 
 
@@ -93,12 +93,12 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(402,'SUPPLIER_CREATE',1,'procu
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(403,'SUPPLIER_EDIT',1,'procurement/admin/supplier/edit.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(405,'SUPPLIER_VIEW',1,'procurement/admin/supplier/edit.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(404,'SUPPLIER_DELETE',1,'');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(500,'USER_LIST',1,'procurement/admin/user/list.jsf');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(501,'USER_CREATE',1,'procurement/admin/user/edit.jsf');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(502,'USER_EDIT',1,'procurement/admin/user/edit.jsf');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(503,'USER_VIEW',1,'');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(504,'USER_DELETE',1,'');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(505,'USER_RESET',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(500,'USER_LIST_P',1,'procurement/admin/user/list.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(501,'USER_CREATE_P',1,'procurement/admin/user/edit.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(502,'USER_EDIT_P',1,'procurement/admin/user/edit.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(503,'USER_VIEW_P',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(504,'USER_DELETE_P',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(505,'USER_RESET_P',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(506,'PROFILE',1,'procurement/profile/profile.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(600,'CURRENCY_LIST',1,'procurement/admin/currency/currency.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(601,'CURRENCY_CREATE',1,'');
@@ -120,12 +120,12 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1000,'LOGO_LIST',1,'procuremen
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1001,'LOGO_CREATE',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1002,'LOGO_EDIT',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1003,'LOGO_DELETE',1,'');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1004,'LOGO_LIST',1,'procurement/admin/logo/preview.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1004,'LOGO_LIST_PREVIEW',1,'procurement/admin/logo/preview.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1100,'CLIENT_LIST',1,'procurement/admin/client/list.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1101,'CLIENT_CREATE',1,'procurement/admin/client/edit.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1102,'CLIENT_EDIT',1,'procurement/admin/client/edit.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1103,'CLIENT_DELETE',1,'');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1200,'REPORT_LIST',1,'procurement/report/report.jsf');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1200,'REPORT_LIST_P',1,'procurement/report/report.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1201,'REPORT_DELIVERABLE',1,'procurement/report/deliverables/deliverables.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1202,'REPORT_BIDDER_LIST',1,'procurement/report/bidderList/categorySelection.jsf');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1203,'REPORT_PROJECT_PROCUREMENT',1,'procurement/report/print-reports.jsf');
@@ -163,7 +163,7 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(4,4,13);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(5,5,13);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(6,106,13);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(100,100,10);
---INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(101,101,10);
+INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(101,101,10);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(102,102,10);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(103,103,10);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(104,104,10);
@@ -351,13 +351,23 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(704,506,17);
 
 
 
-insert into supplier_proc (id,company,street,last_update,status,supplier_id,phone)
-select id,supplier,address,current_date,0,'',contact_detail
-from supplier 
-where status_id=1;
+INSERT INTO SUPPLIER_PROC (ID,COMPANY,STREET,LAST_UPDATE,STATUS,SUPPLIER_ID,PHONE)
+SELECT ID,SUPPLIER,ADDRESS,CURRENT_DATE,0,'',CONTACT_DETAIL
+FROM SUPPLIER 
+WHERE STATUS_ID=1 AND SUPPLIER IN (
+			SELECT SUPPLIER FROM SUPPLIER
+			WHERE STATUS_ID=1 AND SUPPLIER IS NOT NULL AND LENGTH(TRIM(SUPPLIER))>0 AND ADDRESS IS NOT NULL AND LENGTH(TRIM(ADDRESS))>0
+			GROUP BY SUPPLIER
+			HAVING COUNT(*)=1
+) ;
 
-delete from contact;
-insert into contact (id,first_name,email,status,last_update,supplier_id,sur_name)
-select id,contact_name,email_address,0,CURRENT_DATE,id,''
-from supplier 
-where status_id=1;
+DELETE FROM CONTACT;
+INSERT INTO CONTACT (ID,FIRST_NAME,EMAIL,STATUS,LAST_UPDATE,SUPPLIER_ID,SUR_NAME)
+SELECT ID,CONTACT_NAME,EMAIL_ADDRESS,0,CURRENT_DATE,ID,''
+FROM SUPPLIER 
+WHERE STATUS_ID=1 AND SUPPLIER IN (
+			SELECT SUPPLIER FROM SUPPLIER
+			WHERE STATUS_ID=1 AND SUPPLIER IS NOT NULL AND LENGTH(TRIM(SUPPLIER))>0 AND ADDRESS IS NOT NULL AND LENGTH(TRIM(ADDRESS))>0
+			GROUP BY SUPPLIER
+			HAVING COUNT(*)=1
+) ;
