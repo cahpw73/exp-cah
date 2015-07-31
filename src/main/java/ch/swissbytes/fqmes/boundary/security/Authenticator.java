@@ -50,9 +50,7 @@ public class Authenticator extends BaseAuthenticator{
 
         final  String passwordHashed= Encode.encode(credentials.getPassword());
         UserEntity userEntity=getUserEntity(credentials.getUserId(),passwordHashed);
-        //if(userCtrl.canAccess(credentials.getUserId(),passwordHashed)){
         if(userEntity!=null){
-            //UserEntity userEntity =
             List<String> roleList = new ArrayList<>();
             List<RoleEntity> roleEntities = roleDao.getRolesAssignedBy(userDao.findUserByUserName(userEntity.getUsername()).get(0).getId());
             for (RoleEntity re : roleEntities){
@@ -72,13 +70,8 @@ public class Authenticator extends BaseAuthenticator{
             Messages.addGlobalError("User cannot log in");
             setStatus(AuthenticationStatus.FAILURE);
             log.log(Level.INFO, "user fail");
-
         }
     }
-
-
-
-
     private UserEntity getUserEntity(final String username, final String pass){
         return userCtrl.getUserEntity(username,pass);
     }
