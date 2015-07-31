@@ -3,14 +3,12 @@ package ch.swissbytes.fqm.boundary;
 import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
-import ch.swissbytes.fqmes.util.MessageProvider;
 import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 import org.primefaces.context.RequestContext;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;

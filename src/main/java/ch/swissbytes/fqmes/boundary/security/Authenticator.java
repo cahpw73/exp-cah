@@ -49,14 +49,16 @@ public class Authenticator extends BaseAuthenticator{
         log.log(Level.INFO,"trying to authenticate");
 
         final  String passwordHashed= Encode.encode(credentials.getPassword());
-        if(userCtrl.canAccess(credentials.getUserId(),passwordHashed)){
-            UserEntity userEntity = getUserEntity(credentials.getUserId(),passwordHashed);
+        UserEntity userEntity=getUserEntity(credentials.getUserId(),passwordHashed);
+        //if(userCtrl.canAccess(credentials.getUserId(),passwordHashed)){
+        if(userEntity!=null){
+            //UserEntity userEntity =
             List<String> roleList = new ArrayList<>();
-            List<RoleEntity> roleEntities = roleDao.getRolesAssignedBy(userDao.findUserByUserName(credentials.getUserId()).get(0).getId());
+            List<RoleEntity> roleEntities = roleDao.getRolesAssignedBy(userDao.findUserByUserName(userEntity.getUsername()).get(0).getId());
             for (RoleEntity re : roleEntities){
                 roleList.add(re.getName());
             }
-            User user = new User(credentials.getUserId());
+            User user = new User(userEntity.getUsername());
             user.setFirstName(userEntity.getFirstName());
             user.setLastName(userEntity.getName());
             user.setEmail(userEntity.getEmail());

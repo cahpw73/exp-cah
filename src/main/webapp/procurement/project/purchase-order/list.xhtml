@@ -136,6 +136,7 @@
                                                  action="#{poListBean.doSavePOONewVariation}">
                                     <p:ajax onsuccess="PF('variationModal').hide();"
                                             process="variationGroupId"
+                                            async="false"
                                             update=":listPooFormId:projectListId"/>
                                 </h:commandButton>
                                 &#160;

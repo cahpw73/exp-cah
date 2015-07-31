@@ -133,9 +133,9 @@ public class UserDao extends GenericDao implements Serializable {
 
     public UserEntity getUser(String username, String password) {
         String hql = "SELECT u FROM UserEntity u " +
-                "WHERE u.username = :username and u.password = :password and u.status.id=:enabled";
+                "WHERE (lower(u.username) = :username or lower(u.email)=:username) and u.password = :password and u.status.id=:enabled";
         TypedQuery<UserEntity> query = this.entityManager.createQuery(hql, UserEntity.class);
-        query.setParameter("username", username);
+        query.setParameter("username", username.toLowerCase().trim());
         query.setParameter("enabled", StatusEnum.ENABLE.getId());
         query.setParameter("password", password);
         try {
