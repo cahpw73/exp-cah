@@ -2,8 +2,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:p="http://primefaces.org/ui">
     <div class="row">
         <div class="col-sm-8">
             <div class="panel panel-default panel-tab">
@@ -32,7 +31,7 @@
                                         onclick="PF('currencyModal').show();"
                                         action="#{currencyBean.restart}"
                                         styleClass="btn btn-primary btn-sm">
-                                    <p:ajax update=":currencyModalId" async="false"/>
+                                    <p:ajax update=":currencyModalId" process="@this" async="false"/>
                                 </h:commandButton>
                             </div>
                         </div>
