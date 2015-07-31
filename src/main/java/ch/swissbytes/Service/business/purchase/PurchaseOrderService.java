@@ -85,7 +85,11 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public PurchaseOrderEntity load(Long id) {
-        return dao.load(id);
+        PurchaseOrderEntity purchaseOrderEntity=dao.load(id);;
+        if(purchaseOrderEntity.getPoEntity().getSupplier()!=null){
+            purchaseOrderEntity.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(purchaseOrderEntity.getPoEntity().getSupplier().getId()));
+        }
+        return purchaseOrderEntity;
     }
 
 
@@ -100,11 +104,9 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
-    public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, SupplierEntity supplierEntity, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities) {
-        //por.setProject(por.getProjectEntity().getProjectNumber());
+    public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities) {
         PurchaseOrderEntity entity = dao.update(por);
         dao.updatePOEntity(por.getPoEntity());
-        supplierDao.update(supplierEntity);
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
         return por;
@@ -124,7 +126,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             dao.update(entity);
             deleteComment(purchaseOrderId);
             deleteScopeSupply(purchaseOrderId);
-            deleteSupplier(purchaseOrderId);
+            //deleteSupplier(purchaseOrderId);
         }
     }
 

@@ -138,7 +138,7 @@ public class UsersBean implements Serializable {
 
     public String getAccessLevelProcurement(final Long userId){
         UserRoleEntity userRole = userRoleService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.PROCUREMENT);
-        if(userRole.getRole() != null) {
+        if(userRole!=null&&userRole.getRole() != null) {
             RoleEnum roleEnum = RoleEnum.of(userRole.getRole());
             return roleEnum.getLabel();
         }else{
@@ -148,7 +148,7 @@ public class UsersBean implements Serializable {
 
     public String getAccessLevelExpediting(final Long userId){
         UserRoleEntity userRole = userRoleService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING);
-        if(userRole.getRole() != null) {
+        if(userRole!=null&&userRole.getRole() != null) {
             RoleEnum roleEnum = RoleEnum.of(userRole.getRole());
             return roleEnum.getLabel();
         }else{

@@ -7,9 +7,6 @@ import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.logo.LogoBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,7 +64,7 @@ public class ClientBean extends Bean implements Serializable {
 
     public String doSave(){
         client=service.save(client);
-        Messages.addFlashGlobalInfo("The client was created!");
+        Messages.addFlashGlobalInfo("The client has been saved!");
         return "edit?faces-redirect=true&clientId="+client.getId();
     }
     public String doUpdate(){
@@ -77,13 +74,13 @@ public class ClientBean extends Bean implements Serializable {
 
     }
     public String saveAndClose(){
-        Messages.addFlashGlobalInfo("The client was created!");
+        Messages.addFlashGlobalInfo("The client has been saved!");
         service.save(client);
         return "list?faces-redirect=true";
 
     }
     public String updateAndClose(){
-        Messages.addFlashGlobalInfo("The client was updated!");
+        Messages.addFlashGlobalInfo("The client has been saved!");
         service.update(client);
         return "list?faces-redirect=true";
     }
@@ -151,7 +148,6 @@ public class ClientBean extends Bean implements Serializable {
     }
 
     public String getTitlePage(){
-        System.out.println("Mode Crud: " + modeOperationEnum.toString());
         return isBeingCreated()?"New Client" : "Edit Client";
     }
 }

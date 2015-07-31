@@ -189,9 +189,9 @@ public class UserDao extends GenericDao implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT u ");
         sb.append(" FROM UserEntity u ");
-        sb.append(" WHERE NOT u.status.id = :DELETED ");
+        sb.append(" WHERE u.status.id = :ENABLE ");
         Map<String,Object> parameters = new HashMap<>();
-        parameters.put("DELETED", StatusEnum.DELETED.getId());
+        parameters.put("ENABLE", StatusEnum.ENABLE.getId());
         return super.findBy(sb.toString(), parameters);
     }
 

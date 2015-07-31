@@ -42,9 +42,6 @@ import java.util.logging.Logger;
 public class PurchaseOrderEdit implements Serializable {
 
     @Inject
-    private SupplierDao supplierDao;
-
-    @Inject
     private CommentService commentService;
 
     @Inject
@@ -86,8 +83,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     private ScopeSupplyEntity scopeSupplySplit;
 
-    private SupplierEntity supplierEdit;
-
     private CommentEntity commentEdit;
 
     private CommentEntity editingComment;
@@ -98,9 +93,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private Integer currentOperation = -1;
 
-
     private Long relativeCurrentCommentId = 0L;
-    private Long relativeCurrentAttachmentId = 0L;
+
     private Long relativeCurrentScopeSupplyId = 0L;
 
     private ScopeSupplyEntity scopeSupplyEditing;
@@ -148,11 +142,6 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<AttachmentComment> getAttachmentActives() {
-       /* if (idForAttachment != null) {
-            final int index=new CommentService().getIndexById(idForAttachment,comments);
-            return (index>=0)?new AttachmentCommentService().getActives(comments.get(index).getAttachments()):new ArrayList<AttachmentComment>();
-        }
-        return new ArrayList<AttachmentComment>();*/
         if(commentIndexSelected!=null&&commentEdit!=null&&commentIndexSelected==-1){
             return new AttachmentCommentService().getActives(commentEdit.getAttachments());
         }else if(commentIndexSelected!=null&&editingComment!=null&&commentIndexSelected!=-1){
@@ -166,21 +155,15 @@ public class PurchaseOrderEdit implements Serializable {
         if (!fase.equals("1")) {
             originalQuantity = 0;
             poEdit = service.load(Long.parseLong(purchaseOrderId));
-            supplierEdit = supplierDao.findByPurchaseOrder(poEdit.getId());
-
-            supplierEdit = supplierDao.findByPurchaseOrder(poEdit.getId());
             currentHashCode = service.getAbsoluteHashcode(poEdit.getId());
             log.info(String.format("hashcode starting [%s]", currentHashCode));
             if (comments == null || comments.size() == 0) {
                 comments = commentService.findByPurchaseOrder(poEdit.getId());
-            } else {
-
             }
             if (scopeSupplies == null || scopeSupplies.size() == 0) {
                 scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
                 scopeActives.addAll(scopeSupplies);
             }
-
             commentIndexSelected = -1;
         }
 
@@ -195,7 +178,6 @@ public class PurchaseOrderEdit implements Serializable {
     @PostConstruct
     public void create() {
         log.info("creating Purchase Order Edit...");
-        // poEdit=new PurchaseOrderEntity();
         comments = new ArrayList<>();
         commentEdit = new CommentEntity();
         log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
@@ -242,7 +224,7 @@ public class PurchaseOrderEdit implements Serializable {
         String url = "";
         if (hashCode.intValue() == currentHashCode.intValue()) {
             updateStatusesAndLastUpdate();
-            service.doUpdate(poEdit, supplierEdit, comments, scopeSupplies);
+            service.doUpdate(poEdit, comments, scopeSupplies);
             url = "view?faces-redirect=true&poId=" + poEdit.getId();
         } else {
             url = "edit?faces-redirect=true&poId=" + poEdit.getId();
@@ -259,10 +241,6 @@ public class PurchaseOrderEdit implements Serializable {
         Date now = new Date();
         if (!oldPurchaseOrder.equals(poEdit)) {
             poEdit.setLastUpdate(now);
-        }
-        SupplierEntity oldSupplier = supplierDao.load(supplierEdit.getId());
-        if (!oldSupplier.equals(supplierEdit)) {
-            supplierEdit.setLastUpdate(now);
         }
         for (final CommentEntity commentEntity : comments) {
             if (commentEntity.getId() <= 0) {
@@ -322,7 +300,6 @@ public class PurchaseOrderEdit implements Serializable {
         } catch (Exception ex) {
         }
         scopeSupplyEntity.setStatus(enumService.getStatusEnumEnable());
-        relativeCurrentAttachmentId--;
         scopeSupplyEntity.setId(relativeCurrentScopeSupplyId);
         scopeSupplies.add(scopeSupplyEntity);
 
@@ -427,11 +404,6 @@ public class PurchaseOrderEdit implements Serializable {
         return poEdit;
     }
 
-
-    public SupplierEntity getSupplierEdit() {
-        return supplierEdit;
-    }
-
     public List<CommentEntity> getComments() {
         return comments;
     }
@@ -449,7 +421,6 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<CommentEntity> getActiveComments() {
-        //  return commentService.getActives(comments);
         return commentActives;
     }
 
@@ -541,8 +512,6 @@ public class PurchaseOrderEdit implements Serializable {
         }else if(commentIndexSelected!=null&&commentIndexSelected!=-1&&editingComment!=null){
             list=editingComment.getAttachments();
         }
-
-
             return list;
     }
 
@@ -582,7 +551,6 @@ public class PurchaseOrderEdit implements Serializable {
                 }
             }
         }
-
     }
 
     public void handleAttachmentScopeSupply(FileUploadEvent event) {
@@ -681,7 +649,6 @@ public class PurchaseOrderEdit implements Serializable {
                 ss.getTdpList().clear();
                 ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
                 ss.getAttachments().addAll(scopeSupplyEditing.getAttachments());
-                //ss.getAttachments().addAll(scopeSupplyEditing.getAttachments());
                 scopeSupplies.set(indexForScopeSupplyEditing, ss);
             }
             scopeActives.clear();
@@ -742,7 +709,6 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<TransitDeliveryPointEntity> activesTdp() {
-        //return tdpService.getActives(scopeSupplyEditing.getTdpList());
         return tdpActives;
     }
 
@@ -782,7 +748,6 @@ public class PurchaseOrderEdit implements Serializable {
                 log.info("no possible computation");
                 break;
         }
-
         log.info("date calculated " + date);
         return date;
     }

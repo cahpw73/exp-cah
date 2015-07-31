@@ -147,10 +147,18 @@ public class UserBean implements Serializable {
             getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
 
-            getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+
             getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
-            
-            getUserProcurement().setRole(roleProcurement);
+            if(userRoleList.size()>1) {
+                getUserProcurement().setRole(roleProcurement);
+                getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+            }else{
+                UserRoleEntity ure=new UserRoleEntity();
+                ure.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                ure.setRole(roleProcurement);
+                ure.setUser(userEntity);
+                userRoleList.add(ure);
+            }
             getUserExpediting().setRole(roleExpediting);
 
             userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
@@ -175,8 +183,19 @@ public class UserBean implements Serializable {
             getModuleProcurement().setModuleAccess(moduleAccessProcurement);
             getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
-            getUserProcurement().setRole(roleProcurement);
+           // getUserProcurement().setRole(roleProcurement);
             getUserExpediting().setRole(roleExpediting);
+
+            if(userRoleList.size()>1) {
+                getUserProcurement().setRole(roleProcurement);
+                getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+            }else{
+                UserRoleEntity ure=new UserRoleEntity();
+                ure.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                ure.setRole(roleProcurement);
+                ure.setUser(userEntity);
+                userRoleList.add(ure);
+            }
             userService.doUpdateUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
