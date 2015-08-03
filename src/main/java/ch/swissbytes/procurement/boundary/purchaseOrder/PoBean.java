@@ -217,10 +217,6 @@ public class PoBean extends Bean {
         return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
     }
 
-    public void loadPaneActive(){
-        log.info("cargando pane active");
-    }
-
     private void sortPurchaseListByVariationAndDoUpdate(){
         List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(), purchaseOrder.getPo());
         sortBean.sortPurchaseOrderEntity(poList);
@@ -238,7 +234,6 @@ public class PoBean extends Bean {
         int index =  1;
         for(ScopeSupplyEntity ssp : sspList){
             ssp.setOrdered(index);
-
             scopeSupplyService.doUpdate(ssp);
             index++;
         }

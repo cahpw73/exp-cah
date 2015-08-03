@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
+import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 /**
  * Created by alvaro on 5/18/2015.
@@ -106,11 +108,11 @@ public class SupplierProcBean extends Bean implements Serializable {
     }
 
     public String doUpdate() {
+        supplier.getContacts().clear();
+        supplier.getContacts().addAll(contactBean.getList());
         if (!validate()) {
             return "";
         }
-        supplier.getContacts().clear();
-        supplier.getContacts().addAll(contactBean.getList());
         service.update(supplier);
         return "list?faces-redirect=true";
     }
@@ -125,11 +127,26 @@ public class SupplierProcBean extends Bean implements Serializable {
             Messages.addGlobalError("You must select at least one category");
             validated = false;
         }
+        if(!validateContacts()){
+            Messages.addGlobalError("Check format email on contacts");
+            validated = false;
+        }
+        return validated;
+    }
+
+    private boolean validateContacts() {
+        boolean validated = true;
+        String regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?";
+        for (ContactEntity contact : supplier.getContacts()) {
+            if(StringUtils.isNotEmpty(contact.getEmail())&&StringUtils.isNotBlank(contact.getEmail())&&!regexp.matches(contact.getEmail())) {
+                validated=false;
+            }
+        }
         return validated;
     }
 
     private boolean hasEitherAtLeastOneCategory() {
-        return supplier.getCategories().size()+ (categoryBrandBean.getCategories()!=null?categoryBrandBean.getCategories().getTarget().size():0) >= 1;
+        return supplier.getCategories().size() + (categoryBrandBean.getCategories() != null ? categoryBrandBean.getCategories().getTarget().size() : 0) >= 1;
     }
 
     public String doDelete(Long id) {

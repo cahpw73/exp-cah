@@ -12,8 +12,6 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
-import org.omnifaces.util.Messages;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -22,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -61,7 +60,7 @@ public class PoListBean implements Serializable {
 
     private PurchaseOrderEntity currentPurchaseOrder;
 
-    private List<PurchaseOrderEntity> list;
+    //   private List<PurchaseOrderEntity> list;
 
     private List<PurchaseOrderEntity> pOrderList;
 
@@ -74,19 +73,22 @@ public class PoListBean implements Serializable {
     private PurchaseOrderTbl poList;
 
 
-
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
-        list = new ArrayList<>();
+        Date start = new Date();
+        //list = new ArrayList<>();
         currentPurchaseOrder = new PurchaseOrderEntity();
         purchaseOrderToVariation = new PurchaseOrderEntity();
         pOrderList = new ArrayList<>();
         maxVariationsList = new ArrayList<>();
-        poList=new PurchaseOrderTbl(dao,new Filter());
+        poList = new PurchaseOrderTbl(dao, new Filter());
+        Date end = new Date();
+        log.info("creating list Bean takes " + (end.getTime() - start.getTime()));
     }
 
     public void load() {
+        Date start = new Date();
         if (StringUtils.isNotEmpty(projectId) && StringUtils.isNotBlank(projectId)) {
             try {
                 Long.parseLong(projectId);
@@ -97,11 +99,13 @@ public class PoListBean implements Serializable {
             if (project == null) {
                 throw new IllegalArgumentException("project Id invalid");
             }
-            list = service.purchaseListByProject(Long.parseLong(projectId));
+            //list = service.purchaseListByProject(Long.parseLong(projectId));
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
         } else {
             throw new IllegalArgumentException("project Id invalid");
         }
+        Date end = new Date();
+        log.info("loading list Bean takes " + (end.getTime() - start.getTime()));
     }
 
     @PreDestroy
@@ -114,7 +118,7 @@ public class PoListBean implements Serializable {
         service.savePOOnProcurement(purchaseOrderToVariation);
         sortPurchaseListByVariationAndDoUpdate();
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-        list = service.purchaseListByProject(Long.parseLong(projectId));
+        //list = service.purchaseListByProject(Long.parseLong(projectId));
     }
 
     public void doSavePOONewVariation() {
@@ -122,7 +126,7 @@ public class PoListBean implements Serializable {
         service.savePOOnProcurementNewVariation(purchaseOrderToVariation);
         sortPurchaseListByVariationAndDoUpdate();
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-        list = service.purchaseListByProject(Long.parseLong(projectId));
+        //list = service.purchaseListByProject(Long.parseLong(projectId));
     }
 
     private void sortPurchaseListByVariationAndDoUpdate() {
@@ -142,10 +146,7 @@ public class PoListBean implements Serializable {
         pOrderList = service.findByProjectIdAndPo(project.getId(), entity.getPo());
         sortBean.sortPurchaseOrderEntity(pOrderList);
         String lastVarNumber = pOrderList.get(pOrderList.size() - 1).getVariation();
-        if(generateVariationNumber(lastVarNumber)){
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('variationModal').show();");
-        }
+        generateVariationNumber(lastVarNumber);
         purchaseOrderToVariation = service.findPOToCrateVarition(entity.getId());
         prepareToSaveWithNewVariation(purchaseOrderToVariation);
 
@@ -173,47 +174,33 @@ public class PoListBean implements Serializable {
         log.info("");
     }
 
-    private boolean generateVariationNumber(String lastVarNumber) {
-        boolean canCreateVar = false;
-        String tokenVarNumber = lastVarNumber.substring(0,1);
-        if(tokenVarNumber.equals("v")){
-            canCreateVar = true;
-            int lengLastVar = lastVarNumber.length();
-            String formatterVarNumber = lastVarNumber.substring(1,lastVarNumber.length());
-            String[] number = formatterVarNumber.split("\\.");
-            Integer lastNumber;
-            try{
-                if (number.length == 0) {
-                    lastNumber = Integer.valueOf(formatterVarNumber);
-                    lastNumber++;
-                    newVariationNumber = "v" + String.valueOf(lastNumber);
-                } else if (number.length > 1) {
-                    lastNumber = Integer.valueOf(number[number.length - 1]);
-                    lastNumber++;
-                    String varNo = "";
-                    for (int i = 0; i < number.length - 1; i++) {
-                        varNo = varNo + number[i] + ".";
-                    }
-                    newVariationNumber = "v" + varNo + String.valueOf(lastNumber);
-                } else if (number.length == 1) {
-                    lastNumber = Integer.valueOf(formatterVarNumber);
-                    lastNumber++;
-                    newVariationNumber = "v" + String.valueOf(lastNumber);
-                }
-            }catch (NumberFormatException nfe){
-                canCreateVar = false;
+    private void generateVariationNumber(String lastVarNumber) {
+        String[] number = lastVarNumber.split("\\.");
+        Integer lastNumber;
+        if (number.length == 0) {
+            lastNumber = Integer.valueOf(lastVarNumber);
+            lastNumber++;
+            newVariationNumber = String.valueOf(lastNumber);
+        } else if (number.length > 1) {
+            lastNumber = Integer.valueOf(number[number.length - 1]);
+            lastNumber++;
+            String varNo = "";
+            for (int i = 0; i < number.length - 1; i++) {
+                varNo = varNo + number[i] + ".";
             }
-        }else{
-            Messages.addGlobalError("Incorrect Format of variation ("+lastVarNumber+")");
+            newVariationNumber = varNo + String.valueOf(lastNumber);
+        } else if (number.length == 1) {
+            lastNumber = Integer.valueOf(lastVarNumber);
+            lastNumber++;
+            newVariationNumber = String.valueOf(lastNumber);
         }
-        return canCreateVar;
     }
 
     public void doCommitPo() {
         log.info("do commit purchase order");
         currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
         currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
-        list = service.purchaseListByProject(Long.parseLong(projectId));
+        //list = service.purchaseListByProject(Long.parseLong(projectId));
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
     }
 
@@ -252,21 +239,25 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null) {
-            if (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
-                for (Object po : maxVariationsList) {
-                    Object[] values = (Object[]) po;
-                    PurchaseOrderEntity poe = new PurchaseOrderEntity();
-                    poe.setPo((String) values[0]);
-                    poe.setOrderedVariation((Integer) values[1]);
-                    if (entity.getPo().equals(poe.getPo()) &&
-                            entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue() &&
-                            entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
-                        return true;
-                    }
+        log.info("Entity po[" + entity.getPo() + "], orderedVariation[" + entity.getOrderedVariation() + "]");
+        Date start = new Date();
+        if (entity.getPoEntity().getPoProcStatus() != null && entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
+            for (Object po : maxVariationsList) {
+                Object[] values = (Object[]) po;
+                PurchaseOrderEntity poe = new PurchaseOrderEntity();
+                poe.setPo((String) values[0]);
+                poe.setOrderedVariation((Integer) values[1]);
+                //log.info("POE po[" + poe.getPo() + "], orderedVariation[" + poe.getOrderedVariation() + "]");
+                if (entity.getPo().equals(poe.getPo()) &&
+                        entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue()) {
+                    Date end = new Date();
+                    log.info("evaluate variation takes " + (end.getTime() - start.getTime()));
+                    return true;
                 }
             }
         }
+        Date end = new Date();
+        log.info("evaluate variation takes " + (end.getTime() - start.getTime()));
         return false;
     }
 
@@ -346,9 +337,9 @@ public class PoListBean implements Serializable {
         return clausesEntities;
     }
 
-    public List<PurchaseOrderEntity> getList() {
-        return list;
-    }
+    // public List<PurchaseOrderEntity> getList() {
+    //   return list;
+    // }
 
     public ProjectEntity getProject() {
         return project;

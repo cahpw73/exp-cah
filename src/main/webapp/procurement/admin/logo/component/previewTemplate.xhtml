@@ -59,11 +59,11 @@
             <h:link styleClass="btn btn-primary btn-sm" rendered="#{MODE == null}" value="#{msgs['lbl.cancel']}"
                     outcome="logo"/>
             <h:panelGroup rendered="#{MODE eq 'CLIENT'}">
-                <p:commandLink value="#{msgs['lbl.save']}" process="@this"
+                <h:commandButton value="#{msgs['lbl.save']}" process="@this"
                                action="#{clientBean.saveLogo}"
-                               styleClass="btn btn-primary  btn-commandLink-primeFaces"
-                               async="false" update="description logoId #{COMPONENT_UPDATE}">
-                </p:commandLink>
+                               styleClass="btn btn-primary  btn-commandLink-primeFaces">
+                    <p:ajax async="false" update="description logoId #{COMPONENT_UPDATE}"/>
+                </h:commandButton>
                 &#160;
                 <button onclick="PF('logoModal').hide('#{MODAL}');"
                         type="button"

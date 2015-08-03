@@ -103,13 +103,13 @@
                 </h:panelGroup>
                 <br/>
 
-                <h:commandButton
+                <p:commandLink
                         value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
-                        onclick="PF('textSnippetModal').show();"
+                        onclick="doChange();PF('textSnippetModal').show();"
                         action="#{textSnippetBean.clear}"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update=":textSnippetModalId" process="@this"/>
-                </h:commandButton>
+                </p:commandLink>
             </div>
         </div>
     </div>

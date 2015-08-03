@@ -184,7 +184,7 @@ ORDER BY $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Mobile No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0ac7059b-92e4-4352-adbb-cad5fb266ad5" x="281" y="8" width="73" height="10"/>
+				<reportElement uuid="0ac7059b-92e4-4352-adbb-cad5fb266ad5" x="259" y="8" width="114" height="10"/>
 				<textElement markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -236,7 +236,7 @@ ORDER BY $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Job Title</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4b81fc2c-80bf-407a-9bff-6b3648e53ad8" x="385" y="19" width="68" height="10"/>
+				<reportElement uuid="4b81fc2c-80bf-407a-9bff-6b3648e53ad8" x="381" y="19" width="68" height="10"/>
 				<textElement markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -253,19 +253,19 @@ ORDER BY $P!{sortBy}]]>
 	</columnHeader>
 	<detail>
 		<band height="31" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="b04f49de-067d-4866-b30a-57fd7b020665" x="52" y="2" width="61" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b04f49de-067d-4866-b30a-57fd7b020665" x="52" y="2" width="61" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{company}!=null?"<style isBold='true' size='7'  pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>":null]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="115" y="2" width="58" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{street}+" "+$F{suburb}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{street}+"\n"+$F{suburb}+"</style>"]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" x="25" y="16" width="222" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
@@ -281,7 +281,7 @@ ORDER BY $P!{sortBy}]]>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="48b6324a-c0cf-48ae-96ff-ec7443dfc772" x="2" y="2" width="44" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
@@ -289,22 +289,22 @@ ORDER BY $P!{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{code}+"</style>"]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="69f2614e-645e-429d-9a20-dc28d61dfefd" x="418" y="2" width="54" height="12" isPrintWhenDetailOverflows="true"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="69f2614e-645e-429d-9a20-dc28d61dfefd" x="416" y="2" width="54" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{fax}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{fax}!=null?$F{fax}:null+"</style>"]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="281" y="2" width="73" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="259" y="2" width="114" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{phone}+"</style>"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="8f76ef1f-420f-4679-806b-dd95427a4a57" x="345" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="8f76ef1f-420f-4679-806b-dd95427a4a57" x="381" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>

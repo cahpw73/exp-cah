@@ -79,6 +79,10 @@ public class VerificationTokenBean implements Serializable {
                     Messages.addFlashGlobalError("Error occurred while sending the token to your email");
                     log.log(Level.SEVERE,"Messaging has error" + e.getCause());
                     e.printStackTrace();
+                }catch(Exception ex){
+                    Messages.addFlashGlobalError("It cannot send the email to restart the password.");
+                    log.log(Level.SEVERE,"Messaging has error" + ex.getCause());
+                    ex.printStackTrace();
                 }
                 return "login?faces-redirect=true";
             }
@@ -114,6 +118,10 @@ public class VerificationTokenBean implements Serializable {
                     Messages.addFlashGlobalError("Error occurred while sending the token to your email");
                     log.log(Level.SEVERE,"Messaging has error" + e.getCause());
                     e.printStackTrace();
+                }catch(Exception ex){
+                    Messages.addFlashGlobalError("It cannot send the email to restart the password.");
+                    log.log(Level.SEVERE,"Messaging has error" + ex.getCause());
+                    ex.printStackTrace();
                 }
                 return "login?faces-redirect=true";
             }
@@ -160,7 +168,7 @@ public class VerificationTokenBean implements Serializable {
         return "Reset Password";
     }
 
-    private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException {
+    private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
 
         email.setFrom(sendMailInfo);
         email.setTo(mail);

@@ -23,7 +23,7 @@
                                                 style="min-height:300px!important;min-width: 250px!important;"
                                                 converter="logoConverter"
                                                 var="l">
-                                <f:selectItems value="#{logoBean.logos}" var="_logo" itemValue="#{_logo}"
+                                <f:selectItems value="#{logoBean.allLogos}" var="_logo" itemValue="#{_logo}"
                                                itemLabel="#{_logo.description}"/>
                                 <p:column>
                                     <o:graphicImage dataURI="true" value="#{l.file}" width="32" height="32"/>

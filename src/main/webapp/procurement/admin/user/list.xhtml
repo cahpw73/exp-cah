@@ -61,9 +61,9 @@
                                     <p:commandLink style=" color: #428BCA; "
                                                    value="#{msgs['lbl.reset']}"
                                                    action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}">
-                                        <p:ajax  process="@this" update=":glbMsgs"
+                                        <p:ajax  process="@this" update=":glbMsgs" async="false"
                                                  onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
-                                        <p:ajax process="@this" update=":glbMsgs"/>
+                                        <p:ajax process="@this" update=":glbMsgs" async="false"/>
                                     </p:commandLink>
                                 </div>
                             </p:column>

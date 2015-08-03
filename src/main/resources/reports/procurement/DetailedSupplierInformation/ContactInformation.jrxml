@@ -29,21 +29,21 @@ ORDER BY sur_name]]>
 	</columnHeader>
 	<detail>
 		<band height="16" splitType="Stretch">
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="24b98385-1672-40e0-b3cc-033ccbe84bde" x="0" y="0" width="68" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{first_name}+" "+$F{sur_name}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="96e04c53-1a8d-46d4-93ae-97daad97bfdc" x="75" y="0" width="63" height="15" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{job_title}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="b43d4346-e9fb-483e-a5f0-551b49b86846" x="145" y="0" width="73" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>

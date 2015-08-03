@@ -42,6 +42,7 @@ public class LogoBean implements Serializable {
     private Long selected;
 
     private List<LogoEntity> logos;
+    private List<LogoEntity>allLogos;
 
     @PostConstruct
     public void create() {
@@ -53,8 +54,12 @@ public class LogoBean implements Serializable {
         logo = new LogoEntity();
         logos = service.getLogoList();
         log.info("size " + logos.size());
+        allLogos=service.findAll();
     }
 
+    public List<LogoEntity> getAllLogos() {
+        return allLogos;
+    }
 
     public void restart() {
         logo = new LogoEntity();

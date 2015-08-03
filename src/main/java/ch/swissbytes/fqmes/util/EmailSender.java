@@ -28,7 +28,7 @@ public class EmailSender implements Serializable{
     private String body;
     private Multipart content;
 
-    public void send() throws MailConnectException, ConnectException, MessagingException, SocketConnectException {
+    public void send() throws MailConnectException, ConnectException, MessagingException, SocketConnectException,Exception {
         try {
             Message message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress(from));
@@ -45,7 +45,8 @@ public class EmailSender implements Serializable{
         } catch (MessagingException ce) {
             ce.printStackTrace();
             throw new MessagingException(ce.toString());
-
+        }catch(Exception ex){
+            throw new Exception(ex.getMessage());
         }
     }
 

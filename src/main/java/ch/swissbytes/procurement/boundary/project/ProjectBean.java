@@ -151,7 +151,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
             return "edit?faces-redirect=true&isCreateProject=false&projectId=" + projectEntity.getId() + "";
         }
         return "";
@@ -164,7 +164,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
             return "edit?faces-redirect=true&isCreateProject=false&projectId=" + projectEntity.getId() + "";
         }
         return "";
@@ -176,7 +176,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -189,7 +189,7 @@ public class ProjectBean extends Bean implements Serializable {
             prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.", null);
+            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(0);
@@ -313,7 +313,6 @@ public class ProjectBean extends Bean implements Serializable {
     public void addToProjectText() {
         log.info("add standard text to project");
         for (TextSnippetEntity ts : selectedGlobalTexts) {
-            //projectStandardTextList.add(ts);
             ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
             entity.setId(tempProjectTextId);
             entity.setTextSnippet(ts);
@@ -346,7 +345,7 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public boolean isNewProjectEntityToSave() {
-        return projectEntity.getId() != null ? true : false;
+        return projectEntity!=null&&projectEntity.getId() != null ? true : false;
     }
 
     private void prepareToSaveProjectTextSnippet() {
@@ -442,9 +441,9 @@ public class ProjectBean extends Bean implements Serializable {
         return globalStandardTextList;
     }
 
-    public List<TextSnippetEntity> getProjectStandardTextList() {
+   /* public List<TextSnippetEntity> getProjectStandardTextList() {
         return projectStandardTextList;
-    }
+    }*/
 
     public List<TextSnippetEntity> getSelectedGlobalTexts() {
         return selectedGlobalTexts;
@@ -529,16 +528,13 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("edit item");
         entity.startEditing();
         entity.storeOldValue(entity);
-        ///sortBean.sortScopeSupplyEntity(scopeSupplyList);
     }
 
     public void confirmItem(ProjectTextSnippetEntity entity) {
         log.info("confirm text");
-        // if(itemNoIsNotEmpty(entity)){
         int index = projectTextSnippetList.indexOf(entity);
         projectTextSnippetList.set(index,entity);
         entity.stopEditing();
-        //}
     }
 
     public void deleteItem(ProjectTextSnippetEntity entity) {
@@ -576,7 +572,7 @@ public class ProjectBean extends Bean implements Serializable {
         this.selectedProjectTexts = selectedProjectTexts;
     }
 
-    public boolean  isProjectTextSnippetEnable(ProjectTextSnippetEntity entity){
+  /*  public boolean  isProjectTextSnippetEnable(ProjectTextSnippetEntity entity){
         log.info("isProjectTextSnippetEnable");
         projectTextSnippetList.size();
         if(entity != null && entity.getStatusEnum() != null){
@@ -584,7 +580,7 @@ public class ProjectBean extends Bean implements Serializable {
             return StatusEnum.ENABLE.ordinal() == entity.getStatusEnum().ordinal();
         }
         return true;
-    }
+    }*/
     public List<ProjectTextSnippetEntity> filteredList() {
         List<ProjectTextSnippetEntity> list = new ArrayList<>();
         for (ProjectTextSnippetEntity r : this.projectTextSnippetList) {
