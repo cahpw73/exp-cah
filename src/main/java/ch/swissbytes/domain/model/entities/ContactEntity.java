@@ -131,7 +131,7 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
         this.fax = fax;
     }
     @Size(max = 250)
-    @Pattern(regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",message = "Enter a valid email account")
+   // @Pattern(regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",message = "Enter a valid email account")
     @Column(name = "email", length = 250)
     public String getEmail() {
         return email;
@@ -154,8 +154,6 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
     public String getFullName(){
         return firstName+" "+surName;
     }
-
-
 
     @Override
     public String toString() {

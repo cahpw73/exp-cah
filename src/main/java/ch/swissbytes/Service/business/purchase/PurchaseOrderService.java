@@ -365,9 +365,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findVPOById(id);
     }
 
-  /*  public POEntity findPOEntityById(final Long poId){
-        return dao.findPOEntityById(poId);
-    }*/
 
     public BigDecimal calculateProjectValue (List<ScopeSupplyEntity> items,ProjectCurrencyEntity currency){
         BigDecimal poValue = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);

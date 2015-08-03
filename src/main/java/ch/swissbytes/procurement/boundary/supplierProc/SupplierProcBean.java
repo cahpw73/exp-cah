@@ -127,10 +127,10 @@ public class SupplierProcBean extends Bean implements Serializable {
             Messages.addGlobalError("You must select at least one category");
             validated = false;
         }
-        if(!validateContacts()){
+       /* if(!validateContacts()){
             Messages.addGlobalError("Check format email on contacts");
             validated = false;
-        }
+        }*/
         return validated;
     }
 

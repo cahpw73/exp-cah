@@ -10,7 +10,7 @@
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
-	<parameter name="statusList" class="java.lang.String"/>
+	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\summaryPurchaseOrderReport\\"]]></defaultValueExpression>
 	</parameter>
@@ -51,7 +51,7 @@ order by $P{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="76f56b55-de3e-4c34-9303-6fccd7707c0b" x="71" y="1" width="190" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
@@ -63,7 +63,7 @@ order by $P{sortBy}]]>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{statusList}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{po_status}!=null?$P{STATUS_PROCUREMENT}.get($F{po_status}):""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="0b5ec8cc-a986-41c2-bb4c-d3898630a0ed" x="384" y="1" width="70" height="12"/>

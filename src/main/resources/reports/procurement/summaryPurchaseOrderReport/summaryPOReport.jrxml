@@ -65,6 +65,7 @@
 	</parameter>
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
+	<parameter name="STATUS_PROCUREMENT" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[select po.po,sp.company
 from purchase_order po, p_order p,supplier_proc sp
@@ -260,7 +261,7 @@ group by po.po,sp.company]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{company}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+"</style>":null]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement uuid="0cc93b17-b147-48bb-adcb-a420f30badee" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="13" width="555" height="14" isPrintWhenDetailOverflows="true"/>
@@ -269,6 +270,9 @@ group by po.po,sp.company]]>
 				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STATUS_PROCUREMENT">
+					<subreportParameterExpression><![CDATA[$P{STATUS_PROCUREMENT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="sortBy">
 					<subreportParameterExpression><![CDATA[$P{sortBy}]]></subreportParameterExpression>

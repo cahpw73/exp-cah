@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="459"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -287,9 +287,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="19" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<componentElement>
-				<reportElement uuid="9283fa30-acc3-40bf-8ab6-8b873e2cab0e" key="table" style="table" x="0" y="0" width="519" height="19" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="9283fa30-acc3-40bf-8ab6-8b873e2cab0e" key="table" style="table" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="519" height="19" isPrintWhenDetailOverflows="true"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="PODataset" uuid="c6b784f6-fd4c-4f83-8b28-3973076d3945">
 						<datasetParameter name="patternDecimal">
@@ -512,8 +512,8 @@
 	<pageFooter>
 		<band splitType="Stretch"/>
 	</pageFooter>
-	<summary>
-		<band height="93" splitType="Stretch">
+	<lastPageFooter>
+		<band height="97">
 			<staticText>
 				<reportElement uuid="c468b76e-51e2-4afc-8756-a7a5f0089c0b" x="3" y="4" width="261" height="12"/>
 				<textElement verticalAlignment="Middle">
@@ -572,5 +572,8 @@
 				<reportElement uuid="77225ea0-641f-4e08-85fe-9a6432c83354" x="322" y="69" width="190" height="1"/>
 			</line>
 		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
