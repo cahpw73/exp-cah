@@ -15,6 +15,10 @@ public class ReportCommittedCurrencies extends ReportProject {
                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
     }
-
+    @Override
+    protected void loadAdditionalParameters(){
+        addParameters("PROJECT_ID", project.getId());
+        addParameters("SUBREPORT_DIR", "reports/procurement/committedCurrenciesReport/");
+    }
 
 }
