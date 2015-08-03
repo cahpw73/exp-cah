@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.security;
 
 import ch.swissbytes.Service.business.security.SecurityService;
+import ch.swissbytes.fqm.boundary.UserSession;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 
@@ -19,6 +20,8 @@ public class AuthorizationFilter implements Filter {
     private SecurityService securityService;
     @Inject
     private Identity identity;
+    @Inject
+    private UserSession userSession;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,7 +40,11 @@ public class AuthorizationFilter implements Filter {
             }else if(url.equals("/procurement/procurement/report/spreadsheetTest.jsf")){
                 filterChain.doFilter(servletRequest, servletResponse);
             }else{
-                ((HttpServletResponse) servletResponse).sendRedirect(context + "/login.jsf");
+                if(userSession.isProcurement()) {
+                    ((HttpServletResponse) servletResponse).sendRedirect(context + "/project/list.jsf");
+                }else{
+                    ((HttpServletResponse) servletResponse).sendRedirect(context + "/home.jsf");
+                }
             }
         } else {
             ((HttpServletResponse) servletResponse).sendRedirect(context + "/login.jsf");

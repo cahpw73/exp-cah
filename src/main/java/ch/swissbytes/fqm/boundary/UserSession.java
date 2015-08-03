@@ -28,7 +28,6 @@ public class UserSession implements Serializable{
     public boolean isProcurement() {
         if (StringUtils.isNotEmpty(currentModule) && StringUtils.isNotBlank(currentModule)) {
             boolean result = ModuleSystemEnum.PROCUREMENT.name().equalsIgnoreCase(currentModule);
-            System.out.println("Result current module : " + result);
             return result;
         }
         return false;
@@ -63,6 +62,16 @@ public class UserSession implements Serializable{
             identity.logout();
             currentModule=null;
         }
+    }
+
+    public String getAbsoluteCurrentHome(){
+        String home="";
+        if(currentModule.equalsIgnoreCase(ModuleSystemEnum.EXPEDITING.name())){
+            home="/home";
+        }else if(currentModule.equalsIgnoreCase(ModuleSystemEnum.PROCUREMENT.name())){
+            home="/procurement/project/list";
+        }
+        return home;
     }
 
     public String getCurrentModule() {

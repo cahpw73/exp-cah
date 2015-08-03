@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 
 /**
  * Created by alvaro on 5/18/2015.
