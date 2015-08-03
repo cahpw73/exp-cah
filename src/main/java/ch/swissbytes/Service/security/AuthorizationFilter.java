@@ -36,12 +36,12 @@ public class AuthorizationFilter implements Filter {
         if (user!=null) {
             if (securityService.canAccess(url.substring(context.length()+1),user.getLoginName())) {
                 filterChain.doFilter(servletRequest, servletResponse);
-            //TODO Borrar luego esta condincion que solo es de TEST
+            //TODO Borrar luego esta condicion que solo es de TEST
             }else if(url.equals("/procurement/procurement/report/spreadsheetTest.jsf")){
                 filterChain.doFilter(servletRequest, servletResponse);
             }else{
                 if(userSession.isProcurement()) {
-                    ((HttpServletResponse) servletResponse).sendRedirect(context + "/project/list.jsf");
+                    ((HttpServletResponse) servletResponse).sendRedirect(context + "/procurement/project/list.jsf");
                 }else{
                     ((HttpServletResponse) servletResponse).sendRedirect(context + "/home.jsf");
                 }
