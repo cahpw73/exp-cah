@@ -258,17 +258,17 @@ ORDER BY $P!{sortBy}]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{company}!=null?"<style isBold='true' size='7'  pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>":null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{company}!=null?"<style isBold='true' size='7'  pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="115" y="2" width="58" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{street}+"\n"+$F{suburb}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{street})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{suburb})+"</style>"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" x="25" y="16" width="222" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" positionType="Float" x="25" y="16" width="222" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -294,17 +294,17 @@ ORDER BY $P!{sortBy}]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{fax}!=null?$F{fax}:null+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fax}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{fax}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="259" y="2" width="114" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{phone}+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{phone}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{phone}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="8f76ef1f-420f-4679-806b-dd95427a4a57" x="381" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="8f76ef1f-420f-4679-806b-dd95427a4a57" positionType="Float" x="381" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -312,7 +312,7 @@ ORDER BY $P!{sortBy}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BrandInformation.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="e65f7ab5-197d-40e3-858e-81fa3e885763" x="453" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e65f7ab5-197d-40e3-858e-81fa3e885763" positionType="Float" x="453" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
