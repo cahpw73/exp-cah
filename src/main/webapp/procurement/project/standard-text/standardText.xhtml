@@ -105,10 +105,10 @@
 
                 <p:commandLink
                         value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
-                        onclick="doChange();PF('textSnippetModal').show();"
+                        onclick="PF('textSnippetModal').show();"
                         action="#{textSnippetBean.clear}"
                         styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update=":textSnippetModalId" process="@this"/>
+                    <p:ajax onsuccess="doChange();" async="false" update=":textSnippetModalId" process="@this"/>
                 </p:commandLink>
             </div>
         </div>

@@ -28,10 +28,10 @@
                             <div class="col-sm-3">
                                 <p:commandLink
                                         value="#{msgs['project.currencies.lbl.btn.new.currency']}"
-                                        onclick="doChange();PF('currencyModal').show();"
+                                        onclick="PF('currencyModal').show();"
                                         action="#{currencyBean.restart}"
                                         styleClass="btn btn-primary btn-sm">
-                                    <p:ajax update=":currencyModalId" process="@this" async="false"/>
+                                    <p:ajax  update=":currencyModalId" process="@this" async="false"/>
                                 </p:commandLink>
                             </div>
                         </div>
