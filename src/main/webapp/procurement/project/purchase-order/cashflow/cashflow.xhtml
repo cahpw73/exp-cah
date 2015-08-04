@@ -120,11 +120,8 @@
                                                 rendered="#{poBean.beingEdited}">
                                     </p:calendar>
                                     <h:inputText id="expDateCfVi" readonly="true" styleClass="form-control view-po"
-                                                 value="#{cashflowBean.cashflow.expDate}"
-                                                 rendered="#{poBean.beingViewed}">
-                                        <f:convertDateTime timeZone="#{configuration.timeZone}"
-                                                           pattern="#{configuration.formatDate}"/>
-                                    </h:inputText>
+                                                 value="#{util.toLocal(cashflowBean.cashflow.expDate)}"
+                                                 rendered="#{poBean.beingViewed}"/>
                                 </div>
                             </div>
                         </div>
@@ -313,9 +310,7 @@
                         <p:column headerText="#{msgs['po.cashflow.column.claim.date']}"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viClaimDate" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.claimDate}">
-                                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                </h:outputText>
+                                <h:outputText value="#{util.toLocal(_l.claimDate)}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edClaimDate" rendered="#{_l.isEditable}">
                                 <p:calendar id="claimDate" type="text" styleClass="calendar"
@@ -333,9 +328,7 @@
                         <p:column headerText="#{msgs['po.cashflow.column.payment.date']}"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPaymentDate" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.paymentDate}">
-                                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                </h:outputText>
+                                <h:outputText value="#{util.toLocal(_l.paymentDate)}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edPaymentDate" rendered="#{_l.isEditable}">
                                 <p:calendar id="paymentDate" type="text" styleClass="calendar"

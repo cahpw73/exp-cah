@@ -1,10 +1,8 @@
 package ch.swissbytes.Service.business.cashflow;
 
 
-import ch.swissbytes.Service.business.item.ItemDao;
 import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
-import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -26,6 +24,8 @@ public class CashflowService implements Serializable {
 
     @Inject
     private CashflowDetailDao cashflowDetailDao;
+
+
 
     public void doSave(CashflowEntity entity,POEntity po){
         log.info("do save cashflow");
@@ -53,8 +53,11 @@ public class CashflowService implements Serializable {
             entity.setPo(po);
             dao.doSave(entity);
         }
-
-
+        log.info("before for");
+        for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
+           log.info("detail cashflow: id" + cf.getId() );
+        }
+        log.info("after for");
         for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
             if(cf.getId() < 0L) {
                 cf.setId(null);
