@@ -49,7 +49,7 @@ public class ItemService  implements Serializable {
     public void doUpdate(List<ScopeSupplyEntity> supplyList, PurchaseOrderEntity po) {
         for (ScopeSupplyEntity entity : supplyList){
             if(entity!=null) {
-                if (entity.getId()==null&&entity.getId() < 0L) {
+                if (entity.getId()==null||entity.getId() < 0L) {
                     entity.setId(null);
                     entity.setStatus(enumService.getStatusEnumEnable());
                     entity.setPurchaseOrder(po);
