@@ -49,10 +49,13 @@ public class Util {
     }
 
     public String toLocal(Date date) {
+        log.info("toLocal Date");
         if (date != null) {
+            log.info("time zone "+configuration.getTimeZone());
             DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
             long local = zone.convertUTCToLocal(date.getTime());
             SimpleDateFormat sdf = new SimpleDateFormat(configuration.getFormatDate(), new Locale("en"));
+            log.info("formatted "+sdf.format(local));
             return sdf.format(local);
         }
         return null;

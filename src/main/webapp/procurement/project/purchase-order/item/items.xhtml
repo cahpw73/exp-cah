@@ -138,9 +138,7 @@
                         </p:column>
                         <p:column id="deliveryDateColumn"  headerText="#{msgs['po.items.dt.column.delivery.date']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.poDeliveryDate}">
-                                    <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                </h:outputText>
+                                <h:outputText value="#{util.toLocal(_i.poDeliveryDate)}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edDeliveryDate" rendered="#{_i.isEditable}">
                                 <p:calendar id="poOrderDate" type="text" styleClass="calendar"
