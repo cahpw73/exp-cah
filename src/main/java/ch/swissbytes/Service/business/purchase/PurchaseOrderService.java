@@ -221,9 +221,8 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity){
-       //
+        addTokenForVariation(purchaseOrderEntity);
         POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
-        //collectLists(po,purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
@@ -244,8 +243,17 @@ public class PurchaseOrderService extends Service implements Serializable {
         return purchaseOrderEntity;
     }
 
+    private void addTokenForVariation(PurchaseOrderEntity purchaseOrderEntity){
+        String variation = purchaseOrderEntity.getVariation();
+        String token = variation.substring(0,1);
+        if(!token.equals("v")){
+            purchaseOrderEntity.setVariation("v"+variation);
+        }
+    }
+
     @Transactional
     public PurchaseOrderEntity savePOOnProcurementNewVariation(PurchaseOrderEntity purchaseOrderEntity){
+        addTokenForVariation(purchaseOrderEntity);
         POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
@@ -262,11 +270,13 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
+        addTokenForVariation(purchaseOrderEntity);
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
+        purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
         dao.update(purchaseOrderEntity);
         //requisition daos
        requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
@@ -280,6 +290,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
         return purchaseOrderEntity;
     }
+
+
 
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
