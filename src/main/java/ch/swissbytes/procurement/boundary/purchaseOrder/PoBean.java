@@ -100,10 +100,10 @@ public class PoBean extends Bean {
                         purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
                     }
                 }else{
-                    throw new IllegalArgumentException(" project invalid");
+                    throw new IllegalArgumentException(" It is not a project valid");
                 }
             }catch (NumberFormatException nfe){
-                throw new IllegalArgumentException("parameter project invalid");
+                throw new IllegalArgumentException("It is not a project valid");
             }
         }else if(poId!=null){
             try {
@@ -113,7 +113,7 @@ public class PoBean extends Bean {
                 //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
                 poTextBean.loadText(purchaseOrder.getPoEntity(),purchaseOrder.getProjectEntity().getId());
                 if(purchaseOrder==null){
-                    throw new IllegalArgumentException("invalid purchase order Id");
+                    throw new IllegalArgumentException("It is not a purchase order valid");
                 }
                 requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
                 deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
@@ -126,10 +126,10 @@ public class PoBean extends Bean {
                 }
 
             }catch(NumberFormatException nfe){
-                throw new IllegalArgumentException("invalid purchase order Id");
+                throw new IllegalArgumentException("It is not a purchase Order valid");
             }
         }else{
-            throw new IllegalArgumentException("parameter missing");
+            throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
         }
     }
 
