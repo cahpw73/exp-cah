@@ -69,13 +69,6 @@ public class ItemBean implements Serializable {
             scopeSupplyList.add(supply);
             preId--;
             sortBean.sortScopeSupplyEntity(scopeSupplyList);
-
-            /*ItemEntity entity = new ItemEntity();
-            entity.setId(preId);
-            entity.startEditing();
-            itemList.add(entity);
-            preId--;
-            sortBean.sortItemEntity(itemList);*/
         }
     }
 

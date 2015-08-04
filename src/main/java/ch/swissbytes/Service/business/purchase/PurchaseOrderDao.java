@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
 import org.apache.commons.lang3.StringUtils;
 import javax.persistence.Query;
 import java.io.Serializable;
@@ -34,19 +35,10 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         query.setParameter("DELETED", StatusEnum.DELETED.getId());
         if (f != null) {
             log.info("filtering.....");
-          /*  SearchPurchase filter = (SearchPurchase) f;
-            if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject())) {
-                query.setParameter("PROJECT", "%" + filter.getProject().trim() + "%");
+            FilterPO filter=(FilterPO)f;
+            if(filter.getProjectId()!=null){
+                query.setParameter("PROJECT_ID", filter.getProjectId() );
             }
-            if (StringUtils.isNotBlank(filter.getPo()) && StringUtils.isNotEmpty(filter.getPo())) {
-                query.setParameter("PO", "%" + filter.getPo().trim() + "%");
-            }
-            if (StringUtils.isNotBlank(filter.getVariation()) && StringUtils.isNotEmpty(filter.getVariation())) {
-                query.setParameter("VARIATION", "%" + filter.getVariation().trim() + "%");
-            }
-            if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
-                query.setParameter("PO_TITLE", "%" + filter.getPoTitle().trim() + "%");
-            }*/
         } else {
             log.info("filter is null");
         }
@@ -62,20 +54,10 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb = new StringBuilder();
         sb.append(" AND x.status.id<>:DELETED ");
         if (f != null) {
-           /* log.info("filtering.....");
-            SearchPurchase filter = (SearchPurchase) f;
-            if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject())) {
-                sb.append(" AND lower(x.project) like lower(:PROJECT)");
+            FilterPO filter=(FilterPO)f;
+            if(filter.getProjectId()!=null){
+                sb.append(" AND x.projectEntity.id =:PROJECT_ID");
             }
-            if (StringUtils.isNotBlank(filter.getPo()) && StringUtils.isNotEmpty(filter.getPo())) {
-                sb.append(" AND lower(x.po) like lower(:PO)");
-            }
-            if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
-                sb.append(" AND lower(x.poTitle) like lower(:PO_TITLE)");
-            }
-            if (StringUtils.isNotBlank(filter.getVariation()) && StringUtils.isNotEmpty(filter.getVariation())) {
-                sb.append(" AND lower(x.variation) like lower(:VARIATION)");
-            }*/
         } else {
             log.info("filter is null");
         }

@@ -60,8 +60,6 @@ public class PoListBean implements Serializable {
 
     private PurchaseOrderEntity currentPurchaseOrder;
 
-    //   private List<PurchaseOrderEntity> list;
-
     private List<PurchaseOrderEntity> pOrderList;
 
     private List<PurchaseOrderEntity> maxVariationsList;
@@ -72,17 +70,19 @@ public class PoListBean implements Serializable {
 
     private PurchaseOrderTbl poList;
 
+    private FilterPO filter;
+
 
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
         Date start = new Date();
-        //list = new ArrayList<>();
+
         currentPurchaseOrder = new PurchaseOrderEntity();
         purchaseOrderToVariation = new PurchaseOrderEntity();
         pOrderList = new ArrayList<>();
         maxVariationsList = new ArrayList<>();
-        poList = new PurchaseOrderTbl(dao, new Filter());
+
         Date end = new Date();
         log.info("creating list Bean takes " + (end.getTime() - start.getTime()));
     }
@@ -101,6 +101,9 @@ public class PoListBean implements Serializable {
             }
             //list = service.purchaseListByProject(Long.parseLong(projectId));
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+            filter=new FilterPO();
+            filter.setProjectId(project.getId());
+            poList = new PurchaseOrderTbl(dao, filter);
         } else {
             throw new IllegalArgumentException("project Id invalid");
         }

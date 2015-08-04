@@ -2,8 +2,6 @@ package ch.swissbytes.Service.business.item;
 
 
 import ch.swissbytes.Service.business.enumService.EnumService;
-import ch.swissbytes.domain.model.entities.ItemEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -50,16 +48,18 @@ public class ItemService  implements Serializable {
 
     public void doUpdate(List<ScopeSupplyEntity> supplyList, PurchaseOrderEntity po) {
         for (ScopeSupplyEntity entity : supplyList){
-            if(entity.getId() < 0L){
-                entity.setId(null);
-                entity.setStatus(enumService.getStatusEnumEnable());
-                entity.setPurchaseOrder(po);
-                entity.setIsForecastSiteDateManual(false);
-                //@TODO Review Date_SS  estamos poniendo este valor por defecto con la fecha del dia, este campo aparentemente esta siendo usado en attachment modulo expediting
-                entity.setDate(new Date());
+            if(entity!=null) {
+                if (entity.getId()==null&&entity.getId() < 0L) {
+                    entity.setId(null);
+                    entity.setStatus(enumService.getStatusEnumEnable());
+                    entity.setPurchaseOrder(po);
+                    entity.setIsForecastSiteDateManual(false);
+                    //@TODO Review Date_SS  estamos poniendo este valor por defecto con la fecha del dia, este campo aparentemente esta siendo usado en attachment modulo expediting
+                    entity.setDate(new Date());
+                }
+                entity.setLastUpdate(new Date());
+                dao.doUpdate(entity);
             }
-            entity.setLastUpdate(new Date());
-            dao.doUpdate(entity);
         }
     }
 

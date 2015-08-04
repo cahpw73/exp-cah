@@ -4,6 +4,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.xml.sax.SAXParseException;
 
 import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
@@ -70,9 +71,10 @@ public abstract class ReportView implements Serializable {
             ex.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception ex){
-          ex.printStackTrace();
-        }   finally{
+        }  catch (Exception ex){
+            ex.printStackTrace();
+        }
+        finally{
             IOUtils.closeQuietly(outputStream);
         }
 
