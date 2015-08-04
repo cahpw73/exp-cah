@@ -53,8 +53,11 @@ public class CashflowService implements Serializable {
             entity.setPo(po);
             dao.doSave(entity);
         }
-
-
+        log.info("before for");
+        for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
+           log.info("detail cashflow: id" + cf.getId() );
+        }
+        log.info("after for");
         for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
             if(cf.getId() < 0L) {
                 cf.setId(null);

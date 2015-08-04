@@ -168,6 +168,7 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
+            load();
         }
     }
 
