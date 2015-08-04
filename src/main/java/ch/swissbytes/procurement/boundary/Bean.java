@@ -1,12 +1,11 @@
 package ch.swissbytes.procurement.boundary;
 
-import ch.swissbytes.domain.model.entities.ContactEntity;
+
 import ch.swissbytes.domain.types.ModeOperationEnum;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**

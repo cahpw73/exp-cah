@@ -139,15 +139,15 @@ public class PoBean extends Bean {
     }
 
 
-    public String doSave(){
+    public void doSave(){
         log.info("trying to save purchase order on procurement module");
         if(validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            return doLastOperationsOverPO(true);
+             doLastOperationsOverPO(true);
         }
-        return "";
+
     }
 
     public String doSaveAndClose(){
@@ -161,7 +161,7 @@ public class PoBean extends Bean {
         return "";
     }
 
-    public String doUpdate() {
+    public void doUpdate() {
         log.info("trying to update purchase order on procurement module");
         if(validate()) {
             collectData();
@@ -169,7 +169,6 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
         }
-        return "";
     }
 
     public String doUpdateAndClose() {
