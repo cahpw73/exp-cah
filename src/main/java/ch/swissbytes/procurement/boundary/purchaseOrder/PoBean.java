@@ -146,6 +146,9 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
              doLastOperationsOverPO(true);
+            poId=purchaseOrder.getId().toString();
+            projectId=null;
+            load();
         }
 
     }
