@@ -13,23 +13,23 @@ public class Processor {
 
     private Stack<TagHTML> tags;
     private List<DTOSnippet> snippets;
-    private boolean isPdf=false;
+    private boolean isPdf = false;
 
     public Processor(boolean isPdf) {
         tags = new Stack<>();
         snippets = new ArrayList<>();
-        this.isPdf=isPdf;
+        this.isPdf = isPdf;
     }
 
     public String processSnippetText(final String html) {
-        if(StringUtils.isEmpty(html)||StringUtils.isBlank(html)){
+        if (StringUtils.isEmpty(html) || StringUtils.isBlank(html)) {
             return "";
         }
         String copy = html;
         while (copy.length() > 0) {
             String tagFound = findNextTag(copy);
             String textInBetween = getTextInBetween(tagFound, copy);
-            if(StringUtils.isNotEmpty(textInBetween)){
+            if (StringUtils.isNotEmpty(textInBetween)) {
                 snippets.add(registerTextInBetween(textInBetween));
             }
             if (StringUtils.isNotEmpty(tagFound)) {
@@ -43,11 +43,11 @@ public class Processor {
                     }
                 }
             }
-            if(StringUtils.isNotEmpty(tagFound)) {
+            if (StringUtils.isNotEmpty(tagFound)) {
                 Integer index = copy.toLowerCase().indexOf(tagFound.toLowerCase());
                 copy = moveOn(index + tagFound.length(), copy);
-            }else{
-                copy="";
+            } else {
+                copy = "";
             }
         }
         return getStyledText();
@@ -99,30 +99,33 @@ public class Processor {
     }
 
     private String getTextInBetween(String tag, String text) {
-        int index =StringUtils.isNotEmpty(tag)? text.toLowerCase().indexOf(tag.toLowerCase()):text.length();
+        int index = StringUtils.isNotEmpty(tag) ? text.toLowerCase().indexOf(tag.toLowerCase()) : text.length();
         return text.substring(0, index);
     }
 
     private String findNextTag(String source) {
         String tagFound = "";
         int minorIndex = Integer.MAX_VALUE;
+        if (source.startsWith("Optional Train 3")) {
+            System.out.println("here");
+        }
         for (TagHTML tag : TagHTML.values()) {
-            if(tag.ordinal()!=TagHTML.ITALIC_BOLD.ordinal()) {
-                int index = tag.open!=null?source.toLowerCase().indexOf(tag.open.toLowerCase()):-1;
+            if (tag.ordinal() != TagHTML.ITALIC_BOLD.ordinal()) {
+                int index = tag.open != null ? source.toLowerCase().indexOf(tag.open.toLowerCase()) : -1;
                 if (index >= 0) {
                     if (index < minorIndex) {
                         minorIndex = index;
                         tagFound = tag.open;
                     }
-                } else {
-                    index = tag.close!=null?source.toLowerCase().indexOf(tag.close.toLowerCase()):-1;
-                    if (index >= 0) {
-                        if (index < minorIndex) {
-                            minorIndex = index;
-                            tagFound = tag.close;
-                        }
+                }
+                int index2 = tag.close != null ? source.toLowerCase().indexOf(tag.close.toLowerCase()) : -1;
+                if (index2 >= 0) {
+                    if (index2 < minorIndex) {
+                        minorIndex = index2;
+                        tagFound = tag.close;
                     }
                 }
+
             }
 
         }
@@ -134,15 +137,15 @@ public class Processor {
         for (DTOSnippet snippet : snippets) {
             String style = "";
             boolean hasAnyStyle = false;
-            if (snippet.isBold()&&!snippet.isItalic()) {
+            if (snippet.isBold() && !snippet.isItalic()) {
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.BOLD, style);
             }
-            if (snippet.isItalic()&&!snippet.isBold()) {
+            if (snippet.isItalic() && !snippet.isBold()) {
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.ITALIC, style);
             }
-            if(snippet.isItalic()&&snippet.isBold()){
+            if (snippet.isItalic() && snippet.isBold()) {
                 hasAnyStyle = true;
                 style = creatingProperty(TagHTML.ITALIC_BOLD, style);
             }
@@ -163,11 +166,11 @@ public class Processor {
                 style = creatingProperty(TagHTML.H3, style);
             }
 
-            style = style + (snippet.isOpenParagraph()?System.getProperty("line.separator"):"")+snippet.getSnippet();
+            style = style + (snippet.isOpenParagraph() ? System.getProperty("line.separator") : "") + snippet.getSnippet();
             if (hasAnyStyle) {
                 style = style + TagPDFJasper.STYLE.close;
             }
-            style=style+(snippet.isCloseParagraph()?System.getProperty("line.separator"):"");
+            style = style + (snippet.isCloseParagraph() ? System.getProperty("line.separator") : "");
             sb.append(style);
         }
         return sb.toString();
@@ -186,7 +189,7 @@ public class Processor {
         switch (tag) {
             case BOLD:
                 newText = insertProperty(text, TagPDFJasper.BOLD.open);
-                if(isPdf){
+                if (isPdf) {
                     newText = insertProperty(newText, TagPDFJasper.BOLD.close);
                 }
                 break;
@@ -195,14 +198,14 @@ public class Processor {
                 break;
             case ITALIC:
                 newText = insertProperty(text, TagPDFJasper.ITALIC.open);
-                if(isPdf){
+                if (isPdf) {
                     newText = insertProperty(newText, TagPDFJasper.ITALIC.close);
                 }
                 break;
             case ITALIC_BOLD:
                 newText = insertProperty(text, TagPDFJasper.ITALIC.open);
                 newText = insertProperty(newText, TagPDFJasper.BOLD.open);
-                if(isPdf){
+                if (isPdf) {
                     newText = insertProperty(newText, TagPDFJasper.ITALIC_BOLD.open);
                 }
                 break;
@@ -221,7 +224,7 @@ public class Processor {
     }
 
     private String insertProperty(String text, String property) {
-        return StringUtils.isEmpty(text)||StringUtils.isBlank(text)?"": text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
+        return StringUtils.isEmpty(text) || StringUtils.isBlank(text) ? "" : text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
     }
 
 }
