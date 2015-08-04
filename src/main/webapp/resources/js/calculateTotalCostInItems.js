@@ -14,7 +14,7 @@ function calculateTotalCost(){
     console.log("unitPrice: " + unitPrice);
     var unitPriceCalc = unitPrice.replace(",", "");
     try{
-    if(isNumeric(quantity) && parseInt(quantity) >= 0 && parseFloat(unitPriceCalc) >= 0){
+    if(isNumericPositive(quantity) && parseInt(quantity) >= 0 && parseFloat(unitPriceCalc) >= -100000000){
         console.log("calculating....")
         totalPrice = parseFloat(quantity) * parseFloat(unitPriceCalc);
         var totalPriceFixed = parseFloat(totalPrice.toFixed(2));
@@ -27,30 +27,13 @@ function calculateTotalCost(){
     }
 }
 
-function isNumeric(obj) {
+function isNumericPositive(obj) {
     var result = !jQuery.isArray( obj ) && (obj - parseFloat( obj ) + 1) >= 0;
-    console.log("RESULT IS NUMERIC: " + result);
+    console.log("RESULT IS NUMERIC POSITVE: " + result);
     return result;
 }
-
-function verifyQuantityValid(){
-    var quantity = document.getElementsByClassName('scopeSupplyQuantity')[0].value;
-    if(parseInt(quantity)<0){
-        document.getElementsByClassName('scopeSupplyQuantity')[0].value = 0;
-    }else if(quantity == ""){
-        document.getElementsByClassName('totalPriceTxt')[0].value = "";
-    }
-}
-
-function verifyUnitPriceValid(){
-    var priceUnit = document.getElementsByClassName('scopeSupplyCost')[0].value;
-    if(parseInt(priceUnit)<0){
-        document.getElementsByClassName('scopeSupplyCost')[0].value = 0;
-    }else if(priceUnit == ""){
-        document.getElementsByClassName('totalPriceTxt')[0].value = "";
-    }
-}
-
-function copyCurrencyLabel(){
-    calculateTotalPrice();
+function isNumeric(obj) {
+    var result = !jQuery.isArray( obj ) && (obj - parseFloat( obj ) + 1)>=-10000000;
+    console.log("RESULT IS NUMERIC: " + result);
+    return result;
 }
