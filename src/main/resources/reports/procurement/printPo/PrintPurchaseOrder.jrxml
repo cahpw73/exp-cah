@@ -290,7 +290,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[DELIVERY POINT:]]></text>
+				<text><![CDATA[Delivery Point:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="93107e8d-c532-4937-bde0-99c6977ddc56" positionType="Float" x="302" y="18" width="191" height="12" isRemoveLineWhenBlank="true"/>
@@ -304,7 +304,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[DELIVERYINSTRUCTIONS:]]></text>
+				<text><![CDATA[Consigns  To:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" positionType="Float" x="302" y="47" width="190" height="12" isRemoveLineWhenBlank="true"/>
@@ -500,9 +500,9 @@
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" x="0" y="12" width="50" height="12"/>
+								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" x="0" y="14" width="50" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<font size="7"/>
+									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{cost}):null]]></textFieldExpression>
@@ -510,14 +510,16 @@
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="84abf470-d3ba-48e2-ae66-db94ad4fbf8f" x="0" y="25" width="75" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-									<font size="7"/>
+									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{strTotalCost}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{strTotalCost}+"</style>":null]]></textFieldExpression>
 							</textField>
 							<textField>
-								<reportElement uuid="fcc81b98-76bb-4edb-ad81-7c1c036de5cf" x="50" y="13" width="15" height="12"/>
-								<textElement>
-									<font size="7"/>
+								<reportElement uuid="fcc81b98-76bb-4edb-ad81-7c1c036de5cf" x="50" y="14" width="15" height="12">
+									<printWhenExpression><![CDATA[$F{cost}!=null]]></printWhenExpression>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
 							</textField>
@@ -541,25 +543,36 @@
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" x="0" y="12" width="50" height="12"/>
+								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" x="0" y="13" width="50" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<font size="7"/>
+									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{totalCost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalCost}):null]]></textFieldExpression>
 							</textField>
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" x="1" y="25" width="74" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" x="0" y="25" width="50" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-									<font size="7"/>
+									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{totalAmount}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalAmount})+"</style>":null]]></textFieldExpression>
 							</textField>
 							<textField>
-								<reportElement uuid="c78f310f-931f-4a05-ad4b-1ed50847c84d" x="50" y="12" width="15" height="12"/>
-								<textElement>
-									<font size="7"/>
+								<reportElement uuid="c78f310f-931f-4a05-ad4b-1ed50847c84d" x="50" y="14" width="15" height="12">
+									<printWhenExpression><![CDATA[$F{totalCost}!=null]]></printWhenExpression>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement uuid="9ce6fbc6-c8d7-49c7-b562-be936cd4124e" x="50" y="25" width="15" height="12">
+									<printWhenExpression><![CDATA[$F{totalCost}!=null]]></printWhenExpression>
+								</reportElement>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
 							</textField>
@@ -580,21 +593,21 @@
 			<staticText>
 				<reportElement uuid="c468b76e-51e2-4afc-8756-a7a5f0089c0b" x="17" y="4" width="225" height="28" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font size="7"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA["<style size='8'' isBold='true' pdfFontName='Arial'>"+We hereby confirm our understanding and acceptance of this purchase order in  its entirety+"</style>"]]></text>
+				<text><![CDATA[We hereby confirm our understanding and acceptance of this purchase order in  its entirety]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fac54615-b300-434d-9c8b-ee53e94a6af7" x="335" y="4" width="100" height="12"/>
+				<reportElement uuid="fac54615-b300-434d-9c8b-ee53e94a6af7" x="359" y="4" width="100" height="12"/>
 				<textElement verticalAlignment="Middle">
-					<font size="7"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Signed for and on befalf of]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="2ea5c38a-19df-4e43-8ea9-cdad418d40a6" x="334" y="18" width="147" height="14" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2ea5c38a-19df-4e43-8ea9-cdad418d40a6" x="358" y="18" width="147" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
-					<font size="7" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientName}]]></textFieldExpression>
 			</textField>
@@ -613,30 +626,40 @@
 			<line>
 				<reportElement uuid="96c087e2-dcad-4a75-bdd4-81a54f99b8da" x="260" y="0" width="1" height="93"/>
 			</line>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cf54ac43-204c-4bff-ae8e-5eb542ce7149" x="391" y="68" width="94" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{procManager}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0ec27f47-f1a2-45a6-9932-cad0dd25a124" x="17" y="69" width="201" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{procManagerDetail}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement uuid="77225ea0-641f-4e08-85fe-9a6432c83354" x="356" y="64" width="156" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="a488eb9c-3bcd-452c-be15-2be9d598208e" x="269" y="54" width="76" height="14"/>
+				<reportElement uuid="a488eb9c-3bcd-452c-be15-2be9d598208e" x="269" y="54" width="86" height="14"/>
 				<textElement>
-					<font size="7"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Authorised Signature:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="4d7ff76a-117b-45a1-ba4c-bbb3e4c6b0bc" x="401" y="65" width="70" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STEVE POULTER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2fc3d185-273f-43ae-acd1-4e4844068c5f" x="374" y="76" width="125" height="12"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GROUP PROCUREMENT MANAGER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aab1eb6e-b9f0-4ad4-b820-7ab0ea3143d4" x="72" y="65" width="104" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Authorised Signature of Supplier]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="40cf4880-4dce-4d34-a35d-277c30b902cb" x="47" y="64" width="156" height="1"/>
+			</line>
 		</band>
 	</lastPageFooter>
 	<summary>

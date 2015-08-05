@@ -281,6 +281,7 @@ public abstract class GenericDao<T> {
         if(!count){
             query.append(orderBy());
         }
+        System.out.println("query!!!!!!!!!!!!!!!!!!! "+query.toString());
         return query.toString();
     }
     protected String select(boolean count){

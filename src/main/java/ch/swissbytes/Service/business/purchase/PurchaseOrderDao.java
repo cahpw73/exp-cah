@@ -141,8 +141,12 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     @Override
     public String orderBy(String field, boolean ascending) {
-        //return "ORDER BY " + field;
-        return "ORDER BY po,orderedVariation";
+        return " ORDER BY x.po,x.orderedVariation ";
+    }
+
+    @Override
+    public String orderBy(){
+        return " ORDER BY x.po,x.orderedVariation ";
     }
 
     public List<PurchaseOrderEntity> findByProjectAndPo(Long projectId, String poNo) {

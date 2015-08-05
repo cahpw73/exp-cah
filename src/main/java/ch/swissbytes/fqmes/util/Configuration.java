@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.*;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +28,7 @@ public class Configuration implements Serializable {
 
     private static final Logger log = Logger.getLogger(Configuration.class.getName());
 
-    private int []sizes={5,10,50,100};
+    private int []sizes={5,10,25,50,100};
 
     private final String laguangeDefault = "en-AU";
 

@@ -6,7 +6,6 @@ import ch.swissbytes.Service.business.comment.CommentService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
-import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.util.SortBean;
 
@@ -31,8 +30,8 @@ public class PurchaseOrderView implements Serializable{
     @Inject
     private PurchaseOrderService service;
 
-    @Inject
-    private SupplierDao supplierDao;
+   /* @Inject
+    private SupplierDao supplierDao;*/
 
     @Inject
     private CommentService commentService;
@@ -53,7 +52,7 @@ public class PurchaseOrderView implements Serializable{
 
     private PurchaseOrderEntity purchaseOrder;
 
-    private SupplierEntity supplierView;
+    //private SupplierEntity supplierView;
 
     private List<CommentEntity> comments;
 
@@ -76,7 +75,7 @@ public class PurchaseOrderView implements Serializable{
         log.info("loading....");
         purchaseOrder=service.load(Long.parseLong(purchaseOrderId));
         if(purchaseOrder!=null){
-            supplierView=supplierDao.findByPurchaseOrder(purchaseOrder.getId());
+           // supplierView=supplierDao.findByPurchaseOrder(purchaseOrder.getId());
             comments=commentService.findByPurchaseOrder(purchaseOrder.getId());
             scopeSupplies=scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
             if(scopeSupplies != null && !scopeSupplies.isEmpty()){
@@ -94,9 +93,9 @@ public class PurchaseOrderView implements Serializable{
     }
 
 
-    public SupplierEntity getSupplierView() {
+   /* public SupplierEntity getSupplierView() {
         return supplierView;
-    }
+    }*/
 
     public String getPurchaseOrderId() {
         return purchaseOrderId;
