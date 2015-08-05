@@ -26,6 +26,8 @@ public class PurchaseOrderReportDto implements Serializable {
     private String strTotalCost;
     private BigDecimal totalAmount;
 
+    private String currency;
+
     public PurchaseOrderReportDto(){
 
     }
@@ -46,6 +48,7 @@ public class PurchaseOrderReportDto implements Serializable {
         this.preamble = null;
         this.strTotalCost = null;
         this.totalAmount = null;
+        this.currency=currency!=null?currency.getCurrency().getCode():null;
     }
     public PurchaseOrderReportDto(PurchaseOrderEntity po, String preamble){
         this.code = null;
@@ -165,5 +168,13 @@ public class PurchaseOrderReportDto implements Serializable {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
