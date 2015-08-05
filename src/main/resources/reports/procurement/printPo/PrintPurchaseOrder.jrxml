@@ -637,7 +637,7 @@
 				<text><![CDATA[Authorised Signature:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4d7ff76a-117b-45a1-ba4c-bbb3e4c6b0bc" x="401" y="65" width="70" height="12"/>
+				<reportElement uuid="4d7ff76a-117b-45a1-ba4c-bbb3e4c6b0bc" x="401" y="65" width="70" height="11"/>
 				<textElement>
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>

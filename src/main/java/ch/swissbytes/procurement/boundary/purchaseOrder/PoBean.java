@@ -80,57 +80,61 @@ public class PoBean extends Bean {
 
     private boolean supplierHeaderMode=false;
     private boolean supplierMode=false;
+    private boolean loaded=false;
 
 
 
     public void load(){
-        if(projectId!=null){
-            try {
-                ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
-                if (projectEntity != null) {
-                    List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
-                    purchaseOrder.setProjectEntity(projectEntity);
-                    purchaseOrder.setProject(projectEntity.getProjectNumber());
-                    purchaseOrder.setPoEntity(new POEntity());
-                    purchaseOrder.getPoEntity().setOrderDate(new Date());
-                    purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions()!=null?projectEntity.getDeliveryInstructions():"");
-                    putModeCreation();
-                    poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
-                    if(projectCurrencyList.size() == 1){
-                        purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
+        if(!loaded) {
+            if (projectId != null) {
+                try {
+                    ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
+                    if (projectEntity != null) {
+                        List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
+                        purchaseOrder.setProjectEntity(projectEntity);
+                        purchaseOrder.setProject(projectEntity.getProjectNumber());
+                        purchaseOrder.setPoEntity(new POEntity());
+                        purchaseOrder.getPoEntity().setOrderDate(new Date());
+                        purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
+                        putModeCreation();
+                        poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+                        if (projectCurrencyList.size() == 1) {
+                            purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
+                        }
+                    } else {
+                        throw new IllegalArgumentException(" It is not a project valid");
                     }
-                }else{
-                    throw new IllegalArgumentException(" It is not a project valid");
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalArgumentException("It is not a project valid");
                 }
-            }catch (NumberFormatException nfe){
-                throw new IllegalArgumentException("It is not a project valid");
-            }
-        }else if(poId!=null){
-            try {
-                purchaseOrder=service.findById(Long.valueOf(poId));
-                itemBean.loadItemList(purchaseOrder.getId());
-                cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
-                //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
-                poTextBean.loadText(purchaseOrder.getPoEntity(),purchaseOrder.getProjectEntity().getId());
-                if(purchaseOrder==null){
-                    throw new IllegalArgumentException("It is not a purchase order valid");
-                }
-                requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
-                deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
-                if(modeView == null) {
-                    log.info("mode edition");
-                    putModeEdition();
-                }else if(modeView) {
-                    log.info("mode view");
-                    putModeView();
-                }
+            } else if (poId != null) {
+                try {
+                    purchaseOrder = service.findById(Long.valueOf(poId));
+                    itemBean.loadItemList(purchaseOrder.getId());
+                    cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
+                    //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+                    poTextBean.loadText(purchaseOrder.getPoEntity(), purchaseOrder.getProjectEntity().getId());
+                    if (purchaseOrder == null) {
+                        throw new IllegalArgumentException("It is not a purchase order valid");
+                    }
+                    requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
+                    deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
+                    if (modeView == null) {
+                        log.info("mode edition");
+                        putModeEdition();
+                    } else if (modeView) {
+                        log.info("mode view");
+                        putModeView();
+                    }
 
-            }catch(NumberFormatException nfe){
-                throw new IllegalArgumentException("It is not a purchase Order valid");
+                } catch (NumberFormatException nfe) {
+                    throw new IllegalArgumentException("It is not a purchase Order valid");
+                }
+            } else {
+                throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
             }
-        }else{
-            throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
         }
+        loaded=true;
     }
 
     @Override
@@ -148,6 +152,7 @@ public class PoBean extends Bean {
              doLastOperationsOverPO(true);
             poId=purchaseOrder.getId().toString();
             projectId=null;
+            loaded=false;
             load();
         }
 
@@ -171,6 +176,7 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
+            loaded=false;
             load();
         }
     }
@@ -181,7 +187,9 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            return doLastOperationsOverPO(false);
+            String link=doLastOperationsOverPO(false);
+            System.out.println("url "+link);
+            return link;
         }
         return "";
     }

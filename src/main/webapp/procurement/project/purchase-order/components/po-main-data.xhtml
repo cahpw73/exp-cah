@@ -13,12 +13,12 @@
                                      action="#{poBean.doSave}"
                                      rendered="#{poBean.beingCreated}"
                                      value="#{msgs['lbl.save']}">
-                        <p:ajax async="false" update=":glbMsgs buttonGroup"/>
+                        <p:ajax async="false" update=":glbMsgs buttonGroup editPoForm"  process="@form"/>
                     </h:commandButton>
                     <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                      value="#{msgs['lbl.save']}">
-                        <p:ajax async="false" update=":glbMsgs"/>
+                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
                     </h:commandButton>
                     &#160;
                     <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"

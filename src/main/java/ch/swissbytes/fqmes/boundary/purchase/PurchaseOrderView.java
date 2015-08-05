@@ -30,9 +30,6 @@ public class PurchaseOrderView implements Serializable{
     @Inject
     private PurchaseOrderService service;
 
-   /* @Inject
-    private SupplierDao supplierDao;*/
-
     @Inject
     private CommentService commentService;
 
@@ -51,8 +48,6 @@ public class PurchaseOrderView implements Serializable{
     private String purchaseOrderId;
 
     private PurchaseOrderEntity purchaseOrder;
-
-    //private SupplierEntity supplierView;
 
     private List<CommentEntity> comments;
 
@@ -75,7 +70,6 @@ public class PurchaseOrderView implements Serializable{
         log.info("loading....");
         purchaseOrder=service.load(Long.parseLong(purchaseOrderId));
         if(purchaseOrder!=null){
-           // supplierView=supplierDao.findByPurchaseOrder(purchaseOrder.getId());
             comments=commentService.findByPurchaseOrder(purchaseOrder.getId());
             scopeSupplies=scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
             if(scopeSupplies != null && !scopeSupplies.isEmpty()){
@@ -91,11 +85,6 @@ public class PurchaseOrderView implements Serializable{
     public PurchaseOrderEntity getPurchaseOrder() {
         return purchaseOrder;
     }
-
-
-   /* public SupplierEntity getSupplierView() {
-        return supplierView;
-    }*/
 
     public String getPurchaseOrderId() {
         return purchaseOrderId;
