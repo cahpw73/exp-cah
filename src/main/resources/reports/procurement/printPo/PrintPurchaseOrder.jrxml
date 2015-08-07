@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
-	<property name="ireport.x" value="98"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -335,7 +335,7 @@
 				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" positionType="Float" stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="69" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="642535a4-211f-4d0a-a4cc-ca8da068a394" positionType="Float" x="0" y="70" width="519" height="1"/>
+				<reportElement uuid="642535a4-211f-4d0a-a4cc-ca8da068a394" positionType="Float" x="0" y="69" width="519" height="1"/>
 			</line>
 			<line>
 				<reportElement uuid="b28d331a-9ea7-4f27-919f-f46eef65fda1" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="69"/>
@@ -566,8 +566,8 @@
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" x="18" y="14" width="57" height="10"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" x="13" y="14" width="62" height="10"/>
+								<textElement verticalAlignment="Middle">
 									<font fontName="Arial" size="6"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
@@ -581,7 +581,7 @@
 								<textFieldExpression><![CDATA[$F{strTotalCost}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{strTotalCost}+"</style>":null]]></textFieldExpression>
 							</textField>
 							<textField>
-								<reportElement uuid="fcc81b98-76bb-4edb-ad81-7c1c036de5cf" x="3" y="14" width="15" height="10">
+								<reportElement uuid="fcc81b98-76bb-4edb-ad81-7c1c036de5cf" x="3" y="14" width="12" height="10">
 									<printWhenExpression><![CDATA[$F{cost}!=null]]></printWhenExpression>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
@@ -612,9 +612,9 @@
 						</jr:columnHeader>
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" x="17" y="14" width="57" height="9"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<font fontName="Arial" size="6"/>
+								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" x="12" y="14" width="62" height="9"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Arial" size="5"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{totalCost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalCost}):null]]></textFieldExpression>
@@ -622,17 +622,17 @@
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" x="0" y="26" width="75" height="9" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-									<font fontName="Arial" size="6"/>
+									<font fontName="Arial" size="5"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{totalAmount}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalAmount})+"</style>":null]]></textFieldExpression>
 							</textField>
 							<textField>
-								<reportElement uuid="c78f310f-931f-4a05-ad4b-1ed50847c84d" x="2" y="14" width="15" height="9">
+								<reportElement uuid="c78f310f-931f-4a05-ad4b-1ed50847c84d" x="2" y="14" width="12" height="9">
 									<printWhenExpression><![CDATA[$F{totalCost}!=null]]></printWhenExpression>
 								</reportElement>
 								<textElement verticalAlignment="Middle">
-									<font fontName="Arial" size="6"/>
+									<font fontName="Arial" size="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
 							</textField>
