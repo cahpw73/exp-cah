@@ -91,10 +91,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
-            Map detail= separateDetail(Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(po.getProjectEntity().getClient().getTitle())));
-            addParameters("clientDetail1",detail.size()>0?detail.get(0):null);
-            addParameters("clientDetail2",detail.size()>1?detail.get(1):null);
-            addParameters("clientDetail3",detail.size()>2?detail.get(2):null);
+            Map detail= separateDetail(po.getProjectEntity().getClient().getTitle());
+            addParameters("clientDetail1",detail.size()>0?Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(detail.get(0).toString())):null);
+            addParameters("clientDetail2",detail.size()>1?Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(detail.get(1).toString())):null);
+            addParameters("clientDetail3",detail.size()>2?Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(detail.get(2).toString())):null);
         }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());

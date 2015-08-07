@@ -74,7 +74,7 @@
                                   style="width: 80%!important;">
                             <h:panelGroup id="viDescription" rendered="#{!_pt.isEditable}">
 
-                                <h:outputText value="#{_pt.description}" styleClass="content-big-text"/>
+                                #{_pt.description}
 
                             </h:panelGroup>
                             <h:panelGroup id="edDescription" rendered="#{_pt.isEditable}">
