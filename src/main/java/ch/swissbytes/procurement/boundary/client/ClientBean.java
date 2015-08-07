@@ -64,12 +64,12 @@ public class ClientBean extends Bean implements Serializable {
 
     public String doSave(){
         client=service.save(client);
-        Messages.addFlashGlobalInfo("The client has been saved!");
+        Messages.addFlashGlobalInfo("The client has been saved.");
         return "edit?faces-redirect=true&clientId="+client.getId();
     }
     public String doUpdate(){
         service.update(client);
-        Messages.addFlashGlobalInfo("The client was updated!");
+        Messages.addFlashGlobalInfo("The client has been saved.");
         return "edit?faces-redirect=true&clientId="+client.getId();
 
     }

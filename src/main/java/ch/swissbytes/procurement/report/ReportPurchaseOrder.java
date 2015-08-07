@@ -54,18 +54,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.scopeSupplyList = scopeSupplyList;
         this.preamble = preamble;
         this.clausesList = clausesList;
-        LookupValueFactory lookupValueFactory = new LookupValueFactory();
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("SUBREPORT_DIR","reports/procurement/printPo/");
         loadParamPurchaseOrder();
-        loadItems();
-    }
-
-    private void loadItems() {
-
-        //ScopeSupplyEntity scopeSupply =
     }
 
     private void loadParamPurchaseOrder() {
@@ -98,7 +91,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
-            addParameters("clientDetail",Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(po.getProjectEntity().getClient().getTitle())));
+            Map detail= separateDetail(Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(po.getProjectEntity().getClient().getTitle())));
+            addParameters("clientDetail1",detail.size()>0?detail.get(0):null);
+            addParameters("clientDetail2",detail.size()>1?detail.get(1):null);
+            addParameters("clientDetail3",detail.size()>2?detail.get(2):null);
         }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
@@ -113,11 +109,22 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             log.info("InputStream watermark: " + watermark.toString());
             addParameters("watermarkDraft", watermark);
         }
-        List<PurchaseOrderReportDto> dtos = getPOReportDto();
-        addParameters("poList",createDataSource(dtos));
+        addParameters("poList",createDataSource(getPOReportDto()));
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
+        addParameters("projectName",po.getProjectEntity().getTitle());
+        addParameters("paymentTerm", po.getPoEntity().getCashflow()!=null?po.getPoEntity().getCashflow().getPaymentTerms().name():null);
         Date now = new Date();
-        addParameters("currentDate",now);
+        addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
+    }
+    private Map<Integer,String> separateDetail(String detail){
+        Map<Integer,String> columns=new HashMap<>();
+        String separator=System.lineSeparator()+System.lineSeparator();
+        int i=0;
+        for(String column:detail.split(separator)){
+            columns.put(i,column);
+            i++;
+        }
+        return columns;
     }
 
     private List<PurchaseOrderReportDto> getPOReportDto() {
