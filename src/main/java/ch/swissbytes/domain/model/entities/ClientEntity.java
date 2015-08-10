@@ -25,6 +25,7 @@ public class ClientEntity implements Serializable {
     private LogoEntity defaultLogo;
     private LogoEntity defaultFooter;
     private StatusEnum status;
+    private String invoiceTo;
     private Date lastUpdate;
 
     @Id
@@ -56,8 +57,20 @@ public class ClientEntity implements Serializable {
         return title;
     }
 
+
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Size(max = 1000)
+    @Column(name = "invoice_to", nullable = true, length = 1000)
+    public String getInvoiceTo() {
+        return invoiceTo;
+    }
+
+    public void setInvoiceTo(String invoiceTo) {
+        this.invoiceTo = invoiceTo;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

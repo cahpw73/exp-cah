@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="96"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -83,6 +83,8 @@
 	<parameter name="paymentTerm" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE2" class="java.lang.String"/>
 	<parameter name="arialPath" class="java.lang.String"/>
+	<parameter name="invoiceTo" class="java.lang.String"/>
+	<parameter name="retentionApplicable" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -189,7 +191,7 @@
 				<textFieldExpression><![CDATA[$P{clientDetail3}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e7d1d6c2-a55d-4810-ac7c-d5d72723bf99" positionType="Float" x="113" y="81" width="271" height="17" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e7d1d6c2-a55d-4810-ac7c-d5d72723bf99" style="Arial-Bold" positionType="Float" x="113" y="81" width="271" height="17" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" markup="styled">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -410,6 +412,25 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{paymentTerm}]]></textFieldExpression>
 			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" positionType="Float" x="318" y="91" width="144" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{invoiceTo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="db35bb29-0d73-41b6-85a7-686ad84ac436" style="Arial" positionType="Float" x="164" y="128" width="138" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{retentionApplicable}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c5ba6be5-479c-4aad-ac08-ef5afea10b3f" x="163" y="102" width="139" height="12"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>

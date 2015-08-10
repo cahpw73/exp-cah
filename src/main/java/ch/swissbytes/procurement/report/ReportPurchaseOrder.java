@@ -59,7 +59,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("SUBREPORT_DIR","reports/procurement/printPo/");
-        addParameters("arialPath","'D:\\java\\java8\\jre\\lib\\fonts\\RAVIE.ttf'");
         loadParamPurchaseOrder();
     }
 
@@ -114,6 +113,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poList",createDataSource(getPOReportDto()));
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
+        addParameters("retentionApplicable",po.getPoEntity().getCashflow()!=null&&po.getPoEntity().getCashflow().getApplyRetention()!=null&&!po.getPoEntity().getCashflow().getApplyRetention()?"YES":"NO");
+        addParameters("invoiceTo",po.getProjectEntity().getClient().getInvoiceTo());
+
+
         addParameters("paymentTerm", po.getPoEntity().getCashflow()!=null?po.getPoEntity().getCashflow().getPaymentTerms().name():null);
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
