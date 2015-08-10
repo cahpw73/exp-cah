@@ -38,8 +38,10 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
         sb.append(" SELECT x ");
         sb.append(" FROM ClausesEntity x ");
         sb.append(" WHERE x.text.id = :TEXT_ID ");
+        sb.append(" AND x.status=:ENABLED");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("TEXT_ID", id);
+        map.put("ENABLED", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),map);
     }
 
