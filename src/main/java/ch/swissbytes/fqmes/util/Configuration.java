@@ -103,6 +103,10 @@ public class Configuration implements Serializable {
         String localPattern  = ((SimpleDateFormat)formatter).toPattern();
         return localPattern;
     }
+
+    public String getHardFormatDate(){
+        return "dd MMM YYYY";
+    }
     public String getFormatDateTime(){
         log.log(Level.FINE,"format date time");
         String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;

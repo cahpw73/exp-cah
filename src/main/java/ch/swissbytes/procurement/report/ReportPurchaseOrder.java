@@ -56,8 +56,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.clausesList = clausesList;
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
+        addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("SUBREPORT_DIR","reports/procurement/printPo/");
+        addParameters("arialPath","'D:\\java\\java8\\jre\\lib\\fonts\\RAVIE.ttf'");
         loadParamPurchaseOrder();
     }
 
@@ -99,7 +101,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());
-        addParameters("deliveryDateStr",po.getPoDeliveryDate()!=null?new java.text.SimpleDateFormat(configuration.getFormatDate(),new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())):"");
+        addParameters("deliveryDateStr",po.getPoDeliveryDate()!=null?new java.text.SimpleDateFormat(configuration.getHardFormatDate(),new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())):"");
         addParameters("deliveryPoint",po.getPoEntity().getPoint());
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager",po.getPoEntity().getProcManager());
