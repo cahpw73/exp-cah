@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="518" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
+	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
+	<parameter name="PO_ID" class="java.lang.Long"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select item,milestone,order_amt,project_amt,payment_date
+from cashflow cf inner join cashflow_detail cfd  on
+cfd.cashflow_id=cf.id]]>
+	</queryString>
+	<field name="item" class="java.lang.String"/>
+	<field name="milestone" class="java.lang.String"/>
+	<field name="order_amt" class="java.math.BigDecimal"/>
+	<field name="project_amt" class="java.math.BigDecimal"/>
+	<field name="payment_date" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dc2be798-737b-404a-aa49-b32395f2ea10" style="Arial-Bold" x="212" y="20" width="74" height="20"/>
+				<textElement markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SCHEDULE E]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="af22a06e-95b6-4b08-9c8e-7767b31bde75" style="Arial-Bold" x="185" y="40" width="133" height="20"/>
+				<textElement markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAYMENT SCHEDULE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1276d79c-2742-4994-9bf1-bda6cb683d56" style="Arial" x="17" y="73" width="491" height="41" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[The following progress payments base on the supplier's achievement of specified milestones have been agreed and will be paid to the Supplier in accordance with the payment provisions of the Purchase Order:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8bc4d2a3-9d71-478b-a956-d7e2c672096f" style="Arial-Bold" x="17" y="8" width="51" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[Milestone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="74" y="8" width="120" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[Milestone Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c4db6174-c8c7-4cff-b07f-cf56fd4832c3" style="Arial-Bold" x="203" y="8" width="83" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[Amount of Claim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="296" y="8" width="116" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[Cumulative Expenditure]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3af60dda-9c33-4050-b058-25150c2b5eb7" style="Arial-Bold" x="421" y="8" width="87" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[Claim Month]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f133f939-0b87-4d98-9ebb-3fc87be09242" x="0" y="0" width="518" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="583bf7cc-1356-46ab-b571-7dc857b0f43c" x="0" y="36" width="518" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="eac1b157-0990-4257-9eea-092f7d17527e" style="Arial" x="17" y="3" width="51" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="73" y="3" width="120" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{milestone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="3ba5632f-f008-46ec-84ab-d80b78fd9780" style="Arial" x="205" y="3" width="83" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{order_amt}):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="4081da40-3407-4b3a-85bd-b3f6741c03cb" style="Arial" x="297" y="3" width="116" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{project_amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{project_amt}):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="421" y="3" width="87" height="20" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{payment_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{payment_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

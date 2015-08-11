@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -40,6 +42,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private List<ScopeSupplyEntity> scopeSupplyList;
     private String preamble;
     private List<ClausesEntity> clausesList;
+    private Connection connection;
 
 
     /**
@@ -61,6 +64,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
         addParameters("SUBREPORT_DIR","reports/procurement/printPo/");
+        try {
+            connection = getConnection();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        addParameters("REPORT_CONNECTION",connection);
         loadParamPurchaseOrder();
     }
 
@@ -105,6 +114,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("clientDetail3",detail.size()>2?Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(2).toString())):null);
         }
         addParameters("poNo",po.getPo());
+        addParameters("poId",po.getPoEntity().getId());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());
         addParameters("deliveryDateStr",po.getPoDeliveryDate()!=null?new java.text.SimpleDateFormat(configuration.getHardFormatDate(),new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())):"");
@@ -181,6 +191,19 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             runReport(null);
         } catch (Exception ex) {
             ex.printStackTrace();
+        }finally {
+            try {
+                if (connection != null && !connection.isClosed()) ;
+                {
+                    try {
+                        connection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
         }
     }
 

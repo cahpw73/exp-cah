@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.*;
 import java.sql.Connection;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -30,16 +31,15 @@ public abstract class ReportView implements Serializable {
 
     private final Map<String, Object> parameters = new HashMap<String, Object>();
 
-    private final String DATA_SOURCE="java:/fqm/procurementDS";
+    private final String DATA_SOURCE = "java:/fqm/procurementDS";
 
-    /***
-     *
-     * @param filenameJasper - fileName the reports to use
+    /**
+     * @param filenameJasper   - fileName the reports to use
      * @param reportNameMsgKey - Message key for name the file to save
      * @param messages
-     * @param locale {@link java.util.Locale}
+     * @param locale           {@link java.util.Locale}
      */
-    public ReportView( final String filenameJasper, final String reportNameMsgKey, final Map<String, String> messages, final Locale locale) {
+    public ReportView(final String filenameJasper, final String reportNameMsgKey, final Map<String, String> messages, final Locale locale) {
         this.messages = messages;
         this.filenameJasper = filenameJasper;
         this.reportName = new StringBuilder(reportNameMsgKey);
@@ -71,16 +71,18 @@ public abstract class ReportView implements Serializable {
             ex.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }  catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally{
+        } finally {
             IOUtils.closeQuietly(outputStream);
         }
 
         fcontext.responseComplete();
     }
 
+    protected Connection getConnection()throws SQLClientInfoException,JRException, Exception{
+        return getDataSource().getConnection();
+    }
 
     protected void runReport() throws Exception {
         FacesContext fcontext = FacesContext.getCurrentInstance();
@@ -94,7 +96,7 @@ public abstract class ReportView implements Serializable {
             outputStream.writeTo(response.getOutputStream());
             response.setContentLength(outputStream.size());
         } catch (SQLException e) {
-           // LOG.error(" Database access error!.", e);
+            // LOG.error(" Database access error!.", e);
             e.printStackTrace();
         } catch (JRException e) {
             //LOG.error(" Error to the fill the reports!.", e);
