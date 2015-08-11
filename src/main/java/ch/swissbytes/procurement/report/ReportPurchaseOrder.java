@@ -81,7 +81,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultFooter().getFile());
             addParameters("footerLogo", logo);
         }
-        addParameters("purchaseOrderId",po.getId());
+        addParameters("purchaseOrderId", po.getId());
 
         if(po.getPoEntity().getSupplier() != null){
             addParameters("company", po.getPoEntity().getSupplier().getCompany());
@@ -92,11 +92,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("phone", po.getPoEntity().getSupplier().getPhone());
             addParameters("fax", po.getPoEntity().getSupplier().getFax());
         }
+        Processor processor=new Processor(true);
+        processor.useArial();
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
             Map detail= separateDetail(po.getProjectEntity().getClient().getTitle());
-            Processor processor=new Processor(true);
-            processor.useArial();
+
             addParameters("clientDetail1", detail.size() > 0 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(0).toString())) : null);
             processor.clear();
             addParameters("clientDetail2", detail.size() > 1 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(1).toString())) : null);
@@ -120,7 +121,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
         addParameters("retentionApplicable",po.getPoEntity().getCashflow()!=null&&po.getPoEntity().getCashflow().getApplyRetention()!=null&&!po.getPoEntity().getCashflow().getApplyRetention()?"YES":"NO");
-        addParameters("invoiceTo",po.getProjectEntity().getClient().getInvoiceTo());
+        processor.clear();
+        addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getClient().getInvoiceTo())));
 
 
         addParameters("paymentTerm", po.getPoEntity().getCashflow()!=null?po.getPoEntity().getCashflow().getPaymentTerms().name():null);

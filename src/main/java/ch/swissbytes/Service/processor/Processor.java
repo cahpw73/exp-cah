@@ -29,6 +29,17 @@ public class Processor {
         this.isPdf = isPdf;
         FONT=DEFAULT;
     }
+    public Processor(boolean isPdf,String font) {
+        tags = new Stack<>();
+        snippets = new ArrayList<>();
+        this.isPdf = isPdf;
+        if("arial".equalsIgnoreCase(font)){
+                FONT=ARIAL;
+        }else{
+            FONT=DEFAULT;
+        }
+
+    }
     public void useArial(){
         FONT=ARIAL;
     }

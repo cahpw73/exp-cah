@@ -454,15 +454,15 @@
 									<font size="6"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" x="0" y="1" width="278" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="278" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-									<font size="6" isBold="true"/>
+									<font size="6" isBold="true" isItalic="false"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{poTitle}!=null?"<style size='10' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{poTitle}+"</style>":""]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{poTitle}]]></textFieldExpression>
 							</textField>
 							<line>
 								<reportElement uuid="77566b8b-922d-4b10-8a6b-b0326dedf2b8" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="37"/>
@@ -655,7 +655,7 @@
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" positionType="Float" x="319" y="15" width="193" height="12"/>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{invoiceTo}]]></textFieldExpression>
