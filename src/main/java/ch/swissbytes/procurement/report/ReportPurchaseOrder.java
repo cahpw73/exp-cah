@@ -5,20 +5,14 @@ import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.model.entities.TextEntity;
 import ch.swissbytes.domain.types.POStatusEnum;
-import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -214,6 +208,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             }
         }
     }
+
+
 
 
 }

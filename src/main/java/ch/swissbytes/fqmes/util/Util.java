@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -180,7 +182,7 @@ public class Util {
 
     private static BigDecimal currencyToUSDCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni) {
         log.info("currencyToUSDCurrency");
-        BigDecimal amountUSD = new BigDecimal("0.00000").setScale(5,RoundingMode.CEILING);
+        BigDecimal amountUSD = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         if(exchangeRateIni == null && amountIni!=null){
             log.info("Return amount: " + amountIni);
             return amountIni;

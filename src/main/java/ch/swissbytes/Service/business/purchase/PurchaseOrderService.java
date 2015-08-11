@@ -287,6 +287,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //cashFlow
         cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
+        //TODO @alvaro SORT PO TEXT
         textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(),po);
         return purchaseOrderEntity;
     }
