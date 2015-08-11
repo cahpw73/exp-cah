@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="353"/>
+	<property name="ireport.y" value="288"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -89,6 +89,8 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="poId" class="java.lang.Long"/>
+	<parameter name="currency" class="java.lang.String"/>
+	<parameter name="exchangeRate" class="java.math.BigDecimal"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -757,17 +759,29 @@
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="75" splitType="Stretch">
+		<band height="44" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="31" width="519" height="42"/>
+				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="1" y="1" width="519" height="42"/>
+				<subreportParameter name="poNo">
+					<subreportParameterExpression><![CDATA[$P{poNo}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE2">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="exchangeRate">
+					<subreportParameterExpression><![CDATA[$P{exchangeRate}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="PO_ID">
 					<subreportParameterExpression><![CDATA[$P{poId}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="patternDecimal">
-					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				<subreportParameter name="currency">
+					<subreportParameterExpression><![CDATA[$P{currency}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Schedule.jasper"]]></subreportExpression>

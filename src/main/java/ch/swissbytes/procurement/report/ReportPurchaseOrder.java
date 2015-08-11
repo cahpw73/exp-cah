@@ -27,6 +27,7 @@ import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -130,9 +131,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poList",createDataSource(getPOReportDto()));
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
-        addParameters("retentionApplicable",po.getPoEntity().getCashflow()!=null&&po.getPoEntity().getCashflow().getApplyRetention()!=null&&!po.getPoEntity().getCashflow().getApplyRetention()?"YES":"NO");
+        addParameters("retentionApplicable", po.getPoEntity().getCashflow() != null && po.getPoEntity().getCashflow().getApplyRetention() != null && !po.getPoEntity().getCashflow().getApplyRetention() ? "YES" : "NO");
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getClient().getInvoiceTo())));
+        addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
+        addParameters("exchangeRate",po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);
 
 
         addParameters("paymentTerm", po.getPoEntity().getCashflow()!=null?po.getPoEntity().getCashflow().getPaymentTerms().name():null);
@@ -190,7 +193,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         try {
             runReport(null);
         } catch (Exception ex) {
-            ex.printStackTrace();
+
+            if(!(ex.getMessage().contains("'&'")&&ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
+                ex.printStackTrace();
+            }else{
+                log.log(Level.WARNING,"A special character is being used [&]");
+            }
         }finally {
             try {
                 if (connection != null && !connection.isClosed()) ;
