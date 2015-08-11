@@ -14,11 +14,27 @@ public class Processor {
     private Stack<TagHTML> tags;
     private List<DTOSnippet> snippets;
     private boolean isPdf = false;
+    private Integer FONT;
+    private static Integer ARIAL=1;
+    private static Integer DEFAULT=0;
+    private static String HOME="C:\\\\fonts\\";
+    private String arial=HOME+"arial.ttf";
+    private String arialItalic=HOME+"ariali.ttf";
+    private String arialBold=HOME+"arialbd.ttf";
+    private String arialBoldItalic=HOME+"arialbi.ttf";
 
     public Processor(boolean isPdf) {
         tags = new Stack<>();
         snippets = new ArrayList<>();
         this.isPdf = isPdf;
+        FONT=DEFAULT;
+    }
+    public void useArial(){
+        FONT=ARIAL;
+    }
+    public void clear(){
+        tags = new Stack<>();
+        snippets = new ArrayList<>();
     }
 
     public String processSnippetText(final String html) {
@@ -106,9 +122,6 @@ public class Processor {
     private String findNextTag(String source) {
         String tagFound = "";
         int minorIndex = Integer.MAX_VALUE;
-        if (source.startsWith("Optional Train 3")) {
-            System.out.println("here");
-        }
         for (TagHTML tag : TagHTML.values()) {
             if (tag.ordinal() != TagHTML.ITALIC_BOLD.ordinal()) {
                 int index = tag.open != null ? source.toLowerCase().indexOf(tag.open.toLowerCase()) : -1;
@@ -125,7 +138,6 @@ public class Processor {
                         tagFound = tag.close;
                     }
                 }
-
             }
 
         }
@@ -137,17 +149,30 @@ public class Processor {
         for (DTOSnippet snippet : snippets) {
             String style = "";
             boolean hasAnyStyle = false;
-            if (snippet.isBold() && !snippet.isItalic()) {
+            if(FONT==DEFAULT) {
+                if (snippet.isBold() && !snippet.isItalic()) {
+                    hasAnyStyle = true;
+                    style = creatingProperty(TagHTML.BOLD, style);
+                }
+                if (snippet.isItalic() && !snippet.isBold()) {
+                    hasAnyStyle = true;
+                    style = creatingProperty(TagHTML.ITALIC, style);
+                }
+                if (snippet.isItalic() && snippet.isBold()) {
+                    hasAnyStyle = true;
+                    style = creatingProperty(TagHTML.ITALIC_BOLD, style);
+                }
+            }else if(FONT==ARIAL){
+                if(snippet.isBold()&&snippet.isItalic()){
+                    style="<style pdfFontName='"+arialBoldItalic+"'>";
+                }else if(snippet.isBold()){
+                    style="<style pdfFontName='"+arialBold+"'>";
+                }else if(snippet.isItalic()){
+                    style="<style pdfFontName='"+arialItalic+"'>";
+                }else {
+                    style="<style pdfFontName='"+arial+"'>";
+                }
                 hasAnyStyle = true;
-                style = creatingProperty(TagHTML.BOLD, style);
-            }
-            if (snippet.isItalic() && !snippet.isBold()) {
-                hasAnyStyle = true;
-                style = creatingProperty(TagHTML.ITALIC, style);
-            }
-            if (snippet.isItalic() && snippet.isBold()) {
-                hasAnyStyle = true;
-                style = creatingProperty(TagHTML.ITALIC_BOLD, style);
             }
             if (snippet.isUnderlined()) {
                 hasAnyStyle = true;
@@ -225,6 +250,14 @@ public class Processor {
 
     private String insertProperty(String text, String property) {
         return StringUtils.isEmpty(text) || StringUtils.isBlank(text) ? "" : text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
+    }
+
+    public static void main(String[] args) {
+        String s="Reg No 64262\nA wholly owned subsidiary of First Quantum\n Mineral Limited\n REGISTERED OFFICE\n c/o Choice Corporate Services Limited\n PO Box 32565, Lusaka Zambia\n Telf : +261-1 221 191\n Fax: +260-1 224 383\n      Email: choicecorp@zaimtet.zm";
+        Processor pr=new Processor(true);
+        pr.useArial();
+        System.out.println(pr.processSnippetText(s));
+
     }
 
 }

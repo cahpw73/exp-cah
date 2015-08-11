@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.report;
 
 
+import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
@@ -13,6 +14,7 @@ import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -93,9 +95,13 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
             Map detail= separateDetail(po.getProjectEntity().getClient().getTitle());
-            addParameters("clientDetail1",detail.size()>0?Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(detail.get(0).toString())):null);
-            addParameters("clientDetail2",detail.size()>1?Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(detail.get(1).toString())):null);
-            addParameters("clientDetail3",detail.size()>2?Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText(detail.get(2).toString())):null);
+            Processor processor=new Processor(true);
+            processor.useArial();
+            addParameters("clientDetail1", detail.size() > 0 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(0).toString())) : null);
+            processor.clear();
+            addParameters("clientDetail2", detail.size() > 1 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(1).toString())) : null);
+            processor.clear();
+            addParameters("clientDetail3",detail.size()>2?Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(2).toString())):null);
         }
         addParameters("poNo",po.getPo());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
@@ -126,8 +132,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         String separator=System.lineSeparator()+System.lineSeparator();
         int i=0;
         for(String column:detail.split(separator)){
-            columns.put(i,column);
-            i++;
+            if(StringUtils.isNotEmpty(column)&&StringUtils.isNotBlank(column)) {
+                columns.put(i, column);
+                i++;
+            }
         }
         return columns;
     }
