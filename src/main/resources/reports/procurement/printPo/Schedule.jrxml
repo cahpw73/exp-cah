@@ -76,9 +76,9 @@ order by item]]>
 				<textFieldExpression><![CDATA[$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="451" y="5" width="56" height="17"/>
+				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="438" y="5" width="69" height="17"/>
 				<textElement markup="styled"/>
-				<text><![CDATA[SCHEDULE]]></text>
+				<text><![CDATA[SCHEDULE E]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

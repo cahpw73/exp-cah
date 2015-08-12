@@ -39,6 +39,7 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
         sb.append(" FROM ClausesEntity x ");
         sb.append(" WHERE x.text.id = :TEXT_ID ");
         sb.append(" AND x.status=:ENABLED");
+        sb.append(" ORDER BY x.ordered");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("TEXT_ID", id);
         map.put("ENABLED", StatusEnum.ENABLE);

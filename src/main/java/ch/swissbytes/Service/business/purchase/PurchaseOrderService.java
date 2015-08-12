@@ -256,7 +256,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         addTokenForVariation(purchaseOrderEntity);
         POEntity po=dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
-       // purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
@@ -274,7 +273,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
-        //purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
         dao.update(purchaseOrderEntity);
