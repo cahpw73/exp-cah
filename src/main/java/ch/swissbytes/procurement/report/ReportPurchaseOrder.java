@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.report;
 
 
 import ch.swissbytes.Service.processor.Processor;
+import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
@@ -47,7 +48,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               Configuration configuration,PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList, String preamble,List<ClausesEntity> clausesList) {
+                               Configuration configuration,PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList, String preamble,List<ClausesEntity> clausesList,CashflowEntity cashflowEntity) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -64,8 +65,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        addParameters("REPORT_CONNECTION",connection);
+        addParameters("REPORT_CONNECTION", connection);
         loadParamPurchaseOrder();
+        addParameters("paymentTerm", cashflowEntity != null ? cashflowEntity.getPaymentTerms().getLabel() : null);
     }
 
     private void loadParamPurchaseOrder() {
@@ -125,6 +127,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poList",createDataSource(getPOReportDto()));
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
+        addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
         addParameters("retentionApplicable", po.getPoEntity().getCashflow() != null && po.getPoEntity().getCashflow().getApplyRetention() != null && !po.getPoEntity().getCashflow().getApplyRetention() ? "YES" : "NO");
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getClient().getInvoiceTo())));
@@ -132,7 +135,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("exchangeRate",po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);
 
 
-        addParameters("paymentTerm", po.getPoEntity().getCashflow()!=null?po.getPoEntity().getCashflow().getPaymentTerms().name():null);
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
     }

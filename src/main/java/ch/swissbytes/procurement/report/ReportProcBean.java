@@ -1,11 +1,9 @@
 package ch.swissbytes.procurement.report;
 
 
+import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 
@@ -44,6 +42,9 @@ public class ReportProcBean implements Serializable {
     @Inject
     private Configuration configuration;
 
+    @Inject
+    private CashflowService cashflowService;
+
     public Boolean getOpenReport() {
         return openReport;
     }
@@ -81,7 +82,8 @@ public class ReportProcBean implements Serializable {
         log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", "Procurement.PurchaseOrder", messages, locale, configuration, po, list, preamble,clausesList);
+        List<CashflowEntity> cashflows=cashflowService.findByPoId(po.getId());
+        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", "Procurement.PurchaseOrder", messages, locale, configuration, po, list, preamble,clausesList,cashflows.size()>0?cashflows.get(0):null);
         reportView.printDocument(null);
         openReport = true;
     }

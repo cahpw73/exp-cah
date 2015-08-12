@@ -372,6 +372,7 @@ public class PoBean extends Bean {
         for (String currency : totals.keySet()) {
             sb.append(currency);
             sb.append(" ");
+
             sb.append(totals.get(currency));
             sb.append(System.lineSeparator());
         }
