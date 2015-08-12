@@ -141,18 +141,11 @@ order by item]]>
 				<textFieldExpression><![CDATA[$F{order_amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{order_amt},$F{exchange_rate},$P{exchangeRate})):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="4081da40-3407-4b3a-85bd-b3f6741c03cb" style="Arial" x="322" y="3" width="91" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{project_amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{project_amt},$F{exchange_rate},$P{exchangeRate})):null]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="421" y="3" width="87" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{payment_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{payment_date}.getTime())):null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{payment_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{payment_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="a2f3b530-596a-478c-87b6-9c3162a8e89d" x="202" y="3" width="24" height="20"/>
@@ -163,6 +156,13 @@ order by item]]>
 				<reportElement uuid="18acccdf-f247-4a14-bb5f-60fddb8d2b46" x="296" y="3" width="26" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{currency}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="322" y="3" width="91" height="20"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{total}):null]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

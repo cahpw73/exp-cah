@@ -20,6 +20,7 @@ import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -78,14 +79,13 @@ public class PoBean extends Bean {
     @Inject
     private ScopeSupplyService scopeSupplyService;
 
-    private boolean supplierHeaderMode=false;
-    private boolean supplierMode=false;
-    private boolean loaded=false;
+    private boolean supplierHeaderMode = false;
+    private boolean supplierMode = false;
+    private boolean loaded = false;
 
 
-
-    public void load(){
-        if(!loaded) {
+    public void load() {
+        if (!loaded) {
             if (projectId != null) {
                 try {
                     ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
@@ -134,33 +134,33 @@ public class PoBean extends Bean {
                 throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
             }
         }
-        loaded=true;
+        loaded = true;
     }
 
     @Override
     protected void initialize() {
-        purchaseOrder=new PurchaseOrderEntity();
+        purchaseOrder = new PurchaseOrderEntity();
     }
 
 
-    public void doSave(){
+    public void doSave() {
         log.info("trying to save purchase order on procurement module");
-        if(validate()) {
+        if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
-            poId=purchaseOrder.getId().toString();
-            projectId=null;
-            loaded=false;
+            poId = purchaseOrder.getId().toString();
+            projectId = null;
+            loaded = false;
             load();
         }
 
     }
 
-    public String doSaveAndClose(){
+    public String doSaveAndClose() {
         log.info("trying to save and close purchase order on procurement module");
-        if(validate()) {
+        if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
@@ -171,39 +171,40 @@ public class PoBean extends Bean {
 
     public void doUpdate() {
         log.info("trying to update purchase order on procurement module");
-        if(validate()) {
+        if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
-            loaded=false;
+            loaded = false;
             load();
         }
     }
 
     public String doUpdateAndClose() {
         log.info("trying to update purchase order on procurement module");
-        if(validate()) {
+        if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            String link=doLastOperationsOverPO(false);
-            System.out.println("url "+link);
+            String link = doLastOperationsOverPO(false);
+            System.out.println("url " + link);
             return link;
         }
         return "";
     }
-    private String doLastOperationsOverPO(boolean edit){
+
+    private String doLastOperationsOverPO(boolean edit) {
         log.info("purchase order updated [" + purchaseOrder.getId() + "]");
         sortPurchaseListByVariationAndDoUpdate();
         sortScopeSupplyAndDoUpdate();
         Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved.", null);
-        return !edit?backToList():"edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
+        return !edit ? backToList() : "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
     }
 
-    public String doSaveView(){
+    public String doSaveView() {
         log.info("trying to saveView purchase order on procurement module");
-        if(validate()) {
+        if (validate()) {
             collectData();
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
@@ -214,52 +215,52 @@ public class PoBean extends Bean {
         return "";
     }
 
-    public String doUpdateView(){
+    public String doUpdateView() {
         log.info("trying to updateView purchase order on procurement module");
         collectData();
-        purchaseOrder=service.updatePOOnProcurement(purchaseOrder);
-        log.info("purchase order created ["+purchaseOrder.getId()+"]");
+        purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
+        log.info("purchase order created [" + purchaseOrder.getId() + "]");
         sortPurchaseListByVariationAndDoUpdate();
         sortScopeSupplyAndDoUpdate();
         return backToList();
     }
 
-    public String backToList(){
-        return "list.xhtml?faces-redirect=true&projectId="+purchaseOrder.getProjectEntity().getId();
+    public String backToList() {
+        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId();
     }
 
-    private void sortPurchaseListByVariationAndDoUpdate(){
+    private void sortPurchaseListByVariationAndDoUpdate() {
         List<PurchaseOrderEntity> poList = service.findByProjectIdAndPo(purchaseOrder.getProjectEntity().getId(), purchaseOrder.getPo());
         sortBean.sortPurchaseOrderEntity(poList);
         int index = 1;
-        for(PurchaseOrderEntity po : poList){
+        for (PurchaseOrderEntity po : poList) {
             po.setOrderedVariation(index);
             service.doUpdatePurchaseOrder(po);
             index++;
         }
     }
 
-    private void sortScopeSupplyAndDoUpdate(){
+    private void sortScopeSupplyAndDoUpdate() {
         List<ScopeSupplyEntity> sspList = scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
         sortBean.sortScopeSupplyEntity(sspList);
-        int index =  1;
-        for(ScopeSupplyEntity ssp : sspList){
+        int index = 1;
+        for (ScopeSupplyEntity ssp : sspList) {
             ssp.setOrdered(index);
             scopeSupplyService.doUpdate(ssp);
             index++;
         }
     }
 
-    private boolean validate(){
-        boolean validated=true;
-        if(service.isVarNumberUsed(purchaseOrder)){
-            Messages.addFlashError("poVarNumber","variation number is already being used");
-            validated=false;
+    private boolean validate() {
+        boolean validated = true;
+        if (service.isVarNumberUsed(purchaseOrder)) {
+            Messages.addFlashError("poVarNumber", "variation number is already being used");
+            validated = false;
         }
         return validated;
     }
 
-    private void collectData(){
+    private void collectData() {
         purchaseOrder.getPoEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
         purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
         purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
@@ -301,67 +302,84 @@ public class PoBean extends Bean {
         this.modeView = modeView;
     }
 
-    public void updateRequiredDate(DeliverableEntity deliverable){
-        if(purchaseOrder.getPoEntity().getOrderDate()!=null){
+    public void updateRequiredDate(DeliverableEntity deliverable) {
+        if (purchaseOrder.getPoEntity().getOrderDate() != null) {
             deliverable.setRequiredDate(DateUtils.addDays(purchaseOrder.getPoEntity().getOrderDate(), deliverable.getNoDays()));
         }
 
     }
-    public void updateNoDays(DeliverableEntity deliverable){
-        if(purchaseOrder.getPoEntity().getOrderDate()!=null&&deliverable.getRequiredDate()!=null){
-            long diff=deliverable.getRequiredDate().getTime()-purchaseOrder.getPoEntity().getOrderDate().getTime();
+
+    public void updateNoDays(DeliverableEntity deliverable) {
+        if (purchaseOrder.getPoEntity().getOrderDate() != null && deliverable.getRequiredDate() != null) {
+            long diff = deliverable.getRequiredDate().getTime() - purchaseOrder.getPoEntity().getOrderDate().getTime();
             deliverable.setNoDays(Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toDays(diff))));
         }
     }
 
-    public void updateDeliverables(){
-        for(DeliverableEntity deliverable:deliverableBean.getList()){
-            if(deliverable.getNoDays()!=null){
+    public void updateDeliverables() {
+        for (DeliverableEntity deliverable : deliverableBean.getList()) {
+            if (deliverable.getNoDays() != null) {
                 updateRequiredDate(deliverable);
-            }else if(deliverable.getRequiredDate()!=null){
+            } else if (deliverable.getRequiredDate() != null) {
                 updateNoDays(deliverable);
             }
         }
     }
 
-    public void doSaveContact(){
-        ContactEntity contact=contactBean.doSave();
-        if(contact!=null){
+    public void doSaveContact() {
+        ContactEntity contact = contactBean.doSave();
+        if (contact != null) {
             purchaseOrder.getPoEntity().setContactEntity(contact);
             purchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
         }
     }
 
-    public void addingSupplierHeader(){
+    public void addingSupplierHeader() {
         supplier.putModeCreation();
         supplier.start();
-        supplierHeaderMode=true;
+        supplierHeaderMode = true;
     }
 
-    public void addingSupplier(){
+    public void addingSupplier() {
         supplier.putModeCreation();
         supplier.start();
-        supplierMode=true;
+        supplierMode = true;
     }
 
-    public void saveSupplier(){
-        SupplierProcEntity supplierProcEntity=supplier.save();
-        if(supplierProcEntity!=null){
-            if(supplierHeaderMode){
+    public void saveSupplier() {
+        SupplierProcEntity supplierProcEntity = supplier.save();
+        if (supplierProcEntity != null) {
+            if (supplierHeaderMode) {
                 purchaseOrder.getPoEntity().setSupplierHeader(supplierProcEntity);
-            }else if(supplierMode){
+            } else if (supplierMode) {
                 purchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
                 purchaseOrder.getPoEntity().setContactEntity(null);
             }
-            supplierHeaderMode=supplierMode=false;
+            supplierHeaderMode = supplierMode = false;
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");
         }
     }
 
-    public BigDecimal calculateProjectValue(){
-        return service.calculateProjectValue(itemBean.getScopeSupplyList(),purchaseOrder.getPoEntity().getCurrency());
+    public BigDecimal calculateProjectValue() {
+        return service.calculateProjectValue(itemBean.getScopeSupplyList(), purchaseOrder.getPoEntity().getCurrency());
+    }
+
+    public String calculateTotalsValues() {
+        Map<String, BigDecimal> totals = service.getTotalValuesByCurrency(purchaseOrder.getPoEntity().getCurrency(), itemBean.getScopeSupplyList());
+        StringBuilder sb = new StringBuilder();
+        for (String currency : totals.keySet()) {
+            sb.append(currency);
+            sb.append(" ");
+            sb.append(totals.get(currency));
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    public String calculateBalanceValue() {
+        return "0.0";
     }
 
 }
