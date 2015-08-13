@@ -371,19 +371,23 @@ public class PoBean extends Bean {
     }
 
     public String calculateTotalValues() {
-        Map<String, BigDecimal> totals = service.getTotalValuesByCurrency(purchaseOrder.getPoEntity().getCurrency(), itemBean.getScopeSupplyList());
+        Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(purchaseOrder.getPoEntity().getCurrency(), itemBean.getScopeSupplyList());
+        return toString(totals);
+    }
+    private String toString(Map<ProjectCurrencyEntity,BigDecimal>map){
         StringBuilder sb = new StringBuilder();
-        for (String currency : totals.keySet()) {
-            sb.append(currency);
+        for (ProjectCurrencyEntity currency : map.keySet()) {
+            sb.append(currency.getCurrency().getCode());
             sb.append(" ");
-            sb.append(configuration.format(configuration.getPatternDecimal(),totals.get(currency)));
+            sb.append(configuration.format(configuration.getPatternDecimal(),map.get(currency)));
             sb.append(System.lineSeparator());
         }
         return sb.toString();
     }
 
     public String calculateBalanceValue() {
-        return "0.0";
+        Map<ProjectCurrencyEntity, BigDecimal> balances=service.getBalanceByCurrency(purchaseOrder.getPoEntity().getCurrency(), itemBean.getScopeSupplyList(),cashflowBean.getCashflowDetailList());
+        return toString(balances);
     }
 
 }

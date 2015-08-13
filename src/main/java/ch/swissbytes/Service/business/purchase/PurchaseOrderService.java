@@ -399,11 +399,11 @@ public class PurchaseOrderService extends Service implements Serializable {
         return poValue;
     }
 
-    public Map<String, BigDecimal> getTotalValuesByCurrency(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items) {
-        Map<String, BigDecimal> totals = new HashMap<>();
+    public Map<ProjectCurrencyEntity, BigDecimal> getTotalValuesByCurrency(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items) {
+        Map<ProjectCurrencyEntity, BigDecimal> totals = new HashMap<>();
         List<ProjectCurrencyEntity> currencies = findAllCurrenciesOnPO(defaultCurrency, items);
         for (ProjectCurrencyEntity pce : currencies) {
-            totals.put(pce.getCurrency().getCode(), calculatePOValue(items, pce));
+            totals.put(pce, calculatePOValue(items, pce));
         }
         return totals;
     }
@@ -412,12 +412,25 @@ public class PurchaseOrderService extends Service implements Serializable {
         List<ProjectCurrencyEntity> currencies = new ArrayList<>();
         currencies.add(defaultCurrency);
         for (ScopeSupplyEntity item : items) {
-            if (item.getProjectCurrency()!=null&&!hasCurrency(currencies, item.getProjectCurrency().getCurrency())) {
+            if (item.getProjectCurrency() != null && !hasCurrency(currencies, item.getProjectCurrency().getCurrency())) {
                 currencies.add(item.getProjectCurrency());
             }
         }
         return currencies;
     }
+
+    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items, List<CashflowDetailEntity> milestones) {
+        Map<ProjectCurrencyEntity, BigDecimal> balance = new HashMap<>();
+        Map<ProjectCurrencyEntity, BigDecimal> totals = getTotalValuesByCurrency(defaultCurrency, items);
+
+        for(ProjectCurrencyEntity currencyEntity:totals.keySet()){
+            BigDecimal totalPayment=cashflowService.getTotalMilestonePayments(milestones, currencyEntity);
+            BigDecimal total=totals.get(currencyEntity);
+            balance.put(currencyEntity,total.add(totalPayment.multiply(new BigDecimal(-1))));
+        }
+        return balance;
+    }
+
 
     private boolean hasCurrency(List<ProjectCurrencyEntity> list, CurrencyEntity currencyEntity) {
         boolean has = false;

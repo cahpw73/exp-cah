@@ -222,8 +222,9 @@
                                    for="balanceId" value="#{msgs['po.cashflow.lbl.balance']}"/>
 
                     <div style="width: 180px; float: left;">
-                        <p:inputTextarea id="balanceId" value="#{cashflowBean.cashflow.balance}"
+                        <p:inputTextarea id="balanceId" value="#{poBean.calculateBalanceValue()}"
                                          maxlength="950"
+                                         readonly="true"
                                          styleClass="form-control" style="height: 100px!important; "
                                          rendered="#{poBean.beingEdited}"/>
                         <h:inputTextarea id="balanceIdVi" readonly="true" styleClass="form-control"
@@ -352,10 +353,10 @@
                                            update="forecastDt " async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}" process="forecastDt"
                                            action="#{cashflowBean.confirmCashflowDetail(_l)}"
-                                           update="forecastDt " async="false"/>
+                                           update="forecastDt :editPoForm:balanceId" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt"
+                                           action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt :editPoForm:balanceId"
                                            async="false">
                                 <p:confirm header="#{msgs['lbl.confirmation']}"
                                            message="#{msgs['project.list.lbl.msg.confirmation.commit']}"

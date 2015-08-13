@@ -4,10 +4,13 @@ package ch.swissbytes.Service.business.cashflow;
 import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.POEntity;
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Util;
 
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -85,6 +88,14 @@ public class CashflowService implements Serializable {
 
     public List<CashflowDetailEntity> findDetailByCashflowId(final Long cashflowId){
         return cashflowDetailDao.findByCashflowId(cashflowId);
+    }
+
+    public BigDecimal getTotalMilestonePayments(List<CashflowDetailEntity> detail,ProjectCurrencyEntity currency){
+        BigDecimal total=new BigDecimal("0");
+        for(CashflowDetailEntity milestonePayment:detail){
+            total=total.add(Util.currencyToCurrency(milestonePayment.getOrderAmt(),milestonePayment.getProjectCurrency()!=null?milestonePayment.getProjectCurrency().getExchangeRate():null,currency.getExchangeRate()));
+        }
+        return total;
     }
 
 }
