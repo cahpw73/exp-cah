@@ -12,6 +12,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.ByteArrayInputStream;
@@ -130,7 +131,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
-        addParameters("retentionApplicable", po.getPoEntity().getCashflow() != null && po.getPoEntity().getCashflow().getApplyRetention() != null && !po.getPoEntity().getCashflow().getApplyRetention() ? "YES" : "NO");
+        addParameters("retentionApplicable", po.getPoEntity().getCashflow() != null ? BooleanUtils.toStringYesNo(po.getPoEntity().getCashflow().getApplyRetention()): "No");
+        addParameters("liquidatedDamagesApplicable", BooleanUtils.toStringYesNo(po.getPoEntity().getLiquidatedDamagesApplicable()));
+        addParameters("vendorDrawingData", BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()));
+        addParameters("exchangeRateVariation", BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()));
+        addParameters("rtfNo",po.getPoEntity().getRTFNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getClient().getInvoiceTo())));
         addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
