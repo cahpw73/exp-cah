@@ -6,6 +6,7 @@ package ch.swissbytes.domain.model.entities;
 
 import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.domain.types.POStatusEnum;
+import org.apache.commons.lang.BooleanUtils;
 
 import javax.inject.Named;
 import javax.persistence.*;
@@ -39,6 +40,10 @@ public class POEntity implements Serializable{
     private List<DeliverableEntity> deliverables = new ArrayList<>();
     private CashflowEntity cashflow;
     private TextEntity textEntity;
+    private String RTFNo;
+    private Boolean liquidatedDamagesApplicable;
+    private Boolean exchangeRateVariation;
+    private Boolean vendorDrawingData;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -191,6 +196,40 @@ public class POEntity implements Serializable{
 
     public void setContactEntity(ContactEntity contactEntity) {
         this.contactEntity = contactEntity;
+    }
+
+    public String getRTFNo() {
+        return RTFNo;
+    }
+
+    public void setRTFNo(String RTFNo) {
+        this.RTFNo = RTFNo;
+
+    }
+    @Column(name = "LIQUIDATED_DAMAGES_APPLICABLE")
+    public Boolean getLiquidatedDamagesApplicable() {
+        return liquidatedDamagesApplicable;
+    }
+
+
+    public void setLiquidatedDamagesApplicable(Boolean liquidatedDamagesApplicable) {
+        this.liquidatedDamagesApplicable = liquidatedDamagesApplicable;
+    }
+    @Column(name = "EXCHANGE_RATE_VARIATION")
+    public Boolean getExchangeRateVariation() {
+        return exchangeRateVariation;
+    }
+
+    public void setExchangeRateVariation(Boolean exchangeRateVariation) {
+        this.exchangeRateVariation = exchangeRateVariation;
+    }
+    @Column(name = "VENDOR_DRAWING_DATA")
+    public Boolean getVendorDrawingData() {
+        return vendorDrawingData;
+    }
+
+    public void setVendorDrawingData(Boolean vendorDrawingData) {
+        this.vendorDrawingData = vendorDrawingData;
     }
 
     @Transient

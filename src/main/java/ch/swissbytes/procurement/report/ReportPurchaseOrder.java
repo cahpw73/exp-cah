@@ -59,7 +59,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("SUBREPORT_DIR","reports/procurement/printPo/");
+        addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
         try {
             connection = getConnection();
         }catch(Exception ex){
@@ -67,7 +67,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         addParameters("REPORT_CONNECTION", connection);
         loadParamPurchaseOrder();
-        addParameters("paymentTerm", cashflowEntity != null ? cashflowEntity.getPaymentTerms().getLabel() : null);
+        System.out.println("cashflow "+cashflowEntity);
+        //System.out.println("Label PAYMENt TERM  "+cashflowEntity.getPaymentTerms()!=null?cashflowEntity.getPaymentTerms().getLabel():"nothing");
+        addParameters("paymentTerm", cashflowEntity != null &&cashflowEntity.getPaymentTerms()!=null? cashflowEntity.getPaymentTerms().getLabel() : null);
     }
 
     private void loadParamPurchaseOrder() {

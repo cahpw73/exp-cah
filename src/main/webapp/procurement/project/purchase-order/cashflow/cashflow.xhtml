@@ -168,6 +168,7 @@
                         <div style="width: 200px; float: left;">
                             <h:selectOneMenu id="termCfId" onclick="doChangeProc();"
                                              value="#{cashflowBean.cashflow.paymentTerms}"
+                                             required="true"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}">
                                 <f:selectItem
                                         itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
@@ -206,12 +207,12 @@
                     <div style="width: 180px; float: left;">
                         <p:inputTextarea id="orderValueCf"
                                          readonly="true"
-                                         value="#{poBean.calculateTotalsValues()}"
+                                         value="#{poBean.calculateTotalValues()}"
                                          maxlength="950"
                                          styleClass="form-control" style="height: 100px!important;"
                                          rendered="#{poBean.beingEdited}"/>
                         <h:inputTextarea id="orderValueCfVi" readonly="true" styleClass="form-control"
-                                         rendered="#{poBean.beingViewed}" value="#{poBean.calculateTotalsValues()}"/>
+                                         rendered="#{poBean.beingViewed}" value="#{poBean.calculateTotalValues()}"/>
                     </div>
                 </div>
             </div>

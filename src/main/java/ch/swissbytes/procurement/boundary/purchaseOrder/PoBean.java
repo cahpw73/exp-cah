@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
@@ -78,6 +79,9 @@ public class PoBean extends Bean {
 
     @Inject
     private ScopeSupplyService scopeSupplyService;
+
+    @Inject
+    private Configuration configuration;
 
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
@@ -366,14 +370,13 @@ public class PoBean extends Bean {
         return service.calculateProjectValue(itemBean.getScopeSupplyList(), purchaseOrder.getPoEntity().getCurrency());
     }
 
-    public String calculateTotalsValues() {
+    public String calculateTotalValues() {
         Map<String, BigDecimal> totals = service.getTotalValuesByCurrency(purchaseOrder.getPoEntity().getCurrency(), itemBean.getScopeSupplyList());
         StringBuilder sb = new StringBuilder();
         for (String currency : totals.keySet()) {
             sb.append(currency);
             sb.append(" ");
-
-            sb.append(totals.get(currency));
+            sb.append(configuration.format(configuration.getPatternDecimal(),totals.get(currency)));
             sb.append(System.lineSeparator());
         }
         return sb.toString();

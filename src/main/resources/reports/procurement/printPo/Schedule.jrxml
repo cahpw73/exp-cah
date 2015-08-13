@@ -15,7 +15,7 @@
 	<parameter name="poNo" class="java.lang.String"/>
 	<parameter name="projectNumber" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select item,milestone,order_amt,project_amt,payment_date, pc.exchange_rate
+		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate
 from cashflow cf inner join cashflow_detail cfd  on
 cfd.cashflow_id=cf.id
 inner join project_currency pc on pc.id= cfd.project_currency_id
@@ -26,10 +26,10 @@ order by item]]>
 	<field name="milestone" class="java.lang.String"/>
 	<field name="order_amt" class="java.math.BigDecimal"/>
 	<field name="project_amt" class="java.math.BigDecimal"/>
-	<field name="payment_date" class="java.sql.Timestamp"/>
+	<field name="claim_date" class="java.sql.Timestamp"/>
 	<field name="exchange_rate" class="java.math.BigDecimal"/>
 	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{project_amt},$F{exchange_rate},$P{exchangeRate})]]></variableExpression>
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{order_amt},$F{exchange_rate},$P{exchangeRate})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -72,7 +72,7 @@ order by item]]>
 				<text><![CDATA[PURCHASE ORDER No.]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b817b94c-427a-480c-8c47-4ca4f139f5f0" style="Arial-Bold-Italic" x="178" y="5" width="49" height="20"/>
+				<reportElement uuid="b817b94c-427a-480c-8c47-4ca4f139f5f0" style="Arial-Bold-Italic" x="176" y="5" width="49" height="20"/>
 				<textElement markup="styled"/>
 				<textFieldExpression><![CDATA[$P{poNo}]]></textFieldExpression>
 			</textField>
@@ -82,12 +82,12 @@ order by item]]>
 				<text><![CDATA[SCHEDULE E]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="142" y="5" width="22" height="20"/>
+				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="142" y="5" width="25" height="20"/>
 				<textElement markup="styled"/>
 				<textFieldExpression><![CDATA[$P{projectNumber}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="754d17d5-3dbd-45e5-89d2-becf0b1ed725" x="166" y="5" width="9" height="20"/>
+				<reportElement uuid="754d17d5-3dbd-45e5-89d2-becf0b1ed725" x="167" y="5" width="9" height="20"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[-]]></text>
 			</staticText>
@@ -156,7 +156,7 @@ order by item]]>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{payment_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{payment_date}.getTime())):null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{claim_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{claim_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="a2f3b530-596a-478c-87b6-9c3162a8e89d" x="202" y="3" width="24" height="20"/>

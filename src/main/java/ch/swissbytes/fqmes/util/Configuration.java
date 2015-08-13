@@ -10,6 +10,7 @@ import org.picketlink.common.util.StringUtil;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -174,6 +175,9 @@ public class Configuration implements Serializable {
 
     public String getTitle(){
         return System.getProperties().getProperty("fqm-title-page")==null?bundle.getString("main.title"):System.getProperties().getProperty("fqm-title-page");
+    }
+    public String format(String pattern,BigDecimal value){
+        return value!=null?new java.text.DecimalFormat(pattern, new java.text.DecimalFormatSymbols()).format(value):"";
     }
 
 }
