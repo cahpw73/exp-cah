@@ -166,13 +166,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             dtos.add(dto);
         }
 
-        for(ClausesEntity entity : this.clausesList){
-            PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
-            dtos.add(dto);
-        }
+
         if(!scopeSupplyList.isEmpty()){
             PurchaseOrderReportDto poDto = new PurchaseOrderReportDto();
             dtos.add(poDto.loadTotalCost(po.getPoEntity().getCurrency().getCurrency().getCode(), getSumTotalCost()));
+        }
+        for(ClausesEntity entity : this.clausesList){
+            PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
+            dtos.add(dto);
         }
         return dtos;
     }

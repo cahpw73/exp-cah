@@ -6,6 +6,7 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
     <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+
         <div style="width: 900px!important; float: left!important;">
             <div class="form-group">
                 <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
@@ -298,20 +299,6 @@
                         <h:inputText readonly="true" styleClass="form-control view-po"
                                      value="#{configuration.getPOProcStatus(poBean.purchaseOrder.poEntity.poProcStatus)}"
                                      style="width: 200px; float: left;"/>
-                        <ui:remove>
-                            <div style="width: 200px; float: left;">
-                                <h:selectOneMenu id="headerStatusId" styleClass="form-control"
-                                                 value="#{poBean.purchaseOrder.poEntity.poProcStatus}">
-                                    <f:selectItem
-                                            itemLabel="Select one"
-                                            noSelectionOption="true"/>
-                                    <f:selectItems value="#{procPoStatuses}"
-                                                   var="_st"
-                                                   itemValue="#{_st}"
-                                                   itemLabel="#{configuration.getMessage(_st.name)}"/>
-                                </h:selectOneMenu>
-                            </div>
-                        </ui:remove>
                     </div>
                 </div>
                 <div style="width: 280px!important; float: left!important; margin-left: 25px;">
@@ -328,6 +315,47 @@
                             </h:outputText>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="clearfix"/>
+        <div>
+            <div style="width: 345px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="requisitionDt" value="#{msgs['po.header.lbl.rtf']}"/>
+
+                    <h:inputText id="rtfId" readonly="#{poBean.beingViewed}"
+                                style="max-width: 200px;"
+                                 value="#{poBean.purchaseOrder.poEntity.RTFNo}"
+                                 styleClass="form-control"/>
+                </div>
+            </div>
+            <div style="width: 345px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
+                                   for="requisitionDt" value="#{msgs['po.header.lbl.liquidated.damages.applicable']}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.liquidatedDamagesApplicable}"/>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"/>
+        <div>
+            <div style="width: 345px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="requisitionDt" value="#{msgs['po.header.lbl.exchange.rate.variation']}"/>
+
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.exchangeRateVariation}"/>
+                </div>
+            </div>
+            <div style="width: 345px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
+                                   for="requisitionDt" value="#{msgs['po.header.lbl.vendor.drawings.data']}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.vendorDrawingData}"/>
+
                 </div>
             </div>
         </div>
