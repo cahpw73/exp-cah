@@ -225,5 +225,17 @@
                 <p:message for="instructions" id="msgInstruction"/>
             </div>
         </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                           value="Invoice Detail"/>
+            <div class="col-sm-5">
+                <p:inputTextarea id="invoiceTo"
+                                 value="#{projectBean.projectEntity.invoiceTo}"
+                                 maxlength="950"
+                                 styleClass="form-control"
+                                 style="height: 135px!important; width: 366px!important"/>
+                <p:message/>
+            </div>
+        </div>
     </div>
 </ui:composition>

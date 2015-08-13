@@ -30,6 +30,7 @@ public class ProjectEntity implements Serializable {
     private ClientEntity client;
     private StatusEnum status;
     private Date lastUpdate;
+    private String invoiceTo;
 
     private List<ProjectCurrencyEntity> currencies = new ArrayList<>();
     private List<ProjectTextSnippetEntity> projectTextSnippetList = new ArrayList<>();
@@ -200,5 +201,15 @@ public class ProjectEntity implements Serializable {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Size(max = 1000)
+    @Column(name = "invoice_to", nullable = true, length = 1000)
+    public String getInvoiceTo() {
+        return invoiceTo;
+    }
+
+    public void setInvoiceTo(String invoiceTo) {
+        this.invoiceTo = invoiceTo;
     }
 }
