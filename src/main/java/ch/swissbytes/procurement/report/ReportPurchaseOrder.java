@@ -68,9 +68,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         addParameters("REPORT_CONNECTION", connection);
         loadParamPurchaseOrder();
-        System.out.println("cashflow "+cashflowEntity);
         //System.out.println("Label PAYMENt TERM  "+cashflowEntity.getPaymentTerms()!=null?cashflowEntity.getPaymentTerms().getLabel():"nothing");
-        addParameters("paymentTerm", cashflowEntity != null &&cashflowEntity.getPaymentTerms()!=null? cashflowEntity.getPaymentTerms().getLabel() : null);
+        addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel() : null);
+        addParameters("retentionApplicable", cashflowEntity != null? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()) : "No");
+        addParameters("retentionForm",cashflowEntity != null? cashflowEntity.getForm(): null);
     }
 
     private void loadParamPurchaseOrder() {
@@ -132,8 +133,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
-        addParameters("retentionApplicable", po.getPoEntity().getCashflow() != null ? BooleanUtils.toStringYesNo(po.getPoEntity().getCashflow().getApplyRetention()): "No");
-        addParameters("retentionForm", po.getPoEntity().getCashflow() != null ? po.getPoEntity().getCashflow().getForm(): null);
+
         addParameters("liquidatedDamagesApplicable", BooleanUtils.toStringYesNo(po.getPoEntity().getLiquidatedDamagesApplicable()));
         addParameters("vendorDrawingData", BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()));
         addParameters("exchangeRateVariation", BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()));

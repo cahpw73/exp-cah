@@ -170,7 +170,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             return doLastOperationsOverPO(false);
         }
-        return "";
+        return null;
     }
 
     public void doUpdate() {
@@ -192,10 +192,9 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             String link = doLastOperationsOverPO(false);
-            System.out.println("url " + link);
             return link;
         }
-        return "";
+        return null;
     }
 
     private String doLastOperationsOverPO(boolean edit) {
@@ -216,7 +215,7 @@ public class PoBean extends Bean {
             sortScopeSupplyAndDoUpdate();
             return backToList();
         }
-        return "";
+        return null;
     }
 
     public String doUpdateView() {
@@ -257,6 +256,10 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
+        if(!cashflowBean.validateRetentionForm()){
+            Messages.addFlashGlobalError("Please enter Form");
+            validated = false;
+        }
         if (service.isVarNumberUsed(purchaseOrder)) {
             Messages.addFlashError("poVarNumber", "variation number is already being used");
             validated = false;

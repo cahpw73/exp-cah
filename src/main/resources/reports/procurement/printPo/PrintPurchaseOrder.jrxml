@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.y" value="384"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -428,7 +428,7 @@
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="7a67ec09-bced-4a6a-80ce-dd9fa0058d20" x="0" y="14" width="30" height="12"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
@@ -456,7 +456,7 @@
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="699a2303-5514-461d-b87d-f3e53a5d18ad" x="0" y="14" width="30" height="12"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
@@ -486,7 +486,7 @@
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="24419a91-2071-4568-b2fe-fe7a8f98cf31" x="0" y="14" width="30" height="12"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
@@ -501,7 +501,7 @@
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
 								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="278" height="15"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="3"/>
 								</textElement>
@@ -517,15 +517,15 @@
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="1" y="14" width="277" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement verticalAlignment="Middle" markup="styled">
+								<textElement verticalAlignment="Top" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial",7).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="278" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 									<font size="6" isBold="true" isItalic="false"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
@@ -555,7 +555,7 @@
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" style="Arial" x="15" y="14" width="60" height="10"/>
-								<textElement verticalAlignment="Middle" markup="styled">
+								<textElement verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
@@ -563,8 +563,8 @@
 							</textField>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="84abf470-d3ba-48e2-ae66-db94ad4fbf8f" style="Arial" x="0" y="27" width="75" height="10" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-									<font fontName="Arial" size="6"/>
+								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
+									<font fontName="Arial" size="8"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{strTotalCost}!=null?"<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{strTotalCost}+"</style>":null]]></textFieldExpression>
 							</textField>
@@ -572,7 +572,7 @@
 								<reportElement uuid="fcc81b98-76bb-4edb-ad81-7c1c036de5cf" style="Arial" x="3" y="14" width="14" height="10">
 									<printWhenExpression><![CDATA[$F{cost}!=null]]></printWhenExpression>
 								</reportElement>
-								<textElement verticalAlignment="Middle" markup="styled">
+								<textElement verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
@@ -601,7 +601,7 @@
 						<jr:detailCell height="37" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="14" y="14" width="60" height="9"/>
-								<textElement verticalAlignment="Middle" markup="styled">
+								<textElement verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
@@ -609,7 +609,7 @@
 							</textField>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="fe9c6770-c1f3-48d0-a8c0-0a1db268034f" style="Arial" x="0" y="26" width="75" height="9" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="6"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
@@ -619,7 +619,7 @@
 								<reportElement uuid="c78f310f-931f-4a05-ad4b-1ed50847c84d" style="Arial" x="2" y="14" width="14" height="9">
 									<printWhenExpression><![CDATA[$F{totalCost}!=null]]></printWhenExpression>
 								</reportElement>
-								<textElement verticalAlignment="Middle" markup="styled">
+								<textElement verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
@@ -728,7 +728,7 @@
 				<textFieldExpression><![CDATA[$P{invoiceTo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="db35bb29-0d73-41b6-85a7-686ad84ac436" style="Arial" positionType="Float" x="165" y="52" width="20" height="12"/>
+				<reportElement uuid="db35bb29-0d73-41b6-85a7-686ad84ac436" style="Arial" positionType="Float" x="165" y="52" width="15" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
@@ -756,16 +756,16 @@
 				<textFieldExpression><![CDATA[$P{vendorDrawingData}.equals("null")?"No":$P{vendorDrawingData}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" positionType="Float" x="187" y="52" width="116" height="12"/>
+				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" positionType="Float" x="181" y="52" width="116" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{retentionApplicable}!=null&&$P{retentionApplicable}.equalsIgnoreCase("yes")?$P{retentionForm}:null]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="40">
+		<band height="14">
 			<subreport>
-				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" x="0" y="0" width="519" height="40" isRemoveLineWhenBlank="true">
+				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" x="0" y="0" width="519" height="14" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="poId">

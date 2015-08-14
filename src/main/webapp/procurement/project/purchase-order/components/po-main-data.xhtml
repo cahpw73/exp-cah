@@ -35,13 +35,14 @@
                                      action="#{poBean.doSaveView}"
                                      rendered="#{poBean.beingCreated}"
                                      value="#{msgs['lbl.view']}">
-                        <f:param name="projectId" value="#{poListBean.projectId}"/>
+                        <p:ajax async="false" update=":glbMsgs editPoForm" oncomplete="alert('end');" process="@form"/>
                     </h:commandButton>
                     <h:commandButton type="submit"
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doUpdateView}"
                                      rendered="#{poBean.beingUpdated}"
                                      value="#{msgs['lbl.view']}">
+                        <p:ajax async="false" update=":glbMsgs editPoForm" oncomplete="alert('end');" process="@form"/>
                     </h:commandButton>
                 </h:panelGroup>
             </div>

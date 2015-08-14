@@ -44,7 +44,17 @@ public class Processor {
         }else{
             FONT=DEFAULT;
         }
-
+    }
+    public Processor(boolean isPdf,String font,Integer size) {
+        tags = new Stack<>();
+        snippets = new ArrayList<>();
+        this.isPdf = isPdf;
+        if("arial".equalsIgnoreCase(font)){
+            FONT=ARIAL;
+        }else{
+            FONT=DEFAULT;
+        }
+        setFontSize(size);
     }
     public void useArial(){
         FONT=ARIAL;
@@ -211,14 +221,16 @@ public class Processor {
                 hasBeenAddedAnyFontSize=true;
                 style = creatingProperty(TagHTML.H3, style);
             }
-
+            if (hasAnyStyle) {
+                if(!hasBeenAddedAnyFontSize&&hasBeenDefinedAnyFontSize){
+                    style=insertProperty(style,"size='"+ fontSize +"'");
+                }
+            }
             style = style + (snippet.isOpenParagraph() ? System.getProperty("line.separator") : "") + snippet.getSnippet();
             if (hasAnyStyle) {
                 style = style + TagPDFJasper.STYLE.close;
             }
-            if(!hasBeenAddedAnyFontSize&&hasBeenDefinedAnyFontSize){
-                style=style+"size='"+ fontSize +"'";
-            }
+
             style = style + (snippet.isCloseParagraph() ? System.getProperty("line.separator") : "");
             sb.append(style);
         }
@@ -275,5 +287,4 @@ public class Processor {
     private String insertProperty(String text, String property) {
         return StringUtils.isEmpty(text) || StringUtils.isBlank(text) ? "" : text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
     }
-
 }

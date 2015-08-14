@@ -69,6 +69,10 @@ public class CashflowBean implements Serializable {
         }
     }
 
+    public boolean validateRetentionForm(){
+        return cashflow.getApplyRetention()!=null&&cashflow.getApplyRetention().booleanValue()&&StringUtils.isNotEmpty(cashflow.getForm())&&StringUtils.isNotBlank(cashflow.getForm());
+    }
+
     public void confirmCashflowDetail(CashflowDetailEntity entity) {
         log.info("confirm item");
         if (itemNoIsNotEmpty(entity)) {
