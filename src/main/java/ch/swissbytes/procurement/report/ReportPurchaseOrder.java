@@ -128,10 +128,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("watermarkDraft", watermark);
         }
         addParameters("poList",createDataSource(getPOReportDto()));
+        addParameters("totalClauses",this.clausesList.size());
         addParameters("poTitle",po.getPoEntity().getOrderTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
         addParameters("retentionApplicable", po.getPoEntity().getCashflow() != null ? BooleanUtils.toStringYesNo(po.getPoEntity().getCashflow().getApplyRetention()): "No");
+        addParameters("retentionForm", po.getPoEntity().getCashflow() != null ? po.getPoEntity().getCashflow().getForm(): null);
         addParameters("liquidatedDamagesApplicable", BooleanUtils.toStringYesNo(po.getPoEntity().getLiquidatedDamagesApplicable()));
         addParameters("vendorDrawingData", BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()));
         addParameters("exchangeRateVariation", BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()));

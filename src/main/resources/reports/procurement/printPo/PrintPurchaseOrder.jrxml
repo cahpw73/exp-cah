@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="480"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -98,6 +98,7 @@
 	<parameter name="rtfNo" class="java.lang.String"/>
 	<parameter name="retentionForm" class="java.lang.String"/>
 	<parameter name="mrNo" class="java.lang.String"/>
+	<parameter name="totalClauses" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -246,7 +247,7 @@
 				<text><![CDATA[MR No.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" x="124" y="160" width="52" height="12"/>
+				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="124" y="160" width="52" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
@@ -395,7 +396,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="163" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<componentElement>
 				<reportElement uuid="9283fa30-acc3-40bf-8ab6-8b873e2cab0e" key="table" style="table" positionType="Float" x="0" y="97" width="519" height="19" isPrintWhenDetailOverflows="true"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -428,7 +429,7 @@
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="7a67ec09-bced-4a6a-80ce-dd9fa0058d20" x="0" y="14" width="30" height="12"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="6"/>
+									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
@@ -456,7 +457,7 @@
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="699a2303-5514-461d-b87d-f3e53a5d18ad" x="0" y="14" width="30" height="12"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="6"/>
+									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
@@ -486,7 +487,7 @@
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="24419a91-2071-4568-b2fe-fe7a8f98cf31" x="0" y="14" width="30" height="12"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font size="6"/>
+									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
@@ -517,7 +518,7 @@
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="1" y="14" width="277" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Middle" markup="styled">
-									<font size="6"/>
+									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
@@ -555,7 +556,7 @@
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" style="Arial" x="15" y="14" width="60" height="10"/>
 								<textElement verticalAlignment="Middle" markup="styled">
-									<font fontName="Arial" size="6"/>
+									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{cost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{cost}):null]]></textFieldExpression>
@@ -572,7 +573,7 @@
 									<printWhenExpression><![CDATA[$F{cost}!=null]]></printWhenExpression>
 								</reportElement>
 								<textElement verticalAlignment="Middle" markup="styled">
-									<font fontName="Arial" size="6"/>
+									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
 							</textField>
@@ -601,7 +602,7 @@
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="14" y="14" width="60" height="9"/>
 								<textElement verticalAlignment="Middle" markup="styled">
-									<font fontName="Arial" size="6"/>
+									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{totalCost}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{totalCost}):null]]></textFieldExpression>
@@ -619,7 +620,7 @@
 									<printWhenExpression><![CDATA[$F{totalCost}!=null]]></printWhenExpression>
 								</reportElement>
 								<textElement verticalAlignment="Middle" markup="styled">
-									<font fontName="Arial" size="6"/>
+									<font fontName="Arial" size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currency}]]></textFieldExpression>
 							</textField>
@@ -755,17 +756,29 @@
 				<textFieldExpression><![CDATA[$P{vendorDrawingData}.equals("null")?"No":$P{vendorDrawingData}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" positionType="Float" x="187" y="52" width="110" height="12"/>
+				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" positionType="Float" x="187" y="52" width="116" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{retentionApplicable}!=null&&$P{retentionApplicable}.equalsIgnoreCase("yes")?$P{retentionForm}:null]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="40">
 			<subreport>
-				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" x="1" y="121" width="517" height="40"/>
+				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" x="0" y="0" width="519" height="40" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="poId">
+					<subreportParameterExpression><![CDATA[$P{poId}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Clauses.jasper"]]></subreportExpression>
 			</subreport>
+			<break>
+				<reportElement uuid="8d6e4e71-9448-4f90-ad14-5ad6f99618d0" x="0" y="10" width="100" height="1">
+					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
+				</reportElement>
+			</break>
 		</band>
 	</detail>
 	<columnFooter>
@@ -852,7 +865,7 @@
 	<summary>
 		<band height="44" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="1" y="1" width="519" height="42"/>
+				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="1" width="519" height="42"/>
 				<subreportParameter name="poNo">
 					<subreportParameterExpression><![CDATA[$P{poNo}]]></subreportParameterExpression>
 				</subreportParameter>
