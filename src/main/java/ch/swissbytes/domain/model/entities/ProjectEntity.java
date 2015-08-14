@@ -204,7 +204,7 @@ public class ProjectEntity implements Serializable {
     }
 
     @Size(max = 1000)
-    @Column(name = "invoice_to", nullable = true, length = 1000)
+    @Column(name = "invoice_to", length = 1000)
     public String getInvoiceTo() {
         return invoiceTo;
     }
