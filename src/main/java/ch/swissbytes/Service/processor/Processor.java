@@ -22,12 +22,18 @@ public class Processor {
     private String arialItalic=HOME+"ariali.ttf";
     private String arialBold=HOME+"arialbd.ttf";
     private String arialBoldItalic=HOME+"arialbi.ttf";
+    private boolean hasBeenDefinedAnyFontSize=false;
+    private Integer fontSize;
 
     public Processor(boolean isPdf) {
         tags = new Stack<>();
         snippets = new ArrayList<>();
         this.isPdf = isPdf;
         FONT=DEFAULT;
+    }
+    public void setFontSize(Integer fontSize){
+        this.fontSize =fontSize;
+        hasBeenDefinedAnyFontSize=true;
     }
     public Processor(boolean isPdf,String font) {
         tags = new Stack<>();
@@ -160,6 +166,7 @@ public class Processor {
         for (DTOSnippet snippet : snippets) {
             String style = "";
             boolean hasAnyStyle = false;
+            boolean hasBeenAddedAnyFontSize=false;
             if(FONT==DEFAULT) {
                 if (snippet.isBold() && !snippet.isItalic()) {
                     hasAnyStyle = true;
@@ -191,20 +198,26 @@ public class Processor {
             }
             if (snippet.isH1()) {
                 hasAnyStyle = true;
+                hasBeenAddedAnyFontSize=true;
                 style = creatingProperty(TagHTML.H1, style);
             }
             if (snippet.isH2()) {
                 hasAnyStyle = true;
+                hasBeenAddedAnyFontSize=true;
                 style = creatingProperty(TagHTML.H2, style);
             }
             if (snippet.isH3()) {
                 hasAnyStyle = true;
+                hasBeenAddedAnyFontSize=true;
                 style = creatingProperty(TagHTML.H3, style);
             }
 
             style = style + (snippet.isOpenParagraph() ? System.getProperty("line.separator") : "") + snippet.getSnippet();
             if (hasAnyStyle) {
                 style = style + TagPDFJasper.STYLE.close;
+            }
+            if(!hasBeenAddedAnyFontSize&&hasBeenDefinedAnyFontSize){
+                style=style+"size='"+ fontSize +"'";
             }
             style = style + (snippet.isCloseParagraph() ? System.getProperty("line.separator") : "");
             sb.append(style);
@@ -261,14 +274,6 @@ public class Processor {
 
     private String insertProperty(String text, String property) {
         return StringUtils.isEmpty(text) || StringUtils.isBlank(text) ? "" : text.substring(0, text.length() - 1) + " " + property + text.substring(text.length() - 1, text.length());
-    }
-
-    public static void main(String[] args) {
-        String s="Reg No 64262\nA wholly owned subsidiary of First Quantum\n Mineral Limited\n REGISTERED OFFICE\n c/o Choice Corporate Services Limited\n PO Box 32565, Lusaka Zambia\n Telf : +261-1 221 191\n Fax: +260-1 224 383\n      Email: choicecorp@zaimtet.zm";
-        Processor pr=new Processor(true);
-        pr.useArial();
-        System.out.println(pr.processSnippetText(s));
-
     }
 
 }

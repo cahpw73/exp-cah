@@ -41,6 +41,7 @@ public class POEntity implements Serializable{
     private CashflowEntity cashflow;
     private TextEntity textEntity;
     private String RTFNo;
+    private String MRNo;
     private Boolean liquidatedDamagesApplicable;
     private Boolean exchangeRateVariation;
     private Boolean vendorDrawingData;
@@ -198,14 +199,23 @@ public class POEntity implements Serializable{
         this.contactEntity = contactEntity;
     }
 
+    @Column(name = "RTF_NO" ,length = 250)
     public String getRTFNo() {
         return RTFNo;
     }
 
     public void setRTFNo(String RTFNo) {
         this.RTFNo = RTFNo;
-
     }
+    @Column(name = "MR_NO" ,length = 250)
+    public String getMRNo() {
+        return MRNo;
+    }
+
+    public void setMRNo(String MRNo) {
+        this.MRNo = MRNo;
+    }
+
     @Column(name = "LIQUIDATED_DAMAGES_APPLICABLE")
     public Boolean getLiquidatedDamagesApplicable() {
         return liquidatedDamagesApplicable;

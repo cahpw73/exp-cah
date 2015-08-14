@@ -136,6 +136,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("vendorDrawingData", BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()));
         addParameters("exchangeRateVariation", BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()));
         addParameters("rtfNo",po.getPoEntity().getRTFNo());
+        addParameters("mrNo",po.getPoEntity().getMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
         addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
@@ -165,16 +166,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity,po.getPoEntity().getCurrency());
             dtos.add(dto);
         }
-
-
         if(!scopeSupplyList.isEmpty()){
             PurchaseOrderReportDto poDto = new PurchaseOrderReportDto();
             dtos.add(poDto.loadTotalCost(po.getPoEntity().getCurrency().getCurrency().getCode(), getSumTotalCost()));
         }
-        for(ClausesEntity entity : this.clausesList){
+       /* for(ClausesEntity entity : this.clausesList){
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
             dtos.add(dto);
-        }
+        }*/
         return dtos;
     }
 
