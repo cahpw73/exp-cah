@@ -83,6 +83,10 @@ public class PoBean extends Bean {
     @Inject
     private Configuration configuration;
 
+    @Inject
+    private PoListBean listBean;
+
+
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
     private boolean loaded = false;
@@ -213,19 +217,26 @@ public class PoBean extends Bean {
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
-            return backToList();
+            listBean.setCurrentPurchaseOrder(purchaseOrder);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("$('#editPoForm:printDraftPO' ).click();");
         }
         return null;
     }
 
     public String doUpdateView() {
         log.info("trying to updateView purchase order on procurement module");
-        collectData();
-        purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-        log.info("purchase order created [" + purchaseOrder.getId() + "]");
-        sortPurchaseListByVariationAndDoUpdate();
-        sortScopeSupplyAndDoUpdate();
-        return backToList();
+        if (validate()) {
+            collectData();
+            purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
+            log.info("purchase order created [" + purchaseOrder.getId() + "]");
+            sortPurchaseListByVariationAndDoUpdate();
+            sortScopeSupplyAndDoUpdate();
+            listBean.setCurrentPurchaseOrder(purchaseOrder);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("$('#editPoForm:printDraftPO' ).click();");
+        }
+        return null;
     }
 
     public String backToList() {

@@ -97,10 +97,13 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("company", po.getPoEntity().getSupplier().getCompany());
             addParameters("street", po.getPoEntity().getSupplier().getStreet());
             addParameters("state", po.getPoEntity().getSupplier().getState());
+            addParameters("suburb", po.getPoEntity().getSupplier().getSuburb());
+            addParameters("abnReg", po.getPoEntity().getSupplier().getAbnRegNo());
             addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
             addParameters("country", po.getPoEntity().getSupplier().getCountry());
             addParameters("phone", po.getPoEntity().getSupplier().getPhone());
             addParameters("fax", po.getPoEntity().getSupplier().getFax());
+            addParameters("supplierId", po.getPoEntity().getSupplier().getId());
         }
         Processor processor=new Processor(true);
         processor.useArial();

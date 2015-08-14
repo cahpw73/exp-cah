@@ -54,6 +54,7 @@ public class PoListBean implements Serializable {
     @Inject
     private PurchaseOrderDao dao;
 
+
     private String projectId;
 
     private ProjectEntity project;
