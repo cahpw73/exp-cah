@@ -340,11 +340,6 @@ public class PoListBean implements Serializable {
         return clausesEntities;
     }
 
-  /*  public String removePrefixIfAny(PurchaseOrderEntity po) {
-        service.removePrefixIfAny(po);
-        return po.getVariation();
-    }*/
-
     public String addPrefixToVariation(PurchaseOrderEntity po) {
         service.addPrefixToVariation(po);
         return po.getVariation();
