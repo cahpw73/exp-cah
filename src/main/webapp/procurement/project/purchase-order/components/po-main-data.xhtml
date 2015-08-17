@@ -8,52 +8,55 @@
         <div class="col-sm-12" style="margin-bottom: 20px!important;">
             <div class="pull-right">
                 <h:panelGroup id="buttonGroup">
+
                     <h:commandButton type="submit"
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doSave}"
                                      rendered="#{poBean.beingCreated}"
                                      value="#{msgs['lbl.save']}">
-                        <p:ajax async="false" update=":glbMsgs buttonGroup editPoForm"  process="@form"/>
+                        <p:ajax async="false" update=":glbMsgs buttonGroup editPoForm" process="@form"/>
                     </h:commandButton>
                     <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                      value="#{msgs['lbl.save']}">
-                        <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
-                        <f:ajax render=":glbMsgs editPoForm" execute="@form"/>
+                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
                     </h:commandButton>
                     &#160;
                     <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"
                                      styleClass="btn btn-primary btn-sm"
                                      value="#{msgs['lbl.close']}"
                                      rendered="#{poBean.beingCreated}">
-                            </h:commandButton>
+                        <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
+                    </h:commandButton>
                     <h:commandButton type="submit" action="#{poBean.doUpdateAndClose}"
                                      styleClass="btn btn-primary btn-sm"
                                      value="#{msgs['lbl.close']}"
                                      rendered="#{poBean.beingUpdated}">
-                            </h:commandButton>
+                        <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
+                    </h:commandButton>
                     &#160;
-                    <h:commandButton type="submit"
+                    <h:commandButton
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doSaveView}"
                                      rendered="#{poBean.beingCreated}"
                                      value="#{msgs['lbl.view']}">
                         <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
-                        <f:ajax render=":glbMsgs editPoForm" execute="@form"/>
+                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
                     </h:commandButton>
-                    <h:commandButton type="submit"
+                    <h:commandButton
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doUpdateView}"
                                      rendered="#{poBean.beingUpdated}"
                                      value="#{msgs['lbl.view']}">
                         <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
-                        <f:ajax render=":glbMsgs editPoForm" execute="@form"/>
+                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
                     </h:commandButton>
-                    <h:commandButton type="submit"
+                    <h:commandLink type="submit"
                                      id="printDraftPO"
                                      style="display: none;"
+                                     target="_blank"
                                      action="#{poListBean.printPODraft()}">
-                    </h:commandButton>
+                    </h:commandLink>
                 </h:panelGroup>
             </div>
         </div>

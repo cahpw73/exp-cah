@@ -225,7 +225,7 @@ public class PoBean extends Bean {
             sortScopeSupplyAndDoUpdate();
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("$('#editPoForm:printDraftPO' ).click();");
+            context.execute("printDraft();");
         }
         return null;
     }
@@ -240,7 +240,8 @@ public class PoBean extends Bean {
             sortScopeSupplyAndDoUpdate();
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("$('#editPoForm:printDraftPO' ).click();");
+            //context.execute("alert('updated!')");
+            context.execute("printDraft();");
         }
         return null;
     }
@@ -273,6 +274,10 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
+        if(cashflowBean.getPaymentTerms()==null){
+            Messages.addFlashGlobalError("Please enter Payment Terms");
+            validated=false;
+        }
         if(!cashflowBean.validateRetentionForm()){
             Messages.addFlashGlobalError("Please enter Form");
             validated = false;

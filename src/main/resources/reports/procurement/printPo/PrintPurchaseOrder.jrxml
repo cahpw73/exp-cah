@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="864"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -102,7 +102,7 @@
 	<parameter name="abnReg" class="java.lang.String"/>
 	<parameter name="suburb" class="java.lang.String"/>
 	<parameter name="supplierId" class="java.lang.Long"/>
-	<parameter name="parameter1" class="java.lang.String"/>
+	<parameter name="clientDetail0" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -258,7 +258,7 @@
 				<textFieldExpression><![CDATA[$P{mrNo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0089cd60-eecf-406a-b7d2-17d2f3ff9825" positionType="Float" x="14" y="99" width="498" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="0089cd60-eecf-406a-b7d2-17d2f3ff9825" positionType="Float" x="14" y="96" width="498" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>

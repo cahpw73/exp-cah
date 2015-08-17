@@ -51,7 +51,7 @@
 
                     <!-- Tab Projects -->
                     <div class="tab-content">
-                        <!-- Tab Header -->
+
                         <ui:include src="components/po-main-data.xhtml"/>
 
                         <div class="clearfix"/>
@@ -60,35 +60,37 @@
                             <br/>
                             <ui:include src="header/header.xhtml"/>
                         </div>
-                        <!-- Tab supplier-->
+
                         <div class="tab-pane " id="supplierPo">
                             <br/>
                             <ui:include src="supplier/supplier.xhtml"/>
                         </div>
-                        <!-- Tab items-->
+
                         <div class="tab-pane " id="itemPo">
                             <br/>
                             <ui:include src="item/items.xhtml"/>
                         </div>
-                        <!-- Tab Header -->
+
                         <div class="tab-pane" id="textPo">
                             <br/>
                             <ui:include src="text/po-text.xhtml"/>
                         </div>
-                        <!-- Tab supplier-->
+
                         <div class="tab-pane " id="deliverablesPo">
                             <br/>
                             <ui:include src="deliverables/deliverables.xhtml"/>
                         </div>
-                        <!-- Tab items-->
+
                         <div class="tab-pane " id="cashflowPo">
                             <br/>
                             <ui:include src="cashflow/cashflow.xhtml"/>
                         </div>
+
                     </div>
                 </div>
             </div>
         </h:form>
+
         <p:dialog header="New Custom Text" widgetVar="textSnippetModal1"
                   resizable="true">
             <h:panelGroup id="textSnippetModalId">
@@ -99,6 +101,7 @@
                 </div>
             </h:panelGroup>
         </p:dialog>
+
         <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
             <ui:include src="../../admin/supplier/components/contactEdit.xhtml"/>
         </p:dialog>

@@ -37,3 +37,6 @@ function isNumeric(obj) {
     console.log("RESULT IS NUMERIC: " + result);
     return result;
 }
+function printDraft(){
+    $("#editPoForm\\:printDraftPO").click();
+}
