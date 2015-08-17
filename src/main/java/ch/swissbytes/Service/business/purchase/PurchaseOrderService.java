@@ -249,10 +249,12 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public void addPrefixToVariation(PurchaseOrderEntity purchaseOrderEntity) {
-        purchaseOrderEntity.setVariation(PREFIX+purchaseOrderEntity.getVariation());
+        if(purchaseOrderEntity!=null&&StringUtils.isNotEmpty(purchaseOrderEntity.getVariation())&&StringUtils.isNotBlank(purchaseOrderEntity.getVariation())) {
+            purchaseOrderEntity.setVariation(PREFIX + purchaseOrderEntity.getVariation());
+        }
     }
     public void removePrefixIfAny(PurchaseOrderEntity purchaseOrder){
-        if(StringUtils.isNotEmpty(purchaseOrder.getVariation())&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
+        if(purchaseOrder!=null&&StringUtils.isNotEmpty(purchaseOrder.getVariation())&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
             while(purchaseOrder.getVariation().toLowerCase().trim().startsWith(PREFIX)&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
                 purchaseOrder.setVariation(purchaseOrder.getVariation().substring(1,purchaseOrder.getVariation().length()));
             }

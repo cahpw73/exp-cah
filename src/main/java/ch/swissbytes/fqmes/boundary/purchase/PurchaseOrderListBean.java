@@ -4,6 +4,9 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.VPurchaseOrder;
+import ch.swissbytes.fqmes.util.Purchase;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -42,6 +45,8 @@ public class PurchaseOrderListBean implements Serializable {
     private PurchaseOrderEntity purchaseOrderSelected;
 
     private static final Logger log = Logger.getLogger(PurchaseOrderListBean.class.getName());
+
+    private String PREFIX="v";
 
 
     @PostConstruct
@@ -91,6 +96,14 @@ public class PurchaseOrderListBean implements Serializable {
     public void doClean(){
         searchPurchase.clean();
         search();
+    }
+    public String addPrefixToVariation(VPurchaseOrder po){
+        String variation="";
+        if(po!=null&& StringUtils.isNotEmpty(po.getVariation())&&StringUtils.isNotBlank(po.getVariation())){
+            variation=PREFIX+po.getVariation();
+        }
+        return variation;
+
     }
 
     @Produces

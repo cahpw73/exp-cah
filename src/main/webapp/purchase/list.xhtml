@@ -96,7 +96,7 @@
                     #{_purchase.po}
                 </p:column>
                 <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
-                    #{_purchase.variation}
+                    #{purchaseOrderListBean.addPrefixToVariation(_purchase)}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
                     #{_purchase.poTitle}

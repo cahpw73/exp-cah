@@ -155,6 +155,7 @@ public class PurchaseOrderEdit implements Serializable {
         if (!fase.equals("1")) {
             originalQuantity = 0;
             poEdit = service.load(Long.parseLong(purchaseOrderId));
+            service.removePrefixIfAny(poEdit);
             currentHashCode = service.getAbsoluteHashcode(poEdit.getId());
             log.info(String.format("hashcode starting [%s]", currentHashCode));
             if (comments == null || comments.size() == 0) {
