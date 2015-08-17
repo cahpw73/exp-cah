@@ -18,31 +18,36 @@
                     <h:commandButton type="submit" styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                      value="#{msgs['lbl.save']}">
-                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
+                        <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
+                        <f:ajax render=":glbMsgs editPoForm" execute="@form"/>
                     </h:commandButton>
                     &#160;
                     <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"
                                      styleClass="btn btn-primary btn-sm"
                                      value="#{msgs['lbl.close']}"
-                                     rendered="#{poBean.beingCreated}"/>
+                                     rendered="#{poBean.beingCreated}">
+                            </h:commandButton>
                     <h:commandButton type="submit" action="#{poBean.doUpdateAndClose}"
                                      styleClass="btn btn-primary btn-sm"
                                      value="#{msgs['lbl.close']}"
-                                     rendered="#{poBean.beingUpdated}"/>
+                                     rendered="#{poBean.beingUpdated}">
+                            </h:commandButton>
                     &#160;
                     <h:commandButton type="submit"
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doSaveView}"
                                      rendered="#{poBean.beingCreated}"
                                      value="#{msgs['lbl.view']}">
-                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
+                        <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
+                        <f:ajax render=":glbMsgs editPoForm" execute="@form"/>
                     </h:commandButton>
                     <h:commandButton type="submit"
                                      styleClass="btn btn-primary btn-sm"
                                      action="#{poBean.doUpdateView}"
                                      rendered="#{poBean.beingUpdated}"
                                      value="#{msgs['lbl.view']}">
-                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>
+                        <!--<p:ajax async="false" update=":glbMsgs editPoForm" process="@form"/>-->
+                        <f:ajax render=":glbMsgs editPoForm" execute="@form"/>
                     </h:commandButton>
                     <h:commandButton type="submit"
                                      id="printDraftPO"

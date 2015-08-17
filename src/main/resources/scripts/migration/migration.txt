@@ -428,4 +428,4 @@ SELECT SETVAL('users_id_seq', (SELECT MAX(ID)+1 FROM USERS));
 
 
 update purchase_order set variation=substring(variation from 2 for length(variation))
-where variation is not null and length(trim(variation))>0 and lower(trim(variation)) like 'v%'
+where variation is not null and length(trim(variation))>0 and lower(trim(variation)) like 'v%';

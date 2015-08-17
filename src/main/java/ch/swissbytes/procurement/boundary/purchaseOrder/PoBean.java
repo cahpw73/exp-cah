@@ -91,24 +91,46 @@ public class PoBean extends Bean {
     private boolean supplierMode = false;
     private boolean loaded = false;
 
-
+    private void initializeNewPurchaseOrder(ProjectEntity projectEntity){
+        List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
+        purchaseOrder.setProjectEntity(projectEntity);
+        purchaseOrder.setProject(projectEntity.getProjectNumber());
+        purchaseOrder.setPoEntity(new POEntity());
+        purchaseOrder.getPoEntity().setOrderDate(new Date());
+        purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
+        putModeCreation();
+        poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+        if (projectCurrencyList.size() == 1) {
+            purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
+        }
+    }
+    private void loadPurchaseOrder(){
+        purchaseOrder = service.findById(Long.valueOf(poId));
+        itemBean.loadItemList(purchaseOrder.getId());
+        cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
+        //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
+        poTextBean.loadText(purchaseOrder.getPoEntity(), purchaseOrder.getProjectEntity().getId());
+        if (purchaseOrder == null) {
+            throw new IllegalArgumentException("It is not a purchase order valid");
+        }
+        requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
+        deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
+        if (modeView == null) {
+            log.info("mode edition");
+            putModeEdition();
+            service.removePrefixIfAny(purchaseOrder);
+        } else if (modeView) {
+            log.info("mode view");
+            putModeView();
+        }
+    }
     public void load() {
         if (!loaded) {
             if (projectId != null) {
                 try {
                     ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
                     if (projectEntity != null) {
-                        List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
-                        purchaseOrder.setProjectEntity(projectEntity);
-                        purchaseOrder.setProject(projectEntity.getProjectNumber());
-                        purchaseOrder.setPoEntity(new POEntity());
-                        purchaseOrder.getPoEntity().setOrderDate(new Date());
-                        purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
-                        putModeCreation();
-                        poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
-                        if (projectCurrencyList.size() == 1) {
-                            purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
-                        }
+                      initializeNewPurchaseOrder(projectEntity);
                     } else {
                         throw new IllegalArgumentException(" It is not a project valid");
                     }
@@ -117,25 +139,8 @@ public class PoBean extends Bean {
                 }
             } else if (poId != null) {
                 try {
-                    purchaseOrder = service.findById(Long.valueOf(poId));
-                    itemBean.loadItemList(purchaseOrder.getId());
-                    cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
-                    //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
-                    poTextBean.loadText(purchaseOrder.getPoEntity(), purchaseOrder.getProjectEntity().getId());
-                    if (purchaseOrder == null) {
-                        throw new IllegalArgumentException("It is not a purchase order valid");
-                    }
-                    requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
-                    deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
-                    if (modeView == null) {
-                        log.info("mode edition");
-                        putModeEdition();
-                        service.removePrefixIfAny(purchaseOrder);
-                    } else if (modeView) {
-                        log.info("mode view");
-                        putModeView();
-                    }
 
+                    loadPurchaseOrder();
                 } catch (NumberFormatException nfe) {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
@@ -162,7 +167,7 @@ public class PoBean extends Bean {
             poId = purchaseOrder.getId().toString();
             projectId = null;
             loaded = false;
-            load();
+            loadPurchaseOrder();
         }
 
     }
@@ -186,7 +191,7 @@ public class PoBean extends Bean {
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
             loaded = false;
-            load();
+            loadPurchaseOrder();
         }
     }
 
