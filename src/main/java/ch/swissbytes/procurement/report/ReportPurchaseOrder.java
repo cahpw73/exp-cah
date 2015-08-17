@@ -110,12 +110,13 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if(po.getProjectEntity().getClient()!=null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
             Map detail= separateDetail(po.getProjectEntity().getClient().getTitle());
-
-            addParameters("clientDetail1", detail.size() > 0 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(0).toString())) : null);
+            addParameters("clientDetail0", detail.size() > 0 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(0).toString())) : null);
             processor.clear();
-            addParameters("clientDetail2", detail.size() > 1 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(1).toString())) : null);
+            addParameters("clientDetail1", detail.size() > 1 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(1).toString())) : null);
             processor.clear();
-            addParameters("clientDetail3",detail.size()>2?Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(2).toString())):null);
+            addParameters("clientDetail2", detail.size() > 2 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(2).toString())) : null);
+            processor.clear();
+            addParameters("clientDetail3",detail.size()>3?Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(3).toString())):null);
         }
         addParameters("poNo",po.getPo());
         addParameters("poId",po.getPoEntity().getId());
@@ -153,14 +154,30 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
     private Map<Integer,String> separateDetail(String detail){
         Map<Integer,String> columns=new HashMap<>();
-        String separator=System.lineSeparator()+System.lineSeparator();
-        int i=0;
-        for(String column:detail.split(separator)){
-            if(StringUtils.isNotEmpty(column)&&StringUtils.isNotBlank(column)) {
-                columns.put(i, column);
-                i++;
+        String tableOpen="<table>";
+        String tableClose="</table>";
+        int index=detail.toLowerCase().indexOf(tableOpen);
+        String separator = System.lineSeparator() + System.lineSeparator();
+        int i = 0;
+        String textToProcess=detail;
+        if(index >=0) {
+            String firstText=detail.substring(0,index);
+            String remainingText=detail.substring(index+tableOpen.length(),detail.length());
+            columns.put(i,firstText);
+            i++;
+            remainingText=remainingText.replaceAll(tableClose,"");
+            remainingText=remainingText.replaceAll(tableOpen,"");
+            textToProcess=remainingText;
+            for (String column : textToProcess.split(separator)) {
+                if (StringUtils.isNotEmpty(column) && StringUtils.isNotBlank(column)) {
+                    columns.put(i, column);
+                    i++;
+                }
             }
+        }else{
+            columns.put(i,detail);
         }
+
         return columns;
     }
 

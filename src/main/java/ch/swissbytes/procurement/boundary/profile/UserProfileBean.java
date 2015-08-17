@@ -76,7 +76,7 @@ public class UserProfileBean implements Serializable {
                 userEntity.setPassword(getEncodePass(userEntity.getPassword()));
             }
             userService.doUpdate(userEntity);
-            Messages.addFlashGlobalInfo("User was updated.");
+            Messages.addFlashGlobalInfo("User has been updated.");
             return "profile?faces-redirect=true";
         }
         return "";
@@ -85,11 +85,11 @@ public class UserProfileBean implements Serializable {
     private boolean dataValidateToUpdate() {
         boolean result = true;
         if(userService.validateDuplicityEmail(userEntity.getEmail(), userEntity.getId())){
-            Messages.addError("email", "Email was already registered!");
+            Messages.addError("email", "Email is already registered!");
             result = false;
         }
         if(userService.validateDuplicityUsername(userEntity.getUsername(), userEntity.getId())){
-            Messages.addError("username", "Username was already registered!");
+            Messages.addError("username", "Username is already registered!");
             result = false;
         }
 
