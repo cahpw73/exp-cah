@@ -18,6 +18,7 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -77,12 +78,15 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private ContactService contactService;
 
+    private final String PREFIX="v";
+
     public PurchaseOrderService() {
         super.initialize(dao);
     }
 
     public PurchaseOrderEntity load(Long id) {
         PurchaseOrderEntity purchaseOrderEntity = dao.load(id);
+        addPrefixToVariation(purchaseOrderEntity);
         if (purchaseOrderEntity.getPoEntity().getSupplier() != null) {
             purchaseOrderEntity.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(purchaseOrderEntity.getPoEntity().getSupplier().getId()));
         }
@@ -93,6 +97,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier) {
         dao.save(newPurchaseOrder);
+        removePrefixIfAny(newPurchaseOrder);
         supplier.setPurchaseOrder(newPurchaseOrder);
         supplierDao.persist(supplier);
         commentDao.persist(comments, newPurchaseOrder);
@@ -102,6 +107,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities) {
         PurchaseOrderEntity entity = dao.update(por);
+        removePrefixIfAny(entity);
         dao.updatePOEntity(por.getPoEntity());
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
@@ -119,6 +125,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, purchaseOrderId);
         if (!list.isEmpty()) {
             PurchaseOrderEntity entity = list.get(0);
+
             entity.setStatus(getStatusDelete());
             dao.update(entity);
             deleteComment(purchaseOrderId);
@@ -126,6 +133,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             //deleteSupplier(purchaseOrderId);
         }
     }
+
 
 
     private void deleteScopeSupply(final Long purchaseOrderId) {
@@ -137,13 +145,13 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
     }
 
-    private void deleteSupplier(final Long purchaseOrderId) {
+   /* private void deleteSupplier(final Long purchaseOrderId) {
         SupplierEntity supplier = supplierDao.findByPurchaseOrder(purchaseOrderId);
         if (supplier != null) {
             supplier.setStatus(getStatusDelete());
             supplierDao.update(supplier);
         }
-    }
+    }*/
 
     private void deleteComment(final Long purchaseOrderId) {
         List<CommentEntity> commentList = commentDao.findByPurchaseOrder(purchaseOrderId);
@@ -218,7 +226,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
-        addTokenForVariation(purchaseOrderEntity);
+        removePrefixIfAny(purchaseOrderEntity);
         POEntity po = dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         // purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
@@ -240,17 +248,20 @@ public class PurchaseOrderService extends Service implements Serializable {
         return purchaseOrderEntity;
     }
 
-    private void addTokenForVariation(PurchaseOrderEntity purchaseOrderEntity) {
-        String variation = purchaseOrderEntity.getVariation();
-        String token = variation.substring(0, 1);
-        if (!token.equals("v")) {
-            purchaseOrderEntity.setVariation("v" + variation);
+    public void addPrefixToVariation(PurchaseOrderEntity purchaseOrderEntity) {
+        purchaseOrderEntity.setVariation(PREFIX+purchaseOrderEntity.getVariation());
+    }
+    public void removePrefixIfAny(PurchaseOrderEntity purchaseOrder){
+        if(StringUtils.isNotEmpty(purchaseOrder.getVariation())&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
+            while(purchaseOrder.getVariation().toLowerCase().trim().startsWith(PREFIX)&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
+                purchaseOrder.setVariation(purchaseOrder.getVariation().substring(1,purchaseOrder.getVariation().length()));
+            }
         }
     }
 
     @Transactional
     public PurchaseOrderEntity savePOOnProcurementNewVariation(PurchaseOrderEntity purchaseOrderEntity) {
-        addTokenForVariation(purchaseOrderEntity);
+        removePrefixIfAny(purchaseOrderEntity);
         POEntity po = dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
@@ -266,7 +277,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
-        addTokenForVariation(purchaseOrderEntity);
+        removePrefixIfAny(purchaseOrderEntity);
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
@@ -282,7 +293,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         //cashFlow
         cashflowService.doUpdate(purchaseOrderEntity.getPoEntity().getCashflow(), po);
         //Text
-        //TODO @alvaro SORT PO TEXT
         textService.doUpdate(purchaseOrderEntity.getPoEntity().getTextEntity(), po);
         return purchaseOrderEntity;
     }
@@ -290,6 +300,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
+        removePrefixIfAny(purchaseOrderEntity);
         dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         return purchaseOrderEntity;
     }
@@ -310,7 +321,9 @@ public class PurchaseOrderService extends Service implements Serializable {
     public PurchaseOrderEntity findById(Long id) {
         List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
+
         if (po.getPoEntity().getSupplier() != null) {
+            addPrefixToVariation(po);
             po.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPoEntity().getSupplier().getId()));
         }
         if (po != null) {
@@ -333,10 +346,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         return list.isEmpty() ? null : list.get(0);
     }
 
-    public PurchaseOrderEntity findPOToCrateVarition(Long id) {
+    public PurchaseOrderEntity findPOToCreateVariation(Long id) {
         List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
+
         if (po.getPoEntity().getSupplier() != null) {
+            addPrefixToVariation(po);
             po.getPoEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPoEntity().getSupplier().getId()));
         }
         if (po != null) {
@@ -410,7 +425,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     private List<ProjectCurrencyEntity> findAllCurrenciesOnPO(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items) {
         List<ProjectCurrencyEntity> currencies = new ArrayList<>();
-        currencies.add(defaultCurrency);
+        if(defaultCurrency!=null) {
+            currencies.add(defaultCurrency);
+        }
         for (ScopeSupplyEntity item : items) {
             if (item.getProjectCurrency() != null && !hasCurrency(currencies, item.getProjectCurrency().getCurrency())) {
                 currencies.add(item.getProjectCurrency());

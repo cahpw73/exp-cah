@@ -130,6 +130,7 @@ public class PoBean extends Bean {
                     if (modeView == null) {
                         log.info("mode edition");
                         putModeEdition();
+                        service.removePrefixIfAny(purchaseOrder);
                     } else if (modeView) {
                         log.info("mode view");
                         putModeView();

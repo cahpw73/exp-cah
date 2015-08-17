@@ -5,7 +5,6 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
-import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
@@ -102,7 +101,7 @@ public class PoListBean implements Serializable {
             }
             //list = service.purchaseListByProject(Long.parseLong(projectId));
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-            filter=new FilterPO();
+            filter = new FilterPO();
             filter.setProjectId(project.getId());
             poList = new PurchaseOrderTbl(dao, filter);
         } else {
@@ -151,7 +150,7 @@ public class PoListBean implements Serializable {
         sortBean.sortPurchaseOrderEntity(pOrderList);
         String lastVarNumber = pOrderList.get(pOrderList.size() - 1).getVariation();
         generateVariationNumber(lastVarNumber);
-        purchaseOrderToVariation = service.findPOToCrateVarition(entity.getId());
+        purchaseOrderToVariation = service.findPOToCreateVariation(entity.getId());
         prepareToSaveWithNewVariation(purchaseOrderToVariation);
 
     }
@@ -341,9 +340,15 @@ public class PoListBean implements Serializable {
         return clausesEntities;
     }
 
-    // public List<PurchaseOrderEntity> getList() {
-    //   return list;
-    // }
+  /*  public String removePrefixIfAny(PurchaseOrderEntity po) {
+        service.removePrefixIfAny(po);
+        return po.getVariation();
+    }*/
+
+    public String addPrefixToVariation(PurchaseOrderEntity po) {
+        service.addPrefixToVariation(po);
+        return po.getVariation();
+    }
 
     public ProjectEntity getProject() {
         return project;

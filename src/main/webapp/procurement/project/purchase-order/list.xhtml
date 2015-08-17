@@ -28,7 +28,7 @@
                                 #{_p.po}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
-                                #{_p.variation}
+                                #{poListBean.addPrefixToVariation(_p)}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="150">
                                 <h:outputText value="#{_p.poEntity.deliveryInstruction}"/>
