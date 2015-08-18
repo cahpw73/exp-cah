@@ -70,7 +70,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         loadParamPurchaseOrder();
         //System.out.println("Label PAYMENt TERM  "+cashflowEntity.getPaymentTerms()!=null?cashflowEntity.getPaymentTerms().getLabel():"nothing");
         addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel() : null);
-        addParameters("retentionApplicable", cashflowEntity != null? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()) : "No");
+        addParameters("retentionApplicable", cashflowEntity != null&&cashflowEntity.getApplyRetention()!=null? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
         addParameters("retentionForm",cashflowEntity != null? cashflowEntity.getForm(): null);
     }
 

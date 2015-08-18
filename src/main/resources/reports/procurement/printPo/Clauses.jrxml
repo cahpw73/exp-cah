@@ -16,7 +16,11 @@ order by ordered]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band splitType="Stretch"/>
+		<band height="1" splitType="Stretch">
+			<break>
+				<reportElement uuid="1c60c856-e1da-48f8-9153-0c6040a00815" x="0" y="0" width="100" height="1"/>
+			</break>
+		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
@@ -27,7 +31,7 @@ order by ordered]]>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="517" height="20"/>
+				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="503" height="20"/>
 				<textElement markup="styled"/>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
 			</textField>

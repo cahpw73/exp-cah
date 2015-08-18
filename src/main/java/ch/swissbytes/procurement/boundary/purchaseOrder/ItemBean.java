@@ -109,7 +109,7 @@ public class ItemBean implements Serializable {
         log.info("edit item");
         entity.startEditing();
         entity.storeOldValue(entity);
-        sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        //sortBean.sortScopeSupplyEntity(scopeSupplyList);
     }
 
     public void cancelEditionItem(ScopeSupplyEntity entity) {
