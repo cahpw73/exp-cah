@@ -97,6 +97,10 @@ public class SupplierProcBean extends Bean implements Serializable {
     }
 
     public SupplierProcEntity save() {
+        if(contactBean.filteredList().size()<=0){
+            Messages.addGlobalError("You must add at least one contact");
+            return null;
+        }
         if (!validate()) {
             return null;
         }
@@ -131,6 +135,9 @@ public class SupplierProcBean extends Bean implements Serializable {
             validated = false;
         }*/
         return validated;
+    }
+    private boolean validateContactsAdded(){
+        return supplier.getContacts().size()>0;
     }
 
     private boolean validateContacts() {

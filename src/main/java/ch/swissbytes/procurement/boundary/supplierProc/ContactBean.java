@@ -79,4 +79,8 @@ public class ContactBean extends BeanEditableList<ContactEntity> {
         return validated;
     }
 
+    private boolean isAtLeastOneContactAdded(){
+        return filteredList().size()>0;
+    }
+
 }
