@@ -138,9 +138,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("projectName",po.getProjectEntity().getTitle());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
 
-        addParameters("liquidatedDamagesApplicable", BooleanUtils.toStringYesNo(po.getPoEntity().getLiquidatedDamagesApplicable()));
-        addParameters("vendorDrawingData", BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()));
-        addParameters("exchangeRateVariation", BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()));
+        addParameters("liquidatedDamagesApplicable", po.getPoEntity().getLiquidatedDamagesApplicable()!=null?BooleanUtils.toStringYesNo(po.getPoEntity().getLiquidatedDamagesApplicable()).toUpperCase():null);
+        addParameters("vendorDrawingData",po.getPoEntity().getVendorDrawingData()!=null? BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()).toUpperCase():null);
+        addParameters("exchangeRateVariation",po.getPoEntity().getExchangeRateVariation()!=null? BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()).toUpperCase():null);
         addParameters("rtfNo",po.getPoEntity().getRTFNo());
         addParameters("mrNo",po.getPoEntity().getMRNo());
         processor.clear();

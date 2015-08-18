@@ -6,27 +6,28 @@
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<parameter name="supplierId" class="java.lang.Long"/>
+	<parameter name="poId" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[select concat(ct.first_name,ct.sur_name),email,ct.fax,ct.phone
-from contact ct inner join
-supplier_proc sp on sp.id=ct.supplier_id
-where ct.status=0 and sp.id=$P{supplierId}]]>
+		<![CDATA[select concat(first_name,' ',sur_name)as fullname, email,phone,fax
+from p_order  por
+inner join contact ct on ct.id=por.contact_id
+where por.id=$P{poId}]]>
 	</queryString>
-	<field name="concat" class="java.lang.String"/>
+	<field name="fullname" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
-	<field name="fax" class="java.lang.String"/>
 	<field name="phone" class="java.lang.String"/>
+	<field name="fax" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="1" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="31" splitType="Stretch">
@@ -42,7 +43,7 @@ where ct.status=0 and sp.id=$P{supplierId}]]>
 				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{concat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="ac4d8beb-33c8-48b5-a782-fa4d237f0800" style="Arial" positionType="Float" x="2" y="18" width="28" height="12" isPrintWhenDetailOverflows="true"/>
