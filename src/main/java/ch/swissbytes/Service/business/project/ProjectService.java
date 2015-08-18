@@ -86,7 +86,8 @@ public class ProjectService implements Serializable {
                 if (pt.getId() == null) {
                     pt.setProject(entity);
                 }
-                if (pt.getTextSnippet().getId() == null) {
+                if (pt.getTextSnippet().getId() == null||pt.getTextSnippet().getId()<0) {
+                    pt.getTextSnippet().setId(null);
                     pt.getTextSnippet().setProject(entity);
                     pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
                     pt.getTextSnippet().setLastUpdate(new Date());

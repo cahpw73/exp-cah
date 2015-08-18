@@ -136,9 +136,6 @@ public class SupplierProcBean extends Bean implements Serializable {
         }*/
         return validated;
     }
-    private boolean validateContactsAdded(){
-        return supplier.getContacts().size()>0;
-    }
 
     private boolean validateContacts() {
         boolean validated = true;
