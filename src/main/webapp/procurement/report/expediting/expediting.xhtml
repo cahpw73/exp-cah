@@ -35,6 +35,7 @@
                                                        itemValue="#{_p}"
                                                        itemLabel="#{_p.title}"/>
                                         <p:ajax async="false" process="@this" event="change" update="expeditingTblId printBtnId poNoDelId"
+                                                delay="600"
                                                 listener="#{reportExpeditingBean.searchPurchaseOrder}"/>
                                     </h:selectOneMenu>
                                 </div>

@@ -28,8 +28,8 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edCostCode" rendered="#{_i.isEditable}">
-                                <h:inputText id="costCodeItem" required="true" value="#{_i.costCode}" styleClass="form-control">
-                                </h:inputText>
+                                <p:inputText id="costCodeItem" required="true" value="#{_i.costCode}" styleClass="form-control">
+                                </p:inputText>
                             </h:panelGroup>
                         </p:column>
                         <ui:remove>
@@ -38,9 +38,9 @@
                                     <h:outputText value="#{_i.tagNo}"/>
                                 </h:panelGroup>
                                 <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
-                                    <h:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}" styleClass="form-control">
+                                    <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}" styleClass="form-control">
                                         <p:ajax event="change" async="false" process="@this"/>
-                                    </h:inputText>
+                                    </p:inputText>
                                 </h:panelGroup>
                             </p:column>
                         </ui:remove>
@@ -49,11 +49,11 @@
                                 <h:outputText value="#{_i.quantity}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
-                                <h:inputText id="qty" required="true" value="#{_i.quantity}" styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
+                                <p:inputText id="qty" required="true" value="#{_i.quantity}" styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
                                     <f:convertNumber integerOnly="true"/>
                                     <p:ajax event="change" async="false" process="@this"/>
 
-                                </h:inputText>
+                                </p:inputText>
                             </h:panelGroup>
                         </p:column>
 
@@ -62,9 +62,9 @@
                                 <h:outputText value="#{_i.unit}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edUnit" rendered="#{_i.isEditable}">
-                                <h:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}" styleClass="form-control">
+                                <p:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}" styleClass="form-control">
                                     <p:ajax event="change" async="false" process="@this"/>
-                                </h:inputText>
+                                </p:inputText>
                             </h:panelGroup>
                         </p:column>
 
@@ -117,11 +117,11 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edUniCost" rendered="#{_i.isEditable}">
-                                <h:inputText id="unitCostItem" value="#{_i.cost}" required="true" styleClass="form-control edUniCostItems" onkeyup="calculateTotalCost();">
+                                <p:inputText id="unitCostItem" value="#{_i.cost}" required="true" styleClass="form-control edUniCostItems" onkeyup="calculateTotalCost();">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
                                     <p:ajax event="change" async="false" process="@this"/>
-                                </h:inputText>
+                                </p:inputText>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.total.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
