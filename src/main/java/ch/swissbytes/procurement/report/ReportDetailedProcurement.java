@@ -16,6 +16,7 @@ public class ReportDetailedProcurement extends ReportProject {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
     }
 
+    @Override
     protected void loadAdditionalParameters() {
         addParameters("SUBREPORT_DIR", "reports/procurement/detailedProcurementReport/");
     }

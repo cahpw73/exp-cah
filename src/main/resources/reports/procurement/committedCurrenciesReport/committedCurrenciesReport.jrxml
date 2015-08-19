@@ -203,7 +203,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="232" y="7" width="40" height="12"/>
+				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="220" y="7" width="52" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -249,7 +249,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement uuid="28c9bd95-7745-481d-8361-350de6be8063" x="232" y="0" width="37" height="12"/>
+				<reportElement uuid="28c9bd95-7745-481d-8361-350de6be8063" x="220" y="0" width="49" height="12"/>
 				<subreportParameter name="PO_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
