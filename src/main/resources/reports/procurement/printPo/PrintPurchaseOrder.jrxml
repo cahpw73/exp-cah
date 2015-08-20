@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="720"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -110,6 +110,7 @@
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
 	<variable name="variable1" class="java.lang.String"/>
+	<variable name="totalOfPagesSummary" class="java.lang.Integer"/>
 	<background>
 		<band height="794" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank" evaluationTime="Report">
@@ -139,7 +140,7 @@
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}-($V{totalOfPagesSummary}!=null?$V{totalOfPagesSummary}:0)]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true" evaluationTime="Report">
 				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" mode="Transparent" x="436" y="4" width="80" height="80" backcolor="#FFFFFF"/>
@@ -182,21 +183,21 @@
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" x="13" y="96" width="155" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" x="185" y="96" width="155" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" x="358" y="96" width="155" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail3}]]></textFieldExpression>
@@ -267,7 +268,7 @@
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}-($V{totalOfPagesSummary}!=null?$V{totalOfPagesSummary}:0)]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="ecdae919-8472-4831-b053-8c2f11baa8d8" style="Arial" x="481" y="3" width="9" height="12" isRemoveLineWhenBlank="true"/>
@@ -852,9 +853,9 @@
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="2" splitType="Stretch">
+		<band splitType="Immediate">
 			<subreport>
-				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="2" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="poNo">
 					<subreportParameterExpression><![CDATA[$P{poNo}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -880,6 +881,7 @@
 					<subreportParameterExpression><![CDATA[$P{currency}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="PAGE_NUMBER" toVariable="totalOfPagesSummary"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Schedule.jasper"]]></subreportExpression>
 			</subreport>
 		</band>

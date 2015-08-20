@@ -68,7 +68,9 @@ order by item]]>
 			</staticText>
 			<staticText>
 				<reportElement uuid="4a354db7-3393-4c8d-b02c-a42a9ec3d59b" style="Arial-Bold-Italic" x="29" y="5" width="113" height="20"/>
-				<textElement markup="styled"/>
+				<textElement markup="styled">
+					<font fontName="Arial" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[PURCHASE ORDER No.]]></text>
 			</staticText>
 			<staticText>
@@ -78,7 +80,9 @@ order by item]]>
 			</staticText>
 			<textField>
 				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="142" y="5" width="130" height="20"/>
-				<textElement markup="styled"/>
+				<textElement markup="styled">
+					<font fontName="Arial" isBold="false" isItalic="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 		</band>
