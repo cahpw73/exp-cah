@@ -54,7 +54,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
-	<parameter name="exchangeRateDefaultPO" class="java.math.BigDecimal"/>
+	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<queryString>
 		<![CDATA[select po.po
 from purchase_order po, p_order p
@@ -307,14 +307,17 @@ order by po.po]]>
 			</rectangle>
 			<subreport>
 				<reportElement uuid="99463bcb-f81d-42f2-a381-d1b9493b3e37" positionType="Float" x="0" y="0" width="802" height="26"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="STATUS_PROCUREMENT">
 					<subreportParameterExpression><![CDATA[$P{STATUS_PROCUREMENT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="projectId">
+					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
@@ -327,11 +330,17 @@ order by po.po]]>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="projectCurrency">
+					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="projectIdFilter">
 					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="projectDefaultExchangeRate">
+					<subreportParameterExpression><![CDATA[$P{projectDefaultExchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "totalOfOrderSubreport.jasper"]]></subreportExpression>

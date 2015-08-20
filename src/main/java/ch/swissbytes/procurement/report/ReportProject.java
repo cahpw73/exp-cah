@@ -61,7 +61,9 @@ public class ReportProject extends ReportView implements Serializable {
             addParameters("projectIdFilter", project.getId());
             addParameters("projectCode", project.getProjectNumber());
             addParameters("projectName", project.getTitle());
-            addParameters("projectCurrency", getCurrencyDefault());
+            ProjectCurrencyEntity defaultCurrency=getCurrencyDefault();
+            addParameters("projectCurrency", defaultCurrency!=null?defaultCurrency.getCurrency().getCode():null);
+            addParameters("projectDefaultExchangeRate",defaultCurrency!=null?defaultCurrency.getExchangeRate():null);
             addParameters("client", project.getClient() != null ? project.getClient().getName() : "");
             if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
                 InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
@@ -86,15 +88,30 @@ public class ReportProject extends ReportView implements Serializable {
         }
     }
 
-    public String getCurrencyDefault() {
-        String currencyDefault = "";
+    public ProjectCurrencyEntity getCurrencyDefault() {
+        ProjectCurrencyEntity currencyDefault = null;
+
         for(ProjectCurrencyEntity pc : project.getCurrencies()){
             if(pc.getProjectDefault()){
-                currencyDefault = pc.getCurrency().getName();
+                currencyDefault = pc;
+                break;
             }
+        }
+        if(project.getCurrencies().size()>=1&&currencyDefault==null){
+            return project.getCurrencies().get(0);
         }
         return currencyDefault;
     }
+   /* public BigDecimal getExchangeRateDefault() {
+        BigDecimal exchangeRate = new BigDecimal("0");
+        for(ProjectCurrencyEntity pc : project.getCurrencies()){
+            if(pc.getProjectDefault()){
+                exchangeRate = pc.getExchangeRate();
+                break;
+            }
+        }
+        return exchangeRate;
+    }*/
 
     protected String getStrSort(){
         Boolean poNo = sortMap.get("poNo");

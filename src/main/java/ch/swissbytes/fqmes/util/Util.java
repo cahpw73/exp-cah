@@ -171,41 +171,42 @@ public class Util {
     }
 
     public static BigDecimal currencyToCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni, BigDecimal exchangeRateDefault) {
-        log.info("CurrencyToCurrency");
+       // log.info("CurrencyToCurrency");
         log.info("amountIni: " + amountIni);
-        log.info("exchangeRateIni: " + exchangeRateIni );
-        log.info("exchangeRateDefault: " + exchangeRateDefault);
+      //  log.info("exchangeRateIni: " + exchangeRateIni );
+       // log.info("exchangeRateDefault: " + exchangeRateDefault);
         BigDecimal amountUSD = currencyToUSDCurrency(amountIni, exchangeRateIni);
         BigDecimal currencyEnd = usdCurrencyToCurrencyDefault(amountUSD, exchangeRateIni,exchangeRateDefault);
+        log.info("amountConverted: " + currencyEnd);
         return currencyEnd;
     }
 
     private static BigDecimal currencyToUSDCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni) {
-        log.info("currencyToUSDCurrency");
+      //  log.info("currencyToUSDCurrency");
         BigDecimal amountUSD = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         if(exchangeRateIni == null && amountIni!=null){
-            log.info("Return amount: " + amountIni);
+            //log.info("Return amount: " + amountIni);
             return amountIni;
         }else if ( amountIni == null) {
-            log.info("Return amount: " + amountUSD);
+           // log.info("Return amount: " + amountUSD);
             return amountUSD;
         }else if(exchangeRateIni != null && amountIni != null){
             amountUSD = amountIni.divide(exchangeRateIni, 5, RoundingMode.CEILING);
-            log.info("amount USD: " + amountUSD);
+           // log.info("amount USD: " + amountUSD);
             return amountUSD;
         }
         return amountUSD;
     }
 
     private static BigDecimal usdCurrencyToCurrencyDefault(BigDecimal amountUSD, BigDecimal exchangeRateIni, BigDecimal exchangeRateEnd) {
-        log.info("usdCurrencyToCurrencyDefault");
+       // log.info("usdCurrencyToCurrencyDefault");
         BigDecimal currencyEnd = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         if(exchangeRateIni == null && amountUSD!=null){
             return amountUSD;
         }else if (amountUSD != null && exchangeRateEnd != null) {
             currencyEnd = amountUSD.multiply(exchangeRateEnd);
         }
-        log.info("amount currency default: " + currencyEnd);
+        //log.info("amount currency default: " + currencyEnd);
         return currencyEnd;
     }
 

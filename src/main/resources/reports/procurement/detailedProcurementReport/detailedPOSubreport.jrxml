@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedPOSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="858d46b2-620c-4e2a-9685-a346bf5fdf9e">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="296"/>
+	<property name="ireport.x" value="397"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -11,13 +11,14 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
+	<parameter name="projectId" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[select p.po,p.variation,sp.company,po.order_title,c.code,po.po_status,p.orderedvariation,p.id
 from purchase_order p inner join p_order po on p.po_id = po.id
 left join supplier_proc sp on po.supplier_id=sp.id
 left join project_currency pc on po.currency_id = pc.id
 left join currency c on pc.currency_id=c.id
-where p.po = $P{poNoFilter}]]>
+where p.po = $P{poNoFilter} and p.project_id=$P{projectId}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
