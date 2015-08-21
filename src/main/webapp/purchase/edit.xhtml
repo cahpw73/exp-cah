@@ -7,71 +7,75 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/layout/template.xhtml">
 
-<ui:define name="title">Inicio</ui:define>
-<f:metadata>
-    <f:viewAction action="#{identity.isLoggedIn()}"/>
-    <f:viewParam name="poId" value="#{purchaseOrderEdit.purchaseOrderId}"/>
-    <f:viewParam name="fase" value="#{purchaseOrderEdit.fase}"/>
-    <f:viewAction action="#{permissionBean.canAccess(102)}"/>
-    <f:viewAction action="#{purchaseOrderEdit.load}"/>
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewParam name="poId" value="#{purchaseOrderEdit.purchaseOrderId}"/>
+        <f:viewParam name="fase" value="#{purchaseOrderEdit.fase}"/>
+        <f:viewAction action="#{permissionBean.canAccess(102)}"/>
+        <f:viewAction action="#{purchaseOrderEdit.load}"/>
 
-</f:metadata>
-<ui:define name="body">
+    </f:metadata>
+    <ui:define name="body">
         <div class="row">
             <o:highlight/>
 
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
                         acceptcharset="UTF-8">
-                <script>
-                    $(document).ready(function() {
-                        if (document.referrer != "") {
-                            var referringURL = document.referrer;
-                            if(referringURL.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
-                                console.log("is create scope supply");
-                                hasChanges = true;
-                            }else if(referringURL.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
-                                console.log("is create scope supply editing");
-                                hasChanges = true;
-                            }else if(referringURL.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
-                                console.log("is edit scope supply")
-                                hasChanges = true;
-                            }else if(referringURL.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
-                                console.log("is edit scope supply editing")
-                                hasChanges = true;
-                            }else if(referringURL.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
-                                console.log("is edit split scope supply")
-                                hasChanges = true;
+                    <script>
+                        $(document).ready(function () {
+                            if (document.referrer != "") {
+                                var referringURL = document.referrer;
+                                if (referringURL.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1) {
+                                    console.log("is create scope supply");
+                                    hasChanges = true;
+                                } else if (referringURL.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1) {
+                                    console.log("is create scope supply editing");
+                                    hasChanges = true;
+                                } else if (referringURL.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1) {
+                                    console.log("is edit scope supply")
+                                    hasChanges = true;
+                                } else if (referringURL.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1) {
+                                    console.log("is edit scope supply editing")
+                                    hasChanges = true;
+                                } else if (referringURL.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1) {
+                                    console.log("is edit split scope supply")
+                                    hasChanges = true;
+                                }
                             }
-                        }
-                    });
-                </script>
+                        });
+                    </script>
 
                     <!-- Form Name -->
-                <div class="title-page">
-                    <h4 class="page-header">#{msgs['po.view.edit']}</h4>
-                </div>
-                <div class="clearfix"></div>
-                <br/>
-                <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
-                <br/>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
+                    <div class="title-page">
+                        <h4 class="page-header">#{msgs['po.view.edit']}</h4>
                     </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['lbl.project.name.comment']}
+                    <div class="clearfix"></div>
+                    <br/>
+                    <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
+                    <br/>
+
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.project.name.comment']}
+                        </div>
                     </div>
-                </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <!-- Text input-->
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project" value="#{msgs['po.lbl.project.type.required']}"/>
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project"
+                                               value="#{msgs['po.lbl.project.type.required']}"/>
+
                                 <div class="inputText-general-po">
                                     <h:inputText id="project" jsf:placeholder="#{msgs['po.ph.project']}" maxlength="50"
                                                  disabled="true"
-                                                 value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}" class="form-control" required="true"
+                                                 value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}"
+                                                 class="form-control" required="true"
                                                  requiredMessage="#{msgs['po.lbl.project.required']}"/>
                                     <p:message for="project" id="msgProject"/>
                                 </div>
@@ -86,100 +90,140 @@
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"  value="#{msgs['po.lbl.po.type.required']}"/>
-                                <div class="inputText-general-po">
-                                    <h:outputText id="po" maxlength="50"  jsf:placeholder="#{msgs['po.ph.po']}"
-                                                 value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po" required="true"
-                                                 requiredMessage="#{msgs['po.lbl.reference.required']}"/>
-                                </div>
-                            </div>
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['po.lbl.date']}
                         </div>
                     </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
-                    </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['po.lbl.status']}
-                    </div>
-                </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.variation']}"/>
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"
+                                               value="#{msgs['po.lbl.po.type.required']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" disabled="true"
-                                                 value="#{purchaseOrderEdit.poEdit.variation}" class="form-control po-view" />
+                                    <h:outputText id="po" maxlength="50" jsf:placeholder="#{msgs['po.ph.po']}"
+                                                  value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"
+                                                  required="true"
+                                                  requiredMessage="#{msgs['po.lbl.reference.required']}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:selectOneMenu styleClass="menu-po-status" value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}" >
-                                <f:selectItems value="#{poStatuses}"/>
-                            </p:selectOneMenu>
+                            <h:outputText value="#{util.toLocal(purchaseOrderEdit.poEdit.poEntity.orderDate)}" class="form-control view-po"/>
                         </div>
                     </div>
-                    <!-- Text input-->
-
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        <div class="form-group input-general-po">
-                            <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
-                            <div class="inputText-general-po">
-                                <h:inputText value="#{purchaseOrderEdit.poEdit.poEntity.supplier.company}" disabled="true" class="form-control po-view" />
-                                <!--<p:selectOneMenu styleClass="menu-po-status"
-                                                 filter="true"
-                                                 style="min-width:300px;max-width: 300px;"
-                                                 filterMatchMode="startsWith"
-                                                 value="#{purchaseOrderEdit.poEdit.poEntity.supplier}"
-                                        converter="supplierConverter">
-                                    <f:selectItem itemLabel="Select One" itemValue="" />
-                                    <f:selectItems var="_supplier" value="#{supplierProcList.suppliers}"
-                                                   itemLabel="#{_supplier.company}" itemValue="#{_supplier}" />
-                                    <p:ajax async="false" event="change" update="supplierAddress supplierPhone contactId contactEmail"/>
-                                </p:selectOneMenu>-->
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            <div class="col-md-6">
+                                #{msgs['po.lbl.status']}
+                            </div>
+                            <div class="col-md-6">
+                                #{msgs['po.lbl.expediting.status']}
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.variation']}"/>
+                                <div class="inputText-general-po">
+                                    <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" disabled="true"
+                                                 value="#{purchaseOrderEdit.poEdit.variation}"
+                                                 class="form-control po-view"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <div class="col-md-6">
+                                <h:inputText disabled="true"
+                                             value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.poEntity.poProcStatus)}"
+                                             class="form-control po-view"/>
+                            </div>
+                            <div class="col-md-6">
+                                <p:selectOneMenu styleClass="menu-po-status"
+                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
+                                    <f:selectItems value="#{poStatuses}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
                     </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['lbl.contact.detail']}
+                    <div class="row">
+                        <!-- Text input-->
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.po.title']}"/>
+
+                                <div class="inputText-general-po">
+                                    <h:outputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
+                                                  jsf:placeholder="#{msgs['po.ph.po.title']}"
+                                                  class="form-control view-po"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.supplier']}"/>
+
+                                <div class="inputText-general-po">
+                                    <h:inputText value="#{purchaseOrderEdit.poEdit.poEntity.supplier.company}"
+                                                 disabled="true" class="form-control po-view"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.contact.detail']}
+                        </div>
+                    </div>
                     <div class="row"><!---->
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel  class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.address']}"/>
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="inputText-general-po">
-                                    <p:inputTextarea id="supplierAddress" maxlength="450" jsf:placeholder="#{msgs['po.ph.address']}"
+                                    <p:inputTextarea id="supplierAddress" maxlength="450"
+                                                     jsf:placeholder="#{msgs['po.ph.address']}"
                                                      style="height: 90px;"
                                                      readonly="true"
-                                                     value="#{purchaseOrderEdit.poEdit.poEntity.supplier.street}" class="form-control" />
+                                                     value="#{purchaseOrderEdit.poEdit.poEntity.supplier.street}"
+                                                     class="form-control"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                                <p:inputTextarea maxlength="950" type="text" value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
-                                                 id="supplierPhone"
-                                                 style="height: 90px;"
-                                                 readonly="true"
-                                                 jsf:placeholder="#{msgs['po.ph.address.description']}" class="form-control"/>
-                            </div>
+                            <p:inputTextarea maxlength="950" type="text"
+                                             value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
+                                             id="supplierPhone"
+                                             style="height: 90px;"
+                                             readonly="true"
+                                             jsf:placeholder="#{msgs['po.ph.address.description']}"
+                                             class="form-control"/>
+                        </div>
                     </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.email.comment']}
+                        </div>
                     </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['lbl.email.comment']}
-                    </div>
-                </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -195,9 +239,10 @@
                                                      filterMatchMode="startsWith"
                                                      value="#{purchaseOrderEdit.poEdit.poEntity.contactEntity}"
                                                      converter="contactConverter">
-                                        <f:selectItem itemLabel="Select One" itemValue="" />
-                                        <f:selectItems var="_contact" value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contacts}"
-                                                       itemLabel="#{_contact.fullName}" itemValue="#{_contact}" />
+                                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                                        <f:selectItems var="_contact"
+                                                       value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contacts}"
+                                                       itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
                                         <p:ajax async="false" event="change" update="contactEmail"/>
                                     </p:selectOneMenu>
                                 </div>
@@ -207,48 +252,51 @@
                             <p:inputTextarea style="max-height: 29px;"
                                              id="contactEmail"
                                              readonly="true"
-                                             maxlength="950" value="#{purchaseOrderEdit.poEdit.poEntity.contactEntity.email}"
-                                             jsf:placeholder="#{msgs['po.ph.contact.name.description']}" class="form-control"/>
+                                             maxlength="950"
+                                             value="#{purchaseOrderEdit.poEdit.poEntity.contactEntity.email}"
+                                             jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
+                                             class="form-control"/>
                         </div>
                     </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.delivery.date.comment']}
+                        </div>
                     </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['lbl.delivery.date.comment']}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        <div class="form-group input-general-po">
-                            <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                           value="#{msgs['po.lbl.po.delivery.date']}"/>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.po.delivery.date']}"/>
 
-                            <div class="calendar-general-po">
-                                <p:calendar value="#{purchaseOrderEdit.poEdit.poDeliveryDate}"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
+                                <div class="calendar-general-po">
+                                    <p:calendar value="#{purchaseOrderEdit.poEdit.poDeliveryDate}"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
                             </div>
                         </div>
+                        <div class="section-text-area-po">
+                            <p:inputTextarea style="max-height: 29px;"
+                                             maxlength="950" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
+                                             value="#{purchaseOrderEdit.poEdit.deliveryDateComment}"
+                                             class="form-control"/>
+                        </div>
                     </div>
-                    <div class="section-text-area-po">
-                        <p:inputTextarea style="max-height: 29px;"
-                                         maxlength="950" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
-                                         value="#{purchaseOrderEdit.poEdit.deliveryDateComment}" class="form-control"/>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.full.inco.term']}
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
-                    </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['lbl.full.inco.term']}
-                    </div>
-                </div>
 
                     <!-- Text input-->
                     <div class="row">
@@ -256,10 +304,11 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
+
                                 <div class="calendar-general-po">
                                     <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderEdit.poEdit.incoTerm}"
                                                      effect="fold" editable="true" styleClass="menu-ddp"
-                                                     maxlength="50"  style="width: 100%">
+                                                     maxlength="50" style="width: 100%">
                                         <f:selectItems value="#{incoTerms}"/>
                                     </p:selectOneMenu>
                                 </div>
@@ -268,38 +317,30 @@
                         <div class="section-text-area-po">
                             <p:inputTextarea style="max-height: 29px;"
                                              maxlength="950" value="#{purchaseOrderEdit.poEdit.fullIncoTerms}"
-                                             jsf:placeholder="#{msgs['po.ph.inco.term.description']}" class="form-control"/>
+                                             jsf:placeholder="#{msgs['po.ph.inco.term.description']}"
+                                             class="form-control"/>
                         </div>
                     </div>
 
-                <div class="row">
-                    <!-- Text input-->
-                    <div class="section-lbl-input-po">
-                        <div class="form-group input-general-po">
-                            <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.po.title']}"/>
-                            <div class="inputText-general-po">
-                                <h:outputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
-                                             jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control view-po"/>
-                            </div>
+
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.rfe.comment']}
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="section-lbl-input-po">
-                        &#160;
-                    </div>
-                    <div class="section-text-area-po" style="height: 12px!important;">
-                        #{msgs['lbl.rfe.comment']}
-                    </div>
-                </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText maxlength="100" value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
-                                                 jsf:placeholder="#{msgs['po.ph.responsible']}" class="form-control" />
+                                    <h:inputText maxlength="100"
+                                                 value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
+                                                 jsf:placeholder="#{msgs['po.ph.responsible']}" class="form-control"/>
                                 </div>
                             </div>
                         </div>
@@ -313,50 +354,56 @@
                         </div>
                     </div>
                     <ui:include src="components/additionalDataEdit.xhtml"/>
-                <div class="clearfix"></div>
-                <br/>
-                <div style="width: 940px;">
-                    <div class="pull-right">
-                        <h:commandButton id="save0" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
-                                         action="#{purchaseOrderEdit.doUpdate}"
-                                         type='submit'/>
-                        &#160;
-                        <h:commandButton id="cancelCreateBtn0"
-                                         value="#{msgs['lbl.cancel']}"
-                                         styleClass="btn btn-primary btn-sm">
-                            <p:ajax process="@this"
-                                    oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
-                        </h:commandButton>
-                    </div>
+
+                    <div class="clearfix"></div>
+                    <br/>
+
+                    <div style="width: 940px;">
+                        <div class="pull-right">
+                            <h:commandButton id="save0" value="#{msgs['lbl.update']}"
+                                             styleClass="btn btn-primary btn-sm"
+                                             action="#{purchaseOrderEdit.doUpdate}"
+                                             type='submit'/>
+                            &#160;
+                            <h:commandButton id="cancelCreateBtn0"
+                                             value="#{msgs['lbl.cancel']}"
+                                             styleClass="btn btn-primary btn-sm">
+                                <p:ajax process="@this"
+                                        oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
+                            </h:commandButton>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <br/>
+
                     <div class="row">
                         <ui:include src="components/scopeSupplyEdit.xhtml"/>
                     </div>
                     <div class="clearfix"></div>
                     <br/>
+
                     <div class="row">
                         <ui:include src="components/commentsEdit.xhtml"/>
                     </div>
-                <div class="clearfix"></div>
-                <br/>
-                <div class="action-button-po">
-                    <div class="pull-right">
-                        <h:commandButton id="save" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
-                                         action="#{purchaseOrderEdit.doUpdate}"
-                                         type='submit'/>
-                        &#160;
-                        <h:commandButton id="cancelCreateBtn"
-                                         value="#{msgs['lbl.cancel']}"
-                                         styleClass="btn btn-primary btn-sm">
-                            <p:ajax process="@this"
-                                    oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
-                        </h:commandButton>
+                    <div class="clearfix"></div>
+                    <br/>
+
+                    <div class="action-button-po">
+                        <div class="pull-right">
+                            <h:commandButton id="save" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
+                                             action="#{purchaseOrderEdit.doUpdate}"
+                                             type='submit'/>
+                            &#160;
+                            <h:commandButton id="cancelCreateBtn"
+                                             value="#{msgs['lbl.cancel']}"
+                                             styleClass="btn btn-primary btn-sm">
+                                <p:ajax process="@this"
+                                        oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
+                            </h:commandButton>
+                        </div>
                     </div>
-                </div>
-                <div class="clearfix"></div>
-                <br/>
+                    <div class="clearfix"></div>
+                    <br/>
                     <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
                         <f:facet name="message">
                             <div>
@@ -369,6 +416,7 @@
                                 </div>
                             </div>
                         </f:facet>
+
                         <div class="pull-right">
                             <h:commandButton value="#{msgs['lbl.yes']}" immediate="true"
                                              styleClass="btn btn-primary btn-sm"
@@ -386,20 +434,23 @@
             <!-- /.col-lg-12 -->
         </div>
 
-    <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentEditModal" resizable="false" height="400" width="500">
-        <ui:include src="modal/EditModalComment.xhtml"/>
-    </p:dialog>
-    <p:dialog id="commentEditModalId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentUpdateModal" resizable="false"  height="400" width="500">
-        <ui:include src="modal/EditCommentModalUpdate.xhtml"/>
-    </p:dialog>
-        <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupplyModal" resizable="false"  height="380" width="400">
+        <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentEditModal"
+                  resizable="false" height="400" width="500">
+            <ui:include src="modal/EditModalComment.xhtml"/>
+        </p:dialog>
+        <p:dialog id="commentEditModalId" header="#{msgs['modal.comment.edit.title']}" widgetVar="commentUpdateModal"
+                  resizable="false" height="400" width="500">
+            <ui:include src="modal/EditCommentModalUpdate.xhtml"/>
+        </p:dialog>
+        <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}"
+                  widgetVar="attachmentScopeSupplyModal" resizable="false" height="380" width="400">
             <ui:include src="modal/attachment/attachmentScopeSupplyEdit.xhtml"/>
         </p:dialog>
         <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
             <div class="pull-right">
-                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
             </div>
         </p:confirmDialog>
-</ui:define>
+    </ui:define>
 </ui:composition>
