@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.interfaces.ManageFile;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
 import org.primefaces.model.UploadedFile;
 
@@ -170,6 +171,17 @@ public class Util {
         }
     }
 
+    public static String formatMoney(String currency, String pattern,BigDecimal money){
+        String codeCurrency=currency;
+        if(money==null){
+            return null;
+        }
+        if(StringUtils.isEmpty(codeCurrency)||StringUtils.isBlank(codeCurrency)){
+            currency="";
+        }
+        return new DecimalFormat(currency+" "+pattern, new DecimalFormatSymbols()).format(money);
+    }
+
     public static BigDecimal currencyToCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni, BigDecimal exchangeRateDefault) {
        // log.info("CurrencyToCurrency");
         log.info("amountIni: " + amountIni);
@@ -208,6 +220,10 @@ public class Util {
         }
         //log.info("amount currency default: " + currencyEnd);
         return currencyEnd;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Util.formatMoney("$", "#,###.00", new BigDecimal("1500.25")));
     }
 
 }

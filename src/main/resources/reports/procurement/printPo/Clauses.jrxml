@@ -29,7 +29,7 @@ order by ordered]]>
 		<band height="1" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="39" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="503" height="20"/>
 				<textElement markup="styled"/>
