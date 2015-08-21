@@ -89,11 +89,9 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"  value="#{msgs['po.lbl.po.type.required']}"/>
                                 <div class="inputText-general-po">
-                                    <h:inputText id="po" maxlength="50"  jsf:placeholder="#{msgs['po.ph.po']}"
-                                                 value="#{purchaseOrderEdit.poEdit.po}" class="form-control" required="true"
-                                                 disabled="#{not permissionBean.hasPermission(301)}"
+                                    <h:outputText id="po" maxlength="50"  jsf:placeholder="#{msgs['po.ph.po']}"
+                                                 value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po" required="true"
                                                  requiredMessage="#{msgs['po.lbl.reference.required']}"/>
-                                    <p:message for="po" id="msgPo"/>
                                 </div>
                             </div>
                         </div>
@@ -111,8 +109,8 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.variation']}"/>
                                 <div class="inputText-general-po">
-                                    <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" maxlength="50"
-                                                 value="#{purchaseOrderEdit.poEdit.variation}" class="form-control" />
+                                    <h:outputText jsf:placeholder="#{msgs['po.ph.variation']}" maxlength="50"
+                                                 value="#{purchaseOrderEdit.poEdit.variation}" class="form-control po-view" />
                                 </div>
                             </div>
                         </div>
@@ -129,7 +127,10 @@
                         <div class="form-group input-general-po">
                             <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
                             <div class="inputText-general-po">
-                                <p:selectOneMenu styleClass="menu-po-status"
+
+                                <h:outputText
+                                              value="#{purchaseOrderEdit.poEdit.poEntity.supplier.company}" class="form-control po-view" />
+                                <!--<p:selectOneMenu styleClass="menu-po-status"
                                                  filter="true"
                                                  style="min-width:300px;max-width: 300px;"
                                                  filterMatchMode="startsWith"
@@ -139,7 +140,7 @@
                                     <f:selectItems var="_supplier" value="#{supplierProcList.suppliers}"
                                                    itemLabel="#{_supplier.company}" itemValue="#{_supplier}" />
                                     <p:ajax async="false" event="change" update="supplierAddress supplierPhone contactId contactEmail"/>
-                                </p:selectOneMenu>
+                                </p:selectOneMenu>-->
                             </div>
                         </div>
                     </div>
@@ -279,8 +280,8 @@
                         <div class="form-group input-general-po">
                             <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.po.title']}"/>
                             <div class="inputText-general-po">
-                                <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
-                                             jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
+                                <h:outputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
+                                             jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control view-po"/>
                             </div>
                         </div>
                     </div>
