@@ -192,10 +192,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             PurchaseOrderReportDto poDto = new PurchaseOrderReportDto();
             dtos.add(poDto.loadTotalCost(po.getPoEntity().getCurrency().getCurrency().getCode(), getSumTotalCost()));
         }
-       /* for(ClausesEntity entity : this.clausesList){
-            PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
-            dtos.add(dto);
-        }*/
         return dtos;
     }
 
@@ -204,9 +200,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         for(ScopeSupplyEntity entity : this.scopeSupplyList){
             if(entity.getTotalCost()!=null){
                 if(entity.getProjectCurrency()!=null){
-                    totalAmount = totalAmount.add(Util.currencyToCurrency(entity.getTotalCost(),entity.getProjectCurrency().getExchangeRate(),po.getPoEntity().getCurrency().getExchangeRate()));
+                    totalAmount = totalAmount.add(Util.currencyToCurrency(entity.getCost().multiply(new BigDecimal(entity.getQuantity())),entity.getProjectCurrency().getExchangeRate(),po.getPoEntity().getCurrency().getExchangeRate()));
                 }else{
-                    totalAmount = totalAmount.add(entity.getTotalCost());
+                    totalAmount = totalAmount.add(entity.getCost().multiply(new BigDecimal(entity.getQuantity())));
                 }
             }
         }
