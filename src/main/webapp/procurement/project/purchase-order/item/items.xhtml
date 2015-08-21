@@ -39,7 +39,7 @@
                                 </h:panelGroup>
                                 <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
                                     <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}" styleClass="form-control">
-                                        <p:ajax event="change" async="false" process="@this"/>
+
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
@@ -51,7 +51,7 @@
                             <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
                                 <p:inputText id="qty" required="true" value="#{_i.quantity}" styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
                                     <f:convertNumber integerOnly="true"/>
-                                    <p:ajax event="change" async="false" process="@this"/>
+
 
                                 </p:inputText>
                             </h:panelGroup>
@@ -63,7 +63,7 @@
                             </h:panelGroup>
                             <h:panelGroup id="edUnit" rendered="#{_i.isEditable}">
                                 <p:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}" styleClass="form-control">
-                                    <p:ajax event="change" async="false" process="@this"/>
+
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -83,7 +83,6 @@
                                                  required="true"
                                                  style="min-height: 180px; max-height: 180px; width: 100%!important;"
                                                  scrollHeight="32" maxlength="950">
-                                    <p:ajax event="change" async="false" process="@this"/>
                                 </p:inputTextarea>
                             </h:panelGroup>
                         </p:column>
@@ -93,7 +92,7 @@
                                 <h:outputText value="#{_i.projectCurrency.currency.code}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edCurrency" rendered="#{_i.isEditable}">
-                                <h:selectOneMenu id="defaultCurrencyId"
+                                <p:selectOneMenu id="defaultCurrencyId"
                                                  value="#{_i.projectCurrency}"
                                                  required="true"
                                                  styleClass="form-control"
@@ -106,7 +105,7 @@
                                                    itemValue="#{_pc}"
                                                    itemLabel="#{_pc.currency.code}"/>
                                     <p:ajax event="change" async="false" process="@this"/>
-                                </h:selectOneMenu>
+                                </p:selectOneMenu>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
@@ -120,17 +119,24 @@
                                 <p:inputText id="unitCostItem" value="#{_i.cost}" required="true" styleClass="form-control edUniCostItems" onkeyup="calculateTotalCost();">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
-                                    <p:ajax event="change" async="false" process="@this"/>
+
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.total.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-
-                                <h:inputText id="totalCostItem" value="#{_i.calculateTotal()}" readonly="true" styleClass="form-control edTotalCostItems">
+                            <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
+                                <h:outputText value="#{_i.calculateTotal()}">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
+                                </h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
+                                <h:inputText id="totalCostItem" value="#{_i.totalCost}" styleClass="form-control edTotalCostItems">
+                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                     locale="#{configuration.langLocalDecimal}"/>
+                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
-
+                            </h:panelGroup>
                         </p:column>
                         <p:column id="deliveryDateColumn"  headerText="#{msgs['po.items.dt.column.delivery.date']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
@@ -139,6 +145,7 @@
                             <h:panelGroup id="edDeliveryDate" rendered="#{_i.isEditable}">
                                 <p:calendar id="poOrderDate" type="text" styleClass="calendar"
                                             required="true"
+
                                             navigator="true" mask="#{configuration.mask}"
                                             pattern="#{configuration.formatDate}"
                                             converter="#{dateConverter}"
@@ -153,9 +160,9 @@
                         <p:column headerText="#{msgs['lbl.actions']}" rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}" process=":editPoForm:itemsGroup"
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}" process=":editPoForm:itemsDt"
                                            action="#{itemBean.confirmItem(_i)}"
-                                           update="itemsDt :editPoForm:projectValueId :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId" async="false"/>
+                                           update=":glbMsgs itemsDt :editPoForm:projectValueId :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.deleteItem(_i)}"

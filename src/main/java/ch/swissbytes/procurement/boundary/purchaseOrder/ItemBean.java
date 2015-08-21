@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.StatusEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 import org.primefaces.event.ReorderEvent;
 
 import javax.annotation.PostConstruct;
@@ -86,12 +87,17 @@ public class ItemBean implements Serializable {
         }
     }
 
-    public void confirmItem(ScopeSupplyEntity entity) {
+    public void confirmItem(ScopeSupplyEntity entity) throws Exception {
         log.info("confirm item");
-        if(itemNoIsNotEmpty(entity)){
-            int index = scopeSupplyList.indexOf(entity);
-            scopeSupplyList.set(index,entity);
-            entity.stopEditing();
+        int index=scopeSupplyList.indexOf(entity);
+        ScopeSupplyEntity ss=index>=0?scopeSupplyList.get(index):null;
+         if(ss==null){
+             throw new Exception("Invalid item");
+         }
+        if(validateItems(ss,true)){
+            //int index = scopeSupplyList.indexOf(entity);
+            //scopeSupplyList.set(index,entity);
+            ss.stopEditing();
         }
     }
 
@@ -122,7 +128,52 @@ public class ItemBean implements Serializable {
         }
         sortBean.sortScopeSupplyEntity(scopeSupplyList);
     }
-
+    private boolean validateItems(ScopeSupplyEntity scopeSupply,boolean showMessage){
+        boolean validated=true;
+        if(StringUtils.isEmpty(scopeSupply.getCode())&&StringUtils.isBlank(scopeSupply.getCode())){
+            if(showMessage) {
+                Messages.addGlobalError("Enter Item Code");
+            }
+            validated=false;
+        }
+        if(StringUtils.isEmpty(scopeSupply.getCode())&&StringUtils.isBlank(scopeSupply.getCode())){
+            if(showMessage) {
+                Messages.addGlobalError("Enter Item Code");
+            }
+            validated=false;
+        }
+        if(scopeSupply.getQuantity()!=null&&scopeSupply.getQuantity()<=0){
+            if(showMessage) {
+                Messages.addGlobalError("Enter a valid Quantity");
+            }
+            validated=false;
+        }
+        if(StringUtils.isEmpty(scopeSupply.getCostCode())&&StringUtils.isBlank(scopeSupply.getCostCode())){
+            if(showMessage) {
+                Messages.addGlobalError("Enter a valid Quantity");
+            }
+            validated=false;
+        }
+        if(scopeSupply.getProjectCurrency()==null){
+            if(showMessage) {
+                Messages.addGlobalError("Enter a valid currency");
+            }
+            validated=false;
+        }
+        if(scopeSupply.getCost()==null){
+            if(showMessage) {
+                Messages.addGlobalError("Enter the cost");
+            }
+            validated=false;
+        }
+        if(scopeSupply.getPoDeliveryDate()==null){
+            if(showMessage) {
+                Messages.addGlobalError("Enter the delivery date");
+            }
+            validated=false;
+        }
+        return validated;
+    }
     public boolean hasNotStatusDeleted(ScopeSupplyEntity entity) {
         if (entity != null && entity.getStatus() != null)
             return entity.getStatus().getId().intValue() != StatusEnum.DELETED.getId().intValue();
