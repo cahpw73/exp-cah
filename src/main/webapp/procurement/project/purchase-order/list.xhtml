@@ -30,19 +30,19 @@
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
                                 #{poListBean.addPrefixToVariation(_p)}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.title']}" width="40">
+                            <p:column headerText="#{msgs['project.purchase.order.column.title']}" width="130">
                                 #{_p.poEntity.orderTitle}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="150">
+                            <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="130">
                                 <h:outputText value="#{_p.poEntity.deliveryInstruction}"/>
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110">
                                 #{_p.poEntity.supplier.company}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="70">
+                            <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="50">
                                 #{configuration.getPOProcStatus(_p.poEntity.poProcStatus)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="140">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="100">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
                                         rendered="#{poListBean.actionEditPOO(_p) and permissionBean.hasPermission(1402) }"
                                         style="float: left!important; color: #428BCA; margin-right:5px;">
