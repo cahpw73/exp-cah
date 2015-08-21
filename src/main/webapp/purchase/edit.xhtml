@@ -109,7 +109,7 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.variation']}"/>
                                 <div class="inputText-general-po">
-                                    <h:outputText jsf:placeholder="#{msgs['po.ph.variation']}" maxlength="50"
+                                    <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" disabled="true"
                                                  value="#{purchaseOrderEdit.poEdit.variation}" class="form-control po-view" />
                                 </div>
                             </div>
@@ -127,9 +127,7 @@
                         <div class="form-group input-general-po">
                             <h:outputLabel class="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
                             <div class="inputText-general-po">
-
-                                <h:outputText
-                                              value="#{purchaseOrderEdit.poEdit.poEntity.supplier.company}" class="form-control po-view" />
+                                <h:inputText value="#{purchaseOrderEdit.poEdit.poEntity.supplier.company}" disabled="true" class="form-control po-view" />
                                 <!--<p:selectOneMenu styleClass="menu-po-status"
                                                  filter="true"
                                                  style="min-width:300px;max-width: 300px;"
