@@ -480,6 +480,11 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.excludeFromExpediting = excludeFromExpediting;
     }
 
+    @Transient
+    public BigDecimal calculateTotal(){
+        return quantity!=null&&cost!=null?cost.multiply(new BigDecimal(quantity.toString())):null;
+    }
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;

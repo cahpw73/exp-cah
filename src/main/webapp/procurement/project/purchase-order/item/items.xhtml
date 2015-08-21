@@ -125,19 +125,12 @@
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.total.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.totalCost}">
+
+                                <h:inputText id="totalCostItem" value="#{_i.calculateTotal()}" readonly="true" styleClass="form-control edTotalCostItems">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
-                                <h:outputText id="totalCostItem" value="#{_i.totalCost}" styleClass="form-control edTotalCostItems">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                    <p:ajax event="change" async="false" process="@this"/>
-                                </h:outputText>
-                            </h:panelGroup>
+                                </h:inputText>
+
                         </p:column>
                         <p:column id="deliveryDateColumn"  headerText="#{msgs['po.items.dt.column.delivery.date']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
