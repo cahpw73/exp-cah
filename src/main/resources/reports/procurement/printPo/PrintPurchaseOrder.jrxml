@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="2"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.y" value="288"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -221,7 +221,7 @@
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[RTF No]]></text>
+				<text><![CDATA[RFT No]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="42" y="159" width="42" height="12"/>

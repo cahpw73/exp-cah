@@ -429,3 +429,8 @@ SELECT SETVAL('users_id_seq', (SELECT MAX(ID)+1 FROM USERS));
 
 update purchase_order set variation=substring(variation from 2 for length(variation))
 where variation is not null and length(trim(variation))>0 and lower(trim(variation)) like 'v%';
+
+
+update p_order as po set po_status =0
+FROM purchase_order as por
+where por.po_id=po.id and por.project_id=1
