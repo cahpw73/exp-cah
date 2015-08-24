@@ -24,6 +24,7 @@ public class PurchaseOrderReportDto implements Serializable {
     private String poTitle;
     private String preamble;
     private String strTotalCost;
+
     private BigDecimal totalAmount;
 
     private String currency;
@@ -37,18 +38,20 @@ public class PurchaseOrderReportDto implements Serializable {
         this.quantity = scopeSupply.getQuantity();
         this.unit = scopeSupply.getUnit();
         this.description = scopeSupply.getDescription();
-        if(scopeSupply.getProjectCurrency() != null){
+        /*if(scopeSupply.getProjectCurrency() != null){
             this.cost = Util.currencyToCurrency(scopeSupply.getCost(),scopeSupply.getProjectCurrency().getExchangeRate(),currency.getExchangeRate());
             this.totalCost = Util.currencyToCurrency(scopeSupply.calculateTotal(),scopeSupply.getProjectCurrency().getExchangeRate(),currency.getExchangeRate());
         }else {
             this.cost = scopeSupply.getCost();
             this.totalCost = scopeSupply.getTotalCost();
-        }
+        }*/
+        this.cost = scopeSupply.getCost();
+        this.totalCost = scopeSupply.getTotalCost();
         this.poTitle = null;
         this.preamble = null;
         this.strTotalCost = null;
         this.totalAmount = null;
-        this.currency=currency!=null?currency.getCurrency().getCode():null;
+        this.currency=scopeSupply.getProjectCurrency()!=null&&scopeSupply.getProjectCurrency().getCurrency()!=null?scopeSupply.getProjectCurrency().getCurrency().getCode():null;
     }
     public PurchaseOrderReportDto(PurchaseOrderEntity po, String preamble){
         this.code = null;

@@ -28,7 +28,7 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edCostCode" rendered="#{_i.isEditable}">
-                                <p:inputText id="costCodeItem" required="true" value="#{_i.costCode}" styleClass="form-control">
+                                <p:inputText id="costCodeItem" value="#{_i.costCode}" styleClass="form-control">
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -145,7 +145,6 @@
                             <h:panelGroup id="edDeliveryDate" rendered="#{_i.isEditable}">
                                 <p:calendar id="poOrderDate" type="text" styleClass="calendar"
                                             required="true"
-
                                             navigator="true" mask="#{configuration.mask}"
                                             pattern="#{configuration.formatDate}"
                                             converter="#{dateConverter}"

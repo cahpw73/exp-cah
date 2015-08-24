@@ -136,21 +136,21 @@ public class ItemBean implements Serializable {
             }
             validated=false;
         }
-        if(StringUtils.isEmpty(scopeSupply.getCode())&&StringUtils.isBlank(scopeSupply.getCode())){
+        if(StringUtils.isEmpty(scopeSupply.getUnit())&&StringUtils.isBlank(scopeSupply.getUnit())){
             if(showMessage) {
-                Messages.addGlobalError("Enter Item Code");
+                Messages.addGlobalError("Enter Unit");
             }
             validated=false;
         }
-        if(scopeSupply.getQuantity()!=null&&scopeSupply.getQuantity()<=0){
+        if(scopeSupply.getQuantity()==null||scopeSupply.getQuantity()<=0){
             if(showMessage) {
                 Messages.addGlobalError("Enter a valid Quantity");
             }
             validated=false;
         }
-        if(StringUtils.isEmpty(scopeSupply.getCostCode())&&StringUtils.isBlank(scopeSupply.getCostCode())){
+        if(StringUtils.isEmpty(scopeSupply.getDescription())&&StringUtils.isBlank(scopeSupply.getDescription())){
             if(showMessage) {
-                Messages.addGlobalError("Enter a valid Quantity");
+                Messages.addGlobalError("Enter description");
             }
             validated=false;
         }
