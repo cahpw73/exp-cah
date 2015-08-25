@@ -44,7 +44,7 @@ public class PurchaseOrderTbl extends LazyDataModel<PurchaseOrderEntity> {
             purchaseOrderEntityList= dao.findByPage(first, pageSize,filter);
         }
         if(super.getRowCount()<=0){
-            Long total= dao.findTotal(null);
+            Long total= dao.findTotal(filter);
             this.setRowCount(total.intValue());
             this.total=total;
         }

@@ -251,7 +251,7 @@ public class PoListBean implements Serializable {
                 poe.setPo((String) values[0]);
                 poe.setOrderedVariation((Integer) values[1]);
                 //log.info("POE po[" + poe.getPo() + "], orderedVariation[" + poe.getOrderedVariation() + "]");
-                if (entity.getPo().equals(poe.getPo()) &&
+                if (entity.getOrderedVariation()!=null&&entity.getPo().equals(poe.getPo()) &&
                         entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue()) {
                     Date end = new Date();
                     log.info("evaluate variation takes " + (end.getTime() - start.getTime()));

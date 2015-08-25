@@ -31,7 +31,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 	<columnHeader>
 		<band height="1" splitType="Stretch">
 			<line>
-				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="0" y="0" width="519" height="1"/>
+				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="0" y="0" width="518" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
@@ -39,14 +39,14 @@ group by pc.currency_id,c.code,c.symbol]]>
 		<band height="21" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="65894a56-969f-41de-9301-99a2536df9a3" style="Arial-Bold" x="444" y="0" width="71" height="20"/>
-				<textElement textAlignment="Right" markup="styled">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{total})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="d8a7cd26-1cbf-4294-afca-beee137858a8" style="Arial-Bold" x="366" y="0" width="75" height="20"/>
-				<textElement textAlignment="Right" markup="styled">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["TOTAL "+($F{symbol}!=null?$F{symbol}:$F{code})]]></textFieldExpression>
