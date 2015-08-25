@@ -14,7 +14,7 @@ function calculateTotalCost(){
     console.log("unitPrice: " + unitPrice);
     var unitPriceCalc = unitPrice.replace(",", "");
     try{
-    if(isNumericPositive(quantity) && parseInt(quantity) >= 0 && parseFloat(unitPriceCalc) >= -100000000){
+    if(isNumeric(quantity)){
         console.log("calculating....")
         totalPrice = parseFloat(quantity) * parseFloat(unitPriceCalc);
         var totalPriceFixed = parseFloat(totalPrice.toFixed(2));

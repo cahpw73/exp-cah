@@ -111,7 +111,8 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:outputText value="#{util.toLocal(purchaseOrderEdit.poEdit.poEntity.orderDate)}" class="form-control view-po"/>
+                            <h:outputText value="#{util.toLocal(purchaseOrderEdit.poEdit.poEntity.orderDate)}"
+                                          class="form-control view-po"/>
                         </div>
                     </div>
                     <div class="row">
@@ -132,6 +133,7 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.variation']}"/>
+
                                 <div class="inputText-general-po">
                                     <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" disabled="true"
                                                  value="#{purchaseOrderEdit.poEdit.variation}"
@@ -190,7 +192,7 @@
                             #{msgs['lbl.contact.detail']}
                         </div>
                     </div>
-                    <div class="row"><!---->
+                    <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
@@ -207,13 +209,98 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputTextarea maxlength="950" type="text"
+                            <p:inputText maxlength="950" type="text"
                                              value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
                                              id="supplierPhone"
-                                             style="height: 90px;"
                                              readonly="true"
                                              jsf:placeholder="#{msgs['po.ph.address.description']}"
                                              class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.supplier.fax']}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="Supplier Suburb"/>
+
+                                <div class="inputText-general-po">
+                                    <p:inputText id="supplierSuburb" maxlength="450"
+                                                 jsf:placeholder="Suburb"
+                                                 readonly="true"
+                                                 value="#{purchaseOrderEdit.poEdit.poEntity.supplier.suburb}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <p:inputText id="supplierFax" maxlength="450"
+                                         jsf:placeholder="FAx"
+                                         readonly="true"
+                                         value="#{purchaseOrderEdit.poEdit.poEntity.supplier.fax}"
+                                         class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="Supplier State"/>
+
+                                <div class="inputText-general-po">
+                                    <p:inputText id="supplierState" maxlength="450"
+                                                 jsf:placeholder="State"
+                                                 readonly="true"
+                                                 value="#{purchaseOrderEdit.poEdit.poEntity.supplier.state}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="Supplier Postcode"/>
+
+                                <div class="inputText-general-po">
+                                    <p:inputText id="supplierPostCode" maxlength="450"
+                                                 jsf:placeholder="Postcode"
+                                                 readonly="true"
+                                                 value="#{purchaseOrderEdit.poEdit.poEntity.supplier.postCode}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="Supplier Country"/>
+
+                                <div class="inputText-general-po">
+                                    <p:inputText id="supplierCountry" maxlength="450"
+                                                 jsf:placeholder="Country"
+                                                 readonly="true"
+                                                 value="#{purchaseOrderEdit.poEdit.poEntity.supplier.country}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
                         </div>
                     </div>
                     <div class="row">
