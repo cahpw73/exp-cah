@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.util.Util;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -44,7 +45,15 @@ public class PurchaseOrderReportDto implements Serializable {
         this.preamble = null;
         this.strTotalCost = null;
         this.totalAmount = null;
-        this.currency=scopeSupply.getProjectCurrency()!=null&&scopeSupply.getProjectCurrency().getCurrency()!=null?scopeSupply.getProjectCurrency().getCurrency().getCode():null;
+        String symbol="";
+        if(scopeSupply.getProjectCurrency()!=null&&scopeSupply.getProjectCurrency().getCurrency()!=null){
+            if(StringUtils.isNotEmpty(scopeSupply.getProjectCurrency().getCurrency().getSymbol())&&StringUtils.isNotBlank(scopeSupply.getProjectCurrency().getCurrency().getSymbol())){
+                symbol=scopeSupply.getProjectCurrency().getCurrency().getSymbol();
+            }else{
+                symbol=scopeSupply.getProjectCurrency().getCurrency().getCode();
+            }
+        }
+        this.currency=symbol;
     }
     public PurchaseOrderReportDto(PurchaseOrderEntity po, String preamble){
         this.code = null;

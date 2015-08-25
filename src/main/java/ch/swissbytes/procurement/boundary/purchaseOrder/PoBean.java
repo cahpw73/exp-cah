@@ -11,6 +11,7 @@ import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
@@ -402,7 +403,8 @@ public class PoBean extends Bean {
     private String toString(Map<ProjectCurrencyEntity,BigDecimal>map){
         StringBuilder sb = new StringBuilder();
         for (ProjectCurrencyEntity currency : map.keySet()) {
-            sb.append(currency.getCurrency().getCode());
+            String symbol= StringUtils.isNotEmpty(currency.getCurrency().getSymbol())&&StringUtils.isNotBlank(currency.getCurrency().getSymbol())?currency.getCurrency().getSymbol():currency.getCurrency().getCode();
+            sb.append(symbol);
             sb.append(" ");
             sb.append(configuration.format(configuration.getPatternDecimal(),map.get(currency)));
             sb.append(System.lineSeparator());

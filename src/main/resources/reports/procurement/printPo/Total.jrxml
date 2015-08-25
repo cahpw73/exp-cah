@@ -8,18 +8,17 @@
 	<parameter name="purchaseOrderId" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select sum(total_cost)as total,currency_id,c.code
+		<![CDATA[select sum(total_cost)as total,currency_id,c.code,c.symbol
 from scope_supply ss
 left join project_currency pc on pc.id=ss.project_currency_id
 inner join currency c on pc.currency_id=c.id
 where purchase_order_id=$P{purchaseOrderId} and status_id=1
-group by pc.currency_id,c.code
-
-]]>
+group by pc.currency_id,c.code,c.symbol]]>
 	</queryString>
 	<field name="total" class="java.math.BigDecimal"/>
 	<field name="currency_id" class="java.lang.Long"/>
 	<field name="code" class="java.lang.String"/>
+	<field name="symbol" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -32,7 +31,7 @@ group by pc.currency_id,c.code
 	<columnHeader>
 		<band height="1" splitType="Stretch">
 			<line>
-				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="368" y="0" width="150" height="1"/>
+				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="0" y="0" width="519" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
@@ -50,7 +49,7 @@ group by pc.currency_id,c.code
 				<textElement textAlignment="Right" markup="styled">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["TOTAL "+$F{code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["TOTAL "+($F{symbol}!=null?$F{symbol}:$F{code})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="bd72d16e-5375-44b6-88e7-c4f517c4a0de" positionType="Float" stretchType="RelativeToBandHeight" x="517" y="0" width="1" height="21"/>
