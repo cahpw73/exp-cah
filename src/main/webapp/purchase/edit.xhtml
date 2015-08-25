@@ -210,11 +210,10 @@
                         </div>
                         <div class="section-text-area-po">
                             <p:inputText maxlength="950" type="text"
-                                             value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
-                                             id="supplierPhone"
-                                             readonly="true"
-                                             jsf:placeholder="#{msgs['po.ph.address.description']}"
-                                             class="form-control"/>
+                                         value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
+                                         id="supplierPhone"
+                                         readonly="true"
+                                         class="form-control"/>
                         </div>
                     </div>
                     <div class="row">
@@ -225,16 +224,14 @@
                             #{msgs['lbl.supplier.fax']}
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="Supplier Suburb"/>
+                                               value="#{msgs['lbl.supplier.suburb']}"/>
 
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierSuburb" maxlength="450"
-                                                 jsf:placeholder="Suburb"
                                                  readonly="true"
                                                  value="#{purchaseOrderEdit.poEdit.poEntity.supplier.suburb}"
                                                  class="form-control"/>
@@ -243,7 +240,6 @@
                         </div>
                         <div class="section-text-area-po">
                             <p:inputText id="supplierFax" maxlength="450"
-                                         jsf:placeholder="FAx"
                                          readonly="true"
                                          value="#{purchaseOrderEdit.poEdit.poEntity.supplier.fax}"
                                          class="form-control"/>
@@ -253,11 +249,10 @@
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="Supplier State"/>
+                                               value="#{msgs['lbl.supplier.state']}"/>
 
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierState" maxlength="450"
-                                                 jsf:placeholder="State"
                                                  readonly="true"
                                                  value="#{purchaseOrderEdit.poEdit.poEntity.supplier.state}"
                                                  class="form-control"/>
@@ -271,11 +266,10 @@
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="Supplier Postcode"/>
+                                               value="#{msgs['lbl.supplier.postcode']}"/>
 
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierPostCode" maxlength="450"
-                                                 jsf:placeholder="Postcode"
                                                  readonly="true"
                                                  value="#{purchaseOrderEdit.poEdit.poEntity.supplier.postCode}"
                                                  class="form-control"/>
@@ -289,11 +283,10 @@
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="Supplier Country"/>
+                                               value="#{msgs['lbl.supplier.country']}"/>
 
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierCountry" maxlength="450"
-                                                 jsf:placeholder="Country"
                                                  readonly="true"
                                                  value="#{purchaseOrderEdit.poEdit.poEntity.supplier.country}"
                                                  class="form-control"/>
