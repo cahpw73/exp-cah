@@ -30,58 +30,58 @@ where por.id=$P{poId}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="e603782b-75c4-4c37-946e-f93734f6dc28" style="Arial-Bold" positionType="Float" x="2" y="3" width="28" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e603782b-75c4-4c37-946e-f93734f6dc28" style="Arial-Bold" positionType="Float" x="2" y="0" width="28" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Attn:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="d22d4f09-ac75-43d7-9808-12b95d378f8c" style="Arial-Bold" positionType="Float" x="35" y="3" width="121" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="d22d4f09-ac75-43d7-9808-12b95d378f8c" style="Arial-Bold" positionType="Float" x="35" y="0" width="121" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fullname}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ac4d8beb-33c8-48b5-a782-fa4d237f0800" style="Arial" positionType="Float" x="2" y="18" width="28" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="ac4d8beb-33c8-48b5-a782-fa4d237f0800" style="Arial" positionType="Float" x="2" y="15" width="28" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Email]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="99de66e9-2cef-43c0-9ace-54050383b8a8" style="Arial" positionType="Float" x="35" y="18" width="121" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="99de66e9-2cef-43c0-9ace-54050383b8a8" style="Arial" positionType="Float" x="35" y="15" width="121" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="9167dd4a-46fe-45aa-acbf-3220508b1bd4" style="Arial" positionType="Float" x="166" y="18" width="22" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="9167dd4a-46fe-45aa-acbf-3220508b1bd4" style="Arial" positionType="Float" x="166" y="15" width="22" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Fax]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="bb5d2cb3-fd2b-4e2a-accc-f8a9e30b4f97" style="Arial" positionType="Float" x="194" y="18" width="100" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="bb5d2cb3-fd2b-4e2a-accc-f8a9e30b4f97" style="Arial" positionType="Float" x="194" y="15" width="100" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="01994e19-7d85-4bcf-84b2-0f5954ade0d3" style="Arial" positionType="Float" x="166" y="3" width="22" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="01994e19-7d85-4bcf-84b2-0f5954ade0d3" style="Arial" positionType="Float" x="166" y="0" width="22" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Tel:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="354a18d3-8b08-4d8d-adad-c038ddd5465e" style="Arial" positionType="Float" x="194" y="3" width="100" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="354a18d3-8b08-4d8d-adad-c038ddd5465e" style="Arial" positionType="Float" x="194" y="0" width="100" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>

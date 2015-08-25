@@ -142,7 +142,7 @@ public class ItemBean implements Serializable {
             }
             validated=false;
         }
-        if(scopeSupply.getQuantity()==null||scopeSupply.getQuantity()<=0){
+        if(scopeSupply.getQuantity()==null){
             if(showMessage) {
                 Messages.addGlobalError("Enter a valid Quantity");
             }

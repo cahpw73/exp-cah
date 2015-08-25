@@ -415,12 +415,27 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return poValue;
     }
+    private BigDecimal calculatePOValueByCurrency(List<ScopeSupplyEntity> list, ProjectCurrencyEntity currency){
+        BigDecimal poValue = new BigDecimal("0");
+        if (currency == null) {
+            return poValue;
+        }
 
-    public Map<ProjectCurrencyEntity, BigDecimal> getTotalValuesByCurrency(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items) {
+        for (ScopeSupplyEntity item : list) {
+            if(item.getProjectCurrency()!=null&&item.getProjectCurrency().getCurrency().getId().longValue()==currency.getCurrency().getId()) {
+                BigDecimal amount = item.getCost() != null ? item.getCost() : new BigDecimal("0");
+                BigDecimal quantity = new BigDecimal(item.getQuantity() != null ? item.getQuantity().toString() : "0");
+                poValue = poValue.add(amount.multiply(quantity));
+            }
+        }
+        return poValue;
+    }
+
+    public Map<ProjectCurrencyEntity, BigDecimal> getTotalValuesByCurrency(List<ScopeSupplyEntity> items) {
         Map<ProjectCurrencyEntity, BigDecimal> totals = new HashMap<>();
-        List<ProjectCurrencyEntity> currencies = findAllCurrenciesOnPO(defaultCurrency, items);
+        List<ProjectCurrencyEntity> currencies = findAllCurrenciesOnPO(null, items);
         for (ProjectCurrencyEntity pce : currencies) {
-            totals.put(pce, calculatePOValue(items, pce));
+            totals.put(pce, calculatePOValueByCurrency(items, pce));
         }
         return totals;
     }
@@ -438,9 +453,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         return currencies;
     }
 
-    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items, List<CashflowDetailEntity> milestones) {
+    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency( List<ScopeSupplyEntity> items, List<CashflowDetailEntity> milestones) {
         Map<ProjectCurrencyEntity, BigDecimal> balance = new HashMap<>();
-        Map<ProjectCurrencyEntity, BigDecimal> totals = getTotalValuesByCurrency(defaultCurrency, items);
+        Map<ProjectCurrencyEntity, BigDecimal> totals = getTotalValuesByCurrency( items);
 
         for(ProjectCurrencyEntity currencyEntity:totals.keySet()){
             BigDecimal totalPayment=cashflowService.getTotalMilestonePayments(milestones, currencyEntity);
