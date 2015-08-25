@@ -18,8 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
@@ -146,7 +144,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
         addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
-        addParameters("exchangeRate",po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);
+        addParameters("exchangeRate",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);
 
 
         Date now = new Date();
@@ -188,14 +186,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity,po.getPoEntity().getCurrency());
             dtos.add(dto);
         }
-        if(!scopeSupplyList.isEmpty()){
+       /* if(!scopeSupplyList.isEmpty()){
             PurchaseOrderReportDto poDto = new PurchaseOrderReportDto();
+            if()
             dtos.add(poDto.loadTotalCost(po.getPoEntity().getCurrency().getCurrency().getCode(), getSumTotalCost()));
-        }
+        }*/
         return dtos;
     }
 
-    private BigDecimal getSumTotalCost(){
+    /*private BigDecimal getSumTotalCost(){
         BigDecimal totalAmount = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         for(ScopeSupplyEntity entity : this.scopeSupplyList){
             if(entity.getTotalCost()!=null){
@@ -207,7 +206,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             }
         }
         return totalAmount;
-    }
+    }*/
 
     @Override
     public void printDocument(Long documentId) {
