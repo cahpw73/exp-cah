@@ -19,6 +19,7 @@ public class CurrencyEntity implements Serializable{
     private Long id;
     private String name;
     private String code;
+    private String symbol;
     private StatusEnum status;
     private Date lastUpdate;
 
@@ -68,6 +69,15 @@ public class CurrencyEntity implements Serializable{
     @Column(name = "code", nullable = false, length = 250)
     public String getCode() {
         return code;
+    }
+    @Size(max = 10)
+    @Column(name = "symbol", length = 250)
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public void setCode(String code) {

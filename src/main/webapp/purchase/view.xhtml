@@ -6,16 +6,17 @@
                 xmlns:o="http://omnifaces.org/ui"
                 template="/WEB-INF/layout/template.xhtml">
 
-<ui:define name="title">Inicio</ui:define>
-<f:metadata>
-    <f:viewAction action="#{identity.isLoggedIn()}"/>
-    <f:viewParam name="poId" value="#{purchaseOrderView.purchaseOrderId}"/>
-    <f:viewAction action="#{permissionBean.canAccess(103)}"/>
-    <f:viewAction action="#{purchaseOrderView.load}"/>
-</f:metadata>
-<ui:define name="body">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewParam name="poId" value="#{purchaseOrderView.purchaseOrderId}"/>
+        <f:viewAction action="#{permissionBean.canAccess(103)}"/>
+        <f:viewAction action="#{purchaseOrderView.load}"/>
+    </f:metadata>
+    <ui:define name="body">
         <div class="row">
             <o:highlight/>
+
             <div class="col-lg-12">
                 <div id="empForm" class="form-horizontal">
 
@@ -27,6 +28,7 @@
                     <br/>
                     <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
                     <br/>
+
                     <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
@@ -39,9 +41,12 @@
                         <div class="section-lbl-input-po">
                             <!-- Text input-->
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.project.type.required']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.project.type.required']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.projectEntity.projectNumber}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.projectEntity.projectNumber}"/>
                                 </div>
                             </div>
                         </div>
@@ -61,14 +66,18 @@
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.po.type.required']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.po.type.required']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.po}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.po}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:outputText value="#{util.toLocal(purchaseOrderView.purchaseOrder.poEntity.orderDate)}" class="form-control view-po"/>
+                            <h:outputText value="#{util.toLocal(purchaseOrderView.purchaseOrder.poEntity.orderDate)}"
+                                          class="form-control view-po"/>
                         </div>
                     </div>
                     <div class="row">
@@ -87,9 +96,12 @@
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.variation']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.variation']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.variation}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.variation}"/>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +113,8 @@
                                              class="form-control po-view"/>
                             </div>
                             <div class="col-md-6">
-                                <h:inputText readonly="true" styleClass="form-control view-po" value="#{configuration.getPOStatus(purchaseOrderView.purchaseOrder.purchaseOrderStatus)}"/>
+                                <h:inputText readonly="true" styleClass="form-control view-po"
+                                             value="#{configuration.getPOStatus(purchaseOrderView.purchaseOrder.purchaseOrderStatus)}"/>
                             </div>
                         </div>
                     </div>
@@ -109,9 +122,12 @@
                         <!-- Text input-->
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.po.title']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.po.title']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poTitle}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.poTitle}"/>
                                 </div>
                             </div>
                         </div>
@@ -120,9 +136,12 @@
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.supplier']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.supplier']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.company}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.company}"/>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +158,8 @@
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
 
-                                <h:outputLabel class="text-lbl-ltr label-general-po control-label" value="#{msgs['po.lbl.address']}"/>
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.address']}"/>
 
                                 <div class="inputText-general-po">
                                     <h:inputTextarea style="height: 90px;" readonly="true"
@@ -150,7 +170,7 @@
                         </div>
                         <div class="section-text-area-po">
                             <h:inputText readonly="true" styleClass="form-control"
-                                             value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.phone}"/>
+                                         value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.phone}"/>
                         </div>
                     </div>
 
@@ -250,12 +270,13 @@
                                                value="#{msgs['po.lbl.contact.name']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.poEntity.contactEntity.fullName}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.contactEntity.fullName}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputTextarea readonly="true"  styleClass="form-control"
+                            <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.poEntity.contactEntity.email}"/>
                         </div>
                     </div>
@@ -274,7 +295,8 @@
                                                value="#{msgs['po.lbl.po.delivery.date']}"/>
 
                                 <div class="calendar-general-po">
-                                   <h:inputText readonly="true" styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.poDeliveryDate)}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{util.toLocal(purchaseOrderView.purchaseOrder.poDeliveryDate)}"/>
                                 </div>
                             </div>
                         </div>
@@ -296,8 +318,10 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.po.inco.term']}"/>
+
                                 <div class="calendar-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.incoTerm}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.incoTerm}"/>
                                 </div>
                             </div>
                         </div>
@@ -320,8 +344,10 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.responsible']}"/>
+
                                 <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po" value="#{purchaseOrderView.purchaseOrder.responsibleExpediting}"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderView.purchaseOrder.responsibleExpediting}"/>
                                 </div>
                             </div>
                         </div>
@@ -331,10 +357,12 @@
                         </div>
                     </div>
                     <ui:include src="components/additionalDataView.xhtml"/>
+
                     <div style="width: 940px;">
                         <div class="pull-right">
                             <div class="pull-right">
-                                <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                                <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm'
+                                        outcome="/purchase/list"
                                         type='submit'>
                                 </h:link>
                             </div>
@@ -344,19 +372,23 @@
                     <br/>
                     <ui:include src="components/scopeSupplyView.xhtml"/>
                     <br/>
+
                     <div class="clearfix"></div>
                     <div class="action-button-po">
                         <div class="pull-right">
-                            <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                            <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm'
+                                    outcome="/purchase/list"
                                     type='submit'>
                             </h:link>
                         </div>
                     </div>
                     <br/>
                     <ui:include src="components/commentsView.xhtml"/>
+
                     <div class="action-button-po">
                         <div class="pull-right">
-                            <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm' outcome="/purchase/list"
+                            <h:link value="#{msgs['lbl.cancel']}" class='btn btn-primary btn-sm'
+                                    outcome="/purchase/list"
                                     type='submit'>
                             </h:link>
                         </div>
@@ -369,11 +401,13 @@
             <!-- /.col-lg-12 -->
         </div>
 
-<p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}" widgetVar="attachmentScopeSupplyModal" resizable="false"  height="250" width="400">
-    <ui:include src="modal/attachment/attachmentScopeSupplyView.xhtml"/>
-</p:dialog>
-    <p:dialog id="attachmentCommentId" header="#{msgs['attachment.title.comment']}" widgetVar="attachmentCommentModal" resizable="false"  height="250" width="400">
-        <ui:include src="modal/attachment/attachmentCommentView.xhtml"/>
-    </p:dialog>
-</ui:define>
+        <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}"
+                  widgetVar="attachmentScopeSupplyModal" resizable="false" height="250" width="400">
+            <ui:include src="modal/attachment/attachmentScopeSupplyView.xhtml"/>
+        </p:dialog>
+        <p:dialog id="attachmentCommentId" header="#{msgs['attachment.title.comment']}"
+                  widgetVar="attachmentCommentModal" resizable="false" height="250" width="400">
+            <ui:include src="modal/attachment/attachmentCommentView.xhtml"/>
+        </p:dialog>
+    </ui:define>
 </ui:composition>

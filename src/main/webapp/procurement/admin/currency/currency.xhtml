@@ -20,6 +20,9 @@
                         <p:column headerText="#{msgs['lbl.column.code']}" sortBy="#{_currency.code}">
                             #{_currency.code}
                         </p:column>
+                        <p:column headerText="#{msgs['lbl.column.symbol']}" sortBy="#{_currency.symbol}">
+                            #{_currency.symbol}
+                        </p:column>
                         <p:column headerText="#{msgs['lbl.action']}">
                             <h:form prependId="false">
                                 <p:commandLink value="#{msgs['lbl.edit']}"

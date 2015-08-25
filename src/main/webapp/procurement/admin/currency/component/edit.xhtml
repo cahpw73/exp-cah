@@ -37,7 +37,19 @@
                 <p:message for="currencyCode"/></div>
         </div>
         <br/>
-
+        <div class="row">
+            <div class="col-sm-2">
+                <h:outputLabel styleClass="control-label"
+                               value="#{msgs['lbl.column.symbol']}"/>
+            </div>
+            <div class="col-sm-4"><h:inputText maxlength="50" type="text"
+                                               id="currencySymbol"
+                                               onchange="doChangeProc();"
+                                               value="#{currencyBean.currency.symbol}"
+                                               class="form-control"/>
+            </div>
+        </div>
+        <br/>
         <div class="pull-left">
             <h:panelGroup rendered="#{MODE == null}">
                 <h:commandButton value="#{msgs['btn.currency.add']}"
