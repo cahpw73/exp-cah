@@ -15,10 +15,11 @@
 	<parameter name="poNo" class="java.lang.String"/>
 	<parameter name="projectNumber" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate
+		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol
 from cashflow cf inner join cashflow_detail cfd  on
 cfd.cashflow_id=cf.id
-inner join project_currency pc on pc.id= cfd.project_currency_id
+left join project_currency pc on pc.id= cfd.project_currency_id
+inner join currency cu on pc.currency_id=cu.id
 where cf.status=0 and cfd.status=0 and cf.po_id=$P{PO_ID}
 order by item]]>
 	</queryString>
@@ -28,6 +29,8 @@ order by item]]>
 	<field name="project_amt" class="java.math.BigDecimal"/>
 	<field name="claim_date" class="java.sql.Timestamp"/>
 	<field name="exchange_rate" class="java.math.BigDecimal"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="symbol" class="java.lang.String"/>
 	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{order_amt},$F{exchange_rate},$P{exchangeRate})]]></variableExpression>
 	</variable>
@@ -67,23 +70,16 @@ order by item]]>
 				<text><![CDATA[The following progress payments base on the supplier's achievement of specified milestones have been agreed and will be paid to the Supplier in accordance with the payment provisions of the Purchase Order:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4a354db7-3393-4c8d-b02c-a42a9ec3d59b" style="Arial-Bold-Italic" x="29" y="5" width="113" height="20"/>
-				<textElement markup="styled">
-					<font fontName="Arial" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[PURCHASE ORDER No.]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="438" y="5" width="69" height="17"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[SCHEDULE E]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="142" y="5" width="130" height="20"/>
+				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="20" y="5" width="257" height="20"/>
 				<textElement markup="styled">
 					<font fontName="Arial" isBold="false" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PURCHASE ORDER No."+($P{projectNumber}+"-"+$P{poNo})]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -143,7 +139,7 @@ order by item]]>
 				<textElement>
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{order_amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{order_amt},$F{exchange_rate},$P{exchangeRate})):null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{order_amt}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$F{order_amt}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="421" y="3" width="87" height="20" isPrintWhenDetailOverflows="true"/>

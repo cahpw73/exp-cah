@@ -163,8 +163,6 @@
             <h:inputText maxlength="50"
                          id="supplierABN"
                          value="#{supplierProcBean.supplier.abnRegNo}"
-                         required="true"
-                         requiredMessage="ABN is required"
                          readonly="#{supplierProcBean.beingViewed}"
                          class="form-control col-sm-9 #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
                          tabindex="#{tabIndex+8}"/>

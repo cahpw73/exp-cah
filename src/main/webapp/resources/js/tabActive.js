@@ -2,6 +2,21 @@
  * Created by Christian on 9/3/14.
  */
 
+var tabHeader=1;
+var tabSupplier=2;
+var tabItem=3;
+var tabText=4;
+var tabDeliverable=5;
+var tabCashflow=6;
+var tabActive=tabHeader;
+
+function activeTab(tab){
+    tabActive=tab;
+}
+
+function isActive(tab){
+    return tab==tabActive;
+}
 
 function activeCategoryBrandTab(){
     console.log("changing tabs ....");
@@ -12,3 +27,4 @@ function activeCategoryBrandTab(){
     $( "#contacts" ).removeClass( "active" );
     $( "#categories" ).addClass( "active" );
 }
+
