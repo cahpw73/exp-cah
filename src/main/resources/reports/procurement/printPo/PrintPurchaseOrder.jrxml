@@ -562,7 +562,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="7a67ec09-bced-4a6a-80ce-dd9fa0058d20" x="1" y="12" width="29" height="12"/>
+								<reportElement uuid="7a67ec09-bced-4a6a-80ce-dd9fa0058d20" x="1" y="12" width="29" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -590,7 +590,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="699a2303-5514-461d-b87d-f3e53a5d18ad" x="0" y="12" width="30" height="12"/>
+								<reportElement uuid="699a2303-5514-461d-b87d-f3e53a5d18ad" x="0" y="12" width="30" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -620,7 +620,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="24419a91-2071-4568-b2fe-fe7a8f98cf31" x="0" y="12" width="30" height="12"/>
+								<reportElement uuid="24419a91-2071-4568-b2fe-fe7a8f98cf31" x="0" y="12" width="30" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -662,7 +662,7 @@
 								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="278" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 									<font size="11" isBold="true" isItalic="false"/>
-									<paragraph leftIndent="3" rightIndent="2" spacingAfter="10"/>
+									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{poTitle}]]></textFieldExpression>
 							</textField>
@@ -689,7 +689,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" style="Arial" x="0" y="12" width="75" height="12"/>
+								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
@@ -719,7 +719,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="0" y="12" width="75" height="12"/>
+								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>

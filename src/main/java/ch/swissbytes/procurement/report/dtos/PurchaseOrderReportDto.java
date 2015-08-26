@@ -55,6 +55,9 @@ public class PurchaseOrderReportDto implements Serializable {
         }
         this.currency=symbol;
     }
+    public PurchaseOrderReportDto(String description){
+        this.poTitle=description;
+    }
     public PurchaseOrderReportDto(PurchaseOrderEntity po, String preamble){
         this.code = null;
         this.quantity = null;
