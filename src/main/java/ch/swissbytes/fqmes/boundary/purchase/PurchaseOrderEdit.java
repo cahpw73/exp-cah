@@ -15,6 +15,7 @@ import ch.swissbytes.domain.types.TimeMeasurementEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -70,6 +71,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     @Inject
     private AttachmentScopeSupplyService attachmentScopeSupplyService;
+    @Inject
+    private ContactBean contactBean;
 
     private String purchaseOrderId;
 
@@ -872,6 +875,14 @@ public class PurchaseOrderEdit implements Serializable {
             scopeSupplyEditing.getTdpList().set(currentIndexForTdp, tdpService.clone(tdpEdit));
             calculateDate();
             updateTdpActives();
+        }
+    }
+
+    public void doSaveContact() {
+        ContactEntity contact = contactBean.doSave();
+        if (contact != null) {
+            poEdit.getPoEntity().setContactEntity(contact);
+            poEdit.getPoEntity().getSupplier().getContacts().add(contact);
         }
     }
 

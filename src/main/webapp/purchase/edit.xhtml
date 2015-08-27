@@ -313,19 +313,32 @@
                                         <f:selectItems var="_contact"
                                                        value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contacts}"
                                                        itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
-                                        <p:ajax async="false" event="change" update="contactEmail"/>
+                                        <p:ajax async="false" event="change" update="contactEmailExp"/>
                                     </p:selectOneMenu>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
+                            <div class="col-sm-6">
                             <p:inputTextarea style="max-height: 29px;"
-                                             id="contactEmail"
+                                             id="contactEmailExp"
                                              readonly="true"
                                              maxlength="950"
                                              value="#{purchaseOrderEdit.poEdit.poEntity.contactEntity.email}"
                                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                                              class="form-control"/>
+                            </div>
+                            <div class="col-sm-6">
+                            <h:commandButton
+                                    id="btnAddContact"
+                                    value="#{msgs['po.supplier.lbl.btn.add.contact']}"
+                                    disabled="#{purchaseOrderEdit.poEdit.poEntity.supplier==null}"
+                                    action="#{contactBean.start(purchaseOrderEdit.poEdit.poEntity.supplier.id)}"
+                                    onclick="PF('contactModal').show();"
+                                    styleClass="btn btn-primary btn-sm">
+                                <p:ajax async="false" update=":editContact"/>
+                            </h:commandButton>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -515,6 +528,12 @@
         <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}"
                   widgetVar="attachmentScopeSupplyModal" resizable="false" height="380" width="400">
             <ui:include src="modal/attachment/attachmentScopeSupplyEdit.xhtml"/>
+        </p:dialog>
+        <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
+            <ui:include src="../procurement/admin/supplier/components/contactEdit.xhtml">
+                <ui:param name="MODULE" value="EXPEDITING"/>
+                <ui:param name="RENDER" value=":empForm:contactId :empForm:contactEmailExp"/>
+            </ui:include>
         </p:dialog>
         <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
             <div class="pull-right">

@@ -90,10 +90,19 @@
 
             </div>
             <div class="row pull-right">
+
                 <h:commandButton value="#{msgs['lbl.save']}"
+                                 rendered="#{MODULE==null}"
                                  action="#{poBean.doSaveContact}"
                                  styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="editContact :editPoForm:contactDetail" process="editContact"/>
+                </h:commandButton>
+
+                <h:commandButton value="#{msgs['lbl.save']}"
+                                 rendered="#{MODULE eq 'EXPEDITING'}"
+                                 action="#{purchaseOrderEdit.doSaveContact}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
                 </h:commandButton>
                 &#160;
                 <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">
