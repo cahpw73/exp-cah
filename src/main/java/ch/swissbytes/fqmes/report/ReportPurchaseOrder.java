@@ -74,7 +74,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         now.setHours(23);
         now.setMinutes(59);
         now.setSeconds(59);
-        System.out.println("UTC CURRENT DATE "+Util.convertUTC(now, TimeZone.getDefault().getID()));
         addParameters("CURRENT_DATE", Util.convertUTC(now, TimeZone.getDefault().getID()));
     }
 

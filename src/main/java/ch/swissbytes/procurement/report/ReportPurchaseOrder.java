@@ -66,10 +66,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         addParameters("REPORT_CONNECTION", connection);
         loadParamPurchaseOrder();
-        //System.out.println("Label PAYMENt TERM  "+cashflowEntity.getPaymentTerms()!=null?cashflowEntity.getPaymentTerms().getLabel():"nothing");
-        addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel() : null);
+        addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
         addParameters("retentionApplicable", cashflowEntity != null&&cashflowEntity.getApplyRetention()!=null? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
-        addParameters("retentionForm",cashflowEntity != null? cashflowEntity.getForm(): null);
+        addParameters("retentionForm",cashflowEntity != null&&cashflowEntity.getForm()!=null? cashflowEntity.getForm().toUpperCase(): null);
     }
 
     private void loadParamPurchaseOrder() {
@@ -120,8 +119,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poId",po.getPoEntity().getId());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
         addParameters("deliveryDate",po.getPoDeliveryDate());
-        addParameters("deliveryDateStr",po.getPoDeliveryDate()!=null?new java.text.SimpleDateFormat(configuration.getHardFormatDate(),new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())):"");
-        addParameters("deliveryPoint",po.getPoEntity().getPoint());
+        addParameters("deliveryDateStr",po.getPoDeliveryDate()!=null?new java.text.SimpleDateFormat(configuration.getHardFormatDate(),new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())).toUpperCase():"");
+        addParameters("deliveryPoint",po.getPoEntity().getPoint()!=null?po.getPoEntity().getPoint().toUpperCase():null);
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager",po.getPoEntity().getProcManager());
         addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
@@ -140,11 +139,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("vendorDrawingData",po.getPoEntity().getVendorDrawingData()!=null? BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()).toUpperCase():null);
         addParameters("exchangeRateVariation",po.getPoEntity().getExchangeRateVariation()!=null? BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()).toUpperCase():null);
         addParameters("rtfNo",po.getPoEntity().getRTFNo());
-        addParameters("mrNo",po.getPoEntity().getMRNo());
+        addParameters("mrNo", po.getPoEntity().getMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
         addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
         addParameters("exchangeRate",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);
+        addParameters("contactName",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getFullName():null);
+        addParameters("contactEmail",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getEmail():null);
+        addParameters("contactPhone",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getPhone():null);
+        addParameters("contactFax",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getFax():null);
 
 
         Date now = new Date();
@@ -182,7 +185,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private List<PurchaseOrderReportDto> getPOReportDto() {
         List<PurchaseOrderReportDto> dtos = new ArrayList<>();
         dtos.add(new PurchaseOrderReportDto(po.getPoEntity().getOrderTitle()));
-        dtos.add(new PurchaseOrderReportDto(this.preamble));
+        dtos.add(new PurchaseOrderReportDto(null,this.preamble));
         for(ScopeSupplyEntity entity : this.scopeSupplyList){
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity,po.getPoEntity().getCurrency());
             dtos.add(dto);

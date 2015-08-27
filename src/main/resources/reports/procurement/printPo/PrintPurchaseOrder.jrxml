@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.x" value="2"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -103,6 +103,10 @@
 	<parameter name="suburb" class="java.lang.String"/>
 	<parameter name="supplierId" class="java.lang.Long"/>
 	<parameter name="clientDetail0" class="java.lang.String"/>
+	<parameter name="contactName" class="java.lang.String"/>
+	<parameter name="contactEmail" class="java.lang.String"/>
+	<parameter name="contactFax" class="java.lang.String"/>
+	<parameter name="contactPhone" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -120,133 +124,140 @@
 		</band>
 	</background>
 	<title>
-		<band height="163" splitType="Stretch">
+		<band height="149" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" style="Arial" positionType="Float" x="302" y="148" width="20" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" style="Arial" positionType="Float" x="302" y="132" width="20" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="aee23e51-51bc-4626-ba8c-f22adc399559" style="Arial" positionType="Float" x="463" y="148" width="16" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="aee23e51-51bc-4626-ba8c-f22adc399559" style="Arial" positionType="Float" x="463" y="132" width="16" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="a5f0e2e2-1481-4279-85ff-5f34f778ed8f" style="Arial" positionType="Float" x="493" y="148" width="23" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a5f0e2e2-1481-4279-85ff-5f34f778ed8f" style="Arial" positionType="Float" x="493" y="132" width="23" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}-($V{totalOfPagesSummary}!=null?$V{totalOfPagesSummary}:0)]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true" evaluationTime="Report">
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Top" isUsingCache="true" evaluationTime="Report">
 				<reportElement uuid="4083c026-eeee-4892-a282-9bf32226aae3" mode="Transparent" x="436" y="4" width="80" height="80" backcolor="#FFFFFF"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="660d8272-5c99-4652-9f7f-edf4f1123250" style="Arial-Bold" x="13" y="4" width="405" height="27"/>
-				<textElement verticalAlignment="Bottom" markup="styled">
+				<reportElement uuid="660d8272-5c99-4652-9f7f-edf4f1123250" style="Arial-Bold" x="13" y="4" width="417" height="27"/>
+				<textElement verticalAlignment="Top" markup="styled">
 					<font size="20" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6818e7b2-2a61-45a0-87b2-36d1ebe3aab3" style="Arial" positionType="Float" x="323" y="148" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="6818e7b2-2a61-45a0-87b2-36d1ebe3aab3" style="Arial" positionType="Float" x="323" y="132" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{orderDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{orderDate}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2f17b573-1c5b-4dd7-b4f7-ac7a8b2871e0" style="Arial" positionType="Float" x="480" y="148" width="9" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2f17b573-1c5b-4dd7-b4f7-ac7a8b2871e0" style="Arial" positionType="Float" x="480" y="132" width="9" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="518d82ec-737e-47d8-9bbc-348bc8e543ab" style="Arial" positionType="Float" x="440" y="148" width="22" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="518d82ec-737e-47d8-9bbc-348bc8e543ab" style="Arial" positionType="Float" x="440" y="132" width="22" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Page:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="65d8c27d-db0d-4504-aa31-4605bc168071" style="Arial-Bold" positionType="Float" x="17" y="126" width="269" height="17" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size='10' isBold='true' pdfFontName='Helvetica-Bold'>PURCHASE ORDER No:</style>]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" x="13" y="87" width="131" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" x="13" y="50" width="115" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" x="185" y="87" width="131" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" x="173" y="50" width="115" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" x="358" y="87" width="131" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" x="320" y="50" width="110" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail3}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e7d1d6c2-a55d-4810-ac7c-d5d72723bf99" style="Arial-Bold" positionType="Float" x="113" y="106" width="271" height="17" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e7d1d6c2-a55d-4810-ac7c-d5d72723bf99" style="Arial-Bold" positionType="Float" x="113" y="90" width="271" height="19" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font size="10" isBold="true"/>
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7d9223ac-2aa4-40ee-9cbe-00d1be4275ce" style="Arial-Bold" positionType="Float" x="288" y="126" width="206" height="17"/>
+				<reportElement uuid="7d9223ac-2aa4-40ee-9cbe-00d1be4275ce" style="Arial-Bold" positionType="Float" x="288" y="110" width="206" height="19"/>
 				<textElement markup="styled">
-					<font isBold="true"/>
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="13" y="148" width="28" height="12"/>
+				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="13" y="132" width="28" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[RFT No]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="42" y="148" width="42" height="12"/>
+				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="42" y="132" width="42" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{rtfNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="da851372-78b0-460f-a877-a4d4fa872a01" style="Arial" positionType="Float" x="95" y="148" width="28" height="12"/>
+				<reportElement uuid="da851372-78b0-460f-a877-a4d4fa872a01" style="Arial" positionType="Float" x="95" y="132" width="28" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[MR No.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="124" y="148" width="52" height="12"/>
+				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="124" y="132" width="52" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{mrNo}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0089cd60-eecf-406a-b7d2-17d2f3ff9825" positionType="Float" isPrintRepeatedValues="false" x="13" y="32" width="405" height="15" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Top" markup="styled">
+			<staticText>
+				<reportElement uuid="b1df22bd-a565-4887-bdc0-e914c398f734" style="Arial-Bold" positionType="Float" x="42" y="109" width="245" height="20"/>
+				<textElement textAlignment="Right" markup="styled">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PURCHASE ORDER NO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8333df56-30eb-4813-af2e-fad2f2fd30ec" positionType="Float" x="64" y="33" width="278" height="17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail0}]]></textFieldExpression>
@@ -311,92 +322,144 @@
 				</textElement>
 				<text><![CDATA[CONTINUATION SHEET]]></text>
 			</staticText>
+			<line>
+				<reportElement uuid="4ed8aae6-333b-4c3b-af3d-1308c0892c6b" x="0" y="0" width="519" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.8"/>
+				</graphicElement>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="54" splitType="Stretch">
+		<band height="84" splitType="Stretch">
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d6363a91-406c-4444-a263-6de8b370e5e6" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="13" y="6" width="269" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="d6363a91-406c-4444-a263-6de8b370e5e6" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="13" y="3" width="190" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="13" y="19" width="269" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="13" y="16" width="275" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="13" y="32" width="269" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="13" y="29" width="269" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
+					<paragraph spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{postcode}!=null?$P{postcode}:""+" "+ $P{suburb}!=null?$P{suburb}:""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="13" y="34" width="269" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="13" y="42" width="269" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{country}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" style="Arial-Bold" positionType="Float" x="302" y="3" width="116" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" style="Arial-Bold" positionType="Float" x="302" y="3" width="116" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="8" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Consign  To:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" style="Arial" positionType="Float" x="302" y="18" width="190" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" style="Arial" positionType="Float" x="302" y="18" width="209" height="64" isRemoveLineWhenBlank="true"/>
 				<textElement markup="styled">
-					<font size="8" isBold="true"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{deliveryInstructions}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" positionType="Float" stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="54" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="250f5fb6-7905-4b48-9b29-73820eb19f3b" positionType="Float" stretchType="RelativeToBandHeight" x="298" y="0" width="1" height="84" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="642535a4-211f-4d0a-a4cc-ca8da068a394" positionType="Float" x="0" y="53" width="519" height="1"/>
+				<reportElement uuid="642535a4-211f-4d0a-a4cc-ca8da068a394" positionType="Float" x="0" y="83" width="519" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="b28d331a-9ea7-4f27-919f-f46eef65fda1" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="54"/>
+				<reportElement uuid="b28d331a-9ea7-4f27-919f-f46eef65fda1" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="84"/>
 			</line>
 			<line>
-				<reportElement uuid="ba5909d3-a046-4876-9e6d-24ef07a6ff2c" stretchType="RelativeToBandHeight" x="518" y="0" width="1" height="54"/>
+				<reportElement uuid="ba5909d3-a046-4876-9e6d-24ef07a6ff2c" stretchType="RelativeToBandHeight" x="518" y="0" width="1" height="84"/>
 			</line>
 			<line>
 				<reportElement uuid="61331d23-6175-4fd9-8775-9ff20f4e6ad3" positionType="Float" x="0" y="0" width="519" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="2a6b77b7-83fe-447c-bc0e-5e64cfa58f41" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="13" y="4" width="269" height="1" isRemoveLineWhenBlank="true"/>
-				<textElement markup="styled">
+				<reportElement uuid="2a6b77b7-83fe-447c-bc0e-5e64cfa58f41" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="203" y="3" width="91" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{abnReg}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement uuid="4abc9c8e-8466-4823-b722-8ac5adf705ca" positionType="Float" isPrintRepeatedValues="false" x="13" y="48" width="275" height="1" isRemoveLineWhenBlank="true"/>
-				<subreportParameter name="poId">
-					<subreportParameterExpression><![CDATA[$P{poId}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="supplierId">
-					<subreportParameterExpression><![CDATA[$P{supplierId}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Contact.jasper"]]></subreportExpression>
-			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="32e60514-b341-4efd-bc22-1a68314f02ae" style="Arial-Bold" positionType="Float" x="47" y="68" width="129" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{contactEmail}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="044e4acd-803d-41c3-a313-213208aad718" style="Arial-Bold" positionType="Float" x="206" y="55" width="88" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{contactPhone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d1bef5e9-2778-4162-a6d1-784166efd790" style="Arial-Bold" positionType="Float" x="206" y="68" width="88" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{contactFax}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f08eb8ef-1835-493c-8f71-48eb658b00e2" style="Arial-Bold" positionType="Float" x="184" y="55" width="22" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Tel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0e4e83b9-b5d5-4c45-8755-71672e4dde11" style="Arial-Bold" positionType="Float" x="14" y="55" width="28" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Attn:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="55bdc532-58fb-47aa-9584-99b31a1e9e3e" style="Arial-Bold" positionType="Float" x="47" y="55" width="129" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{contactName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6e1428d1-0ef9-42b1-b720-c9252d2ef35b" style="Arial-Bold" positionType="Float" x="14" y="68" width="28" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d2526442-82de-4ff2-8ab9-6bbeeac833fd" style="Arial-Bold" positionType="Float" x="184" y="68" width="22" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Fax:]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="103" splitType="Stretch">
+		<band height="73" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="4bb55097-0301-4b84-be1c-2ebff5fa264c" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="15" width="150" height="12">
+				<reportElement uuid="4bb55097-0301-4b84-be1c-2ebff5fa264c" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="12" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -405,21 +468,21 @@
 				<text><![CDATA[DELIVERY POINT:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="93107e8d-c532-4937-bde0-99c6977ddc56" style="Arial" isPrintRepeatedValues="false" x="165" y="15" width="132" height="12"/>
+				<reportElement uuid="93107e8d-c532-4937-bde0-99c6977ddc56" style="Arial" isPrintRepeatedValues="false" x="165" y="12" width="132" height="10"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{deliveryPoint}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" style="Arial" isPrintRepeatedValues="false" x="165" y="2" width="132" height="12"/>
+				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" style="Arial" isPrintRepeatedValues="false" x="165" y="2" width="132" height="10"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{deliveryDateStr}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="58fdc26c-c561-4604-ba1b-7222b6d15c9a" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="54" width="150" height="12">
+				<reportElement uuid="58fdc26c-c561-4604-ba1b-7222b6d15c9a" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="42" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -428,7 +491,7 @@
 				<text><![CDATA[RETENTION APPLICABLE:/ AGREED FORM:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4f004676-63db-490e-a97e-b583b620c80f" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="41" width="150" height="12">
+				<reportElement uuid="4f004676-63db-490e-a97e-b583b620c80f" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="32" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -437,7 +500,7 @@
 				<text><![CDATA[TERMS OF PAYMENT:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0b3fbcc4-cf98-415a-8972-03fd1af9781a" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="28" width="150" height="12">
+				<reportElement uuid="0b3fbcc4-cf98-415a-8972-03fd1af9781a" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="22" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -446,7 +509,7 @@
 				<text><![CDATA[LIQUIDATED DAMAGES APPLICABLE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7db976b7-9c4c-4459-85ca-d9ad726fb666" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="68" width="150" height="12">
+				<reportElement uuid="7db976b7-9c4c-4459-85ca-d9ad726fb666" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="52" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -455,7 +518,7 @@
 				<text><![CDATA[EXCHANGE RATE VARIATION:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="26eaa9a5-2d68-44f1-8e62-a88efaca86fa" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="81" width="150" height="12">
+				<reportElement uuid="26eaa9a5-2d68-44f1-8e62-a88efaca86fa" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="62" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -464,56 +527,56 @@
 				<text><![CDATA[VENDOR DRAWING & DATA REQUIREMENTS:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="7248f4fd-c9e8-4d36-bbd8-18f1f9edea0c" style="Arial" isPrintRepeatedValues="false" x="165" y="41" width="132" height="12"/>
+				<reportElement uuid="7248f4fd-c9e8-4d36-bbd8-18f1f9edea0c" style="Arial" isPrintRepeatedValues="false" x="165" y="32" width="132" height="10"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{paymentTerm}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="302" y="14" width="209" height="79"/>
+				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="302" y="15" width="209" height="58"/>
 				<textElement markup="styled">
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{invoiceTo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="db35bb29-0d73-41b6-85a7-686ad84ac436" style="Arial" isPrintRepeatedValues="false" x="165" y="54" width="15" height="12"/>
+				<reportElement uuid="db35bb29-0d73-41b6-85a7-686ad84ac436" style="Arial" isPrintRepeatedValues="false" x="165" y="42" width="15" height="10"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{retentionApplicable}==null?"NO":$P{retentionApplicable}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="daafa8f7-6dcf-4a21-aec9-4bf81747c8ce" style="Arial" isPrintRepeatedValues="false" x="166" y="68" width="131" height="12"/>
+				<reportElement uuid="daafa8f7-6dcf-4a21-aec9-4bf81747c8ce" style="Arial" isPrintRepeatedValues="false" x="166" y="52" width="131" height="10"/>
 				<textElement markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{exchangeRateVariation}==null?"NO":$P{exchangeRateVariation}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="c7c4141e-273b-4a4b-a17a-a56f8f57996c" style="Arial" isPrintRepeatedValues="false" x="165" y="28" width="132" height="12"/>
+				<reportElement uuid="c7c4141e-273b-4a4b-a17a-a56f8f57996c" style="Arial" isPrintRepeatedValues="false" x="165" y="22" width="132" height="10"/>
 				<textElement markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{liquidatedDamagesApplicable}==null?"NO":$P{liquidatedDamagesApplicable}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="a533d2ea-2062-4b46-ad94-3b24171312a8" style="Arial" isPrintRepeatedValues="false" x="166" y="81" width="131" height="12"/>
+				<reportElement uuid="a533d2ea-2062-4b46-ad94-3b24171312a8" style="Arial" isPrintRepeatedValues="false" x="166" y="62" width="131" height="10"/>
 				<textElement markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{vendorDrawingData}==null?"NO":$P{vendorDrawingData}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" isPrintRepeatedValues="false" x="181" y="54" width="116" height="12"/>
+				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" isPrintRepeatedValues="false" x="181" y="42" width="116" height="10"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{retentionApplicable}!=null&&$P{retentionApplicable}.equalsIgnoreCase("yes")?$P{retentionForm}:null]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a93e1f4a-2318-4d0e-81d9-24708620f712" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="2" width="150" height="12">
+				<reportElement uuid="a93e1f4a-2318-4d0e-81d9-24708620f712" style="Arial-Bold" isPrintRepeatedValues="false" x="14" y="2" width="150" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -522,11 +585,11 @@
 				<text><![CDATA[DELIVERY DATE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="669e4caf-b5bf-4856-bb1d-b09568d37db7" style="Arial-Bold" isPrintRepeatedValues="false" x="302" y="2" width="150" height="12">
+				<reportElement uuid="669e4caf-b5bf-4856-bb1d-b09568d37db7" style="Arial-Bold" isPrintRepeatedValues="false" x="302" y="2" width="150" height="13">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="false"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[INVOICE TO:]]></text>
 			</staticText>

@@ -65,7 +65,9 @@ public class PurchaseOrderReportDto implements Serializable {
         this.description = null;
         this.cost = null;
         this.totalCost = null;
-        this.poTitle = po.getPoEntity().getOrderTitle();
+        if(po!=null) {
+            this.poTitle = po.getPoEntity().getOrderTitle();
+        }
         this.preamble = preamble;
         this.strTotalCost = null;
         this.totalAmount = null;
