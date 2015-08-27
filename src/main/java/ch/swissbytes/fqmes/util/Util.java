@@ -172,14 +172,14 @@ public class Util {
     }
 
     public static String formatMoney(String currency, String pattern,BigDecimal money){
-        String codeCurrency=currency;
+        String codeCurrency=currency+" ";
         if(money==null){
             return null;
         }
         if(StringUtils.isEmpty(codeCurrency)||StringUtils.isBlank(codeCurrency)){
-            currency="";
+            codeCurrency="";
         }
-        return new DecimalFormat(currency+" "+pattern, new DecimalFormatSymbols()).format(money);
+        return codeCurrency+new DecimalFormat(pattern, new DecimalFormatSymbols()).format(money);
     }
 
     public static BigDecimal currencyToCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni, BigDecimal exchangeRateDefault) {

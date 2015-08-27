@@ -152,7 +152,7 @@ public class ContactEntity extends RecordEditable<ContactEntity> implements Seri
 
     @Transient
     public String getFullName(){
-        return firstName+" "+surName;
+        return (title!=null?(title +" "):"")+firstName+" "+surName;
     }
 
     @Override

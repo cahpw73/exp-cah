@@ -162,16 +162,19 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         int i = 0;
         String textToProcess=detail;
         if(index >=0) {
-            String firstText=detail.substring(0,index);
-            String remainingText=detail.substring(index+tableOpen.length(),detail.length());
+            String firstText=StringUtils.chomp(detail.substring(0, index));
+            String remainingText=StringUtils.chomp(detail.substring(index+tableOpen.length(),detail.length()));
             columns.put(i,firstText);
             i++;
             remainingText=remainingText.replaceAll(tableClose,"");
             remainingText=remainingText.replaceAll(tableOpen,"");
             textToProcess=remainingText;
             for (String column : textToProcess.split(separator)) {
+                while(column.startsWith(System.lineSeparator())&&column.length()>0){
+                    column=column.substring(1,column.length());
+                }
                 if (StringUtils.isNotEmpty(column) && StringUtils.isNotBlank(column)) {
-                    columns.put(i, column);
+                    columns.put(i, StringUtils.chomp(column));
                     i++;
                 }
             }

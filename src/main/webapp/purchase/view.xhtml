@@ -169,17 +169,9 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:inputText readonly="true" styleClass="form-control"
-                                         value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.phone}"/>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.supplier.fax']}
+                            <h:inputTextarea readonly="true" styleClass="form-control"
+                                         style="height: 90px;"
+                                         value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.contactDetail}"/>
                         </div>
                     </div>
                     <div class="row">
@@ -197,10 +189,6 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputText id="supplierFax" maxlength="450"
-                                         readonly="true"
-                                         value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.fax}"
-                                         class="form-control"/>
                         </div>
                     </div>
                     <div class="row">
