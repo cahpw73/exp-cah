@@ -66,10 +66,12 @@ public class UserSession implements Serializable{
 
     public String getAbsoluteCurrentHome(){
         String home="";
-        if(currentModule.equalsIgnoreCase(ModuleSystemEnum.EXPEDITING.name())){
-            home="/home";
-        }else if(currentModule.equalsIgnoreCase(ModuleSystemEnum.PROCUREMENT.name())){
-            home="/procurement/project/list";
+        if(currentModule!=null) {
+            if (currentModule.equalsIgnoreCase(ModuleSystemEnum.EXPEDITING.name())) {
+                home = "/home";
+            } else if (currentModule.equalsIgnoreCase(ModuleSystemEnum.PROCUREMENT.name())) {
+                home = "/procurement/project/list";
+            }
         }
         return home;
     }

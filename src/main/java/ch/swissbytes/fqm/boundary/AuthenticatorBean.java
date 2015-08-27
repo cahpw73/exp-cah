@@ -104,7 +104,8 @@ public class AuthenticatorBean {
 
 
     public String currentHome(){
-        return "/home.xhtml";
+        System.out.println("current home");
+        return session.getAbsoluteCurrentHome()+".xhtml";
     }
     public String validationLogin() {
         if(!identity.isLoggedIn()){
