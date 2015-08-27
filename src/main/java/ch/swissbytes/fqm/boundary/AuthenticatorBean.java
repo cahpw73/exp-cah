@@ -93,9 +93,6 @@ public class AuthenticatorBean {
         if(identity.isLoggedIn()){
             identity.logout();
         }
-        /*RequestContext context = RequestContext.getCurrentInstance();
-        RequestContext.getCurrentInstance().update("pickSystemFormId");
-        context.execute("PF('pickSystemModal').hide();");*/
     }
 
     public String validation(){
@@ -104,7 +101,6 @@ public class AuthenticatorBean {
 
 
     public String currentHome(){
-        System.out.println("current home");
         return session.getAbsoluteCurrentHome()+".xhtml";
     }
     public String validationLogin() {

@@ -84,6 +84,8 @@ public class PoBean extends Bean {
     @Inject
     private Configuration configuration;
 
+
+
     @Inject
     private PoListBean listBean;
 
@@ -91,6 +93,8 @@ public class PoBean extends Bean {
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
     private boolean loaded = false;
+
+    private boolean success;
 
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity){
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
@@ -160,6 +164,7 @@ public class PoBean extends Bean {
 
     public void doSave() {
         log.info("trying to save purchase order on procurement module");
+        boolean success=false;
         if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
@@ -169,7 +174,9 @@ public class PoBean extends Bean {
             projectId = null;
             loaded = false;
             loadPurchaseOrder();
+            success=true;
         }
+       // return success;
 
     }
 
@@ -186,6 +193,7 @@ public class PoBean extends Bean {
 
     public void doUpdate() {
         log.info("trying to update purchase order on procurement module");
+        boolean success=false;
         if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
@@ -193,7 +201,9 @@ public class PoBean extends Bean {
             doLastOperationsOverPO(true);
             loaded = false;
             loadPurchaseOrder();
+            success=true;
         }
+       // return success;
     }
 
     public String doUpdateAndClose() {
