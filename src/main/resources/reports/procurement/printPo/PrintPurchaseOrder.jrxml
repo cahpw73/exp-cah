@@ -179,21 +179,21 @@
 				<text><![CDATA[Page:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" x="13" y="50" width="115" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" x="13" y="56" width="115" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" x="173" y="50" width="115" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" x="173" y="56" width="115" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" x="320" y="50" width="110" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" x="320" y="56" width="110" height="15" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
@@ -249,7 +249,7 @@
 				<text><![CDATA[PURCHASE ORDER NO :]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="8333df56-30eb-4813-af2e-fad2f2fd30ec" positionType="Float" x="64" y="33" width="278" height="17"/>
+				<reportElement uuid="8333df56-30eb-4813-af2e-fad2f2fd30ec" positionType="Float" x="13" y="33" width="417" height="23"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>

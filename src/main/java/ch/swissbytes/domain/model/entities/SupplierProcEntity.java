@@ -210,6 +210,11 @@ public class SupplierProcEntity implements Serializable {
         return brands;
     }
 
+    @Transient
+    public String getContactDetail(){
+        return getPhone()+System.lineSeparator()+getFax();
+    }
+
 
     @Override
     public boolean equals(Object o) {

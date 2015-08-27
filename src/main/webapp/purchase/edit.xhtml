@@ -210,19 +210,12 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputText maxlength="950" type="text"
-                                         value="#{purchaseOrderEdit.poEdit.poEntity.supplier.phone}"
+                            <p:inputTextarea maxlength="950" type="text"
+                                         value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contactDetail}"
                                          id="supplierPhone"
+                                         style="height: 90px;"
                                          readonly="true"
                                          class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.supplier.fax']}
                         </div>
                     </div>
                     <div class="row">
@@ -240,10 +233,6 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputText id="supplierFax" maxlength="450"
-                                         readonly="true"
-                                         value="#{purchaseOrderEdit.poEdit.poEntity.supplier.fax}"
-                                         class="form-control"/>
                         </div>
                     </div>
                     <div class="row">
