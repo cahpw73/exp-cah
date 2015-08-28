@@ -11,6 +11,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="title" value="#{contactBean.contact.title}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="title"/>
                     </div>
@@ -21,6 +22,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="firstName" value="#{contactBean.contact.firstName}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control" required="true"/>
                         <p:message for="firstName"/>
                     </div>
@@ -31,6 +33,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="name" value="#{contactBean.contact.surName}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control" required="true"
                                      requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                         <p:message for="name"/>
@@ -43,6 +46,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="jobTitle" value="#{contactBean.contact.jobTitle}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="jobTitle"/>
                     </div>
@@ -53,6 +57,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="phone" value="#{contactBean.contact.phone}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="phone"/>
                     </div>
@@ -63,6 +68,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="mobile" value="#{contactBean.contact.mobile}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="mobile"/>
                     </div>
@@ -73,6 +79,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="fax" value="#{contactBean.contact.fax}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="fax"/>
                     </div>
@@ -83,6 +90,7 @@
 
                     <div class="col-sm-6">
                         <h:inputText id="contactEmail" value="#{contactBean.contact.email}"
+                                     disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="contactEmail"/>
                     </div>
@@ -90,7 +98,7 @@
 
             </div>
             <div class="row pull-right">
-
+                <h:panelGroup rendered="#{MODE ne 'VIEW'}">
                 <h:commandButton value="#{msgs['lbl.save']}"
                                  rendered="#{MODULE==null}"
                                  action="#{poBean.doSaveContact}"
@@ -105,6 +113,7 @@
                     <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
                 </h:commandButton>
                 &#160;
+                </h:panelGroup>
                 <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">
                     #{msgs['lbl.cancel']}
                 </button>

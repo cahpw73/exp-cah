@@ -21,7 +21,9 @@
                     <div class="pull-left main-logo">
                         <h:graphicImage name="img/FqmLogo.png"/>
                     </div>
-                    <h:link id="homeLinkId" styleClass="navbar-brand lbl-color-df"
+                    <h:link id="homeLinkId1" styleClass="navbar-brand lbl-color-df" rendered="#{userSession.hasAccessBoth}"
+                            outcome="/home"> #{msgs['main.title.procurement']}</h:link>
+                    <h:link id="homeLinkId2" styleClass="navbar-brand lbl-color-df" rendered="#{!userSession.hasAccessBoth}"
                             outcome="/procurement/project/list"> #{msgs['main.title.procurement']}</h:link>
 
                 </div>
