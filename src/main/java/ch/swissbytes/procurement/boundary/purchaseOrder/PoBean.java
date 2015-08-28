@@ -164,7 +164,6 @@ public class PoBean extends Bean {
 
     public void doSave() {
         log.info("trying to save purchase order on procurement module");
-        boolean success=false;
         if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
@@ -174,9 +173,9 @@ public class PoBean extends Bean {
             projectId = null;
             loaded = false;
             loadPurchaseOrder();
-            success=true;
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("restartChanges();");
         }
-       // return success;
 
     }
 
@@ -201,9 +200,9 @@ public class PoBean extends Bean {
             doLastOperationsOverPO(true);
             loaded = false;
             loadPurchaseOrder();
-            success=true;
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("restartChanges();");
         }
-       // return success;
     }
 
     public String doUpdateAndClose() {
@@ -237,6 +236,7 @@ public class PoBean extends Bean {
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("printDraft();");
+            context.execute("restartChanges();");
         }
         return null;
     }
@@ -251,7 +251,7 @@ public class PoBean extends Bean {
             sortScopeSupplyAndDoUpdate();
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             RequestContext context = RequestContext.getCurrentInstance();
-            //context.execute("alert('updated!')");
+            context.execute("restartChanges();");
             context.execute("printDraft();");
         }
         return null;

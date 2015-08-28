@@ -70,3 +70,6 @@ function doChangeProc(){
     console.log('something was changed!');
     hasChanges=true;
 }
+function restartChanges(){
+    hasChanges=false;
+}
