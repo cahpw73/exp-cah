@@ -187,33 +187,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private List<PurchaseOrderReportDto> getPOReportDto() {
         List<PurchaseOrderReportDto> dtos = new ArrayList<>();
+        dtos.add(new PurchaseOrderReportDto(""));
         dtos.add(new PurchaseOrderReportDto(po.getPoEntity().getOrderTitle()));
         dtos.add(new PurchaseOrderReportDto(null,this.preamble));
         for(ScopeSupplyEntity entity : this.scopeSupplyList){
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity,po.getPoEntity().getCurrency());
             dtos.add(dto);
         }
-       /* if(!scopeSupplyList.isEmpty()){
-            PurchaseOrderReportDto poDto = new PurchaseOrderReportDto();
-            if()
-            dtos.add(poDto.loadTotalCost(po.getPoEntity().getCurrency().getCurrency().getCode(), getSumTotalCost()));
-        }*/
         return dtos;
     }
-
-    /*private BigDecimal getSumTotalCost(){
-        BigDecimal totalAmount = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
-        for(ScopeSupplyEntity entity : this.scopeSupplyList){
-            if(entity.getTotalCost()!=null){
-                if(entity.getProjectCurrency()!=null){
-                    totalAmount = totalAmount.add(Util.currencyToCurrency(entity.getCost().multiply(new BigDecimal(entity.getQuantity())),entity.getProjectCurrency().getExchangeRate(),po.getPoEntity().getCurrency().getExchangeRate()));
-                }else{
-                    totalAmount = totalAmount.add(entity.getCost().multiply(new BigDecimal(entity.getQuantity())));
-                }
-            }
-        }
-        return totalAmount;
-    }*/
 
     @Override
     public void printDocument(Long documentId) {

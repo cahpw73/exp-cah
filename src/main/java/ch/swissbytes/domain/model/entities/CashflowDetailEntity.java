@@ -22,6 +22,7 @@ public class CashflowDetailEntity extends RecordEditable<CashflowDetailEntity> i
     private String milestone;
     private BigDecimal orderAmt;
     private BigDecimal projectAmt;
+    private BigDecimal percentage;
     private Date claimDate;
     private Date paymentDate;
     private Date lastUpdate;
@@ -134,6 +135,15 @@ public class CashflowDetailEntity extends RecordEditable<CashflowDetailEntity> i
 
     public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
         this.projectCurrency = projectCurrency;
+    }
+
+    @Column(name="percentage", precision=18, scale=5)
+    public BigDecimal getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(BigDecimal percentage) {
+        this.percentage = percentage;
     }
 
     @Override

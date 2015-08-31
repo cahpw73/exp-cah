@@ -15,7 +15,7 @@
 	<parameter name="poNo" class="java.lang.String"/>
 	<parameter name="projectNumber" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol
+		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol,cfd.percentage
 from cashflow cf inner join cashflow_detail cfd  on
 cfd.cashflow_id=cf.id
 left join project_currency pc on pc.id= cfd.project_currency_id
@@ -31,6 +31,7 @@ order by item]]>
 	<field name="exchange_rate" class="java.math.BigDecimal"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="symbol" class="java.lang.String"/>
+	<field name="percentage" class="java.math.BigDecimal"/>
 	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{order_amt},$F{exchange_rate},$P{exchangeRate})]]></variableExpression>
 	</variable>
@@ -86,27 +87,27 @@ order by item]]>
 	<columnHeader>
 		<band height="37" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="8bc4d2a3-9d71-478b-a956-d7e2c672096f" style="Arial-Bold" x="17" y="8" width="51" height="20"/>
+				<reportElement uuid="8bc4d2a3-9d71-478b-a956-d7e2c672096f" style="Arial-Bold" x="17" y="8" width="50" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Milestone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="74" y="8" width="120" height="20"/>
+				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="126" y="8" width="105" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Milestone Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c4db6174-c8c7-4cff-b07f-cf56fd4832c3" style="Arial-Bold" x="203" y="8" width="83" height="20"/>
+				<reportElement uuid="c4db6174-c8c7-4cff-b07f-cf56fd4832c3" style="Arial-Bold" x="233" y="8" width="83" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Amount of Claim]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="296" y="8" width="116" height="20"/>
+				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="318" y="8" width="117" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Cumulative Expenditure]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3af60dda-9c33-4050-b058-25150c2b5eb7" style="Arial-Bold" x="421" y="8" width="87" height="20"/>
+				<reportElement uuid="3af60dda-9c33-4050-b058-25150c2b5eb7" style="Arial-Bold" x="437" y="8" width="70" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Claim Month]]></text>
 			</staticText>
@@ -116,44 +117,54 @@ order by item]]>
 			<line>
 				<reportElement uuid="583bf7cc-1356-46ab-b571-7dc857b0f43c" x="0" y="36" width="518" height="1"/>
 			</line>
+			<staticText>
+				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="69" y="8" width="55" height="20"/>
+				<textElement markup="styled"/>
+				<text><![CDATA[Percentage]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="24" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="eac1b157-0990-4257-9eea-092f7d17527e" style="Arial" x="17" y="3" width="51" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="eac1b157-0990-4257-9eea-092f7d17527e" style="Arial" x="17" y="3" width="50" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="73" y="3" width="120" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="126" y="3" width="105" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{milestone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3ba5632f-f008-46ec-84ab-d80b78fd9780" style="Arial" x="203" y="3" width="85" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="3ba5632f-f008-46ec-84ab-d80b78fd9780" style="Arial" x="233" y="3" width="83" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{order_amt}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$F{order_amt}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="421" y="3" width="87" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="437" y="3" width="70" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{claim_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{claim_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="296" y="3" width="117" height="20"/>
+				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="318" y="3" width="117" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$V{total}):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="0d3e1846-7e58-4574-8b3d-7dd200cffe15" style="Arial" x="69" y="3" width="55" height="20"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

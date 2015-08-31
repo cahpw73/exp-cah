@@ -73,7 +73,7 @@ public class ReportProcBean implements Serializable {
         log.info("public void printReportExpediting()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Deliverables", messages, locale, configuration, po, projectId, termsPoNo,entityManager);
+        ReportView reportView = new ReportExpediting("/procurement/expediting/reportExpediting", "Procurement.Expediting", messages, locale, configuration, po, projectId, termsPoNo,entityManager);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -83,16 +83,25 @@ public class ReportProcBean implements Serializable {
         openReport = false;
         initializeParametersToJasperReport();
         List<CashflowEntity> cashflows=cashflowService.findByPoId(po.getPoEntity().getId());
-        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", "Procurement.PurchaseOrder", messages, locale, configuration, po, list, preamble,clausesList,cashflows.size()>0?cashflows.get(0):null);
+        String fileName=generateName(po);
+        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length()>0?fileName:"Purchase Order", messages, locale, configuration, po, list, preamble,clausesList,cashflows.size()>0?cashflows.get(0):null);
         reportView.printDocument(null);
         openReport = true;
+    }
+    private String generateName(PurchaseOrderEntity po){
+        String fileName=po.getProjectEntity().getTitle()!=null?po.getProjectEntity().getTitle()+"-":"";
+        fileName=fileName+(po.getPo()!=null?po.getPo()+" ":"");
+        if(po.getVariationNumber()!=null && !po.getVariationNumber().equalsIgnoreCase("v0")&& !po.getVariationNumber().equalsIgnoreCase("0")){
+            fileName=fileName+po.getVariationNumber().toUpperCase()+" ";
+        }
+        return fileName+(po.getPoEntity().getOrderTitle()!=null?po.getPoEntity().getOrderTitle():"");
     }
 
     public void printProjectPurchaseOrder(final ProjectEntity project, final List<PurchaseOrderEntity> poList, final String strSortBy) {
         log.info("printProjectPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration, poList, project, strSortBy);
+        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.project.purchase.order", messages, locale, configuration, poList, project, strSortBy);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -101,7 +110,7 @@ public class ReportProcBean implements Serializable {
         log.info("printDetailedProcurementReport");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDetailedProcurement("/procurement/detailedProcurementReport/detailedProcurementReport", "Procurement.PurchaseOrder", messages, locale, configuration,  project, sortMap);
+        ReportView reportView = new ReportDetailedProcurement("/procurement/detailedProcurementReport/detailedProcurementReport", "Procurement.Detailed.Procurement", messages, locale, configuration,  project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -109,7 +118,7 @@ public class ReportProcBean implements Serializable {
         log.info("printDetailedProcurementReport");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportCommittedCurrencies("/procurement/committedCurrenciesReport/committedCurrenciesReport", "Procurement.PurchaseOrder", messages, locale, configuration,  project, sortMap);
+        ReportView reportView = new ReportCommittedCurrencies("/procurement/committedCurrenciesReport/committedCurrenciesReport", "Procurement.Committed.Currencies", messages, locale, configuration,  project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -127,7 +136,7 @@ public class ReportProcBean implements Serializable {
         log.info("printRequiredRetentions");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportRequiredRetentions("/procurement/RequiredRetentionReport/requiredRetentionReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportRequiredRetentions("/procurement/RequiredRetentionReport/requiredRetentionReport", "Procurement.Required.Retentions", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -136,7 +145,7 @@ public class ReportProcBean implements Serializable {
         log.info("printRequiredRetentions");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportSummaryPurchaseOrder("/procurement/summaryPurchaseOrderReport/summaryPOReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportSummaryPurchaseOrder("/procurement/summaryPurchaseOrderReport/summaryPOReport", "Procurement.Summary.Purchase.order", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -165,7 +174,7 @@ public class ReportProcBean implements Serializable {
         log.info("printSupplierContactInformation");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportSupplierContactInformation("/procurement/supplierContactInformation/SupplierContactInformation", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportSupplierContactInformation("/procurement/supplierContactInformation/SupplierContactInformation", "Procurement.Supplier.contact.information", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -173,7 +182,7 @@ public class ReportProcBean implements Serializable {
         log.info("printDetailedSupplierInformation");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDetailedSupplierInformation("/procurement/DetailedSupplierInformation/DetailedSupplierInformation", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportDetailedSupplierInformation("/procurement/DetailedSupplierInformation/DetailedSupplierInformation", "Procurement.Detailed.supplier.information", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -181,7 +190,7 @@ public class ReportProcBean implements Serializable {
         log.info("printUncommittedData");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportUncommittedData("/procurement/uncommittedDataReport/UncommittedDataReport", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportUncommittedData("/procurement/uncommittedDataReport/UncommittedDataReport", "Procurement.uncommitted.data", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -189,7 +198,7 @@ public class ReportProcBean implements Serializable {
         log.info("printMaterialRequisition");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportMaterialRequisition("/procurement/MaterialRequisitions/MaterialRequisitions", "Procurement.PurchaseOrder", messages, locale, configuration, project, sortMap);
+        ReportView reportView = new ReportMaterialRequisition("/procurement/MaterialRequisitions/MaterialRequisitions", "Procurement.material.requisition", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }

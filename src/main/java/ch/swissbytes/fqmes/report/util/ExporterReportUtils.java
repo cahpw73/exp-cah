@@ -120,7 +120,7 @@ public class ExporterReportUtils {
         } else {
 
             // For filename reports (jasperreports)
-            fileFormat = fileFormat.replace(' ', '-');
+            //fileFormat = fileFormat.replace(' ', '-');
 
             // For windows -> filename
             fileFormat = fileFormat.replace('\\', '-');

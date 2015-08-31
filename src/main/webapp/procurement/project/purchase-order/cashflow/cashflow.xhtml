@@ -249,6 +249,22 @@
                                              requiredMessage="Enter a Item" required="true"/>
                             </h:panelGroup>
                         </p:column>
+                        <p:column headerText="#{msgs['po.cashflow.column.milestone.percentage']}"
+                                  width="250"
+                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                            <h:panelGroup id="viPercentage" rendered="#{!_l.isEditable}">
+                                <h:outputText value="#{_l.percentage}">
+                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                     locale="#{configuration.langLocalDecimal}"/>
+                                </h:outputText>
+                            </h:panelGroup>
+                            <h:panelGroup id="edPercentage" rendered="#{_l.isEditable}">
+                                <h:inputText id="percentage" value="#{_l.percentage}" styleClass="form-control">
+                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                     locale="#{configuration.langLocalDecimal}"/>
+                                </h:inputText>
+                            </h:panelGroup>
+                        </p:column>
                         <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}"
                                   width="250"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
