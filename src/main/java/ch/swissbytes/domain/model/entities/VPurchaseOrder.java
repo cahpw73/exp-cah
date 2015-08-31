@@ -94,7 +94,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
         this.poTitle = poTitle;
     }
 
-    @Column(name="supplier",updatable = false, insertable = false, nullable = true)
+    @Column(name="company",updatable = false, insertable = false, nullable = true)
     public String getSupplier() {
         return supplier;
     }
