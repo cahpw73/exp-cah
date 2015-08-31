@@ -234,6 +234,7 @@ public class PoBean extends Bean {
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
             listBean.setCurrentPurchaseOrder(purchaseOrder);
+            loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("printDraft();");
             context.execute("restartChanges();");
@@ -250,6 +251,7 @@ public class PoBean extends Bean {
             sortPurchaseListByVariationAndDoUpdate();
             sortScopeSupplyAndDoUpdate();
             listBean.setCurrentPurchaseOrder(purchaseOrder);
+            loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
             context.execute("printDraft();");

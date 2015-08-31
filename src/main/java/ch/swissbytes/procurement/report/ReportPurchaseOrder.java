@@ -89,6 +89,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("footerLogo", logo);
         }
         addParameters("purchaseOrderId", po.getId());
+        addParameters("variation",po.getVariationNumber()!=null&&!po.getVariationNumber().equalsIgnoreCase("v0")?po.getVariationNumber().substring(1,po.getVariationNumber().length()):null);
 
         if(po.getPoEntity().getSupplier() != null){
             addParameters("company", po.getPoEntity().getSupplier().getCompany());

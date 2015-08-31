@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="432"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -107,6 +107,7 @@
 	<parameter name="contactEmail" class="java.lang.String"/>
 	<parameter name="contactFax" class="java.lang.String"/>
 	<parameter name="contactPhone" class="java.lang.String"/>
+	<parameter name="variation" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -211,7 +212,7 @@
 				<textElement textAlignment="Center" markup="styled">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PURCHASE ORDER NO : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{variation}!=null?"Variation No."+$P{variation}+" To ":"")+"PURCHASE ORDER NO : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="3" y="127" width="28" height="12"/>
