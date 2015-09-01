@@ -102,7 +102,7 @@ order by item]]>
 				<text><![CDATA[Amount of Claim]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="365" y="8" width="57" height="28"/>
+				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="361" y="8" width="71" height="28"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Cumulative Expenditure]]></text>
 			</staticText>
@@ -155,7 +155,7 @@ order by item]]>
 				<textFieldExpression><![CDATA[$F{claim_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{claim_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="365" y="3" width="71" height="20"/>
+				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="361" y="3" width="71" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -177,7 +177,7 @@ order by item]]>
 	<summary>
 		<band height="20" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="f1a9df2f-b196-4282-bfc7-7f71169f9d33" style="Arial-Bold" x="366" y="0" width="117" height="20"/>
+				<reportElement uuid="f1a9df2f-b196-4282-bfc7-7f71169f9d33" style="Arial-Bold" x="361" y="0" width="117" height="20"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
