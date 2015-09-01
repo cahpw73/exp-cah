@@ -234,6 +234,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        //@TODO SE COPIA ESTO EN LOS OTROS METODOS QUE PERSISTEN
         String incoTerms = getStrToIncoTerm(po.getPoint());
         if(exitsDeliveryPointInIncoTerms(incoTerms)){
             purchaseOrderEntity.setIncoTerm(incoTerms);
