@@ -173,7 +173,7 @@
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" isPrintRepeatedValues="false" x="3" y="50" width="135" height="15" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="c9d7a110-8618-40ac-a12c-788984b6f2e5" positionType="Float" isPrintRepeatedValues="false" x="3" y="50" width="150" height="15" isRemoveLineWhenBlank="true"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -187,14 +187,14 @@
 				<textFieldExpression><![CDATA[$P{clientDetail1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" isPrintRepeatedValues="false" x="192" y="50" width="135" height="15" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="7fcee1bd-bce8-40b2-91c1-ecd11fed76c4" positionType="Float" isPrintRepeatedValues="false" x="185" y="50" width="150" height="15" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientDetail2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" isPrintRepeatedValues="false" x="381" y="50" width="135" height="15" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="e44b7093-2552-468e-acbf-0a920c5871ad" positionType="Float" isPrintRepeatedValues="false" x="368" y="50" width="150" height="15" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7"/>
 				</textElement>

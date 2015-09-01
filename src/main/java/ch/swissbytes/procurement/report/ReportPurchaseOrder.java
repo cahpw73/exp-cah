@@ -89,7 +89,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("footerLogo", logo);
         }
         addParameters("purchaseOrderId", po.getId());
-        addParameters("variation",po.getVariationNumber()!=null&&!po.getVariationNumber().equalsIgnoreCase("v0")?po.getVariationNumber().substring(1,po.getVariationNumber().length()):null);
+        String variation=generateVariation(po.getVariationNumber());
+        addParameters("variation",variation);
 
         if(po.getPoEntity().getSupplier() != null){
             addParameters("company", po.getPoEntity().getSupplier().getCompany());
@@ -132,7 +133,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         addParameters("poList",createDataSource(getPOReportDto()));
         addParameters("totalClauses",this.clausesList.size());
-        addParameters("poTitle",po.getPoEntity().getOrderTitle());
+        addParameters("poTitle",po.getPoTitle());
         addParameters("projectName",po.getProjectEntity().getTitle());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
 
@@ -153,6 +154,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
+    }
+    private String generateVariation(String variation){
+        String variationNumber=Util.removePrefixForVariation(variation,"v");
+        return variationNumber!=null&&variationNumber.trim().length()>0&&!variationNumber.trim().equalsIgnoreCase("0")?variationNumber.trim():null;
     }
     private Map<Integer,String> separateDetail(String detail){
         Map<Integer,String> columns=new HashMap<>();

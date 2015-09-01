@@ -92,17 +92,17 @@ order by item]]>
 				<text><![CDATA[Milestone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="126" y="8" width="105" height="20"/>
+				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="147" y="8" width="105" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Milestone Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c4db6174-c8c7-4cff-b07f-cf56fd4832c3" style="Arial-Bold" x="233" y="8" width="83" height="20"/>
+				<reportElement uuid="c4db6174-c8c7-4cff-b07f-cf56fd4832c3" style="Arial-Bold" x="263" y="8" width="83" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Amount of Claim]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="318" y="8" width="117" height="20"/>
+				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="365" y="8" width="57" height="28"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Cumulative Expenditure]]></text>
 			</staticText>
@@ -118,7 +118,7 @@ order by item]]>
 				<reportElement uuid="583bf7cc-1356-46ab-b571-7dc857b0f43c" x="0" y="36" width="518" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="69" y="8" width="55" height="20"/>
+				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="79" y="8" width="55" height="20"/>
 				<textElement markup="styled"/>
 				<text><![CDATA[Percentage]]></text>
 			</staticText>
@@ -134,14 +134,14 @@ order by item]]>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="126" y="3" width="105" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="147" y="3" width="105" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{milestone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3ba5632f-f008-46ec-84ab-d80b78fd9780" style="Arial" x="233" y="3" width="83" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="3ba5632f-f008-46ec-84ab-d80b78fd9780" style="Arial" x="266" y="3" width="83" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -155,16 +155,16 @@ order by item]]>
 				<textFieldExpression><![CDATA[$F{claim_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{claim_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="318" y="3" width="117" height="20"/>
+				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="365" y="3" width="71" height="20"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$V{total}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0d3e1846-7e58-4574-8b3d-7dd200cffe15" style="Arial" x="69" y="3" width="55" height="20"/>
-				<textElement markup="styled"/>
-				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
+				<reportElement uuid="0d3e1846-7e58-4574-8b3d-7dd200cffe15" style="Arial" x="79" y="3" width="55" height="20"/>
+				<textElement textAlignment="Right" markup="styled"/>
+				<textFieldExpression><![CDATA[$F{percentage}!=null?"% "+$F{percentage}:null]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -177,7 +177,7 @@ order by item]]>
 	<summary>
 		<band height="20" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="f1a9df2f-b196-4282-bfc7-7f71169f9d33" style="Arial-Bold" x="296" y="0" width="117" height="20"/>
+				<reportElement uuid="f1a9df2f-b196-4282-bfc7-7f71169f9d33" style="Arial-Bold" x="366" y="0" width="117" height="20"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>

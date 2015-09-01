@@ -89,7 +89,7 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
     private String generateName(PurchaseOrderEntity po){
-        String fileName=po.getProjectEntity().getTitle()!=null?po.getProjectEntity().getTitle()+"-":"";
+        String fileName=po.getProjectEntity().getProjectNumber()!=null?po.getProjectEntity().getProjectNumber()+"-":"";
         fileName=fileName+(po.getPo()!=null?po.getPo()+" ":"");
         if(po.getVariationNumber()!=null && !po.getVariationNumber().equalsIgnoreCase("v0")&& !po.getVariationNumber().equalsIgnoreCase("0")){
             fileName=fileName+po.getVariationNumber().toUpperCase()+" ";
