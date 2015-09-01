@@ -433,4 +433,15 @@ where variation is not null and length(trim(variation))>0 and lower(trim(variati
 
 update p_order as po set po_status =0
 FROM purchase_order as por
-where por.po_id=po.id and por.project_id=1
+where por.po_id=po.id and por.project_id=1;
+
+
+DROP VIEW V_PURCHASE_ORDER;
+CREATE OR REPLACE VIEW V_PURCHASE_ORDER AS
+SELECT ROW_NUMBER() OVER () AS ID, PO.ID AS PO_ID,
+	PO.PROJECT, PO.PO, PO.VARIATION, PO.PO_TITLE, S.COMPANY,PO.RESPONSIBLE_EXPEDITING, PO.PO_INCO_TERM, PO.PO_DELIVERY_DATE,PO.REQUIRED_DATE,
+	PURCHASE_ORDER_STATUS
+   FROM PURCHASE_ORDER  PO INNER JOIN p_order por on por.id=po_id
+   LEFT JOIN SUPPLIER_PROC S ON POR.SUPPLIER_ID=S.ID
+   WHERE PO.STATUS_ID<>3 and por.po_status=0
+   ORDER BY CASE WHEN ISNUMERIC(PO) THEN LPAD(PO.PO, 50, '0') ELSE PO.PO END;

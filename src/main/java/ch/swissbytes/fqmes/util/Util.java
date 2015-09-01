@@ -212,5 +212,14 @@ public class Util {
         }
         return currencyEnd;
     }
+    public static String removePrefixForVariation(String variation,String PREFIX){
+        String finalVariation=variation;
+        if(StringUtils.isNotEmpty(finalVariation)&&StringUtils.isNotBlank(finalVariation)){
+            while(finalVariation.toLowerCase().trim().startsWith(PREFIX)&&StringUtils.isNotBlank(finalVariation)){
+                finalVariation=finalVariation.substring(1,finalVariation.length());
+            }
+        }
+        return finalVariation;
+    }
 
 }

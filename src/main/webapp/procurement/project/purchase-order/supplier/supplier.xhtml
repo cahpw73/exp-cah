@@ -30,7 +30,7 @@
                                                        var="_s"
                                                        itemValue="#{_s}"
                                                        itemLabel="#{_s.company}"/>
-                                        <p:ajax async="false" update="supplierDetail conactSupId btnAddContact"
+                                        <p:ajax async="false" update="supplierDetail conactSupId btnAddContact projectEmailSupId"
                                                 process="@this"/>
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
@@ -187,7 +187,7 @@
                                                value="#{poBean.purchaseOrder.poEntity.supplier.contacts}"
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.fullName}"/>
-                                <p:ajax async="false" update="phoneSupId faxSupId messageContact" process="conactSupId"/>
+                                <p:ajax async="false" update="phoneSupId faxSupId messageContact projectEmailSupId" process="conactSupId"/>
                             </h:selectOneMenu>
                             <p:message id="messageContact" for="conactSupId"/>
                             <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
