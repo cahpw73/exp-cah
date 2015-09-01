@@ -239,6 +239,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         if(exitsDeliveryPointInIncoTerms(incoTerms)){
             purchaseOrderEntity.setIncoTerm(incoTerms);
             purchaseOrderEntity.setFullIncoTerms(po.getDeliveryInstruction());
+        }else{
+            purchaseOrderEntity.setIncoTerm(null);
+            purchaseOrderEntity.setFullIncoTerms(null);
         }
         dao.save(purchaseOrderEntity);
         //requisition daos
@@ -257,7 +260,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     public boolean exitsDeliveryPointInIncoTerms(String point){
         for(IncoTermsEnum i : IncoTermsEnum.values()){
-            if(i.name().equals(point)){
+            if(i.name().equalsIgnoreCase(point)){
                 return true;
             }
         }
@@ -265,7 +268,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public String getStrToIncoTerm(String point){
-        return point.substring(0,3);
+        return point!=null&&point.length()>2? point.substring(0,3):point;
     }
 
     public void addPrefixToVariation(PurchaseOrderEntity purchaseOrderEntity) {
@@ -305,6 +308,14 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
+        String incoTerms = getStrToIncoTerm(po.getPoint());
+        if(exitsDeliveryPointInIncoTerms(incoTerms)){
+            purchaseOrderEntity.setIncoTerm(incoTerms);
+            purchaseOrderEntity.setFullIncoTerms(po.getDeliveryInstruction());
+        }else{
+            purchaseOrderEntity.setIncoTerm(null);
+            purchaseOrderEntity.setFullIncoTerms(null);
+        }
         dao.update(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doUpdate(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
@@ -323,6 +334,14 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
+        String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPoEntity().getPoint());
+        if(exitsDeliveryPointInIncoTerms(incoTerms)){
+            purchaseOrderEntity.setIncoTerm(incoTerms);
+            purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPoEntity().getDeliveryInstruction());
+        }else{
+            purchaseOrderEntity.setIncoTerm(null);
+            purchaseOrderEntity.setFullIncoTerms(null);
+        }
         dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         return purchaseOrderEntity;
     }
