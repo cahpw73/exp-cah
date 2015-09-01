@@ -15,6 +15,7 @@ import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.IncoTermsEnum;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
@@ -233,6 +234,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        //@TODO SE COPIA ESTO EN LOS OTROS METODOS QUE PERSISTEN
+        String incoTerms = getStrToIncoTerm(po.getPoint());
+        if(exitsDeliveryPointInIncoTerms(incoTerms)){
+            purchaseOrderEntity.setIncoTerm(incoTerms);
+            purchaseOrderEntity.setFullIncoTerms(po.getDeliveryInstruction());
+        }
         dao.save(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
@@ -246,6 +253,19 @@ public class PurchaseOrderService extends Service implements Serializable {
         textService.doSave(purchaseOrderEntity.getPoEntity().getTextEntity(), po);
 
         return purchaseOrderEntity;
+    }
+
+    public boolean exitsDeliveryPointInIncoTerms(String point){
+        for(IncoTermsEnum i : IncoTermsEnum.values()){
+            if(i.name().equals(point)){
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    public String getStrToIncoTerm(String point){
+        return point.substring(0,3);
     }
 
     public void addPrefixToVariation(PurchaseOrderEntity purchaseOrderEntity) {
