@@ -84,6 +84,37 @@
 
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                               for="clientLogoLeft" value="#{msgs['project.detail.client.logo.left']}"/>
+
+                                <div class="col-sm-5">
+                                    <h:selectOneMenu id="clientLogoLeft" onchange="doChangeProc();"
+                                                     value="#{clientBean.client.clientLogoLeft}"
+                                                     styleClass="form-control" converter="logoConverter">
+                                        <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                      noSelectionOption="true"/>
+                                        <f:selectItems value="#{logoBean.logos}"
+                                                       var="_l"
+                                                       itemValue="#{_l}"
+                                                       itemLabel="#{_l.description}"/>
+                                    </h:selectOneMenu>
+                                    <p:message for="clientLogoLeft"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="pull-right">
+                                        <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                       type="button" onclick="doChangeProc();PF('logoModal').show();"
+                                                       action="#{clientBean.startClientLogoLeft}"
+                                                       value="#{msgs['project.detail.btn.new.logo']}">
+                                            <p:ajax
+                                                    async="false" process="logoGroupId"
+                                                    update=":logoModalId"/>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                for="clientLogo" value="#{msgs['project.detail.company.logo']}"/>
 
                                 <div class="col-sm-5">

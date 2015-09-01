@@ -20,6 +20,7 @@ public class ClientEntity implements Serializable {
     private String title;
     private String name;
     private LogoEntity reportLogo;
+    private LogoEntity clientLogoLeft;
     private LogoEntity clientLogo;
     private LogoEntity clientFooter;
     private LogoEntity defaultLogo;
@@ -81,6 +82,16 @@ public class ClientEntity implements Serializable {
 
     public void setReportLogo(LogoEntity reportLogo) {
         this.reportLogo = reportLogo;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_logo_left_id", nullable = true)
+    public LogoEntity getClientLogoLeft() {
+        return clientLogoLeft;
+    }
+
+    public void setClientLogoLeft(LogoEntity clientLogoLeft) {
+        this.clientLogoLeft = clientLogoLeft;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
