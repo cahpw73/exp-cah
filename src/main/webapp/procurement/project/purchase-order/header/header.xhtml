@@ -92,7 +92,7 @@
 
                     <div style="width: 210px; float: left; margin-left: -15px;">
                         <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
-                                         value="#{poBean.purchaseOrder.poEntity.supplierHeader}"
+                                         value="#{poBean.purchaseOrder.poEntity.supplier}"
                                          styleClass="form-control" onclick="doChangeProc();"
                                          converter="supplierConverter">
                             <f:selectItem
@@ -101,10 +101,11 @@
                             <f:selectItems value="#{supplierProcList.suppliers}"
                                            var="_s"
                                            itemValue="#{_s}"
-                                           itemLabel="#{_s.company}"/>
+                                           itemLabel="#{_s.fullName}"/>
+                            <p:ajax async="false" update="supplierSupId"/>
                         </h:selectOneMenu>
                         <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
-                                     value="#{poBean.purchaseOrder.poEntity.supplierHeader.company}"
+                                     value="#{poBean.purchaseOrder.poEntity.supplier.company}"
                                      rendered="#{poBean.beingViewed}"/>
                     </div>
                 </div>

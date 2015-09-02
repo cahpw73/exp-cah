@@ -121,6 +121,8 @@ public class SupplierEntity implements Serializable{
         return that.hashCode()==this.hashCode();
     }
 
+
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;

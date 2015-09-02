@@ -118,6 +118,8 @@ public class PoBean extends Bean {
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
         }
+        requisitionBean.getList().clear();
+        deliverableBean.getList().clear();
         requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
         deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
         if (modeView == null) {
@@ -221,7 +223,7 @@ public class PoBean extends Bean {
         log.info("purchase order updated [" + purchaseOrder.getId() + "]");
         sortPurchaseListByVariationAndDoUpdate();
         sortScopeSupplyAndDoUpdate();
-        Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoEntity().getOrderTitle() + " has been saved.", null);
+        Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoTitle() + " has been saved.", null);
         return !edit ? backToList() : "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
     }
 

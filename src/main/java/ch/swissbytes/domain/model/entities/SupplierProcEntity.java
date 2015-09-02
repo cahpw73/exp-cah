@@ -215,6 +215,10 @@ public class SupplierProcEntity implements Serializable {
         return getPhone()+System.lineSeparator()+getFax();
     }
 
+    @Transient
+    public String getFullName(){
+        return (supplierId!=null&&supplierId.trim().length()>0?"("+supplierId.trim()+") ":"")+company;
+    }
 
     @Override
     public boolean equals(Object o) {

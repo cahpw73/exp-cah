@@ -164,7 +164,7 @@ order by item]]>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="0d3e1846-7e58-4574-8b3d-7dd200cffe15" style="Arial" x="79" y="3" width="55" height="20"/>
 				<textElement textAlignment="Right" markup="styled"/>
-				<textFieldExpression><![CDATA[$F{percentage}!=null?"% "+$F{percentage}:null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{percentage}!=null?"% "+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{percentage}):null]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
