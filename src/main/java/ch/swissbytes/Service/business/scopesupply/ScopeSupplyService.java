@@ -10,6 +10,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -157,6 +158,17 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
 
     public List<ScopeSupplyEntity> scopeSupplyListByPOOId(final Long purchaseOrderId){
         return dao.findByPOOId(purchaseOrderId);
+    }
+
+    public List<ProjectCurrencyEntity>findCurrenciesBy(final Long purchaseOrderId){
+        List<ScopeSupplyEntity>list=scopeSupplyListByPOId(purchaseOrderId);
+        List<ProjectCurrencyEntity>currencies=new ArrayList<>();
+        for(ScopeSupplyEntity scopeSupplyEntity:list){
+            if(!currencies.contains(scopeSupplyEntity.getProjectCurrency())) {
+                currencies.add(scopeSupplyEntity.getProjectCurrency());
+            }
+        }
+        return currencies;
     }
 
     @Transactional

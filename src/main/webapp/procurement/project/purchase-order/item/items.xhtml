@@ -161,11 +161,11 @@
                                            action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}" process=":editPoForm:itemsDt"
                                            action="#{itemBean.confirmItem(_i)}"
-                                           update=":glbMsgs itemsDt :editPoForm:projectValueId :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId" async="false"/>
+                                           update=":glbMsgs itemsDt :editPoForm:projectValueId :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.deleteItem(_i)}"
-                                           update="itemsDt :editPoForm:projectValueId :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId" async="false">
+                                           update="itemsDt :editPoForm:projectValueId :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt" async="false">
                                 <p:confirm header="Remove item"
                                            message="Are you sure to delete this item"
                                            icon="ui-icon-alert">

@@ -146,14 +146,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
     }
 
-   /* private void deleteSupplier(final Long purchaseOrderId) {
-        SupplierEntity supplier = supplierDao.findByPurchaseOrder(purchaseOrderId);
-        if (supplier != null) {
-            supplier.setStatus(getStatusDelete());
-            supplierDao.update(supplier);
-        }
-    }*/
-
     private void deleteComment(final Long purchaseOrderId) {
         List<CommentEntity> commentList = commentDao.findByPurchaseOrder(purchaseOrderId);
         if (!commentList.isEmpty()) {
@@ -515,4 +507,26 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return has;
     }
+
+    /*
+    It finds all purchase orders that haave the same Po Number and are under the same
+    Project.
+    * */
+    public List<PurchaseOrderEntity> findRelatives(Long purchaseOrderId){
+        List<PurchaseOrderEntity> list=new ArrayList<>();
+        PurchaseOrderEntity po=load(purchaseOrderId);
+        if(po!=null){
+            for (PurchaseOrderEntity poe:dao.findByProjectAndPo(po.getProjectEntity().getId(),po.getPo())){
+                if(poe.getId().longValue()!=purchaseOrderId.longValue()){
+                    list.add(poe);
+                }
+            }
+
+        }
+        return list;
+    }
+    public String joinRequisitionsNumbers(){
+        return null;
+    }
+
 }

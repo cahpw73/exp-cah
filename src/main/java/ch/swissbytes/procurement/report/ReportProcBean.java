@@ -94,7 +94,7 @@ public class ReportProcBean implements Serializable {
         if(po.getVariationNumber()!=null && !po.getVariationNumber().equalsIgnoreCase("v0")&& !po.getVariationNumber().equalsIgnoreCase("0")){
             fileName=fileName+po.getVariationNumber().toUpperCase()+" ";
         }
-        return fileName+(po.getPoEntity().getOrderTitle()!=null?po.getPoEntity().getOrderTitle():"");
+        return fileName+(po.getPoTitle()!=null?po.getPoTitle():"");
     }
 
     public void printProjectPurchaseOrder(final ProjectEntity project, final List<PurchaseOrderEntity> poList, final String strSortBy) {

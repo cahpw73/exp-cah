@@ -393,13 +393,13 @@ public class PoBean extends Bean {
     public void saveSupplier() {
         SupplierProcEntity supplierProcEntity = supplier.save();
         if (supplierProcEntity != null) {
-            if (supplierHeaderMode) {
+           /* if (supplierHeaderMode) {
                 purchaseOrder.getPoEntity().setSupplierHeader(supplierProcEntity);
-            } else if (supplierMode) {
+            } else if (supplierMode) {*/
                 purchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
                 purchaseOrder.getPoEntity().setContactEntity(null);
-            }
-            supplierHeaderMode = supplierMode = false;
+            //}
+           // supplierHeaderMode = supplierMode = false;
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");

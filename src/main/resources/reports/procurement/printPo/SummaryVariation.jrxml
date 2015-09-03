@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SummaryVariation" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5bffa4db-f1ee-4855-a9ee-47d2697da4ea">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from purchase_order
+where po='0001' and project_id=1]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="project" class="java.lang.String"/>
+	<field name="po" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
+	<field name="project_name_comment" class="java.lang.String"/>
+	<field name="po_title" class="java.lang.String"/>
+	<field name="po_inco_term" class="java.lang.String"/>
+	<field name="full_inco_term" class="java.lang.String"/>
+	<field name="po_delivery_date" class="java.sql.Timestamp"/>
+	<field name="delivery_date_comment" class="java.lang.String"/>
+	<field name="responsible_expediting" class="java.lang.String"/>
+	<field name="intro_email_sent" class="java.sql.Timestamp"/>
+	<field name="intro_email_sent_comment" class="java.lang.String"/>
+	<field name="required_date" class="java.sql.Timestamp"/>
+	<field name="required_site_date_comment" class="java.lang.String"/>
+	<field name="actual_date" class="java.sql.Timestamp"/>
+	<field name="actual_site_date_comment" class="java.lang.String"/>
+	<field name="last_update" class="java.sql.Timestamp"/>
+	<field name="status_id" class="java.lang.Integer"/>
+	<field name="rfe_comment" class="java.lang.String"/>
+	<field name="purchase_order_status" class="java.lang.Integer"/>
+	<field name="orderedvariation" class="java.lang.Integer"/>
+	<field name="po_id" class="java.lang.Long"/>
+	<field name="project_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5279b8f3-da23-4372-bdf7-2ad873fb696a" x="14" y="9" width="402" height="20"/>
+				<textElement/>
+				<text><![CDATA[All Other Terms and conditions remain unchanged by this Purchase Order Variation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fda47b36-dbe3-437c-a2a9-3b5bc871bb60" x="14" y="34" width="158" height="20"/>
+				<textElement/>
+				<text><![CDATA[Purchase Order Summary]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ed598209-e672-48f5-9552-cf6cda913d54" x="14" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Revised Order Value]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

@@ -23,8 +23,8 @@ public class POEntity implements Serializable{
 
     private Long id;
     private Date orderDate;
-    private String orderTitle;
-    private String varNumber;
+    //private String orderTitle;
+   // private String varNumber;
     private String orderNumber;
     private ProjectCurrencyEntity currency;
     private String deliveryInstruction;
@@ -76,7 +76,7 @@ public class POEntity implements Serializable{
     public void setCurrency(ProjectCurrencyEntity currency) {
         this.currency = currency;
     }
-    @Size(max = 250)
+   /* @Size(max = 250)
     @Column(name="var_number",  length=250)
     public String getVarNumber() {
         return varNumber;
@@ -84,9 +84,9 @@ public class POEntity implements Serializable{
 
     public void setVarNumber(String varNumber) {
         this.varNumber = varNumber;
-    }
+    }*/
 
-    @Size(max = 250)
+    /*@Size(max = 250)
     @Column(name="order_title", length=250)
     public String getOrderTitle() {
         return orderTitle;
@@ -94,7 +94,7 @@ public class POEntity implements Serializable{
 
     public void setOrderTitle(String orderTitle) {
         this.orderTitle = orderTitle;
-    }
+    }*/
 
 
     @Column(name="ORDER_DATE")
@@ -157,9 +157,9 @@ public class POEntity implements Serializable{
         this.procManagerDetail = procManagerDetail;
     }
 
-    private SupplierProcEntity supplierHeader;
+   // private SupplierProcEntity supplierHeader;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+   /* @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="supplier_header_id")
     public SupplierProcEntity getSupplierHeader() {
         return supplierHeader;
@@ -167,7 +167,7 @@ public class POEntity implements Serializable{
 
     public void setSupplierHeader(SupplierProcEntity supplierHeader) {
         this.supplierHeader = supplierHeader;
-    }
+    }*/
 
     @Column(name = "po_status")
     public POStatusEnum getPoProcStatus() {
