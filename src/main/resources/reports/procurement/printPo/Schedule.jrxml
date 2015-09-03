@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="26"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial-Bold-Italic" pdfFontName="C:\fonts\arialbi.ttf"/>
@@ -14,6 +14,15 @@
 	<parameter name="exchangeRate" class="java.math.BigDecimal"/>
 	<parameter name="poNo" class="java.lang.String"/>
 	<parameter name="projectNumber" class="java.lang.String"/>
+	<parameter name="currencyLbl1" class="java.lang.String"/>
+	<parameter name="currencyLbl2" class="java.lang.String"/>
+	<parameter name="currencyLbl3" class="java.lang.String"/>
+	<parameter name="currencyId1" class="java.lang.Long"/>
+	<parameter name="currencyId2" class="java.lang.Long"/>
+	<parameter name="currencyId3" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\printPo\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol,cfd.percentage
 from cashflow cf inner join cashflow_detail cfd  on
@@ -32,7 +41,7 @@ order by item]]>
 	<field name="code" class="java.lang.String"/>
 	<field name="symbol" class="java.lang.String"/>
 	<field name="percentage" class="java.math.BigDecimal"/>
-	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="total1" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{order_amt},$F{exchange_rate},$P{exchangeRate})]]></variableExpression>
 	</variable>
 	<background>
@@ -42,7 +51,7 @@ order by item]]>
 		<band height="25" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="99" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="dc2be798-737b-404a-aa49-b32395f2ea10" style="Arial-Bold" x="211" y="25" width="84" height="20" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
@@ -87,28 +96,24 @@ order by item]]>
 	<columnHeader>
 		<band height="37" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="8bc4d2a3-9d71-478b-a956-d7e2c672096f" style="Arial-Bold" x="17" y="8" width="50" height="20"/>
-				<textElement markup="styled"/>
+				<reportElement uuid="8bc4d2a3-9d71-478b-a956-d7e2c672096f" style="Arial-Bold" x="0" y="3" width="38" height="20"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Milestone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="147" y="8" width="105" height="20"/>
-				<textElement markup="styled"/>
+				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="39" y="3" width="42" height="28"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Milestone Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c4db6174-c8c7-4cff-b07f-cf56fd4832c3" style="Arial-Bold" x="263" y="8" width="83" height="20"/>
-				<textElement markup="styled"/>
-				<text><![CDATA[Amount of Claim]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="4d413b17-0bd7-4310-8c78-f59a551bae69" style="Arial-Bold" x="361" y="8" width="71" height="28"/>
-				<textElement markup="styled"/>
-				<text><![CDATA[Cumulative Expenditure]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3af60dda-9c33-4050-b058-25150c2b5eb7" style="Arial-Bold" x="437" y="8" width="70" height="20"/>
-				<textElement markup="styled"/>
+				<reportElement uuid="3af60dda-9c33-4050-b058-25150c2b5eb7" style="Arial-Bold" x="470" y="3" width="48" height="33"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
 				<text><![CDATA[Claim Month]]></text>
 			</staticText>
 			<line>
@@ -118,54 +123,125 @@ order by item]]>
 				<reportElement uuid="583bf7cc-1356-46ab-b571-7dc857b0f43c" x="0" y="36" width="518" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="79" y="8" width="55" height="20"/>
-				<textElement markup="styled"/>
-				<text><![CDATA[Percentage]]></text>
+				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="82" y="3" width="23" height="20"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="851f05f9-6637-4766-aa52-29fd3eed9911" style="Arial-Bold" x="346" y="3" width="57" height="33"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Amount of Claim "+($P{currencyLbl3}!=null?$P{currencyLbl3}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84ea4b1b-18a2-4724-9a20-64d8f7967f73" style="Arial-Bold" x="284" y="3" width="61" height="33"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cumulative Expenditure "+($P{currencyLbl2}!=null?$P{currencyLbl2}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c92ee45f-c592-4b2e-90ef-5ca309253460" style="Arial-Bold" x="404" y="3" width="57" height="34"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cumulative Expenditure "+($P{currencyLbl3}!=null?$P{currencyLbl3}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4929b386-a1d8-4f16-98d0-0ba64f4978e0" style="Arial-Bold" x="226" y="3" width="57" height="34"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Amount of Claim "+($P{currencyLbl2}!=null?$P{currencyLbl2}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="df9aadbc-dce5-403a-8f57-ddd8914b0249" style="Arial-Bold" x="106" y="3" width="57" height="33"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Amount of Claim "+ ($P{currencyLbl1}!=null?$P{currencyLbl1}:"")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="244eaa98-8e82-440e-a783-100e39e0d6a3" style="Arial-Bold" x="164" y="3" width="61" height="33"/>
+				<textElement markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cumulative Expenditure "+($P{currencyLbl1}!=null?$P{currencyLbl1}:"")]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="24" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="eac1b157-0990-4257-9eea-092f7d17527e" style="Arial" x="17" y="3" width="50" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="eac1b157-0990-4257-9eea-092f7d17527e" style="Arial" x="1" y="3" width="37" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="147" y="3" width="105" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="5b7c09e2-d22f-4a22-8739-3439fa87819f" style="Arial" x="38" y="4" width="42" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{milestone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3ba5632f-f008-46ec-84ab-d80b78fd9780" style="Arial" x="266" y="3" width="83" height="20" isPrintWhenDetailOverflows="true"/>
-				<textElement>
-					<font size="9"/>
+				<reportElement uuid="0d3e1846-7e58-4574-8b3d-7dd200cffe15" style="Arial" x="81" y="4" width="23" height="20"/>
+				<textElement textAlignment="Right" markup="styled">
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{order_amt}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$F{order_amt}):null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{percentage}!=null?"% "+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{percentage}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="437" y="3" width="70" height="20" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="9cf0cc9d-cf9d-4404-926d-a3737dd29aad" style="Arial" x="470" y="3" width="48" height="20" isPrintWhenDetailOverflows="true"/>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{claim_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{claim_date}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="2cf2ef90-59aa-47f1-af1d-14c9f032a0ed" style="Arial" x="361" y="3" width="71" height="20"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{total}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$V{total}):null]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0d3e1846-7e58-4574-8b3d-7dd200cffe15" style="Arial" x="79" y="3" width="55" height="20"/>
-				<textElement textAlignment="Right" markup="styled"/>
-				<textFieldExpression><![CDATA[$F{percentage}!=null?"% "+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{percentage}):null]]></textFieldExpression>
-			</textField>
+			<subreport>
+				<reportElement uuid="15cd5c2e-1bc9-462b-b841-ac3d083ec257" x="106" y="4" width="119" height="20">
+					<printWhenExpression><![CDATA[$P{currencyId1}!=null]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="currencyId">
+					<subreportParameterExpression><![CDATA[$P{currencyId1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$P{PO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentCurrency.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="239bba5a-ebb5-4cd2-998d-3c39f113586c" x="226" y="4" width="118" height="20">
+					<printWhenExpression><![CDATA[$P{currencyId2}!=null]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="currencyId">
+					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$P{PO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentCurrency.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="137c8925-1018-41d7-92eb-a8277b2e53f9" x="346" y="4" width="114" height="20">
+					<printWhenExpression><![CDATA[$P{currencyId3}!=null]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="currencyId">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$P{PO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentCurrency.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
@@ -175,14 +251,6 @@ order by item]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="20" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="f1a9df2f-b196-4282-bfc7-7f71169f9d33" style="Arial-Bold" x="361" y="0" width="117" height="20"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{total}!=null?ch.swissbytes.fqmes.util.Util.formatMoney($F{symbol}!=null?$F{symbol}:$F{code},$P{patternDecimal},$V{total}):null]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="19" splitType="Stretch"/>
 	</summary>
 </jasperReport>

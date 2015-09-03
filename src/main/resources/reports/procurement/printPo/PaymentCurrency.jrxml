@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymenCurrency" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3bae9887-37ac-4da9-8e2d-ded7e9475be9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="currencyId" class="java.lang.Long"/>
+	<parameter name="PO_ID" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol,cfd.percentage
+from cashflow cf inner join cashflow_detail cfd  on
+cfd.cashflow_id=cf.id
+left join project_currency pc on pc.id= cfd.project_currency_id
+inner join currency cu on pc.currency_id=cu.id
+where cf.status=0 and cfd.status=0 and cf.po_id=$P{PO_ID} and pc.id=$P{currencyId}
+order by item]]>
+	</queryString>
+	<field name="item" class="java.lang.String"/>
+	<field name="milestone" class="java.lang.String"/>
+	<field name="order_amt" class="java.math.BigDecimal"/>
+	<field name="project_amt" class="java.math.BigDecimal"/>
+	<field name="claim_date" class="java.sql.Timestamp"/>
+	<field name="exchange_rate" class="java.math.BigDecimal"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="symbol" class="java.lang.String"/>
+	<field name="percentage" class="java.math.BigDecimal"/>
+	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{order_amt}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ac334ce3-8deb-46ba-ba12-628b7c274379" x="0" y="0" width="57" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_amt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ea315fae-307b-4a9b-b2b0-d8b19c647b18" x="57" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="5194b798-9a02-4f8f-a30a-de21a53e72ad" x="57" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

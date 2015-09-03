@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.8181818181818181"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="1449"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -109,6 +109,12 @@
 	<parameter name="contactPhone" class="java.lang.String"/>
 	<parameter name="variation" class="java.lang.String"/>
 	<parameter name="logoLeft" class="java.io.InputStream"/>
+	<parameter name="currencyLbl1" class="java.lang.String"/>
+	<parameter name="currencyLbl2" class="java.lang.String"/>
+	<parameter name="currencyLbl3" class="java.lang.String"/>
+	<parameter name="currencyId1" class="java.lang.Long"/>
+	<parameter name="currencyId2" class="java.lang.Long"/>
+	<parameter name="currencyId3" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -905,12 +911,6 @@
 		<band splitType="Immediate">
 			<subreport>
 				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true"/>
-				<subreportParameter name="poNo">
-					<subreportParameterExpression><![CDATA[$P{poNo}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="FORMAT_DATE2">
-					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="exchangeRate">
 					<subreportParameterExpression><![CDATA[$P{exchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -923,11 +923,35 @@
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="projectNumber">
-					<subreportParameterExpression><![CDATA[$P{projectNumber}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="currency">
 					<subreportParameterExpression><![CDATA[$P{currency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl3">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId1">
+					<subreportParameterExpression><![CDATA[$P{currencyId1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId2">
+					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="poNo">
+					<subreportParameterExpression><![CDATA[$P{poNo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl1">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl2">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FORMAT_DATE2">
+					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="projectNumber">
+					<subreportParameterExpression><![CDATA[$P{projectNumber}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="PAGE_NUMBER" toVariable="totalOfPagesSummary"/>

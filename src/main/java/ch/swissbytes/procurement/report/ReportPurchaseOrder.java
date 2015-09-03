@@ -35,6 +35,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private String preamble;
     private List<ClausesEntity> clausesList;
     private Connection connection;
+    private CashflowEntity cashflowEntity;
 
 
     /**
@@ -51,6 +52,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.scopeSupplyList = scopeSupplyList;
         this.preamble = preamble;
         this.clausesList = clausesList;
+        this.cashflowEntity=cashflowEntity;
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
@@ -61,6 +63,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }catch(Exception ex){
             ex.printStackTrace();
         }
+
         addParameters("REPORT_CONNECTION", connection);
         loadParamPurchaseOrder();
         addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
@@ -92,7 +95,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         addParameters("purchaseOrderId", po.getId());
         String variation=generateVariation(po.getVariationNumber());
-        addParameters("variation",variation);
+        addParameters("variation", variation);
 
         if(po.getPoEntity().getSupplier() != null){
             addParameters("company", po.getPoEntity().getSupplier().getCompany());
@@ -153,7 +156,16 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("contactPhone",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getPhone():null);
         addParameters("contactFax",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getFax():null);
 
-
+        int i=1;
+        Map<Long,String> currencies=getCurrenciesForPayment();
+        for(Long key:currencies.keySet()){
+            if(i<=3) {
+                addParameters("currencyLbl" + i, currencies.get(key));
+                addParameters("currencyId" + i, key);
+            }else
+                break;
+            i++;
+        }
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
     }
@@ -170,7 +182,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         return sb.toString().substring(0,limit);
     }
     private String generateVariation(String variation){
-        String variationNumber=Util.removePrefixForVariation(variation,"v");
+        String variationNumber=Util.removePrefixForVariation(variation, "v");
         return variationNumber!=null&&variationNumber.trim().length()>0&&!variationNumber.trim().equalsIgnoreCase("0")?variationNumber.trim():null;
     }
     private Map<Integer,String> separateDetail(String detail){
@@ -203,6 +215,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
 
         return columns;
+    }
+    private Map<Long,String> getCurrenciesForPayment(){
+        Map<Long,String> currencies=new HashMap<Long,String>();
+        for(CashflowDetailEntity cashflowDetailEntity:cashflowEntity.getCashflowDetailList()){
+            if(cashflowDetailEntity.getProjectCurrency()!=null){
+                currencies.put(cashflowDetailEntity.getProjectCurrency().getId(),cashflowDetailEntity.getProjectCurrency().getCurrency().getSymbol()!=null?cashflowDetailEntity.getProjectCurrency().getCurrency().getSymbol():cashflowDetailEntity.getProjectCurrency().getCurrency().getCode());
+            }
+        }
+        return currencies;
     }
 
     private List<PurchaseOrderReportDto> getPOReportDto() {
