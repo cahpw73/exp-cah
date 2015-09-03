@@ -102,7 +102,7 @@
                                            var="_s"
                                            itemValue="#{_s}"
                                            itemLabel="#{_s.fullName}"/>
-                            <p:ajax async="false" update="supplierSupId"/>
+                            <p:ajax async="false" update="supplierDetail"/>
                         </h:selectOneMenu>
                         <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
                                      value="#{poBean.purchaseOrder.poEntity.supplier.company}"
@@ -229,54 +229,7 @@
         <br/>
 
         <div>
-           <!-- <div>
-                <div style="width: 345px!important; float: left!important;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                       for="defaultCurrencyId" value="#{msgs['po.header.lbl.default.currency']}"/>
 
-                        <div style="width: 200px; float: left;">
-                            <h:selectOneMenu id="defaultCurrencyId"
-                                             value="#{poBean.purchaseOrder.poEntity.currency}"
-                                             styleClass="form-control" rendered="#{poBean.beingEdited}"
-                                             converter="projectCurrencyConverter"
-                                             onclick="doChangeProc();" required="true"
-                                             requiredMessage="Enter a default currency">
-                                <p:ajax event="change" update="conversionRateId" process="@this"/>
-                                <f:selectItem
-                                        itemLabel="Select one"
-                                        noSelectionOption="true"/>
-                                <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
-                                               var="_pc"
-                                               itemValue="#{_pc}"
-                                               itemLabel="#{_pc.currency.code}"/>
-                            </h:selectOneMenu>
-                            <p:message for="defaultCurrencyId"/>
-                            <h:inputText id="defaultCurrencyViId" readonly="true" styleClass="form-control view-po"
-                                         value="#{poBean.purchaseOrder.poEntity.currency.currency.code}"
-                                         rendered="#{poBean.beingViewed}"/>
-                        </div>
-
-                    </div>
-                </div>
-                <div style="width: 280px!important; float: left!important; margin-left: 25px;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
-
-                                       for="conversionRateId" value="Conversation Rate"/>
-
-                        <div style="width: 145px; float: left;">
-                            <h:outputText id="conversionRateId"
-                                          value="#{poBean.purchaseOrder.poEntity.currency.exchangeRate}"
-                                          styleClass="form-control"
-                                          style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none">
-                                <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                 locale="#{configuration.langLocalDecimal}"/>
-                            </h:outputText>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="clearfix"/>
             <div>
                 <div style="width: 345px!important; float: left!important;">
@@ -289,21 +242,7 @@
                                      style="width: 200px; float: left;"/>
                     </div>
                 </div>
-               <!-- <div style="width: 280px!important; float: left!important; margin-left: 25px;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-6 control-label procurement-text-lbl-ltr"
-                                       for="projectValueId" value="#{msgs['po.header.lbl.project.value']}"/>
 
-                        <div style="width: 145px; float: left;">
-                            <h:outputText id="projectValueId" value="#{poBean.calculateProjectValue()}"
-                                          styleClass="form-control"
-                                          style="background-color: #eeeeee; border-color: #eeeeee;box-shadow: none">
-                                <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                 locale="#{configuration.langLocalDecimal}"/>
-                            </h:outputText>
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
         <br/>

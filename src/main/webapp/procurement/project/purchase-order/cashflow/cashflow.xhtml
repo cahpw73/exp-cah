@@ -136,7 +136,6 @@
                                                  value="#{cashflowBean.cashflow.projectCurrency}"
                                                  styleClass="form-control" rendered="#{poBean.beingEdited}"
                                                  converter="projectCurrencyConverter" onclick="doChangeProc();">
-                                    <p:ajax event="change" update="conversionRateId" process="@this"/>
                                     <f:selectItem
                                             itemLabel="Select one"
                                             noSelectionOption="true"/>
@@ -170,7 +169,7 @@
                                              value="#{cashflowBean.cashflow.paymentTerms}"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}">
                                 <f:selectItem
-                                        itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
+                                        itemLabel="Select a Payment Term"
                                         noSelectionOption="true"/>
                                 <f:selectItems value="#{cashflowBean.paymentTerms}"
                                                var="_p"

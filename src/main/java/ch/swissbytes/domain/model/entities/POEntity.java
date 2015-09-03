@@ -24,7 +24,7 @@ public class POEntity implements Serializable{
     private Long id;
     private Date orderDate;
     private String orderNumber;
-    //private ProjectCurrencyEntity currency;
+    private ProjectCurrencyEntity currency;
     private String deliveryInstruction;
     private SupplierProcEntity supplier;
     private String point;
@@ -64,8 +64,7 @@ public class POEntity implements Serializable{
     public void setDeliveryInstruction(String deliveryInstruction) {
         this.deliveryInstruction = deliveryInstruction;
     }
-
-   /* @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="currency_id")
     public ProjectCurrencyEntity getCurrency() {
         return currency;
@@ -74,7 +73,6 @@ public class POEntity implements Serializable{
     public void setCurrency(ProjectCurrencyEntity currency) {
         this.currency = currency;
     }
-*/
     @Column(name="ORDER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getOrderDate() {

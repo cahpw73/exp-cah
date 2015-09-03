@@ -14,7 +14,7 @@
         <f:viewAction action="#{poBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editPoForm"  class="form-horizontal">
+        <h:form id="editPoForm" class="form-horizontal">
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{poBean.beingCreated}">
                     <div class="procurement-panel-header">#{msgs['purchase.order.new.po.title']}</div>
@@ -52,40 +52,40 @@
                     <!-- Tab Projects -->
                     <div class="tab-content">
 
-                       <ui:include src="components/po-main-data.xhtml"/>
+                        <ui:include src="components/po-main-data.xhtml"/>
 
-                                              <div class="clearfix"/>
-                                              <div class="separate-line"/>
+                        <div class="clearfix"/>
+                        <div class="separate-line"/>
 
-                                             <div class="tab-pane active" id="headerPo">
-                                                 <br/>
-                                                 <ui:include src="header/header.xhtml"/>
-                                             </div>
+                        <div class="tab-pane active" id="headerPo">
+                            <br/>
+                            <ui:include src="header/header.xhtml"/>
+                        </div>
 
-                                             <div class="tab-pane " id="supplierPo">
-                                                 <br/>
-                                                 <ui:include src="supplier/supplier.xhtml"/>
-                                             </div>
+                        <div class="tab-pane " id="supplierPo">
+                            <br/>
+                            <ui:include src="supplier/supplier.xhtml"/>
+                        </div>
 
-                                             <div class="tab-pane " id="itemPo">
-                                                 <br/>
-                                                 <ui:include src="item/items.xhtml"/>
-                                             </div>
+                        <div class="tab-pane " id="itemPo">
+                            <br/>
+                            <ui:include src="item/items.xhtml"/>
+                        </div>
 
-                                             <div class="tab-pane" id="textPo">
-                                                 <br/>
-                                                 <ui:include src="text/po-text.xhtml"/>
-                                             </div>
+                        <div class="tab-pane" id="textPo">
+                            <br/>
+                            <ui:include src="text/po-text.xhtml"/>
+                        </div>
 
-                                              <div class="tab-pane " id="deliverablesPo">
-                                                  <br/>
-                                                  <ui:include src="deliverables/deliverables.xhtml"/>
-                                              </div>
+                        <div class="tab-pane " id="deliverablesPo">
+                            <br/>
+                            <ui:include src="deliverables/deliverables.xhtml"/>
+                        </div>
 
-                                             <div class="tab-pane " id="cashflowPo">
-                                                  <br/>
-                                                  <ui:include src="cashflow/cashflow.xhtml"/>
-                                              </div>
+                        <div class="tab-pane " id="cashflowPo">
+                            <br/>
+                            <ui:include src="cashflow/cashflow.xhtml"/>
+                        </div>
 
                     </div>
                 </div>
@@ -108,10 +108,10 @@
         </p:dialog>
         <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">
             <h:form id="supplierId" prependId="false">
-                    <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
-                        <ui:param name="MODE" value="PO"/>
-                        <ui:param name="FORM" value="supplierId"/>
-                    </ui:include>
+                <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
+                    <ui:param name="MODE" value="PO"/>
+                    <ui:param name="FORM" value="supplierId"/>
+                </ui:include>
             </h:form>
         </p:dialog>
     </ui:define>
