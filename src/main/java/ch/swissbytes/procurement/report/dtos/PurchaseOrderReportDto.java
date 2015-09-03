@@ -34,7 +34,7 @@ public class PurchaseOrderReportDto implements Serializable {
 
     }
 
-    public PurchaseOrderReportDto(ScopeSupplyEntity scopeSupply,ProjectCurrencyEntity currency){
+    public PurchaseOrderReportDto(ScopeSupplyEntity scopeSupply){
         this.code = scopeSupply.getCode();
         this.quantity = scopeSupply.getQuantity();
         this.unit = scopeSupply.getUnit();

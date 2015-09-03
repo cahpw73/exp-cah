@@ -149,8 +149,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("mrNo", po.getPoEntity().getMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
-        addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
-        addParameters("exchangeRate",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);
+        /*addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
+        addParameters("exchangeRate",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);*/
         addParameters("contactName",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getFullName():null);
         addParameters("contactEmail",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getEmail():null);
         addParameters("contactPhone",po.getPoEntity().getContactEntity()!=null?po.getPoEntity().getContactEntity().getPhone():null);
@@ -202,7 +202,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dtos.add(new PurchaseOrderReportDto(po.getPoTitle()));
         dtos.add(new PurchaseOrderReportDto(null,this.preamble));
         for(ScopeSupplyEntity entity : this.scopeSupplyList){
-            PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity,po.getPoEntity().getCurrency());
+            PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
             dtos.add(dto);
         }
         return dtos;

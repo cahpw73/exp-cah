@@ -77,9 +77,9 @@ public class SpreadsheetService implements Serializable {
                         }
                         break;
                     case 10:
-                        if (entity.getPoEntity().getCurrency() != null) {
+                       /* if (entity.getPoEntity().getCurrency() != null) {
                             processor.writeStringValue(i, entity.getPoEntity().getCurrency().getCurrency().getCode());
-                        }
+                        }*/
                         break;
                 }
                 i++;

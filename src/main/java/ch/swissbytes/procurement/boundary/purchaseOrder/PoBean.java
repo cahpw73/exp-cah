@@ -105,9 +105,9 @@ public class PoBean extends Bean {
         purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         putModeCreation();
         poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
-        if (projectCurrencyList.size() == 1) {
+       /* if (projectCurrencyList.size() == 1) {
             purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
-        }
+        }*/
     }
     private void loadPurchaseOrder(){
         purchaseOrder = service.findById(Long.valueOf(poId));
@@ -194,7 +194,6 @@ public class PoBean extends Bean {
 
     public void doUpdate() {
         log.info("trying to update purchase order on procurement module");
-        boolean success=false;
         if (validate()) {
             collectData();
             purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
@@ -406,9 +405,9 @@ public class PoBean extends Bean {
         }
     }
 
-    public BigDecimal calculateProjectValue() {
+   /* public BigDecimal calculateProjectValue() {
         return service.calculateProjectValue(itemBean.getScopeSupplyList(), purchaseOrder.getPoEntity().getCurrency());
-    }
+    }*/
 
     public String calculateTotalValues() {
         Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
