@@ -32,7 +32,6 @@ public class ContactConverter implements Converter {
         try {
             Long id = Long.parseLong(value);
             ContactEntity contactEntity= contactService.findById(id);
-            System.out.println(contactEntity);
             return contactEntity;
         } catch (NumberFormatException nfe) {
             return null;
@@ -43,12 +42,10 @@ public class ContactConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component,
                               Object value) {
         String string = null;
-        System.out.println("value "+value);
         if (value instanceof ContactEntity) {
             string = ((ContactEntity) value).getId().toString();
 
         }
-        System.out.println("value returned "+string);
         return string;
     }
 }

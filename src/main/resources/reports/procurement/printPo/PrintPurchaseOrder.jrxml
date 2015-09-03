@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.8181818181818181"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="240"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -126,7 +126,7 @@
 		</band>
 	</background>
 	<title>
-		<band height="198" splitType="Stretch">
+		<band height="194" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" style="Arial" positionType="Float" x="302" y="181" width="20" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -223,7 +223,7 @@
 				<text><![CDATA[RFT No]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="37" y="181" width="42" height="12"/>
+				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="34" y="181" width="42" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
@@ -237,7 +237,7 @@
 				<text><![CDATA[MR No.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="124" y="181" width="52" height="12"/>
+				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="124" y="181" width="170" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>

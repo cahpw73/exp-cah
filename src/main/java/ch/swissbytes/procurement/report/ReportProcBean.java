@@ -81,11 +81,14 @@ public class ReportProcBean implements Serializable {
     public void printPurchaseOrder(final PurchaseOrderEntity po,List<ScopeSupplyEntity> list,String preamble,List<ClausesEntity> clausesList) {
         log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
-        initializeParametersToJasperReport();
-        List<CashflowEntity> cashflows=cashflowService.findByPoId(po.getPoEntity().getId());
-        String fileName=generateName(po);
-        ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length()>0?fileName:"Purchase Order", messages, locale, configuration, po, list, preamble,clausesList,cashflows.size()>0?cashflows.get(0):null);
-        reportView.printDocument(null);
+        PurchaseOrderEntity purchaseOrder=service.findById(po.getId());
+        if(purchaseOrder!=null) {
+            initializeParametersToJasperReport();
+            List<CashflowEntity> cashflows = cashflowService.findByPoId(purchaseOrder.getPoEntity().getId());
+            String fileName = generateName(po);
+            ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order", messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflows.size() > 0 ? cashflows.get(0) : null);
+            reportView.printDocument(null);
+        }
         openReport = true;
     }
     private String generateName(PurchaseOrderEntity po){

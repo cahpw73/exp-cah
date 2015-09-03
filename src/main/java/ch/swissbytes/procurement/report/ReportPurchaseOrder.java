@@ -2,10 +2,7 @@ package ch.swissbytes.procurement.report;
 
 
 import ch.swissbytes.Service.processor.Processor;
-import ch.swissbytes.domain.model.entities.CashflowEntity;
-import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
@@ -30,7 +27,7 @@ import java.util.logging.Logger;
 public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private final Logger log = Logger.getLogger(ReportPurchaseOrder.class.getName());
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
+   // private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
     private Configuration configuration;
     private ResourceUtils resourceUtils;
     private PurchaseOrderEntity po;
@@ -146,7 +143,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("vendorDrawingData",po.getPoEntity().getVendorDrawingData()!=null? BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()).toUpperCase():null);
         addParameters("exchangeRateVariation",po.getPoEntity().getExchangeRateVariation()!=null? BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()).toUpperCase():null);
         addParameters("rtfNo",po.getPoEntity().getRTFNo());
-        addParameters("mrNo", po.getPoEntity().getMRNo());
+        addParameters("mrNo", collectMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
         /*addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
@@ -159,6 +156,18 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
+    }
+    private String collectMRNo(){
+        StringBuilder sb=new StringBuilder();
+        for(RequisitionEntity requisitionEntity:po.getPoEntity().getRequisitions()){
+            sb.append(requisitionEntity.getRequisitionNumber());
+            sb.append(",");
+        }
+        Integer limit=sb.toString().length();
+        if(sb.toString().length()>0){
+            limit=limit-1;
+        }
+        return sb.toString().substring(0,limit);
     }
     private String generateVariation(String variation){
         String variationNumber=Util.removePrefixForVariation(variation,"v");
