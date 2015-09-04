@@ -433,7 +433,7 @@ public class PoBean extends Bean {
     }
 
     public boolean poIsOriginal() {
-        if (purchaseOrder != null && purchaseOrder.getOrderedVariation() != null && purchaseOrder.getOrderedVariation().intValue() == 1) {
+        if(purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1) {
             return true;
         }
         return false;
