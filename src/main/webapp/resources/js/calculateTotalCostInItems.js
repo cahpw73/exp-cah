@@ -12,15 +12,16 @@ function calculateTotalCost(){
     var language =  (navigator.userLanguage||navigator.browserLanguage||navigator.language);
     console.log("quantity: " + parseInt(quantity));
     console.log("unitPrice: " + unitPrice);
-    var unitPriceCalc = unitPrice.replace(",", "");
+
     try{
-    if(!isNaN(quantity)&&!isNaN(unitPriceCalc)){
+    if(!isNaN(parseInt(quantity)) && unitPrice != ""){
+        var unitPriceCalc = unitPrice.replace(",", "");
         console.log("calculating....")
         totalPrice = parseFloat(quantity) * parseFloat(unitPriceCalc);
         var totalPriceFixed = parseFloat(totalPrice.toFixed(2));
         document.getElementsByClassName('form-control edTotalCostItems')[0].value = totalPriceFixed.toLocaleString(language);
     }else{
-        document.getElementsByClassName('form-control edTotalCostItems')[0].value = "0.00"
+        document.getElementsByClassName('form-control edTotalCostItems')[0].value = ""
     }
     }catch (ex){
         console.log("error");
