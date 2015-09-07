@@ -93,6 +93,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         supplier.getContacts().clear();
         supplier.getContacts().addAll(contactBean.getList());
         service.save(supplier);
+        Messages.addFlashGlobalInfo("The supplier has been saved!");
         return "list?faces-redirect=true";
     }
 
@@ -117,6 +118,7 @@ public class SupplierProcBean extends Bean implements Serializable {
             return "";
         }
         service.update(supplier);
+        Messages.addFlashGlobalInfo("The supplier has been saved!");
         return "list?faces-redirect=true";
     }
 

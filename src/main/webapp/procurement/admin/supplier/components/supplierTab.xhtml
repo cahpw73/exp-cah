@@ -68,8 +68,6 @@
                                      style="max-width: 181px;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.state}"
-                                     required="true"
-                                     requiredMessage="State is required"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
                                      tabindex="#{tabIndex+2}"/>
 
@@ -89,8 +87,7 @@
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.postCode}"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                                     requiredMessage="Post code is required"
-                                     tabindex="#{tabIndex+3}" required="true"/>
+                                     tabindex="#{tabIndex+3}"/>
 
                     </div>
                     <div style="float: left;display:inline-flex; width: 275px;">
@@ -106,12 +103,10 @@
                                      value="#{supplierProcBean.supplier.country}"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
                                      tabindex="#{tabIndex+4}"/>
+
                     </div>
-                    <div class="clearfix"/>
-                    <div style="float: left;width: 336px; padding-left: 151px;">
-                        <p:message for="postCode"/>
-                    </div>
-                    <div style="float: left;width: 275px;padding-left: 80px;">
+                    <div class="clearfix"></div>
+                    <div style="width: 198px!important; margin-left: 413px!important;">
                         <p:message for="country"/>
                     </div>
                 </div>
@@ -131,7 +126,7 @@
                          value="#{supplierProcBean.supplier.phone}"
                          readonly="#{supplierProcBean.beingViewed}"
                          class="form-control col-sm-3 #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                         tabindex="#{tabIndex+5}"/>
+                         tabindex="#{tabIndex+5}" />
 
 
         </div>
@@ -144,7 +139,7 @@
                          tabindex="#{tabIndex+6}"/>
         </div>
         <div class="clearfix"/>
-    <div style="float: left;width: 336px; padding-left: 161px;">
+    <div style="float: left;width: 356px; padding-left: 163px;">
         <p:message for="supplierPhone"/>
         </div>
     </div>
