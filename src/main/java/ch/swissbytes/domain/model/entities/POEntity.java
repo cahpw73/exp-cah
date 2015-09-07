@@ -38,7 +38,6 @@ public class POEntity implements Serializable{
     private CashflowEntity cashflow;
     private TextEntity textEntity;
     private String RTFNo;
-   // private String MRNo;
     private Boolean liquidatedDamagesApplicable;
     private Boolean exchangeRateVariation;
     private Boolean vendorDrawingData;
@@ -63,8 +62,7 @@ public class POEntity implements Serializable{
     public void setDeliveryInstruction(String deliveryInstruction) {
         this.deliveryInstruction = deliveryInstruction;
     }
-    /*@ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="currency_id")*/
+
     @Transient
     public ProjectCurrencyEntity getCurrency() {
         return currency;
@@ -170,15 +168,7 @@ public class POEntity implements Serializable{
     public void setRTFNo(String RTFNo) {
         this.RTFNo = RTFNo;
     }
-  /*  @Column(name = "MR_NO" ,length = 250)
-    public String getMRNo() {
-        return MRNo;
-    }
 
-    public void setMRNo(String MRNo) {
-        this.MRNo = MRNo;
-    }
-*/
     @Column(name = "LIQUIDATED_DAMAGES_APPLICABLE")
     public Boolean getLiquidatedDamagesApplicable() {
         return liquidatedDamagesApplicable;
@@ -242,4 +232,5 @@ public class POEntity implements Serializable{
     public void setTextEntity(TextEntity textEntity) {
         this.textEntity = textEntity;
     }
+
 }
