@@ -226,11 +226,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
-        //@TODO SE COPIA ESTO EN LOS OTROS METODOS QUE PERSISTEN
         String incoTerms = getStrToIncoTerm(po.getPoint());
         if(exitsDeliveryPointInIncoTerms(incoTerms)){
             purchaseOrderEntity.setIncoTerm(incoTerms);
-            purchaseOrderEntity.setFullIncoTerms(po.getDeliveryInstruction());
+            purchaseOrderEntity.setFullIncoTerms(po.getPoint());
         }else{
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
@@ -284,10 +283,11 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        purchaseOrderEntity.setPoDeliveryDate(null);
         dao.save(purchaseOrderEntity);
-        requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
-        deliverableDao.doSave(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
-        cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(), po);
+        //requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
+        //deliverableDao.doSave(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
+        //cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(), po);
 
         return purchaseOrderEntity;
     }
@@ -303,7 +303,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         String incoTerms = getStrToIncoTerm(po.getPoint());
         if(exitsDeliveryPointInIncoTerms(incoTerms)){
             purchaseOrderEntity.setIncoTerm(incoTerms);
-            purchaseOrderEntity.setFullIncoTerms(po.getDeliveryInstruction());
+            purchaseOrderEntity.setFullIncoTerms(po.getPoint());
         }else{
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);

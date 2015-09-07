@@ -85,7 +85,6 @@ public class PoBean extends Bean {
     private Configuration configuration;
 
 
-
     @Inject
     private PoListBean listBean;
 
@@ -96,7 +95,7 @@ public class PoBean extends Bean {
 
     private boolean success;
 
-    private void initializeNewPurchaseOrder(ProjectEntity projectEntity){
+    private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
         purchaseOrder.setProject(projectEntity.getProjectNumber());
@@ -109,7 +108,8 @@ public class PoBean extends Bean {
             purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
         }*/
     }
-    private void loadPurchaseOrder(){
+
+    private void loadPurchaseOrder() {
         purchaseOrder = service.findById(Long.valueOf(poId));
         itemBean.loadItemList(purchaseOrder.getId());
         cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
@@ -131,13 +131,14 @@ public class PoBean extends Bean {
             putModeView();
         }
     }
+
     public void load() {
         if (!loaded) {
             if (projectId != null) {
                 try {
                     ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
                     if (projectEntity != null) {
-                      initializeNewPurchaseOrder(projectEntity);
+                        initializeNewPurchaseOrder(projectEntity);
                     } else {
                         throw new IllegalArgumentException(" It is not a project valid");
                     }
@@ -288,11 +289,11 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
-        if(cashflowBean.getPaymentTerms()==null){
+        if (cashflowBean.getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Please enter Payment Terms");
-            validated=false;
+            validated = false;
         }
-        if(!cashflowBean.validateRetentionForm()){
+        if (!cashflowBean.validateRetentionForm()) {
             Messages.addFlashGlobalError("Please enter Form");
             validated = false;
         }
@@ -395,10 +396,10 @@ public class PoBean extends Bean {
            /* if (supplierHeaderMode) {
                 purchaseOrder.getPoEntity().setSupplierHeader(supplierProcEntity);
             } else if (supplierMode) {*/
-                purchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
-                purchaseOrder.getPoEntity().setContactEntity(null);
+            purchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
+            purchaseOrder.getPoEntity().setContactEntity(null);
             //}
-           // supplierHeaderMode = supplierMode = false;
+            // supplierHeaderMode = supplierMode = false;
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");
@@ -413,21 +414,29 @@ public class PoBean extends Bean {
         Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
         return toString(totals);
     }
-    private String toString(Map<ProjectCurrencyEntity,BigDecimal>map){
+
+    private String toString(Map<ProjectCurrencyEntity, BigDecimal> map) {
         StringBuilder sb = new StringBuilder();
         for (ProjectCurrencyEntity currency : map.keySet()) {
-            String symbol= StringUtils.isNotEmpty(currency.getCurrency().getSymbol())&&StringUtils.isNotBlank(currency.getCurrency().getSymbol())?currency.getCurrency().getSymbol():currency.getCurrency().getCode();
+            String symbol = StringUtils.isNotEmpty(currency.getCurrency().getSymbol()) && StringUtils.isNotBlank(currency.getCurrency().getSymbol()) ? currency.getCurrency().getSymbol() : currency.getCurrency().getCode();
             sb.append(symbol);
             sb.append(" ");
-            sb.append(configuration.format(configuration.getPatternDecimal(),map.get(currency)));
+            sb.append(configuration.format(configuration.getPatternDecimal(), map.get(currency)));
             sb.append(System.lineSeparator());
         }
         return sb.toString();
     }
 
     public String calculateBalanceValue() {
-        Map<ProjectCurrencyEntity, BigDecimal> balances=service.getBalanceByCurrency(itemBean.getScopeSupplyList(),cashflowBean.getCashflowDetailList());
+        Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(itemBean.getScopeSupplyList(), cashflowBean.getCashflowDetailList());
         return toString(balances);
+    }
+
+    public boolean poIsOriginal() {
+        if(purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1) {
+            return true;
+        }
+        return false;
     }
 
 }
