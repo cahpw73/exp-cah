@@ -237,29 +237,27 @@
                 <div class="form-group">
                     <p:dataTable id="forecastDt" var="_l"
                                  value="#{cashflowBean.cashflowDetailList}">
-                        <p:column headerText="#{msgs['po.cashflow.column.item']}"
+                        <p:column headerText="#{msgs['po.cashflow.column.milestone']}"
                                   width="70"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viItem" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.item}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edItem" rendered="#{_l.isEditable}">
-                                <p:inputText id="itemNo" value="#{_l.item}" styleClass="form-control"
-                                             requiredMessage="Enter a Item" required="true"/>
-                            </h:panelGroup>
+                                <h:panelGroup id="viItem" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{_l.item}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edItem" rendered="#{_l.isEditable}">
+                                    <p:inputText id="itemNo" value="#{_l.item}" styleClass="form-control"
+                                                 requiredMessage="Enter a Item" required="true"/>
+                                </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.milestone.percentage']}"
+                        <p:column width="70"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPercentage" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.percentage}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
+                                <h:outputText value="#{cashflowBean.formattedPercentage(_l.percentage)}">
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edPercentage" rendered="#{_l.isEditable}">
-                                <h:inputText id="percentage" value="#{_l.percentage}" styleClass="form-control">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
+                                <h:inputText id="percentage" value="#{_l.percentage}" styleClass="form-control percentageCashflow"
+                                             onkeyup="calculatePaymentValue();">
+                                    <h:outputText value="#{_l.percentage}"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -302,7 +300,7 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edOrderAmt" rendered="#{_l.isEditable}">
-                                <h:inputText id="orderAmt" value="#{_l.orderAmt}" styleClass="form-control">
+                                <h:inputText id="orderAmt" value="#{_l.orderAmt}" styleClass="form-control paymentValueCf">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
                                 </h:inputText>
@@ -317,7 +315,8 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edPoAmt" rendered="#{_l.isEditable}">
-                                <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control">
+                                <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control projectValueCashflow"
+                                             onkeyup="calculatePaymentValue();">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
                                 </h:inputText>

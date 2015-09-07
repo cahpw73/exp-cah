@@ -11,6 +11,7 @@ import ch.swissbytes.domain.types.RetentionFormEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.primefaces.event.DragDropEvent;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -154,6 +156,12 @@ public class CashflowBean implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public String formattedPercentage(BigDecimal percentage){
+        Double percentageN = percentage.doubleValue();
+        Integer percentageI = percentageN.intValue();
+        return percentageI.toString();
     }
 
     public List<PaymentTermsEnum> getPaymentTerms(){

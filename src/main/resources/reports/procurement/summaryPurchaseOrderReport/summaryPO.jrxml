@@ -12,7 +12,7 @@
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\summaryPurchaseOrderReport\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select po.variation,p.order_title,p.po_status,c.code,po.id
@@ -74,6 +74,9 @@ order by $P{sortBy}]]>
 			</textField>
 			<subreport>
 				<reportElement uuid="6d9c54ed-8ac8-4be3-928d-31b9ed600b49" x="458" y="1" width="80" height="12"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$P{poNoFilter}]]></subreportParameterExpression>
 				</subreportParameter>

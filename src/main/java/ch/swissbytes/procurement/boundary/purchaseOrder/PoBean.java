@@ -298,7 +298,7 @@ public class PoBean extends Bean {
             validated = false;
         }
         if (service.isVarNumberUsed(purchaseOrder)) {
-            Messages.addFlashError("poVarNumber", "variation number is already being used");
+            Messages.addFlashGlobalError("The variation number is already being used");
             validated = false;
         }
         return validated;
