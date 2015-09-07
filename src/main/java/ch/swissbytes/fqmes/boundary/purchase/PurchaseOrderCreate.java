@@ -143,6 +143,7 @@ public class PurchaseOrderCreate implements Serializable {
         return "view?faces-redirect=true&poId=" + newPurchaseOrder.getId();
     }
 
+
     @Deprecated
     public String doSaveAndAdd() {
         //TODO probably it should be deleted (all this method)
@@ -404,6 +405,9 @@ public class PurchaseOrderCreate implements Serializable {
     @Produces
     public PurchaseOrderEntity getPurchaseOrder() {
         return (PurchaseOrderEntity) service.clone(newPurchaseOrder);
+    }
+    public void saveSupplier(){
+
     }
 
 

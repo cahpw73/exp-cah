@@ -43,6 +43,14 @@
                             process="@form"/>
                 </h:commandButton>
             </h:panelGroup>
+            <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
+                <h:commandButton value="#{msgs['lbl.save']}"
+                                 action="#{bean.saveSupplier}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="false" update="RENDER"
+                            process="@form"/>
+                </h:commandButton>
+            </h:panelGroup>
             <h:commandButton value="#{msgs['lbl.save']}"
                              rendered="#{not supplierProcBean.supplierMode}"
                              styleClass="btn btn-primary btn-sm">

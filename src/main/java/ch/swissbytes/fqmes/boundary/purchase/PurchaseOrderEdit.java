@@ -937,5 +937,8 @@ public class PurchaseOrderEdit implements Serializable {
             tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, currentIndexForTdp.intValue() == 0, tdpPrevious, tdpEdit));
         }
     }
+    public void saveSupplier(){
+
+    }
 
 }
