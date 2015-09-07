@@ -14,7 +14,10 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -58,6 +61,12 @@ public class PurchaseOrderCreate implements Serializable {
     private SortBean sortBean;
     @Inject
     private UserSession userSession;
+
+    @Inject
+    private SupplierProcBean supplier;
+
+    @Inject
+    private SupplierProcList list;
 
     private PurchaseOrderEntity newPurchaseOrder;
 
@@ -406,9 +415,21 @@ public class PurchaseOrderCreate implements Serializable {
     public PurchaseOrderEntity getPurchaseOrder() {
         return (PurchaseOrderEntity) service.clone(newPurchaseOrder);
     }
-    public void saveSupplier(){
+
+        public void saveSupplier(){
+            SupplierProcEntity supplierProcEntity = supplier.save();
+            if (supplierProcEntity != null) {
+                newPurchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
+                newPurchaseOrder.getPoEntity().setContactEntity(null);
+                list.updateSupplierList();
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('supplierModal').hide();");
+            }
 
     }
 
-
+    public void addingSupplierHeader() {
+        supplier.putModeCreation();
+        supplier.start();
+    }
 }

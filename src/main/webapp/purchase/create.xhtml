@@ -166,11 +166,6 @@
                 <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
 
                 <div class="inputText-general-po">
-                 <!--   <h:inputText id="supplier" type="text" maxlength="50"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.company}"
-                                 jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>-->
-
-
                     <p:selectOneMenu styleClass="menu-po-status"
                                      filter="true"
                                      id="supplier"
@@ -188,6 +183,16 @@
                     <p:message for="supplier" />
                 </div>
             </div>
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            <h:commandButton
+                    id="btnAddSupplier"
+                    value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                    onclick="PF('supplierModal').show();"
+                    styleClass="btn btn-primary btn-sm">
+                <p:ajax async="false" update=":supplierId"/>
+            </h:commandButton>
+
         </div>
     </div>
     <!-- Text input-->
@@ -586,7 +591,7 @@
         </p:dialog>
         <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">
             <h:form id="supplierId" prependId="false">
-                <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
+                <ui:include src="../procurement/admin/supplier/components/templateSupplier.xhtml">
                     <ui:param name="MODE" value="CUSTOM"/>
                     <ui:param name="FORM" value="supplierId"/>
                     <ui:param name="bean" value="#{purchaseOrderCreate}"/>

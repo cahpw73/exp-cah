@@ -190,7 +190,7 @@
                                                        value="#{supplierProcList.suppliers}"
                                                        itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
                                         <p:ajax async="false" event="change"
-                                                update="supplierAddress supplierPhone supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
+                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
                                     </p:selectOneMenu>
                                     <p:message for="supplier" />
                                 </div>
@@ -234,7 +234,7 @@
                         <div class="section-text-area-po">
                             <p:inputTextarea maxlength="950" type="text"
                                              value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contactDetail}"
-                                             id="supplierPhone"
+                                             id="supplierPhoneTxt"
                                              style="height: 90px;"
                                              readonly="true"
                                              class="form-control"/>
@@ -581,11 +581,11 @@
         </p:confirmDialog>
         <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">
         <h:form id="supplierId" prependId="false">
-            <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
+            <ui:include src="../procurement/admin/supplier/components/templateSupplier.xhtml">
                 <ui:param name="MODE" value="CUSTOM"/>
                 <ui:param name="FORM" value="supplierId"/>
                 <ui:param name="bean" value="#{purchaseOrderEdit}"/>
-                <ui:param name="RENDER" value="supplierAddress supplierPhone supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
+                <ui:param name="RENDER" value="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
             </ui:include>
         </h:form>
     </p:dialog>

@@ -4,7 +4,7 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:p="http://primefaces.org/ui">
     <br/>
-    <h:panelGroup rendered="#{MODE eq 'PO'}">
+    <h:panelGroup rendered="#{MODE !=null}">
         <p:messages globalOnly="true" closable="true" id="globalMessage" />
     </h:panelGroup>
     <div class="col-sm-7" style="padding-left: 0px!important; margin-bottom:10px!important; ">
@@ -84,7 +84,7 @@
 
     <div class="col-sm-2" style="margin-top: -12px!important;">
         <h:panelGroup id="idBtnCancel">
-            <h:panelGroup rendered="#{MODE eq 'PO'}">
+            <h:panelGroup rendered="#{MODE != null }">
                 <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
                     <button type="button" class="btn btn-primary btn-sm" onclick="PF('supplierModal').hide()">
                         #{msgs['lbl.cancel']}
@@ -116,7 +116,7 @@
     <br/>
     <h:panelGroup id="bodySupplier">
         <h:panelGroup rendered="#{not (supplierProcBean.addingCategory or supplierProcBean.addingBrand)}">
-            <div class="#{MODE eq 'PO'}?'col-sm-12':'col-sm-9'">
+            <div class="#{MODE != null}?'col-sm-12':'col-sm-9'">
                 <ul class="nav nav-tabs" role="tablist">
                     <li id="tabSupplier" class="active"><a href="#supplier" role="tab"
                                           data-toggle="tab">#{msgs['supplier.tab.supplier']}</a></li>
