@@ -287,7 +287,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         dao.save(purchaseOrderEntity);
         //requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //deliverableDao.doSave(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
-        //cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(), po);
+        cashflowService.doSave(purchaseOrderEntity.getPoEntity().getCashflow(), po);
 
         return purchaseOrderEntity;
     }

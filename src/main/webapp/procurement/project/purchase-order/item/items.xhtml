@@ -92,8 +92,8 @@
                             <h:panelGroup id="viCurrency" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.projectCurrency.currency.code}"/>
                             </h:panelGroup>
-                            <h:panelGroup id="edCurrency" rendered="#{_i.isEditable}">
-                                <p:selectOneMenu id="defaultCurrencyId"
+                            <h:panelGroup id="edCurrency" rendered="#{_i.isEditable}" style="width: 93px!important;">
+                                <h:selectOneMenu id="defaultCurrencyId" style="width: 93px!important;"
                                                  value="#{_i.projectCurrency}"
                                                  required="true"
                                                  styleClass="form-control"
@@ -106,7 +106,7 @@
                                                    itemValue="#{_pc}"
                                                    itemLabel="#{_pc.currency.code}"/>
                                     <p:ajax event="change" async="false" process="@this"/>
-                                </p:selectOneMenu>
+                                </h:selectOneMenu>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">

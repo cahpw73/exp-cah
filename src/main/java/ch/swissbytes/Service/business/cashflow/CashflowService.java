@@ -33,17 +33,12 @@ public class CashflowService implements Serializable {
     public void doSave(CashflowEntity entity,POEntity po){
         log.info("do save cashflow");
         if(entity != null) {
-            entity.setLastUpdate(new Date());
-            entity.setStatusEnum(StatusEnum.ENABLE);
-            entity.setPo(po);
-            dao.doSave(entity);
-            for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
-                cf.setId(null);
-                cf.setCashflowEntity(entity);
-                cf.setLastUpdate(new Date());
-                cf.setStatus(StatusEnum.ENABLE);
-                cashflowDetailDao.doSave(cf);
-            }
+            CashflowEntity cashflow = new CashflowEntity();
+            cashflow.setStatusEnum(StatusEnum.ENABLE);
+            cashflow.setLastUpdate(new Date());
+            cashflow.setPo(po);
+            cashflow.setPaymentTerms(entity.getPaymentTerms());
+            dao.doSave(cashflow);
         }
     }
 

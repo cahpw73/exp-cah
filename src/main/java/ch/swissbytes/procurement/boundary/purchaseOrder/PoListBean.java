@@ -242,25 +242,18 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        log.info("Entity po[" + entity.getPo() + "], orderedVariation[" + entity.getOrderedVariation() + "]");
-        Date start = new Date();
         if (entity.getPoEntity().getPoProcStatus() != null && entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.COMMITED.ordinal()) {
             for (Object po : maxVariationsList) {
                 Object[] values = (Object[]) po;
                 PurchaseOrderEntity poe = new PurchaseOrderEntity();
                 poe.setPo((String) values[0]);
                 poe.setOrderedVariation((Integer) values[1]);
-                //log.info("POE po[" + poe.getPo() + "], orderedVariation[" + poe.getOrderedVariation() + "]");
                 if (entity.getOrderedVariation()!=null&&entity.getPo().equals(poe.getPo()) &&
                         entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue()) {
-                    Date end = new Date();
-                    log.info("evaluate variation takes " + (end.getTime() - start.getTime()));
                     return true;
                 }
             }
         }
-        Date end = new Date();
-        log.info("evaluate variation takes " + (end.getTime() - start.getTime()));
         return false;
     }
 
