@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
@@ -264,8 +265,4 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             }
         }
     }
-
-
-
-
 }

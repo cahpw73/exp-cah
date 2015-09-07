@@ -43,7 +43,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 		<band height="33" splitType="Stretch">
 			<printWhenExpression><![CDATA[!$P{isOriginal}]]></printWhenExpression>
 			<subreport>
-				<reportElement uuid="b5f2035c-5b29-40c9-aa68-8f22c39667a6" x="105" y="0" width="200" height="100"/>
+				<reportElement uuid="b5f2035c-5b29-40c9-aa68-8f22c39667a6" x="105" y="0" width="200" height="33"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SummaryVariation.jasper"]]></subreportExpression>
 			</subreport>
