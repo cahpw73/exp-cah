@@ -180,7 +180,7 @@
                                 <div class="inputText-general-po">
                                     <p:selectOneMenu styleClass="menu-po-status"
                                                      filter="true"
-                                                     id="supplier"
+                                                     id="supplierNameId"
                                                      style="min-width:300px;max-width: 300px;"
                                                      filterMatchMode="startsWith"
                                                      value="#{purchaseOrderEdit.poEdit.poEntity.supplier}"
@@ -192,7 +192,7 @@
                                         <p:ajax async="false" event="change"
                                                 update="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
                                     </p:selectOneMenu>
-                                    <p:message for="supplier" />
+                                    <p:message for="supplierNameId" />
                                 </div>
                             </div>
                         </div>
@@ -588,7 +588,7 @@
                     <ui:param name="bean" value="#{purchaseOrderEdit}"/>
                     <ui:param name="RENDER" value=":empForm:supplierAddress :empForm:supplierPhoneTxt
                                                    :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode
-                                                   :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId"/>
+                                                   :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId :empForm:supplierNameId"/>
                 </ui:include>
             </h:form>
         </p:dialog>
