@@ -251,7 +251,7 @@
                         <p:column width="70"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPercentage" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{cashflowBean.formattedPercentage(_l.percentage)}">
+                                <h:outputText value="#{cashflowBean.formattedPercentage(_l.percentage)} %">
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edPercentage" rendered="#{_l.isEditable}">
