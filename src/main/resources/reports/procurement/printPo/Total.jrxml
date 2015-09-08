@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Total" pageWidth="519" pageHeight="802" columnWidth="519" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7f4c05cf-e643-4bad-91f0-341124488f51">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="56"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
@@ -129,7 +129,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA["TOTAL PRICE (EXCL. VAT) "+($F{symbol}!=null?$F{symbol}:$F{code})]]></textFieldExpression>
+				<textFieldExpression><![CDATA["TOTAL PRICE (EXCL. VAT) "+(org.apache.commons.lang.StringUtils.isNotEmpty($F{symbol})?$F{symbol}:$F{code})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="bfcd27b6-7b65-486f-a675-e70b5d257eb9" positionType="Float" stretchType="RelativeToBandHeight" x="443" y="0" width="1" height="22"/>
