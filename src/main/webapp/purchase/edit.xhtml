@@ -177,12 +177,36 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.supplier']}"/>
-
                                 <div class="inputText-general-po">
-                                    <h:inputText value="#{purchaseOrderEdit.poEdit.poEntity.supplier.company}"
-                                                 disabled="true" class="form-control po-view"/>
+                                    <p:selectOneMenu styleClass="menu-po-status"
+                                                     filter="true"
+                                                     id="supplier"
+                                                     style="min-width:300px;max-width: 300px;"
+                                                     filterMatchMode="startsWith"
+                                                     value="#{purchaseOrderEdit.poEdit.poEntity.supplier}"
+                                                     converter="supplierConverter">
+                                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                                        <f:selectItems var="_supplier"
+                                                       value="#{supplierProcList.suppliers}"
+                                                       itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
+                                        <p:ajax async="false" event="change"
+                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="supplier" />
                                 </div>
                             </div>
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            <h:commandButton
+                                    id="btnAddSupplier"
+                                    value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                                    disabled="true"
+                                    action="#{purchaseOrderEdit.addingSupplier}"
+                                    onclick="PF('supplierModal').show();"
+                                    styleClass="btn btn-primary btn-sm">
+                                <p:ajax async="false" update=":supplierId"/>
+                            </h:commandButton>
+
                         </div>
                     </div>
                     <div class="row">
@@ -212,7 +236,7 @@
                         <div class="section-text-area-po">
                             <p:inputTextarea maxlength="950" type="text"
                                              value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contactDetail}"
-                                             id="supplierPhone"
+                                             id="supplierPhoneTxt"
                                              style="height: 90px;"
                                              readonly="true"
                                              class="form-control"/>
@@ -557,5 +581,16 @@
                 <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
             </div>
         </p:confirmDialog>
+        <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">
+        <h:form id="supplierId" prependId="false">
+            <ui:include src="../procurement/admin/supplier/components/templateSupplier.xhtml">
+                <ui:param name="MODE" value="CUSTOM"/>
+                <ui:param name="FORM" value="supplierId"/>
+                <ui:param name="bean" value="#{purchaseOrderEdit}"/>
+                <ui:param name="RENDER" value=":empForm:supplierAddress :empForm:supplierPhoneTxt :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId"/>
+            </ui:include>
+        </h:form>
+    </p:dialog>
+
     </ui:define>
 </ui:composition>

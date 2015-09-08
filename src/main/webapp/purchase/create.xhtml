@@ -67,10 +67,11 @@
                 <h:outputLabel for="projectName" styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.project.type.required']}"/>
                 <div class="inputText-general-po">
                     <h:inputText id="projectName" type="text"
-                                 required="true"
+
                                  maxlength="50"
+                                 disabled="true"
                                  jsf:placeholder="#{msgs['po.ph.project']}"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.project}"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.projectEntity.projectNumber}"
                                  class="form-control"
                                  requiredMessage="#{msgs['po.lbl.project.required']}"/>
                     <p:message for="projectName" id="msgProject"/>
@@ -109,7 +110,12 @@
             &#160;
         </div>
         <div class="section-text-area-po" style="height: 12px!important;">
-            #{msgs['po.lbl.status']}
+            <div class="col-md-6" style="padding-left: 0px;">
+                #{msgs['po.lbl.status']}
+            </div>
+            <div class="col-md-6">
+                #{msgs['po.lbl.expediting.status']}
+            </div>
         </div>
     </div>
     <div class="row">
@@ -126,11 +132,34 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:selectOneMenu styleClass="menu-po-status" value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderStatus}" >
-                <f:selectItems value="#{poStatuses}"/>
-            </p:selectOneMenu>
+            <div class="col-md-6" style="padding-left: 0px;">
+                <h:inputText disabled="true"
+                             value="#{configuration.getPOProcStatus(purchaseOrderCreate.newPurchaseOrder.poEntity.poProcStatus)}"
+                             class="form-control po-view"/>
+            </div>
+            <div class="col-md-6">
+                <p:selectOneMenu styleClass="menu-po-status"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderStatus}">
+                    <f:selectItems value="#{poStatuses}"/>
+                </p:selectOneMenu>
+            </div>
         </div>
     </div>
+
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.po.title']}"/>
+
+                    <div class="inputText-general-po">
+                        <h:inputText id="poTitle" maxlength="50" type="text"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
+                                     jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
+                        <p:message for="poTitle"/>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <div class="row">
         <div class="section-lbl-input-po">
@@ -138,12 +167,35 @@
                 <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.supplier']}"/>
 
                 <div class="inputText-general-po">
-                    <h:inputText id="supplier" type="text" maxlength="50"
-                                 value="#{purchaseOrderCreate.newSupplier.supplier}"
-                                 jsf:placeholder="#{msgs['po.ph.supplier']}" class="form-control"/>
+                    <p:selectOneMenu styleClass="menu-po-status"
+                                     filter="true"
+                                     id="supplier"
+                                     style="min-width:300px;max-width: 300px;"
+                                     filterMatchMode="startsWith"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier}"
+                                     converter="supplierConverter">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItems var="_supplier"
+                                       value="#{supplierProcList.suppliers}"
+                                       itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
+                        <p:ajax async="false" event="change"
+                                update="address addressDescription supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactName"/>
+                    </p:selectOneMenu>
                     <p:message for="supplier" />
                 </div>
             </div>
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            <h:commandButton
+                    id="btnAddSupplier"
+                    action="#{purchaseOrderCreate.addingSupplier}"
+                    value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                    disabled="true"
+                    onclick="PF('supplierModal').show();"
+                    styleClass="btn btn-primary btn-sm">
+                <p:ajax async="false" update=":supplierId"/>
+            </h:commandButton>
+
         </div>
     </div>
     <!-- Text input-->
@@ -163,19 +215,89 @@
                 <div class="inputText-general-po">
                     <p:inputTextarea id="address" maxlength="450" type="text"
                                      style="height: 90px;"
-                                     value="#{purchaseOrderCreate.newSupplier.address}"
+                                     disabled="true"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.street}"
                                      jsf:placeholder="#{msgs['po.ph.address']}" class="form-control"/>
                     <p:message for="address" id="msgAddress"/>
                 </div>
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newSupplier.contactDetail}"
+            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.contactDetail}"
                              style="height: 90px;" class="form-control"
+                             disabled="true"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
             <p:message for="addressDescription"/>
         </div>
     </div>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['lbl.supplier.suburb']}"/>
+
+                    <div class="inputText-general-po">
+                        <p:inputText id="supplierSuburb" maxlength="450"
+                                     readonly="true"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.suburb}"
+                                     class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="section-text-area-po">
+            </div>
+        </div>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['lbl.supplier.state']}"/>
+
+                    <div class="inputText-general-po">
+                        <p:inputText id="supplierState" maxlength="450"
+                                     readonly="true"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.state}"
+                                     class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="section-text-area-po">
+            </div>
+        </div>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['lbl.supplier.postcode']}"/>
+
+                    <div class="inputText-general-po">
+                        <p:inputText id="supplierPostCode" maxlength="450"
+                                     readonly="true"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.postCode}"
+                                     class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="section-text-area-po">
+            </div>
+        </div>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['lbl.supplier.country']}"/>
+
+                    <div class="inputText-general-po">
+                        <p:inputText id="supplierCountry" maxlength="450"
+                                     readonly="true"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.country}"
+                                     class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="section-text-area-po">
+            </div>
+        </div>
     <div class="row">
         <div class="section-lbl-input-po">
             &#160;
@@ -191,21 +313,62 @@
                                value="#{msgs['po.lbl.contact.name']}"/>
 
                 <div class="inputText-general-po">
-                    <h:inputText id="contactName" maxlength="100" type="text"
-                                 value="#{purchaseOrderCreate.newSupplier.contactName}"
-                                 jsf:placeholder="#{msgs['po.ph.contact.name']}"
-                                 class="form-control"/>
+                    <p:selectOneMenu styleClass="menu-po-status"
+                                     filter="true"
+                                     id="contactName"
+                                     style="min-width:300px;max-width: 300px;"
+                                     filterMatchMode="startsWith"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactEntity}"
+                                     converter="contactConverter">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItems var="_contact"
+                                       value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.contacts}"
+                                       itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
+                        <p:ajax async="false" event="change" update="contactEmailExp"/>
+                    </p:selectOneMenu>
                     <p:message for="contactName"/>
                 </div>
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea maxlength="950" type="text" id="cnDescription"
+            <!--<p:inputTextarea maxlength="950" type="text" id="cnDescription"
                              style="max-height: 29px;"
                              value="#{purchaseOrderCreate.newSupplier.emailAddress}"
                              jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
-                             class="form-control"/>
-            <p:message for="cnDescription"/>
+                             class="form-control"/>-->
+
+
+            <div class="col-sm-5" style="padding-left: 0px;">
+                <p:inputTextarea style="max-height: 29px;"
+                                 id="contactEmailExp"
+                                 readonly="true"
+                                 maxlength="950"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactEntity.email}"
+                                 jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
+                                 class="form-control"/>
+                <p:message for="contactEmailExp"/>
+            </div>
+            <div class="col-sm-7 pull-right">
+                <h:commandButton
+                        id="btnAddContact"
+                        value="#{msgs['po.supplier.lbl.btn.add.contact2']}"
+                        disabled="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier==null}"
+                        action="#{contactBean.start(purchaseOrderEdit.poEdit.poEntity.supplier.id)}"
+                        onclick="PF('contactModal').show();"
+                        styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="false" update=":editContact"/>
+                </h:commandButton>
+                &#160;
+                <h:commandButton
+                        id="btnViewContact"
+                        value="#{msgs['po.supplier.lbl.btn.view.contact']}"
+                        disabled="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier==null}"
+                        onclick="PF('contactViewModal').show();"
+                        styleClass="btn btn-primary btn-sm">
+                    <p:ajax async="false" update=":contactViewId"/>
+                </h:commandButton>
+            </div>
+
         </div>
     </div>
     <div class="row">
@@ -278,21 +441,7 @@
             <p:message for="incoTermDescription"/>
         </div>
     </div>
-    <div class="row">
-        <!-- Text input-->
-        <div class="section-lbl-input-po">
-            <div class="form-group input-general-po">
-                <h:outputLabel styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.po.title']}"/>
 
-                <div class="inputText-general-po">
-                    <h:inputText id="poTitle" maxlength="50" type="text"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.poTitle}"
-                                 jsf:placeholder="#{msgs['po.ph.po.title']}" class="form-control"/>
-                    <p:message for="poTitle"/>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="section-lbl-input-po">
             &#160;
@@ -430,5 +579,28 @@
             <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
         </div>
     </p:confirmDialog>
+        <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
+            <ui:include src="../procurement/admin/supplier/components/contactEdit.xhtml">
+                <ui:param name="MODULE" value="EXPEDITING"/>
+                <ui:param name="RENDER" value=":empForm:contactName :empForm:contactEmailExp"/>
+            </ui:include>
+        </p:dialog>
+        <p:dialog header="View Contact" resizable="false" widgetVar="contactViewModal" width="500">
+            <ui:include src="../procurement/admin/supplier/components/contactView.xhtml">
+                <ui:param name="ID" value="contactViewId"/>
+                <ui:param name="MODAL" value="contactViewModal"/>
+                <ui:param name="contact" value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactEntity}"/>
+            </ui:include>
+        </p:dialog>
+        <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">
+            <h:form id="supplierId" prependId="false">
+                <ui:include src="../procurement/admin/supplier/components/templateSupplier.xhtml">
+                    <ui:param name="MODE" value="CUSTOM"/>
+                    <ui:param name="FORM" value="supplierId"/>
+                    <ui:param name="bean" value="#{purchaseOrderCreate}"/>
+                    <ui:param name="RENDER" value="address addressDescription supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactName"/>
+                </ui:include>
+            </h:form>
+        </p:dialog>
     </ui:define>
 </ui:composition>

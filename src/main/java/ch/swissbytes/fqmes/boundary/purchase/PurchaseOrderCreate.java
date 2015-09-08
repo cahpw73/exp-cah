@@ -1,6 +1,8 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
+import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
 import ch.swissbytes.Service.business.comment.CommentService;
@@ -13,7 +15,10 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -58,6 +63,12 @@ public class PurchaseOrderCreate implements Serializable {
     @Inject
     private UserSession userSession;
 
+    @Inject
+    private SupplierProcBean supplier;
+
+    @Inject
+    private SupplierProcList list;
+
     private PurchaseOrderEntity newPurchaseOrder;
 
     private SupplierEntity newSupplier;
@@ -90,6 +101,9 @@ public class PurchaseOrderCreate implements Serializable {
     @Inject
     private Conversation conversation;
 
+    @Inject
+    private ProjectService projectService;
+
 
     @PostConstruct
     public void create() {
@@ -117,6 +131,9 @@ public class PurchaseOrderCreate implements Serializable {
         scopeSupplies = new ArrayList<>();
         newScopeSupply = new ScopeSupplyEntity();
         newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        newPurchaseOrder.setPoEntity(new POEntity());
+        newPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
+        newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));
     }
 
     public void cleanComment() {
@@ -128,11 +145,11 @@ public class PurchaseOrderCreate implements Serializable {
     @Deprecated
     public String doSave() {
         //TODO probably it should be deleted (all this method)
-        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+        /*if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
             log.log(Level.SEVERE, "Somebody is trying to save a PO from expediting module and this is not allowed");
             Messages.addGlobalError("you cannot save a PO");
             return "";
-        }
+        }*/
         savePurchase();
         if (!conversation.isTransient()) {
             conversation.end();
@@ -140,14 +157,15 @@ public class PurchaseOrderCreate implements Serializable {
         return "view?faces-redirect=true&poId=" + newPurchaseOrder.getId();
     }
 
+
     @Deprecated
     public String doSaveAndAdd() {
         //TODO probably it should be deleted (all this method)
-        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+       /* if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
             log.log(Level.SEVERE,"Somebody is trying to save a PO from expediting module and this is not allowed");
             Messages.addGlobalError("you cannot save a PO");
             return "";
-        }
+        }*/
         savePurchase();
         reset();
         if (!conversation.isTransient()) {
@@ -403,5 +421,20 @@ public class PurchaseOrderCreate implements Serializable {
         return (PurchaseOrderEntity) service.clone(newPurchaseOrder);
     }
 
+        public void saveSupplier(){
+            SupplierProcEntity supplierProcEntity = supplier.save();
+            if (supplierProcEntity != null) {
+                newPurchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
+                newPurchaseOrder.getPoEntity().setContactEntity(null);
+                list.updateSupplierList();
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('supplierModal').hide();");
+            }
 
+    }
+
+    public void addingSupplier() {
+        supplier.putModeCreation();
+        supplier.start();
+    }
 }

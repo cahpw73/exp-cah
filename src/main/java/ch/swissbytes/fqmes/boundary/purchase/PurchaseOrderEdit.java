@@ -16,7 +16,10 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
+import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -73,6 +76,12 @@ public class PurchaseOrderEdit implements Serializable {
     private AttachmentScopeSupplyService attachmentScopeSupplyService;
     @Inject
     private ContactBean contactBean;
+
+    @Inject
+    private SupplierProcBean supplier;
+
+    @Inject
+    private SupplierProcList list;
 
     private String purchaseOrderId;
 
@@ -139,15 +148,15 @@ public class PurchaseOrderEdit implements Serializable {
         idForAttachment = id;
     }
 
-    public ScopeSupplyEntity currentScopeSupplyForAttachment(){
-        Integer index=idForAttachment!=null?scopeSupplyService.getIndexById(idForAttachment,scopeActives):-1;
-        return index>=0?scopeActives.get(index):null;
+    public ScopeSupplyEntity currentScopeSupplyForAttachment() {
+        Integer index = idForAttachment != null ? scopeSupplyService.getIndexById(idForAttachment, scopeActives) : -1;
+        return index >= 0 ? scopeActives.get(index) : null;
     }
 
     public List<AttachmentComment> getAttachmentActives() {
-        if(commentIndexSelected!=null&&commentEdit!=null&&commentIndexSelected==-1){
+        if (commentIndexSelected != null && commentEdit != null && commentIndexSelected == -1) {
             return new AttachmentCommentService().getActives(commentEdit.getAttachments());
-        }else if(commentIndexSelected!=null&&editingComment!=null&&commentIndexSelected!=-1){
+        } else if (commentIndexSelected != null && editingComment != null && commentIndexSelected != -1) {
             return new AttachmentCommentService().getActives(editingComment.getAttachments());
         }
         return new ArrayList<AttachmentComment>();
@@ -314,16 +323,16 @@ public class PurchaseOrderEdit implements Serializable {
         UploadedFile uf = event.getFile();
         log.info("uploading file [" + uf.getFileName() + "]");
         log.info("size [" + uf.getSize() + "]");
-            AttachmentComment ac=new AttachmentComment();
-            new Util().enterFile(uf, ac);
-            ac.setStatus(enumService.getStatusEnumEnable());
-            ac.setId(temporaryId);
-            temporaryId--;
-            if(commentIndexSelected==-1){
-                commentEdit.getAttachments().add(ac);
-            }else{
-                editingComment.getAttachments().add(ac);
-            }
+        AttachmentComment ac = new AttachmentComment();
+        new Util().enterFile(uf, ac);
+        ac.setStatus(enumService.getStatusEnumEnable());
+        ac.setId(temporaryId);
+        temporaryId--;
+        if (commentIndexSelected == -1) {
+            commentEdit.getAttachments().add(ac);
+        } else {
+            editingComment.getAttachments().add(ac);
+        }
     }
 
     public void cleanComment() {
@@ -510,24 +519,24 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public List<AttachmentComment> getActiveAttachmentsForComment() {
-        List<AttachmentComment>list=new ArrayList<AttachmentComment>();
-        if(commentIndexSelected!=null&&commentIndexSelected==-1&&commentEdit!=null){
-            list=commentEdit.getAttachments();
-        }else if(commentIndexSelected!=null&&commentIndexSelected!=-1&&editingComment!=null){
-            list=editingComment.getAttachments();
+        List<AttachmentComment> list = new ArrayList<AttachmentComment>();
+        if (commentIndexSelected != null && commentIndexSelected == -1 && commentEdit != null) {
+            list = commentEdit.getAttachments();
+        } else if (commentIndexSelected != null && commentIndexSelected != -1 && editingComment != null) {
+            list = editingComment.getAttachments();
         }
-            return list;
+        return list;
     }
 
     public void deleteAttachmentComment(Long id) {
-        if(commentIndexSelected==-1){
+        if (commentIndexSelected == -1) {
             int index = new AttachmentScopeSupplyService().getIndexById(id, commentEdit.getAttachments());
             commentEdit.getAttachments().remove(index);
-        }else{
-            int index = new AttachmentScopeSupplyService().getIndexById(id,editingComment.getAttachments());
-            if(editingComment.getAttachments().get(index).getId()==null||(editingComment.getAttachments().get(index).getId()!=null&&editingComment.getAttachments().get(index).getId().intValue()<0)){
+        } else {
+            int index = new AttachmentScopeSupplyService().getIndexById(id, editingComment.getAttachments());
+            if (editingComment.getAttachments().get(index).getId() == null || (editingComment.getAttachments().get(index).getId() != null && editingComment.getAttachments().get(index).getId().intValue() < 0)) {
                 editingComment.getAttachments().remove(index);
-            }else if(editingComment.getAttachments().get(index).getId()!=null&&editingComment.getAttachments().get(index).getId().intValue()>0){
+            } else if (editingComment.getAttachments().get(index).getId() != null && editingComment.getAttachments().get(index).getId().intValue() > 0) {
                 editingComment.getAttachments().get(index).setStatus(enumService.getStatusEnumDeleted());
             }
         }
@@ -563,11 +572,11 @@ public class PurchaseOrderEdit implements Serializable {
             final int index = idForAttachment != null ? scopeSupplyService.getIndexById(idForAttachment, scopeSupplies) : -1;
             if (index >= 0) {
                 AttachmentScopeSupply attachment = new AttachmentScopeSupply();
-                    new Util().enterFile(uf, attachment);
-                    attachment.setStatus(enumService.getStatusEnumEnable());
-                    attachment.setId(temporaryId);
-                    temporaryId--;
-                    scopeSupplies.get(index).getAttachments().add(attachment);
+                new Util().enterFile(uf, attachment);
+                attachment.setStatus(enumService.getStatusEnumEnable());
+                attachment.setId(temporaryId);
+                temporaryId--;
+                scopeSupplies.get(index).getAttachments().add(attachment);
             }
         }
     }
@@ -616,9 +625,9 @@ public class PurchaseOrderEdit implements Serializable {
                 tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
                 ss.getTdpList().add(tdp);
             }
-            for(AttachmentScopeSupply acs:selectedScopeSupply.getAttachments()){
+            for (AttachmentScopeSupply acs : selectedScopeSupply.getAttachments()) {
                 temporaryId--;
-                AttachmentScopeSupply attachmentScopeSupply=new AttachmentScopeSupplyService().clone(acs);
+                AttachmentScopeSupply attachmentScopeSupply = new AttachmentScopeSupplyService().clone(acs);
                 attachmentScopeSupply.setId(temporaryId);
                 attachmentScopeSupply.setLastUpdate(new Date());
                 ss.getAttachments().add(attachmentScopeSupply);
@@ -704,6 +713,7 @@ public class PurchaseOrderEdit implements Serializable {
     public void downloadAttachedFileOnComment(final long id) {
         attachmentCommentService.download(id);
     }
+
     public void downloadAttachedFileOnScopeSupply(final long id) {
         attachmentScopeSupplyService.download(id);
     }
@@ -936,6 +946,22 @@ public class PurchaseOrderEdit implements Serializable {
             TransitDeliveryPointEntity tdpPrevious = list.size() > 1 && currentIndexForTdp > 0 ? list.get(currentIndexForTdp - 1) : null;
             tdpEdit.setForecastDeliveryDate(scopeSupplyService.calculateForecastDeliveryDateForTdp(scopeSupplyEditing, currentIndexForTdp.intValue() == 0, tdpPrevious, tdpEdit));
         }
+    }
+
+    public void saveSupplier() {
+        SupplierProcEntity supplierProcEntity = supplier.save();
+        if (supplierProcEntity != null) {
+            poEdit.getPoEntity().setSupplier(supplierProcEntity);
+            poEdit.getPoEntity().setContactEntity(null);
+            list.updateSupplierList();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('supplierModal').hide();");
+        }
+    }
+
+    public void addingSupplier() {
+        supplier.putModeCreation();
+        supplier.start();
     }
 
 }
