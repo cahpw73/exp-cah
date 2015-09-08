@@ -28,6 +28,8 @@
                                  converterMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
                                  onkeyup="calculateNewScopeSupplyQuantity();"
                                  onblur="verifyArrivedQuantity();">
+                        <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
+                                          locale="#{configuration.langLocalDecimal}"/>
                     </h:inputText>
                     <p:message for="arrivedQuantity"/>
                 </div>
@@ -62,6 +64,8 @@
                                  converterMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
                                  onkeyup="calculateOldScopeSupplyQuantity();"
                                  onblur="verifyNewQuantity();">
+                        <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
+                                          locale="#{configuration.langLocalDecimal}"/>
                     </h:inputText>
                     <p:message for="newQuantitySupplySplit" id="msgScopeSupplySplitQuantity"/>
                     </div>
