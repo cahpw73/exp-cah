@@ -231,9 +231,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         String incoTerms = getStrToIncoTerm(po.getPoint());
+        String fullIncoTerms = po.getPoint();
         if(exitsDeliveryPointInIncoTerms(incoTerms)){
             purchaseOrderEntity.setIncoTerm(incoTerms);
-            purchaseOrderEntity.setFullIncoTerms(po.getPoint());
+            purchaseOrderEntity.setFullIncoTerms(fullIncoTerms);
         }else{
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
@@ -242,7 +243,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
         //items
-        itemService.doSave(po.getScopeSupplyList(), purchaseOrderEntity);
+        itemService.doSave(po.getScopeSupplyList(), purchaseOrderEntity,incoTerms,fullIncoTerms);
         //deliverable
         deliverableDao.doSave(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         //CashFlow

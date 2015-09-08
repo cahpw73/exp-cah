@@ -4,6 +4,7 @@ package ch.swissbytes.Service.business.item;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.types.IncoTermsEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
@@ -33,13 +34,20 @@ public class ItemService  implements Serializable {
         dao.saveAndFlush(entity);
     }
 
-    public void doSave(List<ScopeSupplyEntity> supplyList, PurchaseOrderEntity po) {
+    public void doSave(List<ScopeSupplyEntity> supplyList, PurchaseOrderEntity po,String incoTerms,String fullIncoTerms) {
         for(ScopeSupplyEntity entity : supplyList){
             entity.setId(null);
             entity.setLastUpdate(new Date());
             entity.setPurchaseOrder(po);
             entity.setStatus(enumService.getStatusEnumEnable());
             entity.setIsForecastSiteDateManual(false);
+            if(exitsDeliveryPointInIncoTerms(incoTerms)){
+                entity.setSpIncoTerm(incoTerms);
+                entity.setSpIncoTermDescription(fullIncoTerms);
+            }else{
+                entity.setSpIncoTerm(null);
+                entity.setSpIncoTermDescription(null);
+            }
             //@TODO Review Date_SS  estamos poniendo este valor por defecto con la fecha del dia, este campo aparentemente esta siendo usado en attachment modulo expediting
             entity.setDate(new Date());
             dao.doSave(entity);
@@ -82,6 +90,15 @@ public class ItemService  implements Serializable {
 
     public List<ScopeSupplyEntity> findByPoId(Long poEntityId) {
         return dao.findByPoId(poEntityId);
+    }
+
+    public boolean exitsDeliveryPointInIncoTerms(String point){
+        for(IncoTermsEnum i : IncoTermsEnum.values()){
+            if(i.name().equalsIgnoreCase(point)){
+                return true;
+            }
+        }
+        return  false;
     }
 
 }
