@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.8181818181818181"/>
+	<property name="ireport.zoom" value="1.818181818181819"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1449"/>
+	<property name="ireport.y" value="563"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -115,6 +115,7 @@
 	<parameter name="currencyId1" class="java.lang.Long"/>
 	<parameter name="currencyId2" class="java.lang.Long"/>
 	<parameter name="currencyId3" class="java.lang.Long"/>
+	<parameter name="isOriginal" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -803,6 +804,9 @@
 			</componentElement>
 			<subreport>
 				<reportElement uuid="9ef0f8ce-2f88-484c-91bd-3c6d07d88de1" positionType="Float" isPrintRepeatedValues="false" x="0" y="6" width="519" height="16"/>
+				<subreportParameter name="isOriginal">
+					<subreportParameterExpression><![CDATA[$P{isOriginal}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="purchaseOrderId">
 					<subreportParameterExpression><![CDATA[$P{purchaseOrderId}]]></subreportParameterExpression>
 				</subreportParameter>
