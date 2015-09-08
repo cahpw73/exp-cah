@@ -74,55 +74,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private void loadParamPurchaseOrder() {
         resourceUtils = new ResourceUtils();
-        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
-            addParameters("logo", logo);
-        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
-            addParameters("logo", logo);
-        }
-
-        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogoLeft()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogoLeft().getFile());
-            addParameters("logoLeft", logo);
-        }
-
-        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientFooter()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientFooter().getFile());
-            addParameters("footerLogo", logo);
-        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultFooter()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultFooter().getFile());
-            addParameters("footerLogo", logo);
-        }
+        loadParamLogos();
         addParameters("purchaseOrderId", po.getId());
         String variation=generateVariation(po.getVariationNumber());
         addParameters("variation", variation);
-
-        if(po.getPoEntity().getSupplier() != null){
-            addParameters("company", po.getPoEntity().getSupplier().getCompany());
-            addParameters("street", po.getPoEntity().getSupplier().getStreet());
-            addParameters("state", po.getPoEntity().getSupplier().getState());
-            addParameters("suburb", po.getPoEntity().getSupplier().getSuburb());
-            addParameters("abnReg", po.getPoEntity().getSupplier().getAbnRegNo());
-            addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
-            addParameters("country", po.getPoEntity().getSupplier().getCountry());
-            addParameters("phone", po.getPoEntity().getSupplier().getPhone());
-            addParameters("fax", po.getPoEntity().getSupplier().getFax());
-            addParameters("supplierId", po.getPoEntity().getSupplier().getId());
-        }
+        loadParamSupplier();
+        loadParamClients();
         Processor processor=new Processor(true);
         processor.useArial();
-        if(po.getProjectEntity().getClient()!=null) {
-            addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
-            Map detail= separateDetail(po.getProjectEntity().getClient().getTitle());
-            addParameters("clientDetail0", detail.size() > 0 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(0).toString())) : null);
-            processor.clear();
-            addParameters("clientDetail1", detail.size() > 1 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(1).toString())) : null);
-            processor.clear();
-            addParameters("clientDetail2", detail.size() > 2 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(2).toString())) : null);
-            processor.clear();
-            addParameters("clientDetail3",detail.size()>3?Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(3).toString())):null);
-        }
         addParameters("poNo",po.getPo());
         addParameters("poId",po.getPoEntity().getId());
         addParameters("orderDate",po.getPoEntity().getOrderDate());
@@ -132,7 +91,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager",po.getPoEntity().getProcManager());
         addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
-        addParameters("isOriginal",true);
+        addParameters("isOriginal",false);
 
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
@@ -171,6 +130,60 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         Date now = new Date();
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
+    }
+
+    private void loadParamLogos(){
+        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
+            addParameters("logo", logo);
+        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultLogo()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
+            addParameters("logo", logo);
+        }
+
+        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogoLeft()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogoLeft().getFile());
+            addParameters("logoLeft", logo);
+        }
+
+        if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientFooter()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientFooter().getFile());
+            addParameters("footerLogo", logo);
+        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultFooter()!=null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultFooter().getFile());
+            addParameters("footerLogo", logo);
+        }
+    }
+
+    private void loadParamSupplier(){
+        if(po.getPoEntity().getSupplier() != null){
+            addParameters("company", po.getPoEntity().getSupplier().getCompany());
+            addParameters("street", po.getPoEntity().getSupplier().getStreet());
+            addParameters("state", po.getPoEntity().getSupplier().getState());
+            addParameters("suburb", po.getPoEntity().getSupplier().getSuburb());
+            addParameters("abnReg", po.getPoEntity().getSupplier().getAbnRegNo());
+            addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
+            addParameters("country", po.getPoEntity().getSupplier().getCountry());
+            addParameters("phone", po.getPoEntity().getSupplier().getPhone());
+            addParameters("fax", po.getPoEntity().getSupplier().getFax());
+            addParameters("supplierId", po.getPoEntity().getSupplier().getId());
+        }
+    }
+
+    private void loadParamClients(){
+        Processor processor=new Processor(true);
+        processor.useArial();
+        if(po.getProjectEntity().getClient()!=null) {
+            addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
+            Map detail= separateDetail(po.getProjectEntity().getClient().getTitle());
+            addParameters("clientDetail0", detail.size() > 0 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(0).toString())) : null);
+            processor.clear();
+            addParameters("clientDetail1", detail.size() > 1 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(1).toString())) : null);
+            processor.clear();
+            addParameters("clientDetail2", detail.size() > 2 ? Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(2).toString())) : null);
+            processor.clear();
+            addParameters("clientDetail3",detail.size()>3?Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(detail.get(3).toString())):null);
+        }
     }
     private String collectMRNo(){
         StringBuilder sb=new StringBuilder();
