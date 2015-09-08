@@ -32,6 +32,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -118,7 +119,7 @@ public class PurchaseOrderEdit implements Serializable {
     private final static Integer EDIT = 1;
 
 
-    private Integer originalQuantity;
+    private BigDecimal originalQuantity;
 
     private static final Logger log = Logger.getLogger(PurchaseOrderEdit.class.getName());
 
@@ -165,7 +166,7 @@ public class PurchaseOrderEdit implements Serializable {
     public void load() {
         log.info("loading...");
         if (!fase.equals("1")) {
-            originalQuantity = 0;
+            originalQuantity = new BigDecimal("0");
             poEdit = service.load(Long.parseLong(purchaseOrderId));
             service.removePrefixIfAny(poEdit);
             currentHashCode = service.getAbsoluteHashcode(poEdit.getId());
@@ -355,9 +356,9 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("boolean isValidDataUpdate()");
         boolean isValid = false;
         int inc = 0;
-        Integer quantity = scopeSupplyEditing.getQuantity() != null ? scopeSupplyEditing.getQuantity() : 0;
+        BigDecimal quantity = scopeSupplyEditing.getQuantity() != null ? scopeSupplyEditing.getQuantity() :new BigDecimal("0");
         Double cost = scopeSupplyEditing.getCost() != null ? scopeSupplyEditing.getCost().doubleValue() : 0D;
-        if (quantity >= 0) {
+        if (quantity.doubleValue() >= 0) {
             inc++;
         } else {
             Messages.addGlobalError("Quantity has a invalid data");
@@ -377,9 +378,9 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("boolean isValidData()");
         boolean isValid = false;
         int inc = 0;
-        Integer quantity = scopeSupplyEdit.getQuantity() != null ? scopeSupplyEdit.getQuantity() : 0;
+        BigDecimal quantity = scopeSupplyEdit.getQuantity() != null ? scopeSupplyEdit.getQuantity() :new BigDecimal("0");
         Double cost = scopeSupplyEdit.getCost() != null ? scopeSupplyEdit.getCost().doubleValue() : 0D;
-        if (quantity >= 0) {
+        if (quantity.doubleValue() >= 0) {
             inc++;
         } else {
             Messages.addGlobalError("Quantity has a invalid data");
@@ -685,7 +686,7 @@ public class PurchaseOrderEdit implements Serializable {
             if (selectedScopeSupply.getActualSiteDate() == null) {
                 selectedScopeSupply.setActualSiteDate(new Date());
             }
-            scopeSupplySplit.setQuantity(0);
+            scopeSupplySplit.setQuantity(new BigDecimal("0"));
 
         }
         return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;

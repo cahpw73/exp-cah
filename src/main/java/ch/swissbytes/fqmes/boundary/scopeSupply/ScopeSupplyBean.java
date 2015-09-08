@@ -15,6 +15,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -95,9 +96,9 @@ public class ScopeSupplyBean implements Serializable {
         log.info("boolean isValidData()");
         boolean isValid = false;
         int inc = 0;
-        Integer quantity=newScopeSupply.getQuantity()!=null?newScopeSupply.getQuantity():0;
+        BigDecimal quantity=newScopeSupply.getQuantity()!=null?newScopeSupply.getQuantity():new BigDecimal("0");
         Double cost=newScopeSupply.getCost()!=null?newScopeSupply.getCost().doubleValue():0D;
-        if(quantity >= 0){
+        if(quantity.doubleValue() >= 0){
             inc++;
         }else{
             Messages.addGlobalError("Quantity has a invalid data");
@@ -193,9 +194,9 @@ public class ScopeSupplyBean implements Serializable {
         log.info("boolean isValidDataUpdate()");
         boolean isValid = false;
         int inc = 0;
-        Integer quantity=editScopeSupply.getQuantity()!=null?editScopeSupply.getQuantity():0;
+        BigDecimal quantity=editScopeSupply.getQuantity()!=null?editScopeSupply.getQuantity():new BigDecimal("0");
         Double cost=editScopeSupply.getCost()!=null?editScopeSupply.getCost().doubleValue():0D;
-        if(quantity >= 0){
+        if(quantity.doubleValue() >= 0){
             inc++;
         }else{
             Messages.addGlobalError("Quantity has a invalid data");
