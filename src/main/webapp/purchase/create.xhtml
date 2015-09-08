@@ -67,10 +67,11 @@
                 <h:outputLabel for="projectName" styleClass="label-general-po text-lbl-ltr control-label" value="#{msgs['po.lbl.project.type.required']}"/>
                 <div class="inputText-general-po">
                     <h:inputText id="projectName" type="text"
-                                 required="true"
+
                                  maxlength="50"
+                                 disabled="true"
                                  jsf:placeholder="#{msgs['po.ph.project']}"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.project}"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.projectEntity.projectNumber}"
                                  class="form-control"
                                  requiredMessage="#{msgs['po.lbl.project.required']}"/>
                     <p:message for="projectName" id="msgProject"/>
@@ -187,7 +188,9 @@
         <div class="section-text-area-po" style="height: 12px!important;">
             <h:commandButton
                     id="btnAddSupplier"
+                    action="#{purchaseOrderCreate.addingSupplier}"
                     value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                    disabled="true"
                     onclick="PF('supplierModal').show();"
                     styleClass="btn btn-primary btn-sm">
                 <p:ajax async="false" update=":supplierId"/>

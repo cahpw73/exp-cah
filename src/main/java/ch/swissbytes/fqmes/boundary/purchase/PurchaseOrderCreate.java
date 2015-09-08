@@ -1,5 +1,6 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqm.boundary.UserSession;
@@ -100,6 +101,9 @@ public class PurchaseOrderCreate implements Serializable {
     @Inject
     private Conversation conversation;
 
+    @Inject
+    private ProjectService projectService;
+
 
     @PostConstruct
     public void create() {
@@ -129,6 +133,7 @@ public class PurchaseOrderCreate implements Serializable {
         newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         newPurchaseOrder.setPoEntity(new POEntity());
         newPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
+        newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));
     }
 
     public void cleanComment() {
@@ -140,11 +145,11 @@ public class PurchaseOrderCreate implements Serializable {
     @Deprecated
     public String doSave() {
         //TODO probably it should be deleted (all this method)
-        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+        /*if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
             log.log(Level.SEVERE, "Somebody is trying to save a PO from expediting module and this is not allowed");
             Messages.addGlobalError("you cannot save a PO");
             return "";
-        }
+        }*/
         savePurchase();
         if (!conversation.isTransient()) {
             conversation.end();
@@ -156,11 +161,11 @@ public class PurchaseOrderCreate implements Serializable {
     @Deprecated
     public String doSaveAndAdd() {
         //TODO probably it should be deleted (all this method)
-        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+       /* if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
             log.log(Level.SEVERE,"Somebody is trying to save a PO from expediting module and this is not allowed");
             Messages.addGlobalError("you cannot save a PO");
             return "";
-        }
+        }*/
         savePurchase();
         reset();
         if (!conversation.isTransient()) {
@@ -428,7 +433,7 @@ public class PurchaseOrderCreate implements Serializable {
 
     }
 
-    public void addingSupplierHeader() {
+    public void addingSupplier() {
         supplier.putModeCreation();
         supplier.start();
     }

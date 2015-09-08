@@ -44,12 +44,12 @@
                 </h:commandButton>
             </h:panelGroup>
             <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
-                <h:commandButton value="#{msgs['lbl.save']}"
+                <p:commandButton value="save expediting"
                                  action="#{bean.saveSupplier}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update="RENDER"
+                    <p:ajax async="false" update="#{RENDER}"
                             process="@form"/>
-                </h:commandButton>
+                </p:commandButton>
             </h:panelGroup>
             <h:commandButton value="#{msgs['lbl.save']}"
                              rendered="#{not supplierProcBean.supplierMode}"
@@ -60,7 +60,6 @@
                         oncomplete="activeCategoryBrandTab();"
                         update="idBtnSave idBtnCancel bodySupplier"/>
             </h:commandButton>
-
         </h:panelGroup>
     </div>
 

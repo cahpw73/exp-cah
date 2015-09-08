@@ -200,6 +200,8 @@
                             <h:commandButton
                                     id="btnAddSupplier"
                                     value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                                    disabled="true"
+                                    action="#{purchaseOrderEdit.addingSupplier}"
                                     onclick="PF('supplierModal').show();"
                                     styleClass="btn btn-primary btn-sm">
                                 <p:ajax async="false" update=":supplierId"/>
@@ -585,7 +587,7 @@
                 <ui:param name="MODE" value="CUSTOM"/>
                 <ui:param name="FORM" value="supplierId"/>
                 <ui:param name="bean" value="#{purchaseOrderEdit}"/>
-                <ui:param name="RENDER" value="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
+                <ui:param name="RENDER" value=":empForm:supplierAddress :empForm:supplierPhoneTxt :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId"/>
             </ui:include>
         </h:form>
     </p:dialog>
