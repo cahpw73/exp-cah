@@ -15,8 +15,11 @@
                 #{_scopeSupply.code}
             </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" width="80"
-              sortBy="#{_scopeSupply.quantity}" sortFunction="#{sortBean.sortIntegers}">
-            #{_scopeSupply.quantity}
+              sortBy="#{_scopeSupply.quantity}">
+            <h:outputText value="#{_scopeSupply.quantity}">
+                <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
+                                  locale="#{configuration.langLocalDecimal}"/>
+            </h:outputText>
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="80"
                   sortFunction="#{sortBean.sortStrings}">

@@ -11,7 +11,8 @@
                 <h:panelGroup id="itemsGroup">
                     <p:dataTable id="itemsDt" var="_i"
                                  value="#{itemBean.scopeSupplyList}">
-                        <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="50" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="50"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viItemNo" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.code}"/>
                             </h:panelGroup>
@@ -22,7 +23,8 @@
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.items.dt.column.cost.code']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.cost.code']}"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viCostCode" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.costCode}">
                                 </h:outputText>
@@ -34,42 +36,51 @@
                             </h:panelGroup>
                         </p:column>
                         <ui:remove>
-                            <p:column headerText="#{msgs['po.items.dt.column.equip.no']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                            <p:column headerText="#{msgs['po.items.dt.column.equip.no']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viEquipNo" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.tagNo}"/>
                                 </h:panelGroup>
                                 <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
-                                    <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}" styleClass="form-control">
+                                    <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}"
+                                                 styleClass="form-control">
 
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
                         </ui:remove>
-                        <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viQty" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.quantity}"/>
+                                <h:outputText value="#{_i.quantity}">
+                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                                     locale="#{configuration.langLocalDecimal}"/>
+                                </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
-                                <p:inputText id="qty" required="true" value="#{_i.quantity}" styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
-                                    <f:convertNumber integerOnly="true"/>
-
-
+                                <p:inputText id="qty" required="true" value="#{_i.quantity}"
+                                             styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
+                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                                     locale="#{configuration.langLocalDecimal}"/>
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.unit']}" width="50" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.unit']}" width="50"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viUnit" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.unit}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edUnit" rendered="#{_i.isEditable}">
-                                <p:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}" styleClass="form-control">
+                                <p:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}"
+                                             styleClass="form-control">
 
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.description']}" width="500" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.description']}" width="500"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
                                 <p:inputTextarea value="#{_i.description}"
 
@@ -88,7 +99,8 @@
                             </h:panelGroup>
                         </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.currency']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.currency']}"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viCurrency" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.projectCurrency.currency.code}"/>
                             </h:panelGroup>
@@ -109,7 +121,8 @@
                                 </h:selectOneMenu>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viUnitCost" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.cost}">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
@@ -117,14 +130,16 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edUniCost" rendered="#{_i.isEditable}">
-                                <p:inputText id="unitCostItem" value="#{_i.cost}" required="true" styleClass="form-control edUniCostItems" onkeyup="calculateTotalCost();">
+                                <p:inputText id="unitCostItem" value="#{_i.cost}" required="true"
+                                             styleClass="form-control edUniCostItems" onkeyup="calculateTotalCost();">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
 
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['po.items.dt.column.total.cost']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column headerText="#{msgs['po.items.dt.column.total.cost']}"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{_i.calculateTotal()}">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
@@ -132,14 +147,16 @@
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
-                                <h:inputText id="totalCostItem" value="#{_i.totalCost}" styleClass="form-control edTotalCostItems">
+                                <h:inputText id="totalCostItem" value="#{_i.totalCost}"
+                                             styleClass="form-control edTotalCostItems">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
                                     <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
-                        <p:column id="deliveryDateColumn"  headerText="#{msgs['po.items.dt.column.delivery.date']}" rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                        <p:column id="deliveryDateColumn" headerText="#{msgs['po.items.dt.column.delivery.date']}"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                             <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
                                 <h:outputText value="#{util.toLocal(_i.poDeliveryDate)}"/>
                             </h:panelGroup>
@@ -157,16 +174,20 @@
                                 </p:calendar>
                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
+                        <p:column headerText="#{msgs['lbl.actions']}"
+                                  rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}" process=":editPoForm:itemsDt"
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}"
+                                           process=":editPoForm:itemsDt"
                                            action="#{itemBean.confirmItem(_i)}"
-                                           update=":glbMsgs itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt" async="false"/>
+                                           update=":glbMsgs itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
+                                           async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}" process="@this"
                                            action="#{itemBean.deleteItem(_i)}"
-                                           update="itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt" async="false">
+                                           update="itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
+                                           async="false">
                                 <p:confirm header="Remove item"
                                            message="Are you sure to delete this item"
                                            icon="ui-icon-alert">

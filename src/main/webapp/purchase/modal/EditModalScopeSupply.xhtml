@@ -45,7 +45,10 @@
                                  requiredMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
                                  converterMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
                                  onkeyup="calculateTotalPrice()"
-                                 onblur="verifyQuantityValid();"/>
+                                 onblur="verifyQuantityValid();">
+                        <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
+                                          locale="#{configuration.langLocalDecimal}"/>
+                    </h:inputText>
                     <p:message for="scopeSupplyQuantity" id="msgScopeSupplyQuantity"/>
                 </div>
             </div>

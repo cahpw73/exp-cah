@@ -72,6 +72,10 @@ public class Configuration implements Serializable {
         return "#,##0.00";
     }
 
+    public String getPatternIntegerDecimal(){
+        return "###.##";
+    }
+
     public String getLocale(){
         return "en_AU";
     }
@@ -180,4 +184,12 @@ public class Configuration implements Serializable {
         return value!=null?new java.text.DecimalFormat(pattern, new java.text.DecimalFormatSymbols()).format(value):"";
     }
 
+    public static void main(String[] args) {
+        DecimalFormat format = new DecimalFormat("###.##");
+
+        double[] doubles = {123.45, 99.0, 34343434333323.258, 45.0};
+        for(int i=0;i<doubles.length;i++){
+            System.out.println(format.format(doubles[i]));
+        }
+    }
 }

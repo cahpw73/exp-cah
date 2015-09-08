@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.818181818181819"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="707"/>
+	<property name="ireport.y" value="659"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -31,7 +31,7 @@
 		<parameter name="poTitle" class="java.lang.String"/>
 		<parameter name="preamble" class="java.lang.String"/>
 		<field name="code" class="java.lang.String"/>
-		<field name="quantity" class="java.lang.Integer"/>
+		<field name="quantity" class="java.math.BigDecimal"/>
 		<field name="unit" class="java.lang.String"/>
 		<field name="description" class="java.lang.String"/>
 		<field name="cost" class="java.math.BigDecimal"/>
@@ -658,17 +658,16 @@
 							</line>
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="699a2303-5514-461d-b87d-f3e53a5d18ad" x="0" y="12" width="30" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Center" verticalAlignment="Top">
-									<font size="8"/>
-									<paragraph leftIndent="3" rightIndent="2"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
-							</textField>
 							<line>
 								<reportElement uuid="3fba5d02-4753-4433-babc-681364649041" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
 							</line>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement uuid="7f712b51-cdaf-45b1-89bb-29f13ecae49f" style="Arial" x="0" y="12" width="30" height="12"/>
+								<textElement textAlignment="Center" markup="styled">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{quantity}!=null?new ch.swissbytes.fqmes.util.Configuration().format("###.##",$F{quantity}):null]]></textFieldExpression>
+							</textField>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="30" uuid="33cf025f-547c-4e49-b2d6-dd127c9044ef">
