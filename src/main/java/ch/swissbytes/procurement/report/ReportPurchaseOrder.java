@@ -234,9 +234,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
     private Map<Long,String> getCurrenciesForPayment(){
         Map<Long,String> currencies=new HashMap<Long,String>();
-        for(CashflowDetailEntity cashflowDetailEntity:cashflowEntity.getCashflowDetailList()){
-            if(cashflowDetailEntity.getProjectCurrency()!=null){
-                currencies.put(cashflowDetailEntity.getProjectCurrency().getId(),cashflowDetailEntity.getProjectCurrency().getCurrency().getSymbol()!=null?cashflowDetailEntity.getProjectCurrency().getCurrency().getSymbol():cashflowDetailEntity.getProjectCurrency().getCurrency().getCode());
+        if(cashflowEntity!=null) {
+            for (CashflowDetailEntity cashflowDetailEntity : cashflowEntity.getCashflowDetailList()) {
+                if (cashflowDetailEntity.getProjectCurrency() != null) {
+                    currencies.put(cashflowDetailEntity.getProjectCurrency().getId(), cashflowDetailEntity.getProjectCurrency().getCurrency().getSymbol() != null ? cashflowDetailEntity.getProjectCurrency().getCurrency().getSymbol() : cashflowDetailEntity.getProjectCurrency().getCurrency().getCode());
+                }
             }
         }
         return currencies;
