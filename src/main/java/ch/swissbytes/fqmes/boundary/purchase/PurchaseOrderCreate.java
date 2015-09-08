@@ -274,19 +274,19 @@ public class PurchaseOrderCreate implements Serializable {
 
     public void selectingForAttachment(final int index) {
         indexAttachment = index;
-        log.info("indexAttachment "+indexAttachment);
+        log.info("indexAttachment " + indexAttachment);
     }
 
-    public ScopeSupplyEntity currentScopeSupplyForAttachment(){
-        return indexAttachment!=null?scopeSupplies.get(indexAttachment):null;
+    public ScopeSupplyEntity currentScopeSupplyForAttachment() {
+        return indexAttachment != null ? scopeSupplies.get(indexAttachment) : null;
     }
 
-    public List<AttachmentComment>getAttachmentsForComment(){
-        List<AttachmentComment> list=new ArrayList<AttachmentComment>();
-        if(indexCommentEditing!=null&&indexCommentEditing==-1&&newComment!=null){
-            list=newComment.getAttachments();
-        }else if(indexCommentEditing!=null&&indexCommentEditing!=-1&&editComment!=null){
-            list=editComment.getAttachments();
+    public List<AttachmentComment> getAttachmentsForComment() {
+        List<AttachmentComment> list = new ArrayList<AttachmentComment>();
+        if (indexCommentEditing != null && indexCommentEditing == -1 && newComment != null) {
+            list = newComment.getAttachments();
+        } else if (indexCommentEditing != null && indexCommentEditing != -1 && editComment != null) {
+            list = editComment.getAttachments();
         }
         return list;
     }
@@ -324,9 +324,9 @@ public class PurchaseOrderCreate implements Serializable {
     }
 
     public void deleteAttachmentComment(int index) {
-        if(indexCommentEditing==-1){
+        if (indexCommentEditing == -1) {
             newComment.getAttachments().remove(index);
-        }else{
+        } else {
             editComment.getAttachments().remove(index);
         }
     }
@@ -421,15 +421,16 @@ public class PurchaseOrderCreate implements Serializable {
         return (PurchaseOrderEntity) service.clone(newPurchaseOrder);
     }
 
-        public void saveSupplier(){
-            SupplierProcEntity supplierProcEntity = supplier.save();
-            if (supplierProcEntity != null) {
-                newPurchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
-                newPurchaseOrder.getPoEntity().setContactEntity(null);
-                list.updateSupplierList();
-                RequestContext context = RequestContext.getCurrentInstance();
-                context.execute("PF('supplierModal').hide();");
-            }
+    public void saveSupplier() {
+        log.info("saveSupplier");
+        SupplierProcEntity supplierProcEntity = supplier.save();
+        if (supplierProcEntity != null) {
+            newPurchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
+            newPurchaseOrder.getPoEntity().setContactEntity(null);
+            list.updateSupplierList();
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('supplierModal').hide();");
+        }
 
     }
 

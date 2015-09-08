@@ -12,13 +12,13 @@
             <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.supplier.id']} *"
                            style="padding-left: 0px;"/>
             <div class="col-sm-8">
-                <h:inputText id="supplierID" maxlength="50"
+                <h:inputText id="supplierID1" maxlength="50"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.supplierId}"
                              class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
                              required="true" requiredMessage="#{msgs['supplier.lbl.supplier.id']} is required"
                              jsf:autofocus="true" tabindex="1"/>
-                <p:message for="supplierID"/>
+                <p:message for="supplierID1"/>
             </div>
         </div>
     </div>
@@ -44,12 +44,11 @@
                 </h:commandButton>
             </h:panelGroup>
             <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
-                <p:commandButton value="save expediting"
-                                 action="#{bean.saveSupplier}"
+                <h:commandButton value="#{msgs['lbl.save']}"
                                  styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="#{RENDER}"
-                            process="@form"/>
-                </p:commandButton>
+                            process="@form" listener="#{bean.saveSupplier()}"/>
+                </h:commandButton>
             </h:panelGroup>
             <h:commandButton value="#{msgs['lbl.save']}"
                              rendered="#{not supplierProcBean.supplierMode}"
