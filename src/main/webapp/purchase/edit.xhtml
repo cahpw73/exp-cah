@@ -581,15 +581,17 @@
             </div>
         </p:confirmDialog>
         <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">
-        <h:form id="supplierId" prependId="false">
-            <ui:include src="../procurement/admin/supplier/components/templateSupplier.xhtml">
-                <ui:param name="MODE" value="CUSTOM"/>
-                <ui:param name="FORM" value="supplierId"/>
-                <ui:param name="bean" value="#{purchaseOrderEdit}"/>
-                <ui:param name="RENDER" value=":empForm:supplierAddress :empForm:supplierPhoneTxt :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId"/>
-            </ui:include>
-        </h:form>
-    </p:dialog>
+            <h:form id="supplierId" prependId="false">
+                <ui:include src="../procurement/admin/supplier/components/templateSupplier.xhtml">
+                    <ui:param name="MODE" value="CUSTOM"/>
+                    <ui:param name="FORM" value="supplierId"/>
+                    <ui:param name="bean" value="#{purchaseOrderEdit}"/>
+                    <ui:param name="RENDER" value=":empForm:supplierAddress :empForm:supplierPhoneTxt
+                                                   :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode
+                                                   :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId"/>
+                </ui:include>
+            </h:form>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>
