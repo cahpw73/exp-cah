@@ -16,6 +16,9 @@
                                      scope="textSnippetScope"
                                      revert="true" helper="clone"/>
                     </p:column>
+                    <p:column headerText="#{msgs['po.text.lbl.standard.column.text.id']}">
+                        <h:outputText id="texSnippetCode" value="#{_t.code}" styleClass="content-big-text"/>
+                    </p:column>
                     <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
                         <h:outputText id="texSnippetSt" value="#{_t.description}" styleClass="content-big-text"/>
                     </p:column>
