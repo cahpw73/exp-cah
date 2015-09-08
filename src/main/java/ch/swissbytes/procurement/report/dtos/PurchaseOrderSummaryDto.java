@@ -7,6 +7,12 @@ import java.io.Serializable;
  */
 public class PurchaseOrderSummaryDto implements Serializable {
     public String title;
-    public String currencyCode;
+    public String currencyCode1;
+    public String amount1;
+    public String currencyCode2;
+    public String amount2;
+    public String currencyCode3;
+    public String amount3;
+
 
 }
