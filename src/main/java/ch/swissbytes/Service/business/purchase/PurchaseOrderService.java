@@ -40,8 +40,8 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private PurchaseOrderDao dao;
 
-    @Inject
-    private SupplierDao supplierDao;
+    /*@Inject
+    private SupplierDao supplierDao;*/
 
     @Inject
     private CommentDao commentDao;
@@ -97,10 +97,14 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier) {
+        if(newPurchaseOrder.getPoEntity().getId() == null){
+            newPurchaseOrder.setProject(newPurchaseOrder.getProjectEntity().getProjectNumber());
+            dao.save(newPurchaseOrder.getPoEntity());
+        }
         dao.save(newPurchaseOrder);
         removePrefixIfAny(newPurchaseOrder);
         supplier.setPurchaseOrder(newPurchaseOrder);
-        supplierDao.persist(supplier);
+       // supplierDao.persist(supplier);
         commentDao.persist(comments, newPurchaseOrder);
         scopeSupplyDao.persist(scopeSupplies, newPurchaseOrder);
     }
@@ -164,10 +168,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         PurchaseOrderEntity entity = dao.load(purchaseOrderId);
         if (entity != null) {
             hashCode = entity.hashCode();
-            SupplierEntity supplierEntity = supplierDao.findByPurchaseOrder(purchaseOrderId);
+           /* SupplierEntity supplierEntity = supplierDao.findByPurchaseOrder(purchaseOrderId);
             if (supplierEntity != null) {
                 hashCode += supplierEntity.hashCode();
-            }
+            }*/
             for (CommentEntity commentEntity : commentDao.findByPurchaseOrder(purchaseOrderId)) {
                 hashCode += commentEntity.hashCode();
             }
