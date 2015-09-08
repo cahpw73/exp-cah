@@ -27,7 +27,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     private BigDecimal cost;
     private String currency;
     private String code;
-    private Integer quantity;
+    private BigDecimal quantity;
     private String unit;
     private String description;
     private Date forecastExWorkDate;
@@ -106,7 +106,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     }
 
     @Column(name="quantity")
-    public Integer getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
@@ -120,7 +120,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.unit = unit;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
@@ -134,7 +134,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.description = description;
     }
 
-    //@TODO Cambiamos el valur nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    //@TODO Cambiamos el valor nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
     @Column(name="EX_WORK_DATE")
     public Date getForecastExWorkDate() {
         return forecastExWorkDate;

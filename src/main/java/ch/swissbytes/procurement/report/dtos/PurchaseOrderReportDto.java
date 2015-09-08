@@ -17,7 +17,7 @@ import java.util.Date;
 public class PurchaseOrderReportDto implements Serializable {
 
     private String code;
-    private Integer quantity;
+    private BigDecimal quantity;
     private String unit;
     private String description;
     private BigDecimal cost;
@@ -108,11 +108,11 @@ public class PurchaseOrderReportDto implements Serializable {
         this.code = code;
     }
 
-    public Integer getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
