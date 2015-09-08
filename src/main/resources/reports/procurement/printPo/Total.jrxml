@@ -102,7 +102,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 		</band>
 		<band height="22">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="65894a56-969f-41de-9301-99a2536df9a3" style="Arial-Bold" x="444" y="0" width="71" height="20"/>
+				<reportElement uuid="65894a56-969f-41de-9301-99a2536df9a3" style="Arial-Bold" x="447" y="0" width="64" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
@@ -119,10 +119,10 @@ group by pc.currency_id,c.code,c.symbol]]>
 				<textFieldExpression><![CDATA["TOTAL PRICE (EXCL. VAT) "+($F{symbol}!=null?$F{symbol}:$F{code})]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="bfcd27b6-7b65-486f-a675-e70b5d257eb9" positionType="Float" stretchType="RelativeToBandHeight" x="442" y="0" width="1" height="21"/>
+				<reportElement uuid="bfcd27b6-7b65-486f-a675-e70b5d257eb9" positionType="Float" stretchType="RelativeToBandHeight" x="443" y="0" width="1" height="22"/>
 			</line>
 			<line>
-				<reportElement uuid="862a1f4f-83ea-4b47-bfd5-1406583d06a8" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="1" height="21"/>
+				<reportElement uuid="862a1f4f-83ea-4b47-bfd5-1406583d06a8" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="1" height="22"/>
 			</line>
 		</band>
 	</detail>
