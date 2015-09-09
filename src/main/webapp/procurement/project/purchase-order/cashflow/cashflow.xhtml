@@ -175,7 +175,8 @@
                                                var="_p"
                                                itemValue="#{_p}"
                                                itemLabel="#{_p.label}"/>
-                                <p:ajax async="true" process="@this" event="change" update="forecastDt"/>
+                                <p:ajax async="true" process="@this" event="change" update="forecastDt"
+                                        listener="#{cashflowBean.calculatePaymentDateBasedPaymentTerms}"/>
                             </h:selectOneMenu>
                             <h:inputText id="termCfIdVi" readonly="true" styleClass="form-control view-po"
                                          value="#{cashflowBean.cashflow.paymentTerms.label}"
@@ -337,7 +338,7 @@
                                             value="#{_l.claimDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
-                                    <p:ajax event="dateSelect" update="forecastDt" process="@this"
+                                    <p:ajax event="dateSelect" update="forecastDt" process="forecastDt"
                                             listener="#{cashflowBean.calculatePaymentDate(_l)}" async="false"/>
                                 </p:calendar>
                             </h:panelGroup>
@@ -354,7 +355,7 @@
                                             converter="#{dateConverter}"
                                             jsf:placeholder="#{configuration.formatDate}"
                                             converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{cashflowBean.calculatePaymentDate(_l)}"
+                                            value="#{_l.paymentDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
                                 </p:calendar>

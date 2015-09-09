@@ -192,7 +192,6 @@ public class CashflowBean implements Serializable {
     }
 
     public Date calculatePaymentDate(CashflowDetailEntity detailEntity){
-        log.info("calculatePaymentDate detailEntity");
         if(cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null){
             switch (cashflow.getPaymentTerms()){
                 case NET_30 : detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 30), configuration.getTimeZone()));
@@ -208,6 +207,29 @@ public class CashflowBean implements Serializable {
             detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(),configuration.getTimeZone()));
         }
         return detailEntity.getPaymentDate();
+    }
+
+    public void calculatePaymentDateBasedPaymentTerms(){
+        for(CashflowDetailEntity detailEntity : cashflowDetailList) {
+            if (cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null) {
+                switch (cashflow.getPaymentTerms()) {
+                    case NET_30:
+                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 30), configuration.getTimeZone()));
+                        break;
+                    case NET_14:
+                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 15), configuration.getTimeZone()));
+                        break;
+                    case NET_7:
+                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 7), configuration.getTimeZone()));
+                        break;
+                    default:
+                        detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(), configuration.getTimeZone()));
+                        break;
+                }
+            } else if (cashflow.getPaymentTerms() == null && detailEntity.getClaimDate() != null) {
+                detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(), configuration.getTimeZone()));
+            }
+        }
     }
 
     public CashflowEntity getCashflow() {
