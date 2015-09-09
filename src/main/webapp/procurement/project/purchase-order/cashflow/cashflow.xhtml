@@ -175,7 +175,7 @@
                                                var="_p"
                                                itemValue="#{_p}"
                                                itemLabel="#{_p.label}"/>
-                                <p:ajax async="true" process="@this" event="change"/>
+                                <p:ajax async="true" process="@this" event="change" update="forecastDt"/>
                             </h:selectOneMenu>
                             <h:inputText id="termCfIdVi" readonly="true" styleClass="form-control view-po"
                                          value="#{cashflowBean.cashflow.paymentTerms.label}"
@@ -337,13 +337,15 @@
                                             value="#{_l.claimDate}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
+                                    <p:ajax event="dateSelect" update="forecastDt" process="@this"
+                                            listener="#{cashflowBean.calculatePaymentDate(_l)}" async="false"/>
                                 </p:calendar>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['po.cashflow.column.payment.date']}"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPaymentDate" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{util.toLocal(_l.paymentDate)}"/>
+                                <h:outputText value="#{util.toLocal(cashflowBean.calculatePaymentDate(_l))}"/>
                             </h:panelGroup>
                             <h:panelGroup id="edPaymentDate" rendered="#{_l.isEditable}">
                                 <p:calendar id="paymentDate" type="text" styleClass="calendar"
@@ -352,7 +354,7 @@
                                             converter="#{dateConverter}"
                                             jsf:placeholder="#{configuration.formatDate}"
                                             converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{_l.paymentDate}"
+                                            value="#{cashflowBean.calculatePaymentDate(_l)}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
                                 </p:calendar>

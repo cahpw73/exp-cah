@@ -9,7 +9,11 @@ import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.types.PaymentTermsEnum;
 import ch.swissbytes.domain.types.RetentionFormEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
+import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.util.DateUtil;
+import javafx.scene.layout.BackgroundRepeat;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.primefaces.event.DragDropEvent;
@@ -22,6 +26,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -41,6 +46,9 @@ public class CashflowBean implements Serializable {
 
     @Inject
     private SortBean sortBean;
+
+    @Inject
+    private Configuration configuration;
 
     private CashflowEntity cashflow;
 
@@ -181,6 +189,25 @@ public class CashflowBean implements Serializable {
             retentionForms.add(s);
         }
         return retentionForms;
+    }
+
+    public Date calculatePaymentDate(CashflowDetailEntity detailEntity){
+        log.info("calculatePaymentDate detailEntity");
+        if(cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null){
+            switch (cashflow.getPaymentTerms()){
+                case NET_30 : detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 30), configuration.getTimeZone()));
+                    break;
+                case NET_14: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 15), configuration.getTimeZone()));
+                    break;
+                case NET_7: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(),7),configuration.getTimeZone()));
+                    break;
+                default: detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(),configuration.getTimeZone()));
+                    break;
+            }
+        }else if(cashflow.getPaymentTerms() == null && detailEntity.getClaimDate() != null){
+            detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(),configuration.getTimeZone()));
+        }
+        return detailEntity.getPaymentDate();
     }
 
     public CashflowEntity getCashflow() {
