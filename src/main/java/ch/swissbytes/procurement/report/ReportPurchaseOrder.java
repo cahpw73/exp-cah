@@ -96,7 +96,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager",po.getPoEntity().getProcManager());
         addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
-        addParameters("isOriginal",false);
+        addParameters("isOriginal",true);
 
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
