@@ -58,6 +58,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 	</pageHeader>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{isOriginal}==false]]></printWhenExpression>
 			<line>
 				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="0" y="0" width="519" height="1"/>
 			</line>
@@ -119,7 +120,6 @@ group by pc.currency_id,c.code,c.symbol]]>
 	</columnHeader>
 	<detail>
 		<band height="22">
-			<printWhenExpression><![CDATA[$P{isOriginal}==false]]></printWhenExpression>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="65894a56-969f-41de-9301-99a2536df9a3" style="Arial-Bold" x="447" y="0" width="64" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">

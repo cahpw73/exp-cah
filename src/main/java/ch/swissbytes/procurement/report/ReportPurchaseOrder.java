@@ -12,6 +12,8 @@ import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -37,6 +39,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private List<ClausesEntity> clausesList;
     private Connection connection;
     private CashflowEntity cashflowEntity;
+    private EntityManager entityManager;
 
 
     /**
@@ -46,7 +49,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               Configuration configuration,PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList, String preamble,List<ClausesEntity> clausesList,CashflowEntity cashflowEntity) {
+                               Configuration configuration,PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList,
+                               String preamble,List<ClausesEntity> clausesList,CashflowEntity cashflowEntity, EntityManager entityManager) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -54,6 +58,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.preamble = preamble;
         this.clausesList = clausesList;
         this.cashflowEntity=cashflowEntity;
+        this.entityManager = entityManager;
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
@@ -91,7 +96,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions",po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager",po.getPoEntity().getProcManager());
         addParameters("procManagerDetail",po.getPoEntity().getProcManagerDetail());
-        addParameters("isOriginal",false);
+        addParameters("isOriginal",true);
 
         if(po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
@@ -254,6 +259,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    private List<Object> getSummaryItemsPO(){
+        Query query = entityManager.createNativeQuery("select cu.code,cu.symbol,po.orderedvariation,sum (total_cost)\n" +
+                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "left join project_currency pc on pc.id= sp.project_currency_id\n" +
+                "inner join currency cu on pc.currency_id=cu.id\n" +
+                "where sp.status_id=1 and po.po = '"+po.getPo()+"' and po.project_id="+po.getProjectEntity().getId()+"\n" +
+                "group by cu.code,cu.symbol,po.orderedvariation\n" +
+                "order by po.orderedvariation");
+        return query.getResultList();
     }
 
     @Override

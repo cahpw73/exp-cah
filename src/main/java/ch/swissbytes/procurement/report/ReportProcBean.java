@@ -91,7 +91,8 @@ public class ReportProcBean implements Serializable {
                 cashflowEntity.getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(cashflowEntity.getId()));
             }
             String fileName = generateName(po);
-            ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order", messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity);
+            ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
+                                                messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager);
             reportView.printDocument(null);
         }
         openReport = true;
