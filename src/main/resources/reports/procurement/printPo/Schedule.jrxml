@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
-	<property name="ireport.zoom" value="2.0490403660952117"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="386"/>
+	<property name="ireport.y" value="38"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial-Bold-Italic" pdfFontName="C:\fonts\arialbi.ttf"/>
@@ -216,7 +216,7 @@ order by cast(item as integer)]]>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl3},$F{format},$F{currency3})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="27013b90-d85b-4bcd-b9ac-b0659d2453f1" x="175" y="4" width="54" height="20">
+				<reportElement uuid="27013b90-d85b-4bcd-b9ac-b0659d2453f1" x="168" y="4" width="61" height="20">
 					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -285,7 +285,7 @@ order by cast(item as integer)]]>
 					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl1},$F{format},$V{totalCurrency1})]]></textFieldExpression>
 			</textField>
@@ -294,7 +294,7 @@ order by cast(item as integer)]]>
 					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl2},$F{format},$V{totalCurrency2})]]></textFieldExpression>
 			</textField>
@@ -303,7 +303,7 @@ order by cast(item as integer)]]>
 					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl3},$F{format},$V{totalCurrency3})]]></textFieldExpression>
 			</textField>

@@ -40,7 +40,7 @@ order by ss.ordered]]>
 	<field name="title" class="java.lang.String"/>
 	<field name="actual_site_date" class="java.sql.Timestamp"/>
 	<field name="po_inco_term" class="java.lang.String"/>
-	<field name="quantity" class="java.lang.Integer"/>
+	<field name="quantity" class="java.math.BigDecimal"/>
 	<field name="ex_work_date" class="java.sql.Timestamp"/>
 	<field name="purchase_order_id" class="java.lang.Long"/>
 	<field name="project" class="java.lang.String"/>
@@ -212,7 +212,7 @@ order by ss.ordered]]>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{quantity}!=null?new ch.swissbytes.fqmes.util.Configuration().format("###.##",$F{quantity}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement uuid="60c7fb5d-cfd6-4b9c-a79c-176598354cb5" style="overdue" x="380" y="1" width="42" height="12"/>

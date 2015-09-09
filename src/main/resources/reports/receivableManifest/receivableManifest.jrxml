@@ -16,7 +16,7 @@ where ss.status_id<>3 and $X{IN, purchase_order_id, purchaseID} and po.status_id
 order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po.po END,po.variation,ss.ordered]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
-	<field name="quantity" class="java.lang.Integer"/>
+	<field name="quantity" class="java.math.BigDecimal"/>
 	<field name="cost" class="java.math.BigDecimal"/>
 	<field name="unit" class="java.lang.String"/>
 	<field name="project" class="java.lang.String"/>
@@ -196,7 +196,7 @@ order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{quantity}!=null?$F{quantity}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{quantity}!=null?new ch.swissbytes.fqmes.util.Configuration().format("###.##",$F{quantity}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement uuid="7349ef2b-90c6-4ca8-8627-c09847720d64" x="339" y="0" width="45" height="12"/>

@@ -159,6 +159,9 @@ public class CashflowBean implements Serializable {
     }
 
     public String formattedPercentage(BigDecimal percentage){
+        if(percentage==null){
+            return "";
+        }
         Double percentageN = percentage.doubleValue();
         Integer percentageI = percentageN.intValue();
         return percentageI.toString();
