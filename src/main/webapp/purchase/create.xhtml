@@ -82,7 +82,8 @@
             <p:inputTextarea type="text" class="form-control" id="projectNameComment"
                              style="max-height:34px;"
                              maxlength="950"
-                             value="#{purchaseOrderCreate.newPurchaseOrder.projectNameComment}"
+                             readonly="true"
+                             value="#{purchaseOrderCreate.newPurchaseOrder.commentForProject()}"
                              jsf:placeholder="#{msgs['po.ph.projectNameComment']}"/>
             <p:message for="projectNameComment" />
         </div>

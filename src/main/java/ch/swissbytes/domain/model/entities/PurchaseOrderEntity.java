@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Named;
 import javax.persistence.*;
@@ -297,6 +298,17 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setOrderedVariation(Integer orderedVariation) {
         this.orderedVariation = orderedVariation;
+    }
+
+    @Transient
+    public String commentForProject(){
+        String commentForProject="";
+        if(StringUtils.isNotEmpty(projectNameComment)){
+            commentForProject=projectNameComment;
+        }else{
+            commentForProject=(projectEntity!=null&&StringUtils.isNotEmpty(projectEntity.getTitle())?projectEntity.getTitle():"");
+        }
+        return commentForProject;
     }
 
     @Override
