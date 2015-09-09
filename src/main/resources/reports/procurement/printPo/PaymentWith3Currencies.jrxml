@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
-	<property name="ireport.zoom" value="3.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentWith3Currencies" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c92f7d5-2129-4e18-80da-0d9fd8518a60">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="37"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial-Bold-Italic" pdfFontName="C:\fonts\arialbi.ttf"/>
@@ -20,9 +20,6 @@
 	<parameter name="currencyId1" class="java.lang.Long"/>
 	<parameter name="currencyId2" class="java.lang.Long"/>
 	<parameter name="currencyId3" class="java.lang.Long"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol,cast(cfd.percentage as integer),pc.format,
 case when cfd.project_currency_id=$P{currencyId1} then  project_amt else 0 end as currency1 ,
@@ -48,7 +45,7 @@ order by cast(item as integer)]]>
 	<field name="currency1" class="java.math.BigDecimal"/>
 	<field name="currency2" class="java.math.BigDecimal"/>
 	<field name="currency3" class="java.math.BigDecimal"/>
-	<variable name="totalCurrency1" class="java.math.BigDecimal" calculation="Sum">
+    <variable name="totalCurrency1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{currency1}]]></variableExpression>
 	</variable>
 	<variable name="totalCurrency2" class="java.math.BigDecimal" calculation="Sum">
@@ -61,55 +58,10 @@ order by cast(item as integer)]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="25" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="100" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="dc2be798-737b-404a-aa49-b32395f2ea10" style="Arial-Bold" x="211" y="25" width="84" height="20" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
-				</reportElement>
-				<textElement markup="styled">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SCHEDULE E]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="af22a06e-95b6-4b08-9c8e-7767b31bde75" style="Arial-Bold" x="184" y="45" width="133" height="20" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
-				</reportElement>
-				<textElement markup="styled">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PAYMENT SCHEDULE]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1276d79c-2742-4994-9bf1-bda6cb683d56" style="Arial" x="20" y="66" width="476" height="31" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
-					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
-				</reportElement>
-				<textElement markup="styled">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[The following progress payments base on the supplier's achievement of specified milestones have been agreed and will be paid to the Supplier in accordance with the payment provisions of the Purchase Order:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="438" y="5" width="69" height="17"/>
-				<textElement markup="styled"/>
-				<text><![CDATA[SCHEDULE E]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="20" y="5" width="257" height="20"/>
-				<textElement markup="styled">
-					<font fontName="Arial" isBold="false" isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["PURCHASE ORDER No."+($P{projectNumber}+"-"+$P{poNo})]]></textFieldExpression>
-			</textField>
-			<subreport>
-				<reportElement uuid="c4896545-3eb1-4f5b-b4d9-68adee3d4f11" x="31" y="31" width="200" height="34"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentWith3Currencies.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="37" splitType="Stretch">
