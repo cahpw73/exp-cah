@@ -11,6 +11,7 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -309,12 +310,18 @@ public class PoListBean implements Serializable {
         log.info("printing po final");
         currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
         currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+
+        RequestContext.getCurrentInstance().update("projectListId");
+    }
+
+    public void printFinal(){
         printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus());
     }
 
     public void printPODraft() {
         log.info("printing po draft");
         printPo(null);
+
     }
 
     private void printPo(POStatusEnum poStatusEnum) {
