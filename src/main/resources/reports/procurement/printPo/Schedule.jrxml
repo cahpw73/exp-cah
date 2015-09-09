@@ -23,40 +23,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="currenciesNumber" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol,cast(cfd.percentage as integer),pc.format,
-case when cfd.project_currency_id=$P{currencyId1} then  project_amt else 0 end as currency1 ,
-case when cfd.project_currency_id=$P{currencyId2} then  project_amt else 0 end as currency2 ,
-case when cfd.project_currency_id=$P{currencyId3} then  project_amt else 0 end as currency3
-from cashflow cf inner join cashflow_detail cfd  on
-cfd.cashflow_id=cf.id
-left join project_currency pc on pc.id= cfd.project_currency_id
-inner join currency cu on pc.currency_id=cu.id
-where cf.status=0 and cfd.status=0 and cf.po_id=$P{PO_ID}
-order by cast(item as integer)]]>
+		<![CDATA[select 1]]>
 	</queryString>
-	<field name="item" class="java.lang.String"/>
-	<field name="milestone" class="java.lang.String"/>
-	<field name="order_amt" class="java.math.BigDecimal"/>
-	<field name="project_amt" class="java.math.BigDecimal"/>
-	<field name="claim_date" class="java.sql.Timestamp"/>
-	<field name="exchange_rate" class="java.math.BigDecimal"/>
-	<field name="code" class="java.lang.String"/>
-	<field name="symbol" class="java.lang.String"/>
-	<field name="percentage" class="java.lang.Integer"/>
-	<field name="format" class="java.lang.String"/>
-	<field name="currency1" class="java.math.BigDecimal"/>
-	<field name="currency2" class="java.math.BigDecimal"/>
-	<field name="currency3" class="java.math.BigDecimal"/>
-	<variable name="totalCurrency1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{currency1}]]></variableExpression>
-	</variable>
-	<variable name="totalCurrency2" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{currency2}]]></variableExpression>
-	</variable>
-	<variable name="totalCurrency3" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{currency3}]]></variableExpression>
-	</variable>
+	<field name="?column?" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -111,10 +82,90 @@ order by cast(item as integer)]]>
 	</columnHeader>
 	<detail>
 		<band height="24" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{currenciesNumber}>=3]]></printWhenExpression>
 			<subreport>
-				<reportElement uuid="c4896545-3eb1-4f5b-b4d9-68adee3d4f11" x="11" y="90" width="200" height="34"/>
+				<reportElement uuid="c4896545-3eb1-4f5b-b4d9-68adee3d4f11" x="0" y="0" width="518" height="24"/>
+				<subreportParameter name="currencyLbl3">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId1">
+					<subreportParameterExpression><![CDATA[$P{currencyId1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId2">
+					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl1">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl2">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$P{PO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentWith3Currencies.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="19">
+			<printWhenExpression><![CDATA[$P{currenciesNumber}==2]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="bd5c8dc5-ac68-4c0f-a8cd-4e6510702936" x="0" y="0" width="518" height="19"/>
+				<subreportParameter name="currencyLbl3">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId1">
+					<subreportParameterExpression><![CDATA[$P{currencyId1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId2">
+					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl1">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl2">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$P{PO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentWith2Currencies.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="24">
+			<printWhenExpression><![CDATA[$P{currenciesNumber}==1]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="b69bf6d6-dd54-4402-ba9e-beb59dea9d46" x="0" y="0" width="518" height="24"/>
+				<subreportParameter name="currencyLbl3">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId1">
+					<subreportParameterExpression><![CDATA[$P{currencyId1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId2">
+					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl1">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyLbl2">
+					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$P{PO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PaymentWith1Currency.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
