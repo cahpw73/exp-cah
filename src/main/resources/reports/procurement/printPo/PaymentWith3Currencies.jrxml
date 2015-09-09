@@ -247,7 +247,7 @@ order by cast(item as integer)]]>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl1},$F{format},$V{totalCurrency1})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="324f12a7-c282-49c2-96bb-473d68c4034f" style="Arial-Bold-Italic" mode="Opaque" x="289" y="3" width="60" height="20">
+				<reportElement uuid="324f12a7-c282-49c2-96bb-473d68c4034f" style="Arial-Bold" mode="Opaque" x="289" y="3" width="60" height="20">
 					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
 				<textElement>

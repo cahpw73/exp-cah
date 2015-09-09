@@ -914,7 +914,9 @@
 	<summary>
 		<band splitType="Immediate">
 			<subreport>
-				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$P{currenciesNumber}!=null&&$P{currenciesNumber}>0]]></printWhenExpression>
+				</reportElement>
 				<subreportParameter name="exchangeRate">
 					<subreportParameterExpression><![CDATA[$P{exchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
