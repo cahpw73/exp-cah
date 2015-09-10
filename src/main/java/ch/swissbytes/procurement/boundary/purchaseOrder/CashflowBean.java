@@ -2,10 +2,8 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
-import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
-import ch.swissbytes.domain.model.entities.CashflowEntity;
-import ch.swissbytes.domain.model.entities.ItemEntity;
-import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.PaymentTermsEnum;
 import ch.swissbytes.domain.types.RetentionFormEnum;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -28,6 +26,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -49,6 +48,9 @@ public class CashflowBean implements Serializable {
 
     @Inject
     private Configuration configuration;
+
+    @Inject
+    private PurchaseOrderService poService;
 
     private CashflowEntity cashflow;
 
@@ -231,6 +233,7 @@ public class CashflowBean implements Serializable {
             }
         }
     }
+
 
     public CashflowEntity getCashflow() {
         return cashflow;

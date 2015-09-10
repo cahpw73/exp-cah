@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -408,6 +409,28 @@ public class PoBean extends Bean {
     public String calculateTotalValues() {
         Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
         return toString(totals);
+    }
+
+    public BigDecimal calculatePaymentValue(CashflowDetailEntity detailEntity){
+        log.info("calculatePaymentValue...");
+        if(detailEntity.getProjectCurrency() != null){
+            Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
+            final Iterator<ProjectCurrencyEntity> it = totals.keySet().iterator();
+            ProjectCurrencyEntity n;
+            while (it.hasNext()) {
+                n=it.next();
+                if(n.getId().longValue() == detailEntity.getProjectCurrency().getId().longValue()){
+                    detailEntity.setOrderAmt(calculateBasedPercentageAndTotalValue(detailEntity.getPercentage(),totals.get(detailEntity.getProjectCurrency())));
+                    break;
+                }
+            }
+        }
+        return null;
+    }
+
+    private BigDecimal calculateBasedPercentageAndTotalValue(final BigDecimal iPercentage, final BigDecimal totalValue) {
+        BigDecimal paymentValueBig = totalValue.multiply(iPercentage).divide(new BigDecimal(100));
+        return paymentValueBig;
     }
 
     private String toString(Map<ProjectCurrencyEntity, BigDecimal> map) {
