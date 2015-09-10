@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.818181818181819"/>
-	<property name="ireport.x" value="103"/>
-	<property name="ireport.y" value="720"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="602"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -116,6 +116,7 @@
 	<parameter name="currencyId2" class="java.lang.Long"/>
 	<parameter name="currencyId3" class="java.lang.Long"/>
 	<parameter name="isOriginal" class="java.lang.Boolean"/>
+	<parameter name="currenciesNumber" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -913,7 +914,9 @@
 	<summary>
 		<band splitType="Immediate">
 			<subreport>
-				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$P{currenciesNumber}!=null&&$P{currenciesNumber}>0]]></printWhenExpression>
+				</reportElement>
 				<subreportParameter name="exchangeRate">
 					<subreportParameterExpression><![CDATA[$P{exchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -928,6 +931,9 @@
 				</subreportParameter>
 				<subreportParameter name="currency">
 					<subreportParameterExpression><![CDATA[$P{currency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="currencyLbl3">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl3}]]></subreportParameterExpression>
@@ -944,11 +950,14 @@
 				<subreportParameter name="currencyLbl1">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="currencyId3">
-					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				<subreportParameter name="currenciesNumber">
+					<subreportParameterExpression><![CDATA[$P{currenciesNumber}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="currencyLbl2">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE2">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></subreportParameterExpression>

@@ -64,6 +64,10 @@ public class PoTextBean implements Serializable {
         clausesEntities = new ArrayList<>();
     }
 
+    public void copyToPreamble(String text){
+        textEntity.setPreamble(text);
+    }
+
     @PreDestroy
     public void destroy() {
         log.info("destroy poTextBean");

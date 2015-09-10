@@ -5,7 +5,7 @@
 
 
     <div style="width: 1500px!important;">
-        <div style="width: 400px!important; float: left!important; ">
+        <div style="width: 650px!important; float: left!important; ">
             <div class="form-group">
                 <h:outputLabel value="#{msgs['po.text.lbl.standard']}" for="standardTextDt"/>
                 <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}" scrollable="true"
@@ -21,6 +21,11 @@
                     </p:column>
                     <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
                         <h:outputText id="texSnippetSt" value="#{_t.description}" styleClass="content-big-text"/>
+                    </p:column>
+                    <p:column headerText="action" style="width: 100px!important;">
+                        <h:commandLink value="Copy to Preamble" action="#{poTextBean.copyToPreamble(_t.description)}">
+                            <p:ajax async="false" process="@this" update=":editPoForm:preambleTxtId"/>
+                        </h:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>

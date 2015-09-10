@@ -134,6 +134,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             i++;
         }
         Date now = new Date();
+        addParameters("currenciesNumber",currencies.size());
         addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
     }
 
