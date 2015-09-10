@@ -112,6 +112,7 @@
                             </h:panelGroup>
                             <h:panelGroup id="edPercentage" rendered="#{_l.isEditable}">
                                 <h:inputText id="percentage" value="#{_l.percentage}" styleClass="form-control">
+                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"/>
                                     <p:ajax event="blur" process="forecastDt" listener="#{poBean.calculatePaymentValue(_l)}" update="forecastDt"/>
                                 </h:inputText>
                             </h:panelGroup>

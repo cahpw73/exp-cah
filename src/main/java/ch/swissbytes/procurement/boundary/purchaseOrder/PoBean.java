@@ -411,9 +411,9 @@ public class PoBean extends Bean {
         return toString(totals);
     }
 
-    public BigDecimal calculatePaymentValue(CashflowDetailEntity detailEntity){
+    public void calculatePaymentValue(CashflowDetailEntity detailEntity){
         log.info("calculatePaymentValue...");
-        if(detailEntity.getProjectCurrency() != null){
+        if(detailEntity.getProjectCurrency() != null && detailEntity.getPercentage() != null){
             Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
             final Iterator<ProjectCurrencyEntity> it = totals.keySet().iterator();
             ProjectCurrencyEntity n;
@@ -425,7 +425,6 @@ public class PoBean extends Bean {
                 }
             }
         }
-        return null;
     }
 
     private BigDecimal calculateBasedPercentageAndTotalValue(final BigDecimal iPercentage, final BigDecimal totalValue) {
