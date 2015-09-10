@@ -207,6 +207,13 @@ public class PoListBean implements Serializable {
         //list = service.purchaseListByProject(Long.parseLong(projectId));
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
     }
+    public void doFinalise(){
+        if(currentPurchaseOrder!=null) {
+            currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
+            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+
+        }
+    }
 
     public void doReleasePo() {
         log.info("do release purchase order");
@@ -260,14 +267,17 @@ public class PoListBean implements Serializable {
 
     public boolean actionCommitPOO(PurchaseOrderEntity entity) {
         if (entity.getPoEntity().getPoProcStatus() != null) {
-            if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal())
-                    || (entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
+            if ((entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.FINAL.ordinal())) {
                 return true;
             }
         } else {
             return false;
         }
         return false;
+    }
+
+    public boolean actionForReady(PurchaseOrderEntity entity){
+        return entity.getPoEntity().getPoProcStatus()!=null&&entity.getPoEntity().getPoProcStatus().ordinal() == POStatusEnum.READY.ordinal();
     }
 
     public boolean actionReleasePOO(PurchaseOrderEntity entity) {
@@ -309,8 +319,9 @@ public class PoListBean implements Serializable {
     public void printPOFinal() {
         log.info("printing po final");
         if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.COMMITED.ordinal()){
-            currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
-            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+           /* currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
+            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);*/
+            doFinalise();
         }
         //RequestContext.getCurrentInstance().update("projectListId");
         printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus());
