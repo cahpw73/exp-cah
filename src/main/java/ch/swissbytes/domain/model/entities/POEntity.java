@@ -41,6 +41,7 @@ public class POEntity implements Serializable{
     private Boolean liquidatedDamagesApplicable;
     private Boolean exchangeRateVariation;
     private Boolean vendorDrawingData;
+    private Boolean securityDeposit;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -233,4 +234,12 @@ public class POEntity implements Serializable{
         this.textEntity = textEntity;
     }
 
+    @Column(name = "SECURITY_DEPOSIT")
+    public Boolean getSecurityDeposit() {
+        return securityDeposit;
+    }
+
+    public void setSecurityDeposit(Boolean securityDeposit) {
+        this.securityDeposit = securityDeposit;
+    }
 }

@@ -19,6 +19,7 @@
                                     <h:selectBooleanCheckbox  onselect="doChangeProc();"
                                                              value="#{cashflowBean.cashflow.applyRetention}"
                                                              disabled="#{!poBean.beingEdited}">
+                                        <p:ajax oncomplete="#{RENDER_COMPONENT}"/>
                                     </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
                                 </label>
                             </div>
@@ -35,7 +36,9 @@
                             <div style="width: 110px; float: left; margin-left: 13px;">
                                 <h:inputText
                                              value="#{cashflowBean.cashflow.percentage}"
-                                             styleClass="form-control" rendered="#{poBean.beingEdited}"/>
+                                             styleClass="form-control" rendered="#{poBean.beingEdited}">
+                                    <p:ajax oncomplete="#{RENDER_COMPONENT}"/>
+                                        </h:inputText>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
                                              value="#{cashflowBean.cashflow.percentage}"
                                              rendered="#{poBean.beingViewed}"/>
@@ -57,12 +60,14 @@
                                              styleClass="form-control">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
+                                    <p:ajax oncomplete="#{RENDER_COMPONENT}"/>
                                 </h:inputText>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
                                              value="#{cashflowBean.cashflow.amt}"
                                              rendered="#{poBean.beingViewed}">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
+                                    <p:ajax oncomplete="#{RENDER_COMPONENT}"/>
                                 </h:inputText>
                             </div>
                         </div>
@@ -87,7 +92,7 @@
                                                    var="_r"
                                                    itemValue="#{_r}"
                                                    itemLabel="#{_r.label}"/>
-                                    <p:ajax async="true" process="@this" event="change"/>
+                                    <p:ajax async="true" process="@this" event="change" oncomplete="#{RENDER_COMPONENT}"/>
                                 </p:selectOneMenu>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
                                              value="#{cashflowBean.cashflow.form}"
@@ -117,6 +122,8 @@
                                             onselect="calendarChanges();" onchange="calendarChanges();"
                                             onclick="doChangeProc()"
                                             rendered="#{poBean.beingEdited}">
+                                    <p:ajax event="dateSelect" oncomplete="#{RENDER_COMPONENT}" async="false"/>
+                                    <p:ajax event="change" oncomplete="#{RENDER_COMPONENT}" async="false"/>
                                 </p:calendar>
                                 <h:inputText  readonly="true" styleClass="form-control view-po"
                                              value="#{util.toLocal(cashflowBean.cashflow.expDate)}"
@@ -141,6 +148,7 @@
                                                var="_pc"
                                                itemValue="#{_pc}"
                                                itemLabel="#{_pc.currency.code}"/>
+                                <p:ajax event="change" oncomplete="#{RENDER_COMPONENT}" async="false"/>
                             </h:selectOneMenu>
                             <h:inputText readonly="true" styleClass="form-control view-po"
                                          value="#{cashflowBean.cashflow.projectCurrency}"
@@ -153,7 +161,13 @@
             </div>
             <h:panelGroup rendered="#{WITHSECURITYDEPOSIT}">
                 <div class="row">
-
+                    <div style="width: 345px!important; float: left!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                           value="#{msgs['po.header.lbl.security.deposit']}"/>
+                            <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.securityDeposit}"/>
+                        </div>
+                    </div>
                 </div>
             </h:panelGroup>
         </div>
