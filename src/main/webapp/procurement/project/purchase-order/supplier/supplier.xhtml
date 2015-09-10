@@ -17,7 +17,6 @@
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                for="supplierSupId" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
-
                                 <div style="width: 200px; float: left;">
                                     <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
                                                      value="#{poBean.purchaseOrder.poEntity.supplier}"
@@ -30,8 +29,8 @@
                                                        var="_s"
                                                        itemValue="#{_s}"
                                                        itemLabel="#{_s.fullName}"/>
-                                        <p:ajax async="false" update="supplierDetail conactSupId btnAddContact projectEmailSupId"
-                                                process="@this"/>
+                                        <p:ajax async="false" update="supplierDetail contactDetail supplierHeader"
+                                                process="@this" listener="#{poBean.resetContact()}"/>
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
                                     <h:inputText id="supplierSupViId" readonly="true" styleClass="form-control view-po"
@@ -212,6 +211,7 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+            <h:panelGroup id="contactGroupId">
             <!--Phone and Fax-->
             <div style="margin-left: 0px!important; margin-right: 15px!important;">
                 <div style="width: 440px!important; float: left!important;">
@@ -261,6 +261,7 @@
                     </div>
                 </div>
             </div>
+            </h:panelGroup>
         </h:panelGroup>
     </div>
 
