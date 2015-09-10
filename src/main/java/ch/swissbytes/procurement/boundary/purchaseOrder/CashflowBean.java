@@ -193,11 +193,11 @@ public class CashflowBean implements Serializable {
     public Date calculatePaymentDate(CashflowDetailEntity detailEntity){
         if(cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null){
             switch (cashflow.getPaymentTerms()){
-                case NET_30 : detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 30), configuration.getTimeZone()));
+                case NET_30 : detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 29), configuration.getTimeZone()));
                     break;
-                case NET_14: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 15), configuration.getTimeZone()));
+                case NET_14: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 14), configuration.getTimeZone()));
                     break;
-                case NET_7: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(),7),configuration.getTimeZone()));
+                case NET_7: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(),6),configuration.getTimeZone()));
                     break;
                 default: detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(),configuration.getTimeZone()));
                     break;
@@ -213,13 +213,13 @@ public class CashflowBean implements Serializable {
             if (cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null) {
                 switch (cashflow.getPaymentTerms()) {
                     case NET_30:
-                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 30), configuration.getTimeZone()));
+                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 29), configuration.getTimeZone()));
                         break;
                     case NET_14:
-                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 15), configuration.getTimeZone()));
+                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 14), configuration.getTimeZone()));
                         break;
                     case NET_7:
-                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 7), configuration.getTimeZone()));
+                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 6), configuration.getTimeZone()));
                         break;
                     default:
                         detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(), configuration.getTimeZone()));
