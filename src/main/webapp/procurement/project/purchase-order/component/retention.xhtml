@@ -54,7 +54,7 @@
                                            style="padding-left: 17px !important;"/>
 
                             <div style="width: 150px; float: left; margin-left: 21px;">
-                                <h:inputText rendered="#{poBean.beingEdited}"
+                               <!-- <h:inputText rendered="#{poBean.beingEdited}"
                                              value="#{cashflowBean.cashflow.amt}"
                                              styleClass="form-control">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
@@ -67,7 +67,10 @@
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
                                     <p:ajax async="false" update="#{RENDER_COMPONENT}" process="@this"/>
-                                </h:inputText>
+                                </h:inputText>-->
+                                <h:inputTextarea value="#{poBean.calculateAmountForCashflow()}"
+                                                 styleClass="form-control" style="height: 100px!important;"
+                                                 readonly="true"/>
                             </div>
                         </div>
                     </div>

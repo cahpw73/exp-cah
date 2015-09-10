@@ -23,10 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 
@@ -245,5 +242,16 @@ public class CashflowBean implements Serializable {
 
     public List<CashflowDetailEntity> getCashflowDetailList() {
         return cashflowDetailList;
+    }
+
+    public Map<ProjectCurrencyEntity, BigDecimal> calculateAmount( Map<ProjectCurrencyEntity, BigDecimal> currencies ,BigDecimal percentage){
+        Map<ProjectCurrencyEntity, BigDecimal> percentages=new HashMap<>();
+        BigDecimal per=percentage!=null?percentage.divide(new BigDecimal("100")):new BigDecimal("0");
+        for(ProjectCurrencyEntity currency:currencies.keySet()){
+            BigDecimal value=currencies.get(currency);
+            percentages.put(currency,value!=null?value.multiply(per):new BigDecimal("0"));
+        }
+        return percentages;
+
     }
 }
