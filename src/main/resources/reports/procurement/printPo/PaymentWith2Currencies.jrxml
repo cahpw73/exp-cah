@@ -22,9 +22,9 @@
 	<parameter name="currencyId3" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[select item,milestone,order_amt,project_amt,claim_date, pc.exchange_rate,cu.code,cu.symbol,cast(cfd.percentage as integer),pc.format,
-case when cfd.project_currency_id=$P{currencyId1} then  project_amt else 0 end as currency1 ,
-case when cfd.project_currency_id=$P{currencyId2} then  project_amt else 0 end as currency2 ,
-case when cfd.project_currency_id=$P{currencyId3} then  project_amt else 0 end as currency3
+case when cfd.project_currency_id=$P{currencyId1} then  order_amt else 0 end as currency1 ,
+case when cfd.project_currency_id=$P{currencyId2} then  order_amt else 0 end as currency2 ,
+case when cfd.project_currency_id=$P{currencyId3} then  order_amt else 0 end as currency3
 from cashflow cf inner join cashflow_detail cfd  on
 cfd.cashflow_id=cf.id
 left join project_currency pc on pc.id= cfd.project_currency_id

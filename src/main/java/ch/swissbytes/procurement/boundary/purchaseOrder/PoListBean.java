@@ -308,19 +308,21 @@ public class PoListBean implements Serializable {
 
     public void printPOFinal() {
         log.info("printing po final");
-        currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
-        currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
-
-        RequestContext.getCurrentInstance().update("projectListId");
-    }
-
-    public void printFinal(){
+        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.COMMITED.ordinal()){
+            currentPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.FINAL);
+            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+        }
+        //RequestContext.getCurrentInstance().update("projectListId");
         printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus());
     }
 
+
     public void printPODraft() {
         log.info("printing po draft");
-        printPo(null);
+        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.COMMITED.ordinal()&&
+                currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.FINAL.ordinal()) {
+            printPo(null);
+        }
 
     }
 
