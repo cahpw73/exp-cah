@@ -287,6 +287,9 @@
             </div>
         </div>
         <div class="clearfix"/>
-
+        <ui:include src="../component/retention.xhtml">
+            <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.security.deposit.title']}"/>
+            <ui:param name="WITHSECURITYDEPOSIT" value="true"/>
+        </ui:include>
     </div>
 </ui:composition>
