@@ -30,7 +30,7 @@
                                         value="#{msgs['project.currencies.lbl.btn.new.currency']}"
                                         onclick="PF('currencyModal').show();"
                                         action="#{currencyBean.restart}"
-                                        styleClass="btn btn-primary btn-sm">
+                                        styleClass="btn btn-primary btn-commandLink-primeFaces">
                                     <p:ajax  update=":currencyModalId" process="@this" async="false"/>
                                 </p:commandLink>
                             </div>
@@ -85,7 +85,7 @@
                                                  action="#{projectBean.addCurrency}"
                                                  styleClass="btn btn-primary btn-sm"
                                                  rendered="#{projectBean.createCurrency}">
-                                    <p:ajax update="currencyListId,currencyGroup"
+                                    <p:ajax update="currencyListId currencyGroup :glbMsgs"
                                             process="currencyGroup" async="false"/>
                                 </h:commandButton>
                                 <h:commandButton value="#{msgs['lbl.update']}"
@@ -94,6 +94,13 @@
                                                  rendered="#{!projectBean.createCurrency}">
                                     <p:ajax update="currencyListId,currencyGroup"
                                             process="currencyGroup" async="false"/>
+                                </h:commandButton>
+                                &#160;
+                                <h:commandButton value="#{msgs['lbl.cancel']}" immediate="true"
+                                                 action="#{projectBean.cancelCurrencyOperation}"
+                                                 styleClass="btn btn-primary btn-sm">
+                                    <p:ajax update="currencyListId,currencyGroup"
+                                            async="false"/>
                                 </h:commandButton>
                             </div>
                         </div>
@@ -149,7 +156,6 @@
                     </p:commandLink>
                 </p:column>
             </p:dataTable>
-
         </div>
     </div>
 </ui:composition>

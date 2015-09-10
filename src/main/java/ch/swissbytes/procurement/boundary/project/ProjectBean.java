@@ -216,6 +216,13 @@ public class ProjectBean extends Bean implements Serializable {
 
     private boolean validateCurrency() {
         boolean validated = true;
+        for(ProjectCurrencyEntity p : projectCurrencyList){
+            if(p.getCurrency().getId().longValue() == projectCurrencyEntity.getCurrency().getId().longValue()){
+                Messages.addFlashGlobalError("Currency already added");
+                validated = false;
+                break;
+            }
+        }
         if (StringUtils.isEmpty(projectCurrencyEntity.getFormat()) && StringUtils.isBlank(projectCurrencyEntity.getFormat())) {
             Messages.addError("format", "Please enter Format");
             validated = false;
@@ -253,6 +260,13 @@ public class ProjectBean extends Bean implements Serializable {
             createCurrency = true;
             projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
         }
+    }
+
+    public void cancelCurrencyOperation(){
+        log.info("cancel currecny operation");
+        projectCurrencyEntity = new ProjectCurrencyEntity();
+        createCurrency = true;
+        projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
     }
 
     public void doDeleteCurrency(ProjectCurrencyEntity projectCurrency) {
