@@ -12,7 +12,6 @@ import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -317,6 +316,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     turn++;
                 }
                 if(turn == 2){
+                    dto.plus1="plus";
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.currencyCode2 = (String) values[2];
                     } else {
@@ -326,6 +326,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     turn++;
                 }
                 if(turn == 3){
+                    dto.plus2="plus";
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.currencyCode3 = (String) values[2];
                     } else {

@@ -117,6 +117,7 @@
 	<parameter name="currencyId3" class="java.lang.Long"/>
 	<parameter name="isOriginal" class="java.lang.Boolean"/>
 	<parameter name="currenciesNumber" class="java.lang.Integer"/>
+	<parameter name="poSummaryList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -804,6 +805,9 @@
 			</componentElement>
 			<subreport>
 				<reportElement uuid="9ef0f8ce-2f88-484c-91bd-3c6d07d88de1" positionType="Float" isPrintRepeatedValues="false" x="0" y="6" width="519" height="5"/>
+				<subreportParameter name="poSummaryList">
+					<subreportParameterExpression><![CDATA[$P{poSummaryList}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="isOriginal">
 					<subreportParameterExpression><![CDATA[$P{isOriginal}]]></subreportParameterExpression>
 				</subreportParameter>
