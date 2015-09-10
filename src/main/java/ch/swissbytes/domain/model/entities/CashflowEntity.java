@@ -23,7 +23,7 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
 
     private Long id;
     private Boolean applyRetention;
-    private Float percentage;
+    private BigDecimal percentage;
     private BigDecimal amt;
     private String form;
     private String orderValue;
@@ -39,7 +39,7 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "ITEM_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "CASH_FLOW_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }
@@ -58,11 +58,11 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     }
 
     @Column(name = "percentage")
-    public Float getPercentage() {
+    public BigDecimal getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Float percentage) {
+    public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
     }
 

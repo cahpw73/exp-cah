@@ -410,6 +410,11 @@ public class PoBean extends Bean {
         Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
         return toString(totals);
     }
+    
+    public String calculateAmountForCashflow(){
+        Map<ProjectCurrencyEntity, BigDecimal>retention= cashflowBean.calculateAmount(service.getTotalValuesByCurrency(itemBean.getScopeSupplyList()), cashflowBean.getCashflow().getPercentage());
+        return toString(retention);
+    }
 
     public void calculatePaymentValue(CashflowDetailEntity detailEntity){
         log.info("calculatePaymentValue...");
