@@ -119,7 +119,10 @@
                                 </h:panelGroup>
                                 <h:panelGroup id="edItem" rendered="#{_l.isEditable}">
                                     <p:inputText id="itemNo" value="#{_l.item}" styleClass="form-control"
-                                                 requiredMessage="Enter a Item" required="true"/>
+                                                 requiredMessage="Enter a Item" required="true">
+                                        <p:ajax event="blur" process="forecastDt" async="false"/>
+                                    </p:inputText>
+
                                 </h:panelGroup>
                         </p:column>
                         <p:column width="70"
@@ -192,6 +195,7 @@
                             </h:panelGroup>
                             <h:panelGroup id="edPoAmt" rendered="#{_l.isEditable}">
                                 <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control">
+                                    <p:ajax event="blur" process="forecastDt" async="false" />
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
                                 </h:inputText>

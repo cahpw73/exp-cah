@@ -60,9 +60,6 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
         if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
             addParameters("logoFooter", logo);
-        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
-            addParameters("logoFooter", logo);
         }
         addParameters("sortBy", getStrSort());
         addParameters("projectIdFilter",project.getId());

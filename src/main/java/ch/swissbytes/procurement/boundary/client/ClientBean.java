@@ -113,7 +113,7 @@ public class ClientBean extends Bean implements Serializable {
                     client.setReportLogo(logoBean.getLogo());
                     break;
                 case 2:
-                    client.setClientFooter(logoBean.getLogo());
+                   // client.setClientFooter(logoBean.getLogo());
                     break;
                 case 3:
                     client.setDefaultLogo(logoBean.getLogo());

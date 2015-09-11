@@ -58,9 +58,6 @@ public class ReportBidderList extends ReportView implements Serializable {
         if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
             addParameters("logo", logo);
-        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getDefaultLogo().getFile());
-            addParameters("logo", logo);
         }
         addParameters("supplier",suppliers);
         addParameters("packageNumber", packageNumber);
