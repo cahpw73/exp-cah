@@ -205,7 +205,8 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("add currency");
         if (validateCurrency()) {
             projectCurrencyEntity.setId(temporalId());
-            projectCurrencyEntity.setProjectDefault(false);
+            boolean defaultProject=filteredProjectCurrencies().size()==0?true:false;
+            projectCurrencyEntity.setProjectDefault(defaultProject);
             projectCurrencyEntity.setLastUpdate(new Date());
             projectCurrencyEntity.setStatus(StatusEnum.ENABLE);
             projectCurrencyList.add(projectCurrencyEntity);

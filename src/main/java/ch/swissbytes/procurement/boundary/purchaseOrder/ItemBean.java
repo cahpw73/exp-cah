@@ -1,15 +1,15 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.deliverable.DeliverableItemService;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
+import ch.swissbytes.domain.model.entities.DeliverableItem;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.model.entities.StatusEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
-import org.primefaces.event.ReorderEvent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -43,17 +43,21 @@ public class ItemBean implements Serializable {
     @Inject
     private EnumService enumService;
 
+
     private List<ItemEntity> itemList;
 
     private List<ScopeSupplyEntity> scopeSupplyList;
 
     private Long preId = -1L;
 
+
+
     @PostConstruct
     public void create() {
         log.info("create itemBean");
         itemList = new ArrayList<>();
         scopeSupplyList = new ArrayList<>();
+
     }
 
     @PreDestroy
@@ -100,6 +104,8 @@ public class ItemBean implements Serializable {
             ss.stopEditing();
         }
     }
+
+
 
     public void deleteItem(ScopeSupplyEntity entity) {
         log.info("delete item");

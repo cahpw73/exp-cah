@@ -1735,13 +1735,14 @@ SELECT SETVAL('brand_id_seq', (SELECT MAX(ID)+1 FROM BRAND));
 SELECT SETVAL('currency_id_seq', (SELECT MAX(ID)+1 FROM CURRENCY)); 
 SELECT SETVAL('supplier_proc_id_seq', (SELECT MAX(ID)+1 FROM CURRENCY));
 
-
-insert into deliverable_item (id,item,last_update,status) values(1,"Control Philosophy & Functional Description",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status) values(2,"Electrical Termination Diagrams",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(3,"Initial Assembly Diagrams",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(4,"Initial Electrical SLD's & P&ID's",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(5,"Initial Foundation Layout & Loadings",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(6,"Initial General Arrangement Drawings",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(7,"Initial Mechanical Detail Drawings",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(8,"Initial Structural Detail Drawings",CURRENT_DATE,0);
-insert into deliverable_item (id,item,last_update,status)values(8,"Instrument Data Sheet",CURRENT_DATE,0);
+delete from deliverable_item;
+insert into deliverable_item (id,item,last_update,status)values(1,'Control Philosophy & Functional Description',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(2,'Electrical Termination Diagrams',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(3,'Initial Assembly Diagrams',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(4,$$Initial Electrical SLD's & P&ID's$$,CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(5,'Initial Foundation Layout & Loadings',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(6,'Initial General Arrangement Drawings',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(7,'Initial Mechanical Detail Drawings',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(8,'Initial Structural Detail Drawings',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(9,'Instrument Data Sheets',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(10,'Lubrication Schedule',CURRENT_DATE,0);
