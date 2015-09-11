@@ -67,9 +67,6 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
             addParameters("logoFooter", logo);
-        }else if(project.getClient()!=null && project.getClient().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getClient().getDefaultLogo().getFile());
-            addParameters("logoFooter", logo);
         }
     }
 

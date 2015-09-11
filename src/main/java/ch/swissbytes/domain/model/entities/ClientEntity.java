@@ -104,8 +104,7 @@ public class ClientEntity implements Serializable {
         this.clientLogo = clientLogo;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_footer_id", nullable = true)
+    @Transient
     public LogoEntity getClientFooter() {
         return clientFooter;
     }
@@ -114,8 +113,7 @@ public class ClientEntity implements Serializable {
         this.clientFooter = clientFooter;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "default_logo_id", nullable = true)
+    @Transient
     public LogoEntity getDefaultLogo() {
         return defaultLogo;
     }
@@ -124,8 +122,7 @@ public class ClientEntity implements Serializable {
         this.defaultLogo = defaultLogo;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "default_footer_id", nullable = true)
+    @Transient
     public LogoEntity getDefaultFooter() {
         return defaultFooter;
     }

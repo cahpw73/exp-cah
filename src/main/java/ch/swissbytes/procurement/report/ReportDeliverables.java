@@ -67,9 +67,6 @@ public class ReportDeliverables extends ReportView implements Serializable {
         if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getClientLogo()!=null){
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
             addParameters("logoFooter", logo);
-        }else if(po.getProjectEntity().getClient()!=null && po.getProjectEntity().getClient().getDefaultLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
-            addParameters("logoFooter", logo);
         }
         addParameters("projectIdFilter", projectId);
         addParameters("poNoFilter", poNo != null ? "%"+poNo+"%" : "");

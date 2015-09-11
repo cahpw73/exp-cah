@@ -106,7 +106,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             log.info("InputStream watermark: " + watermark.toString());
             addParameters("watermarkDraft", watermark);
         }
-        getPOSummary();
+        addParameters("isOriginal", true);
+       // getPOSummary();
 
         addParameters("poList", createDataSource(getPOReportDto()));
         addParameters("totalClauses", this.clausesList.size());
@@ -147,9 +148,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientLogo() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
             addParameters("logo", logo);
-        } else if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getDefaultLogo() != null) {
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultLogo().getFile());
-            addParameters("logo", logo);
         }
 
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientLogoLeft() != null) {
@@ -157,13 +155,13 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("logoLeft", logo);
         }
 
-        if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientFooter() != null) {
+        /*if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientFooter() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientFooter().getFile());
             addParameters("footerLogo", logo);
         } else if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getDefaultFooter() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultFooter().getFile());
             addParameters("footerLogo", logo);
-        }
+        }*/
     }
 
     private void loadParamSupplier() {

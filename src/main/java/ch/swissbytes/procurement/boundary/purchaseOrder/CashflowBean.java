@@ -190,44 +190,34 @@ public class CashflowBean implements Serializable {
         return retentionForms;
     }
 
-    public Date calculatePaymentDate(CashflowDetailEntity detailEntity){
-        if(cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null){
-            switch (cashflow.getPaymentTerms()){
-                case NET_30 : detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 29), configuration.getTimeZone()));
-                    break;
-                case NET_14: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 14), configuration.getTimeZone()));
-                    break;
-                case NET_7: detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(),6),configuration.getTimeZone()));
-                    break;
-                default: detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(),configuration.getTimeZone()));
-                    break;
-            }
-        }else if(cashflow.getPaymentTerms() == null && detailEntity.getClaimDate() != null){
-            detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(),configuration.getTimeZone()));
-        }
-        return detailEntity.getPaymentDate();
+    public void calculatePaymentDate(CashflowDetailEntity detailEntity){
+        calculatePaymentDatePO(detailEntity);
     }
 
     public void calculatePaymentDateBasedPaymentTerms(){
         for(CashflowDetailEntity detailEntity : cashflowDetailList) {
-            if (cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null) {
-                switch (cashflow.getPaymentTerms()) {
-                    case NET_30:
-                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 29), configuration.getTimeZone()));
-                        break;
-                    case NET_14:
-                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 14), configuration.getTimeZone()));
-                        break;
-                    case NET_7:
-                        detailEntity.setPaymentDate(Util.convertUTC(DateUtil.sumNDays(detailEntity.getClaimDate(), 6), configuration.getTimeZone()));
-                        break;
-                    default:
-                        detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(), configuration.getTimeZone()));
-                        break;
-                }
-            } else if (cashflow.getPaymentTerms() == null && detailEntity.getClaimDate() != null) {
-                detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(), configuration.getTimeZone()));
+            calculatePaymentDatePO(detailEntity);
+        }
+    }
+
+    private void calculatePaymentDatePO(CashflowDetailEntity detailEntity){
+        if (cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null) {
+            switch (cashflow.getPaymentTerms()) {
+                case NET_30:
+                    detailEntity.setPaymentDate(DateUtil.sumNDays(detailEntity.getClaimDate(), 30));
+                    break;
+                case NET_14:
+                    detailEntity.setPaymentDate(DateUtil.sumNDays(detailEntity.getClaimDate(), 15));
+                    break;
+                case NET_7:
+                    detailEntity.setPaymentDate(DateUtil.sumNDays(detailEntity.getClaimDate(), 7));
+                    break;
+                default:
+                    detailEntity.setPaymentDate(detailEntity.getClaimDate());
+                    break;
             }
+        } else if (cashflow.getPaymentTerms() == null && detailEntity.getClaimDate() != null) {
+            detailEntity.setPaymentDate(Util.convertUTC(detailEntity.getClaimDate(), configuration.getTimeZone()));
         }
     }
 
