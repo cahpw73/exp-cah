@@ -35,6 +35,13 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     private Date lastUpdate;
     private POEntity po;
     private List<CashflowDetailEntity> cashflowDetailList = new ArrayList<>();
+    //Fields for Security Deposit
+    private Boolean applyRetentionSecurityDeposit;
+    private BigDecimal percentageSecurityDeposit;
+    //private BigDecimal amtSecurityDeposit;
+    private String formSecurityDeposit;
+    private ProjectCurrencyEntity currencySecurityDeposit;
+    private Date expirationDateSecurityDeposit;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -163,7 +170,52 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     public void setProjectCurrency(ProjectCurrencyEntity projectCurrency) {
         this.projectCurrency = projectCurrency;
     }
+    @Column(name = "apply_retention_security_deposit")
+    public Boolean getApplyRetentionSecurityDeposit() {
+        return applyRetentionSecurityDeposit;
+    }
 
+    public void setApplyRetentionSecurityDeposit(Boolean applyRetentionSecurityDeposit) {
+        this.applyRetentionSecurityDeposit = applyRetentionSecurityDeposit;
+    }
+    @Column(name="percentage_security_deposit", precision=18, scale=5)
+    public BigDecimal getPercentageSecurityDeposit() {
+        return percentageSecurityDeposit;
+    }
+
+    public void setPercentageSecurityDeposit(BigDecimal percentageSecurityDeposit) {
+        this.percentageSecurityDeposit = percentageSecurityDeposit;
+    }
+
+    @Size(max = 250)
+    @Column(name = "form_security_deposit",length = 250)
+    public String getFormSecurityDeposit() {
+        return formSecurityDeposit;
+    }
+
+    public void setFormSecurityDeposit(String formSecurityDeposit) {
+        this.formSecurityDeposit = formSecurityDeposit;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="security_deposit_currency_id")
+    public ProjectCurrencyEntity getCurrencySecurityDeposit() {
+        return currencySecurityDeposit;
+    }
+
+    public void setCurrencySecurityDeposit(ProjectCurrencyEntity currencySecurityDeposit) {
+        this.currencySecurityDeposit = currencySecurityDeposit;
+    }
+
+    @Column(name = "expiration_date_security_deposit")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getExpirationDateSecurityDeposit() {
+        return expirationDateSecurityDeposit;
+    }
+
+    public void setExpirationDateSecurityDeposit(Date expirationDateSecurityDeposit) {
+        this.expirationDateSecurityDeposit = expirationDateSecurityDeposit;
+    }
 
     @Transient
     public List<CashflowDetailEntity> getCashflowDetailList() {
