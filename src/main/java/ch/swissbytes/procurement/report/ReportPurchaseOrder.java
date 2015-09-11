@@ -100,15 +100,16 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions", po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager", po.getPoEntity().getProcManager());
         addParameters("procManagerDetail", po.getPoEntity().getProcManagerDetail());
-
-
         if (po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()) {
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             log.info("InputStream watermark: " + watermark.toString());
             addParameters("watermarkDraft", watermark);
         }
-        addParameters("isOriginal", true);
-        addParameters("poSummaryList", createDataSource(getPOSummary()));
+        if(po.getOrderedVariation().intValue() == 1){
+            addParameters("isOriginal", true);
+        }else if(po.getOrderedVariation().intValue() > 1){
+            addParameters("poSummaryList", createDataSource(getPOSummary()));
+        }
         addParameters("poList", createDataSource(getPOReportDto()));
         addParameters("totalClauses", this.clausesList.size());
         addParameters("poTitle", po.getPoTitle());
@@ -265,13 +266,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         log.info("preparing poSummary dto.......");
         List<PurchaseOrderSummaryDto> dtos = new ArrayList<>();
         List<Object> list = getSummaryItemsPO();
-        verifyOriginalPO(list);
-        switch (nivel) {
-            case 1:
-                log.info("Po is original");
-                addParameters("isOriginal", true);
-                dtos = null;
-                break;
+        switch (po.getOrderedVariation()) {
             case 2:
                 log.info("Po is the first variation");
                 addParameters("isOriginal", false);
@@ -282,6 +277,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             case 3:
                 log.info("Po is the variation N");
                 addParameters("isOriginal", false);
+                loadPOSummaryOriginal(list, dtos);
+                loadThisVariation(list, dtos);
+                loadRevisedOrderValue(list, dtos);
                 break;
         }
 
@@ -309,8 +307,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     BigDecimal total1 = new BigDecimal(0);
                     for (Object recordT1 : list) {
                         Object[] valuesT1 = (Object[]) recordT1;
-                        if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                            total1 = total1.add((BigDecimal) valuesT1[4]);
+                        if((int)valuesT1[3] <= po.getOrderedVariation()){
+                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                                total1 = total1.add((BigDecimal) valuesT1[4]);
+                            }
+                        }else{
+                            break;
                         }
                     }
                     dto.setAmount1(total1);
@@ -326,8 +328,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     BigDecimal total1 = new BigDecimal(0);
                     for (Object recordT1 : list) {
                         Object[] valuesT1 = (Object[]) recordT1;
-                        if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                            total1 = total1.add((BigDecimal) valuesT1[4]);
+                        if((int) valuesT1[3]<=po.getOrderedVariation().intValue()){
+                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                                total1 = total1.add((BigDecimal) valuesT1[4]);
+                            }
+                        }else{
+                            break;
                         }
                     }
                     dto.setAmount2(total1);
@@ -343,8 +349,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     BigDecimal total1 = new BigDecimal(0);
                     for (Object recordT1 : list) {
                         Object[] valuesT1 = (Object[]) recordT1;
-                        if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                            total1 = total1.add((BigDecimal) valuesT1[4]);
+                        if((int) valuesT1[3] <= po.getOrderedVariation().intValue()){
+                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                                total1 = total1.add((BigDecimal) valuesT1[4]);
+                            }
+                        }else{
+                            break;
                         }
                     }
                     dto.setAmount3(total1);
@@ -432,25 +442,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             }
         }
         dtos.add(dto);
-    }
-
-    private List<Object> groupCurrencies() {
-        return null;
-    }
-
-
-    private void verifyOriginalPO(List<Object> list) {
-        int valueOriginal = 1;
-        for (Object record : list) {
-            Object[] values = (Object[]) record;
-            if (valueOriginal != (int) values[3]) {
-                valueOriginal = (int) values[3];
-                nivel++;
-                if (nivel > 3) {
-                    break;
-                }
-            }
-        }
     }
 
     private List<Object> getSummaryItemsPO() {
