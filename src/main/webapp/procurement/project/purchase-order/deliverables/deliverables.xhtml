@@ -19,7 +19,8 @@
                                          rendered="#{_dv.isEditable}"
                                          effect="fold" editable="true" styleClass="form-control"
                                          maxlength="950" style="width: 100%">
-                            <f:selectItems value="#{itemBean.items()}"/>
+                            <f:selectItems value="#{deliverableBean.deliverableItems}"
+                                           var="_deliverableItem" itemValue="#{_deliverableItem.item}" itemLabel="#{_deliverableItem.item}"/>
                             <p:ajax async="false" process="@this" event="change"/>
                         </p:selectOneMenu>
                     </p:column>
