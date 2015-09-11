@@ -9,16 +9,24 @@
         <h:panelGroup id="retention">
             <ui:include src="../component/retention.xhtml">
                 <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.retention.title']}"/>
-                <ui:param name="RENDER_COMPONENT" value=":editPoForm:securityDeposit"/>
-                <ui:param name="NUMMBER_ID" value="2"/>
+                <ui:param name="NUMBER_ID" value="2"/>
+                <ui:param name="APPLY" value="#{cashflowBean.cashflow.applyRetention}"/>
+                <ui:param name="PERCENTAGE" value="#{cashflowBean.cashflow.percentage}"/>
+                <ui:param name="FORM" value="#{cashflowBean.cashflow.form}"/>
+                <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expDate}"/>
+                <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.projectCurrency}"/>
             </ui:include>
         </h:panelGroup>
         <div class="clearfix"></div>
         <h:panelGroup id="securityDeposit">
             <ui:include src="../component/retention.xhtml">
                 <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.security.deposit.title']}"/>
-                <ui:param name="RENDER_COMPONENT" value=":editPoForm:retention"/>
-                <ui:param name="NUMMBER_ID" value="1"/>
+                <ui:param name="NUMBER_ID" value="1"/>
+                <ui:param name="APPLY" value="#{cashflowBean.cashflow.applyRetentionSecurityDeposit}"/>
+                <ui:param name="PERCENTAGE" value="#{cashflowBean.cashflow.percentageSecurityDeposit}"/>
+                <ui:param name="FORM" value="#{cashflowBean.cashflow.formSecurityDeposit}"/>
+                <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expirationDateSecurityDeposit}"/>
+                <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.currencySecurityDeposit}"/>
             </ui:include>
         </h:panelGroup>
         <div class="clearfix"></div>

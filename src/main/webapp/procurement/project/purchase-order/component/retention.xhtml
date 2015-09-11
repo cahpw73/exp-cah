@@ -16,9 +16,9 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <h:selectBooleanCheckbox value="#{cashflowBean.cashflow.applyRetention}"
+                                    <h:selectBooleanCheckbox value="#{APPLY}"
                                                              disabled="#{!poBean.beingEdited}">
-                                        <p:ajax async="false" update="#{RENDER_COMPONENT}" process="@this"
+                                        <p:ajax async="false" process="@this"
                                                 oncomplete="doChangeProc();"/>
                                     </h:selectBooleanCheckbox> #{msgs['po.cashflow.lbl.retention.apply.retention']}
                                 </label>
@@ -34,12 +34,12 @@
                                            value="#{msgs['po.cashflow.lbl.retention.percentage']}"/>
                             <div style="width: 110px; float: left; margin-left: 13px;">
                                 <h:inputText
-                                        value="#{cashflowBean.cashflow.percentage}"
+                                        value="#{PERCENTAGE}"
                                         styleClass="form-control" rendered="#{poBean.beingEdited}">
-                                    <p:ajax async="false" update="#{RENDER_COMPONENT} retentionAmt#{NUMMBER_ID}" process="@this"/>
+                                    <p:ajax async="false" retentionAmt="#{NUMBER_ID}" process="@this"/>
                                 </h:inputText>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
-                                             value="#{cashflowBean.cashflow.percentage}"
+                                             value="#{PERCENTAGE}"
                                              rendered="#{poBean.beingViewed}"/>
                             </div>
                         </div>
@@ -60,18 +60,18 @@
                                                  styleClass="form-control">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
-                                        <p:ajax async="false" update="#{RENDER_COMPONENT}" process="@this"/>
+                                        <p:ajax async="false" process="@this"/>
                                     </h:inputText>
                                     <h:inputText readonly="true" styleClass="form-control view-po"
                                                  value="#{cashflowBean.cashflow.amt}"
                                                  rendered="#{poBean.beingViewed}">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
-                                        <p:ajax async="false" update="#{RENDER_COMPONENT}" process="@this"/>
+                                        <p:ajax async="false" process="@this"/>
                                     </h:inputText>
                                 </ui:remove>
 
-                                <h:inputTextarea id="retentionAmt#{NUMMBER_ID}" value="#{poBean.calculateAmountForCashflow()}"
+                                <h:inputTextarea id="retentionAmt#{NUMBER_ID}" value="#{poBean.calculateAmountForCashflow()}"
                                                  styleClass="form-control" style="height: 100px!important;"
                                                  readonly="true"/>
                             </div>
@@ -88,7 +88,7 @@
                             <div style="width: 200px; float: left;">
                                 <p:selectOneMenu editable="true"
                                                  onchange="doChangeProc();"
-                                                 value="#{cashflowBean.cashflow.form}"
+                                                 value="#{FORM}"
                                                  styleClass="menu-ddp" rendered="#{poBean.beingEdited}">
                                     <f:selectItem
                                             itemLabel="#{msgs['lbl.select']}"
@@ -97,10 +97,10 @@
                                                    var="_r"
                                                    itemValue="#{_r}"
                                                    itemLabel="#{_r.label}"/>
-                                    <p:ajax async="true" process="@this" update="#{RENDER_COMPONENT}"/>
+                                    <p:ajax async="true" process="@this"/>
                                 </p:selectOneMenu>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
-                                             value="#{cashflowBean.cashflow.form}"
+                                             value="#{FORM}"
                                              rendered="#{poBean.beingViewed}"/>
                             </div>
                         </div>
@@ -122,17 +122,17 @@
                                             converter="#{dateConverter}"
                                             jsf:placeholder="#{configuration.formatDate}"
                                             converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{cashflowBean.cashflow.expDate}"
+                                            value="#{EXPIRATION}"
                                             timeZone="#{configuration.timeZone}"
                                             onselect="calendarChanges();" onchange="calendarChanges();"
                                             onclick="doChangeProc()"
                                             rendered="#{poBean.beingEdited}">
-                                    <p:ajax event="dateSelect" process="@this" update="#{RENDER_COMPONENT}"
+                                    <p:ajax event="dateSelect" process="@this"
                                             async="false"/>
-                                    <p:ajax event="change" process="@this" update="#{RENDER_COMPONENT}" async="false"/>
+                                    <p:ajax event="change" process="@this" async="false"/>
                                 </p:calendar>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
-                                             value="#{util.toLocal(cashflowBean.cashflow.expDate)}"
+                                             value="#{util.toLocal(EXPIRATION)}"
                                              rendered="#{poBean.beingViewed}"/>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                                        value="#{msgs['po.cashflow.column.currency.retention']}"/>
 
                         <div style="width: 110px; float: left; margin-left: 20px;">
-                            <h:selectOneMenu value="#{cashflowBean.cashflow.projectCurrency}"
+                            <h:selectOneMenu value="#{CURRENCY}"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}"
                                              converter="projectCurrencyConverter" onclick="doChangeProc();">
                                 <f:selectItem
@@ -154,10 +154,10 @@
                                                var="_pc"
                                                itemValue="#{_pc}"
                                                itemLabel="#{_pc.currency.code}"/>
-                                <p:ajax event="change" process="@this" update="#{RENDER_COMPONENT}" async="false"/>
+                                <p:ajax event="change" process="@this" async="false"/>
                             </h:selectOneMenu>
                             <h:inputText readonly="true" styleClass="form-control view-po"
-                                         value="#{cashflowBean.cashflow.projectCurrency}"
+                                         value="#{CURRENCY}"
                                          rendered="#{poBean.beingViewed}"/>
                         </div>
 
