@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Named;
 import javax.persistence.*;
@@ -212,7 +213,7 @@ public class SupplierProcEntity implements Serializable {
 
     @Transient
     public String getContactDetail(){
-        return getPhone()+System.lineSeparator()+getFax();
+        return (StringUtils.isEmpty(getPhone())?"":getPhone()) +System.lineSeparator()+(StringUtils.isEmpty(getFax())?"":getFax());
     }
 
     @Transient

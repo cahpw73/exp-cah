@@ -224,27 +224,12 @@
                         <p:column headerText="#{msgs['po.cashflow.column.payment.date']}"
                                   rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                             <h:panelGroup id="viPaymentDate" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.paymentDate}">
-                                    <f:convertDateTime pattern="#{configuration.formatDate}" timeZone="#{configuration.timeZone}"/>
+                                <h:outputText value="#{util.toLocal(_l.paymentDate)}">
                                 </h:outputText>
                             </h:panelGroup>
                             <h:panelGroup id="edPaymentDate" rendered="#{_l.isEditable}">
-                                <h:inputText value="#{_l.paymentDate}" readonly="true" styleClass="form-control">
-                                    <f:convertDateTime pattern="#{configuration.formatDate}" timeZone="#{configuration.timeZone}"/>
+                                <h:inputText value="#{util.toLocal(_l.paymentDate)}" readonly="true" styleClass="form-control">
                                 </h:inputText>
-                                <ui:remove>
-                                <p:calendar id="paymentDate" type="text" styleClass="calendar" readonly="true"
-                                            disabled="true"
-                                            navigator="true" mask="#{configuration.mask}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            jsf:placeholder="#{configuration.formatDate}"
-                                            converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{_l.paymentDate}"
-                                            timeZone="#{configuration.timeZone}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();">
-                                </p:calendar>
-                                </ui:remove>
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}"

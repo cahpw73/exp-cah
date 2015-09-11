@@ -190,7 +190,7 @@
                                                        value="#{supplierProcList.suppliers}"
                                                        itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
                                         <p:ajax async="false" event="change"
-                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactId"/>
+                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactId"/>
                                     </p:selectOneMenu>
                                     <p:message for="supplierNameId" />
                                 </div>
@@ -309,14 +309,17 @@
                         <div class="section-text-area-po">
                         </div>
                     </div>
+                    <ui:remove>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
                         </div>
+
                         <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.email.comment']}
+                            #{msgs['lbl.email.address.comment']}
                         </div>
                     </div>
+                    </ui:remove>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -336,12 +339,13 @@
                                         <f:selectItems var="_contact"
                                                        value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contacts}"
                                                        itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
-                                        <p:ajax async="false" event="change" update="contactEmailExp"/>
+                                        <p:ajax async="false" event="change" />
                                     </p:selectOneMenu>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
+                            <ui:remove>
                             <div class="col-sm-5" style="padding-left: 0px;">
                                 <p:inputTextarea style="max-height: 29px;"
                                                  id="contactEmailExp"
@@ -351,7 +355,8 @@
                                                  jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                                                  class="form-control"/>
                             </div>
-                            <div class="col-sm-7 pull-right">
+                            </ui:remove>
+                            <div class="col-sm-7 pull-left">
                                 <h:commandButton
                                         id="btnAddContact"
                                         value="#{msgs['po.supplier.lbl.btn.add.contact2']}"
@@ -365,7 +370,7 @@
                                 <h:commandButton
                                         id="btnViewContact"
                                         value="#{msgs['po.supplier.lbl.btn.view.contact']}"
-                                        disabled="#{purchaseOrderEdit.poEdit.poEntity.supplier==null}"
+                                        disabled="#{purchaseOrderEdit.poEdit.poEntity.contactEntity==null}"
                                         onclick="PF('contactViewModal').show();"
                                         styleClass="btn btn-primary btn-sm">
                                     <p:ajax async="false" update=":contactViewId"/>
@@ -564,7 +569,7 @@
         <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
             <ui:include src="../procurement/admin/supplier/components/contactEdit.xhtml">
                 <ui:param name="MODULE" value="EXPEDITING"/>
-                <ui:param name="RENDER" value=":empForm:contactId :empForm:contactEmailExp"/>
+                <ui:param name="RENDER" value=":empForm:contactId"/>
             </ui:include>
         </p:dialog>
         <p:dialog header="View Contact" resizable="false" widgetVar="contactViewModal" width="500">
@@ -588,7 +593,7 @@
                     <ui:param name="bean" value="#{purchaseOrderEdit}"/>
                     <ui:param name="RENDER" value=":empForm:supplierAddress :empForm:supplierPhoneTxt
                                                    :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode
-                                                   :empForm:supplierCountry :empForm:contactEmailExp :empForm:contactId :empForm:supplierNameId"/>
+                                                   :empForm:supplierCountry :empForm:contactId :empForm:supplierNameId"/>
                 </ui:include>
             </h:form>
         </p:dialog>
