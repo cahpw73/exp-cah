@@ -2,7 +2,7 @@
     font-family: 'FqDejaVuSans';
     src: url('../../resources/fonts/DejaVuSans.eot');
     src: url('../../resources/fonts/DejaVuSans.eot?#iefix') format('embedded-opentype'),
-    url('../../resources/fonts/DejaVuSans.woff') format('woff'),
+/*    url('../../resources/fonts/DejaVuSans.woff') format('woff'),*/
     url('../../resources/fonts/DejaVuSans.svg') format('svg'),
     url('../../resources/fonts/DejaVuSans.otf') format('otf'),
     url('../../resources/fonts/DejaVuSans.ttf') format('truetype');

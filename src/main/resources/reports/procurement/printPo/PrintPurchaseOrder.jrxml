@@ -222,7 +222,7 @@
 				<textElement textAlignment="Center" markup="styled">
 					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{variation}!=null?"Variation No."+$P{variation}+" To ":"")+"PURCHASE ORDER NO : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{variation}!=null?"VARIATION NO."+$P{variation}+" To ":"")+"PURCHASE ORDER NO : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="3" y="173" width="28" height="12"/>
