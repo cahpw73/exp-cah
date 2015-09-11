@@ -190,7 +190,9 @@
                                                        value="#{supplierProcList.suppliers}"
                                                        itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
                                         <p:ajax async="false" event="change"
-                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState supplierPostCode supplierCountry contactId"/>
+                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState
+                                                 btnViewContact btnAddContact
+                                                supplierPostCode supplierCountry contactId"/>
                                     </p:selectOneMenu>
                                     <p:message for="supplierNameId" />
                                 </div>
@@ -339,7 +341,7 @@
                                         <f:selectItems var="_contact"
                                                        value="#{purchaseOrderEdit.poEdit.poEntity.supplier.contacts}"
                                                        itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
-                                        <p:ajax async="false" event="change" />
+                                        <p:ajax async="false" update="btnViewContact" event="change" />
                                     </p:selectOneMenu>
                                 </div>
                             </div>
