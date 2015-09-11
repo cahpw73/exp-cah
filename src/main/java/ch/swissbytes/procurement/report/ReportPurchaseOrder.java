@@ -107,8 +107,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("watermarkDraft", watermark);
         }
         addParameters("isOriginal", true);
-       // getPOSummary();
-
+        addParameters("poSummaryList",createDataSource(getPOSummary()));
         addParameters("poList", createDataSource(getPOReportDto()));
         addParameters("totalClauses", this.clausesList.size());
         addParameters("poTitle", po.getPoTitle());
@@ -154,14 +153,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogoLeft().getFile());
             addParameters("logoLeft", logo);
         }
-
-        /*if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientFooter() != null) {
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientFooter().getFile());
-            addParameters("footerLogo", logo);
-        } else if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getDefaultFooter() != null) {
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getDefaultFooter().getFile());
-            addParameters("footerLogo", logo);
-        }*/
     }
 
     private void loadParamSupplier() {
@@ -270,69 +261,104 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private List<PurchaseOrderSummaryDto> getPOSummary() {
+        log.info("preparing poSummary dto.......");
         List<PurchaseOrderSummaryDto> dtos = new ArrayList<>();
         List<Object> list = getSummaryItemsPO();
         verifyOriginalPO(list);
         switch (nivel){
             case 1 :
+                log.info("Po is original");
                 addParameters("isOriginal", true);
                  dtos = null;
                 break;
             case 2 :
+                log.info("Po is the first variation");
+                addParameters("isOriginal", false);
                 loadPOSummaryOriginal(list,dtos);
+                loadThisVariation(list,dtos);
                 break;
             case 3 :
+                log.info("Po is the variation N");
+                addParameters("isOriginal", false);
                 break;
         }
 
-        return null;
+        return dtos;
     }
 
     private void loadThisVariation(final List<Object> list,List<PurchaseOrderSummaryDto> dtos){
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
-        dto.title="This Variation No.";
+        dto.setTitle("This Variation No." + po.getVariation());
         int turn =  1 ;
         for (Object record : list) {
             Object[] values = (Object[]) record;
+            if((int) values[3] == po.getOrderedVariation()){
+                if(turn == 1) {
+                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
+                        dto.setCurrencyCode1((String) values[2]);
+                    } else {
+                        dto.setCurrencyCode1((String) values[1]);
+                    }
+                    dto.setAmount1((BigDecimal) values[4]);
+                }
+                if(turn == 2){
+                    dto.setPlus1("plus");
+                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
+                        dto.setCurrencyCode2((String) values[2]);
+                    } else {
+                        dto.setCurrencyCode2((String) values[1]);
+                    }
+                    dto.setAmount2((BigDecimal) values[4]);
+                }
+                if(turn == 3){
+                    dto.setPlus2("plus");
+                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
+                        dto.setCurrencyCode3((String) values[2]);
+                    } else {
+                        dto.setCurrencyCode3((String) values[1]);
+                    }
+                    dto.setAmount3((BigDecimal) values[4]);
+                }
+                turn++;
+            }
         }
+        dtos.add(dto);
     }
 
     private void loadPOSummaryOriginal(final List<Object> list,List<PurchaseOrderSummaryDto> dtos){
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
-        dto.title="Original Order Value";
+        dto.setTitle("Original Order Value");
         int turn = 1;
         for (Object record : list) {
             Object[] values = (Object[]) record;
             if((int) values[3] == 1){
                 if(turn == 1) {
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
-                        dto.currencyCode1 = (String) values[2];
+                        dto.setCurrencyCode1((String) values[2]);
                     } else {
-                        dto.currencyCode1 = (String) values[1];
+                        dto.setCurrencyCode1((String) values[1]);
                     }
-                    dto.amount1 = (BigDecimal) values[4];
-                    turn++;
+                    dto.setAmount1((BigDecimal) values[4]);
                 }
                 if(turn == 2){
-                    dto.plus1="plus";
+                    dto.setPlus1("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
-                        dto.currencyCode2 = (String) values[2];
+                        dto.setCurrencyCode2((String) values[2]);
                     } else {
-                        dto.currencyCode2 = (String) values[1];
+                        dto.setCurrencyCode2((String) values[1]);
                     }
-                    dto.amount2 = (BigDecimal) values[4];
-                    turn++;
+                    dto.setAmount2((BigDecimal) values[4]);
                 }
                 if(turn == 3){
-                    dto.plus2="plus";
+                    dto.setPlus2("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
-                        dto.currencyCode3 = (String) values[2];
+                        dto.setCurrencyCode3((String) values[2]);
                     } else {
-                        dto.currencyCode3 = (String) values[1];
+                        dto.setCurrencyCode3((String) values[1]);
                     }
-                    dto.amount3 = (BigDecimal) values[4];
-                    turn++;
+                    dto.setAmount3((BigDecimal) values[4]);
                 }
+                turn++;
             }
         }
         dtos.add(dto);
