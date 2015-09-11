@@ -9,9 +9,16 @@
         <h:panelGroup id="retention">
             <ui:include src="../component/retention.xhtml">
                 <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.retention.title']}"/>
-                <ui:param name="WITHSECURITYDEPOSIT" value="false"/>
                 <ui:param name="RENDER_COMPONENT" value=":editPoForm:securityDeposit"/>
                 <ui:param name="NUMMBER_ID" value="2"/>
+            </ui:include>
+        </h:panelGroup>
+        <div class="clearfix"></div>
+        <h:panelGroup id="securityDeposit">
+            <ui:include src="../component/retention.xhtml">
+                <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.security.deposit.title']}"/>
+                <ui:param name="RENDER_COMPONENT" value=":editPoForm:retention"/>
+                <ui:param name="NUMMBER_ID" value="1"/>
             </ui:include>
         </h:panelGroup>
         <div class="clearfix"></div>

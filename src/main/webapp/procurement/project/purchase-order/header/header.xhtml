@@ -287,13 +287,19 @@
             </div>
         </div>
         <div class="clearfix"/>
-        <h:panelGroup id="securityDeposit">
-            <ui:include src="../component/retention.xhtml">
-                <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.security.deposit.title']}"/>
-                <ui:param name="WITHSECURITYDEPOSIT" value="true"/>
-                <ui:param name="RENDER_COMPONENT" value=":editPoForm:retention"/>
-                <ui:param name="NUMMBER_ID" value="1"/>
-            </ui:include>
-        </h:panelGroup>
+
+            <div class="row">
+                <div style="width: 345px!important; float: left!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                       style="margin-left: 13px;"
+                                       value="#{msgs['po.header.lbl.security.deposit']}"/>
+                        <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}"
+                                                 value="#{poBean.purchaseOrder.poEntity.securityDeposit}">
+                        </p:selectBooleanCheckbox>
+                    </div>
+                </div>
+            </div>
+
     </div>
 </ui:composition>
