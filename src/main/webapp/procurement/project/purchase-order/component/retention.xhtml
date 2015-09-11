@@ -36,11 +36,14 @@
                                 <h:inputText
                                         value="#{PERCENTAGE}"
                                         styleClass="form-control" rendered="#{poBean.beingEdited}">
-                                    <p:ajax async="false" retentionAmt="#{NUMBER_ID}" process="@this"/>
+                                    <p:ajax async="false" retentionAmt="#{NUMBER_ID}" update="retentionAmt#{NUMBER_ID}"  process="@this"/>
+                                    <f:convertNumber pattern="#{configuration.patternDecimal}"/>
                                 </h:inputText>
                                 <h:inputText readonly="true" styleClass="form-control view-po"
                                              value="#{PERCENTAGE}"
-                                             rendered="#{poBean.beingViewed}"/>
+                                             rendered="#{poBean.beingViewed}">
+                                    <f:convertNumber pattern="#{configuration.patternDecimal}"/>
+                                </h:inputText>
                             </div>
                         </div>
                     </div>
@@ -54,24 +57,8 @@
                                            style="padding-left: 17px !important;"/>
 
                             <div style="width: 150px; float: left; margin-left: 21px;">
-                                <ui:remove><!--CODE REMOVED**********************/*/**/-->
-                                    <h:inputText rendered="#{poBean.beingEdited}"
-                                                 value="#{cashflowBean.cashflow.amt}"
-                                                 styleClass="form-control">
-                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                         locale="#{configuration.langLocalDecimal}"/>
-                                        <p:ajax async="false" process="@this"/>
-                                    </h:inputText>
-                                    <h:inputText readonly="true" styleClass="form-control view-po"
-                                                 value="#{cashflowBean.cashflow.amt}"
-                                                 rendered="#{poBean.beingViewed}">
-                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                         locale="#{configuration.langLocalDecimal}"/>
-                                        <p:ajax async="false" process="@this"/>
-                                    </h:inputText>
-                                </ui:remove>
 
-                                <h:inputTextarea id="retentionAmt#{NUMBER_ID}" value="#{poBean.calculateAmountForCashflow()}"
+                                <h:inputTextarea id="retentionAmt#{NUMBER_ID}" value="#{poBean.calculateAmountForCashflow(PERCENTAGE)}"
                                                  styleClass="form-control" style="height: 100px!important;"
                                                  readonly="true"/>
                             </div>
