@@ -40,9 +40,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private PurchaseOrderDao dao;
 
-    /*@Inject
-    private SupplierDao supplierDao;*/
-
     @Inject
     private CommentDao commentDao;
 

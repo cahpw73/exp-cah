@@ -10,6 +10,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,6 +42,7 @@ public class ItemService  implements Serializable {
             entity.setPurchaseOrder(po);
             entity.setStatus(enumService.getStatusEnumEnable());
             entity.setIsForecastSiteDateManual(false);
+            entity.setTotalCost(entity.getCost() != null && entity.getQuantity() != null ? entity.getCost().multiply(entity.getQuantity()) : new BigDecimal("0"));
             if(exitsDeliveryPointInIncoTerms(incoTerms)){
                 entity.setSpIncoTerm(incoTerms);
                 entity.setSpIncoTermDescription(fullIncoTerms);
@@ -64,7 +66,9 @@ public class ItemService  implements Serializable {
                     entity.setIsForecastSiteDateManual(false);
                     //@TODO Review Date_SS  estamos poniendo este valor por defecto con la fecha del dia, este campo aparentemente esta siendo usado en attachment modulo expediting
                     entity.setDate(new Date());
+
                 }
+                entity.setTotalCost(entity.getCost()!=null&&entity.getQuantity()!=null?entity.getCost().multiply(entity.getQuantity()):new BigDecimal("0"));
                 entity.setLastUpdate(new Date());
                 dao.doUpdate(entity);
             }
