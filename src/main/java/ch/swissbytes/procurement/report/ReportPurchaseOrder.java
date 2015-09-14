@@ -105,9 +105,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             log.info("InputStream watermark: " + watermark.toString());
             addParameters("watermarkDraft", watermark);
         }
-        if(po.getOrderedVariation().intValue() == 1){
+        if (po.getOrderedVariation().intValue() == 1) {
             addParameters("isOriginal", true);
-        }else if(po.getOrderedVariation().intValue() > 1){
+        } else if (po.getOrderedVariation().intValue() > 1) {
             addParameters("poSummaryList", createDataSource(getPOSummary()));
         }
         addParameters("poList", createDataSource(getPOReportDto()));
@@ -266,24 +266,96 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         log.info("preparing poSummary dto.......");
         List<PurchaseOrderSummaryDto> dtos = new ArrayList<>();
         List<Object> list = getSummaryItemsPO();
-        switch (po.getOrderedVariation()) {
-            case 2:
-                log.info("Po is the first variation");
-                addParameters("isOriginal", false);
-                loadPOSummaryOriginal(list, dtos);
-                loadThisVariation(list, dtos);
-                loadRevisedOrderValue(list, dtos);
-                break;
-            case 3:
-                log.info("Po is the variation N");
-                addParameters("isOriginal", false);
-                loadPOSummaryOriginal(list, dtos);
-                loadThisVariation(list, dtos);
-                loadRevisedOrderValue(list, dtos);
-                break;
+        if (po.getOrderedVariation().intValue() == 2) {
+            log.info("Po is the first variation");
+            addParameters("isOriginal", false);
+            loadPOSummaryOriginal(list, dtos);
+            loadThisVariation(list, dtos);
+            loadRevisedOrderValue(list, dtos);
+        } else if (po.getOrderedVariation().intValue() >= 3) {
+            log.info("Po is the variation N");
+            addParameters("isOriginal", false);
+            loadPOSummaryOriginal(list, dtos);
+            loadBetweenVariation(list, dtos);
+            loadThisVariation(list, dtos);
+            loadRevisedOrderValue(list, dtos);
         }
 
         return dtos;
+    }
+
+    private void loadBetweenVariation(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
+        List<Object> listAux = new ArrayList<>();
+        listAux.addAll(list);
+        PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
+        dto.setTitle("Variation No."+getDesriptionBetweenVariation());
+        int turn = 1;
+        int indexQuantity = 1;
+        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO();
+        for (Object record : list) {
+            Object[] values = (Object[]) record;
+            if (indexQuantity <= quantityCurrencies) {
+                if (turn == 1) {
+                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
+                        dto.setCurrencyCode1((String) values[2]);
+                    } else {
+                        dto.setCurrencyCode1((String) values[1]);
+                    }
+                    BigInteger currencyId = (BigInteger) values[0];
+                    BigDecimal total1 = new BigDecimal(0);
+                    for (Object recordT1 : list) {
+                        Object[] valuesT1 = (Object[]) recordT1;
+                        if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
+                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                                total1 = total1.add((BigDecimal) valuesT1[4]);
+                            }
+                        }
+                    }
+                    dto.setAmount1(total1);
+                }
+                if (turn == 2) {
+                    dto.setPlus1("plus");
+                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
+                        dto.setCurrencyCode2((String) values[2]);
+                    } else {
+                        dto.setCurrencyCode2((String) values[1]);
+                    }
+                    BigInteger currencyId = (BigInteger) values[0];
+                    BigDecimal total1 = new BigDecimal(0);
+                    for (Object recordT1 : list) {
+                        Object[] valuesT1 = (Object[]) recordT1;
+                        if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
+                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                                total1 = total1.add((BigDecimal) valuesT1[4]);
+                            }
+                        }
+                    }
+                    dto.setAmount2(total1);
+                }
+                if (turn == 3) {
+                    dto.setPlus2("plus");
+                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
+                        dto.setCurrencyCode3((String) values[2]);
+                    } else {
+                        dto.setCurrencyCode3((String) values[1]);
+                    }
+                    BigInteger currencyId = (BigInteger) values[0];
+                    BigDecimal total1 = new BigDecimal(0);
+                    for (Object recordT1 : list) {
+                        Object[] valuesT1 = (Object[]) recordT1;
+                        if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
+                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                                total1 = total1.add((BigDecimal) valuesT1[4]);
+                            }
+                        }
+                    }
+                    dto.setAmount3(total1);
+                }
+                turn++;
+            }
+            indexQuantity++;
+        }
+        dtos.add(dto);
     }
 
     private void loadRevisedOrderValue(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
@@ -307,11 +379,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     BigDecimal total1 = new BigDecimal(0);
                     for (Object recordT1 : list) {
                         Object[] valuesT1 = (Object[]) recordT1;
-                        if((int)valuesT1[3] <= po.getOrderedVariation()){
+                        if ((int) valuesT1[3] <= po.getOrderedVariation()) {
                             if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
                                 total1 = total1.add((BigDecimal) valuesT1[4]);
                             }
-                        }else{
+                        } else {
                             break;
                         }
                     }
@@ -328,11 +400,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     BigDecimal total1 = new BigDecimal(0);
                     for (Object recordT1 : list) {
                         Object[] valuesT1 = (Object[]) recordT1;
-                        if((int) valuesT1[3]<=po.getOrderedVariation().intValue()){
+                        if ((int) valuesT1[3] <= po.getOrderedVariation().intValue()) {
                             if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
                                 total1 = total1.add((BigDecimal) valuesT1[4]);
                             }
-                        }else{
+                        } else {
                             break;
                         }
                     }
@@ -349,11 +421,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     BigDecimal total1 = new BigDecimal(0);
                     for (Object recordT1 : list) {
                         Object[] valuesT1 = (Object[]) recordT1;
-                        if((int) valuesT1[3] <= po.getOrderedVariation().intValue()){
+                        if ((int) valuesT1[3] <= po.getOrderedVariation().intValue()) {
                             if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
                                 total1 = total1.add((BigDecimal) valuesT1[4]);
                             }
-                        }else{
+                        } else {
                             break;
                         }
                     }
@@ -465,6 +537,60 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 "order by cu.id");
         return query.getResultList().size();
     }
+
+    private int getMaxOrderedVariationPO() {
+        Query query = entityManager.createNativeQuery("select max(po.orderedvariation)\n" +
+                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "left join project_currency pc on pc.id= sp.project_currency_id\n" +
+                "inner join currency cu on pc.currency_id=cu.id\n" +
+                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "");
+        return (int) query.getResultList().get(0);
+    }
+
+    private String getDesriptionBetweenVariation() {
+        Long poMinId = -1L;
+        Long poMaxId = -1L;
+        String result = "";
+        Query query = entityManager.createNativeQuery("select distinct po.orderedvariation, po.id\n" +
+                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "left join project_currency pc on pc.id= sp.project_currency_id\n" +
+                "inner join currency cu on pc.currency_id=cu.id\n" +
+                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
+                "order by po.orderedvariation");
+        List<Object> list = query.getResultList();
+        for (Object record : list) {
+            Object[] values = (Object[]) record;
+            if ((int) values[0] == 2) {
+                poMinId = ((BigInteger) values[1]).longValue();
+            }
+            if ((int) values[0] == po.getOrderedVariation() - 1) {
+                poMaxId = ((BigInteger) values[1]).longValue();
+            }
+        }
+
+        if(poMinId.longValue() != poMaxId.longValue()){
+            PurchaseOrderEntity poMin =  findPurchaseOrderById(poMinId);
+            PurchaseOrderEntity poMax =  findPurchaseOrderById(poMaxId);
+            result = "v"+poMin.getVariation() +" - v"+ poMax.getVariation();
+        }else if(poMinId.longValue() == poMaxId.longValue()){
+            PurchaseOrderEntity poMin =  findPurchaseOrderById(poMinId);
+            result = poMin.getVariation();
+        }
+        return result;
+    }
+
+    private PurchaseOrderEntity findPurchaseOrderById(final Long id ){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM PurchaseOrderEntity p ");
+        sb.append(" WHERE p.id = :ID ");
+        Query query = entityManager.createQuery(sb.toString());
+        query.setParameter("ID",id);
+        List<PurchaseOrderEntity> list = query.getResultList();
+        return list.get(0);
+    }
+
+
 
     @Override
     public void printDocument(Long documentId) {
