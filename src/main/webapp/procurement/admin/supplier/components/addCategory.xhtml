@@ -1,0 +1,24 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="form-group">
+                <h:outputLabel value="#{msgs['lbl.admin.name.category']}" for="nameCategoryId"
+                               styleClass="control-label procurement-text-lbl-ltr"/>
+                <div class="col-md-8">
+                    <h:inputText id="nameCategoryId" value="#{categoryBrandBean.categoryEntity.name}"
+                                 styleClass="form-control" maxlength="50"/>
+                    <p:message for="nameCategoryId" />
+                </div>
+            </div>
+            <br/>
+            <h:commandButton value="#{msgs['lbl.add']}" action="#{categoryBrandBean.doSaveCategory}"
+                           type="submit" styleClass="btn btn-primary btn-sm">
+                <p:ajax ajax="false" async="false"  process="@form" update=":supplierId"/>
+            </h:commandButton>
+        </div>
+    </div>
+</ui:composition>
