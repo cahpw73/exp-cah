@@ -17,9 +17,8 @@ public class TableBean implements Serializable{
     private String defaultPageSize="5";
 
     public void onPaginate(PageEvent event){
-        System.out.println("Pagination.....");
         DataTable table=(DataTable)event.getSource();
-        defaultPageSize=Integer.toString(table.getRows());
+        defaultPageSize=Integer.toString(table.getRowCount());
     }
 
     public String getDefaultPageSize() {

@@ -24,7 +24,7 @@
                                      rowsPerPageTemplate="#{configuration.getPagesSize(poListBean.poList.total)}"
                                      paginatorPosition="bottom"
                                      paginator="true">
-                            <p:ajax async="false" event="page"  process=":@this" listener="#{tableBean.onPaginate}"/>
+                            <p:ajax async="false" event="page"  process="@this" listener="#{tableBean.onPaginate}"/>
                             <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40">
                                 #{_p.po}
                             </p:column>
