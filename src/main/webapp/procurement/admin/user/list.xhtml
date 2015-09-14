@@ -106,8 +106,9 @@
                     <!-- Tab Expediting -->
                     <div class="tab-pane" id="expediting">
                         <p:dataTable id="expeditingListId" value="#{usersBean.userList}" var="_u"
-                                     paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                                     paginator="true" rows="#{tableBean.defaultPageSize}" lazy="true"
                                      rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userList.size())}" paginatorPosition="bottom">
+                            <p:ajax async="false" event="page"  process=":@this" listener="#{tableBean.onPaginate}"/>
                             <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
@@ -144,6 +145,8 @@
                                     <p:ajax process="@this"  update=":glbMsgs"/>
                                 </p:commandLink>
                             </p:column>
+
+
                         </p:dataTable>
                         <div class="clearfix"/>
                         <br/>
