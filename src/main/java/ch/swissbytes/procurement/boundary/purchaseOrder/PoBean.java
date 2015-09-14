@@ -94,8 +94,6 @@ public class PoBean extends Bean {
     private boolean supplierMode = false;
     private boolean loaded = false;
 
-    private boolean success;
-
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
@@ -104,17 +102,12 @@ public class PoBean extends Bean {
         purchaseOrder.getPoEntity().setOrderDate(new Date());
         purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         putModeCreation();
-        poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
-       /* if (projectCurrencyList.size() == 1) {
-            purchaseOrder.getPoEntity().setCurrency(projectCurrencyList.get(0));
-        }*/
     }
 
     private void loadPurchaseOrder() {
         purchaseOrder = service.findById(Long.valueOf(poId));
         itemBean.loadItemList(purchaseOrder.getId());
         cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
-        //poTextBean.loadProjectTextSnippets(purchaseOrder.getProjectEntity().getId());
         poTextBean.loadText(purchaseOrder.getPoEntity(), purchaseOrder.getProjectEntity().getId());
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
