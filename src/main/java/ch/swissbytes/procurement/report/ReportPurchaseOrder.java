@@ -289,7 +289,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dto.setTitle("Variation No."+getDesriptionBetweenVariation());
         int turn = 1;
         int indexQuantity = 1;
-        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO();
+        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO(2,po.getOrderedVariation()-1);
         for (Object record : list) {
             Object[] values = (Object[]) record;
             if (indexQuantity <= quantityCurrencies) {
@@ -361,9 +361,58 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         listAux.addAll(list);
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("Revised Order Value");
-        int turn = 1;
+
+        String code1="";
+        BigDecimal amt1=null;
+        String code2="";
+        BigDecimal amt2=null;
+        String code3="";
+        BigDecimal amt3=null;
+        for(PurchaseOrderSummaryDto d : dtos){
+            if(d.getAmount1() != null){
+                amt1 = new BigDecimal(0);
+                amt1 = amt1.add(d.getAmount1());
+            }
+            if(d.getAmount2() != null){
+                dto.setPlus1("plus");
+                amt2 = new BigDecimal(0);
+                amt2 = amt2.add(d.getAmount2());
+            }
+            if(d.getAmount3() != null){
+                dto.setPlus2("plus");
+                amt3 = new BigDecimal(0);
+                amt3 = amt3.add(d.getAmount3());
+            }
+            if(StringUtils.isNotEmpty(d.getCurrencyCode1())){
+                code1= d.getCurrencyCode1();
+            }
+            if(StringUtils.isNotEmpty(d.getCurrencyCode2())){
+                code2= d.getCurrencyCode2();
+            }
+            if(StringUtils.isNotEmpty(d.getCurrencyCode3())){
+                code3= d.getCurrencyCode3();
+            }
+        }
+        dto.setCurrencyCode1(code1);
+        dto.setCurrencyCode2(code2);
+        dto.setCurrencyCode3(code3);
+        dto.setAmount1(amt1);
+        dto.setAmount2(amt2);
+        dto.setAmount3(amt3);
+        //**************************
+        /*int turn = 1;
         int indexQuantity = 1;
-        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO();
+        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO(2,po.getOrderedVariation());
+
+        List<Object> currenciesIds = getCurrenciesUsedSummaryPO(2,po.getOrderedVariation());
+        Integer[] currenciesArrayIds = new Integer[3];
+        int indexCurrencies = 0;
+        for (Object record : currenciesIds) {
+            Object[] values = (Object[]) record;
+            currenciesArrayIds[indexCurrencies] = ((BigInteger) values[0]).intValue();
+            indexCurrencies++;
+        }
+
         for (Object record : list) {
             Object[] values = (Object[]) record;
             if (indexQuantity <= quantityCurrencies) {
@@ -432,8 +481,20 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 turn++;
             }
             indexQuantity++;
-        }
+        }*/
+        //********
         dtos.add(dto);
+    }
+
+    private boolean exitsCurrenciesIdsInArray(Integer[] currenciesArrayIds,int currencyId){
+		boolean result = false;
+		for(int i=0;i<currenciesArrayIds.length-1;i++){
+			if(currenciesArrayIds[i].intValue() == currencyId){
+
+            }
+			result = true;
+		}
+        return result;
     }
 
     private void loadThisVariation(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
@@ -525,24 +586,26 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         return query.getResultList();
     }
 
-    private int getQuantityCurrenciesUsedSummaryPO() {
+    private int getQuantityCurrenciesUsedSummaryPO(Integer orderStart, Integer orderEnd) {
         Query query = entityManager.createNativeQuery("select cu.id\n" +
                 "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "inner join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "  \n" +
+                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + orderStart + " and " + orderEnd + "\n" +
                 "group by cu.id\n" +
                 "order by cu.id");
         return query.getResultList().size();
     }
 
-    private int getMaxOrderedVariationPO() {
-        Query query = entityManager.createNativeQuery("select max(po.orderedvariation)\n" +
+    private List<Object> getCurrenciesUsedSummaryPO(Integer orderStart, Integer orderEnd) {
+        Query query = entityManager.createNativeQuery("select cu.id\n" +
                 "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "inner join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "");
-        return (int) query.getResultList().get(0);
+                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + orderStart + " and " + orderEnd + "\n" +
+                "group by cu.id\n" +
+                "order by cu.id");
+        return query.getResultList();
     }
 
     private String getDesriptionBetweenVariation() {
