@@ -64,6 +64,29 @@ public class CategoryBrandBean implements Serializable {
         this.brands = new DualListModel<BrandEntity>(diffBrandList(brandService.getBrandList(),lb), lb);
     }
 
+    public void doSaveBrand(){
+        if(StringUtils.isNotEmpty(brandEntity.getName())){
+            if(isValidBrand(brandEntity.getName())) {
+                BrandEntity currentBrand = new BrandEntity();
+                currentBrand.setName(brandEntity.getName());
+                currentBrand.setLastUpdate(new Date());
+                currentBrand.setStatus(StatusEnum.ENABLE);
+                brandService.doSave(currentBrand);
+                addNewBrandPicketList(brandEntity);
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('brandModal').hide();");
+            }else{
+                Messages.addFlashError("nameBrandId","Brand name already exists");
+            }
+        }else{
+            Messages.addFlashError("nameBrandId","Enter a valid Brand");
+        }
+    }
+    private boolean isValidBrand(String brandName) {
+        List<BrandEntity> brandList = brandService.findByName(brandName);
+        return brandList.isEmpty();
+    }
+
     public void doSaveCategory(){
         if(StringUtils.isNotEmpty(categoryEntity.getName())){
             if(isValidCategory(categoryEntity.getName())) {
@@ -76,7 +99,6 @@ public class CategoryBrandBean implements Serializable {
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('categoryModal').hide();");
             }else{
-                Messages.addFlashError("nameCategory", "Category name already exists");
                 Messages.addFlashError("nameCategoryId","Category name already exists");
             }
         }else{
@@ -91,6 +113,14 @@ public class CategoryBrandBean implements Serializable {
 
     public void resetCategory(){
         categoryEntity = new CategoryEntity();
+    }
+
+    public void resetBrand(){
+        brandEntity = new BrandEntity();
+    }
+
+    private void addNewBrandPicketList(final BrandEntity brand){
+        brands.getTarget().add(brand);
     }
 
     private void addNewCategoryToPicketList(final CategoryEntity category){

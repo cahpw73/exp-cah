@@ -3,20 +3,20 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
-
-    <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
-                addLabel="Add to Brand"
-                removeLabel="Remove from Brand"
-                converter="brandConverter"
-                itemLabel="#{_brand.name}" itemValue="#{_brand}">
-<ui:remove>
-        <f:facet name="sourceCaption">
-           Global Brands
-            <h:outputLabel/>
-        </f:facet>
-        <f:facet name="targetCaption">
-            Supplier Brands
-        </f:facet>
-</ui:remove>
-    </p:pickList>
+    <div style="float: left">
+        <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
+                    addLabel="Add to Brand"
+                    removeLabel="Remove from Brand"
+                    converter="brandConverter"
+                    itemLabel="#{_brand.name}" itemValue="#{_brand}">
+        </p:pickList>
+    </div>
+    <div style="float: left; margin-left: 50px;">
+        <h:commandButton
+                value="#{msgs['lbl.admin.add.brand']}"
+                onclick="PF('brandModal').show();"
+                styleClass="btn btn-primary btn-sm" action="#{categoryBrandBean.resetBrand}">
+            <p:ajax async="false" process="@this" update=":brandModalFormId"/>
+        </h:commandButton>
+    </div>
 </ui:composition>

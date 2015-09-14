@@ -5,19 +5,19 @@
                 xmlns:p="http://primefaces.org/ui">
     <div class="row">
         <div class="col-lg-10">
-            <h:inputText id="nameCategoryId" value="#{categoryBrandBean.categoryEntity.name}"
+            <h:inputText id="nameBrandId" value="#{categoryBrandBean.brandEntity.name}"
                          styleClass="form-control" maxlength="50"/>
-            <p:message for="nameCategoryId"/>
+            <p:message for="nameBrandId"/>
 
             <div class="clearfix"></div>
             <br/>
-            <h:commandButton value="#{msgs['lbl.add']}" action="#{categoryBrandBean.doSaveCategory}"
+            <h:commandButton value="#{msgs['lbl.add']}" action="#{categoryBrandBean.doSaveBrand}"
                              type="submit" styleClass="btn btn-primary btn-sm">
-                <p:ajax ajax="true" async="false" process="@form" update="#{FORM_1 != null ? FORM : ':supplierId'}"/>
+                <p:ajax ajax="true" async="false" process="@form" update="#{FORM_2 != null ? FORM : ':supplierId'}"/>
             </h:commandButton>
             &#160;
             <button class="btn btn-primary btn-sm"
-                    onclick="PF('categoryModal').hide();"
+                    onclick="PF('brandModal').hide();"
                     type="button">
                 #{msgs['lbl.cancel']}
             </button>

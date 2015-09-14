@@ -113,10 +113,15 @@
                 </ui:include>
             </h:form>
         </p:dialog>
-        <p:dialog header="New Category" widgetVar="categoryModal" width="400" height="400" resizable="false">
-            <h:form id="categoryModalFormId" prependId="false">
+        <p:dialog header="New Category" widgetVar="categoryModal" width="250" height="120" resizable="false">
+            <h:form id="categoryModalFormId" prependId="false" class="form-horizontal">
                 <ui:include src="../../admin/supplier/components/addCategory.xhtml">
                 </ui:include>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="New Brand" widgetVar="brandModal" width="250" height="120" resizable="false">
+            <h:form id="brandModalFormId" prependId="false">
+                <ui:include src="../../admin/supplier/components/addBrand.xhtml"/>
             </h:form>
         </p:dialog>
     </ui:define>
