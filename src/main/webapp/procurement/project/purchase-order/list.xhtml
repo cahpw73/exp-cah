@@ -195,11 +195,10 @@
                                                    target="_blank" style="color: #ffffff" onclick="PF('printPoDlg').hide();">
                                     </h:commandLink>
                                     &#160;
-                                    <h:commandLink id="printDraftlBtnId" styleClass="btn btn-primary btn-sm
-                                                   #{poListBean.hasCurrentPOStatusFinal()==true?'disabled':''} "
+                                    <h:commandLink id="printDraftlBtnId" styleClass="btn btn-primary btn-sm"
                                                    value="#{msgs['project.list.lbl.btn.print.po.draft']}"
                                                    action="#{poListBean.printPODraft}" style="color: #ffffff;"
-                                                   target="_blank" disabled="#{poListBean.hasCurrentPOStatusFinal()}"
+                                                   target="_blank"
                                                    onclick="PF('printPoDlg').hide();">
                                     </h:commandLink>
 

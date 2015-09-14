@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HeaderReport" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="069e6461-8696-4ac0-bcb3-9e8ba10dceb1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
+	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="logoLeft" class="java.io.InputStream"/>
+	<parameter name="clientName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 'something']]>
+	</queryString>
+	<field name="?column?" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="98" splitType="Stretch">
+			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top" isUsingCache="true" evaluationTime="Report">
+				<reportElement uuid="cf5bfbae-5af7-4fbf-a0d0-3a35b5c9d763" mode="Transparent" x="358" y="1" width="162" height="68" backcolor="#FFFFFF"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top" isUsingCache="true" evaluationTime="Report">
+				<reportElement uuid="86d50b8f-19c1-4aed-b5e1-92ca534ce27f" mode="Transparent" x="1" y="0" width="162" height="39" backcolor="#FFFFFF"/>
+				<imageExpression><![CDATA[$P{logoLeft}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="aa619b6c-5161-44b6-8ab5-72f193def856" style="Arial-Bold" x="10" y="71" width="349" height="27"/>
+				<textElement verticalAlignment="Top" markup="styled">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{clientName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
