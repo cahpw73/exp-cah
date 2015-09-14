@@ -38,11 +38,8 @@ public class SupplierTbl extends LazyDataModel<SupplierProcEntity> {
     public List<SupplierProcEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         List<SupplierProcEntity> list = new ArrayList<>();
         list = dao.findByPage(first, pageSize, filter);
-        if (super.getRowCount() <= 0) {
-            Long total = dao.findTotal(null);
-            this.setRowCount(total.intValue());
-            this.total = total;
-        }
+        this.setRowCount(list.size());
+        this.total=Long.valueOf(list.size());
         this.setPageSize(pageSize);
         return list;
     }
