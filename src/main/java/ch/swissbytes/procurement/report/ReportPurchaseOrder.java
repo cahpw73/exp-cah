@@ -363,24 +363,27 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dto.setTitle("Revised Order Value");
 
         String code1="";
-        BigDecimal amt1=null;
+        BigDecimal amt1 = new BigDecimal(0);
+        boolean flagAmt1 = false;
         String code2="";
-        BigDecimal amt2=null;
+        BigDecimal amt2 = new BigDecimal(0);
+        boolean flagAmt2 = false;
         String code3="";
-        BigDecimal amt3=null;
+        BigDecimal amt3 = new BigDecimal(0);
+        boolean flagAmt3 = false;
         for(PurchaseOrderSummaryDto d : dtos){
             if(d.getAmount1() != null){
-                amt1 = new BigDecimal(0);
+                flagAmt1 = true;
                 amt1 = amt1.add(d.getAmount1());
             }
             if(d.getAmount2() != null){
                 dto.setPlus1("plus");
-                amt2 = new BigDecimal(0);
+                flagAmt2 = true;
                 amt2 = amt2.add(d.getAmount2());
             }
             if(d.getAmount3() != null){
                 dto.setPlus2("plus");
-                amt3 = new BigDecimal(0);
+                flagAmt3 = true;
                 amt3 = amt3.add(d.getAmount3());
             }
             if(StringUtils.isNotEmpty(d.getCurrencyCode1())){
@@ -396,9 +399,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dto.setCurrencyCode1(code1);
         dto.setCurrencyCode2(code2);
         dto.setCurrencyCode3(code3);
-        dto.setAmount1(amt1);
-        dto.setAmount2(amt2);
-        dto.setAmount3(amt3);
+        dto.setAmount1(flagAmt1 ? amt1:null);
+        dto.setAmount2(flagAmt2?amt2:null);
+        dto.setAmount3(flagAmt3?amt3:null);
         //**************************
         /*int turn = 1;
         int indexQuantity = 1;
