@@ -27,31 +27,31 @@
 	</columnHeader>
 	<detail>
 		<band height="98" splitType="Stretch">
-			<printWhenExpression><![CDATA[!$P{bigTitle}]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$P{bigTitle}]]></printWhenExpression>
 			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top" isUsingCache="true" evaluationTime="Report">
 				<reportElement uuid="cf5bfbae-5af7-4fbf-a0d0-3a35b5c9d763" mode="Transparent" x="358" y="1" width="162" height="68" backcolor="#FFFFFF"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top" isUsingCache="true" evaluationTime="Report">
-				<reportElement uuid="86d50b8f-19c1-4aed-b5e1-92ca534ce27f" mode="Transparent" x="1" y="0" width="162" height="39" backcolor="#FFFFFF"/>
+				<reportElement uuid="86d50b8f-19c1-4aed-b5e1-92ca534ce27f" mode="Transparent" x="0" y="0" width="162" height="39" backcolor="#FFFFFF"/>
 				<imageExpression><![CDATA[$P{logoLeft}]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="aa619b6c-5161-44b6-8ab5-72f193def856" style="Arial-Bold" x="10" y="71" width="349" height="27"/>
+				<reportElement uuid="aa619b6c-5161-44b6-8ab5-72f193def856" style="Arial-Bold" x="0" y="71" width="349" height="27"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="20" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{clientName}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="103">
-			<printWhenExpression><![CDATA[$P{bigTitle}]]></printWhenExpression>
+		<band height="94">
+			<printWhenExpression><![CDATA[!$P{bigTitle}]]></printWhenExpression>
 			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top" isUsingCache="true" evaluationTime="Report">
 				<reportElement uuid="5d75c39c-c20f-4195-b9d4-2cb5ad94e71f" mode="Transparent" x="0" y="0" width="189" height="39" backcolor="#FFFFFF"/>
 				<imageExpression><![CDATA[$P{logoLeft}]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Right" vAlign="Top" isUsingCache="true" evaluationTime="Report">
-				<reportElement uuid="9f7a2a3b-e36d-4d85-88a6-3b8419788969" mode="Transparent" x="293" y="0" width="227" height="101" backcolor="#FFFFFF"/>
+				<reportElement uuid="9f7a2a3b-e36d-4d85-88a6-3b8419788969" mode="Transparent" x="318" y="0" width="202" height="93" backcolor="#FFFFFF"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 		</band>
