@@ -399,93 +399,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dto.setCurrencyCode1(code1);
         dto.setCurrencyCode2(code2);
         dto.setCurrencyCode3(code3);
-        dto.setAmount1(flagAmt1 ? amt1:null);
+        dto.setAmount1(flagAmt1?amt1:null);
         dto.setAmount2(flagAmt2?amt2:null);
         dto.setAmount3(flagAmt3?amt3:null);
-        //**************************
-        /*int turn = 1;
-        int indexQuantity = 1;
-        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO(2,po.getOrderedVariation());
-
-        List<Object> currenciesIds = getCurrenciesUsedSummaryPO(2,po.getOrderedVariation());
-        Integer[] currenciesArrayIds = new Integer[3];
-        int indexCurrencies = 0;
-        for (Object record : currenciesIds) {
-            Object[] values = (Object[]) record;
-            currenciesArrayIds[indexCurrencies] = ((BigInteger) values[0]).intValue();
-            indexCurrencies++;
-        }
-
-        for (Object record : list) {
-            Object[] values = (Object[]) record;
-            if (indexQuantity <= quantityCurrencies) {
-                if (turn == 1) {
-                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
-                        dto.setCurrencyCode1((String) values[2]);
-                    } else {
-                        dto.setCurrencyCode1((String) values[1]);
-                    }
-                    BigInteger currencyId = (BigInteger) values[0];
-                    BigDecimal total1 = new BigDecimal(0);
-                    for (Object recordT1 : list) {
-                        Object[] valuesT1 = (Object[]) recordT1;
-                        if ((int) valuesT1[3] <= po.getOrderedVariation()) {
-                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                                total1 = total1.add((BigDecimal) valuesT1[4]);
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                    dto.setAmount1(total1);
-                }
-                if (turn == 2) {
-                    dto.setPlus1("plus");
-                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
-                        dto.setCurrencyCode2((String) values[2]);
-                    } else {
-                        dto.setCurrencyCode2((String) values[1]);
-                    }
-                    BigInteger currencyId = (BigInteger) values[0];
-                    BigDecimal total1 = new BigDecimal(0);
-                    for (Object recordT1 : list) {
-                        Object[] valuesT1 = (Object[]) recordT1;
-                        if ((int) valuesT1[3] <= po.getOrderedVariation().intValue()) {
-                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                                total1 = total1.add((BigDecimal) valuesT1[4]);
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                    dto.setAmount2(total1);
-                }
-                if (turn == 3) {
-                    dto.setPlus2("plus");
-                    if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
-                        dto.setCurrencyCode3((String) values[2]);
-                    } else {
-                        dto.setCurrencyCode3((String) values[1]);
-                    }
-                    BigInteger currencyId = (BigInteger) values[0];
-                    BigDecimal total1 = new BigDecimal(0);
-                    for (Object recordT1 : list) {
-                        Object[] valuesT1 = (Object[]) recordT1;
-                        if ((int) valuesT1[3] <= po.getOrderedVariation().intValue()) {
-                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                                total1 = total1.add((BigDecimal) valuesT1[4]);
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                    dto.setAmount3(total1);
-                }
-                turn++;
-            }
-            indexQuantity++;
-        }*/
-        //********
         dtos.add(dto);
     }
 
