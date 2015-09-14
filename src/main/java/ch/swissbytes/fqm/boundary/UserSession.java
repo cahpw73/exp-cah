@@ -25,7 +25,7 @@ public class UserSession implements Serializable{
     @Inject
     private Identity identity;
 
-    public boolean isProcurement() {
+     public boolean isProcurement() {
         if (StringUtils.isNotEmpty(currentModule) && StringUtils.isNotBlank(currentModule)) {
             boolean result = ModuleSystemEnum.PROCUREMENT.name().equalsIgnoreCase(currentModule);
             return result;
@@ -95,4 +95,6 @@ public class UserSession implements Serializable{
     public void setHasAccessBoth(boolean hasAccessBoth) {
         this.hasAccessBoth = hasAccessBoth;
     }
+
+
 }

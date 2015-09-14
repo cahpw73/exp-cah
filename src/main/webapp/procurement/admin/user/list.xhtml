@@ -11,14 +11,16 @@
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form prependId="false">
-
+        <h:form id="formUser" prependId="false">
+            <p:remoteCommand name="updateExpeditingList"  update="procuremetListId"/>
+            <p:remoteCommand name="updateProcurementList" update="expeditingListId"/>
             <div class="col-md-9 panel-tab-users">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#procurement" role="tab"
+                                          onclick="updateProcurementList();"
                                           data-toggle="tab">#{msgs['lbl.tab.procurement.title']}</a></li>
-                    <li><a href="#expediting" role="tab" data-toggle="tab">#{msgs['lbl.tab.expediting.title']}</a></li>
+                    <li><a href="#expediting" onclick="updateExpeditingList();" role="tab" data-toggle="tab">#{msgs['lbl.tab.expediting.title']}</a></li>
                 </ul>
 
                 <!-- Tab Users -->
@@ -26,8 +28,9 @@
                     <!-- Tab Procurement -->
                     <div class="tab-pane active" id="procurement">
                         <p:dataTable id="procuremetListId" value="#{usersBean.userProcurementList}" var="_u"
-                                     paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                                     paginator="true" rows="#{tableBean.defaultPageSize}" lazy="true"
                                      rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userProcurementList.size())}" paginatorPosition="bottom">
+                            <p:ajax async="false" event="page" process="@this" listener="#{tableBean.onPaginate}"/>
                             <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
@@ -106,8 +109,9 @@
                     <!-- Tab Expediting -->
                     <div class="tab-pane" id="expediting">
                         <p:dataTable id="expeditingListId" value="#{usersBean.userList}" var="_u"
-                                     paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                                     paginator="true" rows="#{tableBean.defaultPageSize}" lazy="true"
                                      rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userList.size())}" paginatorPosition="bottom">
+                            <p:ajax async="false" event="page" process="@this" listener="#{tableBean.onPaginate}"/>
                             <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
@@ -144,6 +148,8 @@
                                     <p:ajax process="@this"  update=":glbMsgs"/>
                                 </p:commandLink>
                             </p:column>
+
+
                         </p:dataTable>
                         <div class="clearfix"/>
                         <br/>
