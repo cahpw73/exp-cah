@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Total" pageWidth="519" pageHeight="802" columnWidth="519" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7f4c05cf-e643-4bad-91f0-341124488f51">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="191"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
@@ -29,6 +29,7 @@
 		</box>
 	</style>
 	<subDataset name="Table Dataset 1" uuid="498a6710-21cf-4c25-80c3-9e06dda7e623">
+		<parameter name="patternDecimal" class="java.lang.String"/>
 		<field name="title" class="java.lang.String"/>
 		<field name="currencyCode1" class="java.lang.String"/>
 		<field name="amount1" class="java.math.BigDecimal"/>
@@ -92,13 +93,16 @@ group by pc.currency_id,c.code,c.symbol]]>
 			<componentElement>
 				<reportElement uuid="b13c1217-5404-473e-8019-399ef9de082b" key="table" x="2" y="15" width="356" height="5" forecolor="#000000"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Table Dataset 1" uuid="b73384e6-374a-49ff-9db3-c9367b64714b">
+					<datasetRun subDataset="Table Dataset 1" uuid="511365a3-b8bd-482b-b0cc-3971d493b63a">
+						<datasetParameter name="patternDecimal">
+							<datasetParameterExpression><![CDATA[$P{patternDecimal}]]></datasetParameterExpression>
+						</datasetParameter>
 						<dataSourceExpression><![CDATA[$P{poSummaryList}]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="79" uuid="535f7483-b6f6-4f28-84e5-2427fce160e0">
-						<jr:detailCell height="30" rowSpan="1">
+					<jr:column width="98" uuid="535f7483-b6f6-4f28-84e5-2427fce160e0">
+						<jr:detailCell height="12" rowSpan="1">
 							<textField>
-								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" x="0" y="0" width="79" height="30"/>
+								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" x="0" y="0" width="98" height="12"/>
 								<textElement verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
@@ -106,91 +110,91 @@ group by pc.currency_id,c.code,c.symbol]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="38" uuid="8c573ea5-444d-4178-b143-0957856e8a40">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="f50ede8f-1783-4b4b-91b9-f85a77f232c9" x="0" y="0" width="38" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="20" uuid="8c573ea5-444d-4178-b143-0957856e8a40">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="f50ede8f-1783-4b4b-91b9-f85a77f232c9" x="0" y="0" width="20" height="12"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="39" uuid="582ec6e2-b2fa-4c52-b08d-9fa41be4fd03">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="eda36e1d-97cf-48ae-b8e4-d99723be36e1" x="0" y="0" width="39" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="42" uuid="582ec6e2-b2fa-4c52-b08d-9fa41be4fd03">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="eda36e1d-97cf-48ae-b8e4-d99723be36e1" x="0" y="0" width="42" height="12"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{amount1}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{amount1})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="21" uuid="7d90dbac-dbb9-4bca-9e79-43a7f58558d6">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="c1b4422f-dfa4-47a0-9174-5199ea29a559" x="0" y="0" width="21" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="33" uuid="7d90dbac-dbb9-4bca-9e79-43a7f58558d6">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="c1b4422f-dfa4-47a0-9174-5199ea29a559" x="0" y="0" width="33" height="12"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{plus1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="39" uuid="48a4656d-e426-4f04-8e03-2ce24c7bb410">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="dd398f1a-17bb-4553-9d31-e3606fcbc235" x="0" y="0" width="39" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="20" uuid="48a4656d-e426-4f04-8e03-2ce24c7bb410">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="dd398f1a-17bb-4553-9d31-e3606fcbc235" x="0" y="0" width="20" height="12"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="36" uuid="9c257b78-80ec-4005-84ba-6c351f809370">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="e0e37304-c6a7-403f-9fcc-0055f5e15356" x="0" y="0" width="36" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="42" uuid="9c257b78-80ec-4005-84ba-6c351f809370">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="e0e37304-c6a7-403f-9fcc-0055f5e15356" x="0" y="0" width="42" height="12"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{amount2}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{amount2})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="22" uuid="87c90189-0c66-405e-b35f-340b4628b7ce">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="ac9bc362-a538-4ced-a3be-e08954f6e4d3" x="0" y="0" width="22" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="33" uuid="87c90189-0c66-405e-b35f-340b4628b7ce">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="ac9bc362-a538-4ced-a3be-e08954f6e4d3" x="0" y="0" width="33" height="12"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{plus2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="43" uuid="26847e97-4354-4699-a8c4-ebbab0975a97">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="106fa6a6-6c7a-476b-aaf1-f2486da9a4c5" x="0" y="0" width="43" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="20" uuid="26847e97-4354-4699-a8c4-ebbab0975a97">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="106fa6a6-6c7a-476b-aaf1-f2486da9a4c5" x="0" y="0" width="20" height="12"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode3}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="41" uuid="41644287-e2bc-487a-a19e-a91498db5dc0">
-						<jr:detailCell height="30" rowSpan="1">
-							<textField>
-								<reportElement uuid="5d3fb8db-8b96-4e68-a3b1-be4ca30d2dca" x="0" y="0" width="41" height="30"/>
-								<textElement verticalAlignment="Middle">
+					<jr:column width="42" uuid="41644287-e2bc-487a-a19e-a91498db5dc0">
+						<jr:detailCell height="12" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="5d3fb8db-8b96-4e68-a3b1-be4ca30d2dca" x="0" y="0" width="42" height="12"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="7"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{amount3}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{amount3})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
