@@ -43,6 +43,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private CashflowEntity cashflowEntity;
     private EntityManager entityManager;
     private int nivel = 1;
+    private boolean draft;
     //private
 
 
@@ -54,7 +55,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                                Configuration configuration, PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList,
-                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager) {
+                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager,boolean draft) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -63,6 +64,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.clausesList = clausesList;
         this.cashflowEntity = cashflowEntity;
         this.entityManager = entityManager;
+        this.draft=draft;
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
@@ -100,7 +102,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions", po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager", po.getPoEntity().getProcManager());
         addParameters("procManagerDetail", po.getPoEntity().getProcManagerDetail());
-        if (po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()) {
+      //  if (po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()) {
+        if(draft){
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             log.info("InputStream watermark: " + watermark.toString());
             addParameters("watermarkDraft", watermark);
