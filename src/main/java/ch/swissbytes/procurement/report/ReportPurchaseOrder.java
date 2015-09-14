@@ -405,17 +405,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dtos.add(dto);
     }
 
-    private boolean exitsCurrenciesIdsInArray(Integer[] currenciesArrayIds,int currencyId){
-		boolean result = false;
-		for(int i=0;i<currenciesArrayIds.length-1;i++){
-			if(currenciesArrayIds[i].intValue() == currencyId){
-
-            }
-			result = true;
-		}
-        return result;
-    }
-
     private void loadThisVariation(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("This Variation No." + po.getVariation());

@@ -1,22 +1,23 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
-
-    <p:pickList id="categoryPickList" value="#{categoryBrandBean.categories}" var="_category"
-                addLabel="Add to Supplier"
-                removeLabel="Remove from Supplier"
-                converter="categoryConverter"
-                styleClass="algo"
-                itemLabel="#{_category.name}" itemValue="#{_category}">
-<ui:remove>
-        <f:facet name="sourceCaption" >
-            Global Categories
-
-        </f:facet>
-        <f:facet name="targetCaption">
-            Suplier Categories
-        </f:facet>
-</ui:remove>
-    </p:pickList>
+    <div style="float: left">
+        <p:pickList id="categoryPickList" value="#{categoryBrandBean.categories}" var="_category"
+                    addLabel="Add to Supplier"
+                    removeLabel="Remove from Supplier"
+                    converter="categoryConverter"
+                    styleClass="algo"
+                    itemLabel="#{_category.name}" itemValue="#{_category}">
+        </p:pickList>
+    </div>
+    <div style="float: left; margin-left: 50px;">
+        <h:commandButton
+                value="#{msgs['lbl.admin.add.category']}"
+                onclick="PF('categoryModal').show(); doChangeProc();"
+                styleClass="btn btn-primary btn-sm" action="#{categoryBrandBean.resetCategory}">
+            <p:ajax async="false" process="@this" update=":categoryModalFormId"/>
+        </h:commandButton>
+    </div>
 </ui:composition>
