@@ -123,8 +123,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("mrNo", collectMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
-        /*addParameters("currency",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getCurrency().getCode():null);
-        addParameters("exchangeRate",po.getPoEntity().getCurrency()!=null&&po.getPoEntity().getCurrency().getCurrency()!=null? po.getPoEntity().getCurrency().getExchangeRate():null);*/
         addParameters("contactName", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getFullName() : null);
         addParameters("contactEmail", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getEmail() : null);
         addParameters("contactPhone", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getPhone() : null);

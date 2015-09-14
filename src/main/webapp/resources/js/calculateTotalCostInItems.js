@@ -19,8 +19,8 @@ function calculateTotalCost(){
         console.log("calculating....")
         totalPrice = parseFloat(quantity) * parseFloat(unitPriceCalc);
         var totalPriceFixed = parseFloat(totalPrice.toFixed(2));
-        var totalPriceFixedStr = totalPriceFixed.toString().replace(".", ",");
-        document.getElementsByClassName('form-control edTotalCostItems')[0].value = totalPriceFixedStr.toLocaleString(language);
+       // var totalPriceFixedStr = totalPriceFixed.toString().replace(".", ",");
+        document.getElementsByClassName('form-control edTotalCostItems')[0].value = accounting.toFixed(totalPriceFixed,2);
     }else{
         document.getElementsByClassName('form-control edTotalCostItems')[0].value = ""
     }

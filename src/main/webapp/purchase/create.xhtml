@@ -180,7 +180,8 @@
                                        value="#{supplierProcList.suppliers}"
                                        itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
                         <p:ajax async="false" event="change"
-                                update="address addressDescription supplierSuburb supplierState supplierPostCode supplierCountry contactEmailExp contactName"/>
+                                update="address addressDescription supplierSuburb supplierState supplierPostCode
+                                supplierCountry contactName btnViewContact btnAddContact"/>
                     </p:selectOneMenu>
                     <p:message for="supplierNameId" />
                 </div>
@@ -298,6 +299,7 @@
             <div class="section-text-area-po">
             </div>
         </div>
+        <ui:remove>
     <div class="row">
         <div class="section-lbl-input-po">
             &#160;
@@ -306,6 +308,7 @@
             #{msgs['lbl.email.address.comment']}
         </div>
     </div>
+        </ui:remove>
     <div class="row">
         <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
@@ -324,20 +327,14 @@
                         <f:selectItems var="_contact"
                                        value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.contacts}"
                                        itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
-                        <p:ajax async="false" event="change" update="contactEmailExp"/>
+                        <p:ajax async="false" update="btnViewContact" event="change"/>
                     </p:selectOneMenu>
                     <p:message for="contactName"/>
                 </div>
             </div>
         </div>
         <div class="section-text-area-po">
-            <!--<p:inputTextarea maxlength="950" type="text" id="cnDescription"
-                             style="max-height: 29px;"
-                             value="#{purchaseOrderCreate.newSupplier.emailAddress}"
-                             jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
-                             class="form-control"/>-->
-
-
+            <ui:remove>
             <div class="col-sm-5" style="padding-left: 0px;">
                 <p:inputTextarea style="max-height: 29px;"
                                  id="contactEmailExp"
@@ -348,7 +345,8 @@
                                  class="form-control"/>
                 <p:message for="contactEmailExp"/>
             </div>
-            <div class="col-sm-7 pull-right">
+            </ui:remove>
+            <div class="col-sm-7 pull-left">
                 <h:commandButton
                         id="btnAddContact"
                         value="#{msgs['po.supplier.lbl.btn.add.contact2']}"
@@ -362,7 +360,7 @@
                 <h:commandButton
                         id="btnViewContact"
                         value="#{msgs['po.supplier.lbl.btn.view.contact']}"
-                        disabled="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier==null}"
+                        disabled="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactEntity==null}"
                         onclick="PF('contactViewModal').show();"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update=":contactViewId"/>
@@ -582,7 +580,7 @@
         <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
             <ui:include src="../procurement/admin/supplier/components/contactEdit.xhtml">
                 <ui:param name="MODULE" value="EXPEDITING"/>
-                <ui:param name="RENDER" value=":empForm:contactName :empForm:contactEmailExp"/>
+                <ui:param name="RENDER" value=":empForm:contactName"/>
             </ui:include>
         </p:dialog>
         <p:dialog header="View Contact" resizable="false" widgetVar="contactViewModal" width="500">
@@ -601,7 +599,7 @@
                     <ui:param name="RENDER" value=":empForm:address :empForm:addressDescription
                                                    :empForm:supplierSuburb :empForm:supplierState
                                                    :empForm:supplierPostCode :empForm:supplierCountry
-                                                   :empForm:contactEmailExp :empForm:contactName :empForm:supplierNameId"/>
+                                                   :empForm:contactName :empForm:supplierNameId"/>
                 </ui:include>
             </h:form>
         </p:dialog>

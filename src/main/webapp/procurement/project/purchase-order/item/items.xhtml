@@ -19,7 +19,7 @@
                             <h:panelGroup id="edItemNo" rendered="#{_i.isEditable}">
                                 <p:inputText id="itemNo" value="#{_i.code}" maxlength="50" styleClass="form-control"
                                              onkeypress="return isNumberFormat(event);"
-                                             required="true" requiredMessage="Enter a Item No">
+                                             required="true" requiredMessage="Enter an Item No">
                                 </p:inputText>
                             </h:panelGroup>
                         </p:column>
@@ -148,10 +148,10 @@
                             </h:panelGroup>
                             <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
                                 <h:inputText id="totalCostItem" value="#{_i.totalCost}"
+                                             readonly="true"
                                              styleClass="form-control edTotalCostItems">
                                     <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                      locale="#{configuration.langLocalDecimal}"/>
-                                    <p:ajax event="change" async="false" process="@this"/>
                                 </h:inputText>
                             </h:panelGroup>
                         </p:column>
