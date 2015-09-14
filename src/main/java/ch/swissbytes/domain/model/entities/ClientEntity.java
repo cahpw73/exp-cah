@@ -27,6 +27,7 @@ public class ClientEntity implements Serializable {
     private LogoEntity defaultFooter;
     private StatusEnum status;
     private String invoiceTo;
+    private Boolean bigImage;
     private Date lastUpdate;
 
     @Id
@@ -149,6 +150,14 @@ public class ClientEntity implements Serializable {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public Boolean getBigImage() {
+        return bigImage;
+    }
+
+    public void setBigImage(Boolean bigImage) {
+        this.bigImage = bigImage;
     }
 
     @Override

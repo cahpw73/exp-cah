@@ -324,25 +324,25 @@ public class PoListBean implements Serializable {
             doFinalise();
         }
         //RequestContext.getCurrentInstance().update("projectListId");
-        printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus());
+        printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus(),false);
     }
 
 
     public void printPODraft() {
         log.info("printing po draft");
-        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.COMMITED.ordinal()&&
-                currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.FINAL.ordinal()) {
-            printPo(null);
-        }
+       /* if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.COMMITED.ordinal()&&
+                currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!=POStatusEnum.FINAL.ordinal()) {*/
+            printPo(null,true);
+        //}
 
     }
 
-    private void printPo(POStatusEnum poStatusEnum) {
+    private void printPo(POStatusEnum poStatusEnum,boolean draft) {
         List<ScopeSupplyEntity> scopeSupplyEntities = scopeSupplyService.scopeSupplyListByPOOId(currentPurchaseOrder.getId());
         TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPoEntity().getId());
         String preamble = textEntity != null ? textEntity.getPreamble() : "";
         List<ClausesEntity> clausesEntityList = getClausesEntitiesByPOid(textEntity);
-        reportProcBean.printPurchaseOrder(currentPurchaseOrder, scopeSupplyEntities, preamble, clausesEntityList);
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder, scopeSupplyEntities, preamble, clausesEntityList,draft);
     }
 
     private List<ClausesEntity> getClausesEntitiesByPOid(TextEntity textEntity) {

@@ -78,7 +78,7 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
-    public void printPurchaseOrder(final PurchaseOrderEntity po,List<ScopeSupplyEntity> list,String preamble,List<ClausesEntity> clausesList) {
+    public void printPurchaseOrder(final PurchaseOrderEntity po,List<ScopeSupplyEntity> list,String preamble,List<ClausesEntity> clausesList,boolean draft) {
         log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
         PurchaseOrderEntity purchaseOrder=service.findById(po.getId());
@@ -92,7 +92,7 @@ public class ReportProcBean implements Serializable {
             }
             String fileName = generateName(po);
             ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
-                                                messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager);
+                                                messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager,draft);
             reportView.printDocument(null);
         }
         openReport = true;
