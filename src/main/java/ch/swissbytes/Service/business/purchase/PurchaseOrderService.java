@@ -221,6 +221,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity savePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
+        purchaseOrderEntity.getPoEntity().setContactExpediting(purchaseOrderEntity.getPoEntity().getContactEntity());
         POEntity po = dao.savePOEntity(purchaseOrderEntity.getPoEntity());
         purchaseOrderEntity.setPoEntity(po);
         // purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
@@ -297,6 +298,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity updatePOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
+        purchaseOrderEntity.getPoEntity().setContactExpediting(purchaseOrderEntity.getPoEntity().getContactEntity());
         POEntity po = dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPoEntity(po);
@@ -336,6 +338,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
+        purchaseOrderEntity.getPoEntity().setContactExpediting(purchaseOrderEntity.getPoEntity().getContactEntity());
         dao.updatePOEntity(purchaseOrderEntity.getPoEntity());
         return purchaseOrderEntity;
     }
