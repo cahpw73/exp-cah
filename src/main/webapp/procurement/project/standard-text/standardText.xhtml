@@ -28,7 +28,7 @@
     <div class="row">
         <div style="width: 1500px!important;">
 
-            <div style="width: 415px!important; float: left!important; margin-left: 15px!important;">
+            <div style="width: 500px!important; float: left!important; margin-left: 15px!important;">
                 <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
                 <br/>
                 <p:dataTable id="globalTextDt" var="_gt"
@@ -45,7 +45,7 @@
                     </p:column>
                 </p:dataTable>
             </div>
-            <div style="width: 100px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
+            <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
                 <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
                                  action="#{projectBean.addToProjectText}"
                                  styleClass="btn btn-primary btn-sm"
@@ -61,7 +61,7 @@
                             process="@this,projectTextDt" async="false"/>
                 </h:commandButton>
             </div>
-            <div style="width: 650px!important; float: left!important;">
+            <div style="width: 790px!important; float: left!important;">
                 <h:outputText value="#{msgs['project.standard.text.lbl.project.text']}"/>
                 <br/>
                 <h:panelGroup id="itemsGroup">
