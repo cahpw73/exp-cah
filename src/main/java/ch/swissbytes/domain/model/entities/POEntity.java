@@ -42,6 +42,8 @@ public class POEntity implements Serializable{
     private Boolean exchangeRateVariation;
     private Boolean vendorDrawingData;
     private Boolean securityDeposit;
+    private ContactEntity contactEntity;
+    private ContactEntity contactExpediting;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -149,7 +151,7 @@ public class POEntity implements Serializable{
         this.clazz = clazz;
     }
 
-    private ContactEntity contactEntity;
+
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="contact_id")
@@ -241,5 +243,14 @@ public class POEntity implements Serializable{
 
     public void setSecurityDeposit(Boolean securityDeposit) {
         this.securityDeposit = securityDeposit;
+    }
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="contact_expediting_id")
+    public ContactEntity getContactExpediting() {
+        return contactExpediting;
+    }
+
+    public void setContactExpediting(ContactEntity contactEntity) {
+        this.contactExpediting = contactEntity;
     }
 }

@@ -108,7 +108,7 @@
 
                 <h:commandButton value="#{msgs['lbl.save']}"
                                  rendered="#{MODULE eq 'EXPEDITING'}"
-                                 action="#{purchaseOrderEdit.doSaveContact}"
+                                 action="#{bean.doSaveContact}"
                                  styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
                 </h:commandButton>

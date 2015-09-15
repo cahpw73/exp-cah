@@ -144,7 +144,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         Date now = new Date();
         addParameters("currenciesNumber", currencies.size());
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
-        addParameters("bigTitle",po.getProjectEntity().getClient().getBigImage()!=null?po.getProjectEntity().getClient().getBigImage():false);
+        addParameters("bigLogo",po.getProjectEntity().getClient().getBigImage()!=null?po.getProjectEntity().getClient().getBigImage():false);
+        addParameters("showClientName",po.getProjectEntity().getClient().getShowTitle()!=null?po.getProjectEntity().getClient().getShowTitle():false);
     }
 
     private void loadParamLogos() {

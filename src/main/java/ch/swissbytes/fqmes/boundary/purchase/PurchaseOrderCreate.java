@@ -15,9 +15,9 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
-import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -68,6 +68,9 @@ public class PurchaseOrderCreate implements Serializable {
 
     @Inject
     private SupplierProcList list;
+
+    @Inject
+    private ContactBean contactBean;
 
     private PurchaseOrderEntity newPurchaseOrder;
 
@@ -437,5 +440,12 @@ public class PurchaseOrderCreate implements Serializable {
     public void addingSupplier() {
         supplier.putModeCreation();
         supplier.start();
+    }
+    public void doSaveContact() {
+        ContactEntity contact = contactBean.doSave();
+        if (contact != null) {
+            newPurchaseOrder.getPoEntity().setContactExpediting(contact);
+            newPurchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
+        }
     }
 }

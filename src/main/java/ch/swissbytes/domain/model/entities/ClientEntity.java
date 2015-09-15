@@ -28,6 +28,7 @@ public class ClientEntity implements Serializable {
     private StatusEnum status;
     private String invoiceTo;
     private Boolean bigImage;
+    private Boolean showTitle;
     private Date lastUpdate;
 
     @Id
@@ -158,6 +159,14 @@ public class ClientEntity implements Serializable {
 
     public void setBigImage(Boolean bigImage) {
         this.bigImage = bigImage;
+    }
+
+    public Boolean getShowTitle() {
+        return showTitle;
+    }
+
+    public void setShowTitle(Boolean showTitle) {
+        this.showTitle = showTitle;
     }
 
     @Override

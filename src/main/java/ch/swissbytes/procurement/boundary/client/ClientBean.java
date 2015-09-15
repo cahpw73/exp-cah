@@ -36,6 +36,7 @@ public class ClientBean extends Bean implements Serializable {
     @Override
     public void initialize(){
         client=new ClientEntity();
+        client.setShowTitle(true);
     }
 
     public void load(){
@@ -136,7 +137,7 @@ public class ClientBean extends Bean implements Serializable {
         currentLogo=1;
         logoBean.restart();
     }
-    public void startClientFooter() {
+  /*  public void startClientFooter() {
         currentLogo = 2;
         logoBean.restart();
     }
@@ -148,7 +149,7 @@ public class ClientBean extends Bean implements Serializable {
     public void startDefaultFooter() {
         currentLogo = 4;
         logoBean.restart();
-    }
+    }*/
 
     public void startClientLogoLeft(){
         currentLogo=5;
