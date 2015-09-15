@@ -89,7 +89,9 @@
                                    value="#{msgs['supplier.contact.lbl.email']}"/>
 
                     <div class="col-sm-6">
-                        <h:inputText id="contactEmail" value="#{contactBean.contact.email}"
+                        <p:inputText id="contactEmail" value="#{contactBean.contact.email}"
+                                     required="true"
+                                     requiredMessage="Email is required"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
                         <p:message for="contactEmail"/>
@@ -105,13 +107,20 @@
                                  styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="editContact :editPoForm:contactDetail" process="editContact"/>
                 </h:commandButton>
-
+                <h:panelGroup rendered="#{MODULE eq 'EXPEDITING'}">
                 <h:commandButton value="#{msgs['lbl.save']}"
-                                 rendered="#{MODULE eq 'EXPEDITING'}"
-                                 action="#{bean.doSaveContact}"
+                                 rendered="#{OP eq 'CREATE'}"
+                                 action="#{purchaseOrderCreate.doSaveContact}"
                                  styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
                 </h:commandButton>
+                    <h:commandButton value="#{msgs['lbl.save']}"
+                                     rendered="#{OP eq 'EDIT'}"
+                                     action="#{purchaseOrderEdit.doSaveContact}"
+                                     styleClass="btn btn-primary btn-sm">
+                        <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
+                    </h:commandButton>
+                </h:panelGroup>
                 &#160;
                 </h:panelGroup>
                 <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">
