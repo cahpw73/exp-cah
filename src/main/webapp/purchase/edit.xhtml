@@ -572,6 +572,7 @@
             <ui:include src="../procurement/admin/supplier/components/contactEdit.xhtml">
                 <ui:param name="MODULE" value="EXPEDITING"/>
                 <ui:param name="RENDER" value=":empForm:contactId"/>
+                <ui:param name="OP" value="EDIT"/>
             </ui:include>
         </p:dialog>
         <p:dialog header="View Contact" resizable="false" widgetVar="contactViewModal" width="500">
@@ -579,7 +580,7 @@
                 <ui:param name="ID" value="contactViewId"/>
                 <ui:param name="MODAL" value="contactViewModal"/>
                 <ui:param name="contact" value="#{purchaseOrderEdit.poEdit.poEntity.contactExpediting}"/>
-                <ui:param name="bean" value="p#{purchaseOrderEdit}"/>
+
             </ui:include>
         </p:dialog>
         <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">

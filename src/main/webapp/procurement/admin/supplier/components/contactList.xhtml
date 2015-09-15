@@ -34,7 +34,7 @@
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.email']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.email}"/>
-            <h:inputText id="contactEmailId" rendered="#{_contact.isEditable}" value="#{_contact.email}" styleClass="form-control" maxlength="200"/>
+            <p:inputText id="contactEmailId" rendered="#{_contact.isEditable}" required="true" requiredMessage="email is required" value="#{_contact.email}" styleClass="form-control" maxlength="200"/>
             <p:message for="contactEmailId"/>
         </p:column>
         <p:column headerText="#{msgs['lbl.actions']}" rendered="#{supplierProcBean.beingEdited or supplierProcBean.beingCreated}">

@@ -581,7 +581,7 @@
             <ui:include src="../procurement/admin/supplier/components/contactEdit.xhtml">
                 <ui:param name="MODULE" value="EXPEDITING"/>
                 <ui:param name="RENDER" value=":empForm:contactName"/>
-                <ui:param name="bean" value="p#{purchaseOrderCreate}"/>
+                <ui:param name="OP" value="CREATE"/>
             </ui:include>
         </p:dialog>
         <p:dialog header="View Contact" resizable="false" widgetVar="contactViewModal" width="500">
