@@ -190,7 +190,7 @@
                             </h:selectOneMenu>
                             <p:message id="messageContact" for="conactSupId"/>
                             <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
-                                         value="#{poBean.purchaseOrder.poEntity.contactEntity}"
+                                         value="#{poBean.purchaseOrder.poEntity.contactEntity.fullName}"
                                          rendered="#{poBean.beingViewed}"/>
                         </div>
                     </div>
