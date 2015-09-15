@@ -133,4 +133,8 @@ public class BeanEditableList<T> extends Bean {
     public List<T> getList() {
         return list;
     }
+
+    public void reset(){
+        list=new ArrayList<>();
+    }
 }
