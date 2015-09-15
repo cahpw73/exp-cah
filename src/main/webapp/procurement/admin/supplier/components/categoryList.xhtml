@@ -10,6 +10,7 @@
                     converter="categoryConverter"
                     styleClass="algo"
                     itemLabel="#{_category.name}" itemValue="#{_category}">
+            <p:ajax event="transfer" process="@this" async="false"/>
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 50px;">
