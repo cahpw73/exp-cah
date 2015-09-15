@@ -4,6 +4,7 @@ package ch.swissbytes.procurement.boundary.supplierProc;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcDao;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -38,8 +39,17 @@ public class SupplierTbl extends LazyDataModel<SupplierProcEntity> {
     public List<SupplierProcEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         List<SupplierProcEntity> list = new ArrayList<>();
         list = dao.findByPage(first, pageSize, filter);
-        this.setRowCount(list.size());
-        this.total=Long.valueOf(list.size());
+
+        if (super.getRowCount() <= 0) {
+            Long total = dao.findTotal(null);
+            this.setRowCount(total.intValue());
+            this.total = total;
+        }
+        if(StringUtils.isNotEmpty(filter.getCriteria())&&StringUtils.isNotBlank(filter.getCriteria())){
+            Long total = dao.findTotal(filter);
+            this.setRowCount(total.intValue());
+            this.total=total;
+        }
         this.setPageSize(pageSize);
         return list;
     }
