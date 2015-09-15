@@ -185,7 +185,7 @@ public class SupplierProcEntity implements Serializable {
         this.fax = fax;
     }
 
-    @Size(max = 250)
+   /* @Size(max = 250)
     @Pattern(regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",message = "Enter a valid email account")
     @Column(name = "COMPANY_EMAIL", length = 250)
     public String getCompanyEmail() {
@@ -194,7 +194,7 @@ public class SupplierProcEntity implements Serializable {
 
     public void setCompanyEmail(String companyEmail) {
         this.companyEmail = companyEmail;
-    }
+    }*/
 
     @Transient
     public List<ContactEntity> getContacts() {
