@@ -40,7 +40,7 @@ public class ProjectEntity implements Serializable {
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "PROJECT_ID_SEQ", allocationSize = 1000)
+    @SequenceGenerator(name = "generator", sequenceName = "PROJECT_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }

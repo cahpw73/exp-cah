@@ -160,7 +160,6 @@ public class UserBean implements Serializable {
                 userRoleList.add(ure);
             }
             getUserExpediting().setRole(roleExpediting);
-
             userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
@@ -184,7 +183,9 @@ public class UserBean implements Serializable {
             getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
            // getUserProcurement().setRole(roleProcurement);
-            getUserExpediting().setRole(roleExpediting);
+            if(roleExpediting!=null) {
+                getUserExpediting().setRole(roleExpediting);
+            }
 
             if(userRoleList.size()>1) {
                 getUserProcurement().setRole(roleProcurement);

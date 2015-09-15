@@ -1746,3 +1746,7 @@ insert into deliverable_item (id,item,last_update,status)values(7,'Initial Mecha
 insert into deliverable_item (id,item,last_update,status)values(8,'Initial Structural Detail Drawings',CURRENT_DATE,0);
 insert into deliverable_item (id,item,last_update,status)values(9,'Instrument Data Sheets',CURRENT_DATE,0);
 insert into deliverable_item (id,item,last_update,status)values(10,'Lubrication Schedule',CURRENT_DATE,0);
+
+alter table user_role drop constraint pk_user_role;
+ALTER TABLE user_role ADD PRIMARY KEY (id);
+ALTER TABLE user_role ALTER COLUMN role_id DROP NOT NULL;

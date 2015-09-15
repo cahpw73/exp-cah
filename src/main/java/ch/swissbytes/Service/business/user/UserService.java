@@ -50,12 +50,16 @@ public class UserService implements Serializable {
             user.setLastUpdate(new Date());
             userDao.doSave(user);
             for(ModuleGrantedAccessEntity mga : moduleGrAcList){
-                mga.setUserEntity(user);
-                moduleGrantedAccessService.doSave(mga);
+
+                    mga.setUserEntity(user);
+                    moduleGrantedAccessService.doSave(mga);
+
             }
             for(UserRoleEntity ure : userRoleList){
-                ure.setUser(user);
-                userRoleService.doSave(ure);
+
+                    ure.setUser(user);
+                    userRoleService.doSave(ure);
+
             }
         }
     }
@@ -66,10 +70,14 @@ public class UserService implements Serializable {
             user.setLastUpdate(new Date());
             userDao.doUpdate(user);
             for(ModuleGrantedAccessEntity mga : moduleGrAcList){
-                moduleGrantedAccessService.doUpdate(mga);
+                if(mga!=null) {
+                    moduleGrantedAccessService.doUpdate(mga);
+                }
             }
             for(UserRoleEntity ure : userRoleList){
-                userRoleService.doUpdate(ure);
+                if(ure!=null) {
+                    userRoleService.doUpdate(ure);
+                }
             }
         }
     }
