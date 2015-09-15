@@ -13,11 +13,13 @@
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 50px;">
-        <h:commandButton
+        <p:commandLink
+                style="color: #ffffff"
+                action="#{categoryBrandBean.resetCategory}"
                 value="#{msgs['lbl.admin.add.category']}"
                 onclick="PF('categoryModal').show();"
-                styleClass="btn btn-primary btn-sm" action="#{categoryBrandBean.resetCategory}">
-            <p:ajax async="false" process="@this" update=":categoryModalFormId"/>
-        </h:commandButton>
+                styleClass="btn btn-primary btn-commandLink-primeFaces" ajax="true"
+                process="@this" update=":categoryModalFormId">
+        </p:commandLink>
     </div>
 </ui:composition>

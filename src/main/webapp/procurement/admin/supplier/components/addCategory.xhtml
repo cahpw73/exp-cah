@@ -13,7 +13,7 @@
             <br/>
             <h:commandButton value="#{msgs['lbl.add']}" action="#{categoryBrandBean.doSaveCategory}"
                              type="submit" styleClass="btn btn-primary btn-sm">
-                <p:ajax ajax="true" async="false" process="@form" update="#{FORM_1 != null ? FORM : ':supplierId'}"/>
+                <p:ajax ajax="true" async="false" process="@form" update=":supplierId"/>
             </h:commandButton>
             &#160;
             <button class="btn btn-primary btn-sm"

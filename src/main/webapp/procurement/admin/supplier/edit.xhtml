@@ -13,24 +13,22 @@
         <f:viewAction action="#{supplierProcBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editForm" prependId="false">
+        <h:form id="supplierId" prependId="false">
             <div class="col-md-8">
                 <ui:include src="components/templateSupplier.xhtml">
-                    <ui:param name="FORM" value="editForm"/>
+                    <ui:param name="FORM" value="supplierId"/>
                 </ui:include>
             </div>
         </h:form>
         <p:dialog header="New Category" widgetVar="categoryModal" width="250" height="120" resizable="false">
             <h:form id="categoryModalFormId" prependId="false" class="form-horizontal">
                 <ui:include src="components/addCategory.xhtml">
-                    <ui:param name="FORM_1" value="editForm"/>
                 </ui:include>
             </h:form>
         </p:dialog>
         <p:dialog header="New Brand" widgetVar="brandModal" width="250" height="120" resizable="false">
             <h:form id="brandModalFormId" prependId="false">
                 <ui:include src="components/addBrand.xhtml">
-                    <ui:param name="FORM_2" value="editForm"/>
                 </ui:include>
             </h:form>
         </p:dialog>

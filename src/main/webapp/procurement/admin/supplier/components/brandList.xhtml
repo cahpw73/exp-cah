@@ -12,11 +12,14 @@
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 50px;">
-        <h:commandButton
+        <p:commandLink
+                style="color: #ffffff"
+                action="#{categoryBrandBean.resetBrand}"
                 value="#{msgs['lbl.admin.add.brand']}"
                 onclick="PF('brandModal').show();"
-                styleClass="btn btn-primary btn-sm" action="#{categoryBrandBean.resetBrand}">
-            <p:ajax async="false" process="@this" update=":brandModalFormId"/>
-        </h:commandButton>
+                styleClass="btn btn-primary btn-commandLink-primeFaces"
+                ajax="true" async="false" process="@this" update=":brandModalFormId">
+        </p:commandLink>
+
     </div>
 </ui:composition>
