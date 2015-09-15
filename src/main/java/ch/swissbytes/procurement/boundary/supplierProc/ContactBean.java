@@ -68,12 +68,16 @@ public class ContactBean extends BeanEditableList<ContactEntity> {
 
     private boolean validate(){
         boolean validated=true;
-        if(StringUtils.isEmpty(contact.getFirstName())||StringUtils.isBlank(contact.getFirstName())){
+        if(StringUtils.isEmpty(contact.getFirstName())){
             Messages.addFlashError("firstName","Enter valid first name");
             validated=false;
         }
-        if(StringUtils.isEmpty(contact.getSurName())||StringUtils.isBlank(contact.getSurName())){
+        if(StringUtils.isEmpty(contact.getSurName())){
             Messages.addFlashError("name","Enter valid sur name");
+            validated=false;
+        }
+        if(StringUtils.isEmpty(contact.getEmail())){
+            Messages.addFlashError("name","Enter valid email");
             validated=false;
         }
         return validated;
