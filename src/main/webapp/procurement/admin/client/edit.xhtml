@@ -153,8 +153,18 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    for="title"
-                                   value="Show Client Name"/>
+                                   value="#{msgs['client.show.title']}"/>
 
+                    <div class="col-sm-5">
+                        <p:selectBooleanCheckbox value="#{clientBean.client.showTitle}"/>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br/>
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                   for="title"
+                                   value="#{msgs['client.show.big.image']}"/>
                     <div class="col-sm-5">
                         <p:selectBooleanCheckbox value="#{clientBean.client.bigImage}"/>
                     </div>

@@ -118,7 +118,8 @@
 	<parameter name="isOriginal" class="java.lang.Boolean"/>
 	<parameter name="currenciesNumber" class="java.lang.Integer"/>
 	<parameter name="poSummaryList" class="net.sf.jasperreports.engine.JRDataSource"/>
-	<parameter name="bigTitle" class="java.lang.Boolean"/>
+	<parameter name="bigLogo" class="java.lang.Boolean"/>
+	<parameter name="showClientName" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -261,11 +262,14 @@
 				<subreportParameter name="logo">
 					<subreportParameterExpression><![CDATA[$P{logo}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="bigTitle">
-					<subreportParameterExpression><![CDATA[$P{bigTitle}]]></subreportParameterExpression>
+				<subreportParameter name="bigLogo">
+					<subreportParameterExpression><![CDATA[$P{bigLogo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="clientName">
 					<subreportParameterExpression><![CDATA[$P{clientName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="showClientName">
+					<subreportParameterExpression><![CDATA[$P{showClientName}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="logoLeft">
 					<subreportParameterExpression><![CDATA[$P{logoLeft}]]></subreportParameterExpression>
