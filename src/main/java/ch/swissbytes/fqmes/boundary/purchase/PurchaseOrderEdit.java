@@ -8,7 +8,6 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
-import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
@@ -892,7 +891,7 @@ public class PurchaseOrderEdit implements Serializable {
     public void doSaveContact() {
         ContactEntity contact = contactBean.doSave();
         if (contact != null) {
-            poEdit.getPoEntity().setContactEntity(contact);
+            poEdit.getPoEntity().setContactExpediting(contact);
             poEdit.getPoEntity().getSupplier().getContacts().add(contact);
         }
     }
