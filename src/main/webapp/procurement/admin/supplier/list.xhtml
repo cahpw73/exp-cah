@@ -11,7 +11,7 @@
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
     </f:metadata>
     <ui:define name="body">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <br/>
             <div>
                 <h:form prependId="false">
@@ -38,7 +38,7 @@
                          rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
                          paginatorPosition="bottom">
                 <p:ajax event="page" process="@this" listener="#{tableBean.onPaginate}"/>
-                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}">
+                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150">
                     #{_supplier.supplierId}
                 </p:column>
                 <p:column headerText="#{msgs['supplier.lbl.company']}">
@@ -50,7 +50,7 @@
                 <p:column headerText="#{msgs['supplier.lbl.country']}">
                     #{_supplier.country}
                 </p:column>
-                <p:column headerText="#{msgs['lbl.actions']}">
+                <p:column headerText="#{msgs['lbl.actions']}" width="200">
                     <h:form prependId="false">
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit"
                                 style="color: #428BCA; ">

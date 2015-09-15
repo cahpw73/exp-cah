@@ -11,11 +11,11 @@
             <div class="row">
                 <div class="form-group">
                     <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.street']}"
-                                   for="streetId"/>
+                                   for="streetId" style="width: 152px;"/>
 
                     <div class="col-sm-8">
                         <p:inputTextarea id="streetId" type="text" class="form-control"
-                                         style="max-height:54px;max-width: 450px; margin-left: -24px;"
+                                         style="max-height:54px;max-width: 450px; margin-left: -14px;"
                                          maxlength="950"
                                          required="true"
                                          requiredMessage="Street is required"
@@ -23,7 +23,7 @@
                                          value="#{supplierProcBean.supplier.street}"
                                          tabindex="#{tabIndex}"/>
 
-                        <div style="max-height:54px;max-width: 450px; margin-left: -24px;">
+                        <div style="max-height:54px;max-width: 450px; margin-left: -14px;">
                             <p:message for="streetId"/>
                         </div>
 
@@ -36,18 +36,18 @@
             <div class="row">
                 <div class="form-group">
                     <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.suburb']}"
-                                   for="suburbId"/>
+                                   for="suburbId" style="width: 152px;"/>
 
                     <div class="col-sm-8">
                         <h:inputText id="suburbId" maxlength="50"
-                                     style="max-width: 181px; margin-left: -24px;"
+                                     style="max-width: 181px; margin-left: -14px;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.suburb}"
                                      requiredMessage="Suburb is required"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
                                      tabindex="#{tabIndex+1}" required="true"/>
 
-                        <div style="max-width: 181px; margin-left: -24px;">
+                        <div style="max-width: 181px; margin-left: -14px;">
                             <p:message for="suburbId"></p:message>
                         </div>
                     </div>
@@ -118,10 +118,11 @@
     </div>
     <div class="row">
         <div class="form-inline">
-            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.phone']}"/>
+            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.phone']}" style="width: 167px;"/>
             <h:inputText maxlength="50"
                          id="supplierPhone"
                          required="true"
+                         style="float: left;width: 182px;"
                          requiredMessage="Phone is required"
                          value="#{supplierProcBean.supplier.phone}"
                          readonly="#{supplierProcBean.beingViewed}"
@@ -136,7 +137,7 @@
                          value="#{supplierProcBean.supplier.fax}"
                          readonly="#{supplierProcBean.beingViewed}"
                          class="form-control col-sm-3 #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                         tabindex="#{tabIndex+6}"/>
+                         tabindex="#{tabIndex+6}" style="margin-left: -39px;"/>
         </div>
         <div class="clearfix"/>
     <div style="float: left;width: 356px; padding-left: 163px;">
@@ -168,16 +169,17 @@
 
     <div class="row">
         <div class="form-inline">
-            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.abn']}"/>
+            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.abn']}" for="supplierABN" style="width: 167px;"/>
             <h:inputText maxlength="50"
                          id="supplierABN"
                          value="#{supplierProcBean.supplier.abnRegNo}"
                          readonly="#{supplierProcBean.beingViewed}"
                          class="form-control col-sm-9 #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                         tabindex="#{tabIndex+8}"/>
+                         tabindex="#{tabIndex+8}"
+                         style="max-width: 182px;"/>
             <br/>
 
-            <div style="padding-left:160px;max-width: 250px;">
+            <div style="padding-left:160px;max-width: 230px;">
                 <p:message for="supplierABN"/>
             </div>
         </div>
@@ -186,9 +188,9 @@
 
     <div class="row">
         <div class="form-inline">
-            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.comments']}"/>
+            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.comments']}" style="width: 167px;"/>
             <p:inputTextarea type="text" class="form-control col-sm-9"
-                             style="max-height:54px;width: 454px;"
+                             style="max-height:54px;width: 454px; padding-left:167px;"
                              readonly="#{supplierProcBean.beingViewed}"
                              maxlength="950"
                              value="#{supplierProcBean.supplier.comments}"

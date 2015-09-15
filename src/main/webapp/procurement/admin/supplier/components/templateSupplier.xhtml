@@ -9,9 +9,9 @@
     </h:panelGroup>
     <div class="col-sm-7" style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
-            <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.supplier.id']} *"
+            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.supplier.id']} *"
                            style="padding-left: 0px;"/>
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <h:inputText id="supplierID1" maxlength="50"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.supplierId}"
@@ -64,10 +64,10 @@
 
     <div class="col-sm-7" style="padding-left: 0px!important;">
         <div class="form-group">
-            <h:outputLabel class="control-label col-sm-3" value="#{msgs['supplier.lbl.company']} *"
+            <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']} *"
                            style="padding-left: 0px;"/>
 
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <h:inputText maxlength="50" id="companyId"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.company}"
@@ -114,7 +114,7 @@
     <br/>
     <h:panelGroup id="bodySupplier">
         <h:panelGroup rendered="#{not (supplierProcBean.addingCategory or supplierProcBean.addingBrand)}">
-            <div class="#{MODE != null}?'col-sm-12':'col-sm-9'">
+            <div class="#{MODE != null}?'col-md-12':'col-md-9'">
                 <ul class="nav nav-tabs" role="tablist">
                     <li id="tabSupplier" class="active"><a href="#supplier" role="tab"
                                           data-toggle="tab">#{msgs['supplier.tab.supplier']}</a></li>
