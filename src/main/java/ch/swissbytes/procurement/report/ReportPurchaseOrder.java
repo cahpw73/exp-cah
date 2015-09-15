@@ -290,7 +290,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         List<Object> listAux = new ArrayList<>();
         listAux.addAll(list);
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
-        dto.setTitle("Variation No."+getDesriptionBetweenVariation());
+        dto.setTitle("Variation No." + getDesriptionBetweenVariation());
         int turn = 1;
         int indexQuantity = 1;
         int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO(2,po.getOrderedVariation()-1);
@@ -525,10 +525,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         Long poMaxId = -1L;
         String result = "";
         Query query = entityManager.createNativeQuery("select distinct po.orderedvariation, po.id\n" +
-                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
-                "left join project_currency pc on pc.id= sp.project_currency_id\n" +
-                "inner join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
+                "from purchase_order po  \n" +
+                "where po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + "\n" +
                 "order by po.orderedvariation");
         List<Object> list = query.getResultList();
         for (Object record : list) {
