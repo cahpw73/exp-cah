@@ -34,7 +34,7 @@
                                                            for="projectDelId"
                                                            value="#{msgs['report.deliverables.lbl.project']}"/>
 
-                                            <div class="col-md-7" style="margin-left: -20px!important;">
+                                            <div class="col-md-9" style="margin-left: -20px!important;">
                                                 <h:selectOneMenu id="projectDelId"
                                                                  value="#{reportProcurementBean.selectedProject}"
                                                                  styleClass="form-control" converter="projectConverter">
@@ -95,7 +95,7 @@
                                     <br/>
 
                                     <div class="form-group">
-                                        <div class="pull-right">
+                                        <div class="pull-right" style="margin-right: 23px;">
 
                                             <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
                                                            value="#{msgs['project.list.lbl.btn.print.po.final']}"
