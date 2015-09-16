@@ -110,7 +110,7 @@ public class ReportExpeditingBean implements Serializable {
     }
 
     public boolean hasStatusCommited(ProcurementStatus status){
-        return status!=null&& ProcurementStatus.COMMITED.ordinal() == status.ordinal();
+        return status!=null&& ProcurementStatus.COMMITTED.ordinal() == status.ordinal();
     }
 
     private void loadExpeditingDtoList(Long projectId, String poNo) {

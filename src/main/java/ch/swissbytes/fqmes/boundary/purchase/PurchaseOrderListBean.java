@@ -5,7 +5,6 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
-import ch.swissbytes.fqmes.util.Purchase;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
