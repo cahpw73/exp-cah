@@ -14,7 +14,9 @@
         <f:viewAction action="#{poBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editPoForm" class="form-horizontal">
+        <h:form id="editPoForm" class="form-horizontal" >
+            <p:remoteCommand name="onload" oncomplete="initializeSwitch();"
+                             autoRun="true"/>
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{poBean.beingCreated}">
                     <div class="procurement-panel-header">#{msgs['purchase.order.new.po.title']}</div>

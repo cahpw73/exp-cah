@@ -264,7 +264,12 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.liquidated.damages.applicable']}"/>
-                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.liquidatedDamagesApplicable}"/>
+                    <h:inputHidden id="checkboxLiquidatedDamages"
+                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.liquidatedDamagesApplicable}" />
+                    <input type="checkbox" name="my-checkbox"
+                           id="switchLiquidatedDamages"
+                           data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                    </input>
                 </div>
             </div>
         </div>
@@ -275,14 +280,28 @@
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.exchange.rate.variation']}"/>
 
-                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}"
+                                             style="display: none"
+                                             id="checkBoxExchangeVariation"
+                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}"/>
+                    <input type="checkbox" name="my-checkbox"
+                           id="switchExchangeVariation"
+                           data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                    </input>
                 </div>
             </div>
             <div style="width: 345px!important; float: left!important;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.vendor.drawings.data']}"/>
-                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}"
+                                             id="checkboxDrawingData"
+                                             style="display: none"
+                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}"/>
+                    <input type="checkbox" name="my-checkbox"
+                           id="switchDrawingData"
+                           data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                            </input>
                 </div>
             </div>
         </div>
@@ -295,8 +314,14 @@
                                        style="margin-left: 13px;"
                                        value="#{msgs['po.header.lbl.security.deposit']}"/>
                         <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}"
+                                                 id="checkBoxSecurityDeposit"
+                                                 style="display: none"
                                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">
                         </p:selectBooleanCheckbox>
+                            <input type="checkbox" name="my-checkbox"
+                                   id="switchSecurityDeposit"
+                                   data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                        </input>
                     </div>
                 </div>
             </div>
