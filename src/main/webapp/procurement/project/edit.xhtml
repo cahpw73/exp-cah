@@ -58,7 +58,7 @@
                 <div class="clearfix"></div>
                 <br/>
 
-                <div class="row">
+                <div class="row" style="margin-left: 0px">
                     <div class="col-md-4">
                         <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doSave}" styleClass="btn btn-primary btn-sm"
@@ -89,7 +89,7 @@
             </h:panelGroup>
         </p:dialog>
         <p:dialog header="New Currency" widgetVar="currencyModal"
-                  resizable="false" height="200" width="300">
+                  resizable="false" height="200" width="350">
             <h:panelGroup id="currencyModalId">
                 <div class="col-md-12">
                     <ui:include src="../admin/currency/component/edit.xhtml">

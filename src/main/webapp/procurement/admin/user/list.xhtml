@@ -14,7 +14,7 @@
         <h:form id="formUser" prependId="false">
             <p:remoteCommand name="updateExpeditingList"  update="procuremetListId"/>
             <p:remoteCommand name="updateProcurementList" update="expeditingListId"/>
-            <div class="col-md-9 panel-tab-users">
+            <div class="col-md-12 panel-tab-users">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="active"><a href="#procurement" role="tab"
@@ -74,7 +74,7 @@
                         <div class="clearfix"/>
                         <br/>
                         <div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText id="searchProcTermId" styleClass="form-control input-search"
@@ -84,7 +84,7 @@
                                     </h:inputText>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm" >
                                     <p:ajax process="@this,searchProcTermId," update="procuremetListId" listener="#{usersBean.doSearchProcurement}"/>
                                 </h:commandButton>
@@ -154,7 +154,7 @@
                         <div class="clearfix"/>
                         <br/>
                         <div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText id="searchTermId" styleClass="form-control input-search" value="#{usersBean.searchTerm}"
@@ -162,7 +162,7 @@
                                     </h:inputText>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm" >
                                     <p:ajax process="@this,searchTermId," update="procuremetListId,expeditingListId" listener="#{usersBean.doSearch}"/>
                                 </h:commandButton>
