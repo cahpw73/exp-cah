@@ -3,8 +3,10 @@ package ch.swissbytes.Service.business.category;
 
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.Service.business.brand.BrandDao;
+import ch.swissbytes.Service.business.supplierProc.SupplierCategoryDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.CategoryEntity;
+import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -22,6 +24,9 @@ public class CategoryService extends Service<CategoryEntity> implements Serializ
     @Inject
     private CategoryDao categoryDao;
 
+    @Inject
+    private SupplierCategoryDao supplierCategoryDao;
+
 
 
     @Transactional
@@ -34,6 +39,9 @@ public class CategoryService extends Service<CategoryEntity> implements Serializ
     public void doUpdate(CategoryEntity detachedEntity){
         log.info("doUpdate");
         categoryDao.doUpdate(detachedEntity);
+        if(detachedEntity.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+            supplierCategoryDao.doDeleteByCategoryId(detachedEntity.getId());
+        }
     }
 
     public List<CategoryEntity> getCategoryList(){

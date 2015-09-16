@@ -51,6 +51,21 @@ public class SupplierBrandDao extends GenericDao<SupplierBrand> implements Seria
         super.executeUpdate(sb.toString(),params);
     }
 
+    public void doDeleteByBrandId(Long id){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" UPDATE SupplierBrand SET ");
+        sb.append(" status=:DELETED , ");
+        sb.append(" lastUpdate=:LAST_UPDATE ");
+        sb.append(" WHERE status=:ENABLE ");
+        sb.append(" AND brand.id = :BRAND_ID ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("BRAND_ID", id);
+        params.put("LAST_UPDATE", new Date());
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("DELETED", StatusEnum.DELETED);
+        super.executeUpdate(sb.toString(),params);
+    }
+
     public void doUpdate(List<BrandEntity> brands,SupplierProcEntity supplier){
         List<BrandEntity> oldBrands=findBrandsBySupplier(supplier.getId());
         Date now=new Date();
