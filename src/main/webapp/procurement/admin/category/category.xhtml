@@ -18,7 +18,7 @@
                     <!-- Default panel contents -->
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText styleClass="form-control input-search" value="#{categoryBean.searchNameCategory}"
@@ -33,7 +33,7 @@
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <h:selectOneListbox id="categoryList" value="#{categoryBean.selectedCategory}" converter="categoryConverter"
                                                     styleClass="form-control" style="max-height: 150px; height: 150px;" size="2">
                                     <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
@@ -41,7 +41,7 @@
                                 </h:selectOneListbox>
                                 <p:message for="categoryList" id="msgCategoryList"/>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <h:outputLabel value="#{msgs['lbl.admin.category.new']}" styleClass="control-label"/>
                                 <br/>
                                 <h:inputText id="nameCategory" value="#{categoryBean.categoryName}"
