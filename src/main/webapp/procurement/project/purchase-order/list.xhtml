@@ -59,7 +59,7 @@
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.print.po']}"
                                                action="#{poListBean.loadCurrentPo(_p)}"
-                                               rendered="#{poListBean.isPossiblePrintPO(_p)and permissionBean.hasPermission(1406)}"
+                                               rendered="#{permissionBean.hasPermission(1406)}"
                                                oncomplete="PF('printPoDlg').show();"
                                                update=":printPoGroupId" async="false"
                                                style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
