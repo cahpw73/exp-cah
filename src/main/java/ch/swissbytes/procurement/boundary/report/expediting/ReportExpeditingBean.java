@@ -4,12 +4,10 @@ import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.types.POStatusEnum;
-import ch.swissbytes.procurement.boundary.report.deliverable.DeliverableDto;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.procurement.report.ReportProcBean;
 
 import javax.annotation.PostConstruct;
@@ -111,8 +109,8 @@ public class ReportExpeditingBean implements Serializable {
         }
     }
 
-    public boolean hasStatusCommited(POStatusEnum status){
-        return status!=null&&POStatusEnum.COMMITED.ordinal() == status.ordinal();
+    public boolean hasStatusCommited(ProcurementStatus status){
+        return status!=null&& ProcurementStatus.COMMITED.ordinal() == status.ordinal();
     }
 
     private void loadExpeditingDtoList(Long projectId, String poNo) {

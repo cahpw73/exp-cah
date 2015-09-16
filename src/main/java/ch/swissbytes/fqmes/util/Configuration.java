@@ -1,6 +1,6 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.StringUtils;
@@ -60,7 +60,7 @@ public class Configuration implements Serializable {
         return status!=null? bundle.getString("postatus."+status.name().toUpperCase()):"";
     }
 
-    public String getPOProcStatus(POStatusEnum status){
+    public String getPOProcStatus(ProcurementStatus status){
         return status!=null? bundle.getString("popstatus."+status.name().toUpperCase()):"";
     }
 

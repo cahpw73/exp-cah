@@ -1,13 +1,10 @@
 package ch.swissbytes.procurement.boundary.report.expediting;
 
-import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.types.POStatusEnum;
-import org.apache.commons.lang.StringUtils;
+import ch.swissbytes.domain.types.ProcurementStatus;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Christian-Alba on 14/06/15.
@@ -20,7 +17,7 @@ public class ExpeditingDto implements Serializable {
     private String item;
     private String description;
     private Boolean excludeFromExpediting;
-    private POStatusEnum poStatusEnum;
+    private ProcurementStatus procurementStatus;
 
     public ExpeditingDto() {
 
@@ -33,7 +30,7 @@ public class ExpeditingDto implements Serializable {
         this.item = s.getCode();
         this.description = s.getDescription();
         this.excludeFromExpediting = s.getExcludeFromExpediting();
-        this.poStatusEnum = p.getPoEntity().getPoProcStatus();
+        this.procurementStatus = p.getPoEntity().getPoProcStatus();
     }
 
     public String getPoNo() {
@@ -84,11 +81,11 @@ public class ExpeditingDto implements Serializable {
         this.itemId = itemId;
     }
 
-    public POStatusEnum getPoStatusEnum() {
-        return poStatusEnum;
+    public ProcurementStatus getProcurementStatus() {
+        return procurementStatus;
     }
 
-    public void setPoStatusEnum(POStatusEnum poStatusEnum) {
-        this.poStatusEnum = poStatusEnum;
+    public void setProcurementStatus(ProcurementStatus procurementStatus) {
+        this.procurementStatus = procurementStatus;
     }
 }

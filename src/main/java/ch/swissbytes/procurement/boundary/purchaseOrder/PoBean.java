@@ -4,7 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -163,7 +163,7 @@ public class PoBean extends Bean {
         log.info("trying to save purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.READY);
 
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
@@ -181,7 +181,7 @@ public class PoBean extends Bean {
         log.info("trying to save and close purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             return doLastOperationsOverPO(false);
         }
@@ -192,7 +192,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
             loaded = false;
@@ -206,7 +206,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             String link = doLastOperationsOverPO(false);
             return link;

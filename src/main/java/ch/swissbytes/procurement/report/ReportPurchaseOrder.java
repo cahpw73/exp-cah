@@ -3,7 +3,6 @@ package ch.swissbytes.procurement.report;
 
 import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
@@ -103,7 +102,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions", po.getPoEntity().getDeliveryInstruction());
         addParameters("procManager", po.getPoEntity().getProcManager());
         addParameters("procManagerDetail", po.getPoEntity().getProcManagerDetail());
-        //  if (po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()) {
+        //  if (po.getPoEntity().getPoProcStatus().ordinal() != ProcurementStatus.FINAL.ordinal()) {
         if (draft) {
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             log.info("InputStream watermark: " + watermark.toString());

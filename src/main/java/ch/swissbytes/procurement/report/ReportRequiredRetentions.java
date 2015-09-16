@@ -3,13 +3,10 @@ package ch.swissbytes.procurement.report;
 
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
-import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

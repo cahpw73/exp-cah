@@ -1,8 +1,7 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.business.project.ProjectService;
-import ch.swissbytes.domain.types.ModuleSystemEnum;
-import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
 import ch.swissbytes.Service.business.comment.CommentService;
@@ -135,7 +134,7 @@ public class PurchaseOrderCreate implements Serializable {
         newScopeSupply = new ScopeSupplyEntity();
         newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
         newPurchaseOrder.setPoEntity(new POEntity());
-        newPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
+        newPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.COMMITED);
         newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));
     }
 
