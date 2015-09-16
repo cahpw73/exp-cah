@@ -294,69 +294,76 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         listAux.addAll(list);
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("Variation No." + getDesriptionBetweenVariation());
-        int indexQuantity = 1;
-        int quantityCurrencies = getQuantityCurrenciesUsedSummaryPO(2, po.getOrderedVariation() - 1);
+        boolean total1HasChanges = false;
+        boolean total2HasChanges = false;
+        boolean total3HasChanges = false;
         for (Object record : list) {
             Object[] values = (Object[]) record;
-            if (indexQuantity <= quantityCurrencies) {
-                if(currenciesIdsPo[0] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[0]).longValue()) {
+            if (currenciesIdsPo[0] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[0]).longValue()) {
+                BigInteger currencyId = (BigInteger) values[0];
+                BigDecimal total1 = new BigDecimal(0);
+                for (Object recordT1 : list) {
+                    Object[] valuesT1 = (Object[]) recordT1;
+                    if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
+                        if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                            total1 = total1.add((BigDecimal) valuesT1[4]);
+                            total1HasChanges = true;
+                        }
+                    }
+                }
+                if(total1HasChanges){
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode1((String) values[2]);
                     } else {
                         dto.setCurrencyCode1((String) values[1]);
                     }
-                    BigInteger currencyId = (BigInteger) values[0];
-                    BigDecimal total1 = new BigDecimal(0);
-                    for (Object recordT1 : list) {
-                        Object[] valuesT1 = (Object[]) recordT1;
-                        if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
-                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                                total1 = total1.add((BigDecimal) valuesT1[4]);
-                            }
-                        }
-                    }
                     dto.setAmount1(total1);
                 }
-                if(currenciesIdsPo[1] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[1]).longValue()) {
+            }
+            if (currenciesIdsPo[1] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[1]).longValue()) {
+                BigInteger currencyId = (BigInteger) values[0];
+                BigDecimal total2 = new BigDecimal(0);
+                for (Object recordT1 : list) {
+                    Object[] valuesT1 = (Object[]) recordT1;
+                    if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
+                        if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                            total2 = total2.add((BigDecimal) valuesT1[4]);
+                            total2HasChanges = true;
+                        }
+                    }
+                }
+                if(total2HasChanges){
                     dto.setPlus1("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode2((String) values[2]);
                     } else {
                         dto.setCurrencyCode2((String) values[1]);
                     }
-                    BigInteger currencyId = (BigInteger) values[0];
-                    BigDecimal total1 = new BigDecimal(0);
-                    for (Object recordT1 : list) {
-                        Object[] valuesT1 = (Object[]) recordT1;
-                        if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
-                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                                total1 = total1.add((BigDecimal) valuesT1[4]);
-                            }
+                    dto.setAmount2(total2);
+                }
+            }
+            if (currenciesIdsPo[2] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[2]).longValue()) {
+                BigInteger currencyId = (BigInteger) values[0];
+                BigDecimal total3 = new BigDecimal(0);
+                for (Object recordT1 : list) {
+                    Object[] valuesT1 = (Object[]) recordT1;
+                    if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
+                        if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
+                            total3 = total3.add((BigDecimal) valuesT1[4]);
+                            total3HasChanges = true;
                         }
                     }
-                    dto.setAmount2(total1);
                 }
-                if(currenciesIdsPo[2] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[2]).longValue()) {
+                if(total3HasChanges){
                     dto.setPlus2("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode3((String) values[2]);
                     } else {
                         dto.setCurrencyCode3((String) values[1]);
                     }
-                    BigInteger currencyId = (BigInteger) values[0];
-                    BigDecimal total1 = new BigDecimal(0);
-                    for (Object recordT1 : list) {
-                        Object[] valuesT1 = (Object[]) recordT1;
-                        if ((int) valuesT1[3] > 1 && (int) valuesT1[3] < po.getOrderedVariation().intValue()) {
-                            if (currencyId.intValue() == ((BigInteger) valuesT1[0]).intValue()) {
-                                total1 = total1.add((BigDecimal) valuesT1[4]);
-                            }
-                        }
-                    }
-                    dto.setAmount3(total1);
+                    dto.setAmount3(total3);
                 }
             }
-            indexQuantity++;
         }
         dtos.add(dto);
     }
@@ -365,7 +372,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         List<Object> listAux = new ArrayList<>();
         listAux.addAll(list);
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
-        dto.setTitle("Revised Order Value");
+        dto.setTitleTotal("Revised Order Value");
 
         String code1 = "";
         BigDecimal amt1 = new BigDecimal(0);
@@ -382,12 +389,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 amt1 = amt1.add(d.getAmount1());
             }
             if (d.getAmount2() != null) {
-                dto.setPlus1("plus");
+                dto.setPlusTotal1("plus");
                 flagAmt2 = true;
                 amt2 = amt2.add(d.getAmount2());
             }
             if (d.getAmount3() != null) {
-                dto.setPlus2("plus");
+                dto.setPlusTotal2("plus");
                 flagAmt3 = true;
                 amt3 = amt3.add(d.getAmount3());
             }
@@ -401,12 +408,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 code3 = d.getCurrencyCode3();
             }
         }
-        dto.setCurrencyCode1(code1);
-        dto.setCurrencyCode2(code2);
-        dto.setCurrencyCode3(code3);
-        dto.setAmount1(flagAmt1 ? amt1 : null);
-        dto.setAmount2(flagAmt2 ? amt2 : null);
-        dto.setAmount3(flagAmt3 ? amt3 : null);
+        dto.setCurrencyCodeTotal1(code1);
+        dto.setCurrencyCodeTotal2(code2);
+        dto.setCurrencyCodeTotal3(code3);
+        dto.setAmountTotal1(flagAmt1 ? amt1 : null);
+        dto.setAmountTotal2(flagAmt2 ? amt2 : null);
+        dto.setAmountTotal3(flagAmt3 ? amt3 : null);
         dtos.add(dto);
     }
 
@@ -416,7 +423,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         for (Object record : list) {
             Object[] values = (Object[]) record;
             if ((int) values[3] == po.getOrderedVariation()) {
-                if(currenciesIdsPo[0] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[0]).longValue()) {
+                if (currenciesIdsPo[0] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[0]).longValue()) {
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode1((String) values[2]);
                     } else {
@@ -424,7 +431,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     }
                     dto.setAmount1((BigDecimal) values[4]);
                 }
-                if(currenciesIdsPo[1] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[1]).longValue()) {
+                if (currenciesIdsPo[1] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[1]).longValue()) {
                     dto.setPlus1("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode2((String) values[2]);
@@ -433,7 +440,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     }
                     dto.setAmount2((BigDecimal) values[4]);
                 }
-                if(currenciesIdsPo[2] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[2]).longValue()) {
+                if (currenciesIdsPo[2] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[2]).longValue()) {
                     dto.setPlus2("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode3((String) values[2]);
@@ -454,7 +461,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         for (Object record : list) {
             Object[] values = (Object[]) record;
             if ((int) values[3] == 1) {
-                if(currenciesIdsPo[0] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[0]).longValue()) {
+                if (currenciesIdsPo[0] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[0]).longValue()) {
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode1((String) values[2]);
                     } else {
@@ -463,7 +470,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     dto.setAmount1((BigDecimal) values[4]);
                     currenciesIdsPo[0] = (BigInteger) values[0];
                 }
-                if(currenciesIdsPo[1] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[1]).longValue()) {
+                if (currenciesIdsPo[1] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[1]).longValue()) {
                     dto.setPlus1("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode2((String) values[2]);
@@ -472,7 +479,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     }
                     dto.setAmount2((BigDecimal) values[4]);
                 }
-                if(currenciesIdsPo[2] != null && ((BigInteger)values[0]).longValue() == (currenciesIdsPo[2]).longValue()) {
+                if (currenciesIdsPo[2] != null && ((BigInteger) values[0]).longValue() == (currenciesIdsPo[2]).longValue()) {
                     dto.setPlus2("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode3((String) values[2]);
@@ -518,30 +525,30 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 "order by orderedvariation,cu.id");
         List<BigInteger> list = query.getResultList();
         List<BigInteger> orderedList = Collections.synchronizedList(new ArrayList<BigInteger>());
-        for(BigInteger l: list){
-            if(orderedList.isEmpty()){
+        for (BigInteger l : list) {
+            if (orderedList.isEmpty()) {
                 orderedList.add(l);
-            }else{
+            } else {
                 boolean hasCurrenciId = false;
-                for(BigInteger o : orderedList){
-                    if(o.longValue() == l.longValue()){
+                for (BigInteger o : orderedList) {
+                    if (o.longValue() == l.longValue()) {
                         hasCurrenciId = true;
                         break;
                     }
                 }
-                if(!hasCurrenciId){
+                if (!hasCurrenciId) {
                     orderedList.add(l);
                 }
             }
         }
         int index = 0;
-        currenciesIdsPo[0]=null;
-        currenciesIdsPo[1]=null;
-        currenciesIdsPo[2]=null;
+        currenciesIdsPo[0] = null;
+        currenciesIdsPo[1] = null;
+        currenciesIdsPo[2] = null;
         for (BigInteger record : orderedList) {
             if (index <= 2) {
                 currenciesIdsPo[index] = record;
-            }else{
+            } else {
                 break;
             }
             index++;

@@ -84,9 +84,10 @@ group by pc.currency_id,c.code,c.symbol]]>
 				<reportElement uuid="ace7ef41-4863-4552-9277-3791176ae74d" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="22"/>
 			</line>
 			<staticText>
-				<reportElement uuid="fbae7e05-47cf-4cca-9fbd-9420f8e42788" x="2" y="2" width="100" height="12"/>
-				<textElement>
+				<reportElement uuid="fbae7e05-47cf-4cca-9fbd-9420f8e42788" style="Arial-Bold" x="2" y="2" width="121" height="12"/>
+				<textElement markup="styled">
 					<font size="8" isBold="true"/>
+					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Purchase Order Summary]]></text>
 			</staticText>
@@ -105,6 +106,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" x="0" y="0" width="98" height="12"/>
 								<textElement verticalAlignment="Middle">
 									<font size="7"/>
+									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 							</textField>
