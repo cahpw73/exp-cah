@@ -4,7 +4,6 @@ import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
     private Date requiredDate;
     private StatusEnum statusEnum;
     private Date lastUpdate;
-    private POEntity poEntity;
+    private PurchaseOrderProcurementEntity purchaseOrderProcurementEntity;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -79,12 +78,12 @@ public class DeliverableEntity extends RecordEditable<DeliverableEntity> impleme
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "po_id")
-    public POEntity getPoEntity() {
-        return poEntity;
+    public PurchaseOrderProcurementEntity getPurchaseOrderProcurementEntity() {
+        return purchaseOrderProcurementEntity;
     }
 
-    public void setPoEntity(POEntity poEntity) {
-        this.poEntity = poEntity;
+    public void setPurchaseOrderProcurementEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        this.purchaseOrderProcurementEntity = purchaseOrderProcurementEntity;
     }
 
     @Override

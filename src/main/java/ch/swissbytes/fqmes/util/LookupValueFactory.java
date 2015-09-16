@@ -63,9 +63,9 @@ public class LookupValueFactory implements Serializable {
     @Produces
     @SessionScoped
     @Named("poStatuses")
-    public Map<String,PurchaseOrderStatusEnum> purchaseOrderStatuses(){
-        Map<String,PurchaseOrderStatusEnum> map=new TreeMap<>();
-        for(PurchaseOrderStatusEnum poEnum:PurchaseOrderStatusEnum.values()){
+    public Map<String,ExpeditingStatusEnum> purchaseOrderStatuses(){
+        Map<String,ExpeditingStatusEnum> map=new TreeMap<>();
+        for(ExpeditingStatusEnum poEnum: ExpeditingStatusEnum.values()){
             map.put(bundle.getString("postatus." + poEnum.name()), poEnum);
         }
         return map;
@@ -74,9 +74,9 @@ public class LookupValueFactory implements Serializable {
     @Produces
     @SessionScoped
     @Named("procPoStatuses")
-    public Map<String,POStatusEnum> poStatuses(){
-        Map<String,POStatusEnum> map=new TreeMap<>();
-        for(POStatusEnum poEnum:POStatusEnum.values()){
+    public Map<String,ProcurementStatus> poStatuses(){
+        Map<String,ProcurementStatus> map=new TreeMap<>();
+        for(ProcurementStatus poEnum: ProcurementStatus.values()){
             map.put(bundle.getString("popstatus." + poEnum.name()), poEnum);
         }
         return map;
@@ -95,8 +95,8 @@ public class LookupValueFactory implements Serializable {
 
     public Map<Integer,String> getStatusPOProcurement(){
         Map<Integer,String> result = new HashMap<>();
-        for(POStatusEnum poStatusEnum : POStatusEnum.values()){
-            result.put(poStatusEnum.ordinal(),bundle.getString("popstatus." + poStatusEnum.name().toUpperCase()));
+        for(ProcurementStatus procurementStatus : ProcurementStatus.values()){
+            result.put(procurementStatus.ordinal(),bundle.getString("popstatus." + procurementStatus.name().toUpperCase()));
         }
         return result;
     }

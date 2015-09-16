@@ -35,13 +35,13 @@
                                 #{_p.poTitle}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.description']}" width="130">
-                                <h:outputText value="#{_p.poEntity.deliveryInstruction}"/>
+                                <h:outputText value="#{_p.purchaseOrderProcurementEntity.deliveryInstruction}"/>
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110">
-                                #{_p.poEntity.supplier.company}
+                                #{_p.purchaseOrderProcurementEntity.supplier.company}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="50">
-                                #{configuration.getPOProcStatus(_p.poEntity.poProcStatus)}
+                                #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="100">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"

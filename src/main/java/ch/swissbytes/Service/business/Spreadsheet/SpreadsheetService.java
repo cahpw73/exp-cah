@@ -68,7 +68,7 @@ public class SpreadsheetService implements Serializable {
                         processor.writeStringValue(i, entity.getPoTitle());
                         break;
                     case 6:
-                        List<CashflowEntity> cashflowList = cashflowService.findByPoId(entity.getPoEntity().getId());
+                        List<CashflowEntity> cashflowList = cashflowService.findByPoId(entity.getPurchaseOrderProcurementEntity().getId());
                         if (!cashflowList.isEmpty()) {
                             CashflowEntity cashflowEntity = cashflowList.get(0);
                             if(cashflowEntity.getPaymentTerms() != null) {

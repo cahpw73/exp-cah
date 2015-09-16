@@ -5,7 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 import ch.swissbytes.domain.types.ClassEnum;
-import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
 
 import javax.inject.Named;
 import javax.persistence.*;
@@ -18,7 +18,7 @@ import java.util.List;
 @Named
 @Entity
 @Table(name = "p_order")
-public class POEntity implements Serializable{
+public class PurchaseOrderProcurementEntity implements Serializable{
 
     private Long id;
     private Date orderDate;
@@ -30,7 +30,7 @@ public class POEntity implements Serializable{
     private String procManager;
     private String procManagerDetail;
     private ClassEnum clazz;
-    private POStatusEnum poProcStatus;
+    private ProcurementStatus poProcStatus;
     private List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
     private List<ItemEntity> itemList = new ArrayList<>();
     private List<RequisitionEntity> requisitions = new ArrayList<>();
@@ -134,11 +134,11 @@ public class POEntity implements Serializable{
         this.procManagerDetail = procManagerDetail;
     }
     @Column(name = "po_status")
-    public POStatusEnum getPoProcStatus() {
+    public ProcurementStatus getPoProcStatus() {
         return poProcStatus;
     }
 
-    public void setPoProcStatus(POStatusEnum poProcStatus) {
+    public void setPoProcStatus(ProcurementStatus poProcStatus) {
         this.poProcStatus = poProcStatus;
     }
 

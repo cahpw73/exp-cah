@@ -3,10 +3,9 @@ package ch.swissbytes.Service.business.cashflow;
 
 import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
-import ch.swissbytes.fqmes.util.Util;
 
 import javax.inject.Inject;
 import java.io.Serializable;
@@ -30,7 +29,7 @@ public class CashflowService implements Serializable {
 
 
 
-    public void doSave(CashflowEntity entity,POEntity po){
+    public void doSave(CashflowEntity entity, PurchaseOrderProcurementEntity po){
         log.info("do save cashflow");
         if(entity != null) {
             CashflowEntity cashflow = new CashflowEntity();
@@ -42,7 +41,7 @@ public class CashflowService implements Serializable {
         }
     }
 
-    public void doUpdate(CashflowEntity entity,POEntity po){
+    public void doUpdate(CashflowEntity entity, PurchaseOrderProcurementEntity po){
         entity.setLastUpdate(new Date());
         if(entity.getId()!=null){
             dao.doUpdate(entity);

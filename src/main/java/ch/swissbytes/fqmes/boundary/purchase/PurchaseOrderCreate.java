@@ -1,8 +1,7 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.business.project.ProjectService;
-import ch.swissbytes.domain.types.ModuleSystemEnum;
-import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
 import ch.swissbytes.Service.business.comment.CommentService;
@@ -10,7 +9,7 @@ import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -133,9 +132,9 @@ public class PurchaseOrderCreate implements Serializable {
         newComment = new CommentEntity();
         scopeSupplies = new ArrayList<>();
         newScopeSupply = new ScopeSupplyEntity();
-        newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
-        newPurchaseOrder.setPoEntity(new POEntity());
-        newPurchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.COMMITED);
+        newPurchaseOrder.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+        newPurchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
+        newPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITED);
         newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));
     }
 
@@ -428,8 +427,8 @@ public class PurchaseOrderCreate implements Serializable {
         log.info("saveSupplier");
         SupplierProcEntity supplierProcEntity = supplier.save();
         if (supplierProcEntity != null) {
-            newPurchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
-            newPurchaseOrder.getPoEntity().setContactEntity(null);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().setSupplier(supplierProcEntity);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(null);
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");
@@ -444,8 +443,8 @@ public class PurchaseOrderCreate implements Serializable {
     public void doSaveContact() {
         ContactEntity contact = contactBean.doSave();
         if (contact != null) {
-            newPurchaseOrder.getPoEntity().setContactExpediting(contact);
-            newPurchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().setContactExpediting(contact);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getContacts().add(contact);
         }
     }
 }

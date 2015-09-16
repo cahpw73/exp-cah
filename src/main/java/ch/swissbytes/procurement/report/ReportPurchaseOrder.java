@@ -3,7 +3,6 @@ package ch.swissbytes.procurement.report;
 
 import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.POStatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
@@ -95,15 +94,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         Processor processor = new Processor(true);
         processor.useArial();
         addParameters("poNo", po.getPo());
-        addParameters("poId", po.getPoEntity().getId());
-        addParameters("orderDate", po.getPoEntity().getOrderDate());
+        addParameters("poId", po.getPurchaseOrderProcurementEntity().getId());
+        addParameters("orderDate", po.getPurchaseOrderProcurementEntity().getOrderDate());
         addParameters("deliveryDate", po.getPoDeliveryDate());
         addParameters("deliveryDateStr", po.getPoDeliveryDate() != null ? new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())).toUpperCase() : "");
-        addParameters("deliveryPoint", po.getPoEntity().getPoint() != null ? po.getPoEntity().getPoint().toUpperCase() : null);
-        addParameters("deliveryInstructions", po.getPoEntity().getDeliveryInstruction());
-        addParameters("procManager", po.getPoEntity().getProcManager());
-        addParameters("procManagerDetail", po.getPoEntity().getProcManagerDetail());
-        //  if (po.getPoEntity().getPoProcStatus().ordinal() != POStatusEnum.FINAL.ordinal()) {
+        addParameters("deliveryPoint", po.getPurchaseOrderProcurementEntity().getPoint() != null ? po.getPurchaseOrderProcurementEntity().getPoint().toUpperCase() : null);
+        addParameters("deliveryInstructions", po.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
+        addParameters("procManager", po.getPurchaseOrderProcurementEntity().getProcManager());
+        addParameters("procManagerDetail", po.getPurchaseOrderProcurementEntity().getProcManagerDetail());
+        //  if (po.getPoEntity().getPoProcStatus().ordinal() != ProcurementStatus.FINAL.ordinal()) {
         if (draft) {
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             log.info("InputStream watermark: " + watermark.toString());
@@ -120,17 +119,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("projectName", po.getProjectEntity().getTitle());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
 
-        addParameters("liquidatedDamagesApplicable", po.getPoEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(po.getPoEntity().getLiquidatedDamagesApplicable()).toUpperCase() : null);
-        addParameters("vendorDrawingData", po.getPoEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(po.getPoEntity().getVendorDrawingData()).toUpperCase() : null);
-        addParameters("exchangeRateVariation", po.getPoEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(po.getPoEntity().getExchangeRateVariation()).toUpperCase() : null);
-        addParameters("rtfNo", po.getPoEntity().getRTFNo());
+        addParameters("liquidatedDamagesApplicable", po.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : null);
+        addParameters("vendorDrawingData", po.getPurchaseOrderProcurementEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getVendorDrawingData()).toUpperCase() : null);
+        addParameters("exchangeRateVariation", po.getPurchaseOrderProcurementEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getExchangeRateVariation()).toUpperCase() : null);
+        addParameters("rtfNo", po.getPurchaseOrderProcurementEntity().getRTFNo());
         addParameters("mrNo", collectMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
-        addParameters("contactName", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getFullName() : null);
-        addParameters("contactEmail", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getEmail() : null);
-        addParameters("contactPhone", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getPhone() : null);
-        addParameters("contactFax", po.getPoEntity().getContactEntity() != null ? po.getPoEntity().getContactEntity().getFax() : null);
+        addParameters("contactName", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getFullName() : null);
+        addParameters("contactEmail", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getEmail() : null);
+        addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone() : null);
+        addParameters("contactFax", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getFax() : null);
 
         int i = 1;
         Map<Long, String> currencies = getCurrenciesForPayment();
@@ -162,17 +161,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private void loadParamSupplier() {
-        if (po.getPoEntity().getSupplier() != null) {
-            addParameters("company", po.getPoEntity().getSupplier().getCompany());
-            addParameters("street", po.getPoEntity().getSupplier().getStreet());
-            addParameters("state", po.getPoEntity().getSupplier().getState());
-            addParameters("suburb", po.getPoEntity().getSupplier().getSuburb());
-            addParameters("abnReg", po.getPoEntity().getSupplier().getAbnRegNo());
-            addParameters("postcode", po.getPoEntity().getSupplier().getPostCode());
-            addParameters("country", po.getPoEntity().getSupplier().getCountry());
-            addParameters("phone", po.getPoEntity().getSupplier().getPhone());
-            addParameters("fax", po.getPoEntity().getSupplier().getFax());
-            addParameters("supplierId", po.getPoEntity().getSupplier().getId());
+        if (po.getPurchaseOrderProcurementEntity().getSupplier() != null) {
+            addParameters("company", po.getPurchaseOrderProcurementEntity().getSupplier().getCompany());
+            addParameters("street", po.getPurchaseOrderProcurementEntity().getSupplier().getStreet());
+            addParameters("state", po.getPurchaseOrderProcurementEntity().getSupplier().getState());
+            addParameters("suburb", po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb());
+            addParameters("abnReg", po.getPurchaseOrderProcurementEntity().getSupplier().getAbnRegNo());
+            addParameters("postcode", po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode());
+            addParameters("country", po.getPurchaseOrderProcurementEntity().getSupplier().getCountry());
+            addParameters("phone", po.getPurchaseOrderProcurementEntity().getSupplier().getPhone());
+            addParameters("fax", po.getPurchaseOrderProcurementEntity().getSupplier().getFax());
+            addParameters("supplierId", po.getPurchaseOrderProcurementEntity().getSupplier().getId());
         }
     }
 
@@ -194,7 +193,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private String collectMRNo() {
         StringBuilder sb = new StringBuilder();
-        for (RequisitionEntity requisitionEntity : po.getPoEntity().getRequisitions()) {
+        for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
             sb.append(requisitionEntity.getRequisitionNumber());
             sb.append(",");
         }

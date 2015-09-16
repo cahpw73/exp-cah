@@ -6,7 +6,6 @@ import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.xml.soap.Text;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +24,7 @@ public class TextService implements Serializable {
     @Inject
     private TextClausesDao textClausesDao;
 
-    public void doSave(TextEntity entity, POEntity po){
+    public void doSave(TextEntity entity, PurchaseOrderProcurementEntity po){
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
         entity.setPo(po);
@@ -38,7 +37,7 @@ public class TextService implements Serializable {
         }
     }
 
-    public void doUpdate(TextEntity entity, POEntity po) {
+    public void doUpdate(TextEntity entity, PurchaseOrderProcurementEntity po) {
         if(entity.getId()!=null){
             entity.setLastUpdate(new Date());
             dao.doUpdate(entity);

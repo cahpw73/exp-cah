@@ -22,7 +22,7 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
     private Date requisitionDate;
     private StatusEnum statusEnum;
     private Date lastUpdate;
-    private POEntity poEntity;
+    private PurchaseOrderProcurementEntity purchaseOrderProcurementEntity;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -87,12 +87,12 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="po_id")
-    public POEntity getPoEntity() {
-        return poEntity;
+    public PurchaseOrderProcurementEntity getPurchaseOrderProcurementEntity() {
+        return purchaseOrderProcurementEntity;
     }
 
-    public void setPoEntity(POEntity poEntity) {
-        this.poEntity = poEntity;
+    public void setPurchaseOrderProcurementEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        this.purchaseOrderProcurementEntity = purchaseOrderProcurementEntity;
     }
 
     @Override

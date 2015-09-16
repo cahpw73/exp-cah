@@ -1,7 +1,7 @@
 package ch.swissbytes.fqmes.util;
 
-import ch.swissbytes.domain.types.POStatusEnum;
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTimeZone;
@@ -56,11 +56,11 @@ public class Configuration implements Serializable {
         return time!=null? bundle.getString("measurement.time."+time.name().toLowerCase()):"";
     }
 
-    public String getPOStatus(PurchaseOrderStatusEnum status){
+    public String getPOStatus(ExpeditingStatusEnum status){
         return status!=null? bundle.getString("postatus."+status.name().toUpperCase()):"";
     }
 
-    public String getPOProcStatus(POStatusEnum status){
+    public String getPOProcStatus(ProcurementStatus status){
         return status!=null? bundle.getString("popstatus."+status.name().toUpperCase()):"";
     }
 

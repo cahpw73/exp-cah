@@ -4,7 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.POStatusEnum;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -98,24 +98,24 @@ public class PoBean extends Bean {
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
         purchaseOrder.setProject(projectEntity.getProjectNumber());
-        purchaseOrder.setPoEntity(new POEntity());
-        purchaseOrder.getPoEntity().setOrderDate(new Date());
-        purchaseOrder.getPoEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
+        purchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
+        purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(new Date());
+        purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         putModeCreation();
     }
 
     private void loadPurchaseOrder() {
         purchaseOrder = service.findById(Long.valueOf(poId));
         itemBean.loadItemList(purchaseOrder.getId());
-        cashflowBean.loadCashflow(purchaseOrder.getPoEntity().getId());
-        poTextBean.loadText(purchaseOrder.getPoEntity(), purchaseOrder.getProjectEntity().getId());
+        cashflowBean.loadCashflow(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        poTextBean.loadText(purchaseOrder.getPurchaseOrderProcurementEntity(), purchaseOrder.getProjectEntity().getId());
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
         }
         requisitionBean.getList().clear();
         deliverableBean.getList().clear();
-        requisitionBean.getList().addAll(purchaseOrder.getPoEntity().getRequisitions());
-        deliverableBean.getList().addAll(purchaseOrder.getPoEntity().getDeliverables());
+        requisitionBean.getList().addAll(purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions());
+        deliverableBean.getList().addAll(purchaseOrder.getPurchaseOrderProcurementEntity().getDeliverables());
         if (modeView == null) {
             log.info("mode edition");
             putModeEdition();
@@ -163,7 +163,7 @@ public class PoBean extends Bean {
         log.info("trying to save purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
 
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
@@ -181,7 +181,7 @@ public class PoBean extends Bean {
         log.info("trying to save and close purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             return doLastOperationsOverPO(false);
         }
@@ -192,7 +192,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
             loaded = false;
@@ -206,7 +206,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPoEntity().setPoProcStatus(POStatusEnum.READY);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             String link = doLastOperationsOverPO(false);
             return link;
@@ -300,13 +300,13 @@ public class PoBean extends Bean {
     }
 
     private void collectData() {
-        purchaseOrder.getPoEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
-        purchaseOrder.getPoEntity().getRequisitions().addAll(requisitionBean.getList());
-        purchaseOrder.getPoEntity().getDeliverables().addAll(deliverableBean.getList());
-        purchaseOrder.getPoEntity().setCashflow(cashflowBean.getCashflow());
-        purchaseOrder.getPoEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
-        purchaseOrder.getPoEntity().setTextEntity(poTextBean.getTextEntity());
-        purchaseOrder.getPoEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionBean.getList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getDeliverables().addAll(deliverableBean.getList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().setCashflow(cashflowBean.getCashflow());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().setTextEntity(poTextBean.getTextEntity());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
     }
 
     public String getProjectId() {
@@ -342,15 +342,15 @@ public class PoBean extends Bean {
     }
 
     public void updateRequiredDate(DeliverableEntity deliverable) {
-        if (purchaseOrder.getPoEntity().getOrderDate() != null) {
-            deliverable.setRequiredDate(DateUtils.addDays(purchaseOrder.getPoEntity().getOrderDate(), deliverable.getNoDays()));
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getOrderDate() != null) {
+            deliverable.setRequiredDate(DateUtils.addDays(purchaseOrder.getPurchaseOrderProcurementEntity().getOrderDate(), deliverable.getNoDays()));
         }
 
     }
 
     public void updateNoDays(DeliverableEntity deliverable) {
-        if (purchaseOrder.getPoEntity().getOrderDate() != null && deliverable.getRequiredDate() != null) {
-            long diff = deliverable.getRequiredDate().getTime() - purchaseOrder.getPoEntity().getOrderDate().getTime();
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getOrderDate() != null && deliverable.getRequiredDate() != null) {
+            long diff = deliverable.getRequiredDate().getTime() - purchaseOrder.getPurchaseOrderProcurementEntity().getOrderDate().getTime();
             deliverable.setNoDays(Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toDays(diff))));
         }
     }
@@ -368,8 +368,8 @@ public class PoBean extends Bean {
     public void doSaveContact() {
         ContactEntity contact = contactBean.doSave();
         if (contact != null) {
-            purchaseOrder.getPoEntity().setContactEntity(contact);
-            purchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(contact);
+            purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getContacts().add(contact);
         }
     }
 
@@ -388,8 +388,8 @@ public class PoBean extends Bean {
     public void saveSupplier() {
         SupplierProcEntity supplierProcEntity = supplier.save();
         if (supplierProcEntity != null) {
-            purchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
-            purchaseOrder.getPoEntity().setContactEntity(null);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setSupplier(supplierProcEntity);
+            purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(null);
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");
@@ -397,7 +397,7 @@ public class PoBean extends Bean {
     }
 
     public BigDecimal calculateProjectValue() {
-        return service.calculateProjectValue(itemBean.getScopeSupplyList(), purchaseOrder.getPoEntity().getCurrency());
+        return service.calculateProjectValue(itemBean.getScopeSupplyList(), purchaseOrder.getPurchaseOrderProcurementEntity().getCurrency());
     }
 
     public String calculateTotalValues() {
@@ -457,7 +457,7 @@ public class PoBean extends Bean {
 
     public void resetContact(){
         log.info("reset contact");
-        purchaseOrder.getPoEntity().setContactEntity(new ContactEntity());
+        purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(new ContactEntity());
     }
 
 }

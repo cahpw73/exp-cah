@@ -33,7 +33,7 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
     private PaymentTermsEnum paymentTerms;
     private ProjectCurrencyEntity projectCurrency;
     private Date lastUpdate;
-    private POEntity po;
+    private PurchaseOrderProcurementEntity po;
     private List<CashflowDetailEntity> cashflowDetailList = new ArrayList<>();
     //Fields for Security Deposit
     private Boolean applyRetentionSecurityDeposit;
@@ -143,11 +143,11 @@ public class CashflowEntity extends RecordEditable<CashflowEntity> implements Se
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="po_id")
-    public POEntity getPo() {
+    public PurchaseOrderProcurementEntity getPo() {
         return po;
     }
 
-    public void setPo(POEntity po) {
+    public void setPo(PurchaseOrderProcurementEntity po) {
         this.po = po;
     }
 

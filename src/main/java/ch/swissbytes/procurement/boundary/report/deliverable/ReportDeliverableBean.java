@@ -7,7 +7,6 @@ import ch.swissbytes.domain.model.entities.DeliverableEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.report.ReportProcBean;
-import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -103,11 +101,11 @@ public class ReportDeliverableBean implements Serializable {
         purchaseOrderList.clear();
         purchaseOrderList = purchaseOrderService.purchaseListByProjectIdAnPoNo(projectId, poNo);
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            p.getPoEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(p.getPoEntity().getId()));
+            p.getPurchaseOrderProcurementEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(p.getPurchaseOrderProcurementEntity().getId()));
         }
         deliverableDtoList.clear();
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            for (DeliverableEntity d : p.getPoEntity().getDeliverables()) {
+            for (DeliverableEntity d : p.getPurchaseOrderProcurementEntity().getDeliverables()) {
                 DeliverableDto dto = new DeliverableDto(p, d);
                 deliverableDtoList.add(dto);
             }

@@ -1,6 +1,6 @@
 package ch.swissbytes.domain.model.entities;
 
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import org.apache.commons.lang.math.NumberUtils;
 
 import javax.inject.Named;
@@ -38,7 +38,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private Date requiredDate;
 
-    private PurchaseOrderStatusEnum purchaseOrderStatus;
+    private ExpeditingStatusEnum purchaseOrderStatus;
 
     @Id
     public Long getId() {
@@ -142,11 +142,11 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name="PURCHASE_ORDER_STATUS")
-    public PurchaseOrderStatusEnum getPurchaseOrderStatus() {
+    public ExpeditingStatusEnum getPurchaseOrderStatus() {
         return purchaseOrderStatus;
     }
 
-    public void setPurchaseOrderStatus(PurchaseOrderStatusEnum purchaseOrderStatus) {
+    public void setPurchaseOrderStatus(ExpeditingStatusEnum purchaseOrderStatus) {
         this.purchaseOrderStatus = purchaseOrderStatus;
     }
 
