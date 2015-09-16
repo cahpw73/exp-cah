@@ -2,7 +2,7 @@ package ch.swissbytes.Service.business.purchase;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
 
-import ch.swissbytes.domain.model.entities.POEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -81,10 +81,10 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     public List<PurchaseOrderEntity> findPOMaxVariations(Long projectId){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po.po,MAX(po.orderedVariation) ");
-        sb.append(" FROM PurchaseOrderEntity po, POEntity p ");
+        sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
         sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
-        sb.append(" AND po.poEntity.id = p.id ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");
         sb.append(" GROUP BY po.po ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
@@ -113,26 +113,26 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-    public POEntity savePOEntity(POEntity poEntity) {
-        entityManager.persist(poEntity);
-        return poEntity;
+    public PurchaseOrderProcurementEntity savePOEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        entityManager.persist(purchaseOrderProcurementEntity);
+        return purchaseOrderProcurementEntity;
     }
 
-    public POEntity updatePOEntity(POEntity poEntity) {
-        POEntity entityManaged = entityManager.merge(poEntity);
+    public PurchaseOrderProcurementEntity updatePOEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        PurchaseOrderProcurementEntity entityManaged = entityManager.merge(purchaseOrderProcurementEntity);
         entityManager.persist(entityManaged);
         return entityManaged;
     }
 
-    public POEntity findPOEntityById(final Long poId){
+    public PurchaseOrderProcurementEntity findPOEntityById(final Long poId){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
-        sb.append(" FROM  POEntity p ");
+        sb.append(" FROM  PurchaseOrderProcurementEntity p ");
         sb.append(" WHERE p.id = :PO_ID ");
         Map<String, Object> map = new HashMap<>();
         map.put("PO_ID",poId);
-        List<POEntity> list = super.findBy(sb.toString(),map);
-        POEntity entity = null;
+        List<PurchaseOrderProcurementEntity> list = super.findBy(sb.toString(),map);
+        PurchaseOrderProcurementEntity entity = null;
         if(list.isEmpty()){
             entity = list.get(0);
         }
@@ -211,7 +211,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p.po, p.variation, po.orderDate,sp.company,po.orderTitle,c.code, p.poDeliveryDate,po.poProcStatus ");
         sb.append(" FROM PurchaseOrderEntity p ");
-        sb.append(" INNER JOIN p.poEntity po ");
+        sb.append(" INNER JOIN p.purchaseOrderProcurementEntity po ");
         sb.append(" LEFT JOIN po.supplier sp ");
         sb.append(" LEFT JOIN po.currency pc ");
         sb.append(" LEFT JOIN pc.currency c");

@@ -3,8 +3,7 @@ package ch.swissbytes.Service.business.deliverable;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.DeliverableEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
-import ch.swissbytes.domain.model.entities.RequisitionEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -26,21 +25,21 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
     protected void applyCriteriaValues(Query query, Filter filter) {
 
     }
-    public void doSave(POEntity poEntity,List<DeliverableEntity>deliverables){
+    public void doSave(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity,List<DeliverableEntity>deliverables){
         Date now=new Date();
         for(DeliverableEntity deliverable:deliverables){
             deliverable.setId(null);
             deliverable.setStatusEnum(StatusEnum.ENABLE);
             deliverable.setLastUpdate(now);
-            deliverable.setPoEntity(poEntity);
+            deliverable.setPurchaseOrderProcurementEntity(purchaseOrderProcurementEntity);
             save(deliverable);
         }
     }
-    public void doUpdate(POEntity poEntity,List<DeliverableEntity>deliverables){
+    public void doUpdate(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity,List<DeliverableEntity>deliverables){
         Date now=new Date();
         for(DeliverableEntity deliverable:deliverables){
             deliverable.setLastUpdate(now);
-            deliverable.setPoEntity(poEntity);
+            deliverable.setPurchaseOrderProcurementEntity(purchaseOrderProcurementEntity);
             if(deliverable.getId()<0){
                 deliverable.setId(null);
                 deliverable.setStatusEnum(StatusEnum.ENABLE);
@@ -57,7 +56,7 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
         sb.append(" SELECT d ");
         sb.append(" FROM DeliverableEntity d ");
         sb.append(" WHERE d.statusEnum = :ENABLE ");
-        sb.append(" AND d.poEntity.id=:ID");
+        sb.append(" AND d.purchaseOrderProcurementEntity.id=:ID");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         params.put("ID",id!=null?id:id);
@@ -67,7 +66,7 @@ public class DeliverableDao extends GenericDao<DeliverableEntity> implements Ser
     public List<DeliverableEntity> findDeliverableByPOEntityId(Long id){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT d ");
-        sb.append(" FROM DeliverableEntity d LEFT JOIN d.poEntity p ");
+        sb.append(" FROM DeliverableEntity d LEFT JOIN d.purchaseOrderProcurementEntity p ");
         sb.append(" WHERE d.statusEnum = :ENABLE ");
         sb.append(" AND p.id=:ID");
         Map<String,Object> params = new HashMap<>();

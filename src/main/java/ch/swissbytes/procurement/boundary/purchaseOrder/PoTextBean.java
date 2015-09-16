@@ -3,12 +3,11 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.model.entities.TextEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang.StringUtils;
-import org.bouncycastle.jce.ECNamedCurveTable;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.ReorderEvent;
 
@@ -19,7 +18,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -78,10 +76,10 @@ public class PoTextBean implements Serializable {
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
     }
 
-    public void loadText(POEntity poEntity, final Long projectId) {
+    public void loadText(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity, final Long projectId) {
         //check this if we can improve. it takes about 1 second.
         log.info("loadText");
-        textEntity = textService.findByPoId(poEntity.getId());
+        textEntity = textService.findByPoId(purchaseOrderProcurementEntity.getId());
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
         if(textEntity!=null){
             clausesEntities = textService.findClausesByTextId(textEntity.getId());

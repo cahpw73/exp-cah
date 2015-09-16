@@ -135,7 +135,7 @@
         <div class="section-text-area-po">
             <div class="col-md-6" style="padding-left: 0px;">
                 <h:inputText disabled="true"
-                             value="#{configuration.getPOProcStatus(purchaseOrderCreate.newPurchaseOrder.poEntity.poProcStatus)}"
+                             value="#{configuration.getPOProcStatus(purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.poProcStatus)}"
                              class="form-control po-view"/>
             </div>
             <div class="col-md-6">
@@ -173,7 +173,7 @@
                                      id="supplierNameId"
                                      style="min-width:300px;max-width: 300px;"
                                      filterMatchMode="contains"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier}"
                                      converter="supplierConverter">
                         <f:selectItem itemLabel="Select One" itemValue=""/>
                         <f:selectItems var="_supplier"
@@ -217,14 +217,14 @@
                     <p:inputTextarea id="address" maxlength="450" type="text"
                                      style="height: 90px;"
                                      disabled="true"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.street}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.street}"
                                      jsf:placeholder="#{msgs['po.ph.address']}" class="form-control"/>
                     <p:message for="address" id="msgAddress"/>
                 </div>
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.contactDetail}"
+            <p:inputTextarea id ="addressDescription" maxlength="950" value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.contactDetail}"
                              style="height: 90px;" class="form-control"
                              disabled="true"
                              jsf:placeholder="#{msgs['po.ph.address.description']}"/>
@@ -240,7 +240,7 @@
                     <div class="inputText-general-po">
                         <p:inputText id="supplierSuburb" maxlength="450"
                                      readonly="true"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.suburb}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.suburb}"
                                      class="form-control"/>
                     </div>
                 </div>
@@ -257,7 +257,7 @@
                     <div class="inputText-general-po">
                         <p:inputText id="supplierState" maxlength="450"
                                      readonly="true"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.state}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.state}"
                                      class="form-control"/>
                     </div>
                 </div>
@@ -274,7 +274,7 @@
                     <div class="inputText-general-po">
                         <p:inputText id="supplierPostCode" maxlength="450"
                                      readonly="true"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.postCode}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.postCode}"
                                      class="form-control"/>
                     </div>
                 </div>
@@ -291,7 +291,7 @@
                     <div class="inputText-general-po">
                         <p:inputText id="supplierCountry" maxlength="450"
                                      readonly="true"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.country}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.country}"
                                      class="form-control"/>
                     </div>
                 </div>
@@ -321,11 +321,11 @@
                                      id="contactName"
                                      style="min-width:300px;max-width: 300px;"
                                      filterMatchMode="startsWith"
-                                     value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactExpediting}"
+                                     value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.contactExpediting}"
                                      converter="contactConverter">
                         <f:selectItem itemLabel="Select One" itemValue=""/>
                         <f:selectItems var="_contact"
-                                       value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.contacts}"
+                                       value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.contacts}"
                                        itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
                         <p:ajax async="false" update="btnViewContact" event="change"/>
                     </p:selectOneMenu>
@@ -340,7 +340,7 @@
                                  id="contactEmailExp"
                                  readonly="true"
                                  maxlength="950"
-                                 value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactEntity.email}"
+                                 value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.contactEntity.email}"
                                  jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                                  class="form-control"/>
                 <p:message for="contactEmailExp"/>
@@ -350,8 +350,8 @@
                 <h:commandButton
                         id="btnAddContact"
                         value="#{msgs['po.supplier.lbl.btn.add.contact2']}"
-                        disabled="#{purchaseOrderCreate.newPurchaseOrder.poEntity.supplier==null}"
-                        action="#{contactBean.start(purchaseOrderCreate.newPurchaseOrder.poEntity.supplier.id)}"
+                        disabled="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier==null}"
+                        action="#{contactBean.start(purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.supplier.id)}"
                         onclick="PF('contactModal').show();"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update=":editContact"/>
@@ -360,7 +360,7 @@
                 <h:commandButton
                         id="btnViewContact"
                         value="#{msgs['po.supplier.lbl.btn.view.contact']}"
-                        disabled="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactEntity==null}"
+                        disabled="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.contactEntity==null}"
                         onclick="PF('contactViewModal').show();"
                         styleClass="btn btn-primary btn-sm">
                     <p:ajax async="false" update=":contactViewId"/>
@@ -588,7 +588,7 @@
             <ui:include src="../procurement/admin/supplier/components/contactView.xhtml">
                 <ui:param name="ID" value="contactViewId"/>
                 <ui:param name="MODAL" value="contactViewModal"/>
-                <ui:param name="contact" value="#{purchaseOrderCreate.newPurchaseOrder.poEntity.contactExpediting}"/>
+                <ui:param name="contact" value="#{purchaseOrderCreate.newPurchaseOrder.purchaseOrderProcurementEntity.contactExpediting}"/>
             </ui:include>
         </p:dialog>
         <p:dialog header="New Supplier" widgetVar="supplierModal" width="1000" height="600" resizable="false">

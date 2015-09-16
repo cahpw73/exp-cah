@@ -157,21 +157,21 @@ public class PoListBean implements Serializable {
 
     private void prepareToSaveWithNewVariation(PurchaseOrderEntity purchaseOrderToVariation) {
         purchaseOrderToVariation.setId(null);
-        purchaseOrderToVariation.getPoEntity().setId(null);
-        purchaseOrderToVariation.getPoEntity().setPoProcStatus(ProcurementStatus.READY);
+        purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setId(null);
+        purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
         purchaseOrderToVariation.setVariation(newVariationNumber);
         //purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
-        if (purchaseOrderToVariation.getPoEntity().getCashflow() != null) {
-            purchaseOrderToVariation.getPoEntity().getCashflow().setId(null);
-            for (CashflowDetailEntity entity : purchaseOrderToVariation.getPoEntity().getCashflow().getCashflowDetailList()) {
+        if (purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getCashflow() != null) {
+            purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getCashflow().setId(null);
+            for (CashflowDetailEntity entity : purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList()) {
                 entity.setId(null);
             }
         }
 
-        for (DeliverableEntity entity : purchaseOrderToVariation.getPoEntity().getDeliverables()) {
+        for (DeliverableEntity entity : purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getDeliverables()) {
             entity.setId(null);
         }
-        for (RequisitionEntity entity : purchaseOrderToVariation.getPoEntity().getRequisitions()) {
+        for (RequisitionEntity entity : purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getRequisitions()) {
             entity.setId(null);
         }
         log.info("");
@@ -201,14 +201,14 @@ public class PoListBean implements Serializable {
 
     public void doCommitPo() {
         log.info("do commit purchase order");
-        currentPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.COMMITED);
+        currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITED);
         currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
         //list = service.purchaseListByProject(Long.parseLong(projectId));
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
     }
     public void doFinalise(){
         if(currentPurchaseOrder!=null) {
-            currentPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.FINAL);
+            currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
             currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
 
         }
@@ -216,14 +216,14 @@ public class PoListBean implements Serializable {
 
     public void doReleasePo() {
         log.info("do release purchase order");
-        currentPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.READY);
+        currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
         currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
     }
 
     public boolean actionViewPOO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null) {
-            if ((entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITED.ordinal())
-                    || (entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITED.ordinal())
+                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
                 return true;
             }
         } else {
@@ -233,9 +233,9 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionEditPOO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null) {
-            if ((entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                    || (entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal())) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal())) {
                 return true;
             }
         } else {
@@ -249,7 +249,7 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null && entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITED.ordinal()) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITED.ordinal()) {
             for (Object po : maxVariationsList) {
                 Object[] values = (Object[]) po;
                 PurchaseOrderEntity poe = new PurchaseOrderEntity();
@@ -265,8 +265,8 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionCommitPOO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null) {
-            if ((entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
                 return true;
             }
         } else {
@@ -276,12 +276,12 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionForReady(PurchaseOrderEntity entity){
-        return entity.getPoEntity().getPoProcStatus()!=null&&entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal();
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null&&entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal();
     }
 
     public boolean actionReleasePOO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null) {
-            if (entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()) {
                 return true;
             }
         } else {
@@ -291,10 +291,10 @@ public class PoListBean implements Serializable {
     }
 
     public boolean isPossiblePrintPO(PurchaseOrderEntity entity) {
-        if (entity.getPoEntity().getPoProcStatus() != null) {
-            if ((entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                    || (entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())
-                    || (entity.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITED.ordinal())) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())
+                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITED.ordinal())) {
                 return true;
             }
         } else {
@@ -309,21 +309,21 @@ public class PoListBean implements Serializable {
     }
 
     public boolean hasCurrentPOStatusFinal() {
-        if (currentPurchaseOrder != null && currentPurchaseOrder.getPoEntity() != null) {
-            return currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal();
+        if (currentPurchaseOrder != null && currentPurchaseOrder.getPurchaseOrderProcurementEntity() != null) {
+            return currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal();
         }
         return false;
     }
 
     public void printPOFinal() {
         log.info("printing po final");
-        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPoEntity().getPoProcStatus().ordinal()!= ProcurementStatus.COMMITED.ordinal()){
+        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!= ProcurementStatus.COMMITED.ordinal()){
            /* currentPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.FINAL);
             currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);*/
             doFinalise();
         }
         //RequestContext.getCurrentInstance().update("projectListId");
-        printPo(currentPurchaseOrder.getPoEntity().getPoProcStatus(),false);
+        printPo(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus(),false);
     }
 
 
@@ -338,7 +338,7 @@ public class PoListBean implements Serializable {
 
     private void printPo(ProcurementStatus procurementStatus,boolean draft) {
         List<ScopeSupplyEntity> scopeSupplyEntities = scopeSupplyService.scopeSupplyListByPOOId(currentPurchaseOrder.getId());
-        TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPoEntity().getId());
+        TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
         String preamble = textEntity != null ? textEntity.getPreamble() : "";
         List<ClausesEntity> clausesEntityList = getClausesEntitiesByPOid(textEntity);
         reportProcBean.printPurchaseOrder(currentPurchaseOrder, scopeSupplyEntities, preamble, clausesEntityList,draft);

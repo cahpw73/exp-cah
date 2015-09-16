@@ -117,15 +117,15 @@ public class ReportExpeditingBean implements Serializable {
         purchaseOrderList.clear();
         purchaseOrderList = purchaseOrderService.purchaseListByProjectIdAnPoNo(projectId, poNo);
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            p.getPoEntity().getScopeSupplyList().addAll(itemService.findByPoId(p.getId()));
+            p.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemService.findByPoId(p.getId()));
         }
         expeditingDtosList.clear();
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            for(ScopeSupplyEntity s : p.getPoEntity().getScopeSupplyList()){
+            for(ScopeSupplyEntity s : p.getPurchaseOrderProcurementEntity().getScopeSupplyList()){
                 ExpeditingDto dto = new ExpeditingDto(p,s);
                 expeditingDtosList.add(dto);
             }
-            log.info("POEntity id: " + p.getPoEntity().getId());
+            log.info("PurchaseOrderProcurementEntity id: " + p.getPurchaseOrderProcurementEntity().getId());
         }
     }
 

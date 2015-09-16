@@ -214,7 +214,7 @@
                 &#160;
                 <h:commandButton
                         value="#{msgs['po.items.lbl.btn.copy.date']}"
-                        action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.poEntity.orderDate)}"
+                        action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate)}"
                         styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}"
                         onclick="doChangeProc();">
                     <p:ajax async="false" update="itemsDt" process="@this"/>

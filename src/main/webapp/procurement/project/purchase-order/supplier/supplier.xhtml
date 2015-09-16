@@ -19,7 +19,7 @@
                                                for="supplierSupId" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
                                 <div style="width: 200px; float: left;">
                                     <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
-                                                     value="#{poBean.purchaseOrder.poEntity.supplier}"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
                                                      styleClass="form-control" rendered="#{poBean.beingEdited}"
                                                      converter="supplierConverter">
                                         <f:selectItem
@@ -34,7 +34,7 @@
                                     </h:selectOneMenu>
                                     <p:message for="supplierSupId" id="msgSupplierSupId"/>
                                     <h:inputText id="supplierSupViId" readonly="true" styleClass="form-control view-po"
-                                                 value="#{poBean.purchaseOrder.poEntity.supplier.company}"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
                                                  rendered="#{poBean.beingViewed}"/>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                 <div style="width: 200px; float: left;">
                                     <h:inputText id="abnRegNo"
                                                  readonly="true"
-                                                 value="#{poBean.purchaseOrder.poEntity.supplier.abnRegNo}"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.abnRegNo}"
                                                  styleClass="form-control"/>
                                     <p:message for="abnRegNo" id="msgAbnRegNo"/>
                                 </div>
@@ -64,7 +64,7 @@
                                                      readonly="true"
                                                      maxlength="950" class="form-control"
                                                      jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
-                                                     value="#{poBean.purchaseOrder.poEntity.supplier.street}"/>
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.street}"/>
                                     <p:message for="streetSupId" id="msgStreetSupId"/>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 <div style="width: 395px; float: left; margin-left: 23px;">
                                     <h:inputText id="suburbSupId"
                                                  readonly="true"
-                                                 value="#{poBean.purchaseOrder.poEntity.supplier.suburb}"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.suburb}"
                                                  styleClass="form-control"/>
                                     <p:message for="suburbSupId" id="msgSuburbSupId"/>
                                 </div>
@@ -93,7 +93,7 @@
                                     <div style="width: 200px; float: left;">
                                         <h:inputText id="stateSupId"
                                                      readonly="true"
-                                                     value="#{poBean.purchaseOrder.poEntity.supplier.state}"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.state}"
                                                      styleClass="form-control"/>
                                         <p:message for="stateSupId" id="msgStateSupId"/>
                                     </div>
@@ -108,7 +108,7 @@
                                     <div style="width: 100px; float: left;">
                                         <h:inputText id="postcodeSupId"
                                                      readonly="true"
-                                                     value="#{poBean.purchaseOrder.poEntity.supplier.postCode}"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.postCode}"
                                                      styleClass="form-control"/>
                                         <p:message for="postcodeSupId" id="msgPostcodeSupId"/>
                                     </div>
@@ -124,7 +124,7 @@
                                 <div style="width: 395px; float: left; margin-left: 23px;">
                                     <h:inputText id="countrySupId"
                                                  readonly="true"
-                                                     value="#{poBean.purchaseOrder.poEntity.supplier.country}"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.country}"
                                                  styleClass="form-control"/>
                                     <p:message for="countrySupId" id="msgCountrySupId"/>
                                 </div>
@@ -155,7 +155,7 @@
                                     <p:inputTextarea id="commentSupId" type="text" style="height: 97px;"
                                                      maxlength="950" class="form-control" disabled="true"
                                                      readonly="true"
-                                                     value="#{poBean.purchaseOrder.poEntity.supplier.comments}"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.comments}"
                                                      jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"/>
                                     <p:message for="commentSupId" id="msgCommentSupId"/>
                                 </div>
@@ -176,21 +176,21 @@
                                        for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
                         <div style="width: 180px; float: left;">
                             <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
-                                             value="#{poBean.purchaseOrder.poEntity.contactEntity}"
+                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity}"
                                              converter="contactConverter"
                                              styleClass="form-control" onclick="doChangeProc();">
                                 <f:selectItem
                                         itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
                                         noSelectionOption="true"/>
                                 <f:selectItems var="_c"
-                                               value="#{poBean.purchaseOrder.poEntity.supplier.contacts}"
+                                               value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.contacts}"
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.fullName}"/>
                                 <p:ajax async="false" update="phoneSupId faxSupId messageContact projectEmailSupId" process="conactSupId"/>
                             </h:selectOneMenu>
                             <p:message id="messageContact" for="conactSupId"/>
                             <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
-                                         value="#{poBean.purchaseOrder.poEntity.contactEntity.fullName}"
+                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fullName}"
                                          rendered="#{poBean.beingViewed}"/>
                         </div>
                     </div>
@@ -200,8 +200,8 @@
                         <h:commandButton
                                 id="btnAddContact"
                                 value="#{msgs['po.supplier.lbl.btn.add.contact']}"
-                                disabled="#{poBean.purchaseOrder.poEntity.supplier==null}"
-                                action="#{contactBean.start(poBean.purchaseOrder.poEntity.supplier.id)}"
+                                disabled="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier==null}"
+                                action="#{contactBean.start(poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.id)}"
                                 onclick="PF('contactModal').show(); doChangeProc();"
                                 styleClass="btn btn-primary btn-sm"
                                 rendered="#{poBean.beingEdited}">
@@ -222,7 +222,7 @@
                         <div style="width: 180px; float: left;">
                             <h:inputText id="phoneSupId" disabled="true"
                                          readonly="true"
-                                         value="#{poBean.purchaseOrder.poEntity.contactEntity.phone}"
+                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.phone}"
                                          styleClass="form-control"/>
                             <p:message for="phoneSupId" id="msgPhoneSupId"/>
                         </div>
@@ -236,7 +236,7 @@
                         <div style="width: 180px; float: left;">
                             <h:inputText id="faxSupId" disabled="true"
                                          readonly="true"
-                                         value="#{poBean.purchaseOrder.poEntity.contactEntity.fax}"
+                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fax}"
                                          styleClass="form-control"/>
                             <p:message for="faxSupId" id="msgFaxSupId"/>
                         </div>
@@ -254,7 +254,7 @@
                         <div style="width: 180px; float: left;">
                             <h:inputText id="projectEmailSupId" disabled="true"
                                          readonly="true"
-                                         value="#{poBean.purchaseOrder.poEntity.contactEntity.email}"
+                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.email}"
                                          styleClass="form-control"/>
                             <p:message for="projectEmailSupId" id="msgProjectEmailSupId"/>
                         </div>

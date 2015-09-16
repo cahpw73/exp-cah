@@ -9,7 +9,6 @@ import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -31,7 +30,7 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
     private StatusEnum statusEnum;
     private Date lastUpdate;
     private ProjectCurrencyEntity projectCurrency;//new
-    private POEntity po;//no copy
+    private PurchaseOrderProcurementEntity po;//no copy
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -158,11 +157,11 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="po_id")
-    public POEntity getPo() {
+    public PurchaseOrderProcurementEntity getPo() {
         return po;
     }
 
-    public void setPo(POEntity po) {
+    public void setPo(PurchaseOrderProcurementEntity po) {
         this.po = po;
     }
 

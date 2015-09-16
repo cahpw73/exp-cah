@@ -11,7 +11,6 @@ import ch.swissbytes.domain.types.StatusEnum;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +23,7 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
     private String preamble;
     private StatusEnum status;
     private Date lastUpdate;
-    private POEntity po;
+    private PurchaseOrderProcurementEntity po;
     private List<ClausesEntity> clausesList = new ArrayList<>();
 
     @Id
@@ -70,11 +69,11 @@ public class TextEntity extends RecordEditable<TextEntity> implements Serializab
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="po_id")
-    public POEntity getPo() {
+    public PurchaseOrderProcurementEntity getPo() {
         return po;
     }
 
-    public void setPo(POEntity po) {
+    public void setPo(PurchaseOrderProcurementEntity po) {
         this.po = po;
     }
 

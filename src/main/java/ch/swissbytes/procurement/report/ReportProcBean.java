@@ -84,7 +84,7 @@ public class ReportProcBean implements Serializable {
         PurchaseOrderEntity purchaseOrder=service.findById(po.getId());
         if(purchaseOrder!=null) {
             initializeParametersToJasperReport();
-            List<CashflowEntity> cashflows = cashflowService.findByPoId(purchaseOrder.getPoEntity().getId());
+            List<CashflowEntity> cashflows = cashflowService.findByPoId(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
             CashflowEntity  cashflowEntity=cashflows.size() > 0 ? cashflows.get(0) : null;
             if(cashflowEntity!=null){
                 cashflowEntity.getCashflowDetailList().clear();

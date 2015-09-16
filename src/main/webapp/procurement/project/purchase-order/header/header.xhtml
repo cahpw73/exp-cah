@@ -92,7 +92,7 @@
 
                     <div style="width: 210px; float: left; margin-left: -15px;">
                         <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
-                                         value="#{poBean.purchaseOrder.poEntity.supplier}"
+                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
                                          styleClass="form-control" onclick="doChangeProc();"
                                          converter="supplierConverter">
                             <f:selectItem
@@ -106,7 +106,7 @@
                                     listener="#{poBean.resetContact()}" process="@this"/>
                         </h:selectOneMenu>
                         <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
-                                     value="#{poBean.purchaseOrder.poEntity.supplier.company}"
+                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
                                      rendered="#{poBean.beingViewed}"/>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
 
                     <div style="width: 145px; float: left;">
                         <h:selectOneMenu id="headerClass" onclick="doChangeProc();"
-                                         value="#{poBean.purchaseOrder.poEntity.clazz}"
+                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
                                          styleClass="form-control" rendered="#{poBean.beingEdited}">
                             <f:selectItem
                                     itemLabel="Select one"
@@ -141,7 +141,7 @@
                                            itemLabel="#{_c.name}"/>
                         </h:selectOneMenu>
                         <h:inputText id="headerClassVi" readonly="true" styleClass="form-control view-po"
-                                     value="#{poBean.purchaseOrder.poEntity.clazz}"
+                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
                                      rendered="#{poBean.beingViewed}"/>
                     </div>
                 </div>
@@ -191,12 +191,12 @@
 
                             <div style="width: 145px; float: left;">
                                 <h:inputText id="headerPoint"
-                                             value="#{poBean.purchaseOrder.poEntity.point}"
+                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.point}"
                                              maxlength="250"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}"/>
                                 <p:message for="headerPoint" id="msgHeaderPoint"/>
                                 <h:inputText id="headerPointVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{poBean.purchaseOrder.poEntity.point}"
+                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.point}"
                                              rendered="#{poBean.beingViewed}"/>
                             </div>
                         </div>
@@ -213,12 +213,12 @@
                                 <p:inputTextarea id="headerInstruction" type="text" style="height: 75px;"
                                                  maxlength="950" class="form-control"
                                                  jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
-                                                 value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.deliveryInstruction}"
                                                  rendered="#{poBean.beingEdited}"/>
                                 <p:message for="headerInstruction"/>
                                 <h:inputTextarea readonly="true" styleClass="form-control"
                                                  style="height: 75px;" rendered="#{poBean.beingViewed}"
-                                                 value="#{poBean.purchaseOrder.poEntity.deliveryInstruction}"/>
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.deliveryInstruction}"/>
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                                        value="#{msgs['po.header.lbl.status']}"/>
 
                         <h:inputText readonly="true" styleClass="form-control view-po"
-                                     value="#{configuration.getPOProcStatus(poBean.purchaseOrder.poEntity.poProcStatus)}"
+                                     value="#{configuration.getPOProcStatus(poBean.purchaseOrder.purchaseOrderProcurementEntity.poProcStatus)}"
                                      style="width: 200px; float: left;"/>
                     </div>
                 </div>
@@ -256,7 +256,7 @@
 
                     <h:inputText id="rtfId" readonly="#{poBean.beingViewed}"
                                 style="max-width: 200px;"
-                                 value="#{poBean.purchaseOrder.poEntity.RTFNo}"
+                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.RTFNo}"
                                  styleClass="form-control"/>
                 </div>
             </div>
@@ -264,7 +264,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.liquidated.damages.applicable']}"/>
-                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.liquidatedDamagesApplicable}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.liquidatedDamagesApplicable}"/>
                 </div>
             </div>
         </div>
@@ -275,14 +275,14 @@
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.exchange.rate.variation']}"/>
 
-                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.exchangeRateVariation}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}"/>
                 </div>
             </div>
             <div style="width: 345px!important; float: left!important;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.vendor.drawings.data']}"/>
-                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.poEntity.vendorDrawingData}"/>
+                    <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}"/>
                 </div>
             </div>
         </div>
@@ -295,7 +295,7 @@
                                        style="margin-left: 13px;"
                                        value="#{msgs['po.header.lbl.security.deposit']}"/>
                         <p:selectBooleanCheckbox disabled="#{poBean.beingViewed}"
-                                                 value="#{poBean.purchaseOrder.poEntity.securityDeposit}">
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">
                         </p:selectBooleanCheckbox>
                     </div>
                 </div>

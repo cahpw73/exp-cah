@@ -133,8 +133,8 @@ public class PurchaseOrderCreate implements Serializable {
         scopeSupplies = new ArrayList<>();
         newScopeSupply = new ScopeSupplyEntity();
         newPurchaseOrder.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
-        newPurchaseOrder.setPoEntity(new POEntity());
-        newPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.COMMITED);
+        newPurchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
+        newPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITED);
         newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));
     }
 
@@ -427,8 +427,8 @@ public class PurchaseOrderCreate implements Serializable {
         log.info("saveSupplier");
         SupplierProcEntity supplierProcEntity = supplier.save();
         if (supplierProcEntity != null) {
-            newPurchaseOrder.getPoEntity().setSupplier(supplierProcEntity);
-            newPurchaseOrder.getPoEntity().setContactEntity(null);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().setSupplier(supplierProcEntity);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(null);
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");
@@ -443,8 +443,8 @@ public class PurchaseOrderCreate implements Serializable {
     public void doSaveContact() {
         ContactEntity contact = contactBean.doSave();
         if (contact != null) {
-            newPurchaseOrder.getPoEntity().setContactExpediting(contact);
-            newPurchaseOrder.getPoEntity().getSupplier().getContacts().add(contact);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().setContactExpediting(contact);
+            newPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getContacts().add(contact);
         }
     }
 }

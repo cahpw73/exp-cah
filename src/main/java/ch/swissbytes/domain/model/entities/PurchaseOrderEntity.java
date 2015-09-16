@@ -41,7 +41,7 @@ public class PurchaseOrderEntity implements Serializable{
     private String rfeComment;
     private ExpeditingStatusEnum purchaseOrderStatus;
     private ProjectEntity projectEntity;
-    private POEntity poEntity;
+    private PurchaseOrderProcurementEntity purchaseOrderProcurementEntity;
     private Integer orderedVariation;
 
 
@@ -284,12 +284,12 @@ public class PurchaseOrderEntity implements Serializable{
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="po_id")
-    public POEntity getPoEntity() {
-        return poEntity;
+    public PurchaseOrderProcurementEntity getPurchaseOrderProcurementEntity() {
+        return purchaseOrderProcurementEntity;
     }
 
-    public void setPoEntity(POEntity poEntity) {
-        this.poEntity = poEntity;
+    public void setPurchaseOrderProcurementEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        this.purchaseOrderProcurementEntity = purchaseOrderProcurementEntity;
     }
 
     public Integer getOrderedVariation() {

@@ -18,7 +18,7 @@ import java.util.List;
 @Named
 @Entity
 @Table(name = "p_order")
-public class POEntity implements Serializable{
+public class PurchaseOrderProcurementEntity implements Serializable{
 
     private Long id;
     private Date orderDate;

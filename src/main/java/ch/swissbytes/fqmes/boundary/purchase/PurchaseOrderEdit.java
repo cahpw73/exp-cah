@@ -891,8 +891,8 @@ public class PurchaseOrderEdit implements Serializable {
     public void doSaveContact() {
         ContactEntity contact = contactBean.doSave();
         if (contact != null) {
-            poEdit.getPoEntity().setContactExpediting(contact);
-            poEdit.getPoEntity().getSupplier().getContacts().add(contact);
+            poEdit.getPurchaseOrderProcurementEntity().setContactExpediting(contact);
+            poEdit.getPurchaseOrderProcurementEntity().getSupplier().getContacts().add(contact);
         }
     }
 
@@ -951,8 +951,8 @@ public class PurchaseOrderEdit implements Serializable {
     public void saveSupplier() {
         SupplierProcEntity supplierProcEntity = supplier.save();
         if (supplierProcEntity != null) {
-            poEdit.getPoEntity().setSupplier(supplierProcEntity);
-            poEdit.getPoEntity().setContactEntity(null);
+            poEdit.getPurchaseOrderProcurementEntity().setSupplier(supplierProcEntity);
+            poEdit.getPurchaseOrderProcurementEntity().setContactEntity(null);
             list.updateSupplierList();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('supplierModal').hide();");

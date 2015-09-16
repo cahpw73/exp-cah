@@ -2,8 +2,7 @@ package ch.swissbytes.Service.business.requisition;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
-import ch.swissbytes.domain.model.entities.BrandEntity;
-import ch.swissbytes.domain.model.entities.POEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.RequisitionEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -26,21 +25,21 @@ public class RequisitionDao extends GenericDao<RequisitionEntity> implements Ser
     protected void applyCriteriaValues(Query query, Filter filter) {
 
     }
-    public void doSave(POEntity poEntity,List<RequisitionEntity>requisitions){
+    public void doSave(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity,List<RequisitionEntity>requisitions){
         Date now=new Date();
         for(RequisitionEntity requisitionEntity:requisitions){
             requisitionEntity.setId(null);
             requisitionEntity.setStatusEnum(StatusEnum.ENABLE);
             requisitionEntity.setLastUpdate(now);
-            requisitionEntity.setPoEntity(poEntity);
+            requisitionEntity.setPurchaseOrderProcurementEntity(purchaseOrderProcurementEntity);
             save(requisitionEntity);
         }
     }
-    public void doUpdate(POEntity poEntity,List<RequisitionEntity>requisitions){
+    public void doUpdate(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity,List<RequisitionEntity>requisitions){
         Date now=new Date();
         for(RequisitionEntity requisitionEntity:requisitions){
             requisitionEntity.setLastUpdate(now);
-            requisitionEntity.setPoEntity(poEntity);
+            requisitionEntity.setPurchaseOrderProcurementEntity(purchaseOrderProcurementEntity);
             if(requisitionEntity.getId()<0){
                 requisitionEntity.setId(null);
                 requisitionEntity.setStatusEnum(StatusEnum.ENABLE);
@@ -57,7 +56,7 @@ public class RequisitionDao extends GenericDao<RequisitionEntity> implements Ser
         sb.append(" SELECT r ");
         sb.append(" FROM RequisitionEntity r ");
         sb.append(" WHERE r.statusEnum = :ENABLE ");
-        sb.append(" AND r.poEntity.id=:ID");
+        sb.append(" AND r.purchaseOrderProcurementEntity.id=:ID");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         params.put("ID",id!=null?id:id);

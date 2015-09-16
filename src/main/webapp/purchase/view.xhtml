@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:outputText value="#{util.toLocal(purchaseOrderView.purchaseOrder.poEntity.orderDate)}"
+                            <h:outputText value="#{util.toLocal(purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.orderDate)}"
                                           class="form-control view-po"/>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                         <div class="section-text-area-po">
                             <div class="col-md-6" style="padding-left: 0px;">
                                 <h:inputText disabled="true"
-                                             value="#{configuration.getPOProcStatus(purchaseOrderView.purchaseOrder.poEntity.poProcStatus)}"
+                                             value="#{configuration.getPOProcStatus(purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
                             </div>
                             <div class="col-md-6">
@@ -141,7 +141,7 @@
 
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po"
-                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.company}"/>
+                                                 value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"/>
                                 </div>
                             </div>
                         </div>
@@ -164,14 +164,14 @@
                                 <div class="inputText-general-po">
                                     <h:inputTextarea style="height: 90px;" readonly="true"
                                                      styleClass="form-control"
-                                                     value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.street}"/>
+                                                     value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.street}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
                                          style="height: 90px;"
-                                         value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.contactDetail}"/>
+                                         value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.contactDetail}"/>
                         </div>
                     </div>
                     <div class="row">
@@ -183,7 +183,7 @@
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierSuburb" maxlength="450"
                                                  readonly="true"
-                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.suburb}"
+                                                 value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.suburb}"
                                                  class="form-control"/>
                                 </div>
                             </div>
@@ -200,7 +200,7 @@
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierState" maxlength="450"
                                                  readonly="true"
-                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.state}"
+                                                 value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.state}"
                                                  class="form-control"/>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierPostCode" maxlength="450"
                                                  readonly="true"
-                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.postCode}"
+                                                 value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.postCode}"
                                                  class="form-control"/>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@
                                 <div class="inputText-general-po">
                                     <p:inputText id="supplierCountry" maxlength="450"
                                                  readonly="true"
-                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.supplier.country}"
+                                                 value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.supplier.country}"
                                                  class="form-control"/>
                                 </div>
                             </div>
@@ -259,13 +259,13 @@
 
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po"
-                                                 value="#{purchaseOrderView.purchaseOrder.poEntity.contactExpediting.fullName}"/>
+                                                 value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.contactExpediting.fullName}"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
                             <h:inputTextarea readonly="true" styleClass="form-control"
-                                             value="#{purchaseOrderView.purchaseOrder.poEntity.contactExpediting.email}"/>
+                                             value="#{purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.contactExpediting.email}"/>
                         </div>
                     </div>
                     <div class="row">

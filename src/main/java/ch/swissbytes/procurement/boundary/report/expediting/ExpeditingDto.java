@@ -30,7 +30,7 @@ public class ExpeditingDto implements Serializable {
         this.item = s.getCode();
         this.description = s.getDescription();
         this.excludeFromExpediting = s.getExcludeFromExpediting();
-        this.procurementStatus = p.getPoEntity().getPoProcStatus();
+        this.procurementStatus = p.getPurchaseOrderProcurementEntity().getPoProcStatus();
     }
 
     public String getPoNo() {
