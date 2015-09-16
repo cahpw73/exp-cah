@@ -164,7 +164,6 @@ public class PoBean extends Bean {
         if (validate()) {
             collectData();
             purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
             poId = purchaseOrder.getId().toString();
@@ -192,7 +191,9 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.EDITED.ordinal()) {
+                purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
             loaded = false;
@@ -206,7 +207,9 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.EDITED.ordinal()) {
+                purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             String link = doLastOperationsOverPO(false);
             return link;
