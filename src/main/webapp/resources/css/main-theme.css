@@ -152,7 +152,7 @@ textarea.form-control {
 }
 
 .section-lbl-input-po{
-    width: 480px; float: left; padding-left: 15px
+    width: 530px; float: left; padding-left: 15px
 }
 
 .section-text-area-po{
@@ -165,7 +165,7 @@ textarea.form-control {
 }
 
 .inputText-general-po{
-    width: 315px!important; position: relative;
+    width: 360px!important; position: relative;
     min-height: 1px;
     padding-right: 0px;
     padding-left: 15px; float: left;
