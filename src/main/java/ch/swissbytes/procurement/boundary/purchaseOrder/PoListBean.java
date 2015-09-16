@@ -221,8 +221,11 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
     }
 
-    public boolean actionViewPOO(PurchaseOrderEntity entity) {
-        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+    public boolean canView(PurchaseOrderEntity entity) {
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
+                ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
+       /* if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal())
                     || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
                 return true;
@@ -230,11 +233,14 @@ public class PoListBean implements Serializable {
         } else {
             return true;
         }
-        return false;
+        return false;*/
     }
 
-    public boolean actionEditPOO(PurchaseOrderEntity entity) {
-        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+    public boolean canEdit(PurchaseOrderEntity entity) {
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
+        ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.EDITED.ordinal());
+        /*if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                     || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal())) {
                 return true;
@@ -242,7 +248,7 @@ public class PoListBean implements Serializable {
         } else {
             return true;
         }
-        return false;
+        return false;*/
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
@@ -265,44 +271,19 @@ public class PoListBean implements Serializable {
         return false;
     }
 
-    public boolean actionCommitPOO(PurchaseOrderEntity entity) {
-        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
-                return true;
-            }
-        } else {
-            return false;
-        }
-        return false;
+    public boolean canCommitt(PurchaseOrderEntity entity) {
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
+                (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()||
+        entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.EDITED.ordinal());
     }
 
     public boolean actionForReady(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal();
     }
 
-    public boolean actionReleasePOO(PurchaseOrderEntity entity) {
-        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()) {
-                return true;
-            }
-        } else {
-            return false;
-        }
-        return false;
+    public boolean canRelease(PurchaseOrderEntity entity) {
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal();
     }
-
-   /* public boolean isPossiblePrintPO(PurchaseOrderEntity entity) {
-        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal())) {
-                return true;
-            }
-        } else {
-            return false;
-        }
-        return false;
-    }*/
 
     public void loadCurrentPo(final PurchaseOrderEntity po) {
         log.info("loading current po");

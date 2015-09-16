@@ -45,13 +45,13 @@
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="100">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
-                                        rendered="#{poListBean.actionEditPOO(_p) and permissionBean.hasPermission(1402) }"
+                                        rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
                                         style="float: left!important; color: #428BCA; margin-right:5px;">
                                     <f:param name="poId" value="#{_p.id}"/>
                                 </h:link>
                                 &#160;
                                 <h:link value="#{msgs['project.list.action.view']}" outcome="edit"
-                                        rendered="#{poListBean.actionViewPOO(_p)}"
+                                        rendered="#{poListBean.canView(_p)}"
                                         style="float: left!important; color: #428BCA; margin-right:5px; ">
                                     <f:param name="poId" value="#{_p.id}"/>
                                     <f:param name="modeView" value="true"/>
@@ -78,7 +78,7 @@
                                         value="#{msgs['project.list.action.commit']}"
                                         action="#{poListBean.doCommitPo}"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.actionCommitPOO(_p) and permissionBean.hasPermission(1405)}">
+                                        rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -107,7 +107,7 @@
                                         action="#{poListBean.doReleasePo}"
                                         async="false"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.actionReleasePOO(_p) and permissionBean.hasPermission(1407)}">
+                                        rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
