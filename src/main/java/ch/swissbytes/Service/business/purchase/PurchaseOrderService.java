@@ -11,12 +11,11 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
-import ch.swissbytes.Service.business.scopesupply.SupplierDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.IncoTermsEnum;
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang.StringUtils;
@@ -227,7 +226,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         // purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
-        purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         String incoTerms = getStrToIncoTerm(po.getPoint());
         String fullIncoTerms = po.getPoint();
         if(exitsDeliveryPointInIncoTerms(incoTerms)){
@@ -285,7 +284,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setPoEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
-        purchaseOrderEntity.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         purchaseOrderEntity.setPoDeliveryDate(null);
         dao.save(purchaseOrderEntity);
         //requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());

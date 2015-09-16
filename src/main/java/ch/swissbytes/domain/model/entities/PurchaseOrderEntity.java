@@ -4,7 +4,7 @@ package ch.swissbytes.domain.model.entities;
  * Created by alvaro on 9/8/14.
  */
 
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Named;
@@ -39,7 +39,7 @@ public class PurchaseOrderEntity implements Serializable{
     private Date lastUpdate;
     private StatusEntity status;
     private String rfeComment;
-    private PurchaseOrderStatusEnum purchaseOrderStatus;
+    private ExpeditingStatusEnum purchaseOrderStatus;
     private ProjectEntity projectEntity;
     private POEntity poEntity;
     private Integer orderedVariation;
@@ -247,11 +247,11 @@ public class PurchaseOrderEntity implements Serializable{
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     @Column(name="PURCHASE_ORDER_STATUS",nullable = false)
-    public PurchaseOrderStatusEnum getPurchaseOrderStatus() {
+    public ExpeditingStatusEnum getPurchaseOrderStatus() {
         return purchaseOrderStatus;
     }
 
-    public void setPurchaseOrderStatus(PurchaseOrderStatusEnum purchaseOrderStatus) {
+    public void setPurchaseOrderStatus(ExpeditingStatusEnum purchaseOrderStatus) {
         this.purchaseOrderStatus = purchaseOrderStatus;
     }
 

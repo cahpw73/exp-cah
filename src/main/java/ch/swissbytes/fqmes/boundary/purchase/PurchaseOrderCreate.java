@@ -9,7 +9,7 @@ import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -132,7 +132,7 @@ public class PurchaseOrderCreate implements Serializable {
         newComment = new CommentEntity();
         scopeSupplies = new ArrayList<>();
         newScopeSupply = new ScopeSupplyEntity();
-        newPurchaseOrder.setPurchaseOrderStatus(PurchaseOrderStatusEnum.ISSUED);
+        newPurchaseOrder.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         newPurchaseOrder.setPoEntity(new POEntity());
         newPurchaseOrder.getPoEntity().setPoProcStatus(ProcurementStatus.COMMITED);
         newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));

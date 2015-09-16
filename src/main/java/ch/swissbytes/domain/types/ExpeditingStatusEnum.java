@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by alvaro on 9/30/14.
  */
-public enum PurchaseOrderStatusEnum implements Serializable {
+public enum ExpeditingStatusEnum implements Serializable {
 
 
     ISSUED(0,"issued"), CANCELLED(1,"cancelled"), DUE(2,"due"), OVERDUE(3,"overdue"), UNDER_SUPPLY(4,"under supply"), COMPLETED(5,"completed"),
@@ -15,14 +15,14 @@ public enum PurchaseOrderStatusEnum implements Serializable {
     private Integer id;
     private String label;
 
-    PurchaseOrderStatusEnum(Integer id,String label) {
+    ExpeditingStatusEnum(Integer id, String label) {
         this.id = id;
         this.label=label;
     }
 
 
-    public static PurchaseOrderStatusEnum getEnum(Integer ordinal) {
-        for (PurchaseOrderStatusEnum poEnum : PurchaseOrderStatusEnum.values()) {
+    public static ExpeditingStatusEnum getEnum(Integer ordinal) {
+        for (ExpeditingStatusEnum poEnum : ExpeditingStatusEnum.values()) {
             if (poEnum.ordinal() == ordinal.intValue()) {
                 return poEnum;
             }

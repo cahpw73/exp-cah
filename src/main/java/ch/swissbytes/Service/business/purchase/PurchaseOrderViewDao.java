@@ -3,7 +3,7 @@ package ch.swissbytes.Service.business.purchase;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
-import ch.swissbytes.domain.types.PurchaseOrderStatusEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang3.StringUtils;
@@ -59,10 +59,10 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
 
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 String[] statuses = filter.getStatuses().split(",");
-                List<PurchaseOrderStatusEnum> list = new ArrayList<PurchaseOrderStatusEnum>();
+                List<ExpeditingStatusEnum> list = new ArrayList<ExpeditingStatusEnum>();
                 for (String status : statuses) {
                     try {
-                        list.add(PurchaseOrderStatusEnum.getEnum(Integer.parseInt(status)));
+                        list.add(ExpeditingStatusEnum.getEnum(Integer.parseInt(status)));
                     } catch (NumberFormatException nfe) {
 
                     }
@@ -190,7 +190,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
     private String generateClauseOrderByForPurchaseOrderStatus(){
         StringBuilder sb=new StringBuilder();
         sb.append(" CASE ");
-        for(PurchaseOrderStatusEnum status:PurchaseOrderStatusEnum.values()){
+        for(ExpeditingStatusEnum status: ExpeditingStatusEnum.values()){
             sb.append(" WHEN x.purchaseOrderStatus="+status.ordinal());
             sb.append(" THEN ");
             sb.append("'"+status.getLabel()+"'");
