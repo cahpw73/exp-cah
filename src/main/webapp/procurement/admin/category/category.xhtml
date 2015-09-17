@@ -12,7 +12,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editForm" prependId="false">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <div class="panel panel-default panel-tab">
                     <div class="procurement-panel-header">#{msgs['lbl.admin.category.title']}</div>
                     <!-- Default panel contents -->
@@ -33,9 +33,9 @@
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <h:selectOneListbox id="categoryList" value="#{categoryBean.selectedCategory}" converter="categoryConverter"
-                                                    styleClass="form-control" style="max-height: 150px; height: 150px;" size="2">
+                                                    styleClass="form-control" style="max-height: 500px; height: 500px;" size="2">
                                     <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
                                                    itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
                                 </h:selectOneListbox>

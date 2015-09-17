@@ -12,7 +12,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="brandForm"  prependId="false">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <div class="panel panel-default panel-tab">
                     <div class="procurement-panel-header">#{msgs['lbl.admin.brand.title']}</div>
                     <!-- Default panel contents -->
@@ -33,9 +33,9 @@
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <h:selectOneListbox id="brandList" value="#{brandBean.selectedBrand}" converter="brandConverter"
-                                                    styleClass="form-control" style="max-height: 150px; height: 150px;" size="2">
+                                                    styleClass="form-control" style="max-height: 500px; height: 500px;" size="2">
                                     <f:selectItems value="#{brandBean.brandList}" var="_brand" noSelectionValue="true"
                                                    itemLabel="#{_brand.name}" itemValue="#{_brand}"/>
                                 </h:selectOneListbox>

@@ -11,7 +11,7 @@
                 <div class="col-sm-10" style="padding-left: 0px;">
                     <h:selectOneListbox id="categoryList"
                                         converter="categoryConverter"
-                                        styleClass="form-control" style="max-height: 200px; height: 200px;" size="2">
+                                        styleClass="form-control" style="#{MODE!=null?'max-height: 300px; height: 300px;':'max-height: 400px; height: 400px;'}" size="2">
                         <f:selectItems value="#{supplierProcBean.supplier.categories}" var="_ca"
                                        itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
                     </h:selectOneListbox>
@@ -34,7 +34,7 @@
                 <div class="col-sm-10" style="padding-left: 0px;">
                     <h:selectOneListbox id="brandList"
                                         converter="brandConverter"
-                                        styleClass="form-control " style="max-height: 200px; height: 200px;" size="2">
+                                        styleClass="form-control " style="#{MODE!=null?'max-height: 300px; height: 300px;':'max-height: 400px; height: 400px;'}" size="2">
                         <f:selectItems value="#{supplierProcBean.supplier.brands}" var="_br"
                                        itemLabel="#{_br.name}" itemValue="#{_br}"/>
                     </h:selectOneListbox>

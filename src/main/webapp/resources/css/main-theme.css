@@ -540,3 +540,12 @@ label.checkbox{
     white-space:nowrap;
     text-overflow: ellipsis;
 }
+
+.ui-picklist .ui-picklist-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    height: 400px!important;
+    width: 370px!important;
+}

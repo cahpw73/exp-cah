@@ -7,11 +7,12 @@
     <h:panelGroup rendered="#{MODE !=null}">
         <p:messages globalOnly="true" closable="true" id="globalMessage" />
     </h:panelGroup>
-    <div class="col-sm-7" style="padding-left: 0px!important; margin-bottom:10px!important; ">
+    <div class="#{MODE != null?'col-sm-11':'col-sm-8'}" style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.supplier.id']} *"
                            style="padding-left: 0px;"/>
-            <div class="col-sm-7">
+            <div class="col-sm-8">
+                <div style="float: left!important; width: 78%!important; margin-right: 50px!important;">
                 <h:inputText id="supplierID1" maxlength="50"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.supplierId}"
@@ -19,55 +20,60 @@
                              required="true" requiredMessage="#{msgs['supplier.lbl.supplier.id']} is required"
                              jsf:autofocus="true" tabindex="1"/>
                 <p:message for="supplierID1"/>
+                </div>
+                <div style="float: left!important;">
+                    <h:panelGroup id="idBtnSave" rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
+                        <h:panelGroup rendered="#{MODE ==null}">
+                            <h:commandButton value="#{msgs['lbl.save']}"
+                                             action="#{supplierProcBean.doSave}"
+                                             rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
+                                             styleClass="btn btn-primary btn-sm"/>
+                            <h:commandButton value="#{msgs['lbl.save']}"
+                                             action="#{supplierProcBean.doUpdate}"
+                                             rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
+                                             styleClass="btn btn-primary btn-sm"/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{MODE eq 'PO' and supplierProcBean.supplierMode}">
+                            <h:commandButton value="#{msgs['lbl.save']}"
+                                             action="#{poBean.saveSupplier}"
+                                             styleClass="btn btn-primary btn-sm">
+                                <p:ajax async="false" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
+                                        process="@form"/>
+                            </h:commandButton>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
+                            <h:commandButton value="#{msgs['lbl.save']}"
+                                             styleClass="btn btn-primary btn-sm">
+                                <p:ajax async="false" update="#{RENDER}"
+                                        process="@form" listener="#{bean.saveSupplier()}"/>
+                            </h:commandButton>
+                        </h:panelGroup>
+                        <h:commandButton value="#{msgs['lbl.save']}"
+                                         rendered="#{not supplierProcBean.supplierMode}"
+                                         styleClass="btn btn-primary btn-sm">
+                            <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"
+                                    async="false"
+                                    process="@form"
+                                    oncomplete="activeCategoryBrandTab();"
+                                    update="idBtnSave idBtnCancel bodySupplier"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="col-sm-2">
-        <h:panelGroup id="idBtnSave" rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
-            <h:panelGroup rendered="#{MODE ==null}">
-                <h:commandButton value="#{msgs['lbl.save']}"
-                                 action="#{supplierProcBean.doSave}"
-                                 rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
-                                 styleClass="btn btn-primary btn-sm"/>
-                <h:commandButton value="#{msgs['lbl.save']}"
-                                 action="#{supplierProcBean.doUpdate}"
-                                 rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
-                                 styleClass="btn btn-primary btn-sm"/>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{MODE eq 'PO' and supplierProcBean.supplierMode}">
-                <h:commandButton value="#{msgs['lbl.save']}"
-                                 action="#{poBean.saveSupplier}"
-                                 styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
-                            process="@form"/>
-                </h:commandButton>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
-                <h:commandButton value="#{msgs['lbl.save']}"
-                                 styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update="#{RENDER}"
-                            process="@form" listener="#{bean.saveSupplier()}"/>
-                </h:commandButton>
-            </h:panelGroup>
-            <h:commandButton value="#{msgs['lbl.save']}"
-                             rendered="#{not supplierProcBean.supplierMode}"
-                             styleClass="btn btn-primary btn-sm">
-                <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"
-                        async="false"
-                        process="@form"
-                        oncomplete="activeCategoryBrandTab();"
-                        update="idBtnSave idBtnCancel bodySupplier"/>
-            </h:commandButton>
-        </h:panelGroup>
+
     </div>
 
-    <div class="col-sm-7" style="padding-left: 0px!important;">
+    <div class="#{MODE != null?'col-sm-11':'col-sm-8'}" style="padding-left: 0px!important;">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']} *"
                            style="padding-left: 0px;"/>
 
-            <div class="col-sm-7">
+            <div class="col-sm-8">
+                <div style="float: left!important; width: 78%!important; margin-right: 50px!important;">
                 <h:inputText maxlength="50" id="companyId"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.company}"
@@ -75,39 +81,43 @@
                              required="true" requiredMessage="#{msgs['supplier.lbl.company']} is required"
                              tabindex="2"/>
                 <p:message for="companyId"/>
+                </div>
+                <div style="float: left!important;">
+                    <h:panelGroup id="idBtnCancel">
+                        <h:panelGroup rendered="#{MODE != null }">
+                            <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="PF('supplierModal').hide()">
+                                    #{msgs['lbl.cancel']}
+                                </button>
+                            </h:panelGroup>
+                            <h:commandButton value="#{msgs['lbl.cancel']}"
+                                             styleClass="btn btn-primary btn-sm"
+                                             rendered="#{not supplierProcBean.supplierMode}">
+                                <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
+                                        oncomplete="activeCategoryBrandTab();"
+                                        immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
+                            </h:commandButton>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{MODE ==null}">
+                            <h:link value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
+                                    outcome="list" styleClass="btn btn-primary btn-sm"/>
+                            <h:commandButton value="#{msgs['lbl.cancel']}"
+                                             styleClass="btn btn-primary btn-sm"
+                                             rendered="#{not supplierProcBean.supplierMode}">
+                                <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
+                                        oncomplete="activeCategoryBrandTab();"
+                                        immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
+                            </h:commandButton>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
             </div>
 
         </div>
     </div>
 
     <div class="col-sm-2" style="margin-top: -12px!important;">
-        <h:panelGroup id="idBtnCancel">
-            <h:panelGroup rendered="#{MODE != null }">
-                <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
-                    <button type="button" class="btn btn-primary btn-sm" onclick="PF('supplierModal').hide()">
-                        #{msgs['lbl.cancel']}
-                    </button>
-                </h:panelGroup>
-                <h:commandButton value="#{msgs['lbl.cancel']}"
-                                 styleClass="btn btn-primary btn-sm"
-                                 rendered="#{not supplierProcBean.supplierMode}">
-                    <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
-                            oncomplete="activeCategoryBrandTab();"
-                            immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
-                </h:commandButton>
-            </h:panelGroup>
-            <h:panelGroup rendered="#{MODE ==null}">
-                <h:link value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
-                        outcome="list" styleClass="btn btn-primary btn-sm"/>
-                <h:commandButton value="#{msgs['lbl.cancel']}"
-                                 styleClass="btn btn-primary btn-sm"
-                                 rendered="#{not supplierProcBean.supplierMode}">
-                    <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
-                            oncomplete="activeCategoryBrandTab();"
-                            immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
-                </h:commandButton>
-            </h:panelGroup>
-        </h:panelGroup>
+
     </div>
     <div class="clearfix"/>
     <br/>

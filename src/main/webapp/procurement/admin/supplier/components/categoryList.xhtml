@@ -6,9 +6,9 @@
     <div style="float: left">
         <p:pickList id="categoryPickList" value="#{categoryBrandBean.categories}" var="_category"
                     addLabel="Add to Supplier"
+                    styleClass="pick-list-supplier"
                     removeLabel="Remove from Supplier"
                     converter="categoryConverter"
-                    styleClass="algo"
                     itemLabel="#{_category.name}" itemValue="#{_category}">
             <p:ajax event="transfer" process="@this" async="false"/>
         </p:pickList>

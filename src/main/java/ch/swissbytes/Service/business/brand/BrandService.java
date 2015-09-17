@@ -2,7 +2,9 @@ package ch.swissbytes.Service.business.brand;
 
 
 import ch.swissbytes.Service.business.Service;
+import ch.swissbytes.Service.business.supplierProc.SupplierBrandDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
+import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -20,6 +22,9 @@ public class BrandService  extends Service<BrandEntity> implements Serializable{
     @Inject
     private BrandDao brandDao;
 
+    @Inject
+    private SupplierBrandDao supplierBrandDao;
+
 
 
     @Transactional
@@ -32,6 +37,9 @@ public class BrandService  extends Service<BrandEntity> implements Serializable{
     public void doUpdate(BrandEntity detachedEntity){
         log.info("doUpdate");
         brandDao.doUpdate(detachedEntity);
+        if(detachedEntity.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+            supplierBrandDao.doDeleteByBrandId(detachedEntity.getId());
+        }
     }
 
     public List<BrandEntity> getBrandList(){

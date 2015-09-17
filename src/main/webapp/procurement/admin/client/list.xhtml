@@ -12,7 +12,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
-            <div class="col-md-8 panel-tab-users">
+            <div class="col-md-12 panel-tab-users">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="left-inner-addon">
@@ -39,11 +39,11 @@
                     </div>
                 </div>
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
-                    <p:column headerText="Name" width="120">
+                    <p:column headerText="Name" width="220">
                         <h:outputText value="#{_cl.name}" escape="false"/>
                     </p:column>
                     <p:column headerText="Description">
-                        <p:editor id="descriptionClId" value="#{_cl.title}" controls="" styleClass="view-description"/>
+                        <p:editor id="descriptionClId" value="#{_cl.title}" controls="" styleClass="view-description" style="height: 180px!important;"/>
                     </p:column>
                     <p:column headerText="Report Logo" width="130">
                         #{_cl.reportLogo.description}
