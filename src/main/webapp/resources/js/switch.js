@@ -16,10 +16,19 @@ function create(){
     );
 }
 function initializeSwitch() {
-    $("#switchLiquidatedDamages").bootstrapSwitch('state',$("#checkboxLiquidatedDamages").val());
-    $("#switchExchangeVariation").bootstrapSwitch('state',$("#checkboxExchangeVariation").val());
-    $("#switchDrawingData").bootstrapSwitch('state', $("#checkboxDrawingData").val());
-    $("#switchSecurityDeposit").bootstrapSwitch('state', $("#checkboxSecurityDeposit").val());
+    liquidated=$.parseJSON($("#editPoForm\\:checkboxLiquidatedDamages").val());
+    exchangevariation=$.parseJSON($("#editPoForm\\:checkboxExchangeVariation").val());
+    drawingData=$.parseJSON($("#editPoForm\\:checkboxDrawingData").val());
+    securityDeposit=$.parseJSON($("#editPoForm\\:checkBoxSecurityDeposit").val());
+  /*  console.log("liquidated "+liquidated);
+    console.log("exchangevariation "+exchangevariation);
+    console.log("drawingdata "+drawingData);
+    console.log("securityDeposit "+drawingData);
+    console.log("editPoForm:securityDeposit "+securityDeposit);*/
+    $("#switchLiquidatedDamages").bootstrapSwitch('state',liquidated);
+    $("#switchExchangeVariation").bootstrapSwitch('state',exchangevariation);
+    $("#switchDrawingData").bootstrapSwitch('state',drawingData);
+    $("#switchSecurityDeposit").bootstrapSwitch('state', securityDeposit);
 }
 
 function restartSwitches(){
@@ -27,23 +36,17 @@ function restartSwitches(){
     initializeSwitch();
 }
 
-$('#switchLiquidatedDamages').on('switch-change', function (e, data) {
-    var $el = $(data.el)
-        , value = data.value;
-    console.log(e, $el, value);
+$('#switchLiquidatedDamages').on('switchChange.bootstrapSwitch', function (e, data) {
+    $('#checkboxLiquidatedDamages').val(data);
+    $('#editPoForm\\:checkboxLiquidatedDamages').val(data);
 });
-$('#switchExchangeVariation').on('switch-change', function (e, data) {
-    var $el = $(data.el)
-        , value = data.value;
-    console.log(e, $el, value);
+$('#switchExchangeVariation').on('switchChange.bootstrapSwitch', function (e, data) {
+    $('#editPoForm\\:checkboxExchangeVariation').val(data);
 });
-$('#switchDrawingData').on('switch-change', function (e, data) {
-    var $el = $(data.el)
-        , value = data.value;
-    console.log(e, $el, value);
+$('#switchDrawingData').on('switchChange.bootstrapSwitch', function (e, data) {
+    $('#editPoForm\\:checkboxDrawingData').val(data);
 });
-$('#switchSecurityDeposit').on('switch-change', function (e, data) {
-    var $el = $(data.el)
-        , value = data.value;
-    console.log(e, $el, value);
+$('#switchSecurityDeposit').on('switchChange.bootstrapSwitch', function (e, data) {
+    $('#editPoForm\\:checkBoxSecurityDeposit').val(data);
 });
+

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public enum ProcurementStatus implements Serializable {
 
 
-    COMMITTED(0,"Committed"), FINAL(1,"Final"), READY(2,"Ready"), ON_HOLD(3,"On hold"),EDITED(4,"Edited");
+    COMMITTED(0,"Committed"), FINAL(1,"Final"), READY(2,"Ready"), ON_HOLD(3,"On hold"), INCOMPLETE(4,"Incomplete");
 
     private Integer id;
     private String label;

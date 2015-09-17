@@ -134,7 +134,7 @@ public class PurchaseOrderCreate implements Serializable {
         newScopeSupply = new ScopeSupplyEntity();
         newPurchaseOrder.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         newPurchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
-        newPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.EDITED);
+        newPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.INCOMPLETE);
         newPurchaseOrder.setProjectEntity(projectService.findProjectById(1L));
     }
 

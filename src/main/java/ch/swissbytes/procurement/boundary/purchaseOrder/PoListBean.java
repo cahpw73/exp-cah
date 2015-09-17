@@ -239,7 +239,7 @@ public class PoListBean implements Serializable {
     public boolean canEdit(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
-        ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.EDITED.ordinal());
+        ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
         /*if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                     || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal())) {
@@ -274,7 +274,7 @@ public class PoListBean implements Serializable {
     public boolean canCommitt(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                 (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()||
-        entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.EDITED.ordinal());
+        entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
     }
 
     public boolean actionForReady(PurchaseOrderEntity entity) {
@@ -300,7 +300,7 @@ public class PoListBean implements Serializable {
     public void printPOFinal() {
         log.info("printing po final");
         if (currentPurchaseOrder != null && currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.COMMITTED.ordinal()
-                &&currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.EDITED.ordinal()) {
+                &&currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.INCOMPLETE.ordinal()) {
             doFinalise();
         }
         printPo(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus(), false);
