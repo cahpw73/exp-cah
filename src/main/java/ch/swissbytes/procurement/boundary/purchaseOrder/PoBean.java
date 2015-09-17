@@ -191,7 +191,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.EDITED.ordinal()) {
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.INCOMPLETE.ordinal()) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
@@ -207,7 +207,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.EDITED.ordinal()) {
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.INCOMPLETE.ordinal()) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);

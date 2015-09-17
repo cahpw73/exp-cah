@@ -28,6 +28,11 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
         super.initialize(dao);
     }
 
+    public LogoEntity findById(Long id){
+        List<LogoEntity>list=dao.findById(LogoEntity.class,id);
+        return list.isEmpty()?null:list.get(0);
+    }
+
     @Transactional
     public void delete(LogoEntity logo){
         logo.setStatus(StatusEnum.DELETED);
