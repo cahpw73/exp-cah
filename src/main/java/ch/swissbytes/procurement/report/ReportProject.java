@@ -113,26 +113,37 @@ public class ReportProject extends ReportView implements Serializable {
     protected String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
         Boolean supplier = sortMap.get("supplier");
-        Boolean varNo = sortMap.get("varNo");
+        Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
         if(poNo){
-            strSort = strSort+"po.po, ";
+            strSort = strSort+"po.po,po.orderedvariation, ";
             sortByName = sortByName + "Po No, ";
         }
-        if(varNo){
-            strSort = strSort+"po.orderedvariation, ";
-            sortByName = sortByName +  "Var No,";
-        }
-        if (supplier){
+        if (supplier && poNo){
             strSort = strSort+"sp.company, ";
             sortByName = sortByName +  "Supplier, ";
+        }else if(supplier && !deliveryDate){
+            strSort = strSort+"sp.company,po.orderedvariation, ";
+            sortByName = sortByName +  "Supplier, ";
+        }
+        if(deliveryDate && ( poNo || supplier)){
+            strSort = strSort+"po.po_delivery_date, ";
+            sortByName = sortByName +  "Delivery Date, ";
+        }else if(deliveryDate && !supplier) {
+            strSort = strSort+"po.po_delivery_date,po.orderedvariation, ";
+            sortByName = sortByName +  "Delivery Date, ";
+        }
+        if(poNo && supplier && deliveryDate){
+            strSort = "po.po_delivery_date,po.orderedvariation,sp.company,po.po_delivery_date ";
+            sortByName =  "Po No, Supplier, Delivery Date, ";
         }
 
         if(strSort.length()>1){
             sortByName = sortByName.substring(0,sortByName.length()-2);
             strSort = strSort.substring(0,strSort.length() - 2);
         }else{
-            strSort = "po.id";
+            sortByName = "Variation";
+            strSort = "po.orderedvariation";
         }
         return strSort;
     }

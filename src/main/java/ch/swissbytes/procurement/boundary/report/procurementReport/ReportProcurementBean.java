@@ -85,39 +85,46 @@ public class ReportProcurementBean implements Serializable {
         log.info("print project procurement");
         Map<String, Boolean> sortMap = new HashMap<>();
         sortMap.put("poNo", sortByPoNo);
-        sortMap.put("varNo", sortByVarNo);
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
-        if (selectedProject != null){
-            switch (reportName){
-                case "ppr" : List<PurchaseOrderEntity> list = poService.findByProjectIdCustomizedSort(selectedProject.getId(), sortMap);
-                             reportProcBean.printProjectPurchaseOrder(selectedProject, list, getDescriptionSort(sortMap));
+        if (selectedProject != null) {
+            switch (reportName) {
+                case "ppr":
+                    reportProcBean.printProjectPurchaseOrder(selectedProject, sortMap);
                     break;
-                case "rrr" : reportProcBean.printRequiredRetentions(selectedProject, sortMap);
+                case "rrr":
+                    reportProcBean.printRequiredRetentions(selectedProject, sortMap);
                     break;
-                case "sci":reportProcBean.printSupplierContactInformation(selectedProject, sortMap);
+                case "sci":
+                    reportProcBean.printSupplierContactInformation(selectedProject, sortMap);
                     break;
-                case "dsi":reportProcBean.printDetailedSupplierInformation(selectedProject, sortMap);
+                case "dsi":
+                    reportProcBean.printDetailedSupplierInformation(selectedProject, sortMap);
                     break;
-                case "udr":reportProcBean.printUncommittedData(selectedProject, sortMap);
+                case "udr":
+                    reportProcBean.printUncommittedData(selectedProject, sortMap);
                     break;
-                case "mrr":reportProcBean.printMaterialRequisition(selectedProject, sortMap);
+                case "mrr":
+                    reportProcBean.printMaterialRequisition(selectedProject, sortMap);
                     break;
-                case "spor" : reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap);
+                case "spor":
+                    reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap);
                     break;
-                case "pdp": reportProcBean.printDetailedProcurementReport(selectedProject, sortMap);
+                case "pdp":
+                    reportProcBean.printDetailedProcurementReport(selectedProject, sortMap);
                     break;
-                case "cc": reportProcBean.printCommittedCurrenciesReport(selectedProject,sortMap);
+                case "cc":
+                    reportProcBean.printCommittedCurrenciesReport(selectedProject, sortMap);
                     break;
             }
-        }else{
+        } else {
             Messages.addFlashGlobalError("Select a project first");
         }
 
     }
 
-    public void loadNameReport(){
-        if(StringUtils.isNotEmpty(reportName)) {
+    public void loadNameReport() {
+        if (StringUtils.isNotEmpty(reportName)) {
             switch (reportName) {
                 case "ppr":
                     reportTitle = projectProcurementReport;
@@ -148,7 +155,7 @@ public class ReportProcurementBean implements Serializable {
         log.info("report title: " + reportTitle);
     }
 
-    public void resetValuesProjectProc(){
+    public void resetValuesProjectProc() {
         sortByPoNo = false;
         sortByVarNo = false;
         sortBySupplier = false;
@@ -156,33 +163,29 @@ public class ReportProcurementBean implements Serializable {
         selectedProject = new ProjectEntity();
     }
 
-    public String backToReports(){
+    public String backToReports() {
         log.info("back to reports");
         return "report?faces-redirect=true";
     }
 
-    private String getDescriptionSort(Map<String,Boolean> sortMap){
+    private String getDescriptionSort(Map<String, Boolean> sortMap) {
         Boolean poNo = sortMap.get("poNo");
-        Boolean varNo = sortMap.get("varNo");
         Boolean supplier = sortMap.get("supplier");
         Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
-        if(poNo){
-            strSort = strSort+"PO No,";
+        if (poNo) {
+            strSort = strSort + "PO No,";
         }
-        if(varNo){
-            strSort = strSort+"Var No,";
+        if (supplier) {
+            strSort = strSort + "Supplier,";
         }
-        if (supplier){
-            strSort = strSort+"Supplier,";
+        if (deliveryDate) {
+            strSort = strSort + "Delivery Date,";
         }
-        if(deliveryDate){
-            strSort = strSort+"Delivery Date,";
+        if (strSort.length() > 1) {
+            strSort = strSort.substring(0, strSort.length() - 1);
         }
-        if(strSort.length()>1){
-            strSort = strSort.substring(0,strSort.length() - 1);
-        }
-        return  strSort;
+        return strSort;
     }
 
     public List<ProjectEntity> getProjectList() {

@@ -41,10 +41,6 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
         this.configuration = configuration;
         this.project = project;
         this.sortMap = sortMap;
-        LookupValueFactory lookupValueFactory = new LookupValueFactory();
-        //addParameters("TIME_MEASUREMENT",lookupValueFactory.geTimesMeasurement());
-        //addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
-        //addParameters("COUNTRY_LOCALE", configuration.getCountry());
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
@@ -69,15 +65,11 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
 
     private String getStrSort(){
         Boolean poNo = sortMap.get("poNo");
-        Boolean varNo = sortMap.get("varNo");
         Boolean supplier = sortMap.get("supplier");
         Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
         if(poNo){
             strSort = strSort+"po.po,";
-        }
-        if(varNo){
-            strSort = strSort+"po.orderedVariation,";
         }
         if (supplier){
             strSort = strSort+"sp.company,";

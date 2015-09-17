@@ -183,17 +183,12 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     }
 
     public List<PurchaseOrderEntity> findByProjectCustomizedSort(Long projectId, Map<String, Boolean> sortByMap) {
-
         Boolean poNo = sortByMap.get("poNo");
-        Boolean varNo = sortByMap.get("varNo");
         Boolean supplier = sortByMap.get("supplier");
         Boolean deliveryDate = sortByMap.get("deliveryDate");
         String strSort = "";
         if (poNo) {
             strSort = strSort + "p.po,";
-        }
-        if (varNo) {
-            strSort = strSort + "p.orderedVariation,";
         }
         if (supplier) {
             strSort = strSort + "sp.company,";
@@ -201,7 +196,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         if (deliveryDate) {
             strSort = strSort + "p.poDeliveryDate,";
         }
-
         if (strSort.length() > 1) {
             strSort = strSort.substring(0, strSort.length() - 1);
         }
@@ -217,7 +211,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" LEFT JOIN pc.currency c");
         sb.append(" WHERE p.status.id=:ENABLED ");
         sb.append(" AND p.projectEntity.id  = :PROJECT_ID");
-        if (poNo || varNo || supplier || deliveryDate) {
+        if (poNo || supplier || deliveryDate) {
             sb.append(" ORDER BY " + strSort + " ");
         }
         Map<String, Object> map = new HashMap<>();

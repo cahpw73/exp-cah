@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6105100000000048"/>
-	<property name="ireport.x" value="396"/>
-	<property name="ireport.y" value="87"/>
+	<property name="ireport.x" value="136"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -50,6 +50,13 @@
 		<field name="poValue" class="java.math.BigDecimal"/>
 		<field name="projectValue" class="java.math.BigDecimal"/>
 	</subDataset>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
+	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\projectProcurementReport\\"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="client" class="java.lang.String"/>
@@ -58,24 +65,18 @@
 	<parameter name="projectCurrency" class="java.lang.String"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="currentDate" class="java.util.Date"/>
-	<parameter name="TIME_ZONE" class="java.lang.String"/>
-	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="pooList" class="net.sf.jasperreports.engine.JRDataSource"/>
-	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
-	<parameter name="PROJECT_ID" class="java.lang.Long"/>
-	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\projectProcurementReport\\"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="sortByName" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select po,po.variation,order_date,sp.company,p.order_title,c.code,po_delivery_date,p.po_status,p.id as po_id
 from purchase_order po inner join p_order p on p.id=po.po_id
      left join supplier_proc sp on sp.id = p.supplier_id
      left join project_currency pc on p.currency_id = pc.id
      left join currency c on pc.currency_id=c.id
-where po.project_id=$P{PROJECT_ID}
-order by po.orderedvariation]]>
+where po.project_id=$P{projectIdFilter}
+order by $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
@@ -113,11 +114,11 @@ order by po.orderedvariation]]>
 				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">PROJECT PROCUREMENT REPORT</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="279" y="46" width="150" height="12"/>
+				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="278" y="46" width="161" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Purchase Orders and Contracts Sorted By]]></text>
+				<text><![CDATA[Purchase Orders and Contracts Sorted By:]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="dd7c0244-9235-4c12-95cb-503d677c506e" x="801" y="0" width="1" height="103" isRemoveLineWhenBlank="true"/>
@@ -151,11 +152,11 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="430" y="46" width="196" height="12"/>
+				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="445" y="46" width="196" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{sortBy}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{sortByName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="b812cd39-61ac-4c91-848f-204901600c9b" x="7" y="47" width="80" height="12"/>
@@ -198,6 +199,11 @@ order by po.orderedvariation]]>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8644cbcd-6491-454e-a6e3-e4b60f306fbc" x="278" y="66" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{sortBy}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -388,28 +394,28 @@ order by po.orderedvariation]]>
 	<pageFooter>
 		<band height="55" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="1bc9add7-0934-4369-a434-683b7ace2aa3" x="760" y="2" width="9" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="1bc9add7-0934-4369-a434-683b7ace2aa3" x="760" y="43" width="9" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement uuid="8adf816d-de53-46f4-8146-dfe65ccaa833" x="770" y="2" width="30" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="8adf816d-de53-46f4-8146-dfe65ccaa833" x="770" y="43" width="30" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ac272da3-21c6-4ab1-a35f-1101948dcb85" x="743" y="2" width="16" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="ac272da3-21c6-4ab1-a35f-1101948dcb85" x="743" y="43" width="16" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="6a642ecd-d9e2-4422-9505-4d12fd330974" x="712" y="2" width="28" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="6a642ecd-d9e2-4422-9505-4d12fd330974" x="712" y="43" width="28" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>

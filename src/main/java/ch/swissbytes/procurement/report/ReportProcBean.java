@@ -106,11 +106,11 @@ public class ReportProcBean implements Serializable {
         return fileName+(po.getPoTitle()!=null?po.getPoTitle():"");
     }
 
-    public void printProjectPurchaseOrder(final ProjectEntity project, final List<PurchaseOrderEntity> poList, final String strSortBy) {
+    public void printProjectPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
         log.info("printProjectPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.project.purchase.order", messages, locale, configuration, poList, project, strSortBy);
+        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.project.purchase.order", messages, locale, configuration, project, sortMap);
         reportView.printDocument(null);
         openReport = true;
     }

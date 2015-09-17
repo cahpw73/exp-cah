@@ -18,16 +18,7 @@ import java.util.logging.Logger;
 /**
  * Created by christian on 11/06/14.
  */
-public class ReportProjectProcurement extends ReportView implements Serializable {
-
-    private final Logger log = Logger.getLogger(ReportProjectProcurement.class.getName());
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
-    private Configuration configuration;
-    private List<PurchaseOrderEntity> poList;
-    private ProjectEntity project;
-    private String strSortBy;
-
-
+public class ReportProjectProcurement extends ReportProject implements Serializable {
 
     /**
      * @param filenameJasper   - fileName the reports to use
@@ -36,35 +27,13 @@ public class ReportProjectProcurement extends ReportView implements Serializable
      * @param locale           {@link java.util.Locale}
      */
     public ReportProjectProcurement(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                    Configuration configuration, List<PurchaseOrderEntity> poList, ProjectEntity project, String strSortBy) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
-        this.configuration = configuration;
-        this.poList = poList;
-        this.project = project;
-        this.strSortBy = strSortBy;
-        LookupValueFactory lookupValueFactory = new LookupValueFactory();
-        addParameters("FORMAT_DATE", configuration.getFormatDate());
-        addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("FORMAT_DATE_TIME", configuration.getFormatDateTime());
-        addParameters("STATUS_PROCUREMENT",lookupValueFactory.getStatusPOProcurement());
-        addParameters("SUBREPORT_DIR", "reports/procurement/uncommittedDataReport/");
-        loadParamDeliverables();
+                                    Configuration configuration, ProjectEntity project, Map<String, Boolean> sortMap) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
     }
 
-    private void loadParamDeliverables() {
-        addParameters("PROJECT_ID", project.getId());
-        addParameters("projectCode", project.getProjectNumber());
-        addParameters("projectName", project.getTitle());
-        addParameters("projectCurrency",getCurrencyDefault());
-        addParameters("client", project.getClient().getName());
-        addParameters("sortBy", strSortBy);
-        Date now = new Date();
-        addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
-
-        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
-            addParameters("logoFooter", logo);
-        }
+    @Override
+    protected void loadAdditionalParameters() {
+        addParameters("SUBREPORT_DIR", "reports/procurement/uncommittedDataReport/");
     }
 
     @Override
@@ -74,15 +43,5 @@ public class ReportProjectProcurement extends ReportView implements Serializable
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    public String getCurrencyDefault() {
-        String currencyDefault = "";
-        for(ProjectCurrencyEntity pc : project.getCurrencies()){
-            if(pc.getProjectDefault()){
-                currencyDefault = pc.getCurrency().getName();
-            }
-        }
-        return currencyDefault;
     }
 }
