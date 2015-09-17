@@ -15,7 +15,7 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editPoForm" class="form-horizontal" >
-            <p:remoteCommand name="onload" oncomplete="initializeSwitch();"
+            <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed});"
                              autoRun="true"/>
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{poBean.beingCreated}">
