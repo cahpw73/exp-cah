@@ -44,6 +44,8 @@ public class LogoBean implements Serializable {
     private List<LogoEntity> logos;
     private List<LogoEntity>allLogos;
 
+    private LogoEntity logoEdited;
+
     @PostConstruct
     public void create() {
         log.info("created LogoBean");
@@ -55,6 +57,13 @@ public class LogoBean implements Serializable {
         logos = service.getLogoList();
         log.info("size " + logos.size());
         allLogos=service.findAll();
+    }
+
+    public void selection(){
+        logoEdited=null;
+        if(logoSelected!=null) {
+            logoEdited = service.findById(logoSelected.getId());
+        }
     }
 
     public List<LogoEntity> getAllLogos() {
@@ -85,11 +94,22 @@ public class LogoBean implements Serializable {
         return "logo?faces-redirect=true";
     }
 
+    public String doUpdate(){
+        logo=logoEdited;
+        if(!validate()){
+            return "";
+        }
+        service.doUpdate(logoEdited);
+        return "logo?faces-redirect=true";
+    }
+    public String doCancel(){
+        return "logo?faces-redirect=true";
+    }
+
     public boolean saveForProject() {
         log.info("saving logo for project");
         boolean saved = false;
         if (!validate()) {
-//this is empty
         } else {
             logo = service.save(logo);
             RequestContext context = RequestContext.getCurrentInstance();
@@ -171,5 +191,13 @@ public class LogoBean implements Serializable {
 
     public void setSelected(Long selected) {
         this.selected = selected;
+    }
+
+    public LogoEntity getLogoEdited() {
+        return logoEdited;
+    }
+
+    public void setLogoEdited(LogoEntity logoEdited) {
+        this.logoEdited = logoEdited;
     }
 }
