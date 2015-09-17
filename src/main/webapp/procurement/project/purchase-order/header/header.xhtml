@@ -247,6 +247,7 @@
             </div>
         </div>
         <br/>
+
         <div class="clearfix"/>
         <div>
             <div style="width: 345px!important; float: left!important;">
@@ -255,17 +256,18 @@
                                    for="requisitionDt" value="#{msgs['po.header.lbl.rtf']}"/>
 
                     <h:inputText id="rtfId" readonly="#{poBean.beingViewed}"
-                                style="max-width: 200px;"
+                                 style="max-width: 200px;"
                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.RTFNo}"
                                  styleClass="form-control"/>
                 </div>
             </div>
             <div style="width: 345px!important; float: left!important;">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   style="margin-left: 22px;"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.liquidated.damages.applicable']}"/>
                     <h:inputHidden id="checkboxLiquidatedDamages"
-                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.liquidatedDamagesApplicable}" />
+                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.liquidatedDamagesApplicable}"/>
                     <input type="checkbox" name="my-checkbox"
                            id="switchLiquidatedDamages"
                            data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
@@ -280,7 +282,7 @@
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.exchange.rate.variation']}"/>
                     <h:inputHidden id="checkboxExchangeVariation"
-                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}" />
+                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}"/>
                     <input type="checkbox" name="my-checkbox"
                            id="switchExchangeVariation" value="#{true}"
                            data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}"/>
@@ -289,39 +291,36 @@
             </div>
             <div style="width: 345px!important; float: left!important;">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr" style="margin-left: 22px;"
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   style="margin-left: 22px;"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.vendor.drawings.data']}"/>
                     <h:inputHidden id="checkboxDrawingData"
-                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}" />
+                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}"/>
                     <input type="checkbox" name="my-checkbox"
                            id="switchDrawingData"
                            value="false"
                            data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
-                            </input>
+                    </input>
                 </div>
             </div>
         </div>
         <div class="clearfix"/>
 
-            <div class="row">
-                <div style="width: 345px!important; float: left!important;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                       style="margin-left: 13px;"
-                                       value="#{msgs['po.header.lbl.security.deposit']}"/>
-                        <h:inputText id="checkBoxSecurityDeposit" value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}"/>
-                        <!--<p:selectBooleanCheckbox disabled="#{poBean.beingViewed}"
-                                                 id="checkBoxSecurityDeposit"
-                                                 style="display: none"
-                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">
-                        </p:selectBooleanCheckbox>-->
-                            <input type="checkbox" name="my-checkbox"
-                                   id="switchSecurityDeposit"
-                                   data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
-                        </input>
-                    </div>
+        <div class="row">
+            <div style="width: 345px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   style="margin-left: 13px;"
+                                   value="#{msgs['po.header.lbl.security.deposit']}"/>
+                    <h:inputHidden id="checkBoxSecurityDeposit"
+                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}"/>
+                    <input type="checkbox" name="my-checkbox"
+                           id="switchSecurityDeposit"
+                           data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                    </input>
                 </div>
             </div>
+        </div>
 
     </div>
 </ui:composition>
