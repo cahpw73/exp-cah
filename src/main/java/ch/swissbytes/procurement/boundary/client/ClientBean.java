@@ -137,19 +137,6 @@ public class ClientBean extends Bean implements Serializable {
         currentLogo=1;
         logoBean.restart();
     }
-  /*  public void startClientFooter() {
-        currentLogo = 2;
-        logoBean.restart();
-    }
-    public void startDefaultLogo() {
-        currentLogo = 3;
-        logoBean.restart();
-    }
-
-    public void startDefaultFooter() {
-        currentLogo = 4;
-        logoBean.restart();
-    }*/
 
     public void startClientLogoLeft(){
         currentLogo=5;

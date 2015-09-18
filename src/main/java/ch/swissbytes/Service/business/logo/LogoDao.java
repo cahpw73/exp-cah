@@ -94,4 +94,22 @@ public class LogoDao extends GenericDao<LogoEntity> implements Serializable {
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(), params);
     }
+
+    public List<LogoEntity> existsLogoDescription(final String description, final Long id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT l ");
+        sb.append(" FROM LogoEntity l ");
+        sb.append(" WHERE l.status = :ENABLE ");
+        sb.append(" AND LOWER(l.description) = :DESCRIPTION ");
+        if(id!=null){
+            sb.append(" AND NOT l.id = :ID ");
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("DESCRIPTION",description.toLowerCase());
+        if(id!=null) {
+            params.put("ID", id);
+        }
+        return super.findBy(sb.toString(), params);
+    }
 }
