@@ -152,7 +152,7 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="445" y="46" width="196" height="12"/>
+				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="439" y="46" width="196" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -199,11 +199,6 @@ order by $P!{sortBy}]]>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="8644cbcd-6491-454e-a6e3-e4b60f306fbc" x="278" y="66" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{sortBy}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
