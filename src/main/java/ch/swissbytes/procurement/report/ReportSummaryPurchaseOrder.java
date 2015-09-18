@@ -19,15 +19,7 @@ import java.util.logging.Logger;
 /**
  * Created by christian on 11/06/14.
  */
-public class ReportSummaryPurchaseOrder extends ReportView implements Serializable {
-
-    private final Logger log = Logger.getLogger(ReportSummaryPurchaseOrder.class.getName());
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
-    private Configuration configuration;
-    private ProjectEntity project;
-    Map<String, Boolean> sortMap;
-
-
+public class ReportSummaryPurchaseOrder extends ReportProject implements Serializable {
 
     /**
      * @param filenameJasper   - fileName the reports to use
@@ -37,48 +29,12 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
      */
     public ReportSummaryPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                                       Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
-        this.configuration = configuration;
-        this.project = project;
-        this.sortMap = sortMap;
-        addParameters("patternDecimal", configuration.getPatternDecimal());
-        addParameters("FORMAT_DATE", configuration.getFormatDate());
-        addParameters("TIME_ZONE", configuration.getTimeZone());
+        super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
+    }
+
+    @Override
+    protected void loadAdditionalParameters() {
         addParameters("SUBREPORT_DIR","reports/procurement/summaryPurchaseOrderReport/");
-        loadParamDeliverables();
-    }
-
-    private void loadParamDeliverables() {
-        addParameters("projectCode", project.getProjectNumber());
-        addParameters("projectName", project.getTitle());
-        addParameters("projectCurrency",getCurrencyDefault());
-        addParameters("client", project.getClient().getName());
-        if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
-            InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
-            addParameters("logoFooter", logo);
-        }
-        addParameters("sortBy", getStrSort());
-        addParameters("projectIdFilter",project.getId());
-        Date now = new Date();
-        addParameters("currentDate",now);
-    }
-
-    private String getStrSort(){
-        Boolean poNo = sortMap.get("poNo");
-        Boolean supplier = sortMap.get("supplier");
-        Boolean deliveryDate = sortMap.get("deliveryDate");
-        String strSort = "";
-        if(poNo){
-            strSort = strSort+"po.po,";
-        }
-        if (supplier){
-            strSort = strSort+"sp.company,";
-        }
-
-        if(strSort.length()>1){
-            strSort = strSort.substring(0,strSort.length() - 1);
-        }
-        return strSort;
     }
 
     @Override
@@ -88,16 +44,5 @@ public class ReportSummaryPurchaseOrder extends ReportView implements Serializab
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-
-    public String getCurrencyDefault() {
-        String currencyDefault = "";
-        for(ProjectCurrencyEntity pc : project.getCurrencies()){
-            if(pc.getProjectDefault()){
-                currencyDefault = pc.getCurrency().getName();
-            }
-        }
-        return currencyDefault;
     }
 }

@@ -115,27 +115,27 @@ public class ReportProject extends ReportView implements Serializable {
         Boolean supplier = sortMap.get("supplier");
         Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
-        if(poNo){
-            strSort = strSort+"po.po,po.orderedvariation, ";
-            sortByName = sortByName + "Po No, ";
-        }
-        if (supplier && poNo){
-            strSort = strSort+"sp.company, ";
-            sortByName = sortByName +  "Supplier, ";
-        }else if(supplier && !deliveryDate){
-            strSort = strSort+"sp.company,po.orderedvariation, ";
-            sortByName = sortByName +  "Supplier, ";
-        }
-        if(deliveryDate && ( poNo || supplier)){
-            strSort = strSort+"po.po_delivery_date, ";
-            sortByName = sortByName +  "Delivery Date, ";
-        }else if(deliveryDate && !supplier) {
-            strSort = strSort+"po.po_delivery_date,po.orderedvariation, ";
-            sortByName = sortByName +  "Delivery Date, ";
-        }
         if(poNo && supplier && deliveryDate){
-            strSort = "po.po_delivery_date,po.orderedvariation,sp.company,po.po_delivery_date ";
-            sortByName =  "Po No, Supplier, Delivery Date, ";
+            strSort = "po.po,po.orderedvariation,sp.company,po.po_delivery_date, ";
+            sortByName =  "Po No, Variation, Supplier, Delivery Date, ";
+        }else if(!poNo && supplier && deliveryDate){
+            strSort = "sp.company,po.po_delivery_date,po.orderedvariation, ";
+            sortByName =  "Supplier, Delivery Date, Variation, ";
+        }else if(!poNo && !supplier && deliveryDate){
+            strSort = "po.po_delivery_date,po.orderedvariation, ";
+            sortByName =  "Delivery Date, Variation, ";
+        }else if(poNo && supplier && !deliveryDate){
+            strSort = "po.po,po.orderedvariation,sp.company, ";
+            sortByName =  "Po No, Variation, Supplier, ";
+        }else if(poNo && !supplier && !deliveryDate){
+            strSort = "po.po,po.orderedvariation, ";
+            sortByName =  "Po No, Variation, ";
+        }else if(!poNo && supplier && !deliveryDate){
+            strSort = "sp.company,po.orderedvariation, ";
+            sortByName =  "Supplier, Variation, ";
+        }else if(poNo && !supplier && deliveryDate){
+            strSort = "po.po,po.orderedvariation,po.po_delivery_date, ";
+            sortByName =  "Po No, Variation, Delivery Date, ";
         }
 
         if(strSort.length()>1){

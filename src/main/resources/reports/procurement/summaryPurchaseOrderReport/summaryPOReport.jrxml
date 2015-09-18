@@ -66,12 +66,14 @@
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="STATUS_PROCUREMENT" class="java.lang.Object"/>
+	<parameter name="sortByName" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select po.po,sp.company
 from purchase_order po, p_order p,supplier_proc sp
 where po.status_id = 1 and po.project_id = $P{projectIdFilter}
       and po.po_id = p.id and sp.id=p.supplier_id
-group by po.po,sp.company]]>
+group by po.po,sp.company,po.orderedvariation
+order by $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
@@ -105,11 +107,11 @@ group by po.po,sp.company]]>
 				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">SUMMARY PURCHASE ORDER REPORT</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="188" y="46" width="151" height="12"/>
+				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="188" y="46" width="156" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Purchase Orders and Contracts Sorted By]]></text>
+				<text><![CDATA[Purchase Orders and Contracts Sorted By:]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="dd7c0244-9235-4c12-95cb-503d677c506e" x="554" y="0" width="1" height="105" isRemoveLineWhenBlank="true"/>
@@ -143,11 +145,11 @@ group by po.po,sp.company]]>
 				<textFieldExpression><![CDATA[$P{currentDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{currentDate}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="340" y="46" width="154" height="12"/>
+				<reportElement uuid="1fd804be-826e-4be7-93fb-018344d95fba" x="346" y="46" width="154" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{sortBy}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{sortByName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="c9c4d621-7607-4f16-95bd-3377f6e16f2f" x="77" y="87" width="100" height="12"/>
