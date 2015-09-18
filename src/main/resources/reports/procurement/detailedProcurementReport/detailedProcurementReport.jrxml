@@ -60,7 +60,8 @@
 from purchase_order po, p_order p
 where po.status_id = 1 and po.project_id = $P{projectIdFilter}
       and po.po_id = p.id
-group by po.po]]>
+group by po.po
+order by po.po]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
