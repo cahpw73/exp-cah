@@ -49,30 +49,35 @@
                                 <p:confirm header="Delete Logo"
                                            message="Are you sure delete this Logo?"/>
                             </p:commandLink>
+
                             <div class="clearfix"></div>
                             <br/>
                             <h:panelGroup id="editionMode">
-                                <h:graphicImage library="img" name="NoImage.png"
-                                                rendered="#{logoBean.logoSelected==null}"
-                                                width="#{logoBean.logo.file==null?'250':'0'}"
-                                                styleClass="logo-procurement-preview"
-                                                height="#{logoBean.logo.file==null?'250':'0'}"/>
-                                <o:graphicImage id="graphicId" rendered="#{logoBean.logoSelected!=null}" dataURI="true"
-                                                width="250"
-                                                height="250"
-                                                styleClass="img-responsive"
-                                                value="#{logoBean.logoEdited.file}"/>
+                                <div style="max-width: 250px!important; max-height: 250px!important;">
+                                    <h:graphicImage library="img" name="NoImage.png"
+                                                    rendered="#{logoBean.logoSelected==null}"
+                                                    width="#{logoBean.logo.file==null?'250':'0'}"
+                                                    styleClass="logo-procurement-preview"
+                                                    height="#{logoBean.logo.file==null?'250':'0'}"/>
+                                    <o:graphicImage id="graphicId" rendered="#{logoBean.logoSelected!=null}"
+                                                    dataURI="true"
+                                                    style="max-width:250px!important; max-height:250px!important;"
+                                                    value="#{logoBean.logoEdited.file}"/>
+                                </div>
                                 <div class="clearfix"></div>
                                 <br/>
                                 <p:inputText disabled="#{logoBean.logoSelected==null}"
                                              value="#{logoBean.logoEdited.description}"/>
+
                                 <div class="clearfix"></div>
                                 <br/>
                                 <h:commandButton styleClass="btn btn-primary btn-commandLink-primeFaces"
                                                  action="#{logoBean.doUpdate()}"
-                                                 value="update" disabled="#{logoBean.logoSelected==null}"/>
+                                                 value="#{msgs['lbl.update']}"
+                                                 disabled="#{logoBean.logoSelected==null}"/>
                                 &#160;
-                                <h:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces" action="#{logoBean.doCancel()}" value="cancel"/>
+                                <h:commandButton styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                                 action="#{logoBean.doCancel()}" value="#{msgs['lbl.cancel']}"/>
                             </h:panelGroup>
                         </div>
                     </div>

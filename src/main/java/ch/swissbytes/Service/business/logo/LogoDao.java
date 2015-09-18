@@ -89,6 +89,7 @@ public class LogoDao extends GenericDao<LogoEntity> implements Serializable {
         sb.append(" SELECT l ");
         sb.append(" FROM LogoEntity l ");
         sb.append(" WHERE l.status = :ENABLE ");
+        sb.append("ORDER BY l.description ");
         Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(), params);
