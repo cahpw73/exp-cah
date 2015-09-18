@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SupplierContactInformation" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.693421790161332"/>
-	<property name="ireport.x" value="98"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="PROJECT_ID" class="java.lang.Long"/>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\supplierContactInformation\\"]]></defaultValueExpression>
@@ -17,12 +17,13 @@
 	<parameter name="logoFooter" class="java.io.InputStream"/>
 	<parameter name="logoFooterName" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
+	<parameter name="sortByName" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select po.po, por.order_title,sp.company,sp.street ,sp.suburb,sp.id
 from purchase_order po inner join project pr on pr.id=po.project_id
 inner join p_order por on por.id=po.po_id
 inner join supplier_proc sp on sp.id=por.supplier_id
-where  pr.id=$P{PROJECT_ID}
+where  pr.id=$P{projectIdFilter}
 ORDER BY $P!{sortBy} ASC]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
@@ -82,18 +83,18 @@ ORDER BY $P!{sortBy} ASC]]>
 				<textFieldExpression><![CDATA[$P{client}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5d14bf78-dac3-4fcb-bc66-1602e5fa4148" x="243" y="40" width="38" height="12"/>
+				<reportElement uuid="5d14bf78-dac3-4fcb-bc66-1602e5fa4148" x="234" y="40" width="49" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Sorted By]]></text>
+				<text><![CDATA[Sorted By:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="836661c0-cfc7-4921-8034-0eb010904874" x="283" y="40" width="62" height="12"/>
+				<reportElement uuid="836661c0-cfc7-4921-8034-0eb010904874" x="285" y="40" width="163" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{sortBy}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{sortByName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="8d87cd76-62de-4296-a860-0e9871a2efb5" x="129" y="5" width="318" height="31"/>
