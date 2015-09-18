@@ -64,7 +64,7 @@ public class SpreadSheetTestBean implements Serializable {
     }
 
     public void generateWorkbook(){
-        spreadsheetService.generatorWorkbook(purchaseOrderList,nameFile);
+        spreadsheetService.generateWorkbook(purchaseOrderList, nameFile);
     }
 
     public ProjectEntity getSelectedProject() {

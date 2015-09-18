@@ -33,7 +33,7 @@ public class SpreadsheetService implements Serializable {
 
     public SpreadsheetProcessor processor;
 
-    public void generatorWorkbook(final List<PurchaseOrderEntity> list, final String fileName) {
+    public void generateWorkbook(final List<PurchaseOrderEntity> list, final String fileName) {
         log.info("purchaseOrder list size: " + list.size());
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();

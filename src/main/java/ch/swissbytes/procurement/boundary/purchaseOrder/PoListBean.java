@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
@@ -52,6 +53,8 @@ public class PoListBean implements Serializable {
     private TextService textService;
     @Inject
     private PurchaseOrderDao dao;
+    @Inject
+    private SpreadsheetService exporter;
 
 
     private String projectId;
@@ -362,14 +365,21 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canExportCMS(PurchaseOrderEntity entity){
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
+        boolean exported=entity.getPurchaseOrderProcurementEntity().getCmsExported()==null?false:entity.getPurchaseOrderProcurementEntity().getCmsExported();
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal()
+                &&!exported;
     }
     public boolean canExportJDE(PurchaseOrderEntity entity){
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
     }
 
     public void exportCMS(){
-
+        if(currentPurchaseOrder!=null) {
+            List<PurchaseOrderEntity> list=new ArrayList<>();
+            list.add(service.findById(currentPurchaseOrder.getId()));
+            exporter.generateWorkbook(list, "D:\\swissbytes\\fqmdoc\\file.xls");
+            service.markCMSAsExported(currentPurchaseOrder);
+        }
     }
     public void exportJDE(){
 
