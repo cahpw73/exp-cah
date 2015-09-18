@@ -240,15 +240,6 @@ public class PoListBean implements Serializable {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
         ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
-        /*if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal())) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;*/
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
@@ -368,5 +359,19 @@ public class PoListBean implements Serializable {
 
     public PurchaseOrderTbl getPoList() {
         return poList;
+    }
+
+    public boolean canExportCMS(PurchaseOrderEntity entity){
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
+    }
+    public boolean canExportJDE(PurchaseOrderEntity entity){
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
+    }
+
+    public void exportCMS(){
+
+    }
+    public void exportJDE(){
+
     }
 }

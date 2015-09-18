@@ -44,6 +44,7 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private Boolean securityDeposit;
     private ContactEntity contactEntity;
     private ContactEntity contactExpediting;
+    private Boolean cmsExported;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -252,5 +253,13 @@ public class PurchaseOrderProcurementEntity implements Serializable{
 
     public void setContactExpediting(ContactEntity contactEntity) {
         this.contactExpediting = contactEntity;
+    }
+
+    public Boolean getCmsExported() {
+        return cmsExported;
+    }
+
+    public void setCmsExported(Boolean cmsExported) {
+        this.cmsExported = cmsExported;
     }
 }
