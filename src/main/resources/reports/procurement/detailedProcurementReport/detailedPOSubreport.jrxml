@@ -12,14 +12,15 @@
 	</parameter>
 	<parameter name="STATUS_PROCUREMENT" class="java.util.Map"/>
 	<parameter name="projectId" class="java.lang.Long"/>
+	<parameter name="sortBy" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select p.po,p.variation,sp.company,po.order_title,c.code,po.po_status,p.orderedvariation,p.id
-from purchase_order p inner join p_order po on p.po_id = po.id
-left join supplier_proc sp on po.supplier_id=sp.id
-left join project_currency pc on po.currency_id = pc.id
+		<![CDATA[select po.po,po.variation,sp.company,p.order_title,c.code,p.po_status,po.orderedvariation,po.id
+from purchase_order po inner join p_order p on po.po_id = p.id
+left join supplier_proc sp on p.supplier_id=sp.id
+left join project_currency pc on p.currency_id = pc.id
 left join currency c on pc.currency_id=c.id
-where p.po = $P{poNoFilter} and p.project_id=$P{projectId}
-order by p.orderedvariation]]>
+where po.po = $P{poNoFilter} and po.project_id=$P{projectId}
+order by $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
