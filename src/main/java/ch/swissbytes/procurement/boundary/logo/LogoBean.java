@@ -4,7 +4,9 @@ import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.domain.model.entities.LogoEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
@@ -17,6 +19,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,6 +37,9 @@ public class LogoBean implements Serializable {
 
     @Inject
     private ProjectService projectService;
+
+    @Inject
+    private Configuration configuration;
 
     private LogoEntity logo;
 
@@ -88,8 +94,8 @@ public class LogoBean implements Serializable {
         if (!validate()) {
             return "";
         }
-
         service.save(logo);
+        Messages.addFlashGlobalInfo("Logo " + logo.getDescription() + " has been saved");
         log.info(String.format("logo has been saved [%s]", logo.getDescription()));
         return "logo?faces-redirect=true";
     }
@@ -100,6 +106,7 @@ public class LogoBean implements Serializable {
             return "";
         }
         service.doUpdate(logoEdited);
+        Messages.addFlashGlobalInfo("Logo "+ logoEdited.getDescription()+ " has been edited");
         return "logo?faces-redirect=true";
     }
     public String doCancel(){
@@ -131,17 +138,25 @@ public class LogoBean implements Serializable {
             Messages.addFlashError("description", "Please enter description");
             valid = false;
         }
+        if(service.existsDescription(logo.getDescription(),logo.getId())){
+            valid = false;
+            Messages.addFlashError("description", "Description already exists");
+        }
+
         return valid;
 
     }
 
     public String doDelete() {
         log.info("removing component");
+        logo = service.findById(logoSelected.getId());
         if (logoSelected != null) {
             if (logIsUsedInReports()) {
                 Messages.addFlashError("Can not delete Logo", "You cannot delete " + logoSelected.getDescription() + " because it is already being used");
             } else {
-                service.delete(logoSelected);
+                logo.setLastUpdate(Util.convertUTC(new Date(),configuration.getTimeZone()));
+                service.delete(logo);
+                Messages.addFlashGlobalInfo("Logo "+logo.getDescription()+" was deleted ");
                 log.info(String.format("logo has been removed [%s]", logo.getDescription()));
             }
         }

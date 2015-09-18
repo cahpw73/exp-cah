@@ -134,9 +134,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" AND (p.client.reportLogo.id = :LOGO_ID  ");
         sb.append(" OR p.client.clientLogo.id = :LOGO_ID  ");
-        sb.append(" OR p.client.clientFooter.id = :LOGO_ID  ");
-        sb.append(" OR p.client.defaultLogo.id = :LOGO_ID  ");
-        sb.append(" OR p.client.defaultFooter.id = :LOGO_ID) ");
+        sb.append(" OR p.client.clientLogoLeft = :LOGO_ID )");
         Map<String,Object> params = new HashMap<>();
         params.put("LOGO_ID",logoId);
         params.put("ENABLE", StatusEnum.ENABLE);

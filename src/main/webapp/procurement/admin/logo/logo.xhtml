@@ -12,8 +12,6 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
-            <p:messages closable="true"></p:messages>
-
             <div class="col-md-6">
                 <div class="panel panel-default panel-tab">
                     <div class="procurement-panel-header">Logos</div>
@@ -66,9 +64,9 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <br/>
-                                <p:inputText disabled="#{logoBean.logoSelected==null}"
-                                             value="#{logoBean.logoEdited.description}"/>
-
+                                <p:inputText id="description" disabled="#{logoBean.logoSelected==null}"
+                                             value="#{logoBean.logoEdited.description}" styleClass="form-control"/>
+                                <p:message for="description"/>
                                 <div class="clearfix"></div>
                                 <br/>
                                 <h:commandButton styleClass="btn btn-primary btn-commandLink-primeFaces"

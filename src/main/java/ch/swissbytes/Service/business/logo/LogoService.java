@@ -64,4 +64,9 @@ public class LogoService extends Service<LogoEntity> implements Serializable{
     public List<LogoEntity> findAll() {
         return dao.findAll();
     }
+
+    public boolean existsDescription(final String description, final Long id){
+        List<LogoEntity> list = dao.existsLogoDescription(description, id);
+        return !list.isEmpty();
+    }
 }
