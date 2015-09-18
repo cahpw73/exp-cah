@@ -12,13 +12,15 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -373,13 +375,17 @@ public class PoListBean implements Serializable {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
     }
 
-    public void exportCMS(){
-        if(currentPurchaseOrder!=null) {
+    public StreamedContent exportCMS() throws FileNotFoundException {
+        StreamedContent content=null;
+        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getId()!=null) {
             List<PurchaseOrderEntity> list=new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             exporter.generateWorkbook(list, "D:\\swissbytes\\fqmdoc\\file.xls");
+            InputStream is=new FileInputStream(new File("D:\\swissbytes\\fqmdoc\\brands.csv"));
             service.markCMSAsExported(currentPurchaseOrder);
+            content=new DefaultStreamedContent(is,"application/xls","brands.csv");
         }
+        return content;
     }
     public void exportJDE(){
 
