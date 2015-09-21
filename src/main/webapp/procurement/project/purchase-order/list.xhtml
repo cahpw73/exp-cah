@@ -87,12 +87,13 @@
                                     </p:confirm>
                                 </p:commandLink>
                                 &#160;
-                                <p:commandButton id="exportCsv" value="Export CSV" ajax="false">
+                                <ui:remove>
+                                <p:commandLink id="exportCsv" value="Export CSV" ajax="false">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:fileDownload value="#{poListBean.exportCMS()}"
                                                     contentDisposition="attachment" />
-                                </p:commandButton>
+                                </p:commandLink>
 
                                 <p:commandLink
                                         update="@form" ajax="true"
@@ -118,7 +119,9 @@
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                 </p:commandLink>
+                                </ui:remove>
                                 &#160;
+
                                 <p:commandLink
                                         update="@form" ajax="true"
                                         value="#{msgs['project.list.action.finalise']}"
