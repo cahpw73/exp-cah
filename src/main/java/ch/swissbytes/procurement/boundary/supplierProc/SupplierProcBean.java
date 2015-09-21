@@ -127,17 +127,13 @@ public class SupplierProcBean extends Bean implements Serializable {
     private boolean validate() {
         boolean validated = true;
         if (service.isAlreadyBeingUsed(supplier.getSupplierId(), supplier.getId())) {
-            Messages.addFlashError("supplierID", "supplier id is already being used");
+            Messages.addFlashError("supplierID1", "Supplier ID is already being used");
             validated = false;
         }
         if (!hasEitherAtLeastOneCategory()) {
             Messages.addGlobalError("You must select at least one category");
             validated = false;
         }
-       /* if(!validateContacts()){
-            Messages.addGlobalError("Check format email on contacts");
-            validated = false;
-        }*/
         return validated;
     }
 

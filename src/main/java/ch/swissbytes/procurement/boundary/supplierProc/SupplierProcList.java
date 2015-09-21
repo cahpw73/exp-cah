@@ -26,15 +26,13 @@ public class SupplierProcList implements Serializable {
 
     private static final Logger log = Logger.getLogger(SupplierProcList.class.getName());
 
-    private Filter filter=new Filter();
-    private SupplierTbl list;
     @Inject
     private SupplierProcDao dao;
-
     @Inject
     private SupplierProcService service;
-
+    private SupplierTbl list;
     private List<SupplierProcEntity> suppliers;
+    private Filter filter=new Filter();
 
     @PostConstruct
     public void create(){
