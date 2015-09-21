@@ -116,7 +116,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poList", createDataSource(getPOReportDto()));
         addParameters("totalClauses", this.clausesList.size());
         addParameters("poTitle", po.getPoTitle());
-        addParameters("projectName", po.getProjectEntity().getTitle());
+        addParameters("projectName", po.getProjectEntity().getTitle().toUpperCase());
         addParameters("projectNumber", po.getProjectEntity().getProjectNumber());
 
         addParameters("liquidatedDamagesApplicable", po.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : null);
@@ -126,11 +126,18 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("mrNo", collectMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
-        addParameters("contactName", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getFullName() : null);
-        addParameters("contactEmail", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getEmail() : null);
-        addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone() : null);
-        addParameters("contactFax", po.getPurchaseOrderProcurementEntity().getContactEntity() != null ? po.getPurchaseOrderProcurementEntity().getContactEntity().getFax() : null);
-
+        if(po.getPurchaseOrderProcurementEntity().getContactEntity() != null){
+            addParameters("contactName", po.getPurchaseOrderProcurementEntity().getContactEntity().getFullName());
+            addParameters("contactEmail",po.getPurchaseOrderProcurementEntity().getContactEntity().getEmail());
+            if(StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone()))
+                addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone());
+            else
+            addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getSupplier().getPhone());
+            if(StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getContactEntity().getFax()))
+                addParameters("contactFax", po.getPurchaseOrderProcurementEntity().getContactEntity().getFax());
+            else
+                addParameters("contactFax", po.getPurchaseOrderProcurementEntity().getSupplier().getFax());
+        }
         int i = 1;
         Map<Long, String> currencies = getCurrenciesForPayment();
         for (Long key : currencies.keySet()) {
@@ -255,9 +262,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private List<PurchaseOrderReportDto> getPOReportDto() {
         List<PurchaseOrderReportDto> dtos = new ArrayList<>();
-        dtos.add(new PurchaseOrderReportDto(""));
         dtos.add(new PurchaseOrderReportDto(po.getPoTitle()));
-        dtos.add(new PurchaseOrderReportDto(null, this.preamble));
+        if(StringUtils.isNotEmpty(preamble)){
+            dtos.add(new PurchaseOrderReportDto(null, this.preamble));
+        }
         for (ScopeSupplyEntity entity : this.scopeSupplyList) {
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
             dtos.add(dto);

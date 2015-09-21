@@ -126,8 +126,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" x="0" y="0" width="98" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement verticalAlignment="Middle">
+								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" style="Arial" x="0" y="0" width="98" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
@@ -147,8 +147,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="f50ede8f-1783-4b4b-91b9-f85a77f232c9" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="f50ede8f-1783-4b4b-91b9-f85a77f232c9" style="Arial" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode1}]]></textFieldExpression>
@@ -167,8 +167,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="eda36e1d-97cf-48ae-b8e4-d99723be36e1" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="eda36e1d-97cf-48ae-b8e4-d99723be36e1" style="Arial" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{amount1})]]></textFieldExpression>
@@ -187,8 +187,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="c1b4422f-dfa4-47a0-9174-5199ea29a559" x="0" y="0" width="33" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<reportElement uuid="c1b4422f-dfa4-47a0-9174-5199ea29a559" style="Arial" x="0" y="0" width="33" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{plus1}]]></textFieldExpression>
@@ -207,8 +207,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="dd398f1a-17bb-4553-9d31-e3606fcbc235" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="dd398f1a-17bb-4553-9d31-e3606fcbc235" style="Arial" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode2}]]></textFieldExpression>
@@ -227,8 +227,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="e0e37304-c6a7-403f-9fcc-0055f5e15356" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="e0e37304-c6a7-403f-9fcc-0055f5e15356" style="Arial" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{amount2})]]></textFieldExpression>
@@ -247,8 +247,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="ac9bc362-a538-4ced-a3be-e08954f6e4d3" x="0" y="0" width="33" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
+								<reportElement uuid="ac9bc362-a538-4ced-a3be-e08954f6e4d3" style="Arial" x="0" y="0" width="33" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{plus2}]]></textFieldExpression>
@@ -267,8 +267,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="106fa6a6-6c7a-476b-aaf1-f2486da9a4c5" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="106fa6a6-6c7a-476b-aaf1-f2486da9a4c5" style="Arial" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode3}]]></textFieldExpression>
@@ -287,8 +287,8 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="5d3fb8db-8b96-4e68-a3b1-be4ca30d2dca" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
+								<reportElement uuid="5d3fb8db-8b96-4e68-a3b1-be4ca30d2dca" style="Arial" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney("",$P{patternDecimal},$F{amount3})]]></textFieldExpression>

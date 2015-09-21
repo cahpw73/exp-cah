@@ -144,85 +144,85 @@ order by cast(item as integer)]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d690c0ad-7128-49db-947b-c3ab6397a27c" x="110" y="4" width="57" height="20">
+				<reportElement uuid="d690c0ad-7128-49db-947b-c3ab6397a27c" style="Arial" x="110" y="4" width="57" height="14">
 					<printWhenExpression><![CDATA[$F{currency1}!=null&&$F{currency1}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl1},$F{format},$F{currency1})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="17745274-ed33-4185-ae89-c9eb23377f05" x="231" y="4" width="57" height="20">
+				<reportElement uuid="17745274-ed33-4185-ae89-c9eb23377f05" style="Arial" x="231" y="4" width="57" height="14">
 					<printWhenExpression><![CDATA[$F{currency2}!=null&&$F{currency2}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl2},$F{format},$F{currency2})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="6628ee3d-f698-4add-a8f2-52b9c90ff372" x="351" y="4" width="58" height="20">
+				<reportElement uuid="6628ee3d-f698-4add-a8f2-52b9c90ff372" style="Arial" x="351" y="4" width="58" height="14">
 					<printWhenExpression><![CDATA[$F{currency3}!=null&&$F{currency3}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl3},$F{format},$F{currency3})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="27013b90-d85b-4bcd-b9ac-b0659d2453f1" x="168" y="4" width="61" height="20">
+				<reportElement uuid="27013b90-d85b-4bcd-b9ac-b0659d2453f1" style="Arial" x="168" y="4" width="61" height="14">
 					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl1},$F{format},$V{totalCurrency1})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="97d69d52-ba99-45b3-885f-7b412909e058" x="289" y="4" width="60" height="20">
+				<reportElement uuid="97d69d52-ba99-45b3-885f-7b412909e058" style="Arial" x="289" y="4" width="60" height="14">
 					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl2},$F{format},$V{totalCurrency2})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="2a844d6c-2780-4f2f-9e22-a7b70ff790ad" x="410" y="4" width="57" height="20">
+				<reportElement uuid="2a844d6c-2780-4f2f-9e22-a7b70ff790ad" style="Arial" x="410" y="4" width="57" height="14">
 					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl3},$F{format},$V{totalCurrency3})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="15bc1fa8-87d0-4851-a98b-fd1b2563f311" x="0" y="4" width="35" height="20"/>
-				<textElement>
+				<reportElement uuid="15bc1fa8-87d0-4851-a98b-fd1b2563f311" style="Arial" x="0" y="4" width="35" height="14"/>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9cd4a9f1-e541-4987-8e12-48e134cbcb4c" x="39" y="4" width="45" height="20"/>
-				<textElement>
+				<reportElement uuid="9cd4a9f1-e541-4987-8e12-48e134cbcb4c" style="Arial" x="39" y="4" width="45" height="14"/>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{milestone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="6fed0ae7-e9f8-44c4-8276-b8025fa4acfe" x="85" y="4" width="23" height="20"/>
-				<textElement>
+				<reportElement uuid="6fed0ae7-e9f8-44c4-8276-b8025fa4acfe" style="Arial" x="85" y="4" width="23" height="14"/>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="562d45aa-ead9-47ec-a1d8-ae51181d14a0" x="470" y="4" width="48" height="20"/>
-				<textElement>
+				<reportElement uuid="562d45aa-ead9-47ec-a1d8-ae51181d14a0" style="Arial" x="470" y="4" width="48" height="14"/>
+				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{claim_date}!=null?new java.text.SimpleDateFormat("MMM yyyy",new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{claim_date}.getTime())):null]]></textFieldExpression>
@@ -236,30 +236,30 @@ order by cast(item as integer)]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="23" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="365240b9-9d62-4642-b365-e1874f649f07" style="Arial-Bold" x="168" y="3" width="61" height="20">
+				<reportElement uuid="365240b9-9d62-4642-b365-e1874f649f07" style="Arial-Bold" x="168" y="2" width="61" height="14">
 					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl1},$F{format},$V{totalCurrency1})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="324f12a7-c282-49c2-96bb-473d68c4034f" style="Arial-Bold" mode="Opaque" x="289" y="3" width="60" height="20">
+				<reportElement uuid="324f12a7-c282-49c2-96bb-473d68c4034f" style="Arial-Bold" mode="Transparent" x="289" y="2" width="60" height="14">
 					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl2},$F{format},$V{totalCurrency2})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ca588249-c63a-40c0-a5aa-2947489c4f70" style="Arial-Bold" x="410" y="3" width="57" height="20">
+				<reportElement uuid="ca588249-c63a-40c0-a5aa-2947489c4f70" style="Arial-Bold" x="410" y="2" width="57" height="14">
 					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()>0]]></printWhenExpression>
 				</reportElement>
-				<textElement>
+				<textElement markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($P{currencyLbl3},$F{format},$V{totalCurrency3})]]></textFieldExpression>
