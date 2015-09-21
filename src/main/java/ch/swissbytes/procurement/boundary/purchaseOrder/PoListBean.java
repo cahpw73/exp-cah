@@ -373,9 +373,8 @@ public class PoListBean implements Serializable {
             List<PurchaseOrderEntity> list=new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             InputStream is=exporter.generateWorkbook(list);
-            //InputStream is=new FileInputStream("D:\\swissbytes\\fqmdoc\\file.xls");
             service.markCMSAsExported(currentPurchaseOrder);
-            content=new DefaultStreamedContent(is,"application/xls","file.xls");
+            content=new DefaultStreamedContent(is,"application/xls","file.xlsx");
         }
         return content;
     }
