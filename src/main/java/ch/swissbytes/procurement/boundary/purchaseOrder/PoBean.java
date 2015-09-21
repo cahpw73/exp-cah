@@ -124,6 +124,18 @@ public class PoBean extends Bean {
             log.info("mode view");
             putModeView();
         }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getVendorDrawingData() == null) {
+            purchaseOrder.getPurchaseOrderProcurementEntity().setVendorDrawingData(false);
+        }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getExchangeRateVariation() == null) {
+            purchaseOrder.getPurchaseOrderProcurementEntity().setExchangeRateVariation(false);
+        }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getSecurityDeposit() == null) {
+            purchaseOrder.getPurchaseOrderProcurementEntity().setSecurityDeposit(false);
+        }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() == null) {
+            purchaseOrder.getPurchaseOrderProcurementEntity().setLiquidatedDamagesApplicable(false);
+        }
     }
 
     public void load() {
@@ -191,7 +203,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.INCOMPLETE.ordinal()) {
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
@@ -207,7 +219,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.INCOMPLETE.ordinal()) {
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
@@ -408,21 +420,21 @@ public class PoBean extends Bean {
         return toString(totals);
     }
 
-    public String calculateAmountForCashflow(BigDecimal percentage){
-        Map<ProjectCurrencyEntity, BigDecimal>retention= cashflowBean.calculateAmount(service.getTotalValuesByCurrency(itemBean.getScopeSupplyList()), percentage);
+    public String calculateAmountForCashflow(BigDecimal percentage) {
+        Map<ProjectCurrencyEntity, BigDecimal> retention = cashflowBean.calculateAmount(service.getTotalValuesByCurrency(itemBean.getScopeSupplyList()), percentage);
         return toString(retention);
     }
 
-    public void calculatePaymentValue(CashflowDetailEntity detailEntity){
+    public void calculatePaymentValue(CashflowDetailEntity detailEntity) {
         log.info("calculatePaymentValue...");
-        if(detailEntity.getProjectCurrency() != null && detailEntity.getPercentage() != null){
+        if (detailEntity.getProjectCurrency() != null && detailEntity.getPercentage() != null) {
             Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
             final Iterator<ProjectCurrencyEntity> it = totals.keySet().iterator();
             ProjectCurrencyEntity n;
             while (it.hasNext()) {
-                n=it.next();
-                if(n.getId().longValue() == detailEntity.getProjectCurrency().getId().longValue()){
-                    detailEntity.setOrderAmt(calculateBasedPercentageAndTotalValue(detailEntity.getPercentage(),totals.get(detailEntity.getProjectCurrency())));
+                n = it.next();
+                if (n.getId().longValue() == detailEntity.getProjectCurrency().getId().longValue()) {
+                    detailEntity.setOrderAmt(calculateBasedPercentageAndTotalValue(detailEntity.getPercentage(), totals.get(detailEntity.getProjectCurrency())));
                     break;
                 }
             }
@@ -452,13 +464,13 @@ public class PoBean extends Bean {
     }
 
     public boolean poIsOriginal() {
-        if(purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1) {
+        if (purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1) {
             return true;
         }
         return false;
     }
 
-    public void resetContact(){
+    public void resetContact() {
         log.info("reset contact");
         purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(new ContactEntity());
     }
