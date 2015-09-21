@@ -230,15 +230,6 @@ public class PoListBean implements Serializable {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
                 ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
-       /* if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;*/
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
@@ -376,14 +367,15 @@ public class PoListBean implements Serializable {
     }
 
     public StreamedContent exportCMS() throws FileNotFoundException {
+        System.out.println("exporting cms....");
         StreamedContent content=null;
         if(currentPurchaseOrder!=null&&currentPurchaseOrder.getId()!=null) {
             List<PurchaseOrderEntity> list=new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
-            exporter.generateWorkbook(list, "D:\\swissbytes\\fqmdoc\\file.xls");
-            InputStream is=new FileInputStream(new File("D:\\swissbytes\\fqmdoc\\brands.csv"));
+            InputStream is=exporter.generateWorkbook(list);
+            //InputStream is=new FileInputStream("D:\\swissbytes\\fqmdoc\\file.xls");
             service.markCMSAsExported(currentPurchaseOrder);
-            content=new DefaultStreamedContent(is,"application/xls","brands.csv");
+            content=new DefaultStreamedContent(is,"application/xls","file.xls");
         }
         return content;
     }

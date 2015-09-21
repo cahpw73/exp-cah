@@ -40,21 +40,28 @@ public class SpreadsheetProcessor implements Serializable {
         row.createCell(colNo).setCellValue(value);
     }
 
-    public void saveWorkBook(String fileName) {
-        FileOutputStream out = null;
+    public ByteArrayOutputStream saveWorkBook() {
         try {
-            out = new FileOutputStream(new File(fileName + ".xlsx"));
-            workbook.write(out);
-            out.close();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return outputStream;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
-    public static void main(String[] args) {
+    public InputStream getContentSheet(){
+        ByteArrayOutputStream output=saveWorkBook();
+        if(output!=null) {
+            return new ByteArrayInputStream(output.toByteArray());
+        }
+        return null;
+    }
+
+   /* public static void main(String[] args) {
         SpreadsheetProcessor sp = new SpreadsheetProcessor();
         sp.createWorkbook();
         sp.createSpreadsheet("PurchaseOrder");
@@ -63,7 +70,7 @@ public class SpreadsheetProcessor implements Serializable {
         sp.writeDoubleValue(1, 45.45987D);
 
         sp.createRow(1);
-        sp.writeStringValue(1, "Puesto?" );
+        sp.writeStringValue(1, "Puesto?");
         sp.writeDoubleValue(0, 10D);
 
         sp.createSpreadsheet("Purchase Detail");
@@ -73,8 +80,8 @@ public class SpreadsheetProcessor implements Serializable {
         sp.writeDoubleValue(0, 10D);
 
 
-        sp.saveWorkBook("PRUEBA");
+     //   sp.saveWorkBook("PRUEBA");
         System.out.println("written successfully");
-    }
+    }*/
 
 }
