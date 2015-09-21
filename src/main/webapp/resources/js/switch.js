@@ -1,8 +1,8 @@
 /**
  * Created by Alvaro on 9/3/15.
  */
-create();
-function create(){
+createSwitch();
+function createSwitch(){
     $("[name='my-checkbox']").bootstrapSwitch({
             'state': 'true',
             'size': 'mini'
@@ -10,8 +10,7 @@ function create(){
     );
 }
 function initializeSwitch(readOnly) {
-    console.log("readonly "+readOnly);
-    liquidated=$.parseJSON($("#editPoForm\\:checkboxLiquidatedDamages").val());
+    liquidated=$.parseJSON($('#editPoForm\\:checkboxLiquidatedDamages').val());
     exchangevariation=$.parseJSON($("#editPoForm\\:checkboxExchangeVariation").val());
     drawingData=$.parseJSON($("#editPoForm\\:checkboxDrawingData").val());
     securityDeposit=$.parseJSON($("#editPoForm\\:checkBoxSecurityDeposit").val());
@@ -20,7 +19,6 @@ function initializeSwitch(readOnly) {
     $("#switchDrawingData").bootstrapSwitch('state',drawingData);
     $("#switchSecurityDeposit").bootstrapSwitch('state', securityDeposit);
     if(Boolean(readOnly)) {
-        console.log("readonly mode");
         $("#switchLiquidatedDamages").bootstrapSwitch('readonly','true');
         $("#switchExchangeVariation").bootstrapSwitch('readonly','true');
         $("#switchDrawingData").bootstrapSwitch('readonly','true');
@@ -29,7 +27,7 @@ function initializeSwitch(readOnly) {
 }
 
 function restartSwitches(){
-    create();
+    createSwitch();
     initializeSwitch();
 }
 
