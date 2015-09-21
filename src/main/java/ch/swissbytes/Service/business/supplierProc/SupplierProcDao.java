@@ -66,7 +66,12 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
 
     @Override
     public String orderBy(){
-        return " ORDER BY  x.company";
+        return "";
+    }
+
+    @Override
+    public String orderBy(String field, boolean ascending) {
+        return " ORDER BY " + field + (ascending ? " ASC " : " DESC");
     }
 
     public List<SupplierProcEntity> findByCompany(String company) {

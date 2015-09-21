@@ -38,16 +38,16 @@
                          rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
                          paginatorPosition="bottom">
                 <p:ajax event="page" process="@this" listener="#{tableBean.onPaginate}"/>
-                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150">
+                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150" sortBy="#{_supplier.supplierId}">
                     #{_supplier.supplierId}
                 </p:column>
-                <p:column headerText="#{msgs['supplier.lbl.company']}">
+                <p:column headerText="#{msgs['supplier.lbl.company']}" sortBy="#{_supplier.company}">
                     #{_supplier.company}
                 </p:column>
                 <p:column headerText="#{msgs['supplier.lbl.state']}">
                     #{_supplier.state}
                 </p:column>
-                <p:column headerText="#{msgs['supplier.lbl.country']}">
+                <p:column headerText="#{msgs['supplier.lbl.country']}" sortBy="#{_supplier.country}">
                     #{_supplier.country}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.actions']}" width="200">
