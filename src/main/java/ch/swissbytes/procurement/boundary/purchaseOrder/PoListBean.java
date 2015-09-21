@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
@@ -11,13 +12,15 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,6 +55,8 @@ public class PoListBean implements Serializable {
     private TextService textService;
     @Inject
     private PurchaseOrderDao dao;
+    @Inject
+    private SpreadsheetService exporter;
 
 
     private String projectId;
@@ -225,30 +230,12 @@ public class PoListBean implements Serializable {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
                 ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
-       /* if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal())) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;*/
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
         ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
-        /*if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
-            if ((entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal())) {
-                return true;
-            }
-        } else {
-            return true;
-        }
-        return false;*/
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
@@ -368,5 +355,31 @@ public class PoListBean implements Serializable {
 
     public PurchaseOrderTbl getPoList() {
         return poList;
+    }
+
+    public boolean canExportCMS(PurchaseOrderEntity entity){
+        boolean exported=entity.getPurchaseOrderProcurementEntity().getCmsExported()==null?false:entity.getPurchaseOrderProcurementEntity().getCmsExported();
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal()
+                &&!exported;
+    }
+    public boolean canExportJDE(PurchaseOrderEntity entity){
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
+    }
+
+    public StreamedContent exportCMS() throws FileNotFoundException {
+        System.out.println("exporting cms....");
+        StreamedContent content=null;
+        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getId()!=null) {
+            List<PurchaseOrderEntity> list=new ArrayList<>();
+            list.add(service.findById(currentPurchaseOrder.getId()));
+            InputStream is=exporter.generateWorkbook(list);
+            //InputStream is=new FileInputStream("D:\\swissbytes\\fqmdoc\\file.xls");
+            service.markCMSAsExported(currentPurchaseOrder);
+            content=new DefaultStreamedContent(is,"application/xls","file.xls");
+        }
+        return content;
+    }
+    public void exportJDE(){
+
     }
 }

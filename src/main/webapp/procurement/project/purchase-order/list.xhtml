@@ -87,6 +87,38 @@
                                     </p:confirm>
                                 </p:commandLink>
                                 &#160;
+                                <p:commandButton id="exportCsv" value="Export CSV" ajax="false">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                    <p:fileDownload value="#{poListBean.exportCMS()}"
+                                                    contentDisposition="attachment" />
+                                </p:commandButton>
+
+                                <p:commandLink
+                                        update="@form" ajax="true"
+                                        value="#{msgs['project.list.action.export.cms']}"
+                                        action="#{poListBean.exportCMS}"
+                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                        rendered="#{poListBean.canExportCMS(_p)}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.cms']}"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
+
+                                &#160;
+                                <p:commandLink
+                                        update="@form" ajax="true"
+                                        value="#{msgs['project.list.action.export.jde']}"
+                                        action="#{poListBean.exportJDE}"
+                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                        rendered="#{poListBean.canExportJDE(_p)}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                </p:commandLink>
+                                &#160;
                                 <p:commandLink
                                         update="@form" ajax="true"
                                         value="#{msgs['project.list.action.finalise']}"
@@ -213,10 +245,6 @@
                         </div>
                     </div>
                 </h:panelGroup>
-
         </p:dialog>
-        <h:commandLink style="display: none" id="printPDF">
-
-        </h:commandLink>
     </ui:define>
 </ui:composition>

@@ -325,6 +325,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         return purchaseOrderEntity;
     }
 
+    @Transactional
+    public void markCMSAsExported(PurchaseOrderEntity purchaseOrderEntity){
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setCmsExported(true);
+        dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+    }
+
 
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {

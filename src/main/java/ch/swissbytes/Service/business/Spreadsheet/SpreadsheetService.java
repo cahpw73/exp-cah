@@ -10,6 +10,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
 import javax.inject.Inject;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -33,14 +34,15 @@ public class SpreadsheetService implements Serializable {
 
     public SpreadsheetProcessor processor;
 
-    public void generatorWorkbook(final List<PurchaseOrderEntity> list, final String fileName) {
+    public InputStream generateWorkbook(final List<PurchaseOrderEntity> list) {
         log.info("purchaseOrder list size: " + list.size());
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         generateSpreadsheetPurchaseOrder(list);
         generateSpreadsheetPurchaseOrderDetail(list);
-        processor.saveWorkBook(fileName);
         log.info("written successfully...");
+        return processor.getContentSheet();
+
     }
 
     private void generateSpreadsheetPurchaseOrder(final List<PurchaseOrderEntity> list){
