@@ -127,9 +127,7 @@ public class SpreadsheetService implements Serializable {
         //Unit Price
         processor.writeStringValue(10, "");
         //Unit of Measure
-        if (ss.getCost() != null) {
-            processor.writeDoubleValue(11, ss.getCost().doubleValue());
-        }
+        processor.writeDoubleValue(11, ss.getCost() != null ? ss.getCost().doubleValue() : null);
         //Committed Qty
         processor.writeStringValue(12, "");
         //Committed Install Hrs.
@@ -168,7 +166,7 @@ public class SpreadsheetService implements Serializable {
             List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
             for (ScopeSupplyEntity ss : scopeSupplyList) {
                 processor.createRow(rowNo);
-                prepareDetailContent(entity,ss);
+                prepareDetailContent(entity, ss);
                 rowNo++;
             }
         }
