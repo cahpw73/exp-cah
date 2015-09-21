@@ -275,13 +275,11 @@ public abstract class GenericDao<T> {
         query.append(" WHERE 1=1 ");
         String prepositions=addCriteria(filter);
         if(prepositions!=null&&!prepositions.isEmpty()){
-            //query.append(" AND ");
             query.append(prepositions);
         }
         if(!count){
             query.append(orderBy());
         }
-        System.out.println("query!!!!!!!!!!!!!!!!!!! "+query.toString());
         return query.toString();
     }
     protected String select(boolean count){
@@ -308,7 +306,6 @@ public abstract class GenericDao<T> {
         query.append(" WHERE 1=1 ");
         String prepositions=addCriteria(filter);
         if(prepositions!=null&&!prepositions.isEmpty()){
-            //query.append(" AND ");
             query.append(prepositions);
         }
         if(!count){
