@@ -31,8 +31,8 @@ order by ordered]]>
 	<detail>
 		<band height="39" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="503" height="20"/>
-				<textElement markup="styled"/>
+				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="503" height="15"/>
+				<textElement verticalAlignment="Middle" markup="styled"/>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
 			</textField>
 		</band>

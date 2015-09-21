@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="1.8627639691774651"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
@@ -35,9 +35,9 @@
 		<band height="25" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="100" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="dc2be798-737b-404a-aa49-b32395f2ea10" style="Arial-Bold" x="211" y="25" width="84" height="20" isRemoveLineWhenBlank="true">
+				<reportElement uuid="dc2be798-737b-404a-aa49-b32395f2ea10" style="Arial-Bold" x="211" y="21" width="84" height="20" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
@@ -46,7 +46,7 @@
 				<text><![CDATA[SCHEDULE E]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af22a06e-95b6-4b08-9c8e-7767b31bde75" style="Arial-Bold" x="184" y="45" width="133" height="20" isRemoveLineWhenBlank="true">
+				<reportElement uuid="af22a06e-95b6-4b08-9c8e-7767b31bde75" style="Arial-Bold" x="184" y="41" width="133" height="20" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
@@ -55,7 +55,7 @@
 				<text><![CDATA[PAYMENT SCHEDULE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1276d79c-2742-4994-9bf1-bda6cb683d56" style="Arial" x="20" y="66" width="476" height="31" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+				<reportElement uuid="1276d79c-2742-4994-9bf1-bda6cb683d56" style="Arial" x="20" y="62" width="476" height="31" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
 					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
@@ -64,13 +64,13 @@
 				<text><![CDATA[The following progress payments base on the supplier's achievement of specified milestones have been agreed and will be paid to the Supplier in accordance with the payment provisions of the Purchase Order:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="438" y="5" width="69" height="17"/>
-				<textElement markup="styled"/>
+				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="438" y="3" width="69" height="15"/>
+				<textElement verticalAlignment="Middle" markup="styled"/>
 				<text><![CDATA[SCHEDULE E]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="20" y="5" width="257" height="20"/>
-				<textElement markup="styled">
+				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="20" y="3" width="257" height="15"/>
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" isBold="false" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PURCHASE ORDER No."+($P{projectNumber}+"-"+$P{poNo})]]></textFieldExpression>
