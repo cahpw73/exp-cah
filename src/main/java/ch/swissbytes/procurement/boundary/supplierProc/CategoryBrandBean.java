@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -52,6 +53,14 @@ public class CategoryBrandBean implements Serializable {
         brandEntity = new BrandEntity();
     }
 
+    public void sortCategoryList(){
+        Collections.sort(categories.getTarget());
+        Collections.sort(categories.getSource());
+    }
+    public void sortBrandList(){
+        Collections.sort(brands.getTarget());
+        Collections.sort(brands.getSource());
+    }
 
     public void restart(){
         this.categories = new DualListModel<CategoryEntity>(categoryService.getCategoryList(),new ArrayList<CategoryEntity>());

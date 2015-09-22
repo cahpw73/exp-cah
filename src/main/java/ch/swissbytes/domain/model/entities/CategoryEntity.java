@@ -10,11 +10,12 @@ import ch.swissbytes.domain.types.StatusEnum;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 @Entity
 @Table(name = "category")
-public class CategoryEntity implements Serializable{
+public class CategoryEntity implements Serializable,Comparable<CategoryEntity>{
 
     private Long id;
     private String name;
@@ -71,6 +72,8 @@ public class CategoryEntity implements Serializable{
         return that.hashCode()==this.hashCode();
     }
 
+
+
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
@@ -78,5 +81,10 @@ public class CategoryEntity implements Serializable{
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(CategoryEntity o) {
+        return this.getName().compareToIgnoreCase(o.getName());
     }
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "brand")
-public class BrandEntity implements Serializable{
+public class BrandEntity implements Serializable,Comparable<BrandEntity>{
 
     private Long id;
     private String name;
@@ -78,5 +78,10 @@ public class BrandEntity implements Serializable{
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(BrandEntity o) {
+        return this.getName().compareToIgnoreCase(o.getName());
     }
 }

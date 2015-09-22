@@ -10,9 +10,9 @@
     <div class="#{MODE != null?'col-sm-11':'col-sm-8'}" style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.supplier.id']} *"
-                           style="padding-left: 0px;"/>
+                           style="padding-left: 0px; width: 139px!important;"/>
             <div class="col-sm-8">
-                <div style="float: left!important; width: 78%!important; margin-right: 50px!important;">
+                <div style="float: left!important; margin-right: 315px!important;">
                 <h:inputText id="supplierID1" maxlength="50"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.supplierId}"
@@ -70,10 +70,10 @@
     <div class="#{MODE != null?'col-sm-11':'col-sm-8'}" style="padding-left: 0px!important;">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.company']} *"
-                           style="padding-left: 0px;"/>
+                           style="padding-left: 0px; width: 139px!important;"/>
 
             <div class="col-sm-8">
-                <div style="float: left!important; width: 78%!important; margin-right: 50px!important;">
+                <div style="float: left!important; width: 451px!important; margin-right: 50px!important;">
                 <h:inputText maxlength="50" id="companyId"
                              readonly="#{supplierProcBean.beingViewed}"
                              value="#{supplierProcBean.supplier.company}"
