@@ -29,6 +29,7 @@ public class CashflowDetailEntity extends RecordEditable<CashflowDetailEntity> i
     private StatusEnum status;
     private CashflowEntity cashflowEntity;
     private ProjectCurrencyEntity projectCurrency;
+    private Integer ordered;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -144,6 +145,15 @@ public class CashflowDetailEntity extends RecordEditable<CashflowDetailEntity> i
 
     public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
+    }
+
+    @Column(name="ORDERED")
+    public Integer getOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(Integer ordered) {
+        this.ordered = ordered;
     }
 
     @Override

@@ -1,9 +1,7 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
-import ch.swissbytes.Service.business.deliverable.DeliverableItemService;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
-import ch.swissbytes.domain.model.entities.DeliverableItem;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -99,8 +97,6 @@ public class ItemBean implements Serializable {
              throw new Exception("Invalid item");
          }
         if(validateItems(ss,true)){
-            //int index = scopeSupplyList.indexOf(entity);
-            //scopeSupplyList.set(index,entity);
             ss.stopEditing();
         }
     }

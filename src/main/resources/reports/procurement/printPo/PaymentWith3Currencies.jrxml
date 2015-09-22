@@ -30,7 +30,7 @@ cfd.cashflow_id=cf.id
 left join project_currency pc on pc.id= cfd.project_currency_id
 inner join currency cu on pc.currency_id=cu.id
 where cf.status=0 and cfd.status=0 and cf.po_id=$P{PO_ID}
-order by cast(item as integer)]]>
+order by ordered]]>
 	</queryString>
 	<field name="item" class="java.lang.String"/>
 	<field name="milestone" class="java.lang.String"/>

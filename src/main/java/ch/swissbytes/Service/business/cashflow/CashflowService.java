@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -58,6 +59,13 @@ public class CashflowService implements Serializable {
             }
             cf.setLastUpdate(new Date());
             cashflowDetailDao.doUpdate(cf);
+        }
+    }
+
+    @Transactional
+    public void doUpdateDetail(List<CashflowDetailEntity> list){
+        for(CashflowDetailEntity cde : list){
+            cashflowDetailDao.update(cde);
         }
     }
 

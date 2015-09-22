@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
@@ -81,6 +82,9 @@ public class PoBean extends Bean {
 
     @Inject
     private ScopeSupplyService scopeSupplyService;
+
+    @Inject
+    private CashflowService cashflowService;
 
     @Inject
     private Configuration configuration;
@@ -233,6 +237,7 @@ public class PoBean extends Bean {
         log.info("purchase order updated [" + purchaseOrder.getId() + "]");
         sortPurchaseListByVariationAndDoUpdate();
         sortScopeSupplyAndDoUpdate();
+        sortCashflowDetailAndDoUpdate();
         Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoTitle() + " has been saved.", null);
         return !edit ? backToList() : "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
     }
@@ -295,6 +300,22 @@ public class PoBean extends Bean {
             scopeSupplyService.doUpdate(ssp);
             index++;
         }
+    }
+
+    private void sortCashflowDetailAndDoUpdate(){
+        List<CashflowEntity> cList =  cashflowService.findByPoId(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        if(!cList.isEmpty()){
+            CashflowEntity entity = cList.get(0);
+            List<CashflowDetailEntity> cashflowList = cashflowService.findDetailByCashflowId(entity.getId());
+            sortBean.sortCashFlowDetailEntity(cashflowList);
+            int index = 1;
+            for(CashflowDetailEntity cde : cashflowList){
+                cde.setOrdered(index);
+                index++;
+            }
+            cashflowService.doUpdateDetail(cashflowList);
+        }
+
     }
 
     private boolean validate() {
