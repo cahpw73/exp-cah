@@ -130,7 +130,7 @@ public class PoBean extends Bean {
         }
     }
 
-    private void initializeValuesBooleanInHeaderSection(){
+    private void initializeValuesBooleanInHeaderSection() {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getVendorDrawingData() == null) {
             purchaseOrder.getPurchaseOrderProcurementEntity().setVendorDrawingData(false);
         }
@@ -304,14 +304,14 @@ public class PoBean extends Bean {
         }
     }
 
-    private void sortCashflowDetailAndDoUpdate(){
-        List<CashflowEntity> cList =  cashflowService.findByPoId(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
-        if(!cList.isEmpty()){
+    private void sortCashflowDetailAndDoUpdate() {
+        List<CashflowEntity> cList = cashflowService.findByPoId(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        if (!cList.isEmpty()) {
             CashflowEntity entity = cList.get(0);
             List<CashflowDetailEntity> cashflowList = cashflowService.findDetailByCashflowId(entity.getId());
             sortBean.sortCashFlowDetailEntity(cashflowList);
             int index = 1;
-            for(CashflowDetailEntity cde : cashflowList){
+            for (CashflowDetailEntity cde : cashflowList) {
                 cde.setOrdered(index);
                 index++;
             }
@@ -345,6 +345,33 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
         purchaseOrder.getPurchaseOrderProcurementEntity().setTextEntity(poTextBean.getTextEntity());
         purchaseOrder.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
+    }
+
+    public String phoneContact() {
+        String phone = "";
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() != null && purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getId() != null) {
+            phone = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getPhone();
+            if (StringUtils.isEmpty(phone)) {
+                String phoneSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getPhone();
+                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null && StringUtils.isNotEmpty(phoneSupplier))
+                    return phoneSupplier;
+            }
+        }
+        return phone;
+    }
+
+    public String faxContact() {
+        String fax = "";
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() != null && purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getId() != null) {
+            fax = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getFax();
+            if (StringUtils.isEmpty(fax)) {
+                String faxSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getFax();
+                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier()!=null && StringUtils.isNotEmpty((faxSupplier))) {
+                    return faxSupplier;
+                }
+            }
+        }
+        return fax;
     }
 
     public String getProjectId() {
