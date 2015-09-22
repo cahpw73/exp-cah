@@ -4,222 +4,227 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
-
-    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <div style="width: 1300px!important;">
-            <div class="form-group">
-                <h:panelGroup id="itemsGroup">
-                    <p:dataTable id="itemsDt" var="_i"
-                                 value="#{itemBean.scopeSupplyList}">
-                        <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="50"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viItemNo" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.code}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edItemNo" rendered="#{_i.isEditable}">
-                                <p:inputText id="itemNo" value="#{_i.code}" maxlength="50" styleClass="form-control"
-                                             onkeypress="return isNumberFormat(event);"
-                                             required="true" requiredMessage="Enter an Item No">
-                                </p:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.items.dt.column.cost.code']}"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viCostCode" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.costCode}">
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edCostCode" rendered="#{_i.isEditable}">
-                                <p:inputText id="costCodeItem" value="#{_i.costCode}" styleClass="form-control"
-                                             required="true" requiredMessage="Enter a Cost Code">
-                                </p:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <ui:remove>
-                            <p:column headerText="#{msgs['po.items.dt.column.equip.no']}"
+    <h:panelGroup id="itemsSectionId">
+        <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+            <div style="width: 1300px!important;">
+                <div class="form-group">
+                    <h:panelGroup id="itemsGroup">
+                        <p:dataTable id="itemsDt" var="_i"
+                                     value="#{itemBean.scopeSupplyList}">
+                            <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="50"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                                <h:panelGroup id="viEquipNo" rendered="#{!_i.isEditable}">
-                                    <h:outputText value="#{_i.tagNo}"/>
+                                <h:panelGroup id="viItemNo" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.code}"/>
                                 </h:panelGroup>
-                                <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
-                                    <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}"
+                                <h:panelGroup id="edItemNo" rendered="#{_i.isEditable}">
+                                    <p:inputText id="itemNo" value="#{_i.code}" maxlength="50" styleClass="form-control"
+                                                 onkeypress="return isNumberFormat(event);"
+                                                 required="true" requiredMessage="Enter an Item No">
+                                    </p:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.items.dt.column.cost.code']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viCostCode" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.costCode}">
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edCostCode" rendered="#{_i.isEditable}">
+                                    <p:inputText id="costCodeItem" value="#{_i.costCode}" styleClass="form-control"
+                                                 required="true" requiredMessage="Enter a Cost Code">
+                                    </p:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <ui:remove>
+                                <p:column headerText="#{msgs['po.items.dt.column.equip.no']}"
+                                          rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                    <h:panelGroup id="viEquipNo" rendered="#{!_i.isEditable}">
+                                        <h:outputText value="#{_i.tagNo}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
+                                        <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}"
+                                                     styleClass="form-control">
+
+                                        </p:inputText>
+                                    </h:panelGroup>
+                                </p:column>
+                            </ui:remove>
+                            <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viQty" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.quantity}">
+                                        <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
+                                    <p:inputText id="qty" required="true" value="#{_i.quantity}"
+                                                 styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
+                                        <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </p:inputText>
+                                </h:panelGroup>
+                            </p:column>
+
+                            <p:column headerText="#{msgs['po.items.dt.column.unit']}" width="50"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viUnit" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.unit}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edUnit" rendered="#{_i.isEditable}">
+                                    <p:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}"
                                                  styleClass="form-control">
 
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
-                        </ui:remove>
-                        <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viQty" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.quantity}">
-                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
-                                <p:inputText id="qty" required="true" value="#{_i.quantity}"
-                                             styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
-                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </p:inputText>
-                            </h:panelGroup>
-                        </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.unit']}" width="50"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viUnit" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.unit}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edUnit" rendered="#{_i.isEditable}">
-                                <p:inputText id="unitItem" required="true" maxlength="50" value="#{_i.unit}"
-                                             styleClass="form-control">
+                            <p:column headerText="#{msgs['po.items.dt.column.description']}" width="500"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
+                                    <p:inputTextarea value="#{_i.description}"
 
-                                </p:inputText>
-                            </h:panelGroup>
-                        </p:column>
+                                                     styleClass="form-control" readonly="true"
+                                                     style="min-height: 180px; max-height: 180px; width: 100%!important;"
+                                                     scrollHeight="32">
+                                    </p:inputTextarea>
+                                </h:panelGroup>
+                                <h:panelGroup id="edDescription" rendered="#{_i.isEditable}">
+                                    <p:inputTextarea id="descripItem" value="#{_i.description}"
+                                                     styleClass="form-control"
+                                                     required="true"
+                                                     style="min-height: 180px; max-height: 180px; width: 100%!important;"
+                                                     scrollHeight="32" maxlength="950">
+                                    </p:inputTextarea>
+                                </h:panelGroup>
+                            </p:column>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.description']}" width="500"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
-                                <p:inputTextarea value="#{_i.description}"
+                            <p:column headerText="#{msgs['po.items.dt.column.currency']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viCurrency" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.projectCurrency.currency.code}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edCurrency" rendered="#{_i.isEditable}"
+                                              style="width: 93px!important;">
+                                    <h:selectOneMenu id="defaultCurrencyId" style="width: 93px!important;"
+                                                     value="#{_i.projectCurrency}"
+                                                     required="true"
+                                                     styleClass="form-control"
+                                                     converter="projectCurrencyConverter">
+                                        <f:selectItem
+                                                itemLabel="Select one"
+                                                noSelectionOption="true"/>
+                                        <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
+                                                       var="_pc"
+                                                       itemValue="#{_pc}"
+                                                       itemLabel="#{_pc.currency.code}"/>
+                                        <p:ajax event="change" async="false" process="@this"/>
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viUnitCost" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.cost}">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edUniCost" rendered="#{_i.isEditable}">
+                                    <p:inputText id="unitCostItem" value="#{_i.cost}" required="true"
+                                                 styleClass="form-control edUniCostItems"
+                                                 onkeyup="calculateTotalCost();">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
 
-                                                 styleClass="form-control" readonly="true"
-                                                 style="min-height: 180px; max-height: 180px; width: 100%!important;"
-                                                 scrollHeight="32">
-                                </p:inputTextarea>
-                            </h:panelGroup>
-                            <h:panelGroup id="edDescription" rendered="#{_i.isEditable}">
-                                <p:inputTextarea id="descripItem" value="#{_i.description}"
-                                                 styleClass="form-control"
-                                                 required="true"
-                                                 style="min-height: 180px; max-height: 180px; width: 100%!important;"
-                                                 scrollHeight="32" maxlength="950">
-                                </p:inputTextarea>
-                            </h:panelGroup>
-                        </p:column>
+                                    </p:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.items.dt.column.total.cost']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{_i.calculateTotal()}">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
+                                    <h:inputText id="totalCostItem" value="#{_i.totalCost}"
+                                                 readonly="true"
+                                                 styleClass="form-control edTotalCostItems">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column id="deliveryDateColumn" headerText="#{msgs['po.items.dt.column.delivery.date']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
+                                    <h:outputText value="#{util.toLocal(_i.poDeliveryDate)}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edDeliveryDate" rendered="#{_i.isEditable}">
+                                    <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                                required="true"
+                                                navigator="true" mask="#{configuration.mask}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                jsf:placeholder="#{configuration.formatDate}"
+                                                converterMessage="#{msgs['validator.date.invalid']}"
+                                                value="#{_i.poDeliveryDate}"
+                                                timeZone="#{configuration.timeZone}"
+                                                onselect="calendarChanges();" onchange="calendarChanges();">
+                                    </p:calendar>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.actions']}"
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
+                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
+                                               action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
+                                <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}"
+                                               process=":editPoForm:itemsDt"
+                                               action="#{itemBean.confirmItem(_i)}"
+                                               update=":glbMsgs itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
+                                               async="false"/>
+                                &#160;
+                                <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}"
+                                               process="@this"
+                                               action="#{itemBean.deleteItem(_i)}"
+                                               update="itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
+                                               async="false">
+                                    <p:confirm header="Remove item"
+                                               message="Are you sure to delete this item"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
+                                <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_i.isEditable}" process="@this"
+                                               action="#{itemBean.cancelEditionItem(_i)}" update="itemsDt"
+                                               async="false"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
 
-                        <p:column headerText="#{msgs['po.items.dt.column.currency']}"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viCurrency" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.projectCurrency.currency.code}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edCurrency" rendered="#{_i.isEditable}" style="width: 93px!important;">
-                                <h:selectOneMenu id="defaultCurrencyId" style="width: 93px!important;"
-                                                 value="#{_i.projectCurrency}"
-                                                 required="true"
-                                                 styleClass="form-control"
-                                                 converter="projectCurrencyConverter">
-                                    <f:selectItem
-                                            itemLabel="Select one"
-                                            noSelectionOption="true"/>
-                                    <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
-                                                   var="_pc"
-                                                   itemValue="#{_pc}"
-                                                   itemLabel="#{_pc.currency.code}"/>
-                                    <p:ajax event="change" async="false" process="@this"/>
-                                </h:selectOneMenu>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viUnitCost" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.cost}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edUniCost" rendered="#{_i.isEditable}">
-                                <p:inputText id="unitCostItem" value="#{_i.cost}" required="true"
-                                             styleClass="form-control edUniCostItems" onkeyup="calculateTotalCost();">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-
-                                </p:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.items.dt.column.total.cost']}"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{_i.calculateTotal()}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
-                                <h:inputText id="totalCostItem" value="#{_i.totalCost}"
-                                             readonly="true"
-                                             styleClass="form-control edTotalCostItems">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column id="deliveryDateColumn" headerText="#{msgs['po.items.dt.column.delivery.date']}"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                            <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
-                                <h:outputText value="#{util.toLocal(_i.poDeliveryDate)}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edDeliveryDate" rendered="#{_i.isEditable}">
-                                <p:calendar id="poOrderDate" type="text" styleClass="calendar"
-                                            required="true"
-                                            navigator="true" mask="#{configuration.mask}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            jsf:placeholder="#{configuration.formatDate}"
-                                            converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{_i.poDeliveryDate}"
-                                            timeZone="#{configuration.timeZone}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();">
-                                </p:calendar>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}"
-                                  rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
-                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
-                                           action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}"
-                                           process=":editPoForm:itemsDt"
-                                           action="#{itemBean.confirmItem(_i)}"
-                                           update=":glbMsgs itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
-                                           async="false"/>
-                            &#160;
-                            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}" process="@this"
-                                           action="#{itemBean.deleteItem(_i)}"
-                                           update="itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
-                                           async="false">
-                                <p:confirm header="Remove item"
-                                           message="Are you sure to delete this item"
-                                           icon="ui-icon-alert">
-                                </p:confirm>
-                            </p:commandLink>
-                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_i.isEditable}" process="@this"
-                                           action="#{itemBean.cancelEditionItem(_i)}" update="itemsDt" async="false"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:panelGroup>
+            <div>
+                <div class="form-group">
+                    <h:commandButton
+                            value="#{msgs['po.items.lbl.btn.add.item']}"
+                            action="#{itemBean.addItem}" onclick="doChangeProc();"
+                            styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
+                        <p:ajax async="false" update="itemsDt" process="@this"/>
+                    </h:commandButton>
+                    &#160;
+                    <h:commandButton
+                            value="#{msgs['po.items.lbl.btn.copy.date']}"
+                            action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate)}"
+                            styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}"
+                            onclick="doChangeProc();">
+                        <p:ajax async="false" update="itemsDt" process="@this"/>
+                    </h:commandButton>
+                </div>
             </div>
         </div>
-        <div class="clearfix"></div>
-        <br/>
-
-        <div>
-            <div class="form-group">
-                <h:commandButton
-                        value="#{msgs['po.items.lbl.btn.add.item']}"
-                        action="#{itemBean.addItem}" onclick="doChangeProc();"
-                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
-                    <p:ajax async="false" update="itemsDt" process="@this"/>
-                </h:commandButton>
-                &#160;
-                <h:commandButton
-                        value="#{msgs['po.items.lbl.btn.copy.date']}"
-                        action="#{itemBean.copyDateToItemList(poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate)}"
-                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}"
-                        onclick="doChangeProc();">
-                    <p:ajax async="false" update="itemsDt" process="@this"/>
-                </h:commandButton>
-            </div>
-        </div>
-    </div>
+    </h:panelGroup>
 </ui:composition>

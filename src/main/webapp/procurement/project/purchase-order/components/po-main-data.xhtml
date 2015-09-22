@@ -4,161 +4,168 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
-    <div style="width: 1092px!important; margin-left: 15px!important; margin-right: 15px!important;">
-        <div class="col-sm-12" style="margin-bottom: 20px!important;">
-            <div class="pull-right">
-                <h:panelGroup id="buttonGroup">
+    <h:panelGroup id="poMainSectionId">
+        <div style="width: 1092px!important; margin-left: 15px!important; margin-right: 15px!important;">
+            <div class="col-sm-12" style="margin-bottom: 20px!important;">
+                <div class="pull-right">
+                    <h:panelGroup id="buttonGroup">
 
-                    <h:commandButton styleClass="btn btn-primary btn-sm"
-                                     action="#{poBean.doSave}"
-                                     rendered="#{poBean.beingCreated}"
-                                     value="#{msgs['lbl.save']}">
-                        <p:ajax async="false" update=":glbMsgs buttonGroup editPoForm" process="@form" oncomplete="restartSwitches();"/>
-                    </h:commandButton>
-                    <h:commandButton styleClass="btn btn-primary btn-sm"
-                                     action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
-                                     value="#{msgs['lbl.save']}">
-                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form" oncomplete="restartSwitches();"/>
-                    </h:commandButton>
-                    &#160;
-                    <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"
-                                     styleClass="btn btn-primary btn-sm"
-                                     value="#{msgs['lbl.close']}"
-                                     rendered="#{poBean.beingCreated}">
-                    </h:commandButton>
-                    <h:commandButton type="submit" action="#{poBean.doUpdateAndClose}"
-                                     styleClass="btn btn-primary btn-sm"
-                                     value="#{msgs['lbl.close']}"
-                                     rendered="#{poBean.beingUpdated}">
-                    </h:commandButton>
-                    &#160;
-                    <h:commandButton
-                                     styleClass="btn btn-primary btn-sm"
-                                     action="#{poBean.doSaveView}"
-                                     rendered="#{poBean.beingCreated}"
-                                     value="#{msgs['lbl.print']}">
-                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form" oncomplete="restartSwitches();"/>
-                    </h:commandButton>
-                    <h:commandButton
-                                     styleClass="btn btn-primary btn-sm"
-                                     action="#{poBean.doUpdateView}"
-                                     rendered="#{poBean.beingUpdated}"
-                                     value="#{msgs['lbl.print']}">
-                        <p:ajax async="false" update=":glbMsgs editPoForm" process="@form" oncomplete="restartSwitches();"/>
-                    </h:commandButton>
-                    <h:commandLink type="submit"
-                                     id="printDraftPO"
-                                     style="display: none;"
-                                     target="_blank"
-                                     action="#{poListBean.printPODraft()}">
-                    </h:commandLink>
-                </h:panelGroup>
-            </div>
-        </div>
-    </div>
-    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <div style="width: 240px!important; float: left!important;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poProject" value="#{msgs['po.main.data.lbl.project']}"/>
-
-                <div style="width: 145px; float: left;">
-                    <h:inputText id="poProject" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.projectEntity.projectNumber}"/>
+                        <h:commandButton styleClass="btn btn-primary btn-sm"
+                                         action="#{poBean.doSave}"
+                                         rendered="#{poBean.beingCreated}"
+                                         value="#{msgs['lbl.save']}">
+                            <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"
+                                    oncomplete="restartSwitches();"/>
+                        </h:commandButton>
+                        <h:commandButton styleClass="btn btn-primary btn-sm"
+                                         action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
+                                         value="#{msgs['lbl.save']}">
+                            <p:ajax async="false" update=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId" process="@form"
+                                    oncomplete="restartSwitches();"/>
+                        </h:commandButton>
+                        &#160;
+                        <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"
+                                         styleClass="btn btn-primary btn-sm"
+                                         value="#{msgs['lbl.close']}"
+                                         rendered="#{poBean.beingCreated}">
+                        </h:commandButton>
+                        <h:commandButton type="submit" action="#{poBean.doUpdateAndClose}"
+                                         styleClass="btn btn-primary btn-sm"
+                                         value="#{msgs['lbl.close']}"
+                                         rendered="#{poBean.beingUpdated}">
+                        </h:commandButton>
+                        &#160;
+                        <h:commandButton
+                                styleClass="btn btn-primary btn-sm"
+                                action="#{poBean.doSaveView}"
+                                rendered="#{poBean.beingCreated}"
+                                value="#{msgs['lbl.print']}">
+                            <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"
+                                    oncomplete="restartSwitches();"/>
+                        </h:commandButton>
+                        <h:commandButton
+                                styleClass="btn btn-primary btn-sm"
+                                action="#{poBean.doUpdateView}"
+                                rendered="#{poBean.beingUpdated}"
+                                value="#{msgs['lbl.print']}">
+                            <p:ajax async="false" update=":glbMsgs editPoForm" process="@form"
+                                    oncomplete="restartSwitches();"/>
+                        </h:commandButton>
+                        <h:commandLink type="submit"
+                                       id="printDraftPO"
+                                       style="display: none;"
+                                       target="_blank"
+                                       action="#{poListBean.printPODraft()}">
+                        </h:commandLink>
+                    </h:panelGroup>
                 </div>
             </div>
         </div>
-        <div style="width: 290px!important; float: left!important;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poOrderNumber" value="#{msgs['po.main.data.lbl.order.number']}"/>
+        <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+            <div style="width: 240px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="poProject" value="#{msgs['po.main.data.lbl.project']}"/>
 
-                <div style="width: 145px; float: left;">
-                    <h:inputText id="poOrderNumber"
-                                 value="#{poBean.purchaseOrder.po}"
-                                 maxlength="50"
-                                 styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['po.number.valid']}"
-                                 rendered="#{poBean.beingEdited}"/>
-                    <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
-                    <h:inputText id="poOrderNumberVi" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.po}"
-                                 rendered="#{poBean.beingViewed}"/>
+                    <div style="width: 145px; float: left;">
+                        <h:inputText id="poProject" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.projectEntity.projectNumber}"/>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 290px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="poOrderNumber" value="#{msgs['po.main.data.lbl.order.number']}"/>
+
+                    <div style="width: 145px; float: left;">
+                        <h:inputText id="poOrderNumber"
+                                     value="#{poBean.purchaseOrder.po}"
+                                     maxlength="50"
+                                     styleClass="form-control" required="true"
+                                     requiredMessage="#{msgs['po.number.valid']}"
+                                     rendered="#{poBean.beingEdited}"/>
+                        <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
+                        <h:inputText id="poOrderNumberVi" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.po}"
+                                     rendered="#{poBean.beingViewed}"/>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 280px!important; float: left!important; margin-left: -10px;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="poOrderTitle" value="#{msgs['po.main.data.lbl.order.title']}"/>
+
+                    <div style="width: 198px; float: left;margin-left: -19px;">
+                        <h:inputText id="poOrderTitle"
+                                     value="#{poBean.purchaseOrder.poTitle}"
+                                     maxlength="250"
+                                     styleClass="form-control" required="true"
+                                     requiredMessage="#{msgs['po.title.valid']}"
+                                     rendered="#{poBean.beingEdited}"/>
+                        <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
+                        <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.poTitle}"
+                                     rendered="#{poBean.beingViewed}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div style="width: 290px!important; float: left!important; margin-left: 35px;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="poVarNumber" value="#{msgs['po.main.data.lbl.var.number']}"/>
+
+                    <div style="width: 100px; float: left;">
+                        <h:inputText id="poVarNumber" maxlength="50"
+                                     value="#{poBean.purchaseOrder.variation}"
+                                     styleClass="form-control" required="true"
+                                     requiredMessage="#{msgs['po.variation.valid']}"
+                                     rendered="#{poBean.beingEdited}"/>
+                        <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
+                        <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.variation}"
+                                     rendered="#{poBean.beingViewed}"/>
+                    </div>
                 </div>
             </div>
         </div>
-        <div style="width: 280px!important; float: left!important; margin-left: -10px;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poOrderTitle" value="#{msgs['po.main.data.lbl.order.title']}"/>
+        <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+            <div style="width: 240px!important; float: left!important;">
+                <div class="form-group">
+                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                   for="poOrderDate" value="#{msgs['po.main.data.lbl.order.date']}"/>
 
-                <div style="width: 198px; float: left;margin-left: -19px;">
-                    <h:inputText id="poOrderTitle"
-                                 value="#{poBean.purchaseOrder.poTitle}"
-                                 maxlength="250"
-                                 styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['po.title.valid']}"
-                                 rendered="#{poBean.beingEdited}"/>
-                    <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
-                    <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.poTitle}"
-                                 rendered="#{poBean.beingViewed}"/>
+                    <div style="width: 145px; float: left;">
+                        <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                    navigator="true" mask="#{configuration.mask}"
+                                    pattern="#{configuration.formatDate}"
+                                    converter="#{dateConverter}"
+                                    jsf:placeholder="#{configuration.formatDate}"
+                                    converterMessage="#{msgs['validator.date.invalid']}"
+                                    value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate}"
+                                    timeZone="#{configuration.timeZone}"
+                                    onselect="calendarChangesProc();" onchange="calendarChangesProc();"
+                                    onclick="doChangeProc();"
+                                    rendered="#{poBean.beingEdited}">
+                            <p:ajax event="dateSelect" update="deliverableDt"
+                                    listener="#{poBean.updateDeliverables}"
+                                    process="@this" async="false" delay="500"/>
+                            <p:ajax event="change" update="deliverableDt"
+                                    listener="#{poBean.updateDeliverables}"
+                                    process="@this" async="false" delay="500"/>
+                        </p:calendar>
+                        <p:message for="poOrderDate"/>
+                        <h:inputText id="poOrderDateVi" readonly="true" styleClass="form-control view-po"
+                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate}"
+                                     rendered="#{poBean.beingViewed}">
+                            <f:convertDateTime timeZone="#{configuration.timeZone}"
+                                               pattern="#{configuration.formatDate}"/>
+                        </h:inputText>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div style="width: 290px!important; float: left!important; margin-left: 35px;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poVarNumber" value="#{msgs['po.main.data.lbl.var.number']}"/>
-
-                <div style="width: 100px; float: left;">
-                    <h:inputText id="poVarNumber" maxlength="50"
-                                 value="#{poBean.purchaseOrder.variation}"
-                                 styleClass="form-control" required="true"
-                                 requiredMessage="#{msgs['po.variation.valid']}"
-                                 rendered="#{poBean.beingEdited}"/>
-                    <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
-                    <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.variation}"
-                                 rendered="#{poBean.beingViewed}"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <div style="width: 240px!important; float: left!important;">
-            <div class="form-group">
-                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                               for="poOrderDate" value="#{msgs['po.main.data.lbl.order.date']}"/>
-
-                <div style="width: 145px; float: left;">
-                    <p:calendar id="poOrderDate" type="text" styleClass="calendar"
-                                navigator="true" mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converter="#{dateConverter}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate}"
-                                timeZone="#{configuration.timeZone}"
-                                onselect="calendarChangesProc();" onchange="calendarChangesProc();"
-                                onclick="doChangeProc();"
-                                rendered="#{poBean.beingEdited}">
-                        <p:ajax event="dateSelect" update="deliverableDt"
-                                listener="#{poBean.updateDeliverables}"
-                                process="@this" async="false" delay="500"/>
-                        <p:ajax event="change" update="deliverableDt"
-                                listener="#{poBean.updateDeliverables}"
-                                process="@this" async="false" delay="500"/>
-                    </p:calendar>
-                    <p:message for="poOrderDate"/>
-                    <h:inputText id="poOrderDateVi" readonly="true" styleClass="form-control view-po"
-                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate}"
-                                 rendered="#{poBean.beingViewed}">
-                        <f:convertDateTime timeZone="#{configuration.timeZone}" pattern="#{configuration.formatDate}"/>
-                    </h:inputText>
-                </div>
-            </div>
-        </div>
-    </div>
+    </h:panelGroup>
 </ui:composition>

@@ -4,35 +4,38 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <h:panelGroup id="cashflowSectionId">
+        <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+            <h:panelGroup id="retention">
+                <ui:include src="../component/retention.xhtml">
+                    <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.retention.title']}"/>
+                    <ui:param name="LABEL_CHECKBOX" value="#{msgs['po.cashflow.lbl.retention.apply.retention']}"/>
+                    <ui:param name="NUMBER_ID" value="2"/>
+                    <ui:param name="APPLY" value="#{cashflowBean.cashflow.applyRetention}"/>
+                    <ui:param name="PERCENTAGE" value="#{cashflowBean.cashflow.percentage}"/>
+                    <ui:param name="FORM" value="#{cashflowBean.cashflow.form}"/>
+                    <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expDate}"/>
+                    <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.projectCurrency}"/>
+                </ui:include>
+            </h:panelGroup>
 
-    <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <h:panelGroup id="retention">
-            <ui:include src="../component/retention.xhtml">
-                <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.retention.title']}"/>
-                <ui:param name="LABEL_CHECKBOX" value="#{msgs['po.cashflow.lbl.retention.apply.retention']}"/>
-                <ui:param name="NUMBER_ID" value="2"/>
-                <ui:param name="APPLY" value="#{cashflowBean.cashflow.applyRetention}"/>
-                <ui:param name="PERCENTAGE" value="#{cashflowBean.cashflow.percentage}"/>
-                <ui:param name="FORM" value="#{cashflowBean.cashflow.form}"/>
-                <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expDate}"/>
-                <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.projectCurrency}"/>
-            </ui:include>
-        </h:panelGroup>
-        <div class="clearfix"></div>
-        <h:panelGroup id="securityDeposit">
-            <ui:include src="../component/retention.xhtml">
-                <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.security.deposit.title']}"/>
-                <ui:param name="LABEL_CHECKBOX" value="#{msgs['po.header.lbl.apply.security.deposit']}"/>
-                <ui:param name="NUMBER_ID" value="1"/>
-                <ui:param name="APPLY" value="#{cashflowBean.cashflow.applyRetentionSecurityDeposit}"/>
-                <ui:param name="PERCENTAGE" value="#{cashflowBean.cashflow.percentageSecurityDeposit}"/>
-                <ui:param name="FORM" value="#{cashflowBean.cashflow.formSecurityDeposit}"/>
-                <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expirationDateSecurityDeposit}"/>
-                <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.currencySecurityDeposit}"/>
-            </ui:include>
-        </h:panelGroup>
-        <div class="clearfix"></div>
-        <br/>
+            <div class="clearfix"></div>
+            <h:panelGroup id="securityDeposit">
+                <ui:include src="../component/retention.xhtml">
+                    <ui:param name="TITLE" value="#{msgs['po.cashflow.lbl.panel.security.deposit.title']}"/>
+                    <ui:param name="LABEL_CHECKBOX" value="#{msgs['po.header.lbl.apply.security.deposit']}"/>
+                    <ui:param name="NUMBER_ID" value="1"/>
+                    <ui:param name="APPLY" value="#{cashflowBean.cashflow.applyRetentionSecurityDeposit}"/>
+                    <ui:param name="PERCENTAGE" value="#{cashflowBean.cashflow.percentageSecurityDeposit}"/>
+                    <ui:param name="FORM" value="#{cashflowBean.cashflow.formSecurityDeposit}"/>
+                    <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expirationDateSecurityDeposit}"/>
+                    <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.currencySecurityDeposit}"/>
+                </ui:include>
+            </h:panelGroup>
+
+            <div class="clearfix"></div>
+            <br/>
+
             <div style="margin-left: 0px!important; margin-right: 15px!important;">
                 <div style="width: 440px!important; float: left!important;">
                     <div class="form-group">
@@ -42,7 +45,8 @@
                         <div style="width: 250px; float: left;">
                             <h:selectOneMenu id="termCfId" onclick="doChangeProc();"
                                              value="#{cashflowBean.cashflow.paymentTerms}"
-                                             styleClass="form-control" rendered="#{poBean.beingEdited and poBean.poIsOriginal()}">
+                                             styleClass="form-control"
+                                             rendered="#{poBean.beingEdited and poBean.poIsOriginal()}">
                                 <f:selectItem
                                         itemLabel="Select a Payment Term"
                                         noSelectionOption="true"/>
@@ -62,60 +66,60 @@
             </div>
             <div class="clearfix"></div>
             <br/>
-        <!--Forecast cashflow -->
-        <div style="margin-left: 0px!important; margin-right: 15px!important;">
-            <div style="width: 240px!important; float: left!important;">
-                <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
-                                   value="#{msgs['po.cashflow.lbl.forescast.cashflow']}"/>
+            <!--Forecast cashflow -->
+            <div style="margin-left: 0px!important; margin-right: 15px!important;">
+                <div style="width: 240px!important; float: left!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
+                                       value="#{msgs['po.cashflow.lbl.forescast.cashflow']}"/>
 
-                    <div style="width: 180px; float: left;">
+                        <div style="width: 180px; float: left;">
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 340px!important; float: left!important; margin-left: -43px">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                       for="orderValueCf" value="#{msgs['po.cashflow.lbl.order.value']}"/>
+
+                        <div style="width: 180px; float: left;">
+                            <p:inputTextarea id="orderValueCf"
+                                             readonly="true"
+                                             value="#{poBean.calculateTotalValues()}"
+                                             maxlength="950"
+                                             styleClass="form-control" style="height: 100px!important;"
+                                             rendered="#{poBean.beingEdited}"/>
+                            <h:inputTextarea id="orderValueCfVi" readonly="true" styleClass="form-control"
+                                             rendered="#{poBean.beingViewed}" value="#{poBean.calculateTotalValues()}"/>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 340px!important; float: left!important; margin-left: -43px">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                       for="balanceId" value="#{msgs['po.cashflow.lbl.balance']}"/>
+
+                        <div style="width: 180px; float: left;">
+                            <p:inputTextarea id="balanceId" value="#{poBean.calculateBalanceValue()}"
+                                             maxlength="950"
+                                             readonly="true"
+                                             styleClass="form-control" style="height: 100px!important; "
+                                             rendered="#{poBean.beingEdited}"/>
+                            <h:inputTextarea id="balanceIdVi" readonly="true" styleClass="form-control"
+                                             rendered="#{poBean.beingViewed}" value="#{cashflowBean.cashflow.balance}"/>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div style="width: 340px!important; float: left!important; margin-left: -43px">
-                <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                   for="orderValueCf" value="#{msgs['po.cashflow.lbl.order.value']}"/>
-
-                    <div style="width: 180px; float: left;">
-                        <p:inputTextarea id="orderValueCf"
-                                         readonly="true"
-                                         value="#{poBean.calculateTotalValues()}"
-                                         maxlength="950"
-                                         styleClass="form-control" style="height: 100px!important;"
-                                         rendered="#{poBean.beingEdited}"/>
-                        <h:inputTextarea id="orderValueCfVi" readonly="true" styleClass="form-control"
-                                         rendered="#{poBean.beingViewed}" value="#{poBean.calculateTotalValues()}"/>
-                    </div>
-                </div>
-            </div>
-            <div style="width: 340px!important; float: left!important; margin-left: -43px">
-                <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                   for="balanceId" value="#{msgs['po.cashflow.lbl.balance']}"/>
-
-                    <div style="width: 180px; float: left;">
-                        <p:inputTextarea id="balanceId" value="#{poBean.calculateBalanceValue()}"
-                                         maxlength="950"
-                                         readonly="true"
-                                         styleClass="form-control" style="height: 100px!important; "
-                                         rendered="#{poBean.beingEdited}"/>
-                        <h:inputTextarea id="balanceIdVi" readonly="true" styleClass="form-control"
-                                         rendered="#{poBean.beingViewed}" value="#{cashflowBean.cashflow.balance}"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important;">
-            <div style="width: 1060px!important; float: left;">
-                <div class="form-group">
-                    <p:dataTable id="forecastDt" var="_l"
-                                 value="#{cashflowBean.cashflowDetailList}">
-                        <p:column headerText="#{msgs['po.cashflow.column.milestone']}"
-                                  width="70"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+            <div class="clearfix"></div>
+            <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important;">
+                <div style="width: 1060px!important; float: left;">
+                    <div class="form-group">
+                        <p:dataTable id="forecastDt" var="_l"
+                                     value="#{cashflowBean.cashflowDetailList}">
+                            <p:column headerText="#{msgs['po.cashflow.column.milestone']}"
+                                      width="70"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                                 <h:panelGroup id="viItem" rendered="#{!_l.isEditable}">
                                     <h:outputText value="#{_l.item}"/>
                                 </h:panelGroup>
@@ -126,151 +130,159 @@
                                     </p:inputText>
 
                                 </h:panelGroup>
-                        </p:column>
-                        <p:column width="70"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viPercentage" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.percentage}"> %
-                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edPercentage" rendered="#{_l.isEditable}">
-                                <h:inputText id="percentage" value="#{_l.percentage}" styleClass="form-control">
-                                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"/>
-                                    <p:ajax event="blur" process="forecastDt" listener="#{poBean.calculatePaymentValue(_l)}" update="forecastDt"/>
-                                </h:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}"
-                                  width="250"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viDescrip" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.milestone}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edDescrip" rendered="#{_l.isEditable}">
-                                <h:inputText id="descrip" value="#{_l.milestone}" styleClass="form-control"/>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.currency']}"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viCurrency" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.projectCurrency.currency.code}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edCurrency" rendered="#{_l.isEditable}">
-                                <h:selectOneMenu id="defaultCurrencyId"
-                                                 value="#{_l.projectCurrency}"
-                                                 styleClass="form-control"
-                                                 converter="projectCurrencyConverter" >
-                                    <f:selectItem
-                                            itemLabel="Select one"
-                                            noSelectionOption="true"/>
-                                    <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
-                                                   var="_pc"
-                                                   itemValue="#{_pc}"
-                                                   itemLabel="#{_pc.currency.code}"/>
-                                    <p:ajax event="change" process="forecastDt" listener="#{poBean.calculatePaymentValue(_l)}" update="forecastDt"/>
-                                </h:selectOneMenu>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.order.amt']}"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viOrderAmt" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.orderAmt}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edOrderAmt" rendered="#{_l.isEditable}">
-                                <h:inputText id="orderAmt" value="#{_l.orderAmt}" styleClass="form-control" readonly="true">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.project.amt']}"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viPoAmt" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{_l.projectAmt}">
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edPoAmt" rendered="#{_l.isEditable}">
-                                <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control">
-                                    <p:ajax event="blur" process="forecastDt" async="false" />
-                                    <f:convertNumber pattern="#{configuration.patternDecimal}"
-                                                     locale="#{configuration.langLocalDecimal}"/>
-                                </h:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.claim.date']}"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viClaimDate" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{util.toLocal(_l.claimDate)}"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edClaimDate" rendered="#{_l.isEditable}">
-                                <p:calendar id="claimDate" type="text" styleClass="calendar"
-                                            navigator="true" mask="#{configuration.mask}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            jsf:placeholder="#{configuration.formatDate}"
-                                            converterMessage="#{msgs['validator.date.invalid']}"
-                                            value="#{_l.claimDate}"
-                                            timeZone="#{configuration.timeZone}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();">
-                                    <p:ajax event="dateSelect" update="forecastDt" process="forecastDt"
-                                            listener="#{cashflowBean.calculatePaymentDate(_l)}" async="false"/>
-                                </p:calendar>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['po.cashflow.column.payment.date']}"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
-                            <h:panelGroup id="viPaymentDate" rendered="#{!_l.isEditable}">
-                                <h:outputText value="#{util.toLocal(_l.paymentDate)}">
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup id="edPaymentDate" rendered="#{_l.isEditable}">
-                                <h:inputText value="#{util.toLocal(_l.paymentDate)}" readonly="true" styleClass="form-control">
-                                </h:inputText>
-                            </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="#{msgs['lbl.actions']}"
-                                  rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
-                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.editCashflowDetail(_l)}"
-                                           update="forecastDt " async="false"/>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}" process="forecastDt"
-                                           action="#{cashflowBean.confirmCashflowDetail(_l)}"
-                                           update="forecastDt :editPoForm:balanceId" async="false"/>
-                            &#160;
-                            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.deleteCashflowDetail(_l)}" update="forecastDt :editPoForm:balanceId"
-                                           async="false">
-                                <p:confirm header="#{msgs['lbl.confirmation']}"
-                                           message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
-                                           icon="ui-icon-alert">
-                                </p:confirm>
-                            </p:commandLink>
-                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_l.isEditable}" process="@this"
-                                           action="#{cashflowBean.cancelEditionCashDetail(_l)}" update="forecastDt"
-                                           async="false"/>
-                        </p:column>
-                    </p:dataTable>
+                            </p:column>
+                            <p:column width="70"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viPercentage" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{_l.percentage}"> %
+                                        <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"/>
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edPercentage" rendered="#{_l.isEditable}">
+                                    <h:inputText id="percentage" value="#{_l.percentage}" styleClass="form-control">
+                                        <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"/>
+                                        <p:ajax event="blur" process="forecastDt"
+                                                listener="#{poBean.calculatePaymentValue(_l)}" update="forecastDt"/>
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.cashflow.column.milestone.progress.description']}"
+                                      width="250"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viDescrip" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{_l.milestone}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edDescrip" rendered="#{_l.isEditable}">
+                                    <h:inputText id="descrip" value="#{_l.milestone}" styleClass="form-control"/>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.cashflow.column.currency']}"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viCurrency" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{_l.projectCurrency.currency.code}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edCurrency" rendered="#{_l.isEditable}">
+                                    <h:selectOneMenu id="defaultCurrencyId"
+                                                     value="#{_l.projectCurrency}"
+                                                     styleClass="form-control"
+                                                     converter="projectCurrencyConverter">
+                                        <f:selectItem
+                                                itemLabel="Select one"
+                                                noSelectionOption="true"/>
+                                        <f:selectItems value="#{poBean.purchaseOrder.projectEntity.currencies}"
+                                                       var="_pc"
+                                                       itemValue="#{_pc}"
+                                                       itemLabel="#{_pc.currency.code}"/>
+                                        <p:ajax event="change" process="forecastDt"
+                                                listener="#{poBean.calculatePaymentValue(_l)}" update="forecastDt"/>
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.cashflow.column.order.amt']}"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viOrderAmt" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{_l.orderAmt}">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edOrderAmt" rendered="#{_l.isEditable}">
+                                    <h:inputText id="orderAmt" value="#{_l.orderAmt}" styleClass="form-control"
+                                                 readonly="true">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.cashflow.column.project.amt']}"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viPoAmt" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{_l.projectAmt}">
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edPoAmt" rendered="#{_l.isEditable}">
+                                    <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control">
+                                        <p:ajax event="blur" process="forecastDt" async="false"/>
+                                        <f:convertNumber pattern="#{configuration.patternDecimal}"
+                                                         locale="#{configuration.langLocalDecimal}"/>
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.cashflow.column.claim.date']}"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viClaimDate" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{util.toLocal(_l.claimDate)}"/>
+                                </h:panelGroup>
+                                <h:panelGroup id="edClaimDate" rendered="#{_l.isEditable}">
+                                    <p:calendar id="claimDate" type="text" styleClass="calendar"
+                                                navigator="true" mask="#{configuration.mask}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                jsf:placeholder="#{configuration.formatDate}"
+                                                converterMessage="#{msgs['validator.date.invalid']}"
+                                                value="#{_l.claimDate}"
+                                                timeZone="#{configuration.timeZone}"
+                                                onselect="calendarChanges();" onchange="calendarChanges();">
+                                        <p:ajax event="dateSelect" update="forecastDt" process="forecastDt"
+                                                listener="#{cashflowBean.calculatePaymentDate(_l)}" async="false"/>
+                                    </p:calendar>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['po.cashflow.column.payment.date']}"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
+                                <h:panelGroup id="viPaymentDate" rendered="#{!_l.isEditable}">
+                                    <h:outputText value="#{util.toLocal(_l.paymentDate)}">
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup id="edPaymentDate" rendered="#{_l.isEditable}">
+                                    <h:inputText value="#{util.toLocal(_l.paymentDate)}" readonly="true"
+                                                 styleClass="form-control">
+                                    </h:inputText>
+                                </h:panelGroup>
+                            </p:column>
+                            <p:column headerText="#{msgs['lbl.actions']}"
+                                      rendered="#{cashflowBean.hasNotStatusDeleted(_l) and poBean.beingEdited}">
+                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_l.isEditable}" process="@this"
+                                               action="#{cashflowBean.editCashflowDetail(_l)}"
+                                               update="forecastDt " async="false"/>
+                                <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_l.isEditable}"
+                                               process="forecastDt"
+                                               action="#{cashflowBean.confirmCashflowDetail(_l)}"
+                                               update="forecastDt :editPoForm:balanceId" async="false"/>
+                                &#160;
+                                <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_l.isEditable}"
+                                               process="@this"
+                                               action="#{cashflowBean.deleteCashflowDetail(_l)}"
+                                               update="forecastDt :editPoForm:balanceId"
+                                               async="false">
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
+                                <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_l.isEditable}" process="@this"
+                                               action="#{cashflowBean.cancelEditionCashDetail(_l)}" update="forecastDt"
+                                               async="false"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <br/>
+                <div class="clearfix"></div>
+                <br/>
 
-            <div>
-                <div class="form-group">
-                    <h:commandButton
-                            value="#{msgs['po.items.lbl.btn.add.item']}"
-                            action="#{cashflowBean.addItem}" styleClass="btn btn-primary btn-sm"
-                            rendered="#{poBean.beingEdited}" onclick="doChangeProc();">
-                        <p:ajax async="false" update="forecastDt" process="@this"/>
-                    </h:commandButton>
+                <div>
+                    <div class="form-group">
+                        <h:commandButton
+                                value="#{msgs['po.items.lbl.btn.add.item']}"
+                                action="#{cashflowBean.addItem}" styleClass="btn btn-primary btn-sm"
+                                rendered="#{poBean.beingEdited}" onclick="doChangeProc();">
+                            <p:ajax async="false" update="forecastDt" process="@this"/>
+                        </h:commandButton>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </h:panelGroup>
 </ui:composition>

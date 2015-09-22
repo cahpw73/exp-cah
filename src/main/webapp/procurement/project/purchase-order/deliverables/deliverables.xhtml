@@ -4,98 +4,100 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:p="http://primefaces.org/ui">
+    <h:panelGroup id="deliverablesSectionId">
+        <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+            <div style="width:960px!important; float: left;">
+                <div class="form-group">
+                    <p:dataTable id="deliverableDt" var="_dv"
+                                 value="#{deliverableBean.filteredList()}">
 
-    <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <div style="width:960px!important; float: left;">
-            <div class="form-group">
-                <p:dataTable id="deliverableDt" var="_dv"
-                             value="#{deliverableBean.filteredList()}">
+                        <p:column headerText="#{msgs['po.deliverables.column.description']}" width="300">
+                            <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
+                            <p:selectOneMenu id="descriptions" value="#{_dv.description}"
+                                             required="true"
+                                             requiredMessage="Enter a Description"
+                                             rendered="#{_dv.isEditable}"
+                                             effect="fold" editable="true" styleClass="form-control"
+                                             maxlength="950" style="width: 100%">
+                                <f:selectItems value="#{deliverableBean.deliverableItems}"
+                                               var="_deliverableItem" itemValue="#{_deliverableItem.item}"
+                                               itemLabel="#{_deliverableItem.item}"/>
+                                <p:ajax async="false" process="@this" event="change"/>
+                            </p:selectOneMenu>
+                        </p:column>
 
-                    <p:column headerText="#{msgs['po.deliverables.column.description']}" width="300">
-                        <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.description}"/>
-                        <p:selectOneMenu id="descriptions" value="#{_dv.description}"
-                                         required="true"
-                                         requiredMessage="Enter a Description"
-                                         rendered="#{_dv.isEditable}"
-                                         effect="fold" editable="true" styleClass="form-control"
-                                         maxlength="950" style="width: 100%">
-                            <f:selectItems value="#{deliverableBean.deliverableItems}"
-                                           var="_deliverableItem" itemValue="#{_deliverableItem.item}" itemLabel="#{_deliverableItem.item}"/>
-                            <p:ajax async="false" process="@this" event="change"/>
-                        </p:selectOneMenu>
-                    </p:column>
-
-                    <p:column headerText="#{msgs['po.deliverables.column.Qty']}" width="70">
-                        <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
-                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control">
-                            <p:ajax async="false" process="@this" event="change"/>
-                            <f:convertNumber integerOnly="true"/>
-                        </h:inputText>
-                    </p:column>
-                    <p:column headerText="#{msgs['po.deliverables.column.no.day']}">
-                        <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.noDays}"/>
-                        <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.noDays}" styleClass="form-control">
-                            <p:ajax event="change" async="false"
-                                    process="@this"
-                                    listener="#{poBean.updateRequiredDate(_dv)}"
-                                    update="deliverableDt"/>
-                            <f:convertNumber integerOnly="true"/>
-                        </h:inputText>
-                    </p:column>
-                    <p:column headerText="#{msgs['po.deliverables.column.day.required']}">
-                        <h:outputText rendered="#{not _dv.isEditable}" value="#{util.toLocal(_dv.requiredDate)}"/>
-                        <p:calendar id="poOrderDate" type="text" styleClass="calendar"
-                                    navigator="true" mask="#{configuration.mask}"
-                                    rendered="#{_dv.isEditable}"
-                                    pattern="#{configuration.formatDate}"
-                                    converter="#{dateConverter}"
-                                    jsf:placeholder="#{configuration.formatDate}"
-                                    converterMessage="#{msgs['validator.date.invalid']}"
-                                    value="#{_dv.requiredDate}"
-                                    timeZone="#{configuration.timeZone}"
-                                    onselect="calendarChanges();" onchange="calendarChanges();">
-                            <p:ajax event="dateSelect" async="false"
-                                    process="@this"
-                                    listener="#{poBean.updateNoDays(_dv)}"
-                                    delay="500" update="deliverableDt"/>
-                            <p:ajax event="change" async="false"
-                                    process="@this"
-                                    listener="#{poBean.updateNoDays(_dv)}"
-                                    delay="500" update="deliverableDt"/>
-                        </p:calendar>
-                    </p:column>
-                    <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
-                        <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dv.isEditable}" process="@this"
-                                       action="#{deliverableBean.edit(_dv.id)}"
-                                       update="deliverableDt "/>
-                        <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dv.isEditable}"
-                                       process=":editPoForm:deliverableDt"
-                                       action="#{deliverableBean.confirm(_dv.id)}"
-                                       update="deliverableDt "/>
-                        &#160;
-                        <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_dv.isEditable}" process="@this"
-                                       action="#{deliverableBean.delete(_dv.id)}" update="deliverableDt">
-                            <p:confirm header="Remove Deliverable"
-                                       message="Are you sure to delete this delivery?"
-                                       icon="ui-icon-alert">
-                            </p:confirm>
-                        </p:commandLink>
-                        <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dv.isEditable}" process="@this"
-                                       action="#{deliverableBean.cancel(_dv.id)}" update="deliverableDt"/>
-                    </p:column>
-                </p:dataTable>
+                        <p:column headerText="#{msgs['po.deliverables.column.Qty']}" width="70">
+                            <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.quantity}"/>
+                            <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.quantity}" styleClass="form-control">
+                                <p:ajax async="false" process="@this" event="change"/>
+                                <f:convertNumber integerOnly="true"/>
+                            </h:inputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['po.deliverables.column.no.day']}">
+                            <h:outputText rendered="#{not _dv.isEditable}" value="#{_dv.noDays}"/>
+                            <h:inputText rendered="#{_dv.isEditable}" value="#{_dv.noDays}" styleClass="form-control">
+                                <p:ajax event="change" async="false"
+                                        process="@this"
+                                        listener="#{poBean.updateRequiredDate(_dv)}"
+                                        update="deliverableDt"/>
+                                <f:convertNumber integerOnly="true"/>
+                            </h:inputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['po.deliverables.column.day.required']}">
+                            <h:outputText rendered="#{not _dv.isEditable}" value="#{util.toLocal(_dv.requiredDate)}"/>
+                            <p:calendar id="poOrderDate" type="text" styleClass="calendar"
+                                        navigator="true" mask="#{configuration.mask}"
+                                        rendered="#{_dv.isEditable}"
+                                        pattern="#{configuration.formatDate}"
+                                        converter="#{dateConverter}"
+                                        jsf:placeholder="#{configuration.formatDate}"
+                                        converterMessage="#{msgs['validator.date.invalid']}"
+                                        value="#{_dv.requiredDate}"
+                                        timeZone="#{configuration.timeZone}"
+                                        onselect="calendarChanges();" onchange="calendarChanges();">
+                                <p:ajax event="dateSelect" async="false"
+                                        process="@this"
+                                        listener="#{poBean.updateNoDays(_dv)}"
+                                        delay="500" update="deliverableDt"/>
+                                <p:ajax event="change" async="false"
+                                        process="@this"
+                                        listener="#{poBean.updateNoDays(_dv)}"
+                                        delay="500" update="deliverableDt"/>
+                            </p:calendar>
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dv.isEditable}" process="@this"
+                                           action="#{deliverableBean.edit(_dv.id)}"
+                                           update="deliverableDt "/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dv.isEditable}"
+                                           process=":editPoForm:deliverableDt"
+                                           action="#{deliverableBean.confirm(_dv.id)}"
+                                           update="deliverableDt "/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_dv.isEditable}" process="@this"
+                                           action="#{deliverableBean.delete(_dv.id)}" update="deliverableDt">
+                                <p:confirm header="Remove Deliverable"
+                                           message="Are you sure to delete this delivery?"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
+                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_dv.isEditable}" process="@this"
+                                           action="#{deliverableBean.cancel(_dv.id)}" update="deliverableDt"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+            <div style="float: left; margin-left: 100px; margin-top: 100px;">
+                <div class="form-group">
+                    <h:commandButton
+                            onclick="doChangeProc();"
+                            value="#{msgs['lbl.add']}"
+                            action="#{deliverableBean.add()}"
+                            styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
+                        <p:ajax async="false" update="deliverableDt"/>
+                    </h:commandButton>
+                </div>
             </div>
         </div>
-        <div style="float: left; margin-left: 100px; margin-top: 100px;">
-            <div class="form-group">
-                <h:commandButton
-                        onclick="doChangeProc();"
-                        value="#{msgs['lbl.add']}"
-                        action="#{deliverableBean.add()}"
-                        styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
-                    <p:ajax async="false" update="deliverableDt"/>
-                </h:commandButton>
-            </div>
-        </div>
-    </div>
+    </h:panelGroup>
 </ui:composition>

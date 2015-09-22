@@ -4,265 +4,272 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
-
-    <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-        <h:panelGroup id="supplierDetail">
-            <div class="panel panel-default panel-tab">
-                <div class="procurement-panel-header">#{msgs['po.supplier.panel.lbl.title']}</div>
-                <!-- Default panel contents -->
-                <div class="panel-body">
-                    <!--COL1-->
-                    <div style="float: left;">
-                        <div style="width: 440px!important;">
-                            <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                               for="supplierSupId" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
-                                <div style="width: 200px; float: left;">
-                                    <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
-                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
-                                                     styleClass="form-control" rendered="#{poBean.beingEdited}"
-                                                     converter="supplierConverter">
-                                        <f:selectItem
-                                                itemLabel="#{msgs['po.supplier.panel.lbl.selection.supplier']}"
-                                                noSelectionOption="true"/>
-                                        <f:selectItems value="#{supplierProcList.suppliers}"
-                                                       var="_s"
-                                                       itemValue="#{_s}"
-                                                       itemLabel="#{_s.fullName}"/>
-                                        <p:ajax async="false" update="supplierDetail contactDetail supplierHeader"
-                                                process="@this" listener="#{poBean.resetContact()}"/>
-                                    </h:selectOneMenu>
-                                    <p:message for="supplierSupId" id="msgSupplierSupId"/>
-                                    <h:inputText id="supplierSupViId" readonly="true" styleClass="form-control view-po"
-                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
-                                                 rendered="#{poBean.beingViewed}"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="width: 440px!important;">
-                            <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                               for="abnRegNo" value="#{msgs['po.supplier.panel.lbl.abn.reg.no']}"/>
-
-                                <div style="width: 200px; float: left;">
-                                    <h:inputText id="abnRegNo"
-                                                 readonly="true"
-                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.abnRegNo}"
-                                                 styleClass="form-control"/>
-                                    <p:message for="abnRegNo" id="msgAbnRegNo"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="width: 534px!important;">
-                            <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                               for="streetSupId" value="#{msgs['po.supplier.panel.lbl.street']}"/>
-
-                                <div style="width: 395px; float: left; margin-left: 23px;">
-                                    <p:inputTextarea id="streetSupId" type="text" style="height: 97px;"
-                                                     readonly="true"
-                                                     maxlength="950" class="form-control"
-                                                     jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
-                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.street}"/>
-                                    <p:message for="streetSupId" id="msgStreetSupId"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="width: 534px!important;">
-                            <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                               for="suburbSupId" value="#{msgs['po.supplier.panel.lbl.suburb']}"/>
-
-                                <div style="width: 395px; float: left; margin-left: 23px;">
-                                    <h:inputText id="suburbSupId"
-                                                 readonly="true"
-                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.suburb}"
-                                                 styleClass="form-control"/>
-                                    <p:message for="suburbSupId" id="msgSuburbSupId"/>
-                                </div>
-                            </div>
-                        </div>
-                        <!--State and PostCode-->
-                        <div>
-                            <div style="width: 440px!important; float: left;">
+    <h:panelGroup id="supplierSectionId">
+        <div style="width: 1100px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+            <h:panelGroup id="supplierDetail">
+                <div class="panel panel-default panel-tab">
+                    <div class="procurement-panel-header">#{msgs['po.supplier.panel.lbl.title']}</div>
+                    <!-- Default panel contents -->
+                    <div class="panel-body">
+                        <!--COL1-->
+                        <div style="float: left;">
+                            <div style="width: 440px!important;">
                                 <div class="form-group">
                                     <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="stateSupId" value="#{msgs['po.supplier.panel.lbl.state']}"/>
+                                                   for="supplierSupId"
+                                                   value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                                     <div style="width: 200px; float: left;">
-                                        <h:inputText id="stateSupId"
-                                                     readonly="true"
-                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.state}"
-                                                     styleClass="form-control"/>
-                                        <p:message for="stateSupId" id="msgStateSupId"/>
+                                        <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
+                                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
+                                                         styleClass="form-control" rendered="#{poBean.beingEdited}"
+                                                         converter="supplierConverter">
+                                            <f:selectItem
+                                                    itemLabel="#{msgs['po.supplier.panel.lbl.selection.supplier']}"
+                                                    noSelectionOption="true"/>
+                                            <f:selectItems value="#{supplierProcList.suppliers}"
+                                                           var="_s"
+                                                           itemValue="#{_s}"
+                                                           itemLabel="#{_s.fullName}"/>
+                                            <p:ajax async="false" update="supplierDetail contactDetail supplierHeader"
+                                                    process="@this" listener="#{poBean.resetContact()}"/>
+                                        </h:selectOneMenu>
+                                        <p:message for="supplierSupId" id="msgSupplierSupId"/>
+                                        <h:inputText id="supplierSupViId" readonly="true"
+                                                     styleClass="form-control view-po"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
+                                                     rendered="#{poBean.beingViewed}"/>
                                     </div>
                                 </div>
                             </div>
-                            <div style="width: 240px!important; float: left; margin-left: -141px;">
+
+                            <div style="width: 440px!important;">
                                 <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                                   for="postcodeSupId"
-                                                   value="#{msgs['po.supplier.panel.lbl.postcode']}"/>
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="abnRegNo" value="#{msgs['po.supplier.panel.lbl.abn.reg.no']}"/>
 
-                                    <div style="width: 100px; float: left;">
-                                        <h:inputText id="postcodeSupId"
+                                    <div style="width: 200px; float: left;">
+                                        <h:inputText id="abnRegNo"
                                                      readonly="true"
-                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.postCode}"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.abnRegNo}"
                                                      styleClass="form-control"/>
-                                        <p:message for="postcodeSupId" id="msgPostcodeSupId"/>
+                                        <p:message for="abnRegNo" id="msgAbnRegNo"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 534px!important;">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                                   for="streetSupId" value="#{msgs['po.supplier.panel.lbl.street']}"/>
+
+                                    <div style="width: 395px; float: left; margin-left: 23px;">
+                                        <p:inputTextarea id="streetSupId" type="text" style="height: 97px;"
+                                                         readonly="true"
+                                                         maxlength="950" class="form-control"
+                                                         jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
+                                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.street}"/>
+                                        <p:message for="streetSupId" id="msgStreetSupId"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 534px!important;">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                                   for="suburbSupId" value="#{msgs['po.supplier.panel.lbl.suburb']}"/>
+
+                                    <div style="width: 395px; float: left; margin-left: 23px;">
+                                        <h:inputText id="suburbSupId"
+                                                     readonly="true"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.suburb}"
+                                                     styleClass="form-control"/>
+                                        <p:message for="suburbSupId" id="msgSuburbSupId"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--State and PostCode-->
+                            <div>
+                                <div style="width: 440px!important; float: left;">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                       for="stateSupId" value="#{msgs['po.supplier.panel.lbl.state']}"/>
+
+                                        <div style="width: 200px; float: left;">
+                                            <h:inputText id="stateSupId"
+                                                         readonly="true"
+                                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.state}"
+                                                         styleClass="form-control"/>
+                                            <p:message for="stateSupId" id="msgStateSupId"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="width: 240px!important; float: left; margin-left: -141px;">
+                                    <div class="form-group">
+                                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                                       for="postcodeSupId"
+                                                       value="#{msgs['po.supplier.panel.lbl.postcode']}"/>
+
+                                        <div style="width: 100px; float: left;">
+                                            <h:inputText id="postcodeSupId"
+                                                         readonly="true"
+                                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.postCode}"
+                                                         styleClass="form-control"/>
+                                            <p:message for="postcodeSupId" id="msgPostcodeSupId"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"/>
+                            <div style="width: 534px!important;">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                                   for="countrySupId" value="#{msgs['po.supplier.panel.lbl.country']}"/>
+
+                                    <div style="width: 395px; float: left; margin-left: 23px;">
+                                        <h:inputText id="countrySupId"
+                                                     readonly="true"
+                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.country}"
+                                                     styleClass="form-control"/>
+                                        <p:message for="countrySupId" id="msgCountrySupId"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--COL2-->
+                        <div style="float: left; margin-left: -27px;">
+                            <div style="width: 350px!important; margin-left:30px;">
+                                <div class="form-group">
+                                    <h:commandButton
+                                            value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
+                                            onclick="PF('supplierModal').show(); doChangeProc();"
+                                            action="#{poBean.addingSupplier}"
+                                            styleClass="btn btn-primary btn-sm"
+                                            rendered="#{poBean.beingEdited}">
+                                        <p:ajax async="false" process="@this" update=":supplierId"/>
+                                    </h:commandButton>
+                                </div>
+                            </div>
+                            <div style="width: 440px!important;">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
+                                                   for="commentSupId"
+                                                   value="#{msgs['po.supplier.panel.lbl.comments']}"/>
+
+                                    <div style="width: 250px; float: left;">
+                                        <p:inputTextarea id="commentSupId" type="text" style="height: 97px;"
+                                                         maxlength="950" class="form-control" disabled="true"
+                                                         readonly="true"
+                                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.comments}"
+                                                         jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"/>
+                                        <p:message for="commentSupId" id="msgCommentSupId"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"/>
-                        <div style="width: 534px!important;">
-                            <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                               for="countrySupId" value="#{msgs['po.supplier.panel.lbl.country']}"/>
+                    </div>
+                </div>
+            </h:panelGroup>
 
-                                <div style="width: 395px; float: left; margin-left: 23px;">
-                                    <h:inputText id="countrySupId"
+            <div class="clearfix"></div>
+            <!--Contact and New Contact-->
+            <h:panelGroup id="contactDetail">
+                <div style="margin-left: 0px!important; margin-right: 15px!important;">
+                    <div style="width: 440px!important; float: left!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                           for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
+
+                            <div style="width: 180px; float: left;">
+                                <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity}"
+                                                 converter="contactConverter"
+                                                 styleClass="form-control" onclick="doChangeProc();">
+                                    <f:selectItem
+                                            itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
+                                            noSelectionOption="true"/>
+                                    <f:selectItems var="_c"
+                                                   value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.contacts}"
+                                                   itemValue="#{_c}"
+                                                   itemLabel="#{_c.fullName}"/>
+                                    <p:ajax async="false" update="phoneSupId faxSupId messageContact projectEmailSupId"
+                                            process="conactSupId"/>
+                                </h:selectOneMenu>
+                                <p:message id="messageContact" for="conactSupId"/>
+                                <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
+                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fullName}"
+                                             rendered="#{poBean.beingViewed}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 290px!important; float: left!important; margin-left: -13px">
+                        <div class="form-group">
+                            <h:commandButton
+                                    id="btnAddContact"
+                                    value="#{msgs['po.supplier.lbl.btn.add.contact']}"
+                                    disabled="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier==null}"
+                                    action="#{contactBean.start(poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.id)}"
+                                    onclick="PF('contactModal').show(); doChangeProc();"
+                                    styleClass="btn btn-primary btn-sm"
+                                    rendered="#{poBean.beingEdited}">
+                                <p:ajax async="false" update=":editContact"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <h:panelGroup id="contactGroupId">
+                    <!--Phone and Fax-->
+                    <div style="margin-left: 0px!important; margin-right: 15px!important;">
+                        <div style="width: 440px!important; float: left!important;">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                               for="phoneSupId" value="#{msgs['po.supplier.lbl.phone']}"/>
+
+                                <div style="width: 180px; float: left;">
+                                    <h:inputText id="phoneSupId" disabled="true"
                                                  readonly="true"
-                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.country}"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.phone}"
                                                  styleClass="form-control"/>
-                                    <p:message for="countrySupId" id="msgCountrySupId"/>
+                                    <p:message for="phoneSupId" id="msgPhoneSupId"/>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <!--COL2-->
-                    <div style="float: left; margin-left: -27px;">
-                        <div style="width: 350px!important; margin-left:30px;">
-                            <div class="form-group">
-                                <h:commandButton
-                                        value="#{msgs['po.supplier.panel.lbl.btn.add.supplier']}"
-                                        onclick="PF('supplierModal').show(); doChangeProc();"
-                                        action="#{poBean.addingSupplier}"
-                                        styleClass="btn btn-primary btn-sm"
-                                        rendered="#{poBean.beingEdited}">
-                                    <p:ajax async="false" process="@this" update=":supplierId"/>
-                                </h:commandButton>
-                            </div>
-                        </div>
-                        <div style="width: 440px!important;">
+                        <div style="width: 440px!important; float: left!important; margin-left: -43px">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                               for="commentSupId" value="#{msgs['po.supplier.panel.lbl.comments']}"/>
+                                               for="faxSupId" value="#{msgs['po.supplier.lbl.fax']}"/>
 
-                                <div style="width: 250px; float: left;">
-                                    <p:inputTextarea id="commentSupId" type="text" style="height: 97px;"
-                                                     maxlength="950" class="form-control" disabled="true"
-                                                     readonly="true"
-                                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.comments}"
-                                                     jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"/>
-                                    <p:message for="commentSupId" id="msgCommentSupId"/>
+                                <div style="width: 180px; float: left;">
+                                    <h:inputText id="faxSupId" disabled="true"
+                                                 readonly="true"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fax}"
+                                                 styleClass="form-control"/>
+                                    <p:message for="faxSupId" id="msgFaxSupId"/>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </h:panelGroup>
+                    <div class="clearfix"></div>
+                    <!--Project Email-->
+                    <div style="margin-left: 0px!important; margin-right: 15px!important;">
+                        <div style="width: 440px!important; float: left!important;">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                               for="projectEmailSupId"
+                                               value="#{msgs['po.supplier.lbl.project.email']}"/>
 
-        <div class="clearfix"></div>
-        <!--Contact and New Contact-->
-        <h:panelGroup id="contactDetail">
-            <div style="margin-left: 0px!important; margin-right: 15px!important;">
-                <div style="width: 440px!important; float: left!important;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                       for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
-                        <div style="width: 180px; float: left;">
-                            <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
-                                             value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity}"
-                                             converter="contactConverter"
-                                             styleClass="form-control" onclick="doChangeProc();">
-                                <f:selectItem
-                                        itemLabel="#{msgs['po.supplier.lbl.selection.supplier.contact']}"
-                                        noSelectionOption="true"/>
-                                <f:selectItems var="_c"
-                                               value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.contacts}"
-                                               itemValue="#{_c}"
-                                               itemLabel="#{_c.fullName}"/>
-                                <p:ajax async="false" update="phoneSupId faxSupId messageContact projectEmailSupId" process="conactSupId"/>
-                            </h:selectOneMenu>
-                            <p:message id="messageContact" for="conactSupId"/>
-                            <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
-                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fullName}"
-                                         rendered="#{poBean.beingViewed}"/>
+                                <div style="width: 180px; float: left;">
+                                    <h:inputText id="projectEmailSupId" disabled="true"
+                                                 readonly="true"
+                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.email}"
+                                                 styleClass="form-control"/>
+                                    <p:message for="projectEmailSupId" id="msgProjectEmailSupId"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="width: 290px!important; float: left!important; margin-left: -13px">
-                    <div class="form-group">
-                        <h:commandButton
-                                id="btnAddContact"
-                                value="#{msgs['po.supplier.lbl.btn.add.contact']}"
-                                disabled="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier==null}"
-                                action="#{contactBean.start(poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.id)}"
-                                onclick="PF('contactModal').show(); doChangeProc();"
-                                styleClass="btn btn-primary btn-sm"
-                                rendered="#{poBean.beingEdited}">
-                            <p:ajax async="false" update=":editContact"/>
-                        </h:commandButton>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <h:panelGroup id="contactGroupId">
-            <!--Phone and Fax-->
-            <div style="margin-left: 0px!important; margin-right: 15px!important;">
-                <div style="width: 440px!important; float: left!important;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                       for="phoneSupId" value="#{msgs['po.supplier.lbl.phone']}"/>
-
-                        <div style="width: 180px; float: left;">
-                            <h:inputText id="phoneSupId" disabled="true"
-                                         readonly="true"
-                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.phone}"
-                                         styleClass="form-control"/>
-                            <p:message for="phoneSupId" id="msgPhoneSupId"/>
-                        </div>
-                    </div>
-                </div>
-                <div style="width: 440px!important; float: left!important; margin-left: -43px">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                       for="faxSupId" value="#{msgs['po.supplier.lbl.fax']}"/>
-
-                        <div style="width: 180px; float: left;">
-                            <h:inputText id="faxSupId" disabled="true"
-                                         readonly="true"
-                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fax}"
-                                         styleClass="form-control"/>
-                            <p:message for="faxSupId" id="msgFaxSupId"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <!--Project Email-->
-            <div style="margin-left: 0px!important; margin-right: 15px!important;">
-                <div style="width: 440px!important; float: left!important;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                       for="projectEmailSupId" value="#{msgs['po.supplier.lbl.project.email']}"/>
-
-                        <div style="width: 180px; float: left;">
-                            <h:inputText id="projectEmailSupId" disabled="true"
-                                         readonly="true"
-                                         value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.email}"
-                                         styleClass="form-control"/>
-                            <p:message for="projectEmailSupId" id="msgProjectEmailSupId"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </h:panelGroup>
             </h:panelGroup>
-        </h:panelGroup>
-    </div>
-
+        </div>
+    </h:panelGroup>
 </ui:composition>
