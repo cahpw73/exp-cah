@@ -128,6 +128,9 @@ public class PoBean extends Bean {
             log.info("mode view");
             putModeView();
         }
+    }
+
+    private void initializeValuesBooleanInHeaderSection(){
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getVendorDrawingData() == null) {
             purchaseOrder.getPurchaseOrderProcurementEntity().setVendorDrawingData(false);
         }
@@ -165,6 +168,7 @@ public class PoBean extends Bean {
             } else {
                 throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
             }
+            initializeValuesBooleanInHeaderSection();
         }
         loaded = true;
     }
@@ -248,8 +252,7 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
-            sortPurchaseListByVariationAndDoUpdate();
-            sortScopeSupplyAndDoUpdate();
+            doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
@@ -265,8 +268,7 @@ public class PoBean extends Bean {
             collectData();
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
-            sortPurchaseListByVariationAndDoUpdate();
-            sortScopeSupplyAndDoUpdate();
+            doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
