@@ -1,7 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
     <div style="float: left">
         <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
@@ -9,7 +7,7 @@
                     removeLabel="Remove from Brand"
                     converter="brandConverter"
                     itemLabel="#{_brand.name}" itemValue="#{_brand}">
-            <p:ajax event="transfer" process="@this" async="false"/>
+            <p:ajax event="transfer" process="@this" async="false" listener="#{categoryBrandBean.sortBrandList()}" update="brandPickList"/>
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 50px;">

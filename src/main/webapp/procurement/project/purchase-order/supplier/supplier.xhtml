@@ -228,7 +228,7 @@
                                 <div style="width: 180px; float: left;">
                                     <h:inputText id="phoneSupId" disabled="true"
                                                  readonly="true"
-                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.phone}"
+                                                 value="#{poBean.phoneContact()}"
                                                  styleClass="form-control"/>
                                     <p:message for="phoneSupId" id="msgPhoneSupId"/>
                                 </div>
@@ -242,7 +242,7 @@
                                 <div style="width: 180px; float: left;">
                                     <h:inputText id="faxSupId" disabled="true"
                                                  readonly="true"
-                                                 value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fax}"
+                                                 value="#{poBean.faxContact()}"
                                                  styleClass="form-control"/>
                                     <p:message for="faxSupId" id="msgFaxSupId"/>
                                 </div>
