@@ -305,20 +305,30 @@
             <div class="clearfix"/>
 
             <div class="row">
-                <div style="width: 345px!important; float: left!important;">
-                    <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                       style="margin-left: 13px;"
-                                       value="#{msgs['po.header.lbl.security.deposit']}"/>
-                        <h:inputHidden id="checkBoxSecurityDeposit"
-                                       value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}"/>
-                        <input type="checkbox" name="my-checkbox"
-                               id="switchSecurityDeposit"
-                               data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
-                        </input>
+                <h:panelGroup id="groupSecurityDeposit">
+                    <div style="width: 345px!important; float: left!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                           style="margin-left: 13px;"
+                                           value="#{msgs['po.header.lbl.security.deposit']}"/>
+                            <h:inputHidden id="checkBoxSecurityDeposit"
+                                           value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}" />
+                            <input type="checkbox" name="my-checkbox"
+                                   id="switchSecurityDeposit" onchange="test();"
+                                   data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                            </input>
+                        </div>
                     </div>
-                </div>
+                </h:panelGroup>
             </div>
         </div>
+        <script type="text/javascript">
+            function test(){
+                console.log("test passed")
+                algo();
+            }
+        </script>
+        <p:remoteCommand name="algo" process="checkBoxSecurityDeposit" update="securityDeposit"
+                         actionListener="#{cashflowBean.loadRetentionSecurityDeposit(poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit)}"/>
     </h:panelGroup>
 </ui:composition>

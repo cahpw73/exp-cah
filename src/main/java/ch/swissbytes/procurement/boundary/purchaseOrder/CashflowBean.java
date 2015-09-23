@@ -244,4 +244,8 @@ public class CashflowBean implements Serializable {
         return percentages;
 
     }
+
+    public void loadRetentionSecurityDeposit(boolean retentionSecurityDeposit){
+        cashflow.setApplyRetentionSecurityDeposit(retentionSecurityDeposit);
+    }
 }

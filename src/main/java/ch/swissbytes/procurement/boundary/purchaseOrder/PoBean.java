@@ -525,4 +525,8 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(new ContactEntity());
     }
 
+    public void loadSecurityDeposit(boolean applyRetention){
+        purchaseOrder.getPurchaseOrderProcurementEntity().setSecurityDeposit(applyRetention);
+    }
+
 }
