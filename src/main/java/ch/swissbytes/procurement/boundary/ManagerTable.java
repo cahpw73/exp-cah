@@ -15,7 +15,8 @@ public abstract class ManagerTable implements Serializable{
 
     protected Long lastEdited;
     protected Boolean remember;
-    private Integer currentPage=0;
+    private final Integer PAGE_ZERO=0;
+    private Integer currentPage=PAGE_ZERO;
     protected Filter filter;
     private List <String>ascendingFields;
     private List<String>descendingFields;
@@ -27,6 +28,7 @@ public abstract class ManagerTable implements Serializable{
     public ManagerTable(){
         clear();
     }
+
     protected void clear(){
         ascendingFields=new ArrayList<>();
         descendingFields=new ArrayList<>();
@@ -36,11 +38,22 @@ public abstract class ManagerTable implements Serializable{
 
 
     public void onPaginate(PageEvent event){
+        forgetCurrentPage();
         DataTable table=(DataTable)event.getSource();
         defaultPageSize=table.getRowCount();
         currentPage=table.getPage();
     }
 
+    public Integer pageToSelect(){
+        return remember?currentPage:0;
+    }
+
+    public void forgetCurrentPage(){
+        remember=false;
+    }
+    public void rememberPage(){
+        remember=true;
+    }
 
     public Long getLastEdited() {
         return lastEdited;

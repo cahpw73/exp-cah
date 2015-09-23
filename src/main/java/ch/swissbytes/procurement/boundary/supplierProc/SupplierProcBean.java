@@ -36,6 +36,9 @@ public class SupplierProcBean extends Bean implements Serializable {
     @Inject
     private ContactBean contactBean;
 
+    @Inject
+    private SupplierManagerTable managerTable;
+
     private String supplierId;
 
     private boolean addingCategory = false;
@@ -96,6 +99,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         supplier.getContacts().addAll(contactBean.getList());
         service.save(supplier);
         Messages.addFlashGlobalInfo("The supplier has been saved!");
+        managerTable.rememberPage();
         return "list?faces-redirect=true";
     }
 
@@ -121,6 +125,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
         service.update(supplier);
         Messages.addFlashGlobalInfo("The supplier has been saved!");
+        managerTable.rememberPage();
         return "list?faces-redirect=true";
     }
 

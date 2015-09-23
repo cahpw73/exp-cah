@@ -36,7 +36,7 @@
             <br/>
             <h:form prependId="false">
                 <p:remoteCommand autoRun="true" name="onload"
-                                 oncomplete="PF('supplierTbl').getPaginator().setPage('#{supplierManagerTable.currentPage}');"/>
+                                 oncomplete="PF('supplierTbl').getPaginator().setPage('#{supplierManagerTable.pageToSelect()}');"/>
                 <p:dataTable value="#{supplierProcList.list}" var="_supplier"
                              paginator="true" rows="#{tableSize.defaultPageSize}" lazy="true"
                              widgetVar="supplierTbl"
