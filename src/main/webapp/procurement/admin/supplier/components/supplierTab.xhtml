@@ -15,7 +15,7 @@
 
                     <div class="col-sm-8">
                         <p:inputTextarea id="streetId" type="text" class="form-control"
-                                         style="max-height:54px;max-width: 450px; margin-left: -14px;"
+                                         style="max-height:54px;max-width: 467px; margin-left: -14px;"
                                          maxlength="950"
                                          required="true"
                                          requiredMessage="Street is required"
@@ -40,7 +40,7 @@
 
                     <div class="col-sm-8">
                         <h:inputText id="suburbId" maxlength="50"
-                                     style="max-width: 181px; margin-left: -14px;"
+                                     style="max-width: 186px!important; width: 186px!important; margin-left: -14px;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.suburb}"
                                      requiredMessage="Suburb is required"
@@ -61,11 +61,11 @@
                     <h:outputLabel class="control-label col-sm-2"
                                    value="#{msgs['supplier.lbl.state']}"
                                    for="streetId"
-                                   style="width: 152px;"/>
+                                   style="width: 153px;"/>
 
                     <div class="form-inline">
                         <h:inputText id="supStateId" maxlength="50"
-                                     style="max-width: 181px;"
+                                     style="max-width: 186px!important; width: 186px!important;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.state}"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
@@ -77,13 +77,12 @@
                     </div>
                 </div>
                 <div>
-                    <div style="float: left; display:inline-flex; width: 332px;">
-                        <h:outputLabel class="control-label"
-                                       for="postCode"
-                                       style="margin-left: 15px;"
+                    <div style="float: left; display:inline-flex; width: 345px;">
+                        <h:outputLabel class="control-label col-sm-2"
+                                       for="postCode" style="width: 153px;"
                                        value="#{msgs['supplier.lbl.postcode']}"/>
                         <h:inputText id="postCode" maxlength="50"
-                                     style="max-width: 184px; margin-left: 83px;"
+                                     style="max-width: 186px!important; width: 186px!important;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.postCode}"
                                      class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
@@ -95,7 +94,7 @@
                                        value="#{msgs['supplier.lbl.country']}"/>
 
                         <h:inputText maxlength="50"
-                                     style="max-width: 185px; margin-left: 25px;"
+                                     style="max-width: 186px; width: 186px; margin-left: 25px;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      required="true"
                                      id="country"
@@ -122,7 +121,7 @@
             <h:inputText maxlength="50"
                          id="supplierPhone"
                          required="true"
-                         style="float: left;width: 182px;"
+                         style="float: left; width: 186px; max-width: 186px;"
                          requiredMessage="Phone is required"
                          value="#{supplierProcBean.supplier.phone}"
                          readonly="#{supplierProcBean.beingViewed}"
@@ -132,12 +131,13 @@
 
         </div>
         <div class="form-inline">
-            <h:outputLabel class="control-label col-sm-1" value="#{msgs['supplier.lbl.fax']}" style="width: 127px;"/>
+            <h:outputLabel class="control-label col-sm-1" value="#{msgs['supplier.lbl.fax']}" style="width: 127px; margin-left: 8px;"/>
             <h:inputText maxlength="50"
                          value="#{supplierProcBean.supplier.fax}"
                          readonly="#{supplierProcBean.beingViewed}"
                          class="form-control col-sm-3 #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                         tabindex="#{tabIndex+6}" style="margin-left: -39px;"/>
+                         tabindex="#{tabIndex+6}"
+                         style="margin-left: -39px; width: 186px; max-width: 186px;"/>
         </div>
         <div class="clearfix"/>
     <div style="float: left;width: 356px; padding-left: 163px;">
@@ -176,7 +176,7 @@
                          readonly="#{supplierProcBean.beingViewed}"
                          class="form-control col-sm-9 #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
                          tabindex="#{tabIndex+8}"
-                         style="max-width: 182px;"/>
+                         style="max-width: 186px; width: 186px;"/>
             <br/>
 
             <div style="padding-left:160px;max-width: 230px;">
@@ -190,7 +190,7 @@
         <div class="form-inline">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.comments']}" style="width: 167px;"/>
             <p:inputTextarea type="text" class="form-control col-sm-9"
-                             style="max-height:54px;width: 454px; padding-left:167px;"
+                             style="max-height:54px;width: 469px; padding-left:167px;"
                              readonly="#{supplierProcBean.beingViewed}"
                              maxlength="950"
                              value="#{supplierProcBean.supplier.comments}"
