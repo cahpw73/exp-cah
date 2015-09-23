@@ -150,6 +150,20 @@
                                                icon="ui-icon-alert">
                                     </p:confirm>
                                 </p:commandLink>
+                                <p:commandLink
+                                        update="@form" ajax="true"
+                                        value="#{msgs['project.list.action.delete']}"
+                                        action="#{poListBean.doDeletePo}"
+                                        async="false"
+                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                        rendered="#{poListBean.canDelete(_p)}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
                             </p:column>
 
                         </p:dataTable>
