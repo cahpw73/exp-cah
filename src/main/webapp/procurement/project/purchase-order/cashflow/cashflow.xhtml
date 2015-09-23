@@ -132,7 +132,7 @@
 
                                 </h:panelGroup>
                             </p:column>
-                            <p:column width="70"
+                            <p:column width="70" headerText="#{msgs['po.cashflow.column.currency.percentage']}"
                                       rendered="#{cashflowBean.hasNotStatusDeleted(_l)}">
                                 <h:panelGroup id="viPercentage" rendered="#{!_l.isEditable}">
                                     <h:outputText value="#{_l.percentage}"> %

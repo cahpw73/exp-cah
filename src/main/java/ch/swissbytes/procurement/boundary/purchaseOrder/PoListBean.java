@@ -8,6 +8,7 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ProcurementStatus;
+import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
@@ -226,6 +227,11 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
     }
 
+    public void doDeletePo(){
+        log.info("do delete purchase order");
+        service.doDelete(currentPurchaseOrder.getId());
+    }
+
     public boolean canView(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
@@ -262,6 +268,11 @@ public class PoListBean implements Serializable {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                 (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()||
         entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+    }
+
+    public boolean canDelete(PurchaseOrderEntity entity){
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
+                entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.COMMITTED.ordinal();
     }
 
     public boolean actionForReady(PurchaseOrderEntity entity) {
