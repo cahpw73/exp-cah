@@ -15,20 +15,26 @@
             <br/>
             <div>
                 <h:form prependId="false">
-                    <div class="col-md-3" style="padding-left: 0px!important;">
-                        <div class="left-inner-addon">
-                            <i class="fa fa-search fa-lg"></i>
-                            <h:inputText styleClass="form-control input-search"
-                                         value="#{supplierProcList.filter.criteria}"
-                                         jsf:placeholder="#{msgs['lbl.search']}"
-                                         jsf:autofocus="true">
-                            </h:inputText>
+                    <div style="position: fixed; width: 100%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
+                        <div style="width: 100%; vertical-align: middle; display: table-cell">
+                            <div class="col-md-3" style="padding-left: 0px!important;">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText styleClass="form-control input-search"
+                                                 value="#{supplierProcList.filter.criteria}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}"
+                                                 jsf:autofocus="true">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <h:commandButton value="#{msgs['lbl.search']}" action="#{supplierProcList.doSearch}"
+                                             styleClass="btn btn-primary btn-sm"/>
+                            &#160;
+                            <h:link value="New supplier" outcome="edit" styleClass="btn btn-primary btn-sm"/>
                         </div>
                     </div>
-                    <h:commandButton value="#{msgs['lbl.search']}" action="#{supplierProcList.doSearch}"
-                                     styleClass="btn btn-primary btn-sm"/>
-                    &#160;
-                    <h:link value="New supplier" outcome="edit" styleClass="btn btn-primary btn-sm"/>
+                    <div class="clearfix"></div>
+                    <br/>
                 </h:form>
             </div>
             <div class="clearfix"></div>

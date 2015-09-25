@@ -39,7 +39,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
         if (filter != null && StringUtils.isNotEmpty(filter.getCriteria()) && StringUtils.isNotBlank(filter.getCriteria())) {
-            query.setParameter("CRITERIA", "%" + filter.getCriteria().trim().toLowerCase() + "%");
+            query.setParameter("CRITERIA",  filter.getCriteria().trim().toLowerCase() + "%");
         }
         query.setParameter("ENABLED",StatusEnum.ENABLE);
     }
@@ -56,8 +56,6 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
             query.append(" AND (");
             query.append(" lower(x.supplierId) LIKE :CRITERIA ");
             query.append(" OR lower(x.company) LIKE :CRITERIA ");
-            query.append(" OR lower(x.state) LIKE :CRITERIA ");
-            query.append(" OR lower(x.country) LIKE :CRITERIA ");
             query.append(") ");
         }
         query.append(" AND x.status=:ENABLED ");
