@@ -204,7 +204,7 @@
                                     </h:outputText>
                                 </h:panelGroup>
                                 <h:panelGroup id="edPoAmt" rendered="#{_l.isEditable}">
-                                    <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control">
+                                    <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control" readonly="true">
                                         <p:ajax event="blur" process="forecastDt" async="false"/>
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>

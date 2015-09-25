@@ -488,12 +488,20 @@ public class PoBean extends Bean {
                     break;
                 }
             }
+            detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
         }
     }
 
     private BigDecimal calculateBasedPercentageAndTotalValue(final BigDecimal iPercentage, final BigDecimal totalValue) {
         BigDecimal paymentValueBig = totalValue.multiply(iPercentage).divide(new BigDecimal(100));
         return paymentValueBig;
+    }
+
+    private BigDecimal calculateProjectValueByPaymentValueAndCurrency(final BigDecimal currencyFactor, final BigDecimal paymentValue){
+        log.info("currencyFactor: " + currencyFactor);
+        log.info("paymentValue : " + paymentValue);
+        BigDecimal projectValue = paymentValue.divide(currencyFactor,BigDecimal.ROUND_HALF_UP);
+        return projectValue;
     }
 
     private String toString(Map<ProjectCurrencyEntity, BigDecimal> map) {
