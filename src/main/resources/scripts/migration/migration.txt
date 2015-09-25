@@ -1733,7 +1733,7 @@ ORDER BY SS.LAST_UPDATE DESC;
 SELECT SETVAL('category_id_seq', (SELECT MAX(ID)+1 FROM CATEGORY)); 
 SELECT SETVAL('brand_id_seq', (SELECT MAX(ID)+1 FROM BRAND)); 
 SELECT SETVAL('currency_id_seq', (SELECT MAX(ID)+1 FROM CURRENCY)); 
-SELECT SETVAL('supplier_proc_id_seq', (SELECT MAX(ID)+1 FROM CURRENCY));
+SELECT SETVAL('supplier_proc_id_seq', (SELECT MAX(ID)+1 FROM SUPPLIER_PROC));
 
 delete from deliverable_item;
 insert into deliverable_item (id,item,last_update,status)values(1,'Control Philosophy & Functional Description',CURRENT_DATE,0);

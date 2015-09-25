@@ -312,7 +312,9 @@
                                            style="margin-left: 13px;"
                                            value="#{msgs['po.header.lbl.security.deposit']}"/>
                             <h:inputHidden id="checkBoxSecurityDeposit"
-                                           value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}" />
+
+                                           value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}" >
+                                    </h:inputHidden>
                             <input type="checkbox" name="my-checkbox"
                                    id="switchSecurityDeposit" onchange="test();"
                                    data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">

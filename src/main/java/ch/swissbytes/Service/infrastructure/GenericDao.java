@@ -355,4 +355,6 @@ public abstract class GenericDao<T> {
         return query.getResultList();
     }
 
+    
+
 }

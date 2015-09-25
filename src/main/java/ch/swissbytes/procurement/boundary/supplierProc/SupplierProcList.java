@@ -32,12 +32,17 @@ public class SupplierProcList implements Serializable {
     private SupplierProcService service;
     private SupplierTbl list;
     private List<SupplierProcEntity> suppliers;
-    private Filter filter=new Filter();
+    @Inject
+    private SupplierManagerTable managerTable;
 
     @PostConstruct
     public void create(){
         log.info("SupplierProcList bean created");
-        list=new SupplierTbl(dao,filter);
+        if(!managerTable.getRemember()){
+            managerTable.clear();
+        }
+
+        list=new SupplierTbl(dao,managerTable.getFilter());
     }
 
     public List<SupplierProcEntity> getSuppliers(){
@@ -57,12 +62,9 @@ public class SupplierProcList implements Serializable {
     }
 
     public void doSearch(){
-        list=new SupplierTbl(dao,filter);
+        list=new SupplierTbl(dao,managerTable.getFilter());
     }
 
-    public Filter getFilter() {
-        return filter;
-    }
 
     public SupplierTbl getList() {
         return list;

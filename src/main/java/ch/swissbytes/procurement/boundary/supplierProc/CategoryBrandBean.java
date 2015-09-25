@@ -44,6 +44,8 @@ public class CategoryBrandBean implements Serializable {
     private CategoryEntity categoryEntity;
 
     private BrandEntity brandEntity;
+    private List<BrandEntity>brandList;
+    private List<CategoryEntity>categoryList;
 
 
     @PostConstruct
@@ -51,6 +53,8 @@ public class CategoryBrandBean implements Serializable {
         log.info("CategoryBrandBean bean created");
         categoryEntity = new CategoryEntity();
         brandEntity = new BrandEntity();
+        categoryList=categoryService.getCategoryList();
+        brandList=brandService.getBrandList();
     }
 
     public void sortCategoryList(){
@@ -63,14 +67,14 @@ public class CategoryBrandBean implements Serializable {
     }
 
     public void restart(){
-        this.categories = new DualListModel<CategoryEntity>(categoryService.getCategoryList(),new ArrayList<CategoryEntity>());
-        this.brands = new DualListModel<BrandEntity>(brandService.getBrandList(),new ArrayList<BrandEntity>());
+        this.categories = new DualListModel<CategoryEntity>(categoryList,new ArrayList<CategoryEntity>());
+        this.brands = new DualListModel<BrandEntity>(brandList,new ArrayList<BrandEntity>());
     }
     public void addListLoaded(List<CategoryEntity> categories, List<BrandEntity> brands) {
         List<CategoryEntity>lc= categories != null ? categories : new ArrayList<CategoryEntity>();
         List<BrandEntity>lb= brands != null ? brands : new ArrayList<BrandEntity>();
-        this.categories = new DualListModel<CategoryEntity>(diffCategoryList(categoryService.getCategoryList(), lc),lc);
-        this.brands = new DualListModel<BrandEntity>(diffBrandList(brandService.getBrandList(),lb), lb);
+        this.categories = new DualListModel<CategoryEntity>(diffCategoryList(categoryList, lc),lc);
+        this.brands = new DualListModel<BrandEntity>(diffBrandList(brandList,lb), lb);
     }
 
     public void doSaveBrand(){
@@ -189,5 +193,21 @@ public class CategoryBrandBean implements Serializable {
 
     public void setBrandEntity(BrandEntity brandEntity) {
         this.brandEntity = brandEntity;
+    }
+
+    public List<BrandEntity> getBrandList() {
+        return brandList;
+    }
+
+    public void setBrandList(List<BrandEntity> brandList) {
+        this.brandList = brandList;
+    }
+
+    public List<CategoryEntity> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<CategoryEntity> categoryList) {
+        this.categoryList = categoryList;
     }
 }

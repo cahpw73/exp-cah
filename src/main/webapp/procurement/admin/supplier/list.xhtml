@@ -13,6 +13,7 @@
     <ui:define name="body">
         <div class="col-md-12">
             <br/>
+
             <div>
                 <h:form prependId="false">
                     <div style="position: fixed; width: 100%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
@@ -21,7 +22,7 @@
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText styleClass="form-control input-search"
-                                                 value="#{supplierProcList.filter.criteria}"
+                                                 value="#{supplierManagerTable.filter.criteria}"
                                                  jsf:placeholder="#{msgs['lbl.search']}"
                                                  jsf:autofocus="true">
                                     </h:inputText>
@@ -39,25 +40,29 @@
             </div>
             <div class="clearfix"></div>
             <br/>
-            <p:dataTable value="#{supplierProcList.list}" var="_supplier"
-                         paginator="true" rows="#{tableBean.defaultPageSize}" lazy="true"
-                         rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
-                         paginatorPosition="bottom">
-                <p:ajax event="page" process="@this" listener="#{tableBean.onPaginate}"/>
-                <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150" sortBy="#{_supplier.supplierId}">
-                    #{_supplier.supplierId}
-                </p:column>
-                <p:column headerText="#{msgs['supplier.lbl.company']}" sortBy="#{_supplier.company}">
-                    #{_supplier.company}
-                </p:column>
-                <p:column headerText="#{msgs['supplier.lbl.state']}">
-                    #{_supplier.state}
-                </p:column>
-                <p:column headerText="#{msgs['supplier.lbl.country']}" sortBy="#{_supplier.country}">
-                    #{_supplier.country}
-                </p:column>
-                <p:column headerText="#{msgs['lbl.actions']}" width="200">
-                    <h:form prependId="false">
+            <h:form prependId="false">
+                <p:remoteCommand autoRun="true" name="onload"
+                                 oncomplete="PF('supplierTbl').getPaginator().setPage('#{supplierManagerTable.pageToSelect()}');"/>
+                <p:dataTable value="#{supplierProcList.list}" var="_supplier"
+                             paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
+                             widgetVar="supplierTbl"
+                             rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
+                             paginatorPosition="bottom">
+                    <p:ajax event="page" process="@this" listener="#{supplierManagerTable.onPaginate}"/>
+                    <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150"
+                              sortBy="#{_supplier.supplierId}">
+                        #{_supplier.supplierId}
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.company']}" sortBy="#{_supplier.company}">
+                        #{_supplier.company}
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.state']}">
+                        #{_supplier.state}
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.country']}" sortBy="#{_supplier.country}">
+                        #{_supplier.country}
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.actions']}" width="200">
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit"
                                 style="color: #428BCA; ">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
@@ -77,15 +82,15 @@
                                        icon="ui-icon-alert">
                             </p:confirm>
                         </p:commandLink>
-                    </h:form>
-                </p:column>
+                    </p:column>
 
-            </p:dataTable>
+                </p:dataTable>
+            </h:form>
             <br/>
             <ui:remove>
-            <h:link
-                    outcome="/procurement/report/bidderList/categorySelection">#{msgs['supplier.create.bidder.list']}
-            </h:link>
+                <h:link
+                        outcome="/procurement/report/bidderList/categorySelection">#{msgs['supplier.create.bidder.list']}
+                </h:link>
             </ui:remove>
         </div>
     </ui:define>

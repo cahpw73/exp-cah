@@ -2,7 +2,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <div style="float: left">
-        <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
+        <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" filterMatchMode="contains" var="_brand"
                     addLabel="Add to Brand"
                     removeLabel="Remove from Brand"
                     converter="brandConverter"
