@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Named
 @SessionScoped
-public class TableSize  implements Serializable{
+public class TableCommonFeature implements Serializable{
 
     private Integer defaultPageSize=5;
 

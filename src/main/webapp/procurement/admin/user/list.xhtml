@@ -28,9 +28,9 @@
                     <!-- Tab Procurement -->
                     <div class="tab-pane active" id="procurement">
                         <p:dataTable id="procuremetListId" value="#{usersBean.userProcurementList}" var="_u"
-                                     paginator="true" rows="#{tableSize.defaultPageSize}" lazy="true"
+                                     paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                                      rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userProcurementList.size())}" paginatorPosition="bottom">
-                            <p:ajax async="false" event="page" process="@this" listener="#{tableSize.onPaginate}"/>
+                            <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                             <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
@@ -109,9 +109,9 @@
                     <!-- Tab Expediting -->
                     <div class="tab-pane" id="expediting">
                         <p:dataTable id="expeditingListId" value="#{usersBean.userList}" var="_u"
-                                     paginator="true" rows="#{tableSize.defaultPageSize}" lazy="true"
+                                     paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                                      rowsPerPageTemplate="#{configuration.getPagesSize(usersBean.userList.size())}" paginatorPosition="bottom">
-                            <p:ajax async="false" event="page" process="@this" listener="#{tableSize.onPaginate}"/>
+                            <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                             <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50" style="text-align: center">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>

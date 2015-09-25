@@ -22,7 +22,7 @@
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
                                     <h:inputText styleClass="form-control input-search"
-                                                 value="#{supplierProcList.filter.criteria}"
+                                                 value="#{supplierManagerTable.filter.criteria}"
                                                  jsf:placeholder="#{msgs['lbl.search']}"
                                                  jsf:autofocus="true">
                                     </h:inputText>
@@ -44,7 +44,7 @@
                 <p:remoteCommand autoRun="true" name="onload"
                                  oncomplete="PF('supplierTbl').getPaginator().setPage('#{supplierManagerTable.pageToSelect()}');"/>
                 <p:dataTable value="#{supplierProcList.list}" var="_supplier"
-                             paginator="true" rows="#{tableSize.defaultPageSize}" lazy="true"
+                             paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              widgetVar="supplierTbl"
                              rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
                              paginatorPosition="bottom">

@@ -29,11 +29,12 @@ public abstract class ManagerTable implements Serializable{
         clear();
     }
 
-    protected void clear(){
+    public void clear(){
         ascendingFields=new ArrayList<>();
         descendingFields=new ArrayList<>();
         lastEdited=-1L;
         remember=false;
+        filter=new Filter();
     }
 
 

@@ -1,6 +1,6 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
-import ch.swissbytes.fqm.boundary.TableSize;
+import ch.swissbytes.fqm.boundary.TableCommonFeature;
 import ch.swissbytes.procurement.boundary.ManagerTable;
 import org.primefaces.event.data.PageEvent;
 
@@ -16,7 +16,7 @@ import javax.inject.Named;
 public class SupplierManagerTable extends ManagerTable {
 
     @Inject
-    private TableSize defaultSize;
+    private TableCommonFeature defaultSize;
 
     @Override
     protected Integer findCurrentPage() {

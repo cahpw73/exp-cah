@@ -48,10 +48,10 @@
                     </div>
                 </div>
                 <p:dataTable id="projectListId" value="#{projectListBean.projectList}" var="_p"
-                             paginator="true" rows="#{tableSize.defaultPageSize}" lazy="true"
+                             paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}"
                              paginatorPosition="bottom">
-                    <p:ajax async="false" event="page"  process="@this" listener="#{tableSize.onPaginate}"/>
+                    <p:ajax async="false" event="page"  process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                     <p:column headerText="#{msgs['project.list.column.number']}" width="100">
                         #{_p.projectNumber}
                     </p:column>
