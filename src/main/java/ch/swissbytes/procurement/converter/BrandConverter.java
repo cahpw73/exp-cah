@@ -31,7 +31,7 @@ public class BrandConverter implements Converter {
         List<BrandEntity> list = brandDao.findByName(value);
         BrandEntity brand = null;
         if(!list.isEmpty()){
-            brand = brandDao.findByName(value).get(0);
+            brand = list.get(0);
         }
         return brand;
     }

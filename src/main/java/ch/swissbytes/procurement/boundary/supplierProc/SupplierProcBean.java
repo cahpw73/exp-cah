@@ -53,6 +53,7 @@ public class SupplierProcBean extends Bean implements Serializable {
     @PostConstruct
     public void create() {
         log.info("SupplierProcBean bean created");
+        System.out.println("current page "+managerTable.getCurrentPage());
     }
 
     public void load() {
@@ -119,6 +120,7 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public String doUpdate() {
         supplier.getContacts().clear();
+        System.out.println("current page" + managerTable.getCurrentPage());
         supplier.getContacts().addAll(contactBean.getList());
         if (!validate()) {
             return "";

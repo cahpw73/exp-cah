@@ -41,7 +41,7 @@ public abstract class ManagerTable implements Serializable{
         forgetCurrentPage();
         DataTable table=(DataTable)event.getSource();
         defaultPageSize=table.getRowCount();
-        currentPage=table.getPage();
+        currentPage=event.getPage();
     }
 
     public Integer pageToSelect(){

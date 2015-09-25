@@ -33,7 +33,7 @@ public class CategoryConverter implements Converter {
         List<CategoryEntity> list = categoryDao.findByName(value);
         CategoryEntity category = null;
         if(!list.isEmpty()){
-            category = categoryDao.findByName(value).get(0);
+            category = list.get(0);
         }
         return category;
     }
