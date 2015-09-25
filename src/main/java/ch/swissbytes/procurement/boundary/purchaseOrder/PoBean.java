@@ -498,8 +498,6 @@ public class PoBean extends Bean {
     }
 
     private BigDecimal calculateProjectValueByPaymentValueAndCurrency(final BigDecimal currencyFactor, final BigDecimal paymentValue){
-        log.info("currencyFactor: " + currencyFactor);
-        log.info("paymentValue : " + paymentValue);
         BigDecimal projectValue = paymentValue.divide(currencyFactor,BigDecimal.ROUND_HALF_UP);
         return projectValue;
     }
