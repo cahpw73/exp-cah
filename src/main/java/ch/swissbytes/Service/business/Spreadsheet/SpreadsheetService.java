@@ -103,6 +103,38 @@ public class SpreadsheetService implements Serializable {
     }
 
     private void prepareDetailContent(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+        firstSide(entity,ss);
+        secondSide(10,entity,ss);
+    }
+
+    private void prepareDetailContentMultyCurrencies(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+        firstSide(entity,ss);
+        //PayItemCurrency
+        processor.writeStringValue(10, ss.getProjectCurrency().getCurrency().getCode());
+        secondSide(11,entity,ss);
+    }
+
+    private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
+        processor.createSpreadsheet("PkgDetail");
+        // createHeaderPODetail(processor);
+        int rowNo = 0;
+        for (PurchaseOrderEntity entity : list) {
+            List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
+            boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(scopeSupplyList);
+            for (ScopeSupplyEntity ss : scopeSupplyList) {
+                processor.createRow(rowNo);
+                if(hasMultiCurrencies){
+                    prepareDetailContentMultyCurrencies(entity, ss);
+                }else{
+                    prepareDetailContent(entity, ss);
+                }
+
+                rowNo++;
+            }
+        }
+    }
+
+    private void firstSide(PurchaseOrderEntity entity, ScopeSupplyEntity ss){
         //Package Number
         processor.writeStringValue(0, entity.getPo());
         // Package Amendment
@@ -111,7 +143,6 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(2, "");
         //Item Number
         processor.writeStringValue(3, ss.getCode());
-        //break;
         //Facility Code
         processor.writeStringValue(4, ss.getCode());
         //Trade Commodity Code
@@ -124,52 +155,52 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(8, "");
         //Pay Item Payment Type
         processor.writeStringValue(9, "");
+    }
+    private void secondSide(int start,PurchaseOrderEntity entity, ScopeSupplyEntity ss){
         //Unit Price
-        processor.writeStringValue(10, "");
+        processor.writeDoubleValue(start++, ss.getCost() != null ? ss.getCost().doubleValue() : null);
         //Unit of Measure
-        processor.writeDoubleValue(11, ss.getCost() != null ? ss.getCost().doubleValue() : null);
+        processor.writeStringValue(start++, "");
         //Committed Qty
-        processor.writeStringValue(12, "");
+        processor.writeStringValue(start++, "");
         //Committed Install Hrs.
-        processor.writeStringValue(13, "");
+        processor.writeStringValue(start++, "");
         //Committed Costs.
-        processor.writeStringValue(14, "");
+        processor.writeStringValue(start++, "");
         //Forecast Quantity
-        processor.writeStringValue(15, "");
+        processor.writeStringValue(start++, "");
         //Forecast Install Hrs.
-        processor.writeStringValue(16, "");
+        processor.writeStringValue(start++, "");
         //Forecast Costs
-        processor.writeStringValue(17, "");
+        processor.writeStringValue(start++, "");
         //Sort Select Code 01
-        processor.writeStringValue(18, "");
+        processor.writeStringValue(start++, "");
         //Sort Select Code 02
-        processor.writeStringValue(19, "");
+        processor.writeStringValue(start++, "");
         //Sort Select  Code 03
-        processor.writeStringValue(20, "");
+        processor.writeStringValue(start++, "");
         //Sort Select Code 04
-        processor.writeStringValue(21, "");
+        processor.writeStringValue(start++, "");
         //User Select 01
-        processor.writeStringValue(22, "");
+        processor.writeStringValue(start++, "");
         //User Select 02
-        processor.writeStringValue(23, "");
+        processor.writeStringValue(start++, "");
         //User Select 03
-        processor.writeStringValue(24, "");
+        processor.writeStringValue(start++, "");
         //User Select 04
-        processor.writeStringValue(25, "");
+        processor.writeStringValue(start++, "");
     }
 
-    private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
-        processor.createSpreadsheet("PkgDetail");
-        // createHeaderPODetail(processor);
-        int rowNo = 0;
-        for (PurchaseOrderEntity entity : list) {
-            List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
-            for (ScopeSupplyEntity ss : scopeSupplyList) {
-                processor.createRow(rowNo);
-                prepareDetailContent(entity, ss);
-                rowNo++;
+    private boolean verifyMultiCurrenciesByScopeSupply(List<ScopeSupplyEntity> scopeSupplyList) {
+        boolean isMultiCurrency = false;
+        Long currencyId = scopeSupplyList.get(0).getProjectCurrency().getId();
+        for (ScopeSupplyEntity ss : scopeSupplyList) {
+            if(ss.getProjectCurrency().getId().longValue() != currencyId.longValue()){
+                isMultiCurrency = true;
+                break;
             }
         }
+        return isMultiCurrency;
     }
 
     private void createHeaderPO(SpreadsheetProcessor sp) {
