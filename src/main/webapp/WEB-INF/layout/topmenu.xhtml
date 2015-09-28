@@ -25,8 +25,8 @@
 
                     <h:link id="homeLinkId1" styleClass="navbar-brand lbl-color-df" rendered="#{!userSession.hasAccessBoth}"
                             outcome="/home"> #{configuration.getTitle()}</h:link>
-                    <h:link id="homeLinkId2" styleClass="navbar-brand lbl-color-df" rendered="#{userSession.hasAccessBoth}"
-                            outcome="/procurement/project/list"> #{configuration.getTitle()}</h:link>
+                    <h:commandLink id="homeLinkId2" styleClass="navbar-brand lbl-color-df" rendered="#{userSession.hasAccessBoth}"
+                                   action="#{userSession.switchToProcurement}"> #{configuration.getTitle()}</h:commandLink>
 
                 </div>
             </div>
