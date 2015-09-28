@@ -81,8 +81,6 @@
                                         rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
-                                    <p:fileDownload value="#{poListBean.exportCMS()}"
-                                                    contentDisposition="attachment" />
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
                                                message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
                                                icon="ui-icon-alert">
