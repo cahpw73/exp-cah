@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:dataTable id="contactList" value="#{contactBean.filteredList()}" var="_contact">
-        <p:column headerText="Title">
+        <p:column headerText="Title" width="80">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.title}"/>
             <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.title}" styleClass="form-control" maxlength="245"/>
         </p:column>
@@ -32,7 +32,7 @@
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.fax}"/>
             <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.fax}" styleClass="form-control" maxlength="245"/>
         </p:column>
-        <p:column headerText="#{msgs['supplier.contact.lbl.email']}">
+        <p:column headerText="#{msgs['supplier.contact.lbl.email']}" width="200">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.email}"/>
             <p:inputText id="contactEmailId" rendered="#{_contact.isEditable}" required="true" requiredMessage="email is required" value="#{_contact.email}" styleClass="form-control" maxlength="200"/>
             <p:message for="contactEmailId"/>
