@@ -81,6 +81,8 @@
                                         rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
+                                    <p:fileDownload value="#{poListBean.exportCMS()}"
+                                                    contentDisposition="attachment" />
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
                                                message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
                                                icon="ui-icon-alert">
@@ -88,9 +90,9 @@
                                 </p:commandLink>
                                 &#160;
 
-                                <p:commandLink id="exportCsv" value="Export CMS"
+                                <p:commandLink id="exportCsv" value="Export CMS" ajax="false"
                                                rendered="#{poListBean.canExportCMS(_p)}"
-                                               ajax="false">
+                                               style="float: left!important; color: #428BCA; padding-top: 0px!important;">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:fileDownload value="#{poListBean.exportCMS()}"
@@ -100,14 +102,15 @@
                                                icon="ui-icon-alert"/>
                                 </p:commandLink>
                                 <ui:remove>
-                                <p:commandLink
-                                        update="@form" ajax="true"
+                                <p:commandLink ajax="false"
                                         value="#{msgs['project.list.action.export.cms']}"
                                         action="#{poListBean.exportCMS}"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                         rendered="#{poListBean.canExportCMS(_p)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
+                                    <p:fileDownload value="#{poListBean.exportCMS()}"
+                                                    contentDisposition="attachment" />
                                     <p:confirm header="#{msgs['lbl.confirmation']}"
                                                message="#{msgs['project.list.lbl.msg.confirmation.cms']}"
                                                icon="ui-icon-alert">
@@ -169,7 +172,6 @@
                                     </p:confirm>
                                 </p:commandLink>
                             </p:column>
-
                         </p:dataTable>
                         <br/>
                         <h:link outcome="edit"

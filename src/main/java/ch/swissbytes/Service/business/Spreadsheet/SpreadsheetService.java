@@ -120,16 +120,18 @@ public class SpreadsheetService implements Serializable {
         int rowNo = 0;
         for (PurchaseOrderEntity entity : list) {
             List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
-            boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(scopeSupplyList);
-            for (ScopeSupplyEntity ss : scopeSupplyList) {
-                processor.createRow(rowNo);
-                if(hasMultiCurrencies){
-                    prepareDetailContentMultyCurrencies(entity, ss);
-                }else{
-                    prepareDetailContent(entity, ss);
-                }
+            if(!scopeSupplyList.isEmpty()){
+                boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(scopeSupplyList);
+                for (ScopeSupplyEntity ss : scopeSupplyList) {
+                    processor.createRow(rowNo);
+                    if(hasMultiCurrencies){
+                        prepareDetailContentMultyCurrencies(entity, ss);
+                    }else{
+                        prepareDetailContent(entity, ss);
+                    }
 
-                rowNo++;
+                    rowNo++;
+                }
             }
         }
     }
