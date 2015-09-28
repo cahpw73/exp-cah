@@ -488,7 +488,9 @@ public class PoBean extends Bean {
                     break;
                 }
             }
-            detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
+            if(detailEntity.getOrderAmt() != null) {
+                detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
+            }
         }
     }
 
