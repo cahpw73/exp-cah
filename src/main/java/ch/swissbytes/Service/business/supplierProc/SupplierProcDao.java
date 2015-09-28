@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,26 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         params.put("ID",id==null?0:id);
         List<SupplierProcEntity> list=super.findBy(sb.toString(),params);
         return list.isEmpty()?null:list.get(0);
+    }
+
+    public Integer findPageByCurrentSupplier(BigInteger supplierId,String terms,Integer defaultSizePage){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT page_number ");
+        sb.append(" FROM ( ");
+        sb.append(" SELECT id,company,row_number() over (order by supplier_id),(row_number() over (order by supplier_id)-1)/"+defaultSizePage+" as page_number ");
+        sb.append(" FROM supplier_proc sp ");
+        sb.append(" WHERE 1=1");
+        if(StringUtils.isNotEmpty(terms)) {
+            sb.append(" AND ( lower(company) like '" + terms + "%'  ");
+            sb.append(" OR lower(supplier_id) like '" + terms + "%' )");
+        }
+        sb.append(" ORDER BY supplier_id ");
+        sb.append(" ) queryA ");
+        sb.append(" WHERE id="+supplierId+" ");
+        Query query = entityManager.createNativeQuery(sb.toString());
+        List<Object>list=query.getResultList();
+        BigInteger numberPage = !list.isEmpty()?(BigInteger) list.get(0): BigInteger.ZERO;
+        return numberPage.intValue();
     }
 
 

@@ -447,7 +447,6 @@ public class DateUtil {
     }
 
     public static Date sumNDays(Date date, int n){
-        System.out.println("sumD date: " + date.toString());
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.DAY_OF_YEAR, n);

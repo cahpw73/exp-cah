@@ -191,7 +191,12 @@ public class CashflowBean implements Serializable {
     }
 
     public void calculatePaymentDate(CashflowDetailEntity detailEntity){
-        calculatePaymentDatePO(detailEntity);
+        if(detailEntity.getClaimDate() != null){
+            calculatePaymentDatePO(detailEntity);
+        }else{
+            detailEntity.setPaymentDate(null);
+        }
+
     }
 
     public void calculatePaymentDateBasedPaymentTerms(){

@@ -226,7 +226,7 @@
                                                 value="#{_l.claimDate}"
                                                 timeZone="#{configuration.timeZone}"
                                                 onselect="calendarChanges();" onchange="calendarChanges();">
-                                        <p:ajax event="dateSelect" update="forecastDt" process="forecastDt"
+                                        <p:ajax event="dateSelect" update="forecastDt" process="@this"
                                                 listener="#{cashflowBean.calculatePaymentDate(_l)}" async="false"/>
                                     </p:calendar>
                                 </h:panelGroup>

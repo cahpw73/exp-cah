@@ -62,6 +62,7 @@ public class SupplierProcList implements Serializable {
     }
 
     public void doSearch(){
+        managerTable.clear();
         list=new SupplierTbl(dao,managerTable.getFilter());
     }
 

@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,6 +76,10 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         supplierBrandDao.doDelete(supplier.getId());
         supplierCategoryDao.doDelete(supplier.getId());
         return super.update(supplier);
+    }
+
+    public Integer findPageByCurrentSupplier(BigInteger supplierId,String terms,Integer defaultSizePage){
+        return  dao.findPageByCurrentSupplier(supplierId,terms,defaultSizePage);
     }
 
 

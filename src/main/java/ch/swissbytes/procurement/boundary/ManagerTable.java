@@ -27,22 +27,20 @@ public abstract class ManagerTable implements Serializable{
 
     public ManagerTable(){
         clear();
+        filter=new Filter();
     }
 
     public void clear(){
         clearFieldsToOrder();
         lastEdited=-1L;
         remember=false;
-        filter=new Filter();
+       // filter=new Filter();
     }
 
     public void clearFieldsToOrder(){
         ascendingFields=new ArrayList<>();
         descendingFields=new ArrayList<>();
     }
-
-
-
 
     public void onPaginate(PageEvent event){
         forgetCurrentPage();

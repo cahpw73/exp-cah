@@ -1,12 +1,15 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
+import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.fqm.boundary.TableCommonFeature;
 import ch.swissbytes.procurement.boundary.ManagerTable;
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.event.data.PageEvent;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.math.BigInteger;
 
 /**
  * Created by alvaro on 9/22/2015.
@@ -18,9 +21,16 @@ public class SupplierManagerTable extends ManagerTable {
     @Inject
     private TableCommonFeature defaultSize;
 
+    @Inject
+    private SupplierProcService service;
+
     @Override
-    protected Integer findCurrentPage() {
-        return 1;
+    public Integer findCurrentPage() {
+        BigInteger supplierId = BigInteger.valueOf(lastEdited);
+        if(lastEdited > 0L) {
+            return service.findPageByCurrentSupplier(supplierId, filter.getCriteria(), defaultSize.getDefaultPageSize());
+        }
+        return 0;
     }
 
     @Override

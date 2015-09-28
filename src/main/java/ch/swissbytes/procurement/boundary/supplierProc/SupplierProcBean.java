@@ -127,6 +127,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
         service.update(supplier);
         Messages.addFlashGlobalInfo("The supplier has been saved!");
+        managerTable.setLastEdited(supplier.getId());
         managerTable.rememberPage();
         return "list?faces-redirect=true";
     }
