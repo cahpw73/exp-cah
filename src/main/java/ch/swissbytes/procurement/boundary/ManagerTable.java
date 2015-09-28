@@ -30,12 +30,18 @@ public abstract class ManagerTable implements Serializable{
     }
 
     public void clear(){
-        ascendingFields=new ArrayList<>();
-        descendingFields=new ArrayList<>();
+        clearFieldsToOrder();
         lastEdited=-1L;
         remember=false;
         filter=new Filter();
     }
+
+    public void clearFieldsToOrder(){
+        ascendingFields=new ArrayList<>();
+        descendingFields=new ArrayList<>();
+    }
+
+
 
 
     public void onPaginate(PageEvent event){

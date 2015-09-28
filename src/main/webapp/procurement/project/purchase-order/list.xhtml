@@ -88,12 +88,12 @@
                                 </p:commandLink>
                                 &#160;
                                 <ui:remove>
-                                <p:commandLink id="exportCsv" value="Export CSV" ajax="false">
+                                <h:commandLink id="exportCsv" value="Export CSV" ajax="false">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:fileDownload value="#{poListBean.exportCMS()}"
                                                     contentDisposition="attachment" />
-                                </p:commandLink>
+                                </h:commandLink>
 
                                 <p:commandLink
                                         update="@form" ajax="true"
