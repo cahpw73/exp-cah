@@ -57,6 +57,29 @@ public class CategoryBrandBean implements Serializable {
         brandList=brandService.getBrandList();
     }
 
+    public CategoryEntity findCategoryByName(String name){
+        CategoryEntity target=null;
+        for(CategoryEntity categoryEntity:categoryList){
+            if(categoryEntity.getName().equalsIgnoreCase(name)){
+                target=categoryEntity;
+                break;
+            }
+        }
+        return target;
+    }
+
+
+    public BrandEntity findBrandByName(String name){
+        BrandEntity target=null;
+        for(BrandEntity brandEntity:brandList){
+            if(brandEntity.getName().equalsIgnoreCase(name)){
+                target=brandEntity;
+                break;
+            }
+        }
+        return target;
+    }
+
     public void sortCategoryList(){
         Collections.sort(categories.getTarget());
         Collections.sort(categories.getSource());

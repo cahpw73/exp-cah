@@ -23,6 +23,7 @@ public class SupplierTbl extends LazyDataModel<SupplierProcEntity> {
     private Filter filter;
 
     private Long total;
+    private SupplierManagerTable managerTable;
 
     public SupplierTbl(SupplierProcDao dao, Filter filter) {
         log.info("creating tbl ");
@@ -40,6 +41,7 @@ public class SupplierTbl extends LazyDataModel<SupplierProcEntity> {
         List<SupplierProcEntity> list = new ArrayList<>();
         String field=StringUtils.isEmpty(sortField)?"supplierId":sortField;
         list = dao.findByPage(first, pageSize, filter,field, sortOrder.ordinal() == SortOrder.ASCENDING.ordinal());
+
 
         if (super.getRowCount() <= 0) {
             Long total = dao.findTotal(null);

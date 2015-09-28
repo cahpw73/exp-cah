@@ -53,7 +53,7 @@
                                          styleClass="btn btn-primary btn-sm">
                             <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"
                                     async="false"
-                                    process="@form"
+                                    process="@this"
                                     oncomplete="activeCategoryBrandTab();"
                                     update="idBtnSave idBtnCancel bodySupplier"/>
                         </h:commandButton>
