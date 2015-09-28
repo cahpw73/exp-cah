@@ -87,14 +87,18 @@
                                     </p:confirm>
                                 </p:commandLink>
                                 &#160;
-                                <ui:remove>
-                                <h:commandLink id="exportCsv" value="Export CSV" ajax="false">
+                                <p:commandLink id="exportCsv" value="Export CMS"
+                                               rendered="#{poListBean.canExportCMS(_p)}"
+                                               ajax="false">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:fileDownload value="#{poListBean.exportCMS()}"
                                                     contentDisposition="attachment" />
-                                </h:commandLink>
-
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.cms']}"
+                                               icon="ui-icon-alert"/>
+                                </p:commandLink>
+                                <ui:remove>
                                 <p:commandLink
                                         update="@form" ajax="true"
                                         value="#{msgs['project.list.action.export.cms']}"
@@ -108,7 +112,7 @@
                                                icon="ui-icon-alert">
                                     </p:confirm>
                                 </p:commandLink>
-
+                                </ui:remove>
                                 &#160;
                                 <p:commandLink
                                         update="@form" ajax="true"
@@ -119,7 +123,6 @@
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                 </p:commandLink>
-                                </ui:remove>
                                 &#160;
 
                                 <p:commandLink

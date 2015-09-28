@@ -378,7 +378,6 @@ public class PoListBean implements Serializable {
     }
 
     public StreamedContent exportCMS() throws FileNotFoundException {
-        System.out.println("exporting cms....");
         StreamedContent content=null;
         if(currentPurchaseOrder!=null&&currentPurchaseOrder.getId()!=null) {
             List<PurchaseOrderEntity> list=new ArrayList<>();

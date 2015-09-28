@@ -84,7 +84,9 @@ public class ItemBean implements Serializable {
     public void copyDateToItemList(Date orderDate) {
         if (orderDate != null) {
             for(ScopeSupplyEntity s : scopeSupplyList){
-                s.setPoDeliveryDate(orderDate);
+                if(s.getIsEditable()) {
+                    s.setPoDeliveryDate(orderDate);
+                }
             }
         }
     }

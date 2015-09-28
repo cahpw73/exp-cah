@@ -59,11 +59,9 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     private String to;
     private Date date;
     private String descriptionAttachment;
-    //new fields
     private BigDecimal totalCost;
     private String costCode;
     private Boolean excludeFromExpediting;
-    //@TODO change this value replace to currency
     private ProjectCurrencyEntity projectCurrency;
 
 
