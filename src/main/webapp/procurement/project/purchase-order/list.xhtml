@@ -87,7 +87,7 @@
                                     </p:confirm>
                                 </p:commandLink>
                                 &#160;
-                                <p:commandLink id="exportCsv" value="Export CMS" ajax="false"
+                                <p:commandLink id="exportCsv" value="Export CMS" ajax="false" update="projectListId"
                                                rendered="#{poListBean.canExportCMS(_p)}"
                                                style="float: left!important; color: #428BCA; padding-top: 0px!important;">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -98,22 +98,6 @@
                                                message="#{msgs['project.list.lbl.msg.confirmation.cms']}"
                                                icon="ui-icon-alert"/>
                                 </p:commandLink>
-                                <ui:remove>
-                                <p:commandLink ajax="false"
-                                        value="#{msgs['project.list.action.export.cms']}"
-                                        action="#{poListBean.exportCMS}"
-                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.canExportCMS(_p)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                    <p:fileDownload value="#{poListBean.exportCMS()}"
-                                                    contentDisposition="attachment" />
-                                    <p:confirm header="#{msgs['lbl.confirmation']}"
-                                               message="#{msgs['project.list.lbl.msg.confirmation.cms']}"
-                                               icon="ui-icon-alert">
-                                    </p:confirm>
-                                </p:commandLink>
-                                </ui:remove>
                                 &#160;
                                 <p:commandLink
                                         update="@form" ajax="true"
