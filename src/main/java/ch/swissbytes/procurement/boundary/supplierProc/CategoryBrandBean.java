@@ -81,11 +81,11 @@ public class CategoryBrandBean implements Serializable {
     }
 
     public void sortCategoryList(){
-        Collections.sort(categories.getTarget());
+        //Collections.sort(categories.getTarget());
         Collections.sort(categories.getSource());
     }
     public void sortBrandList(){
-        Collections.sort(brands.getTarget());
+       // Collections.sort(brands.getTarget());
         Collections.sort(brands.getSource());
     }
 

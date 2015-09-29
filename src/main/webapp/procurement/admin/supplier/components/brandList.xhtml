@@ -7,7 +7,7 @@
                     removeLabel="Remove from Brand"
                     converter="brandConverter"
                     itemLabel="#{_brand.name}" itemValue="#{_brand}">
-            <p:ajax event="transfer" process="@this" async="false" listener="#{categoryBrandBean.sortBrandList()}" update="brandPickList"/>
+            <p:ajax event="transfer" async="false" process="@this"/>
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 50px;">
