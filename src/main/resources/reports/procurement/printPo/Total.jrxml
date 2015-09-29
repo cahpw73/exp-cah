@@ -137,7 +137,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="20" uuid="8c573ea5-444d-4178-b143-0957856e8a40">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="7509a19c-8cfd-469f-bea0-1442ed893467" style="Arial-Bold" x="0" y="0" width="20" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -157,7 +157,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="42" uuid="582ec6e2-b2fa-4c52-b08d-9fa41be4fd03">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="4897806c-d50e-437d-a34e-1afd7c5ea0f7" style="Arial-Bold" x="0" y="0" width="42" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -177,7 +177,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="33" uuid="7d90dbac-dbb9-4bca-9e79-43a7f58558d6">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="90cac2c0-2b97-4643-bce3-4b58ede7fb19" style="Arial-Bold" x="0" y="0" width="33" height="12"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -197,7 +197,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="20" uuid="48a4656d-e426-4f04-8e03-2ce24c7bb410">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="afbdfa20-04b9-4a9a-ae2c-0e71345919af" style="Arial-Bold" x="0" y="0" width="20" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -217,7 +217,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="42" uuid="9c257b78-80ec-4005-84ba-6c351f809370">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="4f480545-b9cc-43e7-b5c7-43e1c1a2df9e" style="Arial-Bold" x="0" y="0" width="42" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -237,7 +237,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="33" uuid="87c90189-0c66-405e-b35f-340b4628b7ce">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="1cca9d00-f9a6-451d-9916-414b1791db10" style="Arial-Bold" x="0" y="0" width="33" height="12"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -257,7 +257,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="20" uuid="26847e97-4354-4699-a8c4-ebbab0975a97">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="9e8cf393-f9c7-48ed-8bd7-9105085bbd35" style="Arial-Bold" x="0" y="0" width="20" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
@@ -277,7 +277,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 					</jr:column>
 					<jr:column width="42" uuid="41644287-e2bc-487a-a19e-a91498db5dc0">
 						<jr:columnFooter height="12" rowSpan="1">
-							<textField>
+							<textField isBlankWhenNull="true">
 								<reportElement uuid="712691d9-c13c-4069-9e69-3704e26c48a0" style="Arial-Bold" x="0" y="0" width="42" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>

@@ -583,14 +583,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             }
         }
 
-        if (poMinId.longValue() != poMaxId.longValue()) {
-            PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
-            PurchaseOrderEntity poMax = findPurchaseOrderById(poMaxId);
-            result = "v" + poMin.getVariation() + " - v" + poMax.getVariation();
-        } else if (poMinId.longValue() == poMaxId.longValue()) {
-            PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
-            result = poMin.getVariation();
+        if(poMinId.longValue() != -1L && poMaxId.longValue() != -1L){
+            if (poMinId.longValue() != poMaxId.longValue()) {
+                PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
+                PurchaseOrderEntity poMax = findPurchaseOrderById(poMaxId);
+                result = "v" + poMin.getVariation() + " - v" + poMax.getVariation();
+            } else if (poMinId.longValue() == poMaxId.longValue()) {
+                PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
+                result = poMin.getVariation();
+            }
         }
+
         return result;
     }
 
