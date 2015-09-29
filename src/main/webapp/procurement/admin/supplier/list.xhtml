@@ -15,7 +15,7 @@
             <br/>
 
             <div>
-                <h:form prependId="false">
+                <h:form id="searchForm" prependId="false">
                     <div style="position: fixed; width: 100%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
                             <div class="col-md-3" style="padding-left: 0px!important;">
@@ -28,7 +28,7 @@
                                     </h:inputText>
                                 </div>
                             </div>
-                            <h:commandButton value="#{msgs['lbl.search']}" action="#{supplierProcList.doSearch}"
+                            <h:commandButton id="srch" value="#{msgs['lbl.search']}" action="#{supplierProcList.doSearch}"
                                              styleClass="btn btn-primary btn-sm"/>
                             &#160;
                             <h:link value="New supplier" outcome="edit" styleClass="btn btn-primary btn-sm"/>
