@@ -24,17 +24,17 @@
                 <div style="float: left!important;">
                     <h:panelGroup id="idBtnSave" rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
                         <h:panelGroup rendered="#{MODE ==null}">
-                            <h:commandButton value="#{msgs['lbl.save']}"
+                            <h:commandButton id="sp5" value="#{msgs['lbl.save']}"
                                              action="#{supplierProcBean.doSave}"
                                              rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
                                              styleClass="btn btn-primary btn-sm"/>
-                            <h:commandButton value="#{msgs['lbl.save']}"
+                            <h:commandButton id="sp4" value="#{msgs['lbl.save']}"
                                              action="#{supplierProcBean.doUpdate}"
                                              rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
                                              styleClass="btn btn-primary btn-sm"/>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE eq 'PO' and supplierProcBean.supplierMode}">
-                            <h:commandButton value="#{msgs['lbl.save']}"
+                            <h:commandButton id="sp3" value="#{msgs['lbl.save']}"
                                              action="#{poBean.saveSupplier}"
                                              styleClass="btn btn-primary btn-sm">
                                 <p:ajax async="false" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
@@ -42,13 +42,13 @@
                             </h:commandButton>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
-                            <h:commandButton value="#{msgs['lbl.save']}"
+                            <h:commandButton id="sp2" value="#{msgs['lbl.save']}"
                                              styleClass="btn btn-primary btn-sm">
                                 <p:ajax async="false" update="#{RENDER}"
                                         process="@form" listener="#{bean.saveSupplier()}"/>
                             </h:commandButton>
                         </h:panelGroup>
-                        <h:commandButton value="#{msgs['lbl.save']}"
+                        <h:commandButton id="sp1" value="#{msgs['lbl.save']}"
                                          rendered="#{not supplierProcBean.supplierMode}"
                                          styleClass="btn btn-primary btn-sm">
                             <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"

@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.boundary.supplierProc;
 
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
+import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ContactEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
@@ -14,6 +15,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -53,7 +56,6 @@ public class SupplierProcBean extends Bean implements Serializable {
     @PostConstruct
     public void create() {
         log.info("SupplierProcBean bean created");
-        System.out.println("current page "+managerTable.getCurrentPage());
     }
 
     public void load() {
@@ -187,8 +189,10 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public void addCategoryBrand() {
         if (addingCategory) {
+            List<CategoryEntity> list =  new ArrayList<>();
+            list.addAll(categoryBrandBean.getCategories().getTarget());
             supplier.getCategories().clear();
-            supplier.getCategories().addAll(categoryBrandBean.getCategories().getTarget());
+            supplier.getCategories().addAll(list);
         }
         if (addingBrand) {
             supplier.getBrands().clear();
