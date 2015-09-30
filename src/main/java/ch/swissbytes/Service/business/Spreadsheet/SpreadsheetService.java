@@ -146,13 +146,13 @@ public class SpreadsheetService implements Serializable {
         //Item Number
         processor.writeStringValue(3, ss.getCode());
         //Facility Code
-        processor.writeStringValue(4, ss.getCode());
+        processor.writeStringValue(4, "");
         //Trade Commodity Code
         processor.writeStringValue(5, "");
         //Phase Code
         processor.writeStringValue(6, "");
         //Item Description
-        processor.writeStringValue(7, "");
+        processor.writeStringValue(7, ss.getDescription());
         //PayItem Group
         processor.writeStringValue(8, "");
         //Pay Item Payment Type
@@ -164,7 +164,7 @@ public class SpreadsheetService implements Serializable {
         int col=start;
         processor.writeDoubleValue(col, ss.getCost() != null ? ss.getCost().doubleValue() : null);
         //Unit of Measure
-        processor.writeStringValue(col++, "");
+        processor.writeStringValue(col++, ss.getUnit());
         //Committed Qty
         processor.writeStringValue(col++, "");
         //Committed Install Hrs.

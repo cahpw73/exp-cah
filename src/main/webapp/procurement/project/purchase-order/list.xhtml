@@ -271,9 +271,10 @@
                             <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces"
                                            value="#{msgs['lbl.yes']}"
                                            ajax="false"
+                                           onclick="PrimeFaces.monitorDownload(null, stop);"
                                            style="color: #ffffff">
                                 <p:fileDownload value="#{poListBean.exportCMS()}"
-                                                onclick="PrimeFaces.monitorDownload(null, stop);"
+
                                                 contentDisposition="attachment">
                                         </p:fileDownload>
                             </p:commandLink>
@@ -281,7 +282,7 @@
                             <button class="btn btn-primary btn-sm" type="button"
                                     onclick="PF('cmsExport').hide();">
                                 #{msgs['lbl.no']}</button>
-                            <p:remoteCommand name="stop" onstart="alert('init');" oncomplete="PF('cmsExport').hide();" update=":listPooFormId:projectListId"/>
+                            <p:remoteCommand name="stop" oncomplete="PF('cmsExport').hide();" update=":listPooFormId:projectListId"/>
                         </h:form>
                     </div>
                 </div>
