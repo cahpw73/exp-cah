@@ -90,6 +90,8 @@
                         <div style="width: 210px; float: left; margin-left: -15px;">
                             <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
+                                             required="true"
+                                             requiredMessage="Supplier is required"
                                              styleClass="form-control" onclick="doChangeProc();"
                                              converter="supplierConverter">
                                 <f:selectItem
@@ -102,6 +104,7 @@
                                 <p:ajax async="false" update="supplierDetail contactDetail"
                                         listener="#{poBean.resetContact()}" process="@this"/>
                             </h:selectOneMenu>
+                            <p:message for="supplierHeader "/>
                             <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
                                          rendered="#{poBean.beingViewed}"/>
@@ -128,6 +131,8 @@
                         <div style="width: 145px; float: left;">
                             <h:selectOneMenu id="headerClass" onclick="doChangeProc();"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
+                                             required="true"
+                                             requiredMessage="Class is required"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}">
                                 <f:selectItem
                                         itemLabel="Select one"
@@ -137,6 +142,7 @@
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.name}"/>
                             </h:selectOneMenu>
+                            <p:message for="headerClass" />
                             <h:inputText id="headerClassVi" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
                                          rendered="#{poBean.beingViewed}"/>
@@ -166,6 +172,8 @@
                                                 converterMessage="#{msgs['validator.date.invalid']}"
                                                 value="#{poBean.purchaseOrder.poDeliveryDate}"
                                                 timeZone="#{configuration.timeZone}"
+                                                required="true"
+                                                requiredMessage="Delivery Date is required"
                                                 onselect="calendarChanges();" onchange="calendarChanges();"
                                                 rendered="#{poBean.beingEdited}"
                                                 onclick="doChangeProc();">
@@ -190,6 +198,8 @@
                                     <h:inputText id="headerPoint"
                                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.point}"
                                                  maxlength="250"
+                                                 required="true"
+                                                 requiredMessage="Delivery Point is required"
                                                  styleClass="form-control" rendered="#{poBean.beingEdited}"/>
                                     <p:message for="headerPoint" id="msgHeaderPoint"/>
                                     <h:inputText id="headerPointVi" readonly="true" styleClass="form-control view-po"
