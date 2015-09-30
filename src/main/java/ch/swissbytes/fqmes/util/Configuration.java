@@ -180,6 +180,9 @@ public class Configuration implements Serializable {
     public String getTitle(){
         return System.getProperties().getProperty("fqm-title-page")==null?bundle.getString("main.title"):System.getProperties().getProperty("fqm-title-page");
     }
+    public String getProcurementTitle(){
+        return System.getProperties().getProperty("procurement-title-page")==null?bundle.getString("main.title.procurement"):System.getProperties().getProperty("procurement-title-page");
+    }
     public String format(String pattern,BigDecimal value){
         return value!=null?new java.text.DecimalFormat(pattern, new java.text.DecimalFormatSymbols()).format(value):"";
     }
