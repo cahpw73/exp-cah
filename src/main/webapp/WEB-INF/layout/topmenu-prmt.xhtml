@@ -22,9 +22,9 @@
                         <h:graphicImage name="img/FqmLogo.png"/>
                     </div>
                     <h:commandLink id="homeLinkId1" styleClass="navbar-brand lbl-color-df" rendered="#{userSession.hasAccessBoth}"
-                                   action="#{userSession.switchToExpediting}"> #{msgs['main.title.procurement']}</h:commandLink>
+                                   action="#{userSession.switchToExpediting}"> #{configuration.procurementTitle}</h:commandLink>
                     <h:link id="homeLinkId2" styleClass="navbar-brand lbl-color-df" rendered="#{!userSession.hasAccessBoth}"
-                            outcome="/procurement/project/list"> #{msgs['main.title.procurement']}</h:link>
+                            outcome="/procurement/project/list">  #{configuration.procurementTitle}</h:link>
 
                 </div>
             </div>

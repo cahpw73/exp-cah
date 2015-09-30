@@ -4,17 +4,17 @@ import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
 import javax.inject.Inject;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -103,15 +103,15 @@ public class SpreadsheetService implements Serializable {
     }
 
     private void prepareDetailContent(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
-        firstSide(entity,ss);
-        secondSide(10,entity,ss);
+        firstSide(entity, ss);
+        secondSide(10, entity, ss);
     }
 
-    private void prepareDetailContentMultyCurrencies(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
-        firstSide(entity,ss);
+    private void prepareDetailContentMultiCurrencies(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+        firstSide(entity, ss);
         //PayItemCurrency
         processor.writeStringValue(10, ss.getProjectCurrency().getCurrency().getCode());
-        secondSide(11,entity,ss);
+        secondSide(11, entity, ss);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
@@ -120,13 +120,13 @@ public class SpreadsheetService implements Serializable {
         int rowNo = 0;
         for (PurchaseOrderEntity entity : list) {
             List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
-            if(!scopeSupplyList.isEmpty()){
+            if (!scopeSupplyList.isEmpty()) {
                 boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(scopeSupplyList);
                 for (ScopeSupplyEntity ss : scopeSupplyList) {
                     processor.createRow(rowNo);
-                    if(hasMultiCurrencies){
-                        prepareDetailContentMultyCurrencies(entity, ss);
-                    }else{
+                    if (hasMultiCurrencies) {
+                        prepareDetailContentMultiCurrencies(entity, ss);
+                    } else {
                         prepareDetailContent(entity, ss);
                     }
 
@@ -136,7 +136,7 @@ public class SpreadsheetService implements Serializable {
         }
     }
 
-    private void firstSide(PurchaseOrderEntity entity, ScopeSupplyEntity ss){
+    private void firstSide(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
         //Package Number
         processor.writeStringValue(0, entity.getPo());
         // Package Amendment
@@ -158,51 +158,51 @@ public class SpreadsheetService implements Serializable {
         //Pay Item Payment Type
         processor.writeStringValue(9, "");
     }
-    private void secondSide(int start,PurchaseOrderEntity entity, ScopeSupplyEntity ss){
+
+    private void secondSide(int start, PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
         //Unit Price
-        processor.writeDoubleValue(start++, ss.getCost() != null ? ss.getCost().doubleValue() : null);
+        int col=start;
+        processor.writeDoubleValue(col, ss.getCost() != null ? ss.getCost().doubleValue() : null);
         //Unit of Measure
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Committed Qty
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Committed Install Hrs.
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Committed Costs.
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Forecast Quantity
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Forecast Install Hrs.
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Forecast Costs
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Sort Select Code 01
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Sort Select Code 02
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Sort Select  Code 03
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //Sort Select Code 04
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //User Select 01
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //User Select 02
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //User Select 03
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
         //User Select 04
-        processor.writeStringValue(start++, "");
+        processor.writeStringValue(col++, "");
     }
 
     private boolean verifyMultiCurrenciesByScopeSupply(List<ScopeSupplyEntity> scopeSupplyList) {
-        boolean isMultiCurrency = false;
-        Long currencyId = scopeSupplyList.get(0).getProjectCurrency().getId();
+        List<ProjectCurrencyEntity> currencies = new ArrayList<>();
         for (ScopeSupplyEntity ss : scopeSupplyList) {
-            if(ss.getProjectCurrency().getId().longValue() != currencyId.longValue()){
-                isMultiCurrency = true;
-                break;
+            if (ss.getProjectCurrency() != null && !currencies.contains(ss.getProjectCurrency())) {
+                currencies.add(ss.getProjectCurrency());
             }
         }
-        return isMultiCurrency;
+        return currencies.size() > 1;
     }
 
     private void createHeaderPO(SpreadsheetProcessor sp) {

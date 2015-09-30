@@ -37,7 +37,7 @@ public class SpreadsheetProcessor implements Serializable {
     }
 
     public void writeDoubleValue(int colNo, Double value) {
-        row.createCell(colNo).setCellValue(value);
+        row.createCell(colNo).setCellValue(value==null?"":value.toString());
     }
 
     public ByteArrayOutputStream saveWorkBook() {
@@ -60,28 +60,5 @@ public class SpreadsheetProcessor implements Serializable {
         }
         return null;
     }
-
-   /* public static void main(String[] args) {
-        SpreadsheetProcessor sp = new SpreadsheetProcessor();
-        sp.createWorkbook();
-        sp.createSpreadsheet("PurchaseOrder");
-        sp.createRow(0);
-        sp.writeStringValue(0, "45");
-        sp.writeDoubleValue(1, 45.45987D);
-
-        sp.createRow(1);
-        sp.writeStringValue(1, "Puesto?");
-        sp.writeDoubleValue(0, 10D);
-
-        sp.createSpreadsheet("Purchase Detail");
-
-        sp.createRow(0);
-        sp.writeStringValue(1, "Detalle?");
-        sp.writeDoubleValue(0, 10D);
-
-
-     //   sp.saveWorkBook("PRUEBA");
-        System.out.println("written successfully");
-    }*/
 
 }

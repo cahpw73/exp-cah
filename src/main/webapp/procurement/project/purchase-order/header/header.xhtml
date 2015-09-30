@@ -10,6 +10,7 @@
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
                                    for="requisitionDt" value="#{msgs['po.header.lbl.requisition']}"/>
+
                     <div style="width: 667px; float: left; margin-left:-32px!important;">
                         <h:panelGroup id="requisitionsGroup">
                             <p:dataTable id="requisitionDt" var="_req"
@@ -81,6 +82,7 @@
             </div>
             <div class="clearfix"/>
             <br/>
+
             <div style="width: 900px!important; float: left!important;">
                 <div style="width: 310px!important; float: left!important;">
                     <div class="form-group">
@@ -142,7 +144,7 @@
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.name}"/>
                             </h:selectOneMenu>
-                            <p:message for="headerClass" />
+                            <p:message for="headerClass"/>
                             <h:inputText id="headerClassVi" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
                                          rendered="#{poBean.beingViewed}"/>
@@ -323,8 +325,8 @@
                                            value="#{msgs['po.header.lbl.security.deposit']}"/>
                             <h:inputHidden id="checkBoxSecurityDeposit"
 
-                                           value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}" >
-                                    </h:inputHidden>
+                                           value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">
+                            </h:inputHidden>
                             <input type="checkbox" name="my-checkbox"
                                    id="switchSecurityDeposit" onchange="test();"
                                    data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
@@ -335,7 +337,7 @@
             </div>
         </div>
         <script type="text/javascript">
-            function test(){
+            function test() {
                 console.log("test passed")
                 algo();
             }

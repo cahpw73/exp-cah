@@ -28,7 +28,7 @@ public class SupplierManagerTable extends ManagerTable {
     public Integer findCurrentPage() {
         BigInteger supplierId = BigInteger.valueOf(lastEdited);
         if(lastEdited > 0L) {
-            return service.findPageByCurrentSupplier(supplierId, filter.getCriteria(), defaultSize.getDefaultPageSize());
+            return getCurrentPage(); //service.findPageByCurrentSupplier(supplierId, filter.getCriteria(), defaultSize.getDefaultPageSize());
         }
         return 0;
     }
