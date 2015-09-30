@@ -131,11 +131,10 @@ public class CategoryBrandBean implements Serializable {
     public void doSaveCategory(){
         if(StringUtils.isNotEmpty(categoryEntity.getName())){
             if(isValidCategory(categoryEntity.getName())) {
-                CategoryEntity currentCategory = new CategoryEntity();
-                currentCategory.setName(categoryEntity.getName());
-                currentCategory.setLastUpdate(new Date());
-                currentCategory.setStatus(StatusEnum.ENABLE);
-                categoryService.doSave(currentCategory);
+                categoryEntity.setLastUpdate(new Date());
+                categoryEntity.setStatus(StatusEnum.ENABLE);
+                //categoryEntity=categoryService.save(categoryEntity);
+                categoryService.doSave(categoryEntity);
                 addNewCategoryToPicketList(categoryEntity);
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('categoryModal').hide();");
