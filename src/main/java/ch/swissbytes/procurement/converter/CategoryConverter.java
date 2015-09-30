@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -28,10 +29,12 @@ public class CategoryConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
                               String value) {
+        System.out.println("value "+value);
         if (value == null) {
             return null;
         }
-        return categoryBrandBean.findCategoryByName(value);
+        List<CategoryEntity> list=categoryDao.findById(CategoryEntity.class,Integer.valueOf(value));
+        return !list.isEmpty()?list.get(0):null;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class CategoryConverter implements Converter {
                               Object value) {
         String string = null;
         if (value instanceof CategoryEntity) {
-            string = ((CategoryEntity) value).getName();
+            string = ((CategoryEntity) value).getId().toString();
         }
         return string;
     }

@@ -89,7 +89,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         log.info("START PROCUREMENT BEAN");
         supplier = new SupplierProcEntity();
         putModeSupplier();
-        //categoryBrandBean.restart();
+      //  categoryBrandBean.restart();
         contactBean.reset();
     }
 

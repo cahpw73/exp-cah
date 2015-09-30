@@ -8,6 +8,7 @@ import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
@@ -60,9 +61,11 @@ public class CategoryBrandBean implements Serializable {
     public CategoryEntity findCategoryByName(String name){
         CategoryEntity target=null;
         for(CategoryEntity categoryEntity:categoryList){
-            if(categoryEntity.getName().equalsIgnoreCase(name)){
-                target=categoryEntity;
-                break;
+            if(name.equalsIgnoreCase("AACategory")) {
+                if (categoryEntity.getName().equalsIgnoreCase(name)) {
+                    target = categoryEntity;
+                    break;
+                }
             }
         }
         return target;
@@ -80,13 +83,15 @@ public class CategoryBrandBean implements Serializable {
         return target;
     }
 
-    public void sortCategoryList(){
-        //Collections.sort(categories.getTarget());
-        Collections.sort(categories.getSource());
+    public void sortCategoryList(TransferEvent transferEvent){
+        if(transferEvent.isRemove()){
+            Collections.sort(categories.getSource());
+        }
     }
-    public void sortBrandList(){
-       // Collections.sort(brands.getTarget());
-        Collections.sort(brands.getSource());
+    public void sortBrandList(TransferEvent transferEvent){
+        if(transferEvent.isRemove()){
+            Collections.sort(brands.getSource());
+        }
     }
 
     public void restart(){
@@ -163,14 +168,14 @@ public class CategoryBrandBean implements Serializable {
         categories.getTarget().add(category);
     }
 
-    private List<CategoryEntity> diffCategoryList(List<CategoryEntity> original, List<CategoryEntity> destiny) {
-        for (CategoryEntity ce : destiny) {
-            int index=original.indexOf(ce);
+    private List<CategoryEntity> diffCategoryList(List<CategoryEntity> source, List<CategoryEntity> target) {
+        for (CategoryEntity ce : target) {
+            int index=source.indexOf(ce);
             if(index>=0){
-                original.remove(index);
+                source.remove(index);
             }
         }
-        return original;
+        return source;
     }
     private List<BrandEntity> diffBrandList(List<BrandEntity> original, List<BrandEntity> destiny) {
         for (BrandEntity be : destiny) {
