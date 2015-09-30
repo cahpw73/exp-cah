@@ -108,11 +108,9 @@ public class CategoryBrandBean implements Serializable {
     public void doSaveBrand(){
         if(StringUtils.isNotEmpty(brandEntity.getName())){
             if(isValidBrand(brandEntity.getName())) {
-                BrandEntity currentBrand = new BrandEntity();
-                currentBrand.setName(brandEntity.getName());
-                currentBrand.setLastUpdate(new Date());
-                currentBrand.setStatus(StatusEnum.ENABLE);
-                brandService.doSave(currentBrand);
+                brandEntity.setLastUpdate(new Date());
+                brandEntity.setStatus(StatusEnum.ENABLE);
+                brandService.doSave(brandEntity);
                 addNewBrandPicketList(brandEntity);
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('brandModal').hide();");
@@ -133,7 +131,6 @@ public class CategoryBrandBean implements Serializable {
             if(isValidCategory(categoryEntity.getName())) {
                 categoryEntity.setLastUpdate(new Date());
                 categoryEntity.setStatus(StatusEnum.ENABLE);
-                //categoryEntity=categoryService.save(categoryEntity);
                 categoryService.doSave(categoryEntity);
                 addNewCategoryToPicketList(categoryEntity);
                 RequestContext context = RequestContext.getCurrentInstance();

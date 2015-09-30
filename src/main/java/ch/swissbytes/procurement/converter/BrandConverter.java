@@ -32,8 +32,8 @@ public class BrandConverter implements Converter {
         if (value == null) {
             return null;
         }
-        System.out.println("brand...... getAsObject.....");
-        return  categoryBrandBean.findBrandByName(value);
+        List<BrandEntity> list=brandDao.findById(BrandEntity.class, Integer.valueOf(value));
+        return  list.isEmpty()?null:list.get(0);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class BrandConverter implements Converter {
                               Object value) {
         String string = null;
         if (value instanceof BrandEntity) {
-            string = ((BrandEntity) value).getName();
+            string = ((BrandEntity) value).getId().toString();
         }
         return string;
     }
