@@ -90,22 +90,13 @@ public class ReportProcBean implements Serializable {
                 cashflowEntity.getCashflowDetailList().clear();
                 cashflowEntity.getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(cashflowEntity.getId()));
             }
-            String fileName = generateName(po);
+            String fileName = service.generateName(po);
             ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
                                                 messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager,draft);
             reportView.printDocument(null);
         }
         openReport = true;
     }
-    private String generateName(PurchaseOrderEntity po){
-        String fileName=po.getProjectEntity().getProjectNumber()!=null?po.getProjectEntity().getProjectNumber()+"-":"";
-        fileName=fileName+(po.getPo()!=null?po.getPo()+" ":"");
-        if(po.getVariationNumber()!=null && !po.getVariationNumber().equalsIgnoreCase("v0")&& !po.getVariationNumber().equalsIgnoreCase("0")){
-            fileName=fileName+po.getVariationNumber().toUpperCase()+" ";
-        }
-        return fileName+(po.getPoTitle()!=null?po.getPoTitle():"");
-    }
-
     public void printProjectPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
         log.info("printProjectPurchaseOrder");
         openReport = false;
