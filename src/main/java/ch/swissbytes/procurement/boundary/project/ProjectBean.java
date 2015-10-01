@@ -205,7 +205,7 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("add currency");
         if (validateCurrency()) {
             projectCurrencyEntity.setId(temporalId());
-            boolean defaultProject=filteredProjectCurrencies().size()==0?true:false;
+            boolean defaultProject = filteredProjectCurrencies().size() == 0 ? true : false;
             projectCurrencyEntity.setProjectDefault(defaultProject);
             projectCurrencyEntity.setLastUpdate(new Date());
             projectCurrencyEntity.setStatus(StatusEnum.ENABLE);
@@ -217,11 +217,13 @@ public class ProjectBean extends Bean implements Serializable {
 
     private boolean validateCurrency() {
         boolean validated = true;
-        for(ProjectCurrencyEntity p : projectCurrencyList){
-            if(p.getCurrency().getId().longValue() == projectCurrencyEntity.getCurrency().getId().longValue()){
-                Messages.addFlashGlobalError("Currency already added");
-                validated = false;
-                break;
+        if(projectCurrencyEntity.getCurrency() !=null) {
+            for (ProjectCurrencyEntity p : projectCurrencyList) {
+                if (p.getCurrency().getId().longValue() == projectCurrencyEntity.getCurrency().getId().longValue()) {
+                    Messages.addFlashGlobalError("Currency already added");
+                    validated = false;
+                    break;
+                }
             }
         }
         if (StringUtils.isEmpty(projectCurrencyEntity.getFormat()) && StringUtils.isBlank(projectCurrencyEntity.getFormat())) {
@@ -263,7 +265,7 @@ public class ProjectBean extends Bean implements Serializable {
         }
     }
 
-    public void cancelCurrencyOperation(){
+    public void cancelCurrencyOperation() {
         log.info("cancel currecny operation");
         projectCurrencyEntity = new ProjectCurrencyEntity();
         createCurrency = true;
@@ -295,7 +297,7 @@ public class ProjectBean extends Bean implements Serializable {
             Messages.addFlashError("projectNumber", "Project number was already registered!");
             result = false;
         }
-        if (filteredProjectCurrencies().size()==0) {
+        if (filteredProjectCurrencies().size() == 0) {
             Messages.addFlashGlobalError("You must add at least 1 currency");
             result = false;
         }
@@ -308,7 +310,7 @@ public class ProjectBean extends Bean implements Serializable {
             Messages.addError("projectNumber", "Project number was already registered!");
             result = false;
         }
-        if (filteredProjectCurrencies().size()==0) {
+        if (filteredProjectCurrencies().size() == 0) {
             Messages.addFlashGlobalError("You must add at least 1 currency");
             result = false;
         }
@@ -344,13 +346,13 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("remove standard text from project text");
         for (ProjectTextSnippetEntity ts : selectedProjectTexts) {
             globalStandardTextList.add(textSnippetService.findById(ts.getTextSnippet().getId()));
-            if(ts.getId() > 0 && ts.getId() < 1000){
-                for(ProjectTextSnippetEntity pl : projectTextSnippetList){
-                    if(ts.getId().intValue() == pl.getId().intValue()){
+            if (ts.getId() > 0 && ts.getId() < 1000) {
+                for (ProjectTextSnippetEntity pl : projectTextSnippetList) {
+                    if (ts.getId().intValue() == pl.getId().intValue()) {
                         pl.setStatus(StatusEnum.DELETED);
                     }
                 }
-            }else {
+            } else {
                 projectTextSnippetList.removeAll(selectedProjectTexts);
             }
         }
@@ -358,20 +360,20 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public boolean isNewProjectEntityToSave() {
-        return projectEntity!=null&&projectEntity.getId() != null ? true : false;
+        return projectEntity != null && projectEntity.getId() != null ? true : false;
     }
 
     private void prepareToSaveProjectTextSnippet() {
-        for (ProjectTextSnippetEntity p : projectTextSnippetList){
+        for (ProjectTextSnippetEntity p : projectTextSnippetList) {
             p.setId(null);
         }
     }
 
-    public List<ProjectCurrencyEntity> filteredProjectCurrencies(){
+    public List<ProjectCurrencyEntity> filteredProjectCurrencies() {
         List<ProjectCurrencyEntity> list = new ArrayList<>();
-        for(ProjectCurrencyEntity p : projectCurrencyList){
+        for (ProjectCurrencyEntity p : projectCurrencyList) {
             log.info("currency default: " + p.getProjectDefault());
-            if(p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
+            if (p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()) {
                 list.add(p);
             }
         }
@@ -379,8 +381,8 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     private void prepareToUpdateProjectTextSnippet() {
-        for (ProjectTextSnippetEntity p : projectTextSnippetList){
-            if(p.getId() >= 1000){
+        for (ProjectTextSnippetEntity p : projectTextSnippetList) {
+            if (p.getId() >= 1000) {
                 p.setId(null);
             }
         }
@@ -521,11 +523,11 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public void updateDefaultStatusCurrency(ProjectCurrencyEntity currencyEntity) {
-        log.info("updateDefaultStatusCurrency "+currencyEntity.getId());
+        log.info("updateDefaultStatusCurrency " + currencyEntity.getId());
         for (ProjectCurrencyEntity pce : projectCurrencyList) {
             pce.setProjectDefault(false);
-            if(pce.getId().longValue() == currencyEntity.getId().longValue()){
-                    pce.setProjectDefault(true);
+            if (pce.getId().longValue() == currencyEntity.getId().longValue()) {
+                pce.setProjectDefault(true);
             }
         }
     }
@@ -546,7 +548,7 @@ public class ProjectBean extends Bean implements Serializable {
     public void confirmItem(ProjectTextSnippetEntity entity) {
         log.info("confirm text");
         int index = projectTextSnippetList.indexOf(entity);
-        projectTextSnippetList.set(index,entity);
+        projectTextSnippetList.set(index, entity);
         entity.stopEditing();
     }
 
@@ -585,15 +587,15 @@ public class ProjectBean extends Bean implements Serializable {
         this.selectedProjectTexts = selectedProjectTexts;
     }
 
-  /*  public boolean  isProjectTextSnippetEnable(ProjectTextSnippetEntity entity){
-        log.info("isProjectTextSnippetEnable");
-        projectTextSnippetList.size();
-        if(entity != null && entity.getStatusEnum() != null){
-            log.info("Status " +  entity.getStatusEnum().getLabel());
-            return StatusEnum.ENABLE.ordinal() == entity.getStatusEnum().ordinal();
-        }
-        return true;
-    }*/
+    /*  public boolean  isProjectTextSnippetEnable(ProjectTextSnippetEntity entity){
+          log.info("isProjectTextSnippetEnable");
+          projectTextSnippetList.size();
+          if(entity != null && entity.getStatusEnum() != null){
+              log.info("Status " +  entity.getStatusEnum().getLabel());
+              return StatusEnum.ENABLE.ordinal() == entity.getStatusEnum().ordinal();
+          }
+          return true;
+      }*/
     public List<ProjectTextSnippetEntity> filteredList() {
         List<ProjectTextSnippetEntity> list = new ArrayList<>();
         for (ProjectTextSnippetEntity r : this.projectTextSnippetList) {
@@ -612,7 +614,7 @@ public class ProjectBean extends Bean implements Serializable {
         this.searchTerm = searchTerm;
     }
 
-    public void doSearchGlobalText(){
+    public void doSearchGlobalText() {
         log.info("before search globalStext: " + globalStandardTextList.size());
         globalStandardTextList.clear();
         globalStandardTextList = textSnippetService.findByText(searchTerm);
