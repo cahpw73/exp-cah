@@ -5,24 +5,28 @@
                 xmlns:p="http://primefaces.org/ui">
     <br/>
     <h:panelGroup rendered="#{MODE !=null}">
-        <p:messages globalOnly="true" closable="true" id="globalMessage" />
+        <p:messages globalOnly="true" closable="true" id="globalMessage"/>
     </h:panelGroup>
-    <div class="#{MODE != null?'col-sm-11':'col-sm-8'}" style="padding-left: 0px!important; margin-bottom:10px!important; ">
+
+    <div class="#{MODE != null?'col-sm-11':'col-sm-8'}"
+         style="padding-left: 0px!important; margin-bottom:10px!important; ">
         <div class="form-group">
             <h:outputLabel class="control-label col-sm-2" value="#{msgs['supplier.lbl.supplier.id']} *"
                            style="padding-left: 0px; width: 139px!important;"/>
+
             <div class="col-sm-8">
-                <div style="float: left!important; margin-right: 331px!important; width: 186px!important;">
-                <h:inputText id="supplierID1" maxlength="50"
-                             readonly="#{supplierProcBean.beingViewed}"
-                             value="#{supplierProcBean.supplier.supplierId}"
-                             class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
-                             required="true" requiredMessage="#{msgs['supplier.lbl.supplier.id']} is required"
-                             jsf:autofocus="true" tabindex="1"/>
-                <p:message for="supplierID1"/>
+                <div style="float: left!important; margin-right: 422px!important; width: 95px!important;">
+                    <h:inputText id="supplierID1" maxlength="50"
+                                 readonly="#{supplierProcBean.beingViewed}"
+                                 value="#{supplierProcBean.supplier.supplierId}"
+                                 class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
+                                 required="true" requiredMessage="#{msgs['supplier.lbl.supplier.id']} is required"
+                                 jsf:autofocus="true" tabindex="1"/>
+                    <p:message for="supplierID1"/>
                 </div>
                 <div style="float: left!important;">
-                    <h:panelGroup id="idBtnSave" rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
+                    <h:panelGroup id="idBtnSave"
+                                  rendered="#{supplierProcBean.beingCreated or supplierProcBean.beingEdited}">
                         <h:panelGroup rendered="#{MODE ==null}">
                             <h:commandButton id="sp5" value="#{msgs['lbl.save']}"
                                              action="#{supplierProcBean.doSave}"
@@ -37,7 +41,8 @@
                             <h:commandButton id="sp3" value="#{msgs['lbl.save']}"
                                              action="#{poBean.saveSupplier}"
                                              styleClass="btn btn-primary btn-sm">
-                                <p:ajax async="false" update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
+                                <p:ajax async="false"
+                                        update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
                                         process="@form"/>
                             </h:commandButton>
                         </h:panelGroup>
@@ -74,19 +79,20 @@
 
             <div class="col-sm-8">
                 <div style="float: left!important; width: 467px!important; margin-right: 50px!important;">
-                <h:inputText maxlength="50" id="companyId"
-                             readonly="#{supplierProcBean.beingViewed}"
-                             value="#{supplierProcBean.supplier.company}"
-                             class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
-                             required="true" requiredMessage="#{msgs['supplier.lbl.company']} is required"
-                             tabindex="2"/>
-                <p:message for="companyId"/>
+                    <h:inputText maxlength="50" id="companyId"
+                                 readonly="#{supplierProcBean.beingViewed}"
+                                 value="#{supplierProcBean.supplier.company}"
+                                 class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''} "
+                                 required="true" requiredMessage="#{msgs['supplier.lbl.company']} is required"
+                                 tabindex="2"/>
+                    <p:message for="companyId"/>
                 </div>
                 <div style="float: left!important;">
                     <h:panelGroup id="idBtnCancel">
                         <h:panelGroup rendered="#{MODE != null }">
                             <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
-                                <button type="button" class="btn btn-primary btn-sm" onclick="PF('supplierModal').hide()">
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        onclick="PF('supplierModal').hide()">
                                     #{msgs['lbl.cancel']}
                                 </button>
                             </h:panelGroup>
@@ -127,11 +133,12 @@
             <div class="#{MODE != null}?'col-md-12':'col-md-9'">
                 <ul class="nav nav-tabs" role="tablist">
                     <li id="tabSupplier" class="active"><a href="#supplier" role="tab"
-                                          data-toggle="tab">#{msgs['supplier.tab.supplier']}</a></li>
+                                                           data-toggle="tab">#{msgs['supplier.tab.supplier']}</a></li>
                     <li id="tabCategory"><a href="#categories" role="tab"
-                           data-toggle="tab">#{msgs['supplier.tab.categories']}</a>
+                                            data-toggle="tab">#{msgs['supplier.tab.categories']}</a>
                     </li>
-                    <li id="tabContact"><a href="#contacts" role="tab" data-toggle="tab">#{msgs['supplier.tab.contact']}</a>
+                    <li id="tabContact"><a href="#contacts" role="tab"
+                                           data-toggle="tab">#{msgs['supplier.tab.contact']}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
