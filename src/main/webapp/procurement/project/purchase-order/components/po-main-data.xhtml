@@ -14,13 +14,13 @@
                                          action="#{poBean.doSave}"
                                          rendered="#{poBean.beingCreated}"
                                          value="#{msgs['lbl.save']}">
-                            <p:ajax async="false" update=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId" process="@form"
+                            <p:ajax async="false" update="#{UPDATE}" process="@form"
                                     oncomplete="restartSwitches();"/>
                         </h:commandButton>
                         <h:commandButton styleClass="btn btn-primary btn-sm"
                                          action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                          value="#{msgs['lbl.save']}">
-                            <p:ajax async="false" update=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId" process="@form"
+                            <p:ajax async="false" update="#{UPDATE}" process="@form"
                                     oncomplete="restartSwitches();"/>
                         </h:commandButton>
                         &#160;
@@ -40,7 +40,7 @@
                                 action="#{poBean.doSaveView}"
                                 rendered="#{poBean.beingCreated}"
                                 value="#{msgs['lbl.print']}">
-                            <p:ajax async="false" update=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId" process="@form"
+                            <p:ajax async="false" update="#{UPDATE}" process="@form"
                                     oncomplete="restartSwitches();"/>
                         </h:commandButton>
                         <h:commandButton
@@ -48,7 +48,7 @@
                                 action="#{poBean.doUpdateView}"
                                 rendered="#{poBean.beingUpdated}"
                                 value="#{msgs['lbl.print']}">
-                            <p:ajax async="false" update=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId" process="@form"
+                            <p:ajax async="false" update="#{UPDATE}" process="@form"
                                     oncomplete="restartSwitches();"/>
                         </h:commandButton>
                         <h:commandLink type="submit"

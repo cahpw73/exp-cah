@@ -334,6 +334,20 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("The variation number is already being used");
             validated = false;
         }
+        if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null){
+                Messages.addFlashGlobalError("Enter a valid Contact for Supplier");
+                validated = false;
+            }
+        }
+        if(itemBean.getScopeSupplyList().isEmpty()){
+            Messages.addFlashGlobalError("You must add at least one Item");
+            validated = false;
+        }
+        if(cashflowBean.getCashflow().getApplyRetention()!=null && cashflowBean.getCashflow().getApplyRetention()){
+
+        }
+
         return validated;
     }
 

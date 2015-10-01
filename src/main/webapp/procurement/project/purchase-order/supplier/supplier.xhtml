@@ -179,10 +179,10 @@
                     <div style="width: 440px!important; float: left!important;">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
-                                           for="conactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
+                                           for="contactSupId" value="#{msgs['po.supplier.lbl.contact']}"/>
 
                             <div style="width: 180px; float: left;">
-                                <h:selectOneMenu id="conactSupId" rendered="#{poBean.beingEdited}"
+                                <h:selectOneMenu id="contactSupId" rendered="#{poBean.beingEdited}"
                                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity}"
                                                  converter="contactConverter"
                                                  styleClass="form-control" onclick="doChangeProc();">
@@ -194,9 +194,9 @@
                                                    itemValue="#{_c}"
                                                    itemLabel="#{_c.fullName}"/>
                                     <p:ajax async="false" update="phoneSupId faxSupId messageContact projectEmailSupId"
-                                            process="conactSupId"/>
+                                            process="contactSupId"/>
                                 </h:selectOneMenu>
-                                <p:message id="messageContact" for="conactSupId"/>
+                                <p:message id="messageContact" for="contactSupId"/>
                                 <h:inputText id="conactSupViId" readonly="true" styleClass="form-control view-po"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.fullName}"
                                              rendered="#{poBean.beingViewed}"/>

@@ -4,54 +4,71 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <p:dataTable id="contactList" value="#{contactBean.filteredList()}" var="_contact">
-        <p:column headerText="Title" width="80">
+        <p:column headerText="Title" width="60">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.title}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.title}" styleClass="form-control" maxlength="245"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.title}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.first.name']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.firstName}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.firstName}" styleClass="form-control" maxlength="245"/>
+            <p:inputText id="contactFirstName" rendered="#{_contact.isEditable}"
+                         required="true" requiredMessage="First Name is required"
+                         value="#{_contact.firstName}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.surname']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.surName}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.surName}" styleClass="form-control" maxlength="245"/>
+            <p:inputText id="contactSurname" rendered="#{_contact.isEditable}"
+                         required="true" requiredMessage="Surname is required"
+                         value="#{_contact.surName}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.job.title']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.jobTitle}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.jobTitle}" styleClass="form-control" maxlength="245"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.jobTitle}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.phone']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.phone}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.phone}" styleClass="form-control" maxlength="245"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.phone}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.mobile']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.mobile}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.mobile}" styleClass="form-control" maxlength="245"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.mobile}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
         <p:column headerText="#{msgs['supplier.contact.lbl.fax']}">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.fax}"/>
-            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.fax}" styleClass="form-control" maxlength="245"/>
+            <h:inputText rendered="#{_contact.isEditable}" value="#{_contact.fax}" styleClass="form-control"
+                         maxlength="245"/>
         </p:column>
-        <p:column headerText="#{msgs['supplier.contact.lbl.email']}" width="200">
+        <p:column headerText="#{msgs['supplier.contact.lbl.email']}" width="240">
             <h:outputText rendered="#{not _contact.isEditable}" value="#{_contact.email}"/>
-            <p:inputText id="contactEmailId" rendered="#{_contact.isEditable}" required="true" requiredMessage="email is required" value="#{_contact.email}" styleClass="form-control" maxlength="200"/>
-            <p:message for="contactEmailId"/>
+            <p:inputText id="contactEmailId" rendered="#{_contact.isEditable}" required="true"
+                         requiredMessage="email is required" value="#{_contact.email}" styleClass="form-control"
+                         maxlength="200"/>
         </p:column>
-        <p:column headerText="#{msgs['lbl.actions']}" rendered="#{supplierProcBean.beingEdited or supplierProcBean.beingCreated}">
-            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_contact.isEditable}" process=":#{FORM}:contactList"
-                           action="#{contactBean.edit(_contact.id)}" update="contactList"/>
-            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_contact.isEditable}" process=":#{FORM}:contactList"
-                           action="#{contactBean.confirm(_contact.id)}" update="contactList"/>
-            &#160;
-            <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}" process="@this"
-                           action="#{contactBean.delete(_contact.id)}" update="contactList">
-                <p:confirm header="Remove contact"
-                           message="Are you sure to delete this contact?"
-                           icon="ui-icon-alert">
-                </p:confirm>
-            </p:commandLink>
-            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_contact.isEditable}" process="@this"
-                           action="#{contactBean.cancel(_contact.id)}" update="contactList"/>
+        <p:column headerText="#{msgs['lbl.actions']}" width="100"
+                  rendered="#{supplierProcBean.beingEdited or supplierProcBean.beingCreated}">
+            <div class="pull-right">
+                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_contact.isEditable}"
+                               process=":#{FORM}:contactList"
+                               action="#{contactBean.edit(_contact.id)}" update="contactList"/>
+                <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_contact.isEditable}"
+                               process=":#{FORM}:contactList"
+                               action="#{contactBean.confirm(_contact.id)}" update="contactList"/>
+                &#160;
+                <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}" process="@this"
+                               action="#{contactBean.delete(_contact.id)}" update="contactList">
+                    <p:confirm header="Remove contact"
+                               message="Are you sure to delete this contact?"
+                               icon="ui-icon-alert">
+                    </p:confirm>
+                </p:commandLink>
+                <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_contact.isEditable}" process="@this"
+                               action="#{contactBean.cancel(_contact.id)}" update="contactList"/>
+            </div>
         </p:column>
     </p:dataTable>
     <br/>
