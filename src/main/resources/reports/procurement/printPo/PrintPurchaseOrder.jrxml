@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6528925619834718"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="474"/>
+	<property name="ireport.y" value="282"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -215,7 +215,7 @@
 				<textElement textAlignment="Center" markup="styled">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{variation}!=null?"VARIATION No."+$P{variation}+" To ":"")+"PURCHASE ORDER No : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{variation}!=null?"VARIATION No."+$P{variation}+" TO ":"")+"PURCHASE ORDER No : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="3" y="162" width="28" height="12"/>
@@ -363,7 +363,7 @@
 					<font size="9" isBold="true"/>
 					<paragraph spacingAfter="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{postcode}!=null?$P{postcode}:""+" "+ $P{suburb}!=null?$P{suburb}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{suburb}!=null?$P{suburb}:"")+" "+($P{postcode}!=null?$P{postcode}:"")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="42" width="291" height="12" isRemoveLineWhenBlank="true"/>
@@ -402,7 +402,7 @@
 				<reportElement uuid="61331d23-6175-4fd9-8775-9ff20f4e6ad3" positionType="Float" x="0" y="0" width="519" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="2a6b77b7-83fe-447c-bc0e-5e64cfa58f41" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="248" y="3" width="47" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2a6b77b7-83fe-447c-bc0e-5e64cfa58f41" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="248" y="3" width="74" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="8"/>
 				</textElement>
@@ -492,7 +492,7 @@
 				<textFieldExpression><![CDATA[$P{deliveryPoint}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" style="Arial" isPrintRepeatedValues="false" x="190" y="2" width="104" height="10"/>
+				<reportElement uuid="42817b11-afcd-4391-b378-49b37defa688" style="Arial" isPrintRepeatedValues="false" x="190" y="2" width="132" height="10"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="false"/>
 				</textElement>
@@ -586,7 +586,7 @@
 				<textFieldExpression><![CDATA[$P{vendorDrawingData}==null?"NO":$P{vendorDrawingData}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="208" y="42" width="86" height="10"/>
+				<reportElement uuid="3155d23c-c91e-4e13-95c3-ff663d2ca6a4" style="Arial" positionType="Float" isPrintRepeatedValues="false" x="208" y="42" width="114" height="10"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
@@ -618,7 +618,7 @@
 				<textFieldExpression><![CDATA[$P{securityDeposit}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="53ada790-99be-45f7-a6e9-ff363b0e1ad6" style="Arial" positionType="Float" x="208" y="52" width="86" height="10"/>
+				<reportElement uuid="53ada790-99be-45f7-a6e9-ff363b0e1ad6" style="Arial" positionType="Float" x="208" y="52" width="114" height="10"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 				</textElement>
@@ -936,7 +936,7 @@
 				<text><![CDATA[GROUP PROCUREMENT MANAGER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="aab1eb6e-b9f0-4ad4-b820-7ab0ea3143d4" style="Arial-Bold" x="72" y="65" width="104" height="14"/>
+				<reportElement uuid="aab1eb6e-b9f0-4ad4-b820-7ab0ea3143d4" style="Arial-Bold" x="61" y="65" width="133" height="14"/>
 				<textElement markup="styled">
 					<font fontName="Arial" size="8" isBold="true" isPdfEmbedded="true"/>
 				</textElement>
