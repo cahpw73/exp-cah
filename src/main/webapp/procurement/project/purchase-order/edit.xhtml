@@ -14,9 +14,10 @@
         <f:viewAction action="#{poBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editPoForm" class="form-horizontal" >
+        <h:form id="editPoForm" class="form-horizontal">
             <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed});"
                              autoRun="true"/>
+
             <div class="col-md-8" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{poBean.beingCreated}">
                     <div class="procurement-panel-header">#{msgs['purchase.order.new.po.title']}</div>
@@ -53,7 +54,10 @@
 
                     <!-- Tab Projects -->
                     <div class="tab-content">
-                        <ui:include src="components/po-main-data.xhtml"/>
+                        <ui:include src="components/po-main-data.xhtml">
+                            <ui:param name="UPDATE"
+                                      value=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"/>
+                        </ui:include>
 
                         <div class="clearfix"/>
                         <div class="separate-line"/>
