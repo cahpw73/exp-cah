@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6528925619834718"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="282"/>
+	<property name="ireport.y" value="138"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -122,6 +122,7 @@
 	<parameter name="showClientName" class="java.lang.Boolean"/>
 	<parameter name="securityDeposit" class="java.lang.String"/>
 	<parameter name="securityDepositForm" class="java.lang.String"/>
+	<parameter name="townPostcodeState" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -351,22 +352,22 @@
 				<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="16" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="4beda10c-23a7-480b-8ff0-6d8035c348c2" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="16" width="319" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{street}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="29" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="b916d401-6e70-49f2-b618-0ea150607312" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="29" width="319" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 					<paragraph spacingAfter="2"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{suburb}!=null?$P{suburb}:"")+" "+($P{postcode}!=null?$P{postcode}:"")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{townPostcodeState}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="42" width="291" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="256d66b4-645b-46c1-96ea-6711e4f2bbea" style="Arial-Bold" positionType="Float" isPrintRepeatedValues="false" x="3" y="42" width="319" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -409,21 +410,21 @@
 				<textFieldExpression><![CDATA[$P{abnReg}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="32e60514-b341-4efd-bc22-1a68314f02ae" style="Arial" positionType="Float" x="32" y="68" width="144" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="32e60514-b341-4efd-bc22-1a68314f02ae" style="Arial" positionType="Float" x="32" y="68" width="153" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{contactEmail}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="044e4acd-803d-41c3-a313-213208aad718" style="Arial" positionType="Float" x="215" y="55" width="79" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="044e4acd-803d-41c3-a313-213208aad718" style="Arial" positionType="Float" x="215" y="55" width="107" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{contactPhone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d1bef5e9-2778-4162-a6d1-784166efd790" style="Arial" positionType="Float" x="215" y="68" width="79" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="d1bef5e9-2778-4162-a6d1-784166efd790" style="Arial" positionType="Float" x="215" y="68" width="107" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>
@@ -444,7 +445,7 @@
 				<text><![CDATA[Attn:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55bdc532-58fb-47aa-9584-99b31a1e9e3e" style="Arial" positionType="Float" mode="Opaque" x="33" y="55" width="143" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="55bdc532-58fb-47aa-9584-99b31a1e9e3e" style="Arial" positionType="Float" mode="Opaque" x="33" y="55" width="152" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
 					<font size="9"/>
 				</textElement>

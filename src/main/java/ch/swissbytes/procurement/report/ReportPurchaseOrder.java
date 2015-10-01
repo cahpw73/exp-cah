@@ -181,7 +181,30 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("phone", po.getPurchaseOrderProcurementEntity().getSupplier().getPhone());
             addParameters("fax", po.getPurchaseOrderProcurementEntity().getSupplier().getFax());
             addParameters("supplierId", po.getPurchaseOrderProcurementEntity().getSupplier().getId());
+            addParameters("townPostcodeState",getTownPostCodeStateParameter());
         }
+    }
+    private String getTownPostCodeStateParameter(){
+        StringBuilder sb=new StringBuilder();
+        boolean hasPrevious=false;
+        if(StringUtils.isNotEmpty( po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb())&&StringUtils.isNotBlank(po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb())){
+            sb.append(po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb());
+            hasPrevious=true;
+        }
+        if(StringUtils.isNotEmpty( po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode())&&StringUtils.isNotBlank( po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode())){
+            if(hasPrevious){
+                sb.append(", ");
+            }
+            sb.append(po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode());
+            hasPrevious=true;
+        }
+        if(StringUtils.isNotEmpty( po.getPurchaseOrderProcurementEntity().getSupplier().getState())&&StringUtils.isNotBlank( po.getPurchaseOrderProcurementEntity().getSupplier().getState())){
+            if(hasPrevious){
+                sb.append(", ");
+            }
+            sb.append(po.getPurchaseOrderProcurementEntity().getSupplier().getState());
+        }
+        return sb.toString();
     }
 
     private void loadParamClients() {
