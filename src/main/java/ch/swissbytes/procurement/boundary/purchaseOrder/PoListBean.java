@@ -207,19 +207,24 @@ public class PoListBean implements Serializable {
     }
 
     public void doCommitPo() {
-        log.info("do commit purchase order");
-        currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
-        currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
-        //list = service.purchaseListByProject(Long.parseLong(projectId));
-        maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+        if (currentPurchaseOrder != null) {
+            currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
+            if(validate()){
+                currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
+                currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+                maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+            }
+        }
     }
 
     public void doFinalise() {
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
-            currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
-            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
-
+            if(validate()){
+                currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
+                currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
+                currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+            }
         }
     }
 
@@ -234,7 +239,7 @@ public class PoListBean implements Serializable {
         if(StringUtils.isEmpty(currentPurchaseOrder.getVariation())){
             validate = false;
         }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier()==null){
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier()==null) {
             validate = false;
         }
         if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getClazz()==null){
@@ -246,32 +251,69 @@ public class PoListBean implements Serializable {
         if(StringUtils.isEmpty(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoint())){
             validate = false;
         }
-        return false;
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
+            if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null){
+                validate = false;
+            }
+        }
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()){
+           validate = false;
+        }
+        if(!validateRetention(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())){
+            validate = false;
+        }
+        if(!validateSecurityDeposit(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())){
+            validate = false;
+        }
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms()==null){
+            validate = false;
+        }
+
+        if(!validate){
+            Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before committing");
+        }
+        return validate;
     }
 
-    /*public boolean validateRetention() {
+    public boolean validateRetention(final CashflowEntity cashflow) {
         boolean validate = true;
         boolean applyRetentionSelected = currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
         if (applyRetentionSelected) {
             if (StringUtils.isEmpty(cashflow.getForm())){
-                Messages.addFlashGlobalError("Enter a valid Retention Form");
                 validate = false;
             }
             if(cashflow.getPercentage() == null){
-                Messages.addFlashGlobalError("Enter a valid Retention Percentage");
                 validate = false;
             }
             if (cashflow.getExpDate() == null){
-                Messages.addFlashGlobalError("Enter a valid Retention Exp Date");
                 validate = false;
             }
             if(cashflow.getProjectCurrency() == null) {
-                Messages.addFlashGlobalError("Enter a valid Retention Currency");
                 validate = false;
             }
         }
         return validate;
-    }*/
+    }
+
+    public boolean validateSecurityDeposit(final CashflowEntity cashflow) {
+        boolean validate = true;
+        boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
+        if (applySecurityDeposit) {
+            if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())){
+                validate = false;
+            }
+            if(cashflow.getPercentageSecurityDeposit() == null){
+                validate = false;
+            }
+            if(cashflow.getExpirationDateSecurityDeposit() == null){
+                validate = false;
+            }
+            if(cashflow.getCurrencySecurityDeposit() == null) {
+                validate = false;
+            }
+        }
+        return validate;
+    }
 
     public void doReleasePo() {
         log.info("do release purchase order");
