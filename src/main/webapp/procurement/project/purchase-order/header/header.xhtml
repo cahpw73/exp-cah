@@ -294,7 +294,7 @@
                         <h:inputHidden id="checkboxExchangeVariation"
                                        value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}"/>
                         <input type="checkbox" name="my-checkbox"
-                               id="switchExchangeVariation" value="#{true}"
+                               id="switchExchangeVariation"
                                data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}"/>
 
                     </div>
@@ -308,7 +308,6 @@
                                        value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}"/>
                         <input type="checkbox" name="my-checkbox"
                                id="switchDrawingData"
-                               value="false"
                                data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
                         </input>
                     </div>
@@ -324,11 +323,10 @@
                                            style="margin-left: 13px;"
                                            value="#{msgs['po.header.lbl.security.deposit']}"/>
                             <h:inputHidden id="checkBoxSecurityDeposit"
-
                                            value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">
                             </h:inputHidden>
                             <input type="checkbox" name="my-checkbox"
-                                   id="switchSecurityDeposit" onchange="test();"
+                                   id="switchSecurityDeposit"
                                    data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
                             </input>
                         </div>
@@ -336,13 +334,5 @@
                 </h:panelGroup>
             </div>
         </div>
-        <script type="text/javascript">
-            function test() {
-                console.log("test passed")
-                algo();
-            }
-        </script>
-        <p:remoteCommand name="algo" process="checkBoxSecurityDeposit" update="securityDeposit"
-                         actionListener="#{cashflowBean.loadRetentionSecurityDeposit(poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit)}"/>
     </h:panelGroup>
 </ui:composition>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6528925619834718"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="138"/>
+	<property name="ireport.y" value="576"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -438,9 +438,9 @@
 				<text><![CDATA[Tel:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0e4e83b9-b5d5-4c45-8755-71672e4dde11" style="Arial" positionType="Float" x="3" y="55" width="28" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="0e4e83b9-b5d5-4c45-8755-71672e4dde11" style="Arial-Bold" positionType="Float" x="3" y="55" width="28" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Attn:]]></text>
 			</staticText>
@@ -475,7 +475,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="92" splitType="Stretch">
+		<band height="89" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="4bb55097-0301-4b84-be1c-2ebff5fa264c" style="Arial-Bold" isPrintRepeatedValues="false" x="3" y="12" width="182" height="10">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
@@ -552,9 +552,9 @@
 				<textFieldExpression><![CDATA[$P{paymentTerm}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="329" y="13" width="184" height="58"/>
+				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="329" y="13" width="184" height="70"/>
 				<textElement markup="styled">
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{invoiceTo}]]></textFieldExpression>
 			</textField>
@@ -883,14 +883,14 @@
 				<text><![CDATA[We hereby confirm our understanding and acceptance of this Purchase Order in its entirety]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fac54615-b300-434d-9c8b-ee53e94a6af7" style="Arial" x="373" y="7" width="140" height="12"/>
+				<reportElement uuid="fac54615-b300-434d-9c8b-ee53e94a6af7" style="Arial" x="356" y="7" width="140" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8" isBold="false" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Signed for and on behalf of]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="2ea5c38a-19df-4e43-8ea9-cdad418d40a6" style="Arial-Bold" x="372" y="21" width="147" height="14" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2ea5c38a-19df-4e43-8ea9-cdad418d40a6" style="Arial-Bold" x="356" y="21" width="147" height="14" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8" isBold="true" isPdfEmbedded="true"/>
 				</textElement>

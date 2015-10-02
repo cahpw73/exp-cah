@@ -45,9 +45,11 @@
                 <p:dataTable value="#{supplierProcList.list}" var="_supplier"
                              paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              widgetVar="supplierTbl"
+                             binding="#{supplierProcList.dataTable}"
                              rowsPerPageTemplate="#{configuration.getPagesSize(supplierProcList.list.total)}"
                              paginatorPosition="bottom">
                     <p:ajax event="page" process="@this" listener="#{supplierManagerTable.onPaginate}"/>
+                    <p:ajax event="sort" listener="#{supplierProcList.sortListener}" />
                     <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150"
                               sortBy="#{_supplier.supplierId}">
                         #{_supplier.supplierId}

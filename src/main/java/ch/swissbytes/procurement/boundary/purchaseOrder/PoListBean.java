@@ -234,8 +234,6 @@ public class PoListBean implements Serializable {
         }
     }
 
-
-
     public void doReleasePo() {
         log.info("do release purchase order");
         currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
