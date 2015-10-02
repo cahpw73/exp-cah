@@ -21,12 +21,18 @@ public abstract class ManagerTable implements Serializable{
     private List <String>ascendingFields;
     private List<String>descendingFields;
     private Integer defaultPageSize;
+    private boolean sortInitialized;
+    private String sortBy;
+    private String direction;
+    private boolean ascending;
+    private DataTable dataTable;
 
 
     protected abstract Integer findCurrentPage();
 
     public ManagerTable(){
         clear();
+        sortInitialized=false;
         filter=new Filter();
     }
 
@@ -47,6 +53,14 @@ public abstract class ManagerTable implements Serializable{
         DataTable table=(DataTable)event.getSource();
         defaultPageSize=table.getRowCount();
         currentPage=event.getPage();
+    }
+
+    public DataTable getDataTable() {
+        return dataTable;
+    }
+
+    public void setDataTable(DataTable dataTable) {
+        this.dataTable = dataTable;
     }
 
     public Integer pageToSelect(){
@@ -106,5 +120,37 @@ public abstract class ManagerTable implements Serializable{
 
     public void setDefaultPageSize(Integer defaultPageSize) {
         this.defaultPageSize = defaultPageSize;
+    }
+
+    public boolean isSortInitialized() {
+        return sortInitialized;
+    }
+
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public boolean isAscending() {
+        return ascending;
+    }
+
+    public void setAscending(boolean ascending) {
+        this.ascending = ascending;
+    }
+
+    public void setSortInitialized(boolean sortInitialized) {
+        this.sortInitialized = sortInitialized;
     }
 }
