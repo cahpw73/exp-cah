@@ -1,9 +1,10 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.cashflow.CashflowService;
-import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
+import ch.swissbytes.domain.model.entities.CashflowEntity;
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.types.PaymentTermsEnum;
 import ch.swissbytes.domain.types.RetentionFormEnum;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -11,10 +12,8 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.DateUtil;
-import javafx.scene.layout.BackgroundRepeat;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.primefaces.event.DragDropEvent;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -23,7 +22,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -67,9 +69,9 @@ public class CashflowBean implements Serializable {
         log.info("destroy poTextBean");
     }
 
-    public void loadCashflow(final Long poId){
-        List<CashflowEntity> list=cashflowService.findByPoId(poId);
-        if(!list.isEmpty()) {
+    public void loadCashflow(final Long poId) {
+        List<CashflowEntity> list = cashflowService.findByPoId(poId);
+        if (!list.isEmpty()) {
             cashflow = list.get(0);
             cashflowDetailList = cashflowService.findDetailByCashflowId(cashflow.getId());
             if (!cashflowDetailList.isEmpty()) {
@@ -78,10 +80,52 @@ public class CashflowBean implements Serializable {
         }
     }
 
-    public boolean validateRetentionForm(){
-        boolean applyRetentionSelected=cashflow.getApplyRetention()!=null&&cashflow.getApplyRetention().booleanValue();
+    public boolean validateRetention() {
+        boolean validate = true;
+        boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
+        if (applyRetentionSelected) {
+            if (StringUtils.isEmpty(cashflow.getForm())){
+                Messages.addFlashGlobalError("Enter a valid Retention Form");
+                validate = false;
+            }
+            if(cashflow.getPercentage() == null){
+                Messages.addFlashGlobalError("Enter a valid Retention Percentage");
+                validate = false;
+            }
+            if (cashflow.getExpDate() == null){
+                Messages.addFlashGlobalError("Enter a valid Retention Exp Date");
+                validate = false;
+            }
+            if(cashflow.getProjectCurrency() == null) {
+                Messages.addFlashGlobalError("Enter a valid Retention Currency");
+                validate = false;
+            }
+        }
+        return validate;
+    }
 
-        return (applyRetentionSelected&&StringUtils.isNotEmpty(cashflow.getForm())&&StringUtils.isNotBlank(cashflow.getForm()))||!applyRetentionSelected;
+    public boolean validateSecurityDeposit() {
+        boolean validate = true;
+        boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
+        if (applySecurityDeposit) {
+            if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())){
+                Messages.addFlashGlobalError("Enter a valid Security Deposit Form");
+                validate = false;
+            }
+            if(cashflow.getPercentageSecurityDeposit() == null){
+                Messages.addFlashGlobalError("Enter a valid Security Deposit Percentage");
+                validate = false;
+            }
+            if(cashflow.getExpirationDateSecurityDeposit() == null){
+                Messages.addFlashGlobalError("Enter a valid Security Deposit Exp Date");
+                validate = false;
+            }
+            if(cashflow.getCurrencySecurityDeposit() == null) {
+                Messages.addFlashGlobalError("Enter a valid Security Deposit Currency");
+                validate = false;
+            }
+        }
+        return validate;
     }
 
     public void confirmCashflowDetail(CashflowDetailEntity entity) {
@@ -165,8 +209,8 @@ public class CashflowBean implements Serializable {
         return false;
     }
 
-    public String formattedPercentage(BigDecimal percentage){
-        if(percentage==null){
+    public String formattedPercentage(BigDecimal percentage) {
+        if (percentage == null) {
             return "";
         }
         Double percentageN = percentage.doubleValue();
@@ -174,38 +218,38 @@ public class CashflowBean implements Serializable {
         return percentageI.toString();
     }
 
-    public List<PaymentTermsEnum> getPaymentTerms(){
+    public List<PaymentTermsEnum> getPaymentTerms() {
         List<PaymentTermsEnum> paymentTerms = new ArrayList<>();
-        for(PaymentTermsEnum s : PaymentTermsEnum.values()){
+        for (PaymentTermsEnum s : PaymentTermsEnum.values()) {
             paymentTerms.add(s);
         }
         return paymentTerms;
     }
 
-    public List<RetentionFormEnum> getRetentionForms(){
+    public List<RetentionFormEnum> getRetentionForms() {
         List<RetentionFormEnum> retentionForms = new ArrayList<>();
-        for(RetentionFormEnum s : RetentionFormEnum.values()){
+        for (RetentionFormEnum s : RetentionFormEnum.values()) {
             retentionForms.add(s);
         }
         return retentionForms;
     }
 
-    public void calculatePaymentDate(CashflowDetailEntity detailEntity){
-        if(detailEntity.getClaimDate() != null){
+    public void calculatePaymentDate(CashflowDetailEntity detailEntity) {
+        if (detailEntity.getClaimDate() != null) {
             calculatePaymentDatePO(detailEntity);
-        }else{
+        } else {
             detailEntity.setPaymentDate(null);
         }
 
     }
 
-    public void calculatePaymentDateBasedPaymentTerms(){
-        for(CashflowDetailEntity detailEntity : cashflowDetailList) {
+    public void calculatePaymentDateBasedPaymentTerms() {
+        for (CashflowDetailEntity detailEntity : cashflowDetailList) {
             calculatePaymentDatePO(detailEntity);
         }
     }
 
-    private void calculatePaymentDatePO(CashflowDetailEntity detailEntity){
+    private void calculatePaymentDatePO(CashflowDetailEntity detailEntity) {
         if (cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null) {
             switch (cashflow.getPaymentTerms()) {
                 case NET_30:
@@ -239,18 +283,18 @@ public class CashflowBean implements Serializable {
         return cashflowDetailList;
     }
 
-    public Map<ProjectCurrencyEntity, BigDecimal> calculateAmount( Map<ProjectCurrencyEntity, BigDecimal> currencies ,BigDecimal percentage){
-        Map<ProjectCurrencyEntity, BigDecimal> percentages=new HashMap<>();
-        BigDecimal per=percentage!=null?percentage.divide(new BigDecimal("100")):new BigDecimal("0");
-        for(ProjectCurrencyEntity currency:currencies.keySet()){
-            BigDecimal value=currencies.get(currency);
-            percentages.put(currency,value!=null?value.multiply(per):new BigDecimal("0"));
+    public Map<ProjectCurrencyEntity, BigDecimal> calculateAmount(Map<ProjectCurrencyEntity, BigDecimal> currencies, BigDecimal percentage) {
+        Map<ProjectCurrencyEntity, BigDecimal> percentages = new HashMap<>();
+        BigDecimal per = percentage != null ? percentage.divide(new BigDecimal("100")) : new BigDecimal("0");
+        for (ProjectCurrencyEntity currency : currencies.keySet()) {
+            BigDecimal value = currencies.get(currency);
+            percentages.put(currency, value != null ? value.multiply(per) : new BigDecimal("0"));
         }
         return percentages;
 
     }
 
-    public void loadRetentionSecurityDeposit(boolean retentionSecurityDeposit){
+    public void loadRetentionSecurityDeposit(boolean retentionSecurityDeposit) {
         cashflow.setApplyRetentionSecurityDeposit(retentionSecurityDeposit);
     }
 }

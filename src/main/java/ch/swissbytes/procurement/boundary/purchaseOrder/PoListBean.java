@@ -13,6 +13,7 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Messages;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -215,11 +216,62 @@ public class PoListBean implements Serializable {
 
     public void doFinalise() {
         if (currentPurchaseOrder != null) {
+            currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
             currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
             currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
 
         }
     }
+
+    private boolean validate(){
+        boolean validate = true;
+        if(StringUtils.isEmpty(currentPurchaseOrder.getPo())){
+            validate = false;
+        }
+        if(StringUtils.isEmpty(currentPurchaseOrder.getPoTitle())){
+            validate = false;
+        }
+        if(StringUtils.isEmpty(currentPurchaseOrder.getVariation())){
+            validate = false;
+        }
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier()==null){
+            validate = false;
+        }
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getClazz()==null){
+            validate = false;
+        }
+        if(currentPurchaseOrder.getPoDeliveryDate()==null){
+            validate = false;
+        }
+        if(StringUtils.isEmpty(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoint())){
+            validate = false;
+        }
+        return false;
+    }
+
+    /*public boolean validateRetention() {
+        boolean validate = true;
+        boolean applyRetentionSelected = currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
+        if (applyRetentionSelected) {
+            if (StringUtils.isEmpty(cashflow.getForm())){
+                Messages.addFlashGlobalError("Enter a valid Retention Form");
+                validate = false;
+            }
+            if(cashflow.getPercentage() == null){
+                Messages.addFlashGlobalError("Enter a valid Retention Percentage");
+                validate = false;
+            }
+            if (cashflow.getExpDate() == null){
+                Messages.addFlashGlobalError("Enter a valid Retention Exp Date");
+                validate = false;
+            }
+            if(cashflow.getProjectCurrency() == null) {
+                Messages.addFlashGlobalError("Enter a valid Retention Currency");
+                validate = false;
+            }
+        }
+        return validate;
+    }*/
 
     public void doReleasePo() {
         log.info("do release purchase order");
