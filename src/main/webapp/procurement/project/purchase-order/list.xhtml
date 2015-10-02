@@ -26,6 +26,7 @@
                         </div>
                     </div>
                 </h:panelGroup>
+
                 <div class="clearfix"></div>
                 <br/>
 
@@ -103,7 +104,8 @@
                                     </p:confirm>
                                 </p:commandLink>
                                 &#160;
-                                <p:commandLink id="exportCsv" value="Export CMS" update="projectListId"
+                                <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
+                                               update="projectListId"
                                                rendered="#{poListBean.canExportCMS(_p)}"
                                                onclick="PF('cmsExport').show();"
                                                style="float: left!important; color: #428BCA; padding-top: 0px!important;">
@@ -112,10 +114,10 @@
                                 </p:commandLink>
                                 &#160;
                                 <p:commandLink
-                                        update="@form"
+                                        id="exportJde"
+                                        update="projectListId"
                                         value="#{msgs['project.list.action.export.jde']}"
-                                        action="#{poListBean.exportJDE}"
-                                        onclick="PF('cmsExport').show();"
+                                        onclick="PF('jdeExport').show();"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                         rendered="#{poListBean.canExportJDE(_p)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -292,6 +294,45 @@
                                     onclick="PF('cmsExport').hide();">
                                 #{msgs['lbl.no']}</button>
                             <p:remoteCommand name="stop" oncomplete="PF('cmsExport').hide();"
+                                             update=":listPooFormId:projectListId"/>
+                        </h:form>
+                    </div>
+                </div>
+                <br/>
+
+            </div>
+        </p:dialog>
+
+        <p:dialog id="exportJDEId" header="Export JDE" widgetVar="jdeExport"
+                  resizable="false">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <h:outputText styleClass="col-sm-8 control-label"
+                                  style="text-align: left !important;direction: ltr !important;"
+                                  for="poVarNumberVi"
+                                  value="Are you sure to export JDE?"/>
+                </div>
+                <div class="clearfix"></div>
+                <br/>
+
+                <div class="form-group">
+                    <div class="pull-right">
+                        <h:form>
+                            <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                           value="#{msgs['lbl.yes']}"
+                                           ajax="false"
+                                           onclick="PrimeFaces.monitorDownload(null, stop);"
+                                           style="color: #ffffff">
+                                <p:fileDownload value="#{poListBean.exportJDE()}"
+                                                contentDisposition="attachment">
+                                </p:fileDownload>
+                            </p:commandLink>
+                            &#160;
+                            <button class="btn btn-primary btn-sm" type="button"
+                                    onclick="PF('jdeExport').hide();">
+                                #{msgs['lbl.no']}</button>
+                            <p:remoteCommand name="stop" oncomplete="PF('jdeExport').hide();"
                                              update=":listPooFormId:projectListId"/>
                         </h:form>
                     </div>

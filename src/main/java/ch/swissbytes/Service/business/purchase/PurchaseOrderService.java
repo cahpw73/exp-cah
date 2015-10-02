@@ -330,6 +330,11 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setCmsExported(true);
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
     }
+    @Transactional
+    public void markJDEAsExported(PurchaseOrderEntity purchaseOrderEntity){
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setJdeExported(true);
+        dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+    }
 
 
     @Transactional
@@ -349,8 +354,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     private void collectLists(PurchaseOrderProcurementEntity po, PurchaseOrderEntity poe) {
-        /*po.getItemList().clear();
-        po.getItemList().addAll(poe.getPoEntity().getItemList());*/
         po.getScopeSupplyList().clear();
         po.getScopeSupplyList().addAll(poe.getPurchaseOrderProcurementEntity().getScopeSupplyList());
         po.getDeliverables().clear();
@@ -374,7 +377,6 @@ public class PurchaseOrderService extends Service implements Serializable {
             po.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId()));
             po.getPurchaseOrderProcurementEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId()));
             po.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
-            //po.getPoEntity().getItemList().addAll(itemService.findByPoId(po.getPoEntity().getId()));
             List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
             po.getPurchaseOrderProcurementEntity().setCashflow(!cashflows.isEmpty() ? cashflows.get(0) : null);
             if (po.getPurchaseOrderProcurementEntity().getCashflow() != null) {
