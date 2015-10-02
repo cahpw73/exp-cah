@@ -29,6 +29,7 @@ function initializeSwitch(readOnly) {
 }
 
 function restartSwitches(){
+    console.log("restarting switches...");
     create();
     initializeSwitch();
 }
@@ -45,5 +46,13 @@ $('#switchDrawingData').on('switchChange.bootstrapSwitch', function (e, data) {
 });
 $('#switchSecurityDeposit').on('switchChange.bootstrapSwitch', function (e, data) {
     $('#editPoForm\\:checkBoxSecurityDeposit').val(data);
+    if(data){
+        document.getElementById("editPoForm:apply1").checked = true;
+        console.log("checked as true");
+    }else{
+        document.getElementById("editPoForm:apply1").checked = false;
+        console.log("checked as false");
+    }
+    console.log("checkbox value = "+$('#editPoForm\\:apply1').is(':checked'));
 });
 
