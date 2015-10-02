@@ -326,8 +326,14 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Please enter Payment Terms");
             validated = false;
         }
-        if (!cashflowBean.validateRetentionForm()) {
-            Messages.addFlashGlobalError("Please enter Form");
+        if (!cashflowBean.validateRetention()) {
+            validated = false;
+        }
+        if(!cashflowBean.validateSecurityDeposit()){
+            validated = false;
+        }
+        if(cashflowBean.getCashflow().getPaymentTerms()==null){
+            Messages.addFlashGlobalError("Enter a valid Payment Terms in Cashflow");
             validated = false;
         }
         if (service.isVarNumberUsed(purchaseOrder)) {
@@ -344,9 +350,7 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("You must add at least one Item");
             validated = false;
         }
-        if(cashflowBean.getCashflow().getApplyRetention()!=null && cashflowBean.getCashflow().getApplyRetention()){
 
-        }
 
         return validated;
     }
