@@ -219,6 +219,8 @@ public class PoListBean implements Serializable {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
                 maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+            }else{
+                Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before committing");
             }
         }
     }
@@ -230,6 +232,8 @@ public class PoListBean implements Serializable {
                 currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+            }else{
+                Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before finalizing");
             }
         }
     }
@@ -458,10 +462,6 @@ public class PoListBean implements Serializable {
         }
         if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms() == null) {
             validate = false;
-        }
-
-        if (!validate) {
-            Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before committing");
         }
         return validate;
     }
