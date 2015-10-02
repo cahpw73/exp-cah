@@ -35,7 +35,7 @@ function restartSwitches(){
 }
 
 $('#switchLiquidatedDamages').on('switchChange.bootstrapSwitch', function (e, data) {
-    $('#checkboxLiquidatedDamages').val(data);
+    //$('#checkboxLiquidatedDamages').val(data);
     $('#editPoForm\\:checkboxLiquidatedDamages').val(data);
 });
 $('#switchExchangeVariation').on('switchChange.bootstrapSwitch', function (e, data) {

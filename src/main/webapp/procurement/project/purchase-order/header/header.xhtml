@@ -276,7 +276,7 @@
                                        style="margin-left: 22px;"
                                        for="requisitionDt"
                                        value="#{msgs['po.header.lbl.liquidated.damages.applicable']}"/>
-                        <h:inputHidden id="checkboxLiquidatedDamages"
+                        <h:inputText id="checkboxLiquidatedDamages"
                                        value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.liquidatedDamagesApplicable}"/>
                         <input type="checkbox" name="my-checkbox"
                                id="switchLiquidatedDamages"
@@ -291,10 +291,10 @@
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                        for="requisitionDt" value="#{msgs['po.header.lbl.exchange.rate.variation']}"/>
-                        <h:inputHidden id="checkboxExchangeVariation"
+                        <h:inputText id="checkboxExchangeVariation"
                                        value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.exchangeRateVariation}"/>
                         <input type="checkbox" name="my-checkbox"
-                               id="switchExchangeVariation" value="#{true}"
+                               id="switchExchangeVariation"
                                data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}"/>
 
                     </div>
@@ -304,11 +304,10 @@
                         <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                        style="margin-left: 22px;"
                                        for="requisitionDt" value="#{msgs['po.header.lbl.vendor.drawings.data']}"/>
-                        <h:inputHidden id="checkboxDrawingData"
+                        <h:inputText id="checkboxDrawingData"
                                        value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.vendorDrawingData}"/>
                         <input type="checkbox" name="my-checkbox"
                                id="switchDrawingData"
-                               value="false"
                                data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
                         </input>
                     </div>
@@ -323,9 +322,9 @@
                             <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                            style="margin-left: 13px;"
                                            value="#{msgs['po.header.lbl.security.deposit']}"/>
-                            <h:inputHidden id="checkBoxSecurityDeposit"
+                            <h:inputText id="checkBoxSecurityDeposit"
                                            value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">
-                            </h:inputHidden>
+                            </h:inputText>
                             <input type="checkbox" name="my-checkbox"
                                    id="switchSecurityDeposit"
                                    data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
