@@ -11,20 +11,20 @@
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form prependId="false">
-            <div class="col-md-12 panel-tab-users">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="left-inner-addon">
-                            <i class="fa fa-search fa-lg"></i>
-                            <h:inputText id="searchTermId" styleClass="form-control input-search"
-                                         value="#{projectListBean.searchTerm}"
-                                         jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
-                            </h:inputText>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div>
+        <div class="col-md-12">
+            <h:form prependId="false">
+                <h:panelGroup>
+                    <div style="position: fixed; width: 93%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
+                        <div style="width: 100%; vertical-align: middle; display: table-cell">
+                            <div class="col-md-3" style="padding-left: 0px!important;">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText id="searchTermId" styleClass="form-control input-search"
+                                                 value="#{projectListBean.searchTerm}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
+                                    </h:inputText>
+                                </div>
+                            </div>
                             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
                                 <p:ajax process="@this,searchTermId" update="projectListId"
                                         listener="#{projectListBean.doSearch}"/>
@@ -34,11 +34,8 @@
                                 <p:ajax process="@this,searchTermId" update="projectListId,searchTermId"
                                         listener="#{projectListBean.doClean}"/>
                             </h:commandButton>
-                        </div>
-                    </div>
-                    <div class="pull-right">
-                        <div class="col-md-3">
-                            <div>
+
+                            <div class="pull-right">
                                 <h:commandButton value="#{msgs['project.list.add.project']}"
                                                  styleClass="btn btn-primary btn-sm"
                                                  rendered="#{permissionBean.hasPermission(1301)}"
@@ -46,12 +43,17 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="clearfix"></div>
+                    <br/>
+                </h:panelGroup>
+
+                <div class="clearfix"></div>
+                <br/><br/>
                 <p:dataTable id="projectListId" value="#{projectListBean.projectList}" var="_p"
                              paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}"
                              paginatorPosition="bottom">
-                    <p:ajax async="false" event="page"  process="@this" listener="#{tableCommonFeature.onPaginate}"/>
+                    <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                     <p:column headerText="#{msgs['project.list.column.number']}" width="100">
                         #{_p.projectNumber}
                     </p:column>
@@ -69,7 +71,8 @@
                     </p:column>
 
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
-                        <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
+                        <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
+                                styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;"
                                 rendered="#{permissionBean.hasPermission(1302)}">
                             <f:param name="isCreateProject" value="false"/>
@@ -82,7 +85,7 @@
                         </h:link>
                     </p:column>
                 </p:dataTable>
-            </div>
-        </h:form>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>
