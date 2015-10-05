@@ -98,6 +98,8 @@ public class PoBean extends Bean {
     private boolean supplierMode = false;
     private boolean loaded = false;
 
+
+
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
@@ -176,6 +178,7 @@ public class PoBean extends Bean {
     @Override
     protected void initialize() {
         purchaseOrder = new PurchaseOrderEntity();
+        loaded=false;
     }
 
 
