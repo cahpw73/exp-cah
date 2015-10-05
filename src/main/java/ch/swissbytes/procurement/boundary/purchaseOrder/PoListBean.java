@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDEService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
@@ -8,7 +9,6 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ProcurementStatus;
-import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
@@ -22,7 +22,9 @@ import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,8 +59,12 @@ public class PoListBean implements Serializable {
     private TextService textService;
     @Inject
     private PurchaseOrderDao dao;
+
     @Inject
     private SpreadsheetService exporter;
+
+    @Inject
+    private SpreadsheetJDEService exporterToJDE;
 
 
     private String projectId;
@@ -209,10 +215,12 @@ public class PoListBean implements Serializable {
     public void doCommitPo() {
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
-            if(validate()){
+            if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
                 maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+            }else{
+                Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before committing");
             }
         }
     }
@@ -220,107 +228,14 @@ public class PoListBean implements Serializable {
     public void doFinalise() {
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
-            if(validate()){
+            if (validate()) {
                 currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+            }else{
+                Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before finalizing");
             }
         }
-    }
-
-    private boolean validate(){
-        boolean validate = true;
-        if(StringUtils.isEmpty(currentPurchaseOrder.getPo())){
-            validate = false;
-        }
-        if(StringUtils.isEmpty(currentPurchaseOrder.getPoTitle())){
-            validate = false;
-        }
-        if(StringUtils.isEmpty(currentPurchaseOrder.getVariation())){
-            validate = false;
-        }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier()==null) {
-            validate = false;
-        }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getClazz()==null){
-            validate = false;
-        }
-        if(currentPurchaseOrder.getPoDeliveryDate()==null){
-            validate = false;
-        }
-        if(StringUtils.isEmpty(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoint())){
-            validate = false;
-        }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
-            if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null){
-                validate = false;
-            }
-        }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()){
-           validate = false;
-        }
-        if(!validateRetention(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())){
-            validate = false;
-        }
-        if(!validateSecurityDeposit(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())){
-            validate = false;
-        }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
-            if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms()==null){
-                validate = false;
-            }
-        }
-
-        if(!validate){
-            Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before committing");
-        }
-        return validate;
-    }
-
-    public boolean validateRetention(final CashflowEntity cashflow) {
-        boolean validate = true;
-        if(cashflow!=null){
-            boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
-
-            if (applyRetentionSelected) {
-                if (StringUtils.isEmpty(cashflow.getForm())){
-                    validate = false;
-                }
-                if(cashflow.getPercentage() == null){
-                    validate = false;
-                }
-                if (cashflow.getExpDate() == null){
-                    validate = false;
-                }
-                if(cashflow.getProjectCurrency() == null) {
-                    validate = false;
-                }
-            }
-        }
-
-        return validate;
-    }
-
-    public boolean validateSecurityDeposit(final CashflowEntity cashflow) {
-        boolean validate = true;
-        if(cashflow!=null){
-            boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
-            if (applySecurityDeposit) {
-                if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())){
-                    validate = false;
-                }
-                if(cashflow.getPercentageSecurityDeposit() == null){
-                    validate = false;
-                }
-                if(cashflow.getExpirationDateSecurityDeposit() == null){
-                    validate = false;
-                }
-                if(cashflow.getCurrencySecurityDeposit() == null) {
-                    validate = false;
-                }
-            }
-        }
-        return validate;
     }
 
     public void doReleasePo() {
@@ -329,21 +244,21 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
     }
 
-    public void doDeletePo(){
+    public void doDeletePo() {
         log.info("do delete purchase order");
         service.doDelete(currentPurchaseOrder.getId());
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
-                ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
+                || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                 || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
-        ||entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+                || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
@@ -368,11 +283,11 @@ public class PoListBean implements Serializable {
 
     public boolean canCommitt(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
-                (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal()||
-        entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+                (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal() ||
+                        entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
     }
 
-    public boolean canDelete(PurchaseOrderEntity entity){
+    public boolean canDelete(PurchaseOrderEntity entity) {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                 entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.COMMITTED.ordinal();
     }
@@ -382,7 +297,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canRelease(PurchaseOrderEntity entity) {
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null&&entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal();
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal();
     }
 
     public void loadCurrentPo(final PurchaseOrderEntity po) {
@@ -400,7 +315,7 @@ public class PoListBean implements Serializable {
     public void printPOFinal() {
         log.info("printing po final");
         if (currentPurchaseOrder != null && currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.COMMITTED.ordinal()
-                &&currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()!=ProcurementStatus.INCOMPLETE.ordinal()) {
+                && currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
             doFinalise();
         }
         printPo(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus(), false);
@@ -470,28 +385,130 @@ public class PoListBean implements Serializable {
         return poList;
     }
 
-    public boolean canExportCMS(PurchaseOrderEntity entity){
-        boolean exported=entity.getPurchaseOrderProcurementEntity().getCmsExported()==null?false:entity.getPurchaseOrderProcurementEntity().getCmsExported();
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal()
-                &&!exported;
+    public boolean canExportCMS(PurchaseOrderEntity entity) {
+        boolean exported = entity.getPurchaseOrderProcurementEntity().getCmsExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getCmsExported();
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
+                && !exported;
     }
-    public boolean canExportJDE(PurchaseOrderEntity entity){
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal()==ProcurementStatus.COMMITTED.ordinal();
+
+    public boolean canExportJDE(PurchaseOrderEntity entity) {
+        boolean exported = entity.getPurchaseOrderProcurementEntity().getJdeExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getJdeExported();
+        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
+                && !exported;
     }
 
     public StreamedContent exportCMS() throws FileNotFoundException {
-        log.info("StreamedContent");
-        StreamedContent content=null;
-        if(currentPurchaseOrder!=null&&currentPurchaseOrder.getId()!=null) {
-            List<PurchaseOrderEntity> list=new ArrayList<>();
+        log.info("exportCMS");
+        StreamedContent content = null;
+        if (currentPurchaseOrder != null && currentPurchaseOrder.getId() != null) {
+            List<PurchaseOrderEntity> list = new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
-            InputStream is=exporter.generateWorkbook(list);
+            InputStream is = exporter.generateWorkbook(list);
             service.markCMSAsExported(currentPurchaseOrder);
-            content=new DefaultStreamedContent(is,"application/xls",service.generateName(currentPurchaseOrder)+".xlsx");
+            content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
         }
         return content;
     }
-    public void exportJDE(){
 
+    public StreamedContent exportJDE() {
+        log.info("exportJDE");
+        StreamedContent content = null;
+        if(currentPurchaseOrder != null && currentPurchaseOrder.getId() != null){
+            List<PurchaseOrderEntity> list = new ArrayList<>();
+            list.add(service.findById(currentPurchaseOrder.getId()));
+            InputStream is = exporterToJDE.generateWorkbook(list);
+            service.markJDEAsExported(currentPurchaseOrder);
+            content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
+        }
+        return content;
+    }
+
+    private boolean validate() {
+        boolean validate = true;
+        if (StringUtils.isEmpty(currentPurchaseOrder.getPo())) {
+            validate = false;
+        }
+        if (StringUtils.isEmpty(currentPurchaseOrder.getPoTitle())) {
+            validate = false;
+        }
+        if (StringUtils.isEmpty(currentPurchaseOrder.getVariation())) {
+            validate = false;
+        }
+        if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() == null) {
+            validate = false;
+        }
+        if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
+            validate = false;
+        }
+        if (currentPurchaseOrder.getPoDeliveryDate() == null) {
+            validate = false;
+        }
+        if (StringUtils.isEmpty(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoint())) {
+            validate = false;
+        }
+        if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null) {
+            if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null) {
+                validate = false;
+            }
+        }
+        if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()) {
+            validate = false;
+        }
+        if (!validateRetention(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())) {
+            validate = false;
+        }
+        if (!validateSecurityDeposit(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())) {
+            validate = false;
+        }
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
+            if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms() == null) {
+                validate = false;
+            }
+        }
+        return validate;
+    }
+
+    private boolean validateRetention(final CashflowEntity cashflow) {
+        boolean validate = true;
+        if(cashflow!=null){
+            boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
+            if (applyRetentionSelected) {
+                if (StringUtils.isEmpty(cashflow.getForm())) {
+                    validate = false;
+                }
+                if (cashflow.getPercentage() == null) {
+                    validate = false;
+                }
+                if (cashflow.getExpDate() == null) {
+                    validate = false;
+                }
+                if (cashflow.getProjectCurrency() == null) {
+                    validate = false;
+                }
+            }
+        }
+        return validate;
+    }
+
+    private boolean validateSecurityDeposit(final CashflowEntity cashflow) {
+        boolean validate = true;
+        if(cashflow!=null){
+            boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
+            if (applySecurityDeposit) {
+                if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
+                    validate = false;
+                }
+                if (cashflow.getPercentageSecurityDeposit() == null) {
+                    validate = false;
+                }
+                if (cashflow.getExpirationDateSecurityDeposit() == null) {
+                    validate = false;
+                }
+                if (cashflow.getCurrencySecurityDeposit() == null) {
+                    validate = false;
+                }
+            }
+        }
+        return validate;
     }
 }
