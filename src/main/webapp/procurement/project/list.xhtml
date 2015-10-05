@@ -11,11 +11,15 @@
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
     </f:metadata>
     <ui:define name="body">
-        <div class="col-md-12">
-            <h:form prependId="false">
+        <h:form prependId="false">
+            <div class="col-md-12">
                 <h:panelGroup>
-                    <div style="position: fixed; width: 93%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
+                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
+                            <p:messages id="projectGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                                        warnClass="alert" closable="true"
+                                        infoClass="alert alert-info"/>
+
                             <div class="col-md-3" style="padding-left: 0px!important;">
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
@@ -85,7 +89,7 @@
                         </h:link>
                     </p:column>
                 </p:dataTable>
-            </h:form>
-        </div>
+            </div>
+        </h:form>
     </ui:define>
 </ui:composition>
