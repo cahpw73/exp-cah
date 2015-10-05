@@ -452,6 +452,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private void loadThisVariation(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("This Variation No." + po.getVariation());
+
         for (Object record : list) {
             Object[] values = (Object[]) record;
             if ((int) values[3] == po.getOrderedVariation()) {

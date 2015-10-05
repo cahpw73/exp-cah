@@ -326,12 +326,12 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Please enter Payment Terms");
             validated = false;
         }
-        if (!cashflowBean.validateRetention()) {
+        /*if (!cashflowBean.validateRetention()) {
             validated = false;
-        }
-        if(!cashflowBean.validateSecurityDeposit()){
+        }*/
+        /*if(!cashflowBean.validateSecurityDeposit()){
             validated = false;
-        }
+        }*/
         if(cashflowBean.getCashflow().getPaymentTerms()==null){
             Messages.addFlashGlobalError("Enter a valid Payment Terms in Cashflow");
             validated = false;
@@ -340,16 +340,16 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("The variation number is already being used");
             validated = false;
         }
-        if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
+        /*if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
             if(purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null){
                 Messages.addFlashGlobalError("Enter a valid Contact for Supplier");
                 validated = false;
             }
-        }
-        if(itemBean.getScopeSupplyList().isEmpty()){
+        }*/
+        /*if(itemBean.getScopeSupplyList().isEmpty()){
             Messages.addFlashGlobalError("You must add at least one Item");
             validated = false;
-        }
+        }*/
 
 
         return validated;
