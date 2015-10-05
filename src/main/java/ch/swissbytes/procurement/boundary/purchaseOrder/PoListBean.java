@@ -25,9 +25,11 @@ import javax.inject.Named;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -465,7 +467,20 @@ public class PoListBean implements Serializable {
                 validate = false;
             }
         }
+        if(!balanceEqualZero()){
+            validate = false;
+        }
         return validate;
+    }
+
+    private boolean balanceEqualZero(){
+        Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList(), currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList());
+        for (ProjectCurrencyEntity currency : balances.keySet()) {
+            if(balances.get(currency).doubleValue() != 0d){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean validateRetention(final CashflowEntity cashflow) {
