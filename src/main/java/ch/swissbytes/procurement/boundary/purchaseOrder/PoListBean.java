@@ -460,27 +460,31 @@ public class PoListBean implements Serializable {
         if (!validateSecurityDeposit(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())) {
             validate = false;
         }
-        if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms() == null) {
-            validate = false;
+        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
+            if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms() == null) {
+                validate = false;
+            }
         }
         return validate;
     }
 
     private boolean validateRetention(final CashflowEntity cashflow) {
         boolean validate = true;
-        boolean applyRetentionSelected = currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
-        if (applyRetentionSelected) {
-            if (StringUtils.isEmpty(cashflow.getForm())) {
-                validate = false;
-            }
-            if (cashflow.getPercentage() == null) {
-                validate = false;
-            }
-            if (cashflow.getExpDate() == null) {
-                validate = false;
-            }
-            if (cashflow.getProjectCurrency() == null) {
-                validate = false;
+        if(cashflow!=null){
+            boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
+            if (applyRetentionSelected) {
+                if (StringUtils.isEmpty(cashflow.getForm())) {
+                    validate = false;
+                }
+                if (cashflow.getPercentage() == null) {
+                    validate = false;
+                }
+                if (cashflow.getExpDate() == null) {
+                    validate = false;
+                }
+                if (cashflow.getProjectCurrency() == null) {
+                    validate = false;
+                }
             }
         }
         return validate;
@@ -488,19 +492,21 @@ public class PoListBean implements Serializable {
 
     private boolean validateSecurityDeposit(final CashflowEntity cashflow) {
         boolean validate = true;
-        boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
-        if (applySecurityDeposit) {
-            if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
-                validate = false;
-            }
-            if (cashflow.getPercentageSecurityDeposit() == null) {
-                validate = false;
-            }
-            if (cashflow.getExpirationDateSecurityDeposit() == null) {
-                validate = false;
-            }
-            if (cashflow.getCurrencySecurityDeposit() == null) {
-                validate = false;
+        if(cashflow!=null){
+            boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
+            if (applySecurityDeposit) {
+                if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
+                    validate = false;
+                }
+                if (cashflow.getPercentageSecurityDeposit() == null) {
+                    validate = false;
+                }
+                if (cashflow.getExpirationDateSecurityDeposit() == null) {
+                    validate = false;
+                }
+                if (cashflow.getCurrencySecurityDeposit() == null) {
+                    validate = false;
+                }
             }
         }
         return validate;
