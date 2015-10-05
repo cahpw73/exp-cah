@@ -18,7 +18,7 @@
             <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed});"
                              autoRun="true"/>
 
-            <div class="col-md-8" style="margin-top: 25px;">
+            <div class="col-md-12" style="margin-top: 25px;">
                 <h:panelGroup rendered="#{poBean.beingCreated}">
                     <div class="procurement-panel-header">#{msgs['purchase.order.new.po.title']}</div>
                 </h:panelGroup>
@@ -26,7 +26,7 @@
                     <div class="procurement-panel-header">#{msgs['purchase.order.edit.po.title']}</div>
                 </h:panelGroup>
 
-                <div class="col-md-8 panel-tab-users">
+                <div class="col-md-12 panel-tab-users">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li id="headerTab" class="active">
