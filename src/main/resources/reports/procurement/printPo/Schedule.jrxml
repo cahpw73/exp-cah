@@ -73,7 +73,7 @@
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" isBold="false" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PURCHASE ORDER No."+($P{projectNumber}+"-"+$P{poNo})]]></textFieldExpression>
+				<textFieldExpression><![CDATA["PURCHASE ORDER No. "+($P{projectNumber}+"-"+$P{poNo})]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
