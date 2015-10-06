@@ -16,18 +16,50 @@ navigator.urls[8]={"url":"/user/edit","level":"../../../"};
 navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
 
 $("#projectListLinkId").click(function(e){
+    verifyToLeaveProjectEdit(e)
+})
+
+$("#cancelProjectBtn1").click(function(e){
+    verifyToLeaveProjectEdit(e)
+})
+
+$("#cancelProjectBtn2").click(function(e){
+    verifyToLeaveProjectEdit(e)
+})
+
+function verifyToLeaveProjectEdit(e){
     for (var i = 0; i < navigator.urls.length; i++) {
         if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
             leavePageToProjectList(e,navigator.urls[i].level);
             break;
         }
     }
-})
+}
 
 function leavePageToProjectList(e,level){
     target=level+"procurement/project/list.jsf";
     leavingPage(e,target,"confCancelPurchaseList");
 }
+
+/*go to Po list*/
+$("#cancelPOBtn1").click(function(e){
+    alert("1")
+    verifyToLeavePOEdit(e)
+})
+function verifyToLeavePOEdit(e){
+    for (var i = 0; i < navigator.urls.length; i++) {
+        if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+            leavePageToPOList(e,navigator.urls[i].level);
+            break;
+        }
+    }
+}
+function leavePageToPOList(e,level){
+    target=level+"procurement/project/purchase-order/list.jsf";
+    leavingPage(e,target,"confCancelPurchaseList");
+}
+
+
 
 $("#reportListLinkId").click(function(e){
     console.log("click report list.... "+window.location.href);

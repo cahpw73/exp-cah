@@ -72,6 +72,14 @@
                         <h:commandButton value="#{msgs['lbl.close']}" rendered="#{projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doUpdateAndClose}"
                                          styleClass="btn btn-primary btn-sm"/>
+                        <ui:remove>
+                            <h:link id="cancelProjectBtn1" outcome="list"
+                                    value="#{msgs['lbl.cancel']}" rendered="#{!projectBean.newProjectEntityToSave}"
+                                    styleClass="btn btn-primary btn-sm"/>
+                            <h:link id="cancelProjectBtn2" outcome="list"
+                                    value="#{msgs['lbl.cancel']}" rendered="#{projectBean.newProjectEntityToSave}"
+                                    styleClass="btn btn-primary btn-sm"/>
+                        </ui:remove>
                     </div>
                 </div>
             </div>

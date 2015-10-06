@@ -62,6 +62,17 @@ $('#editUserForm textarea').on("change keyup paste", function() {
     hasChanges=true;
 });
 
+$('#supplierId input').on( 'input change keyup paste', function() {
+    console.log("Into create or edit from procurement");
+    hasChanges=true;
+    console.log("hasChanges: " + hasChanges);
+});
+
+$('#supplierId textarea').on("change keyup paste", function() {
+    console.log("textArea create or edit");
+    hasChanges=true;
+});
+
 function calendarChangesProc(){
     console.log("calendar create or edit");
     hasChanges=true;

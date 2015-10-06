@@ -4,7 +4,8 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:confirmDialog widgetVar="confCancelPurchaseList" severity="alert" global="true" id="confrDialogLinkId" header="Cancel">
+    <p:confirmDialog widgetVar="confCancelPurchaseList" severity="alert" global="true" id="confrDialogLinkId"
+                     header="Cancel">
         <f:facet name="message">
             <div>
                 <div class="col-md-1">
@@ -17,7 +18,8 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:link outcome="/procurement/project/list" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
+            <h:link outcome="/procurement/project/list"
+                    styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
             &#160;
             <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                     onclick="PF('confCancelPurchaseList').hide();">
@@ -26,7 +28,8 @@
         </div>
     </p:confirmDialog>
 
-    <p:confirmDialog widgetVar="confCancelReportList" severity="alert" global="true" id="confrDialogReportLinkId" header="Cancel">
+    <p:confirmDialog widgetVar="confCancelReportList" severity="alert" global="true" id="confrDialogReportLinkId"
+                     header="Cancel">
         <f:facet name="message">
             <div>
                 <div class="col-md-1">
@@ -39,7 +42,8 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:link outcome="/procurement/report/report" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
+            <h:link outcome="/procurement/report/report"
+                    styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
             &#160;
             <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                     onclick="PF('confCancelReportList').hide();">
@@ -48,7 +52,8 @@
         </div>
     </p:confirmDialog>
 
-    <p:confirmDialog widgetVar="confCancelAdminList" severity="alert" global="true" id="confrDialogAdminLinkId" header="Cancel">
+    <p:confirmDialog widgetVar="confCancelAdminList" severity="alert" global="true" id="confrDialogAdminLinkId"
+                     header="Cancel">
         <f:facet name="message">
             <div>
                 <div class="col-md-1">
@@ -61,7 +66,8 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:link outcome="/procurement/admin/admin" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
+            <h:link outcome="/procurement/admin/admin"
+                    styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
             &#160;
             <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                     onclick="PF('confCancelAdminList').hide();">
@@ -70,7 +76,8 @@
         </div>
     </p:confirmDialog>
 
-    <p:confirmDialog widgetVar="confCancelProfile" severity="alert" global="true" id="confrDialogProfileLinkId" header="Cancel">
+    <p:confirmDialog widgetVar="confCancelProfile" severity="alert" global="true" id="confrDialogProfileLinkId"
+                     header="Cancel">
         <f:facet name="message">
             <div>
                 <div class="col-md-1">
@@ -83,7 +90,8 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:link outcome="/procurement/profile/profile" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
+            <h:link outcome="/procurement/profile/profile"
+                    styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
             &#160;
             <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                     onclick="PF('confCancelProfile').hide();">

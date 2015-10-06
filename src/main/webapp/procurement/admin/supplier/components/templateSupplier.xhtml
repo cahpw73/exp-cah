@@ -87,12 +87,13 @@
                     <h:panelGroup id="idBtnCancel">
                         <h:panelGroup rendered="#{MODE != null }">
                             <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
-                                <button type="button" class="btn btn-primary btn-sm"
+                                <button id="ccb4
+                                " type="button" class="btn btn-primary btn-sm"
                                         onclick="PF('supplierModal').hide()">
                                     #{msgs['lbl.cancel']}
                                 </button>
                             </h:panelGroup>
-                            <h:commandButton value="#{msgs['lbl.cancel']}"
+                            <h:commandButton id="ccb3" value="#{msgs['lbl.cancel']}"
                                              styleClass="btn btn-primary btn-sm"
                                              rendered="#{not supplierProcBean.supplierMode}">
                                 <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
@@ -101,9 +102,9 @@
                             </h:commandButton>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE ==null}">
-                            <h:link value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
+                            <h:link id="ccb2" value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
                                     outcome="list" styleClass="btn btn-primary btn-sm"/>
-                            <h:commandButton value="#{msgs['lbl.cancel']}"
+                            <h:commandButton id="ccb1" value="#{msgs['lbl.cancel']}"
                                              styleClass="btn btn-primary btn-sm"
                                              rendered="#{not supplierProcBean.supplierMode}">
                                 <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
