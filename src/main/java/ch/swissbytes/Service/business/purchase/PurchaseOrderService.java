@@ -369,33 +369,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
 
         if (po.getPurchaseOrderProcurementEntity().getSupplier() != null) {
-            addPrefixToVariation(po);
-            po.getPurchaseOrderProcurementEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPurchaseOrderProcurementEntity().getSupplier().getId()));
-        }
-        if (po != null) {
-            po.getProjectEntity().getCurrencies().addAll(projectService.findProjectCurrencyByProjectId(po.getProjectEntity().getId()));
-            po.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId()));
-            po.getPurchaseOrderProcurementEntity().getDeliverables().addAll(deliverableDao.findDeliverableByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId()));
-            po.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
-            List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
-            po.getPurchaseOrderProcurementEntity().setCashflow(!cashflows.isEmpty() ? cashflows.get(0) : null);
-            if (po.getPurchaseOrderProcurementEntity().getCashflow() != null) {
-                po.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPurchaseOrderProcurementEntity().getCashflow().getId()));
-            }
-            po.getPurchaseOrderProcurementEntity().setTextEntity(textService.findByPoId(po.getPurchaseOrderProcurementEntity().getId()));
-            if (po.getPurchaseOrderProcurementEntity().getTextEntity() != null) {
-                List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPurchaseOrderProcurementEntity().getTextEntity().getId());
-                po.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(clausesEntities);
-            }
-        }
-        return list.isEmpty() ? null : list.get(0);
-    }
-
-    public PurchaseOrderEntity findByIdWithoutPrefixV(Long id) {
-        List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
-        PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
-
-        if (po.getPurchaseOrderProcurementEntity().getSupplier() != null) {
             //addPrefixToVariation(po);
             po.getPurchaseOrderProcurementEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPurchaseOrderProcurementEntity().getSupplier().getId()));
         }

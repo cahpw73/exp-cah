@@ -81,7 +81,7 @@ public class ReportProcBean implements Serializable {
     public void printPurchaseOrder(final PurchaseOrderEntity po,List<ScopeSupplyEntity> list,String preamble,List<ClausesEntity> clausesList,boolean draft) {
         log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
-        PurchaseOrderEntity purchaseOrder=service.findByIdWithoutPrefixV(po.getId());
+        PurchaseOrderEntity purchaseOrder=service.findById(po.getId());
         if(purchaseOrder!=null) {
             initializeParametersToJasperReport();
             List<CashflowEntity> cashflows = cashflowService.findByPoId(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
