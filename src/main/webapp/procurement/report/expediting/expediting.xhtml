@@ -54,7 +54,7 @@
                                         <h:inputText id="poNoDelId" styleClass="form-control input-search"
                                                      value="#{reportExpeditingBean.termsPoNo}"
                                                      jsf:placeholder="#{msgs['lbl.search']}">
-                                            <p:ajax event="keyup" process="@this" update="expeditingTblId"
+                                            <p:ajax event="keyup" process="@this" update="expeditingTblId" delay="600"
                                                     listener="#{reportExpeditingBean.filterExpeditingDtoListByPoNo}" async="false"/>
                                         </h:inputText>
                                     </div>
@@ -72,7 +72,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <p:dataTable id="expeditingTblId" var="_l" lazy="true"
-                                             value="#{reportExpeditingBean.expeditingDtosList}">
+                                             value="#{reportExpeditingBean.expeditingDtosList}"
+                                             paginator="true" rows="#{tableCommonFeature.defaultPageSize}"
+                                             rowsPerPageTemplate="#{configuration.getPagesSize(reportExpeditingBean.expeditingDtosList.size())}"
+                                             paginatorPosition="bottom">
                                     <p:column headerText="#{msgs['report.expediting.column.po.no']}" width="90">
                                         #{_l.poNo}
                                     </p:column>
