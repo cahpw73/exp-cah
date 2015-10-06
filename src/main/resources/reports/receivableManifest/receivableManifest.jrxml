@@ -13,7 +13,8 @@
 		<![CDATA[select ss.code,ss.quantity,ss.cost,ss.unit,po.project,ss.description,ss.currency,po.po,po.variation,ss.required_site_date,ss.actual_site_date,ss.tag_no
 from scope_supply ss inner join purchase_order po on po.id=ss.purchase_order_id
 where ss.status_id<>3 and $X{IN, purchase_order_id, purchaseID} and po.status_id<>3
-order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po.po END,po.variation,ss.ordered]]>
+      and (ss.exclude_from_expediting is null or ss.exclude_from_expediting = false)
+order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po.po END,po.variation,ss.ordered ]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
 	<field name="quantity" class="java.math.BigDecimal"/>

@@ -33,7 +33,7 @@
                                         <f:selectItems value="#{reportExpeditingBean.projectList}"
                                                        var="_p"
                                                        itemValue="#{_p}"
-                                                       itemLabel="#{_p.title}"/>
+                                                       itemLabel="#{_p.projectNumber}"/>
                                         <p:ajax async="false" process="@this" event="change" update="expeditingTblId printBtnId poNoDelId"
                                                 delay="600"
                                                 listener="#{reportExpeditingBean.searchPurchaseOrder}"/>
@@ -89,9 +89,7 @@
                                     <p:column style="text-align: center!important;" width="250"
                                             headerText="#{msgs['report.expediting.column.exclude.from.expediting']}">
                                         <div style="vertical-align: middle; text-align: center;">
-                                            <h:selectBooleanCheckbox value="#{_l.excludeFromExpediting}"
-                                                                     disabled="#{reportExpeditingBean.hasStatusCommited(_l.procurementStatus)}">
-                                                <p:ajax async="false" process="@this" event="change"/>
+                                            <h:selectBooleanCheckbox value="#{_l.excludeFromExpediting}" readonly="true" disabled="true">
                                             </h:selectBooleanCheckbox>
                                         </div>
                                     </p:column>

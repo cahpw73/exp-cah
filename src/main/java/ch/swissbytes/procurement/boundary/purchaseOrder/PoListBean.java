@@ -367,7 +367,6 @@ public class PoListBean implements Serializable {
     }
 
     public PurchaseOrderEntity getCurrentPurchaseOrder() {
-        log.info("set value on current purchase order");
         return currentPurchaseOrder;
     }
 

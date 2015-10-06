@@ -128,13 +128,28 @@
                                 listener="#{purchaseOrderEdit.deleteScopeSupply(_scopeSupply.id)}"/>
                     </h:commandLink>
                 </div>
-                   <div class="pull-left">
+                <div class="pull-left">
                     <h:commandLink rendered="#{permissionBean.hasPermission(105)}"
                                    style="margin-top: 2px;margin-bottom: 2px;"
                                    disabled="#{not (_scopeSupply.quantity!=null and _scopeSupply.quantity>1)}"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table #{(not (_scopeSupply.quantity!=null and _scopeSupply.quantity>1))?'disabled':''} "
                                    action="#{purchaseOrderEdit.selectScopeSupply(_scopeSupply.id)}"
                                    value="#{msgs['supply.scope.lbl.split']}"/>
+                </div>
+                <div class="pull-left">
+                    <p:commandLink value="#{msgs['supply.scope.lbl.dont.expedite']}"
+                                   style="margin-top: 2px;margin-bottom: 2px;"
+                                   update="@form" ajax="true" async="false"
+                                   action="#{purchaseOrderEdit.updateScopeSupplyExcludeFromExpedite}"
+                                   disabled="#{_scopeSupply.excludeFromExpediting}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table btn-commandLink-primeFaces">
+                        <f:setPropertyActionListener target="#{purchaseOrderEdit.currentScopeSupply}"
+                                                     value="#{_scopeSupply}"/>
+                        <p:confirm header="#{msgs['lbl.confirmation']}"
+                                   message="#{msgs['supply.scope.lbl.msg.confirmation.commit']}"
+                                   icon="ui-icon-alert">
+                        </p:confirm>
+                    </p:commandLink>
                 </div>
             </p:column>
         </p:dataTable>

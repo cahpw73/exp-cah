@@ -166,7 +166,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         for(ScopeSupplyEntity scopeSupplyEntity:list){
             if(!currencies.contains(scopeSupplyEntity.getProjectCurrency())) {
                 currencies.add(scopeSupplyEntity.getProjectCurrency());
-            }
+        }
         }
         return currencies;
     }

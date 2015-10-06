@@ -103,6 +103,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private ScopeSupplyEntity scopeSupplyEdit;
 
+    private ScopeSupplyEntity currentScopeSupply;
+
     private Integer currentOperation = -1;
 
     private Long relativeCurrentCommentId = 0L;
@@ -175,14 +177,22 @@ public class PurchaseOrderEdit implements Serializable {
             }
             if (scopeSupplies == null || scopeSupplies.size() == 0) {
                 scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
-                scopeActives.addAll(scopeSupplies);
+                for (ScopeSupplyEntity s : scopeSupplies) {
+                    if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
+                        scopeActives.add(s);
+                    }
+                }
             }
             commentIndexSelected = -1;
         }
 
         if (scopeSupplies != null && !scopeSupplies.isEmpty()) {
             scopeActives.clear();
-            scopeActives.addAll(scopeSupplies);
+            for (ScopeSupplyEntity s : scopeSupplies) {
+                if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
+                    scopeActives.add(s);
+                }
+            }
             sortScopeSupply.sortScopeSupplyEntity(scopeActives);
         }
         commentActives = commentService.getActives(comments);
@@ -355,7 +365,7 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("boolean isValidDataUpdate()");
         boolean isValid = false;
         int inc = 0;
-        BigDecimal quantity = scopeSupplyEditing.getQuantity() != null ? scopeSupplyEditing.getQuantity() :new BigDecimal("0");
+        BigDecimal quantity = scopeSupplyEditing.getQuantity() != null ? scopeSupplyEditing.getQuantity() : new BigDecimal("0");
         Double cost = scopeSupplyEditing.getCost() != null ? scopeSupplyEditing.getCost().doubleValue() : 0D;
         if (quantity.doubleValue() >= 0) {
             inc++;
@@ -377,7 +387,7 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("boolean isValidData()");
         boolean isValid = false;
         int inc = 0;
-        BigDecimal quantity = scopeSupplyEdit.getQuantity() != null ? scopeSupplyEdit.getQuantity() :new BigDecimal("0");
+        BigDecimal quantity = scopeSupplyEdit.getQuantity() != null ? scopeSupplyEdit.getQuantity() : new BigDecimal("0");
         Double cost = scopeSupplyEdit.getCost() != null ? scopeSupplyEdit.getCost().doubleValue() : 0D;
         if (quantity.doubleValue() >= 0) {
             inc++;
@@ -959,9 +969,31 @@ public class PurchaseOrderEdit implements Serializable {
         }
     }
 
+    public void updateScopeSupplyExcludeFromExpedite() {
+        currentScopeSupply.setExcludeFromExpediting(true);
+        scopeSupplyService.doUpdate(currentScopeSupply);
+        scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
+        scopeActives.clear();
+        for (ScopeSupplyEntity s : scopeSupplies) {
+            if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
+                scopeActives.add(s);
+            }
+        }
+        sortScopeSupply.sortScopeSupplyEntity(scopeActives);
+
+    }
+
     public void addingSupplier() {
         supplier.putModeCreation();
         supplier.start();
     }
 
+    public ScopeSupplyEntity getCurrentScopeSupply() {
+
+        return currentScopeSupply;
+    }
+
+    public void setCurrentScopeSupply(ScopeSupplyEntity currentScopeSupply) {
+        this.currentScopeSupply = currentScopeSupply;
+    }
 }
