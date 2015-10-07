@@ -196,7 +196,7 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Exclude from Expediting</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Excluded From Expediting</style>]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="4c4df347-33c0-4e7c-b46b-369f8f152c46" x="0" y="5" width="555" height="1"/>

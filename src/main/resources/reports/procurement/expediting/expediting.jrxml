@@ -63,7 +63,7 @@ order by po.po,po.orderedvariation]]>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{exclude_from_expediting}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{exclude_from_expediting}?"true":""]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="400036f7-6085-4bef-b998-df9f6cec522f" positionType="Float" x="0" y="14" width="555" height="1"/>
