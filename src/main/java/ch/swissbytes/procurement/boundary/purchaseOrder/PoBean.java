@@ -329,9 +329,9 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Please enter Payment Terms");
             validated = false;
         }
-        /*if (!cashflowBean.validateRetention()) {
+        if (!cashflowBean.validateRetention()) {
             validated = false;
-        }*/
+        }
         /*if(!cashflowBean.validateSecurityDeposit()){
             validated = false;
         }*/

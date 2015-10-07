@@ -971,8 +971,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void updateScopeSupplyExcludeFromExpedite() {
         currentScopeSupply.setExcludeFromExpediting(true);
-        scopeSupplyService.doUpdate(currentScopeSupply);
-        scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
         scopeActives.clear();
         for (ScopeSupplyEntity s : scopeSupplies) {
             if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
@@ -980,7 +978,6 @@ public class PurchaseOrderEdit implements Serializable {
             }
         }
         sortScopeSupply.sortScopeSupplyEntity(scopeActives);
-
     }
 
     public void addingSupplier() {

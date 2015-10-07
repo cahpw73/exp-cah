@@ -106,9 +106,6 @@ public class PurchaseOrderCreate implements Serializable {
     @Inject
     private ProjectService projectService;
 
-    private ScopeSupplyEntity currentScopeSupply;
-
-
     @PostConstruct
     public void create() {
         log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
@@ -456,26 +453,5 @@ public class PurchaseOrderCreate implements Serializable {
             newPurchaseOrder.getPurchaseOrderProcurementEntity().setContactExpediting(contact);
             newPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getContacts().add(contact);
         }
-    }
-
-    public void updateScopeSupplyExcludeFromExpedite() {
-        currentScopeSupply.setExcludeFromExpediting(true);
-        List<ScopeSupplyEntity> scopeActives = new ArrayList<>();
-        for (ScopeSupplyEntity s : scopeSupplies) {
-            if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
-                scopeActives.add(s);
-            }
-        }
-        scopeSupplies.clear();
-        scopeSupplies.addAll(scopeActives);
-        sortBean.sortScopeSupplyEntity(scopeSupplies);
-    }
-
-    public ScopeSupplyEntity getCurrentScopeSupply() {
-        return currentScopeSupply;
-    }
-
-    public void setCurrentScopeSupply(ScopeSupplyEntity currentScopeSupply) {
-        this.currentScopeSupply = currentScopeSupply;
     }
 }

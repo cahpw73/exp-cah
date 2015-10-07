@@ -15,7 +15,7 @@
         <h:form id="listPooFormId" prependId="false">
             <div class="col-md-12">
                 <h:panelGroup>
-                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 70px; top:61px; display: table;">
+                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 60px; display: table; margin-top: -19px">
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
                             <p:messages id="poGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
@@ -93,7 +93,7 @@
                                 <p:commandLink ajax="true"
                                                value="#{msgs['project.list.action.commit']}"
                                                action="#{poListBean.doCommitPo}"
-                                               update=":glbMsgs :listPooFormId:projectListId"
+                                               update="@form"
                                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                                rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -124,9 +124,8 @@
                                                                  value="#{_p}"/>
                                 </p:commandLink>
                                 &#160;
-
                                 <p:commandLink
-                                        update=":glbMsgs @form" ajax="true"
+                                        update="@form" ajax="true"
                                         value="#{msgs['project.list.action.finalise']}"
                                         action="#{poListBean.doFinalise()}"
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"

@@ -221,8 +221,6 @@ public class PoListBean implements Serializable {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
                 maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-            }else{
-                Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before committing");
             }
         }
     }
@@ -234,8 +232,6 @@ public class PoListBean implements Serializable {
                 currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
-            }else{
-                Messages.addFlashGlobalError("Not all fields required have been entered on this PO. Please make sure to review before finalizing");
             }
         }
     }
@@ -427,32 +423,41 @@ public class PoListBean implements Serializable {
     private boolean validate() {
         boolean validate = true;
         if (StringUtils.isEmpty(currentPurchaseOrder.getPo())) {
+            Messages.addFlashGlobalError("Enter a valid PO Number");
             validate = false;
         }
         if (StringUtils.isEmpty(currentPurchaseOrder.getPoTitle())) {
+            Messages.addFlashGlobalError("Enter a valid PO Title");
             validate = false;
         }
         if (StringUtils.isEmpty(currentPurchaseOrder.getVariation())) {
+            Messages.addFlashGlobalError("Enter a valid Var Number");
             validate = false;
         }
         if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() == null) {
+            Messages.addFlashGlobalError("Enter a valid Supplier");
             validate = false;
         }
         if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
+            Messages.addFlashGlobalError("Enter a valid Class");
             validate = false;
         }
         if (currentPurchaseOrder.getPoDeliveryDate() == null) {
+            Messages.addFlashGlobalError("Enter a valid Delivery Date");
             validate = false;
         }
         if (StringUtils.isEmpty(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoint())) {
+            Messages.addFlashGlobalError("Enter a valid Delivery Point");
             validate = false;
         }
         if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null) {
             if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null) {
+                Messages.addFlashGlobalError("Enter a valid Contact for Supplier");
                 validate = false;
             }
         }
         if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()) {
+            Messages.addFlashGlobalError("You must add at least one Item");
             validate = false;
         }
         if (!validateRetention(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())) {
@@ -463,21 +468,35 @@ public class PoListBean implements Serializable {
         }
         if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
             if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms() == null) {
+                Messages.addFlashGlobalError("Enter a valid Payment Terms");
                 validate = false;
             }
         }
         if(!balanceEqualZero()){
+            Messages.addFlashGlobalError("The Balance must be zero");
             validate = false;
         }
         return validate;
     }
 
     private boolean balanceEqualZero(){
-        Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList(), currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList());
-        for (ProjectCurrencyEntity currency : balances.keySet()) {
-            if(balances.get(currency).doubleValue() != 0d){
+        if(!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()){
+            if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
+                if(!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().isEmpty()){
+                    Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList(), currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList());
+                    for (ProjectCurrencyEntity currency : balances.keySet()) {
+                        if(balances.get(currency).doubleValue() != 0d){
+                            return false;
+                        }
+                    }
+                }else{
+                    return false;
+                }
+            }else{
                 return false;
             }
+        }else{
+            return false;
         }
         return true;
     }
@@ -488,15 +507,19 @@ public class PoListBean implements Serializable {
             boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
             if (applyRetentionSelected) {
                 if (StringUtils.isEmpty(cashflow.getForm())) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Form");
                     validate = false;
                 }
                 if (cashflow.getPercentage() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Percentage");
                     validate = false;
                 }
                 if (cashflow.getExpDate() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Exp Date");
                     validate = false;
                 }
                 if (cashflow.getProjectCurrency() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Currency");
                     validate = false;
                 }
             }
@@ -510,15 +533,19 @@ public class PoListBean implements Serializable {
             boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
             if (applySecurityDeposit) {
                 if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Form");
                     validate = false;
                 }
                 if (cashflow.getPercentageSecurityDeposit() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Percentage");
                     validate = false;
                 }
                 if (cashflow.getExpirationDateSecurityDeposit() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Exp Date");
                     validate = false;
                 }
                 if (cashflow.getCurrencySecurityDeposit() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Currency");
                     validate = false;
                 }
             }
