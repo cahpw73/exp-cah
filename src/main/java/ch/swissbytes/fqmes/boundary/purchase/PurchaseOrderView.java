@@ -73,6 +73,14 @@ public class PurchaseOrderView implements Serializable{
             comments=commentService.findByPurchaseOrder(purchaseOrder.getId());
             scopeSupplies=scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
             if(scopeSupplies != null && !scopeSupplies.isEmpty()){
+                List<ScopeSupplyEntity> scopeActives = new ArrayList<>();
+                for (ScopeSupplyEntity s : scopeSupplies) {
+                    if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
+                        scopeActives.add(s);
+                    }
+                }
+                scopeSupplies.clear();
+                scopeSupplies.addAll(scopeActives);
                 sortScopeSupply.sortScopeSupplyEntity(scopeSupplies);
             }
         }

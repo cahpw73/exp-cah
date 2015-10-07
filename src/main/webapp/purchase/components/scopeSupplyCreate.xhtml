@@ -5,80 +5,84 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h4 class="sub-header fq-sub-header">#{msgs['po.supply.scope.title']}</h4>
+
     <div class="fq-form-table">
         <p:dataTable id="scopeSupplyList" var="_scopeSupply"
                      styleClass="data-table-po-sc data-table-po-lists"
                      value="#{purchaseOrderCreate.scopeSupplies}" rowKey="#{_index+1}"
                      rowIndexVar="_index">
-        <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="80"
-                  sortFunction="#{sortBean.sortItemNumber}">
+            <p:column headerText="#{msgs['po.supply.scope.column.code']}" sortBy="#{_scopeSupply.code}" width="80"
+                      sortFunction="#{sortBean.sortItemNumber}">
                 #{_scopeSupply.code}
             </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" width="80"
-              sortBy="#{_scopeSupply.quantity}">
-            <h:outputText value="#{_scopeSupply.quantity}">
-                <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
-                                  locale="#{configuration.langLocalDecimal}"/>
-            </h:outputText>
-        </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="80"
-                  sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" width="80"
+                      sortBy="#{_scopeSupply.quantity}">
+                <h:outputText value="#{_scopeSupply.quantity}">
+                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                     locale="#{configuration.langLocalDecimal}"/>
+                </h:outputText>
+            </p:column>
+            <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="80"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.unit}
             </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}"  width="100"
-                  sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}"
+                      width="100"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.description}
             </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}"  sortBy="#{_scopeSupply.spIncoTerm}" width="100"
-                  sortFunction="#{sortBean.sortStrings}" >
+            <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}"
+                      width="100"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.spIncoTerm}
             </p:column>
-        <p:column  sortBy="#{_scopeSupply.poDeliveryDate}"  width="110"
-                  sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
-            <f:facet name="header">
-                #{msgs['po.supply.scope.column.original.delivery.date']}
-            </f:facet>
+            <p:column sortBy="#{_scopeSupply.poDeliveryDate}" width="110"
+                      sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
+                <f:facet name="header">
+                    #{msgs['po.supply.scope.column.original.delivery.date']}
+                </f:facet>
                 #{util.toLocal(_scopeSupply.poDeliveryDate)}
             </p:column>
-        <p:column sortBy="#{_scopeSupply.forecastExWorkDate}" width="90"
-                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
-            <f:facet name="header">
-                #{msgs['po.supply.scope.column.forecast.ex.works.date']}
-            </f:facet>
+            <p:column sortBy="#{_scopeSupply.forecastExWorkDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    #{msgs['po.supply.scope.column.forecast.ex.works.date']}
+                </f:facet>
                 #{util.toLocal(_scopeSupply.forecastExWorkDate)}
             </p:column>
-        <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
-                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
-            <f:facet name="header">
+            <p:column sortBy="#{_scopeSupply.actualExWorkDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
                     #{msgs['po.supply.scope.column.actual']}
                     <br/>
                     #{msgs['po.supply.scope.column.actual.ex.works']}
                     <br/>
                     #{msgs['po.supply.scope.column.actual.date']}
-            </f:facet>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.actualExWorkDate)}
             </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}" width="90"
-                  sortFunction="#{sortBean.sortLeadTime}" >
+            <p:column headerText="#{msgs['po.supply.scope.column.lead.time']}" sortBy="#{_scopeSupply.customLeadTime}"
+                      width="90"
+                      sortFunction="#{sortBean.sortLeadTime}">
                 #{_scopeSupply.deliveryLeadTimeQt}
                 &#160;
                 #{ configuration.getTimeMeasurement(_scopeSupply.deliveryLeadTimeMs)}
             </p:column>
-        <p:column sortBy="#{_scopeSupply.forecastSiteDate}" width="90"
-                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
-            <f:facet name="header">
-                #{msgs['po.supply.scope.column.forecast.site.date']}
-            </f:facet>
+            <p:column sortBy="#{_scopeSupply.forecastSiteDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
+                    #{msgs['po.supply.scope.column.forecast.site.date']}
+                </f:facet>
                 #{util.toLocal(_scopeSupply.forecastSiteDate)}
             </p:column>
 
-        <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="90"
-                  sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
-            <f:facet name="header">
+            <p:column sortBy="#{_scopeSupply.actualSiteDate}" width="90"
+                      sortFunction="#{sortBean.sortDate}" styleClass="forecast-ex-work-date">
+                <f:facet name="header">
                     #{msgs['po.supply.scope.column.actual.site']}
                     <br/>
                     #{msgs['po.supply.scope.column.site.date']}
-            </f:facet>
+                </f:facet>
                 #{util.toLocal(_scopeSupply.actualSiteDate)}
             </p:column>
             <p:column sortBy="#{_scopeSupply.requiredSiteDate}" width="90"
@@ -88,12 +92,14 @@
                 </f:facet>
                 #{util.toLocal(_scopeSupply.requiredSiteDate)}
             </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}" sortBy="#{_scopeSupply.responsibleExpediting}" width="70"
-                  sortFunction="#{sortBean.sortStrings}">
+            <p:column headerText="#{msgs['po.supply.scope.column.responsible.expediting']}"
+                      sortBy="#{_scopeSupply.responsibleExpediting}" width="70"
+                      sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.responsibleExpediting}
             </p:column>
-            <p:column headerText="#{msgs['po.supply.scope.column.var']}"  width="45">
-                <h:outputText value="#{util.calculateVariance(_scopeSupply)}" style="color:#{util.calculateVariance(_scopeSupply).startsWith('-')?'red':'black'}"/>
+            <p:column headerText="#{msgs['po.supply.scope.column.var']}" width="45">
+                <h:outputText value="#{util.calculateVariance(_scopeSupply)}"
+                              style="color:#{util.calculateVariance(_scopeSupply).startsWith('-')?'red':'black'}"/>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.attachment']}" width="95">
                 <div class="icon-container-attachment">
@@ -103,20 +109,40 @@
 
                                    action="#{purchaseOrderCreate.selectingForAttachment(_index)}"
                                    update=":attachmentscopeSupplyId">
-                        <h:graphicImage url="#{_scopeSupply.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}" width="20" height="20"/>
+                        <h:graphicImage
+                                url="#{_scopeSupply.attachments.size() gt 0?'/resources/img/full-folder.png':'/resources/img/folder.png'}"
+                                width="20" height="20"/>
                     </p:commandLink>
                 </div>
             </p:column>
-        <p:column headerText="#{msgs['lbl.action']}" width="137">
-            <div class="center-button">
-                <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
-                &#160;
-                <h:commandLink value="#{msgs['lbl.delete']}" styleClass="btn btn-primary btn-sm color-btn-data-table"  action="#{purchaseOrderCreate.deleteScopeSupply(_index)}">
-                    <p:ajax update="scopeSupplyList"/>
-                </h:commandLink>
-            </div>
-        </p:column>
+            <p:column headerText="#{msgs['lbl.action']}" width="137">
+                <div class="center-button">
+                    <h:commandLink value="#{msgs['lbl.edit']}" styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                   action="#{purchaseOrderCreate.selectForEditingScopeSuppply(_index)}"/>
+                    &#160;
+                    <h:commandLink value="#{msgs['lbl.delete']}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                   action="#{purchaseOrderCreate.deleteScopeSupply(_index)}">
+                        <p:ajax update="scopeSupplyList"/>
+                    </h:commandLink>
+                    &#160;
+                    <p:commandLink value="#{msgs['supply.scope.lbl.dont.expedite']}"
+                                   style="margin-top: 2px;margin-bottom: 2px;"
+                                   update="@form" ajax="true" async="false"
+                                   action="#{purchaseOrderCreate.updateScopeSupplyExcludeFromExpedite}"
+                                   disabled="#{_scopeSupply.excludeFromExpediting}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table btn-commandLink-primeFaces">
+                        <f:setPropertyActionListener target="#{purchaseOrderCreate.currentScopeSupply}"
+                                                     value="#{_scopeSupply}"/>
+                        <p:confirm header="#{msgs['lbl.confirmation']}"
+                                   message="#{msgs['supply.scope.lbl.msg.confirmation.commit']}"
+                                   icon="ui-icon-alert">
+                        </p:confirm>
+                    </p:commandLink>
+                </div>
+            </p:column>
         </p:dataTable>
+
         <div class="action-button-po">
             <div class="pull-right">
                 <h:commandButton styleClass="btn btn-primary btn-sm component-left"
@@ -125,6 +151,7 @@
             </div>
             <div class="clearfix"></div>
             <br/>
+
             <div class="pull-right">
                 <p:commandLink id="save01" value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
                                style="padding: 0px!important;"
