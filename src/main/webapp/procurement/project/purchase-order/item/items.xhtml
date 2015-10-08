@@ -151,8 +151,9 @@
                                 </h:panelGroup>
                                 <h:panelGroup id="edTotalCost" rendered="#{_i.isEditable}">
                                     <h:inputText id="totalCostItem" value="#{_i.totalCost}"
-                                                 readonly="true"
-                                                 styleClass="form-control edTotalCostItems">
+                                                 required="true"
+                                                 styleClass="form-control edTotalCostItems"
+                                                 onkeyup="calculateUnitCost();">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
                                     </h:inputText>
