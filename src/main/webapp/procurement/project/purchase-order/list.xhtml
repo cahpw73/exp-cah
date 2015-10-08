@@ -104,6 +104,20 @@
                                     </p:confirm>
                                 </p:commandLink>
                                 &#160;
+                                <p:commandLink ajax="true"
+                                               value="#{msgs['project.list.action.uncommit']}"
+                                               action="#{poListBean.doUncommit}"
+                                               update="@form"
+                                               style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                               rendered="#{poListBean.canUncommitt(_p)}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                    <p:confirm header="#{msgs['lbl.confirmation']}"
+                                               message="#{msgs['project.list.lbl.msg.confirmation.uncommit']}"
+                                               icon="ui-icon-alert">
+                                    </p:confirm>
+                                </p:commandLink>
+                                &#160;
                                 <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
                                                update="projectListId"
                                                rendered="#{poListBean.canExportCMS(_p)}"

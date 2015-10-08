@@ -225,6 +225,10 @@ public class PoListBean implements Serializable {
         }
     }
 
+    public void doUncommit(){
+
+    }
+
     public void doFinalise() {
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
@@ -283,6 +287,12 @@ public class PoListBean implements Serializable {
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                 (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal() ||
                         entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+    }
+    public boolean canUncommitt(PurchaseOrderEntity entity){
+        return entity.getPurchaseOrderProcurementEntity().getCmsExported()!=null
+                &&entity.getPurchaseOrderProcurementEntity().getJdeExported()!=null&&
+                entity.getPurchaseOrderProcurementEntity().getCmsExported()&&
+                entity.getPurchaseOrderProcurementEntity().getJdeExported();
     }
 
     public boolean canDelete(PurchaseOrderEntity entity) {

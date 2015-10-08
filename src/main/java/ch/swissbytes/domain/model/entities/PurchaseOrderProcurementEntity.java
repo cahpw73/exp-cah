@@ -44,8 +44,8 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private Boolean securityDeposit;
     private ContactEntity contactEntity;
     private ContactEntity contactExpediting;
-    private Boolean cmsExported;
-    private Boolean jdeExported;
+    private Boolean cmsExported=false;
+    private Boolean jdeExported=false;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
