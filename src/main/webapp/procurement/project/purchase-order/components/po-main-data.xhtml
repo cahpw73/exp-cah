@@ -24,11 +24,13 @@
                                     oncomplete="restartSwitches();"/>
                         </h:commandButton>
                         &#160;
+                        <ui:remove>
                         <h:commandButton type="submit" action="#{poBean.doSaveAndClose}"
                                          styleClass="btn btn-primary btn-sm"
                                          value="#{msgs['lbl.close']}"
                                          rendered="#{poBean.beingCreated}">
                         </h:commandButton>
+                        </ui:remove>
                         <h:link outcome="list" value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm">
                             <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                         </h:link>
