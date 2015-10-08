@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.6528925619834718"/>
+	<property name="ireport.zoom" value="1.366026910730142"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="979"/>
+	<property name="ireport.y" value="251"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -445,9 +445,9 @@
 				<text><![CDATA[Attn:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55bdc532-58fb-47aa-9584-99b31a1e9e3e" style="Arial" positionType="Float" mode="Opaque" x="33" y="55" width="152" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="55bdc532-58fb-47aa-9584-99b31a1e9e3e" style="Arial-Bold" positionType="Float" mode="Opaque" x="33" y="55" width="152" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
-					<font size="9"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{contactName}]]></textFieldExpression>
 			</textField>

@@ -281,7 +281,7 @@
                             <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces"
                                            value="#{msgs['lbl.yes']}"
                                            ajax="false"
-                                           onclick="PrimeFaces.monitorDownload(null, stop);"
+                                           onclick="PrimeFaces.monitorDownload(null, stop); PF('cmsExport').hide();"
                                            style="color: #ffffff">
                                 <p:fileDownload value="#{poListBean.exportCMS()}" contentDisposition="attachment">
                                 </p:fileDownload>
@@ -319,7 +319,7 @@
                             <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces"
                                            value="#{msgs['lbl.yes']}"
                                            ajax="false"
-                                           onclick="PrimeFaces.monitorDownload(null, stop);"
+                                           onclick="PrimeFaces.monitorDownload(null, stop); PF('jdeExport').hide();"
                                            style="color: #ffffff">
                                 <p:fileDownload value="#{poListBean.exportJDE()}"
                                                 contentDisposition="attachment">
