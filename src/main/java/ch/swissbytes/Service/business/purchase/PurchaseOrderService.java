@@ -17,6 +17,7 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.IncoTermsEnum;
 import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
 import org.apache.commons.lang.StringUtils;
 
@@ -74,6 +75,8 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ContactService contactService;
+    @Inject
+    private Configuration configuration;
 
     private final String PREFIX="v";
 
@@ -280,6 +283,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity savePOOnProcurementNewVariation(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(new Date(),configuration.getTimeZone()));
         PurchaseOrderProcurementEntity po = dao.savePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
         purchaseOrderEntity.setPurchaseOrderProcurementEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
