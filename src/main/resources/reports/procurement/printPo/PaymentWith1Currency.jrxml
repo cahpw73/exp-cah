@@ -119,7 +119,7 @@ order by ordered]]>
 		<band height="18" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="d690c0ad-7128-49db-947b-c3ab6397a27c" style="Arial" x="217" y="2" width="131" height="14">
-					<printWhenExpression><![CDATA[$F{currency1}!=null&&$F{currency1}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{currency1}!=null&&$F{currency1}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -128,7 +128,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="27013b90-d85b-4bcd-b9ac-b0659d2453f1" style="Arial" x="358" y="2" width="90" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -175,7 +175,7 @@ order by ordered]]>
 		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="365240b9-9d62-4642-b365-e1874f649f07" style="Arial-Bold" x="358" y="2" width="90" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="9" isBold="true"/>

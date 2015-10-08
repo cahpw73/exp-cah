@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentWith3Currencies" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c92f7d5-2129-4e18-80da-0d9fd8518a60">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="6"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
@@ -147,7 +147,7 @@ order by ordered]]>
 		<band height="19" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="d690c0ad-7128-49db-947b-c3ab6397a27c" style="Arial" x="110" y="4" width="57" height="14">
-					<printWhenExpression><![CDATA[$F{currency1}!=null&&$F{currency1}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{currency1}!=null&&$F{currency1}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -156,7 +156,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="17745274-ed33-4185-ae89-c9eb23377f05" style="Arial" x="231" y="4" width="57" height="14">
-					<printWhenExpression><![CDATA[$F{currency2}!=null&&$F{currency2}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{currency2}!=null&&$F{currency2}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -165,7 +165,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="6628ee3d-f698-4add-a8f2-52b9c90ff372" style="Arial" x="351" y="4" width="58" height="14">
-					<printWhenExpression><![CDATA[$F{currency3}!=null&&$F{currency3}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{currency3}!=null&&$F{currency3}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -174,7 +174,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="27013b90-d85b-4bcd-b9ac-b0659d2453f1" style="Arial" x="168" y="4" width="61" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -183,7 +183,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="97d69d52-ba99-45b3-885f-7b412909e058" style="Arial" x="289" y="4" width="60" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -192,7 +192,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="2a844d6c-2780-4f2f-9e22-a7b70ff790ad" style="Arial" x="410" y="4" width="57" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="8"/>
@@ -239,7 +239,7 @@ order by ordered]]>
 		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="365240b9-9d62-4642-b365-e1874f649f07" style="Arial-Bold" x="168" y="2" width="61" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency1}!=null&&$V{totalCurrency1}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="9" isBold="true"/>
@@ -248,7 +248,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="324f12a7-c282-49c2-96bb-473d68c4034f" style="Arial-Bold" mode="Transparent" x="289" y="2" width="60" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency2}!=null&&$V{totalCurrency2}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="9" isBold="true"/>
@@ -257,7 +257,7 @@ order by ordered]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="ca588249-c63a-40c0-a5aa-2947489c4f70" style="Arial-Bold" x="410" y="2" width="57" height="14">
-					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()>0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{totalCurrency3}!=null&&$V{totalCurrency3}.doubleValue()!=0]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
 					<font size="9" isBold="true"/>
