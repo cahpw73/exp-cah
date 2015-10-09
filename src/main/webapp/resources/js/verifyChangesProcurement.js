@@ -82,5 +82,10 @@ function doChangeProc(){
     hasChanges=true;
 }
 function restartChanges(){
+    console.log("reseting changes.");
     hasChanges=false;
+}
+
+function printDraft(){
+    $("#editPoForm\\:printDraftPO" ).click();
 }
