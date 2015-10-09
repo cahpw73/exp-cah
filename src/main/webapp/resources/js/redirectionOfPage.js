@@ -14,6 +14,7 @@ navigator.urls[6]={"url":"/brands/brands","level":"../../../"};
 navigator.urls[7]={"url":"/currency/currency","level":"../../../"};
 navigator.urls[8]={"url":"/user/edit","level":"../../../"};
 navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
+navigator.urls[10]={"url":"/profile/profile","level":"../../../"};
 
 /**** Redireccionamiento hacia project*****/
 //Quitar el segundo boton porque ya no se lo necesita
@@ -106,6 +107,19 @@ function verifyToLeaveClientEdit(e){
         for (var i = 0; i < navigator.urls.length; i++) {
             if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
                 PF('confGoToClientListDlg').show();
+                return false;
+            }
+        }
+    }
+    return false;
+}
+/***Redirecionamiento hacia profile ProjectList de Profile***/
+function verifyToLeaveProfileProcurementEdit(e){
+    if(hasChanges){
+        if(e.preventDefault) e.preventDefault();
+        for (var i = 0; i < navigator.urls.length; i++) {
+            if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+                PF('confGoToProjectListFromProfileDlg').show();
                 return false;
             }
         }

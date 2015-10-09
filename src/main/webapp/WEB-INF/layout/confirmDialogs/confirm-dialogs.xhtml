@@ -152,6 +152,31 @@
         </div>
     </p:confirmDialog>
 
+    <p:confirmDialog widgetVar="confGoToProjectListFromProfileDlg" severity="alert" global="true" id="confGoToProjectListFromProfileId"
+                     header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:link outcome="/procurement/project/list"
+                    styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}
+            </h:link>
+            &#160;
+            <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
+                    onclick="PF('confGoToProjectListFromProfileDlg').hide();">
+                #{msgs['lbl.no']}
+            </button>
+        </div>
+    </p:confirmDialog>
+
     <p:confirmDialog widgetVar="confCancelReportList" severity="alert" global="true" id="confrDialogReportLinkId"
                      header="Cancel">
         <f:facet name="message">
