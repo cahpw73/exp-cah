@@ -252,15 +252,26 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
-                || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
+        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null){
+            return  (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
+                    || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
+        }else{
+            return false;
+        }
+
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
-                || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+        log.info("entity.getPurchaseOrderProcurementEntity().getPoProcStatus()  "+entity.getPurchaseOrderProcurementEntity().getPoProcStatus() );
+        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            return
+            (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
+                    || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+        }else{
+            return true;
+        }
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {

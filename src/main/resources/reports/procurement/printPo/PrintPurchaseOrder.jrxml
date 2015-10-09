@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.366026910730142"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="251"/>
+	<property name="ireport.y" value="336"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -30,6 +30,8 @@
 		<parameter name="patternDecimal" class="java.lang.String"/>
 		<parameter name="poTitle" class="java.lang.String"/>
 		<parameter name="preamble" class="java.lang.String"/>
+		<parameter name="TIME_ZONE" class="java.lang.String"/>
+		<parameter name="FORMAT_DATE2" class="java.lang.String"/>
 		<field name="code" class="java.lang.String"/>
 		<field name="quantity" class="java.math.BigDecimal"/>
 		<field name="unit" class="java.lang.String"/>
@@ -41,6 +43,7 @@
 		<field name="strTotalCost" class="java.lang.String"/>
 		<field name="totalAmount" class="java.math.BigDecimal"/>
 		<field name="currency" class="java.lang.String"/>
+		<field name="deliveryDate" class="java.util.Date"/>
 	</subDataset>
 	<parameter name="purchaseOrderId" class="java.lang.Long"/>
 	<parameter name="logo" class="java.io.InputStream"/>
@@ -639,7 +642,7 @@
 			<componentElement>
 				<reportElement uuid="9283fa30-acc3-40bf-8ab6-8b873e2cab0e" key="table" style="table" positionType="Float" isPrintRepeatedValues="false" x="0" y="1" width="519" height="5"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="PODataset" uuid="c6b784f6-fd4c-4f83-8b28-3973076d3945">
+					<datasetRun subDataset="PODataset" uuid="1afcbafc-0ffd-4f2e-91e2-27a04d8f821d">
 						<datasetParameter name="patternDecimal">
 							<datasetParameterExpression><![CDATA[$P{patternDecimal}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -648,6 +651,12 @@
 						</datasetParameter>
 						<datasetParameter name="preamble">
 							<datasetParameterExpression><![CDATA[$P{preamble}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="TIME_ZONE">
+							<datasetParameterExpression><![CDATA[$P{TIME_ZONE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="FORMAT_DATE2">
+							<datasetParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></datasetParameterExpression>
 						</datasetParameter>
 						<dataSourceExpression><![CDATA[$P{poList}]]></dataSourceExpression>
 					</datasetRun>
@@ -735,10 +744,10 @@
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="278" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
+					<jr:column width="210" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="278" height="15"/>
+								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="210" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="3"/>
@@ -749,12 +758,12 @@
 								<reportElement uuid="57bf7b90-461a-44f5-ba8f-190752cebaa5" x="0" y="0" width="1" height="16"/>
 							</line>
 							<line>
-								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="278" height="1"/>
+								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="210" height="1"/>
 							</line>
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="1" y="12" width="277" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="1" y="12" width="209" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Top" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -762,7 +771,7 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial",8).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="278" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="210" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 									<font size="11" isBold="true" isItalic="false"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -771,6 +780,35 @@
 							</textField>
 							<line>
 								<reportElement uuid="77566b8b-922d-4b10-8a6b-b0326dedf2b8" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+							</line>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="a51c0290-202f-48c3-91aa-6d489ff4d64b">
+						<jr:columnHeader height="16" rowSpan="1">
+							<staticText>
+								<reportElement uuid="820b6b18-bd3f-4abb-b324-42a75cd1b677" style="Arial-Bold" x="0" y="0" width="68" height="15"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Delivery Date]]></text>
+							</staticText>
+							<line>
+								<reportElement uuid="6aeec973-a565-40d2-a6bc-a39fc666bb91" x="0" y="0" width="1" height="16"/>
+							</line>
+							<line>
+								<reportElement uuid="801de382-24e3-4369-844e-a4cb777112a7" x="0" y="15" width="68" height="1"/>
+							</line>
+						</jr:columnHeader>
+						<jr:detailCell height="24" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="8a3719f0-8bb7-4286-9148-d9c9310a7de9" style="Arial" positionType="Float" x="0" y="12" width="68" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Center" markup="styled">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{deliveryDate}.getTime())):null]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement uuid="efda876a-d7d6-4f9b-a728-04c74d5fa200" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
 							</line>
 						</jr:detailCell>
 					</jr:column>

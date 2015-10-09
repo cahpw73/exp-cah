@@ -274,6 +274,7 @@ public class PoBean extends Bean {
             log.info("purchase order created [" + purchaseOrder.getId() + "]");
             doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
+            poId = purchaseOrder.getId().toString();
             loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("printDraft();");
