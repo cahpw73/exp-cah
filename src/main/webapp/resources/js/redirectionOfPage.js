@@ -15,6 +15,8 @@ navigator.urls[7]={"url":"/currency/currency","level":"../../../"};
 navigator.urls[8]={"url":"/user/edit","level":"../../../"};
 navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
 
+/**** Redireccionamiento hacia project*****/
+//Quitar el segundo boton porque ya no se lo necesita
 $("#projectListLinkId").click(function(e){
     verifyToLeaveProjectEdit(e)
 })
@@ -41,24 +43,21 @@ function leavePageToProjectList(e,level){
     leavingPage(e,target,"confCancelPurchaseList");
 }
 
-/*go to Po list*/
-$("#cancelPOBtn1").click(function(e){
-    alert("1")
-    verifyToLeavePOEdit(e)
-})
+/*****Redireccionamiento hacia PO List*******/
 function verifyToLeavePOEdit(e){
+    if(e.preventDefault) e.preventDefault();
     for (var i = 0; i < navigator.urls.length; i++) {
         if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
             leavePageToPOList(e,navigator.urls[i].level);
-            break;
+            return false;
         }
     }
+    return false;
 }
 function leavePageToPOList(e,level){
     target=level+"procurement/project/purchase-order/list.jsf";
     leavingPage(e,target,"confCancelPurchaseList");
 }
-
 
 
 $("#reportListLinkId").click(function(e){
@@ -106,6 +105,8 @@ function leavePageToProfileList(e,level){
     leavingPage(e,target,"confCancelProfile");
 }
 function leavingPage(e,target,dialog){
+    alert("Target["+target+"]");
+
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");
