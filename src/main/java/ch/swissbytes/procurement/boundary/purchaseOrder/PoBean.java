@@ -183,7 +183,7 @@ public class PoBean extends Bean {
                 if ((modeView==null|| (modeView!=null&&!modeView))
                         &&status.ordinal() == ProcurementStatus.COMMITTED.ordinal() || status.ordinal() == ProcurementStatus.FINAL.ordinal()) {
                     try {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("purchase-order/list.jsf?projectId=1");
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("list.jsf?projectId="+purchaseOrder.getProjectEntity().getId());
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
