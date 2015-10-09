@@ -277,8 +277,8 @@ public class PoBean extends Bean {
             poId = purchaseOrder.getId().toString();
             loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("printDraft();");
             context.execute("restartChanges();");
+            context.execute("printDraft();");
         }
         return null;
     }
