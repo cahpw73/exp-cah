@@ -33,7 +33,7 @@
                         </ui:remove>
                         <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.cancel']}"
                                 styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
-                                rendered="#{poBean.beingCreated}" >
+                                outcome="list">
                             <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                         </h:link>
                         <ui:remove>

@@ -404,15 +404,22 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canExportCMS(PurchaseOrderEntity entity) {
-        boolean exported = entity.getPurchaseOrderProcurementEntity().getCmsExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getCmsExported();
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
-                && !exported;
+        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null){
+            boolean exported = entity.getPurchaseOrderProcurementEntity().getCmsExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getCmsExported();
+            return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
+                    && !exported;
+        }
+        return false;
     }
 
     public boolean canExportJDE(PurchaseOrderEntity entity) {
-        boolean exported = entity.getPurchaseOrderProcurementEntity().getJdeExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getJdeExported();
-        return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
-                && !exported;
+        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null){
+            boolean exported = entity.getPurchaseOrderProcurementEntity().getJdeExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getJdeExported();
+            return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
+                    && !exported;
+        }
+        return false;
+
     }
 
     public StreamedContent exportCMS() throws FileNotFoundException {

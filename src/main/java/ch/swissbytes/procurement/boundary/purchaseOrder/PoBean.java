@@ -580,4 +580,11 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setSecurityDeposit(applyRetention);
     }
 
+    public String verifyAndGetProjectId(){
+        if(purchaseOrder!=null && purchaseOrder.getProjectEntity()!=null){
+            return purchaseOrder.getProjectEntity().getId().toString();
+        }
+        return "";
+    }
+
 }
