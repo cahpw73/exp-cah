@@ -31,7 +31,9 @@
                                          rendered="#{poBean.beingCreated}">
                         </h:commandButton>
                         </ui:remove>
-                        <h:link outcome="list" value="#{msgs['lbl.cancel']}" styleClass="btn btn-primary btn-sm">
+                        <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.cancel']}"
+                                styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
+                                outcome="list">
                             <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                         </h:link>
                         <ui:remove>
@@ -176,4 +178,20 @@
             </div>
         </div>
     </h:panelGroup>
+
+    <!--<script>-->
+        <!--setTimeout(function () {-->
+
+
+
+            <!--$("#editPoForm\\:cancelPOCreateBtn").click(function(e){-->
+                <!--e.preventDefault();-->
+                <!---->
+                <!--verifyToLeavePOEdit(e)-->
+            <!--})-->
+        <!--}, 5000);-->
+    <!--</script>-->
+
 </ui:composition>
+
+

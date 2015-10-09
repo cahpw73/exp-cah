@@ -15,15 +15,13 @@ navigator.urls[7]={"url":"/currency/currency","level":"../../../"};
 navigator.urls[8]={"url":"/user/edit","level":"../../../"};
 navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
 
+/**** Redireccionamiento hacia project*****/
+//Quitar el segundo boton porque ya no se lo necesita
 $("#projectListLinkId").click(function(e){
     verifyToLeaveProjectEdit(e)
 })
 
 $("#cancelProjectBtn1").click(function(e){
-    verifyToLeaveProjectEdit(e)
-})
-
-$("#cancelProjectBtn2").click(function(e){
     verifyToLeaveProjectEdit(e)
 })
 
@@ -41,24 +39,25 @@ function leavePageToProjectList(e,level){
     leavingPage(e,target,"confCancelPurchaseList");
 }
 
-/*go to Po list*/
-$("#cancelPOBtn1").click(function(e){
-    alert("1")
-    verifyToLeavePOEdit(e)
-})
+/*****Redireccionamiento hacia PO List*******/
 function verifyToLeavePOEdit(e){
-    for (var i = 0; i < navigator.urls.length; i++) {
-        if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
-            leavePageToPOList(e,navigator.urls[i].level);
-            break;
+    if(hasChanges){
+        if(e.preventDefault) e.preventDefault();
+        for (var i = 0; i < navigator.urls.length; i++) {
+            if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+                leavePageToPOList(e,navigator.urls[i].level);
+                return false;
+            }
         }
     }
-}
-function leavePageToPOList(e,level){
-    target=level+"procurement/project/purchase-order/list.jsf";
-    leavingPage(e,target,"confCancelPurchaseList");
-}
 
+    return false;
+}
+function leavePageToPOList(level){
+    target=level+"procurement/project/purchase-order/list.jsf";
+    console.log("hasChanges true");
+    PF('confGotoPoListDlg').show();
+}
 
 
 $("#reportListLinkId").click(function(e){
@@ -106,6 +105,8 @@ function leavePageToProfileList(e,level){
     leavingPage(e,target,"confCancelProfile");
 }
 function leavingPage(e,target,dialog){
+    alert("Target["+target+"]");
+
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");
