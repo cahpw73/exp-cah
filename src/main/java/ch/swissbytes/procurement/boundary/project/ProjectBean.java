@@ -288,6 +288,7 @@ public class ProjectBean extends Bean implements Serializable {
             }
         }
         projectCurrencyEntity = new ProjectCurrencyEntity();
+        projectCurrency.setFormat(DEFAULT_CURRENCY_FORMAT);
         createCurrency = true;
     }
 
