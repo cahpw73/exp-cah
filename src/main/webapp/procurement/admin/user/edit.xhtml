@@ -163,10 +163,14 @@
                                                  action="#{userBean.doUpdate}"
                                                  styleClass="btn btn-primary btn-sm"/>
                                 &#160;
-                                <h:commandButton value="#{msgs['lbl.cancel']}"
-                                                 action="list?faces-redirect=true"
-                                                 styleClass="btn btn-primary btn-sm"
-                                                 immediate="true"/>
+                                <ui:remove>
+                                    <h:commandButton value="#{msgs['lbl.cancel']}"
+                                                     action="list?faces-redirect=true"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     immediate="true"/>
+                                </ui:remove>
+                                <h:link value="#{msgs['lbl.cancel']}"
+                                        outcome="list" styleClass="btn btn-primary btn-sm" onclick="verifyToLeaveUserEdit(event)"/>
                             </div>
                         </div>
                     </div>
