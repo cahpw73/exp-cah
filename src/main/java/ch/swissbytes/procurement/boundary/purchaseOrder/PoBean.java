@@ -168,7 +168,7 @@ public class PoBean extends Bean {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
             } else {
-                throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
+                    throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
             }
             initializeValuesBooleanInHeaderSection();
         }
