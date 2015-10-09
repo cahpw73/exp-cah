@@ -219,9 +219,8 @@ public class ProjectBean extends Bean implements Serializable {
         boolean validated = true;
         if(projectCurrencyEntity.getCurrency() !=null) {
             for (ProjectCurrencyEntity p : projectCurrencyList) {
-
                 if (p.getCurrency().getId().longValue() == projectCurrencyEntity.getCurrency().getId().longValue()) {
-                    if(projectCurrencyEntity.getId()!=null &&p.getId().longValue()==projectCurrencyEntity.getId().longValue()) {
+                    if(projectCurrencyEntity.getId()==null||(projectCurrencyEntity.getId()!=null &&p.getId().longValue()!=projectCurrencyEntity.getId().longValue()) ){
                         Messages.addFlashError("currencyId", "Currency already added");
                         validated = false;
                         break;
