@@ -78,7 +78,7 @@
     </filter>
     <filter-mapping>
         <filter-name>NoCacheFilter</filter-name>
-        <url-pattern>/procurement/project/purchase-order/list</url-pattern>
+        <url-pattern>/procurement/project/purchase-order/*</url-pattern>
     </filter-mapping>
 
 
