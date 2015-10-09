@@ -231,6 +231,9 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus()==null){
+                purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            }
             if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             }
@@ -276,8 +279,11 @@ public class PoBean extends Bean {
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             poId = purchaseOrder.getId().toString();
             loadPurchaseOrder();
+            log.info("saved po "+poId);
             RequestContext context = RequestContext.getCurrentInstance();
+            log.info("restarting changes!");
             context.execute("restartChanges();");
+            log.info("printing draft!");
             context.execute("printDraft();");
         }
         return null;
@@ -292,8 +298,11 @@ public class PoBean extends Bean {
             doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             loadPurchaseOrder();
+            log.info("saved po "+poId);
             RequestContext context = RequestContext.getCurrentInstance();
+            log.info("restarting changes!");
             context.execute("restartChanges();");
+            log.info("printing draft!");
             context.execute("printDraft();");
         }
         return null;
