@@ -17,9 +17,11 @@ import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
@@ -162,8 +164,7 @@ public class PoBean extends Bean {
                 }
             } else if (poId != null) {
                 try {
-
-                    loadPurchaseOrder();
+                        loadPurchaseOrder();
                 } catch (NumberFormatException nfe) {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
@@ -173,6 +174,23 @@ public class PoBean extends Bean {
             initializeValuesBooleanInHeaderSection();
         }
         loaded = true;
+    }
+    public void canEditPo(){
+        if(poId!=null){
+            purchaseOrder = service.findById(Long.valueOf(poId));
+            ProcurementStatus status=purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
+            if(status!=null) {
+                if(status.ordinal()==ProcurementStatus.COMMITTED.ordinal()||status.ordinal()==ProcurementStatus.FINAL.ordinal()){
+                  //  return "purchase-order/list.xhtml";
+                    try {
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("list..xhtml");
+                    }catch (IOException ioe){
+                        ioe.printStackTrace();
+                    }
+                }
+            }
+        }
+       // return null;
     }
 
     @Override
