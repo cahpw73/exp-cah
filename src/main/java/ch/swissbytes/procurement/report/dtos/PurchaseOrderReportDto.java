@@ -25,6 +25,7 @@ public class PurchaseOrderReportDto implements Serializable {
     private String poTitle;
     private String preamble;
     private String strTotalCost;
+    private Date deliveryDate;
 
     private BigDecimal totalAmount;
 
@@ -41,6 +42,7 @@ public class PurchaseOrderReportDto implements Serializable {
         this.description = scopeSupply.getDescription();
         this.cost = scopeSupply.getCost();
         this.totalCost = scopeSupply.getTotalCost();
+        this.deliveryDate = scopeSupply.getPoDeliveryDate();
         this.poTitle = null;
         this.preamble = null;
         this.strTotalCost = null;
@@ -65,6 +67,7 @@ public class PurchaseOrderReportDto implements Serializable {
         this.description = null;
         this.cost = null;
         this.totalCost = null;
+        this.deliveryDate = null;
         if(po!=null) {
             this.poTitle = po.getPoTitle();
         }
@@ -95,6 +98,7 @@ public class PurchaseOrderReportDto implements Serializable {
         dto.setTotalCost(null);
         dto.setPoTitle(null);
         dto.setPreamble(null);
+        dto.setDeliveryDate(null);
         dto.setStrTotalCost("TOTAL "+ currencyCode);
         dto.setTotalAmount(totalAmount);
         return dto;
@@ -186,5 +190,13 @@ public class PurchaseOrderReportDto implements Serializable {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }
