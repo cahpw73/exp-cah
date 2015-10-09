@@ -101,7 +101,6 @@ public class PoBean extends Bean {
     private boolean loaded = false;
 
 
-
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
@@ -164,7 +163,7 @@ public class PoBean extends Bean {
                 }
             } else if (poId != null) {
                 try {
-                        loadPurchaseOrder();
+                    loadPurchaseOrder();
                 } catch (NumberFormatException nfe) {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
@@ -175,28 +174,28 @@ public class PoBean extends Bean {
         }
         loaded = true;
     }
-    public void canEditPo(){
-        if(poId!=null){
+
+    public void canEditPo() {
+        if (poId != null) {
             purchaseOrder = service.findById(Long.valueOf(poId));
-            ProcurementStatus status=purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
-            if(status!=null) {
-                if(status.ordinal()==ProcurementStatus.COMMITTED.ordinal()||status.ordinal()==ProcurementStatus.FINAL.ordinal()){
-                  //  return "purchase-order/list.xhtml";
+            ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
+            if (status != null) {
+                if ((modeView==null|| (modeView!=null&&!modeView))
+                        &&status.ordinal() == ProcurementStatus.COMMITTED.ordinal() || status.ordinal() == ProcurementStatus.FINAL.ordinal()) {
                     try {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("list..xhtml");
-                    }catch (IOException ioe){
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("purchase-order/list.jsf?projectId=1");
+                    } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
                 }
             }
         }
-       // return null;
     }
 
     @Override
     protected void initialize() {
         purchaseOrder = new PurchaseOrderEntity();
-        loaded=false;
+        loaded = false;
     }
 
 
@@ -353,7 +352,7 @@ public class PoBean extends Bean {
         /*if(!cashflowBean.validateSecurityDeposit()){
             validated = false;
         }*/
-        if(cashflowBean.getCashflow().getPaymentTerms()==null){
+        if (cashflowBean.getCashflow().getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Enter a valid Payment Terms in Cashflow");
             validated = false;
         }
@@ -405,7 +404,7 @@ public class PoBean extends Bean {
             fax = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getFax();
             if (StringUtils.isEmpty(fax)) {
                 String faxSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getFax();
-                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier()!=null && StringUtils.isNotEmpty((faxSupplier))) {
+                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null && StringUtils.isNotEmpty((faxSupplier))) {
                     return faxSupplier;
                 }
             }
@@ -525,13 +524,13 @@ public class PoBean extends Bean {
                 if (n.getId().longValue() == detailEntity.getProjectCurrency().getId().longValue()) {
                     detailEntity.setOrderAmt(calculateBasedPercentageAndTotalValue(detailEntity.getPercentage(), totals.get(detailEntity.getProjectCurrency())));
                     break;
-                }else{
+                } else {
                     detailEntity.setOrderAmt(null);
                 }
             }
-            if(detailEntity.getOrderAmt() != null) {
+            if (detailEntity.getOrderAmt() != null) {
                 detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
-            }else{
+            } else {
                 detailEntity.setProjectAmt(null);
             }
         }
@@ -542,8 +541,8 @@ public class PoBean extends Bean {
         return paymentValueBig;
     }
 
-    private BigDecimal calculateProjectValueByPaymentValueAndCurrency(final BigDecimal currencyFactor, final BigDecimal paymentValue){
-        BigDecimal projectValue = paymentValue.divide(currencyFactor,BigDecimal.ROUND_HALF_UP);
+    private BigDecimal calculateProjectValueByPaymentValueAndCurrency(final BigDecimal currencyFactor, final BigDecimal paymentValue) {
+        BigDecimal projectValue = paymentValue.divide(currencyFactor, BigDecimal.ROUND_HALF_UP);
         return projectValue;
     }
 
@@ -576,7 +575,7 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(new ContactEntity());
     }
 
-    public void loadSecurityDeposit(boolean applyRetention){
+    public void loadSecurityDeposit(boolean applyRetention) {
         purchaseOrder.getPurchaseOrderProcurementEntity().setSecurityDeposit(applyRetention);
     }
 
