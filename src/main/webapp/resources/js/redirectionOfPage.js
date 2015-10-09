@@ -50,7 +50,6 @@ function verifyToLeavePOEdit(e){
             }
         }
     }
-
     return false;
 }
 function leavePageToPOList(level){
@@ -59,6 +58,60 @@ function leavePageToPOList(level){
     PF('confGotoPoListDlg').show();
 }
 
+/****Redireccionamiento hacia Supplier List ***/
+function verifyToLeaveSupplierEdit(e){
+    if(hasChanges){
+        if(e.preventDefault) e.preventDefault();
+        for (var i = 0; i < navigator.urls.length; i++) {
+            if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+                PF('confGoToSupplierListDlg').show();
+                return false;
+            }
+        }
+    }
+    return false;
+}
+/***Redirecinamiento hacia User List***/
+function verifyToLeaveUserEdit(e){
+    if(hasChanges){
+        if(e.preventDefault) e.preventDefault();
+        for (var i = 0; i < navigator.urls.length; i++) {
+            if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+                PF('confGoToUserListDlg').show();
+                return false;
+            }
+        }
+    }
+    return false;
+}
+
+/***Redirecionamiento hacia Logo List**/
+function verifyToLeaveLogoEdit(e){
+    if(hasChanges){
+        if(e.preventDefault) e.preventDefault();
+        for (var i = 0; i < navigator.urls.length; i++) {
+            if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+                PF('confGoToLogoListDlg').show();
+                return false;
+            }
+        }
+    }
+    return false;
+}
+
+/**Redirecionamiento hacia Client List**/
+function verifyToLeaveClientEdit(e){
+    if(hasChanges){
+        if(e.preventDefault) e.preventDefault();
+        for (var i = 0; i < navigator.urls.length; i++) {
+            if(window.location.href.indexOf(navigator.urls[i].url)!=-1){
+                PF('confGoToClientListDlg').show();
+                return false;
+            }
+        }
+    }
+    return false;
+}
 
 $("#reportListLinkId").click(function(e){
     console.log("click report list.... "+window.location.href);
@@ -105,8 +158,6 @@ function leavePageToProfileList(e,level){
     leavingPage(e,target,"confCancelProfile");
 }
 function leavingPage(e,target,dialog){
-    alert("Target["+target+"]");
-
     e.preventDefault();
     if(hasChanges){
         console.log("hasChanges true");

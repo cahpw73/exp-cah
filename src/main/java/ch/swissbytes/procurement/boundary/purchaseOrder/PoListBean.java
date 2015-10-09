@@ -263,7 +263,6 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
-        log.info("entity.getPurchaseOrderProcurementEntity().getPoProcStatus()  "+entity.getPurchaseOrderProcurementEntity().getPoProcStatus() );
         if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             return
             (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())

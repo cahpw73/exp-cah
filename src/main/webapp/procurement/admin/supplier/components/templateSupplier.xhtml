@@ -87,10 +87,9 @@
                     <h:panelGroup id="idBtnCancel">
                         <h:panelGroup rendered="#{MODE != null }">
                             <h:panelGroup rendered="#{supplierProcBean.supplierMode}">
-                                <button id="ccb4
-                                " type="button" class="btn btn-primary btn-sm"
+                                <button id="ccb4" type="button" class="btn btn-primary btn-sm"
                                         onclick="PF('supplierModal').hide()">
-                                    #{msgs['lbl.cancel']}
+                                        #{msgs['lbl.cancel']}
                                 </button>
                             </h:panelGroup>
                             <h:commandButton id="ccb3" value="#{msgs['lbl.cancel']}"
@@ -103,7 +102,8 @@
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE ==null}">
                             <h:link id="ccb2" value="#{msgs['lbl.cancel']}" rendered="#{supplierProcBean.supplierMode}"
-                                    outcome="list" styleClass="btn btn-primary btn-sm"/>
+                                    outcome="list" styleClass="btn btn-primary btn-sm" onclick="verifyToLeaveSupplierEdit(event)"/>
+
                             <h:commandButton id="ccb1" value="#{msgs['lbl.cancel']}"
                                              styleClass="btn btn-primary btn-sm"
                                              rendered="#{not supplierProcBean.supplierMode}">
