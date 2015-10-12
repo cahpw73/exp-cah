@@ -97,7 +97,7 @@ public class ReportExpeditingBean implements Serializable {
     }
 
     public String backToReports(){
-        return "report/report?faces-redirect=true";
+        return "/report?faces-redirect=true";
     }
 
     public void doSave(){

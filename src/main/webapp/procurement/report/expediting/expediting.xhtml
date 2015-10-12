@@ -110,11 +110,16 @@
                                                value="#{msgs['lbl.save']}"
                                                action="#{reportExpeditingBean.doSave}">
                                 </h:commandButton>
-                                &#160;
-                                <h:commandButton class="btn btn-primary btn-sm"
+                                <ui:remove>
+                                    &#160;
+                                <h:button class="btn btn-primary btn-sm" outcome="../report"
                                                  immediate="true"
-                                                 action="#{reportExpeditingBean.backToReports}"
-                                                 value="#{msgs['lbl.cancel']}"/>
+                                                 value="#{msgs['lbl.close']}"/>
+                                &#160;
+                                <h:link outcome="../report"
+                                        value="#{msgs['lbl.close']}"
+                                        styleClass="btn btn-primary btn-sm"/>
+                                </ui:remove>
                             </div>
                         </div>
                     </div>
