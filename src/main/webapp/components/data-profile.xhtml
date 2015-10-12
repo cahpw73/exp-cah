@@ -89,14 +89,8 @@
                                      action="#{userProfileBean.doUpdate}"
                                      styleClass="btn btn-primary btn-sm"/>
                     &#160;
-                    <h:link id="profileProcBtnId" styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.cancel']}"
+                    <h:link id="profileProcBtnId" styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.close']}"
                             outcome="/procurement/project/list" onclick="verifyToLeaveProfileProcurementEdit(event)" />
-                    <ui:remove>
-                        <h:commandButton value="#{msgs['lbl.cancel']}" rendered="#{userSession.procurement}"
-                                         action="/procurement/project/list?faces-redirect=true"
-                                         styleClass="btn btn-primary btn-sm"
-                                         immediate="true"/>
-                    </ui:remove>
                     <h:commandButton id="profileExpediteBtnId" value="#{msgs['lbl.cancel']}" rendered="#{!userSession.procurement}"
                                      action="/home?faces-redirect=true"
                                      styleClass="btn btn-primary btn-sm"
