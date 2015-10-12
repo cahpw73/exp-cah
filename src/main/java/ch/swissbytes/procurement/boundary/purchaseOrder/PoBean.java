@@ -574,7 +574,8 @@ public class PoBean extends Bean {
     }
 
     public boolean poIsOriginal() {
-        if (purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1) {
+        if (purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1 ||
+                purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal()) {
             return true;
         }
         return false;

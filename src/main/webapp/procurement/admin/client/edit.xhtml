@@ -178,16 +178,8 @@
                             <h:commandButton value="#{msgs['lbl.save']}" rendered="#{clientBean.beingOnlyEdited}"
                                              action="#{clientBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
                             &#160;
-                            <h:link id="clientEditBtnId" styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.cancel']}"
+                            <h:link id="clientEditBtnId" styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.close']}"
                                     outcome="list" onclick="verifyToLeaveClientEdit(event)" />
-                            <ui:remove>
-                            <h:commandButton value="#{msgs['lbl.close']}" rendered="#{clientBean.beingCreated}"
-                                             action="#{clientBean.saveAndClose}"
-                                             styleClass="btn btn-primary btn-sm"/>
-                            <h:commandButton value="#{msgs['lbl.close']}" rendered="#{clientBean.beingOnlyEdited}"
-                                             action="#{clientBean.updateAndClose}"
-                                             styleClass="btn btn-primary btn-sm"/>
-                            </ui:remove>
                         </div>
                     </div>
                 </div>

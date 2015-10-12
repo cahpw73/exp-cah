@@ -2,10 +2,12 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
+import ch.swissbytes.procurement.boundary.BeanEditableList;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
@@ -117,9 +119,25 @@ public class ItemBean implements Serializable {
 
     public void editItem(ScopeSupplyEntity entity) {
         log.info("edit item");
-        entity.startEditing();
-        entity.storeOldValue(entity);
-        //sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        if(canEdit()) {
+            entity.startEditing();
+            entity.storeOldValue(entity);
+            //sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        }
+    }
+
+    private boolean canEdit(){
+        return rowsBeingEdited()==0;
+    }
+
+    private Integer rowsBeingEdited() {
+        Integer rows = 0;
+        for (ScopeSupplyEntity r : scopeSupplyList) {
+            if (r.getIsEditable()) {
+                rows++;
+            }
+        }
+        return rows;
     }
 
     public void cancelEditionItem(ScopeSupplyEntity entity) {

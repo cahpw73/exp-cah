@@ -56,7 +56,7 @@
                            action="#{logoBean.doSave}">
             </h:commandLink>
             &#160;
-            <h:link id="logoEditBtnId" styleClass="btn btn-primary btn-sm" rendered="#{MODE == null}" value="#{msgs['lbl.cancel']}"
+            <h:link id="logoEditBtnId" styleClass="btn btn-primary btn-sm" rendered="#{MODE == null}" value="#{msgs['lbl.close']}"
                     outcome="logo" onclick="verifyToLeaveLogoEdit(event)"/>
             <h:panelGroup rendered="#{MODE eq 'CLIENT'}">
                 <h:commandButton value="#{msgs['lbl.save']}" process="@this"

@@ -67,7 +67,7 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 	<detail>
 		<band height="42" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="73031216-32c4-43a0-8b95-81a50cd2739a" x="2" y="0" width="800" height="40"/>
+				<reportElement uuid="73031216-32c4-43a0-8b95-81a50cd2739a" x="2" y="0" width="800" height="40" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="qtyLbl">
 					<subreportParameterExpression><![CDATA[$P{qtyLbl}]]></subreportParameterExpression>
 				</subreportParameter>
