@@ -270,7 +270,7 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public void cancelCurrencyOperation() {
-        log.info("cancel currecny operation");
+        log.info("cancel currency operation");
         projectCurrencyEntity = new ProjectCurrencyEntity();
         createCurrency = true;
         projectCurrencyEntity.setFormat(DEFAULT_CURRENCY_FORMAT);
