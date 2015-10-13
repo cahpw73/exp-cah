@@ -49,6 +49,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("LANGUAGE_LOCALE", configuration.getLanguage());
         addParameters("COUNTRY_LOCALE", configuration.getCountry());
+        addParameters("STATUS_EXPEDITING",lookupValueFactory.getPurchaseOrderStatuses());
         loadParamJobSummary();
     }
 

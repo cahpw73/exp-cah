@@ -9,6 +9,9 @@
 	<parameter name="purchaseID" class="java.util.Collection"/>
 	<parameter name="TIME_MEASUREMENT" class="java.util.Map"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="CURRENT_DATE" class="java.util.Date"/>
+	<parameter name="STATUS_EXPEDITING" class="java.util.Map"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="itemLbl" class="java.lang.String"/>
 	<parameter name="qtyLbl" class="java.lang.String"/>
 	<parameter name="uomLbl" class="java.lang.String"/>
@@ -22,11 +25,9 @@
 	<parameter name="forecastSiteDateLbl" class="java.lang.String"/>
 	<parameter name="actualSiteDateLbl" class="java.lang.String"/>
 	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
-	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="deliveryCommentLbl" class="java.lang.String"/>
 	<parameter name="fullIncoTermLbl" class="java.lang.String"/>
 	<parameter name="varLbl" class="java.lang.String"/>
-	<parameter name="CURRENT_DATE" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select id,project,po
 from purchase_order
@@ -98,6 +99,9 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<subreportParameter name="uomLbl">
 					<subreportParameterExpression><![CDATA[$P{uomLbl}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="STATUS_EXPEDITING">
+					<subreportParameterExpression><![CDATA[$P{STATUS_EXPEDITING}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="PURCHASE_ORDER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -113,20 +117,20 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<subreportParameter name="forecastExWorksDateLbl">
 					<subreportParameterExpression><![CDATA[$P{forecastExWorksDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="TIME_MEASURE_LIST">
-					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="incoTermLbl">
 					<subreportParameterExpression><![CDATA[$P{incoTermLbl}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="CURRENT_DATE">
-					<subreportParameterExpression><![CDATA[$P{CURRENT_DATE}]]></subreportParameterExpression>
+				<subreportParameter name="TIME_MEASURE_LIST">
+					<subreportParameterExpression><![CDATA[$P{TIME_MEASUREMENT}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="varLbl">
+					<subreportParameterExpression><![CDATA[$P{varLbl}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="actualSiteDateLbl">
 					<subreportParameterExpression><![CDATA[$P{actualSiteDateLbl}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="varLbl">
-					<subreportParameterExpression><![CDATA[$P{varLbl}]]></subreportParameterExpression>
+				<subreportParameter name="CURRENT_DATE">
+					<subreportParameterExpression><![CDATA[$P{CURRENT_DATE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="equipmentLbl">
 					<subreportParameterExpression><![CDATA[$P{equipmentLbl}]]></subreportParameterExpression>

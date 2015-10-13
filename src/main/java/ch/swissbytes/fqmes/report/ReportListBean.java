@@ -50,7 +50,6 @@ public class ReportListBean implements Serializable {
     }
 
     public PurchaseOrderViewTbl getList() {
-        log.info("getting tbl");
         return tbl;
     }
 
