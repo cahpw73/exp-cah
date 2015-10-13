@@ -278,7 +278,12 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()) {
+        boolean canCreateVar = false;
+        boolean isLastVariationAndCanCreateVariation = false;
+        boolean existsLastVariationAndHasStatusIncomplete= verifyMaxVariationWithStatusIncomplete(entity);
+        boolean existNextVariation = verifyNextPOVariationExists(entity);
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
+                entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()) {
             for (Object po : maxVariationsList) {
                 Object[] values = (Object[]) po;
                 PurchaseOrderEntity poe = new PurchaseOrderEntity();
@@ -286,11 +291,27 @@ public class PoListBean implements Serializable {
                 poe.setOrderedVariation((Integer) values[1]);
                 if (entity.getOrderedVariation() != null && entity.getPo().equals(poe.getPo()) &&
                         entity.getOrderedVariation().intValue() == poe.getOrderedVariation().intValue()) {
-                    return true;
+                    isLastVariationAndCanCreateVariation = true;
                 }
             }
         }
+        if(isLastVariationAndCanCreateVariation || (existsLastVariationAndHasStatusIncomplete && existNextVariation)){
+            canCreateVar = true;
+        }
+
+        return canCreateVar;
+    }
+
+    private boolean verifyMaxVariationWithStatusIncomplete(PurchaseOrderEntity entity){
+        PurchaseOrderEntity po = service.findPOWithMaxVariation(entity.getProject(),entity.getPo());
+        if(po != null && po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal() && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()){
+            return true;
+        }
         return false;
+    }
+
+    private boolean verifyNextPOVariationExists(PurchaseOrderEntity entity){
+        return service.findPOByOneVariation(entity.getProject(),entity.getPo(),entity.getVariation());
     }
 
     public boolean canCommitt(PurchaseOrderEntity entity) {

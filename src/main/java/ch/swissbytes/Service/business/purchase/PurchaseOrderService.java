@@ -215,6 +215,22 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findPOMaxVariations(projectId);
     }
 
+    public PurchaseOrderEntity findPOWithMaxVariation(String project,String po){
+        List<PurchaseOrderEntity> list = dao.findPOWithMaxVariation(project,po);
+        if(!list.isEmpty()){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    public boolean findPOByOneVariation(String project,String po,String variation){
+        List<PurchaseOrderEntity> list = dao.findPOByOneVariation(project,po,variation);
+        if(!list.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
     public List<PurchaseOrderEntity> purchaseListByProjectIdAnPoNo(final Long projectId, final String poNo) {
         return dao.findPOByProjectIdAndPoNo(projectId, poNo);
     }

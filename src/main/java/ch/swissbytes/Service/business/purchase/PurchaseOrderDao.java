@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
 import org.apache.commons.lang3.StringUtils;
@@ -90,6 +91,49 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("PROJECT_ID", projectId);
         return super.findBy(sb.toString(), map);
+    }
+
+    public List<PurchaseOrderEntity> findPOWithMaxVariation(String project,String po){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
+        sb.append(" WHERE po.status.id = :ENABLED ");
+        sb.append(" AND po.project = :PROJECT ");
+        sb.append(" AND po.po = :PO ");
+        sb.append(" AND p.poProcStatus = :INCOMPLETE ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");
+        sb.append(" AND po.orderedVariation = (");
+        sb.append(" SELECT MAX(po.orderedVariation) ");
+        sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
+        sb.append(" WHERE po.status.id = :ENABLED ");
+        sb.append(" AND po.project = :PROJECT ");
+        sb.append(" AND po.po = :PO ");
+        sb.append(" AND p.poProcStatus = :INCOMPLETE ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");
+        sb.append(" )");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("PROJECT", project);
+        map.put("PO", po);
+        map.put("INCOMPLETE", ProcurementStatus.INCOMPLETE);
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        return super.findBy(sb.toString(),map);
+    }
+
+    public List<PurchaseOrderEntity> findPOByOneVariation(String project, String po, String variation){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
+        sb.append(" WHERE po.variation = :VARIATION ");
+        sb.append(" AND po.project = :PROJECT ");
+        sb.append(" AND po.po = :PO ");
+        sb.append(" AND po.status.id = :ENABLED ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("PROJECT", project);
+        map.put("PO", po);
+        map.put("VARIATION", variation);
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        return super.findBy(sb.toString(),map);
     }
 
     public List<PurchaseOrderEntity> findPOByProjectIdAndPoNo(final Long projectId, final String poNo) {
