@@ -51,7 +51,6 @@ public class ItemBean implements Serializable {
     private Long preId = -1L;
 
 
-
     @PostConstruct
     public void create() {
         log.info("create itemBean");
@@ -85,8 +84,8 @@ public class ItemBean implements Serializable {
 
     public void copyDateToItemList(Date orderDate) {
         if (orderDate != null) {
-            for(ScopeSupplyEntity s : scopeSupplyList){
-                if(s.getIsEditable()) {
+            for (ScopeSupplyEntity s : scopeSupplyList) {
+                if (s.getIsEditable()) {
                     s.setPoDeliveryDate(orderDate);
                 }
             }
@@ -95,23 +94,22 @@ public class ItemBean implements Serializable {
 
     public void confirmItem(ScopeSupplyEntity entity) throws Exception {
         log.info("confirm item");
-        int index=scopeSupplyList.indexOf(entity);
-        ScopeSupplyEntity ss=index>=0?scopeSupplyList.get(index):null;
-         if(ss==null){
-             throw new Exception("Invalid item");
-         }
-        if(validateItems(ss,true)){
+        int index = scopeSupplyList.indexOf(entity);
+        ScopeSupplyEntity ss = index >= 0 ? scopeSupplyList.get(index) : null;
+        if (ss == null) {
+            throw new Exception("Invalid item");
+        }
+        if (validateItems(ss, true)) {
             ss.stopEditing();
         }
     }
 
 
-
     public void deleteItem(ScopeSupplyEntity entity) {
         log.info("delete item");
-        if(entity.getId()< 0L){
+        if (entity.getId() < 0L) {
             scopeSupplyList.remove(entity);
-        }else{
+        } else {
             entity.setStatus(enumService.getStatusEnumDeleted());
         }
         sortBean.sortScopeSupplyEntity(scopeSupplyList);
@@ -119,15 +117,15 @@ public class ItemBean implements Serializable {
 
     public void editItem(ScopeSupplyEntity entity) {
         log.info("edit item");
-        if(canEdit()) {
+        if (canEdit()) {
             entity.startEditing();
             entity.storeOldValue(entity);
             //sortBean.sortScopeSupplyEntity(scopeSupplyList);
         }
     }
 
-    private boolean canEdit(){
-        return rowsBeingEdited()==0;
+    private boolean canEdit() {
+        return rowsBeingEdited() == 0;
     }
 
     private Integer rowsBeingEdited() {
@@ -142,60 +140,65 @@ public class ItemBean implements Serializable {
 
     public void cancelEditionItem(ScopeSupplyEntity entity) {
         log.info("cancel item");
-        if(!itemNoIsNotEmpty(entity)){
+        if (!itemNoIsNotEmpty(entity)) {
             scopeSupplyList.remove(entity);
-        }else{
+        } else {
             entity.stopEditing();
-            entity = entity.getValueCloned();
+            int index = scopeSupplyList.indexOf(entity);
+            if (index >= 0) {
+                scopeSupplyList.set(index, entity.getValueCloned());
+                scopeSupplyList.get(index).stopEditing();
+            }
         }
-        sortBean.sortScopeSupplyEntity(scopeSupplyList);
     }
-    private boolean validateItems(ScopeSupplyEntity scopeSupply,boolean showMessage){
-        boolean validated=true;
-        if(StringUtils.isEmpty(scopeSupply.getCode())&&StringUtils.isBlank(scopeSupply.getCode())){
-            if(showMessage) {
+
+    private boolean validateItems(ScopeSupplyEntity scopeSupply, boolean showMessage) {
+        boolean validated = true;
+        if (StringUtils.isEmpty(scopeSupply.getCode()) && StringUtils.isBlank(scopeSupply.getCode())) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter Item Code");
             }
-            validated=false;
+            validated = false;
         }
-        if(StringUtils.isEmpty(scopeSupply.getUnit())&&StringUtils.isBlank(scopeSupply.getUnit())){
-            if(showMessage) {
+        if (StringUtils.isEmpty(scopeSupply.getUnit()) && StringUtils.isBlank(scopeSupply.getUnit())) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter Unit");
             }
-            validated=false;
+            validated = false;
         }
-        if(scopeSupply.getQuantity()==null){
-            if(showMessage) {
+        if (scopeSupply.getQuantity() == null) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter a valid Quantity");
             }
-            validated=false;
+            validated = false;
         }
-        if(StringUtils.isEmpty(scopeSupply.getDescription())&&StringUtils.isBlank(scopeSupply.getDescription())){
-            if(showMessage) {
+        if (StringUtils.isEmpty(scopeSupply.getDescription()) && StringUtils.isBlank(scopeSupply.getDescription())) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter description");
             }
-            validated=false;
+            validated = false;
         }
-        if(scopeSupply.getProjectCurrency()==null){
-            if(showMessage) {
+        if (scopeSupply.getProjectCurrency() == null) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter a valid currency");
             }
-            validated=false;
+            validated = false;
         }
-        if(scopeSupply.getCost()==null){
-            if(showMessage) {
+        if (scopeSupply.getCost() == null) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter the cost");
             }
-            validated=false;
+            validated = false;
         }
-        if(scopeSupply.getPoDeliveryDate()==null){
-            if(showMessage) {
+        if (scopeSupply.getPoDeliveryDate() == null) {
+            if (showMessage) {
                 Messages.addGlobalError("Enter the delivery date");
             }
-            validated=false;
+            validated = false;
         }
         return validated;
     }
+
     public boolean hasNotStatusDeleted(ScopeSupplyEntity entity) {
         if (entity != null && entity.getStatus() != null)
             return entity.getStatus().getId().intValue() != StatusEnum.DELETED.getId().intValue();
@@ -205,7 +208,7 @@ public class ItemBean implements Serializable {
 
     private boolean noHasData(ScopeSupplyEntity entity) {
         if (entity.getCostCode() == null && entity.getPoDeliveryDate() == null
-                && (entity.getQuantity()  == null)
+                && (entity.getQuantity() == null)
                 && (StringUtils.isEmpty(entity.getCode()) && StringUtils.isBlank(entity.getCode()))
                 && (StringUtils.isEmpty(entity.getUnit()) && StringUtils.isBlank(entity.getUnit()))
                 && (StringUtils.isEmpty(entity.getDescription()) && StringUtils.isBlank(entity.getDescription()))
@@ -224,10 +227,12 @@ public class ItemBean implements Serializable {
         }
         return true;
     }
+
     private boolean itemNoIsNotEmpty(ScopeSupplyEntity entity) {
         log.info("item is not empty");
         return StringUtils.isNotEmpty(entity.getCode()) && StringUtils.isNotBlank(entity.getCode());
     }
+
     public List<ItemEntity> getItemList() {
         return itemList;
     }
