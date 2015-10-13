@@ -40,8 +40,7 @@ public class NoCacheFilter implements Filter {
             String key = (String) headerNames.nextElement();
             String value = request.getHeader(key);
             map.put(key, value);
-            System.out.println("key " + key);
-            System.out.println("value "+value);
+            System.out.println( key+"  "+value);
         }
 
         return map;
@@ -52,14 +51,17 @@ public class NoCacheFilter implements Filter {
         log.info("No Cache Filter.");
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
-        // if (!isAJAXRequest(httpReq)) {
-        if (!httpReq.getRequestURI().startsWith(httpReq.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip JSF resources (CSS/JS/Images/etc)
-            httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-            httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-            httpRes.setDateHeader("Expires", 0); // Proxies.
-        }
-        getHeadersInfo(httpReq);
         log.info("Request URI " + httpReq.getRequestURI());
+         if (!isAJAXRequest(httpReq)) {
+             if (!httpReq.getRequestURI().startsWith(httpReq.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip JSF resources (CSS/JS/Images/etc)
+                 httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                 httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                 httpRes.setDateHeader("Expires", 0); // Proxies.
+             }
+         }else{
+             log.info("request ajax ");
+         }
+        getHeadersInfo(httpReq);
         chain.doFilter(request, response);
     }
 
