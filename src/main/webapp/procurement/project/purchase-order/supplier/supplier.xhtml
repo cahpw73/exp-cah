@@ -22,8 +22,6 @@
                                     <div style="width: 200px; float: left;">
                                         <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
                                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
-                                                         required="true"
-                                                         requiredMessage="Supplier is required"
                                                          styleClass="form-control" rendered="#{poBean.beingEdited}"
                                                          converter="supplierConverter">
                                             <f:selectItem

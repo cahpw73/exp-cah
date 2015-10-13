@@ -359,9 +359,6 @@ public class PoBean extends Bean {
         if (!cashflowBean.validateRetention()) {
             validated = false;
         }
-        /*if(!cashflowBean.validateSecurityDeposit()){
-            validated = false;
-        }*/
         if (cashflowBean.getCashflow().getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Enter a valid Payment Terms in Cashflow");
             validated = false;
@@ -370,18 +367,22 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("The variation number is already being used");
             validated = false;
         }
-        /*if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null){
-                Messages.addFlashGlobalError("Enter a valid Contact for Supplier");
-                validated = false;
-            }
-        }*/
-        /*if(itemBean.getScopeSupplyList().isEmpty()){
-            Messages.addFlashGlobalError("You must add at least one Item");
+        if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() == null){
+            Messages.addFlashGlobalError("Enter a valid Supplier in Header");
             validated = false;
-        }*/
-
-
+        }
+        if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null){
+            Messages.addFlashGlobalError("Enter a valid Class in Header");
+            validated = false;
+        }
+        if(purchaseOrder.getPoDeliveryDate() == null){
+            Messages.addFlashGlobalError("Enter a valid Delivery Date in Header");
+            validated = false;
+        }
+        if(StringUtils.isEmpty(purchaseOrder.getPurchaseOrderProcurementEntity().getPoint())){
+            Messages.addFlashGlobalError("Enter a valid Delivery Point in Header");
+            validated = false;
+        }
         return validated;
     }
 
