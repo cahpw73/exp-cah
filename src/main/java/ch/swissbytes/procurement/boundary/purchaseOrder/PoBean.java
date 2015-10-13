@@ -386,6 +386,139 @@ public class PoBean extends Bean {
         return validated;
     }
 
+    public void validateAll() {
+        boolean validate = true;
+        if (StringUtils.isEmpty(purchaseOrder.getPo())) {
+            Messages.addFlashGlobalError("Enter a valid PO Number");
+            validate = false;
+        }
+        if (StringUtils.isEmpty(purchaseOrder.getPoTitle())) {
+            Messages.addFlashGlobalError("Enter a valid PO Title");
+            validate = false;
+        }
+        if (StringUtils.isEmpty(purchaseOrder.getVariation())) {
+            Messages.addFlashGlobalError("Enter a valid Var Number");
+            validate = false;
+        }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() == null) {
+            Messages.addFlashGlobalError("Enter a valid Supplier");
+            validate = false;
+        }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
+            Messages.addFlashGlobalError("Enter a valid Class");
+            validate = false;
+        }
+        if (purchaseOrder.getPoDeliveryDate() == null) {
+            Messages.addFlashGlobalError("Enter a valid Delivery Date");
+            validate = false;
+        }
+        if (StringUtils.isEmpty(purchaseOrder.getPurchaseOrderProcurementEntity().getPoint())) {
+            Messages.addFlashGlobalError("Enter a valid Delivery Point");
+            validate = false;
+        }
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null) {
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() == null) {
+                Messages.addFlashGlobalError("Enter a valid Contact for Supplier");
+                validate = false;
+            }
+        }
+        if (itemBean.getScopeSupplyList().isEmpty()) {
+            Messages.addFlashGlobalError("You must add at least one Item");
+            validate = false;
+        }
+        if (!validateRetention(cashflowBean.getCashflow())) {
+            validate = false;
+        }
+        if (!validateSecurityDeposit(cashflowBean.getCashflow())) {
+            validate = false;
+        }
+        if (cashflowBean.getCashflow().getPaymentTerms() == null) {
+            Messages.addFlashGlobalError("Enter a valid Payment Terms");
+            validate = false;
+        }
+        if(!balanceEqualZero()){
+            Messages.addFlashGlobalError("The Balance must be zero");
+            validate = false;
+        }
+        if(validate){
+            Messages.addFlashGlobalInfo("This PO has been validated");
+        }
+    }
+
+    private boolean balanceEqualZero(){
+        if(!itemBean.getScopeSupplyList().isEmpty()){
+            if(cashflowBean.getCashflow()!=null){
+                if(!cashflowBean.getCashflowDetailList().isEmpty()){
+                    Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(itemBean.getScopeSupplyList(), cashflowBean.getCashflowDetailList());
+                    for (ProjectCurrencyEntity currency : balances.keySet()) {
+                        if(balances.get(currency).doubleValue() != 0d){
+                            return false;
+                        }
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateSecurityDeposit(final CashflowEntity cashflow) {
+        boolean validate = true;
+        if(cashflow!=null){
+            boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
+            if (applySecurityDeposit) {
+                if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Form");
+                    validate = false;
+                }
+                if (cashflow.getPercentageSecurityDeposit() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Percentage");
+                    validate = false;
+                }
+                if (cashflow.getExpirationDateSecurityDeposit() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Exp Date");
+                    validate = false;
+                }
+                if (cashflow.getCurrencySecurityDeposit() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Security Deposit Currency");
+                    validate = false;
+                }
+            }
+        }
+        return validate;
+    }
+
+    private boolean validateRetention(final CashflowEntity cashflow) {
+        boolean validate = true;
+        if(cashflow!=null){
+            boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
+            if (applyRetentionSelected) {
+                if (StringUtils.isEmpty(cashflow.getForm())) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Form");
+                    validate = false;
+                }
+                if (cashflow.getPercentage() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Percentage");
+                    validate = false;
+                }
+                if (cashflow.getExpDate() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Exp Date");
+                    validate = false;
+                }
+                if (cashflow.getProjectCurrency() == null) {
+                    Messages.addFlashGlobalError("Enter a valid Retention Currency");
+                    validate = false;
+                }
+            }
+        }
+        return validate;
+    }
+
     private void collectData() {
         purchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
         purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionBean.getList());
