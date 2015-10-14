@@ -178,9 +178,7 @@ public class PurchaseOrderEdit implements Serializable {
             if (scopeSupplies == null || scopeSupplies.size() == 0) {
                 scopeSupplies = scopeSupplyService.findByPurchaseOrder(poEdit.getId());
                 for (ScopeSupplyEntity s : scopeSupplies) {
-                    if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
-                        scopeActives.add(s);
-                    }
+                    scopeActives.add(s);
                 }
             }
             commentIndexSelected = -1;
@@ -189,9 +187,7 @@ public class PurchaseOrderEdit implements Serializable {
         if (scopeSupplies != null && !scopeSupplies.isEmpty()) {
             scopeActives.clear();
             for (ScopeSupplyEntity s : scopeSupplies) {
-                if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
-                    scopeActives.add(s);
-                }
+                scopeActives.add(s);
             }
             sortScopeSupply.sortScopeSupplyEntity(scopeActives);
         }
@@ -971,13 +967,10 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void updateScopeSupplyExcludeFromExpedite() {
         currentScopeSupply.setExcludeFromExpediting(true);
-        scopeActives.clear();
-        for (ScopeSupplyEntity s : scopeSupplies) {
-            if (s.getExcludeFromExpediting() == null || !s.getExcludeFromExpediting()) {
-                scopeActives.add(s);
-            }
-        }
-        sortScopeSupply.sortScopeSupplyEntity(scopeActives);
+    }
+
+    public void addItemToExpedite() {
+        currentScopeSupply.setExcludeFromExpediting(false);
     }
 
     public void addingSupplier() {
