@@ -179,10 +179,12 @@ public class PoBean extends Bean {
         if (poId != null) {
             purchaseOrder = service.findById(Long.valueOf(poId));
             ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
-            if (status != null) {
-                if ((modeView==null|| (modeView!=null&&!modeView))
-                        &&status.ordinal() == ProcurementStatus.COMMITTED.ordinal() || status.ordinal() == ProcurementStatus.FINAL.ordinal()) {
+            log.info("STATUs " + status);
+            if (status != null&&isFinalOrCommitted(status)) {
+                log.info("modeView "+modeView);
+                if ((modeView==null|| !modeView)) {
                     try {
+                        log.info("redirecting to project list!");
                         FacesContext.getCurrentInstance().getExternalContext().redirect("list.jsf?projectId="+purchaseOrder.getProjectEntity().getId());
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
@@ -190,6 +192,9 @@ public class PoBean extends Bean {
                 }
             }
         }
+    }
+    private boolean isFinalOrCommitted(ProcurementStatus status){
+        return status.ordinal()==ProcurementStatus.COMMITTED.ordinal()||status.ordinal()==ProcurementStatus.FINAL.ordinal();
     }
 
     @Override

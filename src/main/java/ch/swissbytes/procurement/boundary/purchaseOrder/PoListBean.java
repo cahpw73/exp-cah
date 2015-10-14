@@ -88,8 +88,6 @@ public class PoListBean implements Serializable {
 
     private FilterPO filter;
 
-    private int countMaxVerifyVariation = 0;
-
 
     @PostConstruct
     public void create() {
@@ -119,7 +117,6 @@ public class PoListBean implements Serializable {
             }
             //list = service.purchaseListByProject(Long.parseLong(projectId));
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-            log.info("maxVariationsList Size: " + maxVariationsList.size());
             filter = new FilterPO();
             filter.setProjectId(project.getId());
             poList = new PurchaseOrderTbl(dao, filter);
@@ -163,7 +160,6 @@ public class PoListBean implements Serializable {
     }
 
     public void createVarNumberToPO(PurchaseOrderEntity entity) {
-        log.info("loading current purchase order");
         currentPurchaseOrder = entity;
         pOrderList = service.findByProjectIdAndPo(project.getId(), entity.getPo());
         sortBean.sortPurchaseOrderEntity(pOrderList);
@@ -297,8 +293,6 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        countMaxVerifyVariation++;
-        log.info("countMaxVerifyVariation " + countMaxVerifyVariation);
         boolean canCreateVar = false;
         boolean isLastVariationAndCanCreateVariation = false;
         boolean existsLastVariationAndHasStatusIncomplete = verifyMaxVariationWithStatusIncomplete(entity);

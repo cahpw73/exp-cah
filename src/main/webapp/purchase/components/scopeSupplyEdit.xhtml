@@ -151,6 +151,21 @@
                         </p:confirm>
                     </p:commandLink>
                 </div>
+                <div class="pull-left">
+                    <p:commandLink value="#{msgs['supply.scope.lbl.expedite']}"
+                                   style="margin-top: 2px;margin-bottom: 2px;"
+                                   update="@form" ajax="true" async="false"
+                                   action="#{purchaseOrderEdit.addItemToExpedite}"
+                                   disabled="#{!_scopeSupply.excludeFromExpediting}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table btn-commandLink-primeFaces">
+                        <f:setPropertyActionListener target="#{purchaseOrderEdit.currentScopeSupply}"
+                                                     value="#{_scopeSupply}"/>
+                        <p:confirm header="#{msgs['lbl.confirmation']}"
+                                   message="#{msgs['supply.scope.lbl.msg.confirmation.add.expediting']}"
+                                   icon="ui-icon-alert">
+                        </p:confirm>
+                    </p:commandLink>
+                </div>
             </p:column>
         </p:dataTable>
 
