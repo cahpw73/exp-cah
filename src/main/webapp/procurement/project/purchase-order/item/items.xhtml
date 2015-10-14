@@ -60,7 +60,8 @@
                                 </h:panelGroup>
                                 <h:panelGroup id="edQty" rendered="#{_i.isEditable}">
                                     <p:inputText id="qty" required="true" value="#{_i.quantity}"
-                                                 styleClass="form-control edQtyItems" onkeyup="calculateTotalCost();">
+                                                 styleClass="form-control edQtyItems"
+                                                 onkeyup="calculateTotalCost();" onchange="calculateTotalCost();">
                                         <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
                                     </p:inputText>
@@ -134,7 +135,7 @@
                                 <h:panelGroup id="edUniCost" rendered="#{_i.isEditable}">
                                     <p:inputText id="unitCostItem" value="#{_i.cost}" required="true"
                                                  styleClass="form-control edUniCostItems"
-                                                 onkeyup="calculateTotalCost();">
+                                                 onkeyup="calculateTotalCost();" onchange="calculateTotalCost();">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
 

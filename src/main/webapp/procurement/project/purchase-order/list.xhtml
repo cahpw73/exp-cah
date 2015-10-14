@@ -108,7 +108,7 @@
                                                action="#{poListBean.doUncommit}"
                                                update="@form"
                                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                               rendered="#{poListBean.canUncommitt(_p)}">
+                                               rendered="#{poListBean.canUncommit(_p)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                                  value="#{_p}"/>
                                     <p:confirm header="#{msgs['lbl.confirmation']}"

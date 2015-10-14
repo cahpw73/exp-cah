@@ -168,12 +168,12 @@ public class PoListBean implements Serializable {
         pOrderList = service.findByProjectIdAndPo(project.getId(), entity.getPo());
         sortBean.sortPurchaseOrderEntity(pOrderList);
         String lastVarNumber = entity.getVariation();
-        if(generateVariationNumber(lastVarNumber)){
+        if (generateVariationNumber(lastVarNumber)) {
             purchaseOrderToVariation = service.findPOToCreateVariation(entity.getId());
             prepareToSaveWithNewVariation(purchaseOrderToVariation);
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('variationModal').show();");
-        }else{
+        } else {
             Messages.addFlashGlobalError("The format variation is invalid");
         }
 
@@ -205,7 +205,7 @@ public class PoListBean implements Serializable {
         String[] number = lastVarNumber.split("\\.");
         Integer lastNumber;
         boolean generateVar;
-        try{
+        try {
             if (number.length == 0) {
                 lastNumber = Integer.valueOf(lastVarNumber);
                 lastNumber++;
@@ -224,7 +224,7 @@ public class PoListBean implements Serializable {
                 newVariationNumber = String.valueOf(lastNumber);
             }
             generateVar = true;
-        }catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             generateVar = false;
         }
         return generateVar;
@@ -241,8 +241,11 @@ public class PoListBean implements Serializable {
         }
     }
 
-    public void doUncommit(){
-
+    public void doUncommit() {
+        if(currentPurchaseOrder != null){
+            currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+        }
     }
 
     public void doFinalise() {
@@ -268,23 +271,23 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
-        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null){
-            return  (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+            return (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                     || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
                     || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal());
-        }else{
+        } else {
             return false;
         }
 
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
-        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             return
-            (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
-                    || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
-                    || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
-        }else{
+                    (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
+                            || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.ON_HOLD.ordinal()
+                            || entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
+        } else {
             return true;
         }
     }
@@ -295,15 +298,15 @@ public class PoListBean implements Serializable {
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
         countMaxVerifyVariation++;
-        log.info("countMaxVerifyVariation "  + countMaxVerifyVariation);
+        log.info("countMaxVerifyVariation " + countMaxVerifyVariation);
         boolean canCreateVar = false;
         boolean isLastVariationAndCanCreateVariation = false;
-        boolean existsLastVariationAndHasStatusIncomplete= verifyMaxVariationWithStatusIncomplete(entity);
+        boolean existsLastVariationAndHasStatusIncomplete = verifyMaxVariationWithStatusIncomplete(entity);
         boolean existNextVariation = verifyNextPOVariationExists(entity);
         boolean poCommitted = false;
         if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             poCommitted = entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal();
-            if(poCommitted) {
+            if (poCommitted) {
                 for (Object po : maxVariationsList) {
                     Object[] values = (Object[]) po;
                     PurchaseOrderEntity poe = new PurchaseOrderEntity();
@@ -316,18 +319,18 @@ public class PoListBean implements Serializable {
                 }
             }
         }
-        if(isLastVariationAndCanCreateVariation || (existsLastVariationAndHasStatusIncomplete && !existNextVariation && poCommitted) ){
+        if (isLastVariationAndCanCreateVariation || (existsLastVariationAndHasStatusIncomplete && !existNextVariation && poCommitted)) {
             canCreateVar = true;
         }
 
         return canCreateVar;
     }
 
-    private boolean verifyMaxVariationWithStatusIncomplete(PurchaseOrderEntity entity){
-        PurchaseOrderEntity po = service.findPOWithMaxVariation(entity.getProject(),entity.getPo());
-        if(po != null){
-            if(po.getPurchaseOrderProcurementEntity() != null && po.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null && po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal()){
-                if(po.getOrderedVariation()!=null && entity.getOrderedVariation()!=null && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()){
+    private boolean verifyMaxVariationWithStatusIncomplete(PurchaseOrderEntity entity) {
+        PurchaseOrderEntity po = service.findPOWithMaxVariation(entity.getProject(), entity.getPo());
+        if (po != null) {
+            if (po.getPurchaseOrderProcurementEntity() != null && po.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal()) {
+                if (po.getOrderedVariation() != null && entity.getOrderedVariation() != null && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()) {
                     return true;
                 }
             }
@@ -335,16 +338,16 @@ public class PoListBean implements Serializable {
         return false;
     }
 
-    private boolean verifyNextPOVariationExists(PurchaseOrderEntity entity){
+    private boolean verifyNextPOVariationExists(PurchaseOrderEntity entity) {
         String nextVariationStr = "";
         boolean nextVariationBool = false;
         try {
-            if(StringUtils.isNotEmpty(entity.getVariation())) {
+            if (StringUtils.isNotEmpty(entity.getVariation())) {
                 Integer nextVariation = Integer.valueOf(entity.getVariation()) + 1;
                 nextVariationStr = nextVariation.toString();
             }
-            nextVariationBool = service.findPOByOneVariation(entity.getProject(),entity.getPo(),nextVariationStr);
-        }catch (NumberFormatException nef){
+            nextVariationBool = service.findPOByOneVariation(entity.getProject(), entity.getPo(), nextVariationStr);
+        } catch (NumberFormatException nef) {
             log.info("Trying create variation to : " + entity.getVariation());
         }
 
@@ -357,11 +360,21 @@ public class PoListBean implements Serializable {
                 (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal() ||
                         entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
     }
-    public boolean canUncommitt(PurchaseOrderEntity entity){
-        return entity.getPurchaseOrderProcurementEntity().getCmsExported()!=null
-                &&entity.getPurchaseOrderProcurementEntity().getJdeExported()!=null&&
-                entity.getPurchaseOrderProcurementEntity().getCmsExported()&&
-                entity.getPurchaseOrderProcurementEntity().getJdeExported();
+
+    public boolean canUncommit(PurchaseOrderEntity entity) {
+        boolean canUncommit = false;
+        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null){
+           if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()){
+               if(entity.getPurchaseOrderProcurementEntity().getCmsExported() != null && entity.getPurchaseOrderProcurementEntity().getCmsExported()){
+                   return false;
+               }
+               if(entity.getPurchaseOrderProcurementEntity().getJdeExported() != null && entity.getPurchaseOrderProcurementEntity().getJdeExported()){
+                   return false;
+               }
+               canUncommit = true;
+           }
+        }
+        return canUncommit;
     }
 
     public boolean canDelete(PurchaseOrderEntity entity) {
@@ -462,7 +475,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canExportCMS(PurchaseOrderEntity entity) {
-        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null){
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             boolean exported = entity.getPurchaseOrderProcurementEntity().getCmsExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getCmsExported();
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
                     && !exported;
@@ -471,7 +484,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canExportJDE(PurchaseOrderEntity entity) {
-        if(entity.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null){
+        if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
             boolean exported = entity.getPurchaseOrderProcurementEntity().getJdeExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getJdeExported();
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
                     && !exported;
@@ -496,7 +509,7 @@ public class PoListBean implements Serializable {
     public StreamedContent exportJDE() {
         log.info("exportJDE");
         StreamedContent content = null;
-        if(currentPurchaseOrder != null && currentPurchaseOrder.getId() != null){
+        if (currentPurchaseOrder != null && currentPurchaseOrder.getId() != null) {
             List<PurchaseOrderEntity> list = new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             InputStream is = exporterToJDE.generateWorkbook(list);
@@ -552,36 +565,36 @@ public class PoListBean implements Serializable {
         if (!validateSecurityDeposit(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow())) {
             validate = false;
         }
-        if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
+        if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow() != null) {
             if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms() == null) {
                 Messages.addFlashGlobalError("Enter a valid Payment Terms");
                 validate = false;
             }
         }
-        if(!balanceEqualZero()){
+        if (!balanceEqualZero()) {
             Messages.addFlashGlobalError("The Balance must be zero");
             validate = false;
         }
         return validate;
     }
 
-    private boolean balanceEqualZero(){
-        if(!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()){
-            if(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow()!=null){
-                if(!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().isEmpty()){
+    private boolean balanceEqualZero() {
+        if (!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().isEmpty()) {
+            if (currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow() != null) {
+                if (!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().isEmpty()) {
                     Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList(), currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList());
                     for (ProjectCurrencyEntity currency : balances.keySet()) {
-                        if(balances.get(currency).doubleValue() != 0d){
+                        if (balances.get(currency).doubleValue() != 0d) {
                             return false;
                         }
                     }
-                }else{
+                } else {
                     return false;
                 }
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
         return true;
@@ -589,7 +602,7 @@ public class PoListBean implements Serializable {
 
     private boolean validateRetention(final CashflowEntity cashflow) {
         boolean validate = true;
-        if(cashflow!=null){
+        if (cashflow != null) {
             boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
             if (applyRetentionSelected) {
                 if (StringUtils.isEmpty(cashflow.getForm())) {
@@ -615,7 +628,7 @@ public class PoListBean implements Serializable {
 
     private boolean validateSecurityDeposit(final CashflowEntity cashflow) {
         boolean validate = true;
-        if(cashflow!=null){
+        if (cashflow != null) {
             boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
             if (applySecurityDeposit) {
                 if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
