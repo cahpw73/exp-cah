@@ -40,7 +40,7 @@ public class NoCacheFilter implements Filter {
             String key = (String) headerNames.nextElement();
             String value = request.getHeader(key);
             map.put(key, value);
-            System.out.println( key+"  "+value);
+            log.info(key+"  "+value);
         }
 
         return map;

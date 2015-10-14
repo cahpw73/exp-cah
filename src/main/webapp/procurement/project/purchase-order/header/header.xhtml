@@ -101,7 +101,7 @@
                                                var="_s"
                                                itemValue="#{_s}"
                                                itemLabel="#{_s.fullName}"/>
-                                <p:ajax async="false" update="supplierDetail contactDetail"
+                                <p:ajax async="false" update="editPoForm:supplierDetail contactDetail"
                                         listener="#{poBean.resetContact()}" process="@this"/>
                             </h:selectOneMenu>
                             <p:message for="supplierHeader "/>
