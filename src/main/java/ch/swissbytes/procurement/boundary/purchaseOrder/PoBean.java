@@ -534,9 +534,11 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() != null && purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getId() != null) {
             phone = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getPhone();
             if (StringUtils.isEmpty(phone)) {
-                String phoneSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getPhone();
-                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null && StringUtils.isNotEmpty(phoneSupplier))
-                    return phoneSupplier;
+                if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
+                    String phoneSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getPhone();
+                    if (StringUtils.isNotEmpty(phoneSupplier))
+                        return phoneSupplier;
+                }
             }
         }
         return phone;
@@ -547,9 +549,11 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() != null && purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getId() != null) {
             fax = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getFax();
             if (StringUtils.isEmpty(fax)) {
-                String faxSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getFax();
-                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null && StringUtils.isNotEmpty((faxSupplier))) {
-                    return faxSupplier;
+                if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null ) {
+                    String faxSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getFax();
+                    if (StringUtils.isNotEmpty((faxSupplier))){
+                        return faxSupplier;
+                    }
                 }
             }
         }

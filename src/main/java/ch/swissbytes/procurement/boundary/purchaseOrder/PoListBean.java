@@ -87,6 +87,8 @@ public class PoListBean implements Serializable {
 
     private FilterPO filter;
 
+    private int countMaxVerifyVariation = 0;
+
 
     @PostConstruct
     public void create() {
@@ -116,6 +118,7 @@ public class PoListBean implements Serializable {
             }
             //list = service.purchaseListByProject(Long.parseLong(projectId));
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+            log.info("maxVariationsList Size: " + maxVariationsList.size());
             filter = new FilterPO();
             filter.setProjectId(project.getId());
             poList = new PurchaseOrderTbl(dao, filter);
@@ -278,9 +281,8 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        if(entity.getPo().equals("0027")){
-            log.info("start");
-        }
+        countMaxVerifyVariation++;
+        log.info("countMaxVerifyVariation "  + countMaxVerifyVariation);
         boolean canCreateVar = false;
         boolean isLastVariationAndCanCreateVariation = false;
         boolean existsLastVariationAndHasStatusIncomplete= verifyMaxVariationWithStatusIncomplete(entity);
@@ -310,19 +312,29 @@ public class PoListBean implements Serializable {
 
     private boolean verifyMaxVariationWithStatusIncomplete(PurchaseOrderEntity entity){
         PurchaseOrderEntity po = service.findPOWithMaxVariation(entity.getProject(),entity.getPo());
-        if(po != null && po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal() && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()){
-            return true;
+        if(po != null){
+            if(po.getPurchaseOrderProcurementEntity() != null && po.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null && po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal()){
+                if(po.getOrderedVariation()!=null && entity.getOrderedVariation()!=null && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()){
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     private boolean verifyNextPOVariationExists(PurchaseOrderEntity entity){
         String nextVariationStr = "";
-        if(StringUtils.isNotEmpty(entity.getVariation())) {
-            Integer nextVariation = Integer.valueOf(entity.getVariation()) + 1;
-            nextVariationStr = nextVariation.toString();
+        boolean nextVariationBool = false;
+        try {
+            if(StringUtils.isNotEmpty(entity.getVariation())) {
+                Integer nextVariation = Integer.valueOf(entity.getVariation()) + 1;
+                nextVariationStr = nextVariation.toString();
+            }
+            nextVariationBool = service.findPOByOneVariation(entity.getProject(),entity.getPo(),nextVariationStr);
+        }catch (NumberFormatException nef){
+            log.info("Trying create variation to : " + entity.getVariation());
         }
-        boolean nextVariationBool = service.findPOByOneVariation(entity.getProject(),entity.getPo(),nextVariationStr);
+
 
         return nextVariationBool;
     }
