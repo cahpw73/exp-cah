@@ -14,6 +14,7 @@ import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -167,9 +168,14 @@ public class PoListBean implements Serializable {
         pOrderList = service.findByProjectIdAndPo(project.getId(), entity.getPo());
         sortBean.sortPurchaseOrderEntity(pOrderList);
         String lastVarNumber = entity.getVariation();
-        generateVariationNumber(lastVarNumber);
-        purchaseOrderToVariation = service.findPOToCreateVariation(entity.getId());
-        prepareToSaveWithNewVariation(purchaseOrderToVariation);
+        if(generateVariationNumber(lastVarNumber)){
+            purchaseOrderToVariation = service.findPOToCreateVariation(entity.getId());
+            prepareToSaveWithNewVariation(purchaseOrderToVariation);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('variationModal').show();");
+        }else{
+            Messages.addFlashGlobalError("The format variation is invalid");
+        }
 
     }
 
@@ -195,26 +201,33 @@ public class PoListBean implements Serializable {
         log.info("");
     }
 
-    private void generateVariationNumber(String lastVarNumber) {
+    private boolean generateVariationNumber(String lastVarNumber) {
         String[] number = lastVarNumber.split("\\.");
         Integer lastNumber;
-        if (number.length == 0) {
-            lastNumber = Integer.valueOf(lastVarNumber);
-            lastNumber++;
-            newVariationNumber = String.valueOf(lastNumber);
-        } else if (number.length > 1) {
-            lastNumber = Integer.valueOf(number[number.length - 1]);
-            lastNumber++;
-            String varNo = "";
-            for (int i = 0; i < number.length - 1; i++) {
-                varNo = varNo + number[i] + ".";
+        boolean generateVar;
+        try{
+            if (number.length == 0) {
+                lastNumber = Integer.valueOf(lastVarNumber);
+                lastNumber++;
+                newVariationNumber = String.valueOf(lastNumber);
+            } else if (number.length > 1) {
+                lastNumber = Integer.valueOf(number[number.length - 1]);
+                lastNumber++;
+                String varNo = "";
+                for (int i = 0; i < number.length - 1; i++) {
+                    varNo = varNo + number[i] + ".";
+                }
+                newVariationNumber = varNo + String.valueOf(lastNumber);
+            } else if (number.length == 1) {
+                lastNumber = Integer.valueOf(lastVarNumber);
+                lastNumber++;
+                newVariationNumber = String.valueOf(lastNumber);
             }
-            newVariationNumber = varNo + String.valueOf(lastNumber);
-        } else if (number.length == 1) {
-            lastNumber = Integer.valueOf(lastVarNumber);
-            lastNumber++;
-            newVariationNumber = String.valueOf(lastNumber);
+            generateVar = true;
+        }catch (NumberFormatException nfe){
+            generateVar = false;
         }
+        return generateVar;
     }
 
     public void doCommitPo() {

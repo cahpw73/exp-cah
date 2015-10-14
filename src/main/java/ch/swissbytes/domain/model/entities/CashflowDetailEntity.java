@@ -34,7 +34,7 @@ public class CashflowDetailEntity extends RecordEditable<CashflowDetailEntity> i
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "CLAUSES_TEXT_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "CASHFLOW_DETAIL_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }

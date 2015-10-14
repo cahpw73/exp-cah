@@ -29,7 +29,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "PROJECT_CURRENCY_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "PROJECT_TEXT_SNIPPET_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }
