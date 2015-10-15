@@ -70,6 +70,9 @@ public class PoListBean implements Serializable {
     @Inject
     private SpreadsheetJDEService exporterToJDE;
 
+    @Inject
+    private POManagerTable poManagerTable;
+
 
     private String projectId;
 
@@ -116,12 +119,8 @@ public class PoListBean implements Serializable {
             if (project == null) {
                 throw new IllegalArgumentException("project Id invalid");
             }
-            //list = service.purchaseListByProject(Long.parseLong(projectId));
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-            filter = new FilterPO();
-            filter.setProjectId(project.getId());
-            filter.setPurchaseOrderNumberOption(PurchaseOrderNumberOption.P0000);
-            poList = new PurchaseOrderTbl(dao, filter);
+            ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
         } else {
             throw new IllegalArgumentException("project Id invalid");
         }
@@ -649,14 +648,13 @@ public class PoListBean implements Serializable {
     }
 
     public FilterPO getFilter() {
-        return filter;
+
+        return(FilterPO) poManagerTable.getFilter();
     }
 
-    public void setFilter(FilterPO filter) {
-        this.filter = filter;
-    }
 
     public List<PurchaseOrderEntity> findPOs(){
+
         return service.findPosBy(getFilter());
     }
 }
