@@ -1,12 +1,13 @@
 package ch.swissbytes.fqmes.boundary.permission;
 
 
-
-
 import ch.swissbytes.Service.business.permission.PermissionService;
 import ch.swissbytes.Service.business.permission.PermissionDao;
+import ch.swissbytes.Service.business.user.UserDao;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
+import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.domain.model.entities.UserPermissionGrantedEntity;
 import org.picketlink.Identity;
 import org.picketlink.idm.model.basic.User;
 
@@ -38,68 +39,69 @@ public class PermissionBean implements Serializable {
     @Inject
     private PermissionService service;
 
+    @Inject
+    private UserDao userDao;
+
     private Logger log = Logger.getLogger(PermissionBean.class.getName());
 
     private List<PermissionGrantedEntity> permissions;
+
+    private List<UserPermissionGrantedEntity> userPermissions;
 
 
     private Date initialDate;
 
     @PostConstruct
-    public void init(){
-        //log.info("Permission Bean initialize...");
-        initialDate=new Date();
-        User user=(User)identity.getAccount();
-
-        List<RoleEntity> currentRoles=service.getRolesFor(user.getLoginName());
-        permissions=service.getPermissions(collectIds(currentRoles));
-
-
+    public void init() {
+        initialDate = new Date();
+        User user = (User) identity.getAccount();
+        List<UserEntity> list = userDao.findUserByUserName(user.getLoginName());
+        List<RoleEntity> currentRoles = service.getRolesFor(list);
+        permissions = service.getPermissions(collectIds(currentRoles));
+        userPermissions = service.getUserPermissions(list.get(0).getId());
     }
 
-    public boolean hasPermission(Integer option){
-       // log.info("public boolean hasPermission(Integer option="+option+")");
-        boolean  granted=false;
-        for(PermissionGrantedEntity permission:permissions){
-            if(permission.getOptions().getId().intValue()==option.intValue()){
-                granted=true;
+    public boolean hasPermission(Integer option) {
+        boolean granted = false;
+        for (PermissionGrantedEntity permission : permissions) {
+            if (permission.getOptions().getId().intValue() == option.intValue()) {
+                granted = true;
                 break;
             }
         }
         return granted;
     }
 
-    public String canAccess(Integer option){
-        //log.info("public String canAccess(Integer option="+option+")");
-        return hasPermission(option)?"GRANTED":"ACCESS_DENIED";
+    public boolean hasUserPermission(Integer option){
+        boolean granted = false;
+        for (UserPermissionGrantedEntity permission : userPermissions) {
+            if (permission.getOptions().getId().intValue() == option.intValue()) {
+                granted = true;
+                break;
+            }
+        }
+        return granted;
     }
 
-    private List<Integer> collectIds(final List<RoleEntity>roles){
-        List<Integer>ids=new ArrayList<>();
-        for(RoleEntity role:roles){
+    public String canAccess(Integer option) {
+        return hasPermission(option) ? "GRANTED" : "ACCESS_DENIED";
+    }
+
+    private List<Integer> collectIds(final List<RoleEntity> roles) {
+        List<Integer> ids = new ArrayList<>();
+        for (RoleEntity role : roles) {
             ids.add(role.getId());
         }
         return ids;
     }
 
 
-
     @PreDestroy
-    public void destroy(){
-        //log.info("Permission Bean destroy...");
-        Date endDate=new Date();
-        Long diff=endDate.getTime()-initialDate.getTime();
-        log.info(String.format("duration time for permission loading [%s]",diff.longValue()));
+    public void destroy() {
+        Date endDate = new Date();
+        Long diff = endDate.getTime() - initialDate.getTime();
+        log.info(String.format("duration time for permission loading [%s]", diff.longValue()));
     }
-
-
-
-
-
-
-
-
-
 
 
 }

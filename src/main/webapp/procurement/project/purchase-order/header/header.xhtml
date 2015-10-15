@@ -90,6 +90,7 @@
                                        for="supplierHeader" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
                         <div style="width: 210px; float: left; margin-left: -15px;">
+
                             <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
                                              styleClass="form-control" onclick="doChangeProc();"
@@ -104,7 +105,9 @@
                                 <p:ajax async="false" update="editPoForm:supplierDetail editPoForm:contactDetail"
                                         listener="#{poBean.resetContact()}" process="@this"/>
                             </h:selectOneMenu>
+
                             <p:message for="supplierHeader "/>
+
                             <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
                                          rendered="#{poBean.beingViewed}"/>

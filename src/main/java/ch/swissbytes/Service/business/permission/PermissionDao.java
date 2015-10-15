@@ -3,17 +3,16 @@ package ch.swissbytes.Service.business.permission;
 
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.Service.infrastructure.Filter;
-import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
-import ch.swissbytes.domain.model.entities.OptionsEntity;
-import ch.swissbytes.domain.model.entities.RoleEntity;
-import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -54,8 +53,17 @@ public class PermissionDao extends GenericDao<PermissionGrantedEntity> implement
         return query.getResultList();
     }
 
+    public List<UserPermissionGrantedEntity> getUserPermissionFor(final Long userId){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p");
+        sb.append(" FROM UserPermissionGrantedEntity p");
+        sb.append(" WHERE p.user.id = :USER_ID ");
+        Map<String,Object> map = new HashMap<>();
+        map.put("USER_ID",userId);
+        return super.findBy(sb.toString(),map);
+    }
+
     public List<RoleEntity> getRolesAssignedBy(final Long userId) {
-        log.info("Get Roles Assigned by userId =" + userId + ")");
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT re ");
         sb.append(" FROM UserEntity r, UserRoleEntity ur, RoleEntity re ");
