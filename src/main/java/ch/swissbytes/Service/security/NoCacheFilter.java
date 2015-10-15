@@ -33,33 +33,26 @@ public class NoCacheFilter implements Filter {
     }
 
     private Map<String, String> getHeadersInfo(HttpServletRequest request) {
-
         Map<String, String> map = new HashMap<>();
         Enumeration headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String key = (String) headerNames.nextElement();
             String value = request.getHeader(key);
             map.put(key, value);
-            log.info(key+"  "+value);
         }
-
         return map;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("No Cache Filter.");
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
-        log.info("Request URI " + httpReq.getRequestURI());
          if (!isAJAXRequest(httpReq)) {
              if (!httpReq.getRequestURI().startsWith(httpReq.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER)) { // Skip JSF resources (CSS/JS/Images/etc)
                  httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
                  httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
                  httpRes.setDateHeader("Expires", 0); // Proxies.
              }
-         }else{
-             log.info("request ajax ");
          }
         getHeadersInfo(httpReq);
         chain.doFilter(request, response);

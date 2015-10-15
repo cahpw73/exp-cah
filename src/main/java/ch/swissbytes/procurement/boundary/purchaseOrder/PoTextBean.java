@@ -94,7 +94,9 @@ public class PoTextBean implements Serializable {
             }
             textSnippetList.removeAll(listToRemove);
         }
-
+    }
+    public void loadTextNewPO(final Long projectId){
+        textSnippetList = projectTextSnippetService.findByProjectId(projectId);
     }
 
     public void onStandardTextDrop(DragDropEvent ddEvent) {
