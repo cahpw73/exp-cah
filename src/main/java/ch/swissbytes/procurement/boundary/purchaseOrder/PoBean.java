@@ -108,6 +108,7 @@ public class PoBean extends Bean {
         purchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
         purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(new Date());
         purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
+        poTextBean.loadTextNewPO(projectEntity.getId());
         putModeCreation();
     }
 
