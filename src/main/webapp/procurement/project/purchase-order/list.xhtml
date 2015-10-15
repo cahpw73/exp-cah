@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <h:panelGroup>
                     <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 60px; display: table; margin-top: -19px">
-                        <div style="width: 100%; vertical-align: middle; display: table-cell">
+                        <div style="width: 100%; vertical-align: middle; display: table-cell;">
                             <p:messages id="poGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
                                         infoClass="alert alert-info"/>
@@ -26,67 +26,81 @@
                                     value="#{msgs['project.purchase.order.btn.new.purchase.order']}">
                                 <f:param name="projectId" value="#{poListBean.projectId}"/>
                             </h:link>
+                            <div class="clearfix"/>
                             <br/>
+                            <div style="width: 100%; text-align: center">
+                            <div style="display: inline-block; margin:0 auto;">
                             <h:commandLink action="#{poListBean.filter.setPOOO()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="0000">
+                                           value="#{msgs['lbl.0000']}" style="margin-right: 1px;">
                                 <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP1000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="1000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.1000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP2000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="2000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.2000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP3000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="3000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.3000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP4000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="4000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.4000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP5000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="5000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.5000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP6000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="6000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           value="#{msgs['lbl.6000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP7000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="7000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.7000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP8000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="8000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.8000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP9000()}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="9000">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.9000']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setCC}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="CC">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           style="margin-right: 1px;"
+                                           value="#{msgs['lbl.CC']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setSC}"
                                            styleClass="btn btn-primary btn-sm"
-                                           value="SC">
-                                <p:ajax async="false" update="projectListId"/>s
+                                           value="#{msgs['lbl.SC']}">
+                                <p:ajax async="false" update="projectListId"/>
                             </h:commandLink>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </h:panelGroup>
