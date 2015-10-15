@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.user.UserDao;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.PermissionGrantedEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.domain.model.entities.UserPermissionGrantedEntity;
 
 import javax.inject.Inject;
 import java.io.Serializable;
@@ -27,9 +28,11 @@ public class PermissionService implements Serializable {
       return  dao.getPermissionFor(roles);
     }
 
-    public List<RoleEntity> getRolesFor(final String userName){
-        log.info("Get Roles list by userName="+userName+")");
-        List<UserEntity> list=userDao.findUserByUserName(userName);
+    public List<UserPermissionGrantedEntity> getUserPermissions(final Long userId){
+        return dao.getUserPermissionFor(userId);
+    }
+
+    public List<RoleEntity> getRolesFor(final List<UserEntity> list){
         if(!list.isEmpty()){
             return dao.getRolesAssignedBy(list.get(0).getId());
         }

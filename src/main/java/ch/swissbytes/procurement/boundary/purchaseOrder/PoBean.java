@@ -701,7 +701,6 @@ public class PoBean extends Bean {
     }
 
     public void resetContact() {
-        log.info("reset contact");
         purchaseOrder.getPurchaseOrderProcurementEntity().setContactEntity(new ContactEntity());
     }
 

@@ -139,7 +139,7 @@ INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1405,'PO_COMMIT',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1406,'PO_PRINT',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1407,'PO_RELEASE',1,'');
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1408,'PO_VARIATION',1,'');
-INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1408,'PO_UNCOMMIT',1,'');
+INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1409,'PO_UNCOMMIT',1,'');
 
 
 
@@ -337,4 +337,7 @@ INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(702,1400,17);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(703,1404,17);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(704,506,17);
 INSERT INTO ROLE_OPTION(id,option_id,role_id) VALUES(704,506,17);
+
+INSERT INTO USER_OPTION(id,option_id,user_id) VALUES(1,1409,139);
+INSERT INTO USER_OPTION(id,option_id,user_id) VALUES(2,1409,116);
 
