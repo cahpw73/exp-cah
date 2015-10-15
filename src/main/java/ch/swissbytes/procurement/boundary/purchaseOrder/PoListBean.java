@@ -9,6 +9,7 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ProcurementStatus;
+import ch.swissbytes.domain.types.PurchaseOrderNumberOption;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
@@ -119,6 +120,7 @@ public class PoListBean implements Serializable {
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
             filter = new FilterPO();
             filter.setProjectId(project.getId());
+            filter.setPurchaseOrderNumberOption(PurchaseOrderNumberOption.P0000);
             poList = new PurchaseOrderTbl(dao, filter);
         } else {
             throw new IllegalArgumentException("project Id invalid");
@@ -644,5 +646,17 @@ public class PoListBean implements Serializable {
             }
         }
         return validate;
+    }
+
+    public FilterPO getFilter() {
+        return filter;
+    }
+
+    public void setFilter(FilterPO filter) {
+        this.filter = filter;
+    }
+
+    public List<PurchaseOrderEntity> findPOs(){
+        return service.findPosBy(getFilter());
     }
 }

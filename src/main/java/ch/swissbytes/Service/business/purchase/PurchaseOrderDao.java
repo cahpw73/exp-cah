@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
@@ -116,6 +117,36 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("PO", po);
         map.put("INCOMPLETE", ProcurementStatus.INCOMPLETE);
         map.put("ENABLED", StatusEnum.ENABLE.getId());
+        return super.findBy(sb.toString(),map);
+    }
+
+    public List<PurchaseOrderEntity> findPOsBy(FilterPO filterPO){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE  po.projectEntity.id = :PROJECT ");
+        sb.append(" AND po.status.id = :ENABLED ");
+
+        if(filterPO.getClassEnum()!=null&&
+                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal())){
+            sb.append(" AND po.purchaseOrderProcurementEntity.clazz = :CLAZZ ");
+        }
+        if(filterPO.getPurchaseOrderNumberOption()!=null){
+            sb.append(" AND (po.po >= :BEGINNING ");
+            sb.append(" AND po.po <= :ENDING )");
+        }
+        sb.append(" ORDER BY po.po, po.orderedVariation ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("PROJECT", filterPO.getProjectId());
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        if(filterPO.getClassEnum()!=null&&
+                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal())){
+            map.put("CLAZZ", filterPO.getClassEnum());
+        }
+        if(filterPO.getPurchaseOrderNumberOption()!=null){
+            map.put("BEGINNING", filterPO.getPurchaseOrderNumberOption().getBeginning());
+            map.put("ENDING", filterPO.getPurchaseOrderNumberOption().getEnding());
+        }
         return super.findBy(sb.toString(),map);
     }
 

@@ -19,6 +19,7 @@ import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
 import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
@@ -224,7 +225,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public boolean findPOByOneVariation(String project,String po,String variation){
-        List<PurchaseOrderEntity> list = dao.findPOByOneVariation(project,po,variation);
+        List<PurchaseOrderEntity> list = dao.findPOByOneVariation(project, po, variation);
         if(!list.isEmpty()){
             return true;
         }
@@ -571,4 +572,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         return fileName+(po.getPoTitle()!=null?po.getPoTitle():"");
     }
 
+
+    public List<PurchaseOrderEntity> findPosBy(FilterPO filter){
+        return dao.findPOsBy(filter);
+    }
 }
