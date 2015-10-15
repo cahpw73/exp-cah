@@ -23,8 +23,6 @@ public class PurchaseOrderTbl extends LazyDataModel<PurchaseOrderEntity> {
     private Long total;
 
     public PurchaseOrderTbl(PurchaseOrderDao dao,Filter filter){
-        log.info("creating tbl ");
-        log.info((dao!=null?"dao has value":"dao has no value"));
         this.filter=filter;
         this.dao=dao;
         total=0L;
@@ -36,7 +34,6 @@ public class PurchaseOrderTbl extends LazyDataModel<PurchaseOrderEntity> {
 
     @Override
     public List<PurchaseOrderEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        log.info("loading data... "+sortField);
         List<PurchaseOrderEntity> purchaseOrderEntityList=new ArrayList<>();
         if(sortField!=null){
             purchaseOrderEntityList= dao.findByPage(first, pageSize,filter,sortField,sortOrder.ordinal()==SortOrder.ASCENDING.ordinal());

@@ -32,16 +32,12 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     @Override
     protected void applyCriteriaValues(Query query, Filter f) {
-        log.info("protected  void applyCriteriaValues(Query query,Filter f)");
         query.setParameter("DELETED", StatusEnum.DELETED.getId());
         if (f != null) {
-            log.info("filtering.....");
             FilterPO filter=(FilterPO)f;
             if(filter.getProjectId()!=null){
                 query.setParameter("PROJECT_ID", filter.getProjectId() );
             }
-        } else {
-            log.info("filter is null");
         }
     }
 
@@ -51,7 +47,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     @Override
     protected String addCriteria(Filter f) {
-        log.info("protected  String addCriteria(Filter f)");
         StringBuilder sb = new StringBuilder();
         sb.append(" AND x.status.id<>:DELETED ");
         if (f != null) {
@@ -59,8 +54,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
             if(filter.getProjectId()!=null){
                 sb.append(" AND x.projectEntity.id =:PROJECT_ID");
             }
-        } else {
-            log.info("filter is null");
         }
         return sb.toString();
     }

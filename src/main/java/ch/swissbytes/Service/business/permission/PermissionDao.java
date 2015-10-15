@@ -40,7 +40,7 @@ public class PermissionDao extends GenericDao<PermissionGrantedEntity> implement
     }
 
     public List<PermissionGrantedEntity> getPermissionFor(final List<Integer> roles) {
-        log.info("public List<PermissionGrantedEntity> getPermissionFor(final List<Integer>roles=" + roles + ")");
+        log.info("Get Permission Granted by roles list ");
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT permission ");
         sb.append("FROM PermissionGrantedEntity permission ");
@@ -55,7 +55,7 @@ public class PermissionDao extends GenericDao<PermissionGrantedEntity> implement
     }
 
     public List<RoleEntity> getRolesAssignedBy(final Long userId) {
-        log.info("public List<RoleEntity> getRolesAssignedBy(final Long userId=" + userId + ")");
+        log.info("Get Roles Assigned by userId =" + userId + ")");
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT re ");
         sb.append(" FROM UserEntity r, UserRoleEntity ur, RoleEntity re ");

@@ -28,7 +28,7 @@ public class PermissionService implements Serializable {
     }
 
     public List<RoleEntity> getRolesFor(final String userName){
-        log.info("public List<RoleEntity> getRolesFor(final String userName="+userName+")");
+        log.info("Get Roles list by userName="+userName+")");
         List<UserEntity> list=userDao.findUserByUserName(userName);
         if(!list.isEmpty()){
             return dao.getRolesAssignedBy(list.get(0).getId());

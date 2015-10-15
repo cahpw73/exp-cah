@@ -221,17 +221,6 @@ public class PoBean extends Bean {
 
     }
 
-    public String doSaveAndClose() {
-        log.info("trying to save and close purchase order on procurement module");
-        if (validate()) {
-            collectData();
-            purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-            purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            return doLastOperationsOverPO(false);
-        }
-        return null;
-    }
-
     public void doUpdate() {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
@@ -249,20 +238,6 @@ public class PoBean extends Bean {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
         }
-    }
-
-    public String doUpdateAndClose() {
-        log.info("trying to update purchase order on procurement module");
-        if (validate()) {
-            collectData();
-            if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
-                purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-            }
-            purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            String link = doLastOperationsOverPO(false);
-            return link;
-        }
-        return null;
     }
 
     private String doLastOperationsOverPO(boolean edit) {
