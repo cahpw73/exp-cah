@@ -43,6 +43,7 @@ public class FilterPO extends Filter {
         purchaseOrderNumberOption=PurchaseOrderNumberOption.P0000;
         classEnum=null;
     }
+
     public void setP1000(){
         purchaseOrderNumberOption=PurchaseOrderNumberOption.P1000;
         classEnum=null;
@@ -86,6 +87,43 @@ public class FilterPO extends Filter {
     public void setSC(){
         purchaseOrderNumberOption=null;
         classEnum=ClassEnum.SERVICE_CONTRACT;
+    }
+
+    public boolean isP0000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P0000.ordinal();
+    }
+    public boolean isP1000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P1000.ordinal();
+    }
+    public boolean isP2000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P2000.ordinal();
+    }
+    public boolean isP3000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P3000.ordinal();
+    }
+    public boolean isP4000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P4000.ordinal();
+    }
+    public boolean isP5000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P5000.ordinal();
+    }
+    public boolean isP6000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P6000.ordinal();
+    }
+    public boolean isP7000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P7000.ordinal();
+    }
+    public boolean isP8000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P8000.ordinal();
+    }
+    public boolean isP9000Selected(){
+        return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P9000.ordinal();
+    }
+    public boolean isSCSelected(){
+        return classEnum!=null&&classEnum.ordinal()==ClassEnum.SERVICE_CONTRACT.ordinal();
+    }
+    public boolean isCCSelected(){
+        return classEnum!=null&&classEnum.ordinal()==ClassEnum.CONSTRUCTION_CONTRACT.ordinal();
     }
     public void clear(){
         super.clean();

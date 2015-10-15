@@ -36,5 +36,9 @@ footer {
     font-size: 11px!important;
 }
 
+.button-selected{
+    opacity: 0.5;
+}
+
 
 

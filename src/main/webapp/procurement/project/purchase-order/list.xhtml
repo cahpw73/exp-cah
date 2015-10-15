@@ -14,7 +14,7 @@
     <ui:define name="body">
         <h:form id="listPooFormId" prependId="false">
             <div class="col-md-12">
-                <h:panelGroup>
+                <h:panelGroup id="filterButtons">
                     <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 60px; display: table; margin-top: -19px">
                         <div style="width: 100%; vertical-align: middle; display: table-cell;">
                             <p:messages id="poGlbMsgs" globalOnly="true" errorClass="alert alert-error"
@@ -31,73 +31,73 @@
                             <div style="width: 100%; text-align: center">
                             <div style="display: inline-block; margin:0 auto;">
                             <h:commandLink action="#{poListBean.filter.setPOOO()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p0000Selected?'button-selected':''}"
                                            value="#{msgs['lbl.0000']}" style="margin-right: 1px;">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP1000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p1000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.1000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP2000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p2000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.2000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP3000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p3000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.3000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP4000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p4000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.4000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP5000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p5000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.5000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP6000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p6000Selected?'button-selected':''}"
                                            value="#{msgs['lbl.6000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP7000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p7000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.7000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP8000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p8000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.8000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setP9000()}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.p9000Selected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.9000']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setCC}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.CCSelected?'button-selected':''}"
                                            style="margin-right: 1px;"
                                            value="#{msgs['lbl.CC']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             <h:commandLink action="#{poListBean.filter.setSC}"
-                                           styleClass="btn btn-primary btn-sm"
+                                           styleClass="btn btn-primary btn-sm #{poListBean.filter.SCSelected?'button-selected':''}"
                                            value="#{msgs['lbl.SC']}">
-                                <p:ajax async="false" update="projectListId"/>
+                                <p:ajax async="false" update="projectListId filterButtons"/>
                             </h:commandLink>
                             </div>
                             </div>
