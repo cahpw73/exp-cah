@@ -58,10 +58,7 @@ public class SortBean implements Serializable {
         Comparator<PurchaseOrderEntity> comparator = new Comparator<PurchaseOrderEntity>() {
             @Override
             public int compare(PurchaseOrderEntity po1, PurchaseOrderEntity po2) {
-                if(StringUtils.isNotEmpty(po1.getVariation()) && StringUtils.isNotEmpty(po2.getVariation())){
-                    return sortItemNumber(po1.getVariation(), po2.getVariation());
-                }
-                return 0;
+                return sortVariation(po1.getVariation(), po2.getVariation());
             }
         };
         Collections.sort(list, comparator);
@@ -86,6 +83,33 @@ public class SortBean implements Serializable {
                 return 1;
             } else if (val2.toString().equals("")) {
                 return -1;
+            }
+            return 0;
+        } else {
+            if (matchRegex(val1.toString()) && matchRegex(val2.toString())) { //Case 1 valid match regex
+                String codeA = val1.toString();
+                String codeB = val2.toString();
+                return isLessThan(codeA, codeB) ? -1 : 1;
+            } else if (matchRegexAtLeastOne(val1.toString(), val2.toString())) { // Case 2 valid only one regex
+                int i = 0;
+                if (matchRegex(val1.toString())) {
+                    i = -1;
+                } else if (matchRegex(val2.toString())) {
+                    i = 1;
+                }
+                return i;
+            } else { //Case 3 none valid regex
+                return val1.toString().compareTo(val2.toString());
+            }
+        }
+    }
+
+    public int sortVariation(Object val1, Object val2) {
+        if (val1.toString().equals("") || val2.toString().equals("")) {
+            if (val1.toString().equals("")) {
+                return -1;
+            } else if (val2.toString().equals("")) {
+                return 1;
             }
             return 0;
         } else {
