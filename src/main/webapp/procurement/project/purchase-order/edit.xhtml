@@ -20,115 +20,120 @@
                              autoRun="true"/>
 
             <div class="col-md-12" style="margin-top: 7px;">
-                <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 100px; display: table; margin-top: -19px">
-                    <div style="width: 100%; vertical-align: middle; display: table-cell">
-                        <p:messages id="poEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
-                                    warnClass="alert" closable="true"
-                                    infoClass="alert alert-info" />
-                        <br/>
-                        <h:panelGroup rendered="#{poBean.beingCreated}">
-                            <div class="procurement-panel-header" >#{msgs['purchase.order.new.po.title']}</div>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{poBean.beingOnlyEdited}">
-                            <div class="procurement-panel-header">#{msgs['purchase.order.edit.po.title']}</div>
-                        </h:panelGroup>
-                        <br/>
-                        <div class="pull-left" style="margin-left: 14px!important;">
-                            <h:panelGroup id="buttonGroup">
-                                <h:commandButton styleClass="btn btn-primary btn-sm"
-                                                 action="#{poBean.doSave}"
-                                                 rendered="#{poBean.beingCreated}"
-                                                 value="#{msgs['lbl.save']}">
-                                    <p:ajax async="false"
-                                            update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
-                                            process="@form"
-                                            oncomplete="restartSwitches();"/>
-                                </h:commandButton>
-                                <h:commandButton styleClass="btn btn-primary btn-sm"
-                                                 action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
-                                                 value="#{msgs['lbl.save']}">
-                                    <p:ajax async="false"
-                                            update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
-                                            process="@form"
-                                            oncomplete="restartSwitches();"/>
-                                </h:commandButton>
-                                &#160;
-                                <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
-                                        styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
-                                        outcome="list">
-                                    <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
-                                </h:link>
-                                &#160;
-                                <h:commandButton
-                                        styleClass="btn btn-primary btn-sm"
-                                        action="#{poBean.doSaveView}"
-                                        rendered="#{poBean.beingCreated}"
-                                        value="#{msgs['lbl.print']}">
-                                    <p:ajax async="false"
-                                            update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
-                                            process="@form"
-                                            oncomplete="restartSwitches();"/>
-                                </h:commandButton>
-                                <h:commandButton
-                                        styleClass="btn btn-primary btn-sm"
-                                        action="#{poBean.doUpdateView}"
-                                        rendered="#{poBean.beingUpdated}"
-                                        value="#{msgs['lbl.print']}">
-                                    <p:ajax async="false"
-                                            update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
-                                            process="@form"
-                                            oncomplete="restartSwitches();"/>
-                                </h:commandButton>
-                                <h:commandLink type="submit"
-                                               id="printDraftPO"
-                                               target="_blank"
-                                               style="display: none;"
-                                               action="#{poListBean.printPODraft()}">
-                                </h:commandLink>
-                                &#160;
-                                <h:commandButton styleClass="btn btn-primary btn-sm"
-                                                 action="#{poBean.validateAll}"
-                                                 rendered="#{poBean.beingCreated or poBean.beingUpdated}"
-                                                 value="#{msgs['po.main.data.lbl.button.validate']}">
-                                    <p:ajax async="false"
-                                            update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
-                                            process="@form"/>
-                                </h:commandButton>
-                            </h:panelGroup>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+
                 <div class="col-md-12 panel-tab-users">
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li id="headerTab" class="active">
-                            <a href="#headerPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.header']}</a>
-                        </li>
-                        <li id="supplierTab">
-                            <a href="#supplierPo" role="tab"
-                               data-toggle="tab">#{msgs['purchase.order.tab.supplier']}</a>
-                        </li>
-                        <li id="itemTab">
-                            <a href="#itemPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.items']}</a>
-                        </li>
-                        <li id="textTab">
-                            <a href="#textPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.text']}</a>
-                        </li>
-                        <li id="deliverableTab">
-                            <a href="#deliverablesPo" role="tab"
-                               data-toggle="tab">#{msgs['purchase.order.tab.deliverables']}</a>
-                        </li>
-                        <li id="cashflowTab">
-                            <a href="#cashflowPo" role="tab"
-                               data-toggle="tab">#{msgs['purchase.order.tab.cashflow']}</a>
-                        </li>
-                    </ul>
-
+                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 100px; display: table; margin-top: -44px">
+                        <div style="width: 100%; vertical-align: middle; display: table-cell">
+                            <p:messages id="poEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                                        warnClass="alert" closable="true"
+                                        infoClass="alert alert-info" />
+                            <br/>
+                            <h:panelGroup rendered="#{poBean.beingCreated}">
+                                <div class="procurement-panel-header" >#{msgs['purchase.order.new.po.title']}</div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{poBean.beingOnlyEdited}">
+                                <div class="procurement-panel-header">#{msgs['purchase.order.edit.po.title']}</div>
+                            </h:panelGroup>
+                            <br/>
+                            <div class="pull-left" style="margin-left: 14px!important;">
+                                <h:panelGroup id="buttonGroup">
+                                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                                     action="#{poBean.doSave}"
+                                                     rendered="#{poBean.beingCreated}"
+                                                     value="#{msgs['lbl.save']}">
+                                        <p:ajax async="false"
+                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                process="@form"
+                                                oncomplete="restartSwitches();"/>
+                                    </h:commandButton>
+                                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                                     action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
+                                                     value="#{msgs['lbl.save']}">
+                                        <p:ajax async="false"
+                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                process="@form"
+                                                oncomplete="restartSwitches();"/>
+                                    </h:commandButton>
+                                    &#160;
+                                    <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
+                                            styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
+                                            outcome="list">
+                                        <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
+                                    </h:link>
+                                    &#160;
+                                    <h:commandButton
+                                            styleClass="btn btn-primary btn-sm"
+                                            action="#{poBean.doSaveView}"
+                                            rendered="#{poBean.beingCreated}"
+                                            value="#{msgs['lbl.print']}">
+                                        <p:ajax async="false"
+                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                process="@form"
+                                                oncomplete="restartSwitches();"/>
+                                    </h:commandButton>
+                                    <h:commandButton
+                                            styleClass="btn btn-primary btn-sm"
+                                            action="#{poBean.doUpdateView}"
+                                            rendered="#{poBean.beingUpdated}"
+                                            value="#{msgs['lbl.print']}">
+                                        <p:ajax async="false"
+                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                process="@form"
+                                                oncomplete="restartSwitches();"/>
+                                    </h:commandButton>
+                                    <h:commandLink type="submit"
+                                                   id="printDraftPO"
+                                                   target="_blank"
+                                                   style="display: none;"
+                                                   action="#{poListBean.printPODraft()}">
+                                    </h:commandLink>
+                                    &#160;
+                                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                                     action="#{poBean.validateAll}"
+                                                     rendered="#{poBean.beingCreated or poBean.beingUpdated}"
+                                                     value="#{msgs['po.main.data.lbl.button.validate']}">
+                                        <p:ajax async="false"
+                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                process="@form"/>
+                                    </h:commandButton>
+                                </h:panelGroup>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br/>
+                            <br/>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li id="headerTab" class="active">
+                                    <a href="#headerPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.header']}</a>
+                                </li>
+                                <li id="supplierTab">
+                                    <a href="#supplierPo" role="tab"
+                                       data-toggle="tab">#{msgs['purchase.order.tab.supplier']}</a>
+                                </li>
+                                <li id="itemTab">
+                                    <a href="#itemPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.items']}</a>
+                                </li>
+                                <li id="textTab">
+                                    <a href="#textPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.text']}</a>
+                                </li>
+                                <li id="deliverableTab">
+                                    <a href="#deliverablesPo" role="tab"
+                                       data-toggle="tab">#{msgs['purchase.order.tab.deliverables']}</a>
+                                </li>
+                                <li id="cashflowTab">
+                                    <a href="#cashflowPo" role="tab"
+                                       data-toggle="tab">#{msgs['purchase.order.tab.cashflow']}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                     <!-- Tab Projects -->
                     <div class="tab-content">
                         <ui:include src="components/po-main-data.xhtml">
