@@ -1771,3 +1771,16 @@ UPDATE P_ORDER AS PR SET PO_STATUS =4 FROM  PURCHASE_ORDER AS PO WHERE PO.PROJEC
 
 INSERT INTO OPTIONS(id,name,module_id,url) VALUES(1408,'PO_UNCOMMIT',1,'');
 
+
+
+delete from milestone_item;
+insert into milestone_item (id,item,last_update,status)values(1,'On Award',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(2,'Initial Certified Data',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(3,'On Agreed Progress',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(4,'X Months After Award',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(5,'X Months prior to Delivery',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(6,'On Completion',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(7,'Initial Mechanical Detail Drawings',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(8,'On Issue of BOL',CURRENT_DATE,0);
+
+
