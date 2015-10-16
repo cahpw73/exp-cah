@@ -154,6 +154,7 @@
                                     <h:inputText id="totalCostItem" value="#{_i.totalCost}"
                                                  required="true"
                                                  styleClass="form-control edTotalCostItems"
+                                                 onchange="calculateUnitCost();"
                                                  onkeyup="calculateUnitCost();">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
