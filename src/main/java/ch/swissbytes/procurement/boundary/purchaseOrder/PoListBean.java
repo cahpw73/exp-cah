@@ -119,7 +119,10 @@ public class PoListBean implements Serializable {
             if (project == null) {
                 throw new IllegalArgumentException("project Id invalid");
             }
+            Date d1=new Date();
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+            Date d2 =new Date();
+            log.info("getting all max variations takes ["+(d2.getTime()-d1.getTime())+"]ms");
             ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
         } else {
             throw new IllegalArgumentException("project Id invalid");
@@ -294,6 +297,8 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
+
+        Date time1=new Date();
         boolean canCreateVar = false;
         boolean isLastVariationAndCanCreateVariation = false;
         boolean existsLastVariationAndHasStatusIncomplete = verifyMaxVariationWithStatusIncomplete(entity);
@@ -317,7 +322,8 @@ public class PoListBean implements Serializable {
         if (isLastVariationAndCanCreateVariation || (existsLastVariationAndHasStatusIncomplete && !existNextVariation && poCommitted)) {
             canCreateVar = true;
         }
-
+        Date time2=new Date();
+        log.info("variation time ["+(time2.getTime()-time1.getTime())+"]ms");
         return canCreateVar;
     }
 

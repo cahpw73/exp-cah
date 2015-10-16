@@ -76,7 +76,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     public List<PurchaseOrderEntity> findPOMaxVariations(Long projectId){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po.po,MAX(po.orderedVariation) ");
-        sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
+        sb.append(" FROM PurchaseOrderEntity po.purchaseOrderProcurementEntity p ");
         sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");

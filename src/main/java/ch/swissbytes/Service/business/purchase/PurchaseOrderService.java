@@ -217,7 +217,10 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public PurchaseOrderEntity findPOWithMaxVariation(String project,String po){
+        Date date1=new Date();
         List<PurchaseOrderEntity> list = dao.findPOWithMaxVariation(project,po);
+        Date date2=new Date();
+        log.info("Time for max variation ["+(date2.getTime()-date1.getTime())+"]ms");
         if(!list.isEmpty()){
             return list.get(0);
         }
