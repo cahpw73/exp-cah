@@ -1,9 +1,11 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.cashflow.CashflowService;
+import ch.swissbytes.Service.business.milestone.MilestoneItemService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
+import ch.swissbytes.domain.model.entities.MilestoneItem;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.types.PaymentTermsEnum;
 import ch.swissbytes.domain.types.RetentionFormEnum;
@@ -50,18 +52,22 @@ public class CashflowBean implements Serializable {
 
     @Inject
     private PurchaseOrderService poService;
+    @Inject
+    private MilestoneItemService milestoneItemService;
 
     private CashflowEntity cashflow;
 
     private List<CashflowDetailEntity> cashflowDetailList;
 
     private Long preId = -1L;
+    private List<MilestoneItem> milestoneItems;
 
     @PostConstruct
     public void create() {
         log.info("create poTextBean");
         cashflow = new CashflowEntity();
         cashflowDetailList = new ArrayList<>();
+        milestoneItems=milestoneItemService.findAllMilestoneItems();
     }
 
     @PreDestroy
@@ -196,6 +202,10 @@ public class CashflowBean implements Serializable {
     private boolean itemNoIsNotEmpty(CashflowDetailEntity entity) {
         log.info("item is not empty");
         return StringUtils.isNotEmpty(entity.getItem()) && StringUtils.isNotBlank(entity.getItem());
+    }
+
+    public List<MilestoneItem> getMilestoneItems() {
+        return milestoneItems;
     }
 
     private boolean noHasData(CashflowDetailEntity entity) {

@@ -129,7 +129,6 @@
                                                  requiredMessage="Enter a Item" required="true">
                                         <p:ajax event="blur" process="forecastDt" async="false"/>
                                     </p:inputText>
-
                                 </h:panelGroup>
                             </p:column>
                             <p:column width="70" headerText="#{msgs['po.cashflow.column.currency.percentage']}"
@@ -154,7 +153,14 @@
                                     <h:outputText value="#{_l.milestone}"/>
                                 </h:panelGroup>
                                 <h:panelGroup id="edDescrip" rendered="#{_l.isEditable}">
-                                    <h:inputText id="descrip" value="#{_l.milestone}" styleClass="form-control"/>
+                                    <p:selectOneMenu id="descrip" value="#{_l.milestone}"
+                                                     effect="fold" editable="true" styleClass="form-control"
+                                                     maxlength="950" style="width: 100%">
+                                        <f:selectItems value="#{cashflowBean.milestoneItems}"
+                                                       var="_milestoneItem" itemValue="#{_milestoneItem.item}"
+                                                       itemLabel="#{_milestoneItem.item}"/>
+                                        <p:ajax async="false" process="@this" event="change"/>
+                                    </p:selectOneMenu>
                                 </h:panelGroup>
                             </p:column>
                             <p:column headerText="#{msgs['po.cashflow.column.currency']}"
@@ -204,7 +210,8 @@
                                     </h:outputText>
                                 </h:panelGroup>
                                 <h:panelGroup id="edPoAmt" rendered="#{_l.isEditable}">
-                                    <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control" readonly="true">
+                                    <h:inputText id="PoAmt" value="#{_l.projectAmt}" styleClass="form-control"
+                                                 readonly="true">
                                         <p:ajax event="blur" process="forecastDt" async="false"/>
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>

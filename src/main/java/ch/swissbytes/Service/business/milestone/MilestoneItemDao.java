@@ -18,7 +18,7 @@ import java.util.Map;
 public class MilestoneItemDao extends GenericDao<MilestoneItem> implements Serializable {
 
 
-    public List<DeliverableItem> findAllMilestoneItems(){
+    public List<MilestoneItem> findAllMilestoneItems(){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT d ");
         sb.append(" FROM MilestoneItem d ");

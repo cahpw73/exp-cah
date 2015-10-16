@@ -26,7 +26,7 @@ public class MilestoneItemService extends Service<MilestoneItem> implements Seri
         super.initialize(dao);
     }
 
-    public List<DeliverableItem> findAllDeliverableItems(){
+    public List<MilestoneItem> findAllMilestoneItems(){
         return dao.findAllMilestoneItems();
     }
 }
