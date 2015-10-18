@@ -22,6 +22,7 @@
                                     <div style="width: 200px; float: left;">
                                         <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
                                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
+
                                                          styleClass="form-control" rendered="#{poBean.beingEdited}"
                                                          converter="supplierConverter">
                                             <f:selectItem
@@ -32,6 +33,9 @@
                                                            itemValue="#{_s}"
                                                            itemLabel="#{_s.fullName}"/>
                                             <p:ajax async="false"
+                                                    event="change"
+                                                    partialSubmit="true"
+                                                    resetValues="true"
                                                     update="editPoForm:contactDetail editPoForm:supplierHeader"
                                                     process="@this" listener="#{poBean.resetContact()}"/>
                                         </h:selectOneMenu>
