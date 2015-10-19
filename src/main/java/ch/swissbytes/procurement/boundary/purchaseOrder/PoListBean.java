@@ -315,9 +315,6 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        if(entity.getPo().equals("04") && entity.getVariation().equals("4")){
-            log.info("");
-        }
         Date time1 = new Date();
         boolean canCreateVar = false;
         boolean poCommitted = false;
@@ -356,11 +353,9 @@ public class PoListBean implements Serializable {
     private boolean verifyMaxVariationWithStatusIncomplete(final PurchaseOrderEntity entity) {
         PurchaseOrderEntity po = entity;
         for (PurchaseOrderEntity p : allPurchaseOrders) {
-            if (StringUtils.equals(entity.getPo(),p.getPo())) {
-                if (po.getOrderedVariation() != null && p.getOrderedVariation() != null) {
-                    if (StringUtils.equals(entity.getPo(), p.getPo()) && p.getOrderedVariation().intValue() > po.getOrderedVariation().intValue()) {
-                        po = p;
-                    }
+            if (po.getOrderedVariation() != null && p.getOrderedVariation() != null) {
+                if (StringUtils.equals(entity.getPo(), p.getPo()) && p.getOrderedVariation().intValue() > po.getOrderedVariation().intValue()) {
+                    po = p;
                 }
             }
         }
@@ -381,14 +376,11 @@ public class PoListBean implements Serializable {
                 nextVariationStr = nextVariation.toString();
             }
             for (PurchaseOrderEntity p : allPurchaseOrders) {
-                if (StringUtils.equals(entity.getPo(),p.getPo())) {
-                    if (StringUtils.equals(p.getPo(), entity.getPo()) && StringUtils.equals(p.getVariation(), nextVariationStr)) {
-                        nextVariationBool = true;
-                        break;
-                    }
+                if (StringUtils.equals(p.getPo(), entity.getPo()) && StringUtils.equals(p.getVariation(), nextVariationStr)) {
+                    nextVariationBool = true;
+                    break;
                 }
             }
-            //nextVariationBool = service.findPOByOneVariation(entity.getProject(), entity.getPo(), nextVariationStr);
         } catch (NumberFormatException nef) {
             log.info("Trying create variation to : " + entity.getVariation());
         }
@@ -397,7 +389,6 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canCommitt(PurchaseOrderEntity entity) {
-        log.info("CanCommit()");
         return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                 (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal() ||
                         entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
@@ -704,7 +695,7 @@ public class PoListBean implements Serializable {
         log.info("Find the list of POs");
         Date d1 = new Date();
         purchaseOrders = service.findPosBy(getFilter());
-        log.info("purchaseOrders size: "+purchaseOrders.size());
+        log.info("purchaseOrders size: " + purchaseOrders.size());
         Date d2 = new Date();
         log.info("getting all POs [" + (d2.getTime() - d1.getTime()) + "]ms");
     }
