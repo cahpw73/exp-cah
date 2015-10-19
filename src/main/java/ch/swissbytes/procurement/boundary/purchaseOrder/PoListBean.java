@@ -357,8 +357,10 @@ public class PoListBean implements Serializable {
         PurchaseOrderEntity po = entity;
         for (PurchaseOrderEntity p : allPurchaseOrders) {
             if (StringUtils.equals(entity.getPo(),p.getPo())) {
-                if (StringUtils.equals(entity.getPo(), p.getPo()) && p.getOrderedVariation().intValue() > po.getOrderedVariation().intValue()) {
-                    po = p;
+                if (po.getOrderedVariation() != null && p.getOrderedVariation() != null) {
+                    if (StringUtils.equals(entity.getPo(), p.getPo()) && p.getOrderedVariation().intValue() > po.getOrderedVariation().intValue()) {
+                        po = p;
+                    }
                 }
             }
         }
