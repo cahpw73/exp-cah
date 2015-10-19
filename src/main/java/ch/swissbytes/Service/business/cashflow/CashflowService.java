@@ -103,8 +103,11 @@ public class CashflowService implements Serializable {
     public BigDecimal getTotalMilestonePayments(List<CashflowDetailEntity> detail,ProjectCurrencyEntity currency){
         BigDecimal total=new BigDecimal("0");
         for(CashflowDetailEntity milestonePayment:detail){
-            if(milestonePayment.getProjectCurrency()!=null&&currency!=null&&currency.getCurrency().getId().longValue()==milestonePayment.getProjectCurrency().getCurrency().getId().longValue())
-            total=total.add(milestonePayment.getOrderAmt()!=null?milestonePayment.getOrderAmt():new BigDecimal("0"));
+            if(milestonePayment.getStatus()==null||(milestonePayment.getStatus()!=null&&milestonePayment.getStatus().ordinal()==StatusEnum.ENABLE.ordinal()))
+            {
+                if (milestonePayment.getProjectCurrency() != null && currency != null && currency.getCurrency().getId().longValue() == milestonePayment.getProjectCurrency().getCurrency().getId().longValue())
+                    total = total.add(milestonePayment.getOrderAmt() != null ? milestonePayment.getOrderAmt() : new BigDecimal("0"));
+            }
         }
         return total;
     }
