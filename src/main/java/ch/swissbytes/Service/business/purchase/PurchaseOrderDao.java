@@ -26,7 +26,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     private static final Logger log = Logger.getLogger(PurchaseOrderDao.class.getName());
 
-
     public PurchaseOrderEntity load(final Long id) {
         return super.load(PurchaseOrderEntity.class, id);
     }
@@ -296,5 +295,18 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("ID",id);
         List<VPurchaseOrder>list=this.findBy(sb.toString(), parameters);
         return list.isEmpty()?null:list.get(0);
+    }
+
+    public List<PurchaseOrderEntity> findAllPOs(final Long projectId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" ORDER BY po.po ");
+        Map<String,Object> parameters=new HashMap<>();
+        parameters.put("ENABLED",StatusEnum.ENABLE.getId());
+        parameters.put("PROJECT_ID",projectId);
+        return super.findBy(sb.toString(),parameters);
     }
 }

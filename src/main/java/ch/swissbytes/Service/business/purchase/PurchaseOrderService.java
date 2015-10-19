@@ -580,4 +580,8 @@ public class PurchaseOrderService extends Service implements Serializable {
     public List<PurchaseOrderEntity> findPosBy(FilterPO filter){
         return dao.findPOsBy(filter);
     }
+
+    public List<PurchaseOrderEntity> findAllPOs(final Long projectId) {
+        return dao.findAllPOs(projectId);
+    }
 }

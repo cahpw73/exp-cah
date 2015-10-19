@@ -173,7 +173,8 @@
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.variation']}"
                                                rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
-                                               action="#{poListBean.createVarNumberToPO(_p)}"
+                                               action="#{poListBean.createVarNumberToPO(_p)}" ignoreAutoUpdate="true" partialSubmit="true"
+                                               process="@this"
                                                update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
                                                style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                                 </p:commandLink>
