@@ -1780,7 +1780,7 @@ insert into milestone_item (id,item,last_update,status)values(3,'On Agreed Progr
 insert into milestone_item (id,item,last_update,status)values(4,'X Months After Award',CURRENT_DATE,0);
 insert into milestone_item (id,item,last_update,status)values(5,'X Months prior to Delivery',CURRENT_DATE,0);
 insert into milestone_item (id,item,last_update,status)values(6,'On Completion',CURRENT_DATE,0);
-insert into milestone_item (id,item,last_update,status)values(7,'Initial Mechanical Detail Drawings',CURRENT_DATE,0);
+insert into milestone_item (id,item,last_update,status)values(7,'On Delivery',CURRENT_DATE,0);
 insert into milestone_item (id,item,last_update,status)values(8,'On Issue of BOL',CURRENT_DATE,0);
 
 
