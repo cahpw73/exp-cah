@@ -84,6 +84,8 @@ public class PoListBean implements Serializable {
 
     private List<PurchaseOrderEntity> maxVariationsList;
 
+    private List<PurchaseOrderEntity> purchaseOrders;
+
     private String newVariationNumber;
 
     private PurchaseOrderEntity purchaseOrderToVariation;
@@ -124,11 +126,12 @@ public class PoListBean implements Serializable {
             Date d2 =new Date();
             log.info("getting all max variations takes ["+(d2.getTime()-d1.getTime())+"]ms");
             ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
+            findPOs();
         } else {
             throw new IllegalArgumentException("project Id invalid");
         }
         Date end = new Date();
-        log.info("loading list Bean takes " + (end.getTime() - start.getTime()));
+        log.info("loading list Bean takes [" + (end.getTime() - start.getTime())+ "]ms");
     }
 
     @PreDestroy
@@ -293,7 +296,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
-        return canCreateVariation(entity);
+        return false; //canCreateVariation(entity);
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
@@ -659,8 +662,19 @@ public class PoListBean implements Serializable {
     }
 
 
-    public List<PurchaseOrderEntity> findPOs(){
+    public void findPOs(){
+        log.info("Find the list of POs");
+        Date d1=new Date();
+        purchaseOrders = service.findPosBy(getFilter());
+        Date d2=new Date();
+        log.info("getting all POs ["+(d2.getTime()-d1.getTime())+"]ms");
+    }
 
-        return service.findPosBy(getFilter());
+    public List<PurchaseOrderEntity> getPurchaseOrders() {
+        return purchaseOrders;
+    }
+
+    public void setPurchaseOrders(List<PurchaseOrderEntity> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
     }
 }

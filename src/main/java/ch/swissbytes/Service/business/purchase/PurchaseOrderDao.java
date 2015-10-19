@@ -119,7 +119,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE  po.projectEntity.id = :PROJECT ");
         sb.append(" AND po.status.id = :ENABLED ");
-
         if(filterPO.getClassEnum()!=null&&
                 (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal())){
             sb.append(" AND po.purchaseOrderProcurementEntity.clazz = :CLAZZ ");
