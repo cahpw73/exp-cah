@@ -66,6 +66,11 @@ public class PoTextBean implements Serializable {
         textEntity.setPreamble(text);
     }
 
+    public void copyToClauses(ProjectTextSnippetEntity text){
+        droppedTextSnippetList.add(createClausesEntity(text));
+        textSnippetList.remove(text);
+    }
+
     @PreDestroy
     public void destroy() {
         log.info("destroy poTextBean");
