@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Client</ui:define>
@@ -50,6 +51,9 @@
                     </p:column>
                     <p:column headerText="Company Logo" width="130">
                         #{_cl.clientLogo.description}
+                    </p:column>
+                    <p:column headerText="Client Logo Left" width="130">
+                        <o:graphicImage dataURI="true" value="#{_cl.clientLogoLeft.file}" width="126" height="auto"/>
                     </p:column>
 
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="130">
