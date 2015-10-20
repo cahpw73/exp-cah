@@ -79,12 +79,14 @@
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit"
                                 style="color: #428BCA; ">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
+                            <f:param name="FILTER" value="#{supplierProcList.filter.criteria}"/>
                         </h:link>
                         &#160;
                         <h:link value="#{msgs['lbl.view']}" outcome="edit"
                                 style=" color: #428BCA;">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
                             <f:param name="MODE" value="VIEW"/>
+                            <f:param name="FILTER" value="#{supplierProcList.filter.criteria}"/>
                         </h:link>
 
                         <p:commandLink style=" color: #428BCA; "

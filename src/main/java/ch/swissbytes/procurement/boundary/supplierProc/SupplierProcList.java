@@ -19,7 +19,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.swing.*;
 import java.io.Serializable;
 
 import java.util.List;
@@ -55,6 +54,7 @@ public class SupplierProcList implements Serializable {
             managerTable.clear();
         }
         filter=new Filter();
+        filter.setCriteria("");
         list = new SupplierTbl(dao, filter);
 
     }
