@@ -105,6 +105,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         service.save(supplier);
         Messages.addFlashGlobalInfo("The supplier has been saved!");
         managerTable.rememberPage();
+
         return "list?faces-redirect=true";
     }
 
@@ -124,7 +125,6 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public String doUpdate() {
         supplier.getContacts().clear();
-        System.out.println("current page" + managerTable.getCurrentPage());
         supplier.getContacts().addAll(contactBean.getList());
         if (!validate()) {
             return "";

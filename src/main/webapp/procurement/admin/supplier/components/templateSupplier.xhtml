@@ -2,6 +2,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <br/>
     <h:panelGroup rendered="#{MODE !=null}">
@@ -31,11 +32,15 @@
                             <h:commandButton id="sp5" value="#{msgs['lbl.save']}"
                                              action="#{supplierProcBean.doSave}"
                                              rendered="#{supplierProcBean.supplierMode and not supplierProcBean.editing}"
-                                             styleClass="btn btn-primary btn-sm"/>
+                                             styleClass="btn btn-primary btn-sm">
+                                        <f:param name="FILTER" value="#{supplierProcBean.criteria}"/>
+                                    </h:commandButton>
                             <h:commandButton id="sp4" value="#{msgs['lbl.save']}"
                                              action="#{supplierProcBean.doUpdate}"
                                              rendered="#{supplierProcBean.supplierMode and supplierProcBean.editing}"
-                                             styleClass="btn btn-primary btn-sm"/>
+                                             styleClass="btn btn-primary btn-sm">
+                                <f:param name="FILTER" value="#{supplierProcBean.criteria}"/>
+                            </h:commandButton>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE eq 'PO' and supplierProcBean.supplierMode}">
                             <h:commandButton id="sp3" value="#{msgs['lbl.save']}"
