@@ -52,6 +52,8 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     private String mode;
 
+    private String criteria;
+
 
     @PostConstruct
     public void create() {
@@ -199,6 +201,14 @@ public class SupplierProcBean extends Bean implements Serializable {
             supplier.getBrands().addAll(categoryBrandBean.getBrands().getTarget());
         }
         addingCategory = addingBrand = false;
+    }
+
+    public String getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(String criteria) {
+        this.criteria = criteria;
     }
 
     @PreDestroy

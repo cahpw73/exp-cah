@@ -11,6 +11,7 @@
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
         <f:viewAction action="#{supplierProcBean.load}"/>
+        <f:viewParam name="FILTER" value="#{supplierProcBean.criteria}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form id="supplierId" prependId="false">

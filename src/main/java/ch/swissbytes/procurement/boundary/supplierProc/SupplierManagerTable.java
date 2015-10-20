@@ -3,7 +3,6 @@ package ch.swissbytes.procurement.boundary.supplierProc;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.fqm.boundary.TableCommonFeature;
 import ch.swissbytes.procurement.boundary.ManagerTable;
-import org.apache.commons.lang.StringUtils;
 import org.primefaces.event.data.PageEvent;
 
 import javax.enterprise.context.SessionScoped;

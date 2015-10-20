@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.boundary.supplierProc;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcDao;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 
+import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
 import org.primefaces.component.datatable.DataTable;
@@ -42,13 +43,34 @@ public class SupplierProcList implements Serializable {
     @Inject
     private SupplierManagerTable managerTable;
 
+    private Filter filter;
+
+    private String criteria;
+
+
     @PostConstruct
     public void create() {
         log.info("SupplierProcList bean created");
         if (!managerTable.getRemember()) {
             managerTable.clear();
         }
-        list = new SupplierTbl(dao, managerTable.getFilter());
+        filter=new Filter();
+        list = new SupplierTbl(dao, filter);
+
+    }
+    public void load(){
+        if(criteria!=null){
+            filter.setCriteria(criteria);
+        }
+        list=new SupplierTbl(dao,filter);
+    }
+
+    public String getCriteria() {
+        return criteria;
+    }
+
+    public void setCriteria(String criteria) {
+        this.criteria = criteria;
     }
 
     public List<SupplierProcEntity> getSuppliers() {
@@ -69,7 +91,7 @@ public class SupplierProcList implements Serializable {
 
     public void doSearch() {
         managerTable.clear();
-        list = new SupplierTbl(dao, managerTable.getFilter());
+        list = new SupplierTbl(dao,filter);
     }
 
     public SupplierTbl getList() {
@@ -96,4 +118,13 @@ public class SupplierProcList implements Serializable {
         managerTable.setDirection(event.isAscending() ? "ascending" : "descending");
         managerTable.setSortInitialized(true);
     }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+    }
+
 }
