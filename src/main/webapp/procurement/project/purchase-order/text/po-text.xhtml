@@ -23,10 +23,15 @@
                         <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
                             <h:outputText id="texSnippetSt" value="#{_t.description}" styleClass="content-big-text"/>
                         </p:column>
-                        <p:column headerText="action" style="width: 100px!important;">
+                        <p:column headerText="action" style="width: 110px!important;">
                             <h:commandLink value="Copy to Preamble"
                                            action="#{poTextBean.copyToPreamble(_t.description)}">
                                 <p:ajax async="false" process="@this" update=":editPoForm:preambleTxtId"/>
+                            </h:commandLink>
+                            &#160;
+                            <h:commandLink value="Copy to Clauses"
+                                           action="#{poTextBean.copyToClauses(_t)}">
+                                <p:ajax async="false" process="@this" update=":editPoForm:standardTextDt :editPoForm:clausesAuxDt"/>
                             </h:commandLink>
                         </p:column>
                     </p:dataTable>
