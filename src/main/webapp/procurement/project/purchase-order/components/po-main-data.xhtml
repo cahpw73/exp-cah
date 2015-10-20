@@ -143,8 +143,8 @@
                                    for="poOrderDate" value="#{msgs['po.main.data.lbl.order.date']}"/>
 
                     <div style="width: 145px; float: left;">
-                        <p:calendar id="poOrderDate" type="text" styleClass="calendar"
-                                    navigator="true" mask="#{configuration.mask}"
+                        <p:calendar id="poOrderDate" type="text" styleClass="calendar order-date-po"
+                                    navigator="true" mask="#{configuration.mask}" widgetVar="calendarOrderPoWV"
                                     pattern="#{configuration.formatDate}"
                                     converter="#{dateConverter}"
                                     jsf:placeholder="#{configuration.formatDate}"
