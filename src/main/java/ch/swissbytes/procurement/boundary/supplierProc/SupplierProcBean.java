@@ -106,7 +106,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         Messages.addFlashGlobalInfo("The supplier has been saved!");
         managerTable.rememberPage();
 
-        return "list?faces-redirect=true";
+        return "list?faces-redirect=true&FILTER="+criteria;
     }
 
     public SupplierProcEntity save() {
@@ -133,7 +133,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         Messages.addFlashGlobalInfo("The supplier has been saved!");
         managerTable.setLastEdited(supplier.getId());
         managerTable.rememberPage();
-        return "list?faces-redirect=true";
+        return "list?faces-redirect=true&FILTER="+criteria;
     }
 
     private boolean validate() {
