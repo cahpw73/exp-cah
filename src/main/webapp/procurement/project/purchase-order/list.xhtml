@@ -36,8 +36,7 @@
                                                    actionListener="#{poListBean.filter.setPOOO()}"
                                                    styleClass="btn btn-primary btn-sm #{poListBean.filter.p0000Selected?'button-selected':''}"
                                                    value="#{msgs['lbl.0000']}" style="margin-right: 1px;">
-                                        <p:ajax async="false" update="projectListId filterButtons" process="@this"
-                                                partialSubmit="true" ignoreAutoUpdate="true"/>
+                                        <p:ajax async="false" update="projectListId filterButtons" ignoreAutoUpdate="true"/>
                                     </h:commandLink>
 
                                     <h:commandLink action="#{poListBean.findPOs()}"
@@ -45,8 +44,7 @@
                                                    styleClass="btn btn-primary btn-sm #{poListBean.filter.p1000Selected?'button-selected':''}"
                                                    style="margin-right: 1px;"
                                                    value="#{msgs['lbl.1000']}">
-                                        <p:ajax async="false" partialSubmit="true" ignoreAutoUpdate="true"
-                                                update="projectListId filterButtons"/>
+                                        <p:ajax async="false" update="projectListId filterButtons"/>
                                     </h:commandLink>
                                     <h:commandLink action="#{poListBean.findPOs()}"
                                                    actionListener="#{poListBean.filter.setP2000()}"
@@ -67,8 +65,7 @@
                                                    styleClass="btn btn-primary btn-sm #{poListBean.filter.p4000Selected?'button-selected':''}"
                                                    style="margin-right: 1px;"
                                                    value="#{msgs['lbl.4000']}">
-                                        <p:ajax async="false" ignoreAutoUpdate="true" partialSubmit="true"
-                                                update="projectListId filterButtons" process="@this"/>
+                                        <p:ajax async="false" ignoreAutoUpdate="true" update="projectListId filterButtons" />
                                     </h:commandLink>
                                     <h:commandLink action="#{poListBean.findPOs()}"
                                                    actionListener="#{poListBean.filter.setP5000()}"
