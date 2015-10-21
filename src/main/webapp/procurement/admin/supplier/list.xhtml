@@ -10,7 +10,7 @@
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(2)}"/>
         <f:viewParam name="FILTER" value="#{supplierProcList.criteria}"/>
-        <f:viewAction action="#{supplierProcBean.load()}"/>
+        <f:viewAction action="#{supplierProcList.load()}"/>
     </f:metadata>
     <ui:define name="body">
         <div class="col-md-12">

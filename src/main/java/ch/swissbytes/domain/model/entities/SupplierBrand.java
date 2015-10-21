@@ -25,7 +25,7 @@ public class SupplierBrand implements Serializable{
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name = "generator", sequenceName = "SUPPLIER_CATEGORY_ID_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "SUPPLIER_BRAND_ID_SEQ", allocationSize = 1)
     public Long getId() {
         return id;
     }
