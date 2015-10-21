@@ -8,16 +8,16 @@
             padding: 0;
             overflow: auto;
             height: 400px!important;
-            width: 650px!important;
+            width: 430px!important;
         }
     </style>
     <div style="float: left">
-        <p:pickList id="brandPickList" value="#{categoryBrandBean.brands}" var="_brand"
+        <p:pickList id="brandPickListModal" value="#{categoryBrandBean.brands}" var="_brand"
                     addLabel="Add to Brand"
                     removeLabel="Remove from Brand"
                     converter="brandConverter"
                     itemLabel="#{_brand.name}" itemValue="#{_brand}">
-            <p:ajax event="transfer" async="false" update="brandPickList" listener="#{categoryBrandBean.sortBrandList}" process="@this"/>
+            <p:ajax event="transfer" async="false" update="brandPickListModal" listener="#{categoryBrandBean.sortBrandList}" process="brandPickListModal"/>
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 25px;">
