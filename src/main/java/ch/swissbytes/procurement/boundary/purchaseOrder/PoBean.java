@@ -658,7 +658,7 @@ public class PoBean extends Bean {
                 }
             }
             if (detailEntity.getOrderAmt() != null) {
-                detailEntity.setProjectAmt(calculateProjectValueByTotalValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), totals.get(detailEntity.getProjectCurrency())));
+                detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
             } else {
                 detailEntity.setProjectAmt(null);
             }
@@ -671,7 +671,7 @@ public class PoBean extends Bean {
     }
 
     private BigDecimal calculateProjectValueByPaymentValueAndCurrency(final BigDecimal currencyFactor, final BigDecimal paymentValue) {
-        BigDecimal projectValue = paymentValue.divide(currencyFactor, BigDecimal.ROUND_HALF_UP);
+        BigDecimal projectValue = paymentValue.multiply(currencyFactor);
         return projectValue;
     }
 
