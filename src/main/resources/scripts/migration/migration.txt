@@ -1783,4 +1783,10 @@ insert into milestone_item (id,item,last_update,status)values(6,'On Completion',
 insert into milestone_item (id,item,last_update,status)values(7,'On Delivery',CURRENT_DATE,0);
 insert into milestone_item (id,item,last_update,status)values(8,'On Issue of BOL',CURRENT_DATE,0);
 
+select cd.project_amt,cd.percentage,cd.order_amt,pc.currency_factor
+from cashflow_detail cd inner join project_currency pc on pc.id=cd.project_currency_id
+
+update cashflow_detail ccd set project_amt=ccd.order_amt*pc.currency_factor from cashflow_detail cd inner join project_currency pc on pc.id=cd.project_currency_id
+where cd.id=ccd.id
+
 
