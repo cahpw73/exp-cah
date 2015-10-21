@@ -92,6 +92,11 @@ public class FilterPO extends Filter {
         classEnum=ClassEnum.SERVICE_CONTRACT;
     }
 
+    public void setMF(){
+        purchaseOrderNumberOption=null;
+        classEnum=ClassEnum.MINING_FLEET;
+    }
+
     public boolean isP0000Selected(){
         return purchaseOrderNumberOption!=null&&purchaseOrderNumberOption.ordinal()==PurchaseOrderNumberOption.P0000.ordinal();
     }
@@ -127,6 +132,9 @@ public class FilterPO extends Filter {
     }
     public boolean isCCSelected(){
         return classEnum!=null&&classEnum.ordinal()==ClassEnum.CONSTRUCTION_CONTRACT.ordinal();
+    }
+    public boolean isMFSelected(){
+        return classEnum!=null&&classEnum.ordinal()==ClassEnum.MINING_FLEET.ordinal();
     }
     public void clear(){
         super.clean();

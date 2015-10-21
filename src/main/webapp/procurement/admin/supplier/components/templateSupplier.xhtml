@@ -161,11 +161,17 @@
             </div>
         </h:panelGroup>
         <h:panelGroup rendered="#{supplierProcBean.addingCategory or supplierProcBean.addingBrand}">
-            <h:panelGroup rendered="#{supplierProcBean.addingCategory}">
+            <h:panelGroup rendered="#{supplierProcBean.addingCategory and MODE == null}">
                 <ui:include src="categoryList.xhtml"/>
             </h:panelGroup>
-            <h:panelGroup rendered="#{supplierProcBean.addingBrand}">
+            <h:panelGroup rendered="#{supplierProcBean.addingCategory and MODE != null}">
+                <ui:include src="categoryListModal.xhtml"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{supplierProcBean.addingBrand and MODE == null}">
                 <ui:include src="brandList.xhtml"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{supplierProcBean.addingBrand and MODE != null}">
+                <ui:include src="brandListModal.xhtml"/>
             </h:panelGroup>
         </h:panelGroup>
     </h:panelGroup>

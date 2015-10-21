@@ -114,6 +114,12 @@
                                                    value="#{msgs['lbl.SC']}">
                                         <p:ajax async="false" update="projectListId filterButtons"/>
                                     </h:commandLink>
+                                    <h:commandLink action="#{poListBean.findPOs()}"
+                                                   actionListener="#{poListBean.filter.setMF}"
+                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.MFSelected?'button-selected':''}"
+                                                   value="#{msgs['lbl.MF']}">
+                                        <p:ajax async="false" update="projectListId filterButtons"/>
+                                    </h:commandLink>
                                 </div>
                             </div>
                         </div>

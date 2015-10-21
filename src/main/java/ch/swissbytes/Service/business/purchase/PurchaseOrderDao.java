@@ -119,7 +119,9 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" WHERE  po.projectEntity.id = :PROJECT ");
         sb.append(" AND po.status.id = :ENABLED ");
         if(filterPO.getClassEnum()!=null&&
-                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal())){
+                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||
+                        filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal()||
+                filterPO.getClassEnum().ordinal()==ClassEnum.MINING_FLEET.ordinal())){
             sb.append(" AND po.purchaseOrderProcurementEntity.clazz = :CLAZZ ");
         }
         if(filterPO.getPurchaseOrderNumberOption()!=null){
@@ -131,7 +133,9 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("PROJECT", filterPO.getProjectId());
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         if(filterPO.getClassEnum()!=null&&
-                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal())){
+                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||
+                        filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal()||
+                filterPO.getClassEnum().ordinal()==ClassEnum.MINING_FLEET.ordinal())){
             map.put("CLAZZ", filterPO.getClassEnum());
         }
         if(filterPO.getPurchaseOrderNumberOption()!=null){
