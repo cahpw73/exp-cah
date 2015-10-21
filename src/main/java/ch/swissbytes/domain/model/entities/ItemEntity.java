@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "item")
 public class ItemEntity extends RecordEditable<ItemEntity> implements Serializable{
 
+    //It will be used by 
     private Long id;
     private String itemNo;//Code*
     private String equipNo;//TagNo*
