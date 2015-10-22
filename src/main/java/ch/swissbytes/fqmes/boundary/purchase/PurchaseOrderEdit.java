@@ -624,7 +624,6 @@ public class PurchaseOrderEdit implements Serializable {
             ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
             ss.getTdpList().clear();
             ss.getAttachments().clear();
-
             for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
                 currentIndexForTdp--;
                 TransitDeliveryPointEntity tdp = tdpService.clone(tdpe);
