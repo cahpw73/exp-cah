@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "item")
-public class ItemEntity  implements Serializable,EntityTbl{
+public class ItemEntity extends RecordEditable<ItemEntity> implements Serializable,EntityTbl{
 
     private Long id;
     private BigDecimal cost;

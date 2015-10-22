@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.report.expediting;
 
+import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.ProcurementStatus;
@@ -23,7 +24,7 @@ public class ExpeditingDto implements Serializable {
 
     }
 
-    public ExpeditingDto(PurchaseOrderEntity p,ScopeSupplyEntity s) {
+    public ExpeditingDto(PurchaseOrderEntity p,ItemEntity s) {
         this.itemId = s.getId();
         this.poNo = p.getPo();
         this.varNo = p.getVariation();

@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.item;
 
 
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.IncoTermsEnum;
@@ -35,8 +36,8 @@ public class ItemService  implements Serializable {
         dao.saveAndFlush(entity);
     }
 
-    public void doSave(List<ScopeSupplyEntity> supplyList, PurchaseOrderEntity po,String incoTerms,String fullIncoTerms) {
-        for(ScopeSupplyEntity entity : supplyList){
+    public void doSave(List<ItemEntity> supplyList, PurchaseOrderEntity po,String incoTerms,String fullIncoTerms) {
+        for(ItemEntity entity : supplyList){
             entity.setId(null);
             entity.setLastUpdate(new Date());
             entity.setPurchaseOrder(po);
@@ -56,8 +57,8 @@ public class ItemService  implements Serializable {
         }
     }
 
-    public void doUpdate(List<ScopeSupplyEntity> supplyList, PurchaseOrderEntity po) {
-        for (ScopeSupplyEntity entity : supplyList){
+    public void doUpdate(List<ItemEntity> supplyList, PurchaseOrderEntity po) {
+        for (ItemEntity entity : supplyList){
             if(entity!=null) {
                 if (entity.getId()==null||entity.getId() < 0L) {
                     entity.setId(null);
@@ -76,23 +77,23 @@ public class ItemService  implements Serializable {
     }
 
     @Transactional
-    public void doUpdate(ScopeSupplyEntity entity){
+    public void doUpdate(ItemEntity entity){
         entity.setLastUpdate(new Date());
         dao.doUpdate(entity);
     }
 
-    public void delete(ScopeSupplyEntity entity) {
+    public void delete(ItemEntity entity) {
         entity.setStatusEnum(StatusEnum.DELETED);
         entity.setLastUpdate(new Date());
         dao.update(entity);
     }
 
-    public ScopeSupplyEntity findById(final Long id){
-        List<ScopeSupplyEntity> list = dao.findById(ScopeSupplyEntity.class, id);
+    public ItemEntity findById(final Long id){
+        List<ItemEntity> list = dao.findById(ItemEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;
     }
 
-    public List<ScopeSupplyEntity> findByPoId(Long poEntityId) {
+    public List<ItemEntity> findByPoId(Long poEntityId) {
         return dao.findByPoId(poEntityId);
     }
 

@@ -41,6 +41,19 @@ public class SortBean implements Serializable {
         Collections.sort(list, comparator);
     }
 
+    public void sortItemEntity(List<ItemEntity> list) {
+        Comparator<ItemEntity> comparator = new Comparator<ItemEntity>() {
+            @Override
+            public int compare(ItemEntity ssp1, ItemEntity ssp2) {
+                if(StringUtils.isNotEmpty(ssp1.getCode()) && StringUtils.isNotEmpty(ssp2.getCode())){
+                    return sortItemNumber(ssp1.getCode(), ssp2.getCode());
+                }
+                return 0;
+            }
+        };
+        Collections.sort(list, comparator);
+    }
+
     public void sortCashFlowDetailEntity(List<CashflowDetailEntity> list){
         Comparator<CashflowDetailEntity> comparator = new Comparator<CashflowDetailEntity>() {
             @Override

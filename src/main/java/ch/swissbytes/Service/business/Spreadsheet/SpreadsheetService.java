@@ -3,10 +3,7 @@ package ch.swissbytes.Service.business.Spreadsheet;
 import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
-import ch.swissbytes.domain.model.entities.CashflowEntity;
-import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
@@ -102,12 +99,12 @@ public class SpreadsheetService implements Serializable {
         return "";
     }
 
-    private void prepareDetailContent(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+    private void prepareDetailContent(PurchaseOrderEntity entity, ItemEntity ss) {
         firstSide(entity, ss);
         secondSide(10, entity, ss);
     }
 
-    private void prepareDetailContentMultiCurrencies(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+    private void prepareDetailContentMultiCurrencies(PurchaseOrderEntity entity, ItemEntity ss) {
         firstSide(entity, ss);
         //PayItemCurrency
         processor.writeStringValue(10, ss.getProjectCurrency().getCurrency().getCode());
@@ -119,10 +116,10 @@ public class SpreadsheetService implements Serializable {
         // createHeaderPODetail(processor);
         int rowNo = 0;
         for (PurchaseOrderEntity entity : list) {
-            List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyService.scopeSupplyListByPOOId(entity.getId());
-            if (!scopeSupplyList.isEmpty()) {
-                boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(scopeSupplyList);
-                for (ScopeSupplyEntity ss : scopeSupplyList) {
+            List<ItemEntity> itemEntityList = scopeSupplyService.getItemsBYPOId(entity.getId());
+            if (!itemEntityList.isEmpty()) {
+                boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(itemEntityList);
+                for (ItemEntity ss : itemEntityList) {
                     processor.createRow(rowNo);
                     if (hasMultiCurrencies) {
                         prepareDetailContentMultiCurrencies(entity, ss);
@@ -136,7 +133,7 @@ public class SpreadsheetService implements Serializable {
         }
     }
 
-    private void firstSide(PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+    private void firstSide(PurchaseOrderEntity entity, ItemEntity ss) {
         //Package Number
         processor.writeStringValue(0, entity.getPo());
         // Package Amendment
@@ -159,7 +156,7 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(9, "");
     }
 
-    private void secondSide(int start, PurchaseOrderEntity entity, ScopeSupplyEntity ss) {
+    private void secondSide(int start, PurchaseOrderEntity entity, ItemEntity ss) {
         //Unit Price
         int col=start;
         processor.writeDoubleValue(col, ss.getCost() != null ? ss.getCost().doubleValue() : null);
@@ -195,9 +192,9 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(col++, "");
     }
 
-    private boolean verifyMultiCurrenciesByScopeSupply(List<ScopeSupplyEntity> scopeSupplyList) {
+    private boolean verifyMultiCurrenciesByScopeSupply(List<ItemEntity> itemEntityList) {
         List<ProjectCurrencyEntity> currencies = new ArrayList<>();
-        for (ScopeSupplyEntity ss : scopeSupplyList) {
+        for (ItemEntity ss : itemEntityList) {
             if (ss.getProjectCurrency() != null && !currencies.contains(ss.getProjectCurrency())) {
                 currencies.add(ss.getProjectCurrency());
             }

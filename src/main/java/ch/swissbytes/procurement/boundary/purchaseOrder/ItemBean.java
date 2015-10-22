@@ -46,7 +46,7 @@ public class ItemBean implements Serializable {
 
     private List<ItemEntity> itemList;
 
-    private List<ScopeSupplyEntity> scopeSupplyList;
+    private List<ItemEntity> scopeSupplyList;
 
     private Long preId = -1L;
 
@@ -67,24 +67,24 @@ public class ItemBean implements Serializable {
     public void addItem() {
         log.info("add Item");
         if (lastItemNoIsNotEmpty()) {
-            ScopeSupplyEntity supply = new ScopeSupplyEntity();
+            ItemEntity supply = new ItemEntity();
             supply.setId(preId);
             supply.startEditing();
             scopeSupplyList.add(supply);
             preId--;
-            sortBean.sortScopeSupplyEntity(scopeSupplyList);
+            sortBean.sortItemEntity(scopeSupplyList);
         }
     }
 
     public void loadItemList(final Long poEntityId) {
         log.info("loading item list to edit");
         scopeSupplyList = itemService.findByPoId(poEntityId);
-        sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        sortBean.sortItemEntity(scopeSupplyList);
     }
 
     public void copyDateToItemList(Date orderDate) {
         if (orderDate != null) {
-            for (ScopeSupplyEntity s : scopeSupplyList) {
+            for (ItemEntity s : scopeSupplyList) {
                 if (s.getIsEditable()) {
                     s.setPoDeliveryDate(orderDate);
                 }
@@ -92,10 +92,10 @@ public class ItemBean implements Serializable {
         }
     }
 
-    public void confirmItem(ScopeSupplyEntity entity) throws Exception {
+    public void confirmItem(ItemEntity entity) throws Exception {
         log.info("confirm item");
         int index = scopeSupplyList.indexOf(entity);
-        ScopeSupplyEntity ss = index >= 0 ? scopeSupplyList.get(index) : null;
+        ItemEntity ss = index >= 0 ? scopeSupplyList.get(index) : null;
         if (ss == null) {
             throw new Exception("Invalid item");
         }
@@ -105,17 +105,17 @@ public class ItemBean implements Serializable {
     }
 
 
-    public void deleteItem(ScopeSupplyEntity entity) {
+    public void deleteItem(ItemEntity entity) {
         log.info("delete item");
         if (entity.getId() < 0L) {
             scopeSupplyList.remove(entity);
         } else {
             entity.setStatus(enumService.getStatusEnumDeleted());
         }
-        sortBean.sortScopeSupplyEntity(scopeSupplyList);
+        sortBean.sortItemEntity(scopeSupplyList);
     }
 
-    public void editItem(ScopeSupplyEntity entity) {
+    public void editItem(ItemEntity entity) {
         log.info("edit item");
         if (canEdit()) {
             entity.startEditing();
@@ -130,7 +130,7 @@ public class ItemBean implements Serializable {
 
     private Integer rowsBeingEdited() {
         Integer rows = 0;
-        for (ScopeSupplyEntity r : scopeSupplyList) {
+        for (ItemEntity r : scopeSupplyList) {
             if (r.getIsEditable()) {
                 rows++;
             }
@@ -138,7 +138,7 @@ public class ItemBean implements Serializable {
         return rows;
     }
 
-    public void cancelEditionItem(ScopeSupplyEntity entity) {
+    public void cancelEditionItem(ItemEntity entity) {
         log.info("cancel item");
         if (!itemNoIsNotEmpty(entity)) {
             scopeSupplyList.remove(entity);
@@ -152,7 +152,7 @@ public class ItemBean implements Serializable {
         }
     }
 
-    private boolean validateItems(ScopeSupplyEntity scopeSupply, boolean showMessage) {
+    private boolean validateItems(ItemEntity scopeSupply, boolean showMessage) {
         boolean validated = true;
         if (StringUtils.isEmpty(scopeSupply.getCode()) && StringUtils.isBlank(scopeSupply.getCode())) {
             if (showMessage) {
@@ -199,14 +199,14 @@ public class ItemBean implements Serializable {
         return validated;
     }
 
-    public boolean hasNotStatusDeleted(ScopeSupplyEntity entity) {
+    public boolean hasNotStatusDeleted(ItemEntity entity) {
         if (entity != null && entity.getStatus() != null)
             return entity.getStatus().getId().intValue() != StatusEnum.DELETED.getId().intValue();
         else
             return true;
     }
 
-    private boolean noHasData(ScopeSupplyEntity entity) {
+  /*  private boolean noHasData(ItemEntity entity) {
         if (entity.getCostCode() == null && entity.getPoDeliveryDate() == null
                 && (entity.getQuantity() == null)
                 && (StringUtils.isEmpty(entity.getCode()) && StringUtils.isBlank(entity.getCode()))
@@ -217,18 +217,18 @@ public class ItemBean implements Serializable {
             return true;
         }
         return false;
-    }
+    }*/
 
     private boolean lastItemNoIsNotEmpty() {
         int index = scopeSupplyList.size();
         if (index > 0) {
-            ScopeSupplyEntity lastItem = scopeSupplyList.get(index - 1);
+            ItemEntity lastItem = scopeSupplyList.get(index - 1);
             return itemNoIsNotEmpty(lastItem);
         }
         return true;
     }
 
-    private boolean itemNoIsNotEmpty(ScopeSupplyEntity entity) {
+    private boolean itemNoIsNotEmpty(ItemEntity entity) {
         log.info("item is not empty");
         return StringUtils.isNotEmpty(entity.getCode()) && StringUtils.isNotBlank(entity.getCode());
     }
@@ -248,7 +248,7 @@ public class ItemBean implements Serializable {
         return list;
     }
 
-    public List<ScopeSupplyEntity> getScopeSupplyList() {
+    public List<ItemEntity> getScopeSupplyList() {
         return scopeSupplyList;
     }
 }

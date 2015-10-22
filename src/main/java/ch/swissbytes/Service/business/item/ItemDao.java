@@ -18,19 +18,26 @@ import java.util.logging.Logger;
  * Created by christian on 9/10/14.
  */
 
-public class ItemDao extends GenericDao<ScopeSupplyEntity> implements Serializable {
+public class ItemDao extends GenericDao<ItemEntity> implements Serializable {
 
     private static final Logger log = Logger.getLogger(ItemDao.class.getName());
 
 
 
-    public void doSave(ScopeSupplyEntity entity){
+    public void doSave(ItemEntity entity){
         super.saveAndFlush(entity);
     }
 
-    public void doUpdate(ScopeSupplyEntity detachedEntity){
+   /* public void doSave(ItemEntity entity){
+        super.saveAndFlush(entity);
+    }*/
+    public void doUpdate(ItemEntity detachedEntity){
         super.update(detachedEntity);
     }
+
+    /*public void doUpdate(ItemEntity detachedEntity){
+        super.update(detachedEntity);
+    }*/
 
     public List<ItemEntity> findAll() {
         StringBuilder sb=new StringBuilder();
@@ -42,10 +49,10 @@ public class ItemDao extends GenericDao<ScopeSupplyEntity> implements Serializab
         return super.findBy(sb.toString(),map);
     }
 
-    public List<ScopeSupplyEntity> findByPoId(Long poEntityId) {
+    public List<ItemEntity> findByPoId(Long poEntityId) {
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");
-        sb.append(" FROM ScopeSupplyEntity x ");
+        sb.append(" FROM ItemEntity x ");
         sb.append(" WHERE x.status.id = :ENABLED ");
         sb.append(" AND x.purchaseOrder.id = :PO_ID ");
         sb.append(" ORDER BY x.id ");

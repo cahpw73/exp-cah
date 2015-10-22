@@ -31,8 +31,8 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private String procManagerDetail;
     private ClassEnum clazz;
     private ProcurementStatus poProcStatus;
-    private List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
-    private List<ItemEntity> itemList = new ArrayList<>();
+    private List<ItemEntity> scopeSupplyList = new ArrayList<>();
+    //private List<ItemEntity> itemList = new ArrayList<>();
     private List<RequisitionEntity> requisitions = new ArrayList<>();
     private List<DeliverableEntity> deliverables = new ArrayList<>();
     private CashflowEntity cashflow;
@@ -200,13 +200,13 @@ public class PurchaseOrderProcurementEntity implements Serializable{
         this.vendorDrawingData = vendorDrawingData;
     }
 
-    @Transient
+    /*@Transient
     public List<ItemEntity> getItemList() {
         return itemList;
-    }
+    }*/
 
     @Transient
-    public List<ScopeSupplyEntity> getScopeSupplyList() {
+    public List<ItemEntity> getScopeSupplyList() {
         return scopeSupplyList;
     }
 

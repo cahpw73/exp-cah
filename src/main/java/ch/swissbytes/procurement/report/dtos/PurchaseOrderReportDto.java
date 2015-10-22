@@ -1,10 +1,7 @@
 package ch.swissbytes.procurement.report.dtos;
 
-import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.domain.model.entities.*;
+
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
@@ -35,24 +32,24 @@ public class PurchaseOrderReportDto implements Serializable {
 
     }
 
-    public PurchaseOrderReportDto(ScopeSupplyEntity scopeSupply){
-        this.code = scopeSupply.getCode();
-        this.quantity = scopeSupply.getQuantity();
-        this.unit = scopeSupply.getUnit();
-        this.description = scopeSupply.getDescription();
-        this.cost = scopeSupply.getCost();
-        this.totalCost = scopeSupply.getTotalCost();
-        this.deliveryDate = scopeSupply.getPoDeliveryDate();
+    public PurchaseOrderReportDto(ItemEntity itemEntity){
+        this.code = itemEntity.getCode();
+        this.quantity = itemEntity.getQuantity();
+        this.unit = itemEntity.getUnit();
+        this.description = itemEntity.getDescription();
+        this.cost = itemEntity.getCost();
+        this.totalCost = itemEntity.getTotalCost();
+        this.deliveryDate = itemEntity.getPoDeliveryDate();
         this.poTitle = null;
         this.preamble = null;
         this.strTotalCost = null;
         this.totalAmount = null;
         String symbol="";
-        if(scopeSupply.getProjectCurrency()!=null&&scopeSupply.getProjectCurrency().getCurrency()!=null){
-            if(StringUtils.isNotEmpty(scopeSupply.getProjectCurrency().getCurrency().getSymbol())&&StringUtils.isNotBlank(scopeSupply.getProjectCurrency().getCurrency().getSymbol())){
-                symbol=scopeSupply.getProjectCurrency().getCurrency().getSymbol();
+        if(itemEntity.getProjectCurrency()!=null&&itemEntity.getProjectCurrency().getCurrency()!=null){
+            if(StringUtils.isNotEmpty(itemEntity.getProjectCurrency().getCurrency().getSymbol())&&StringUtils.isNotBlank(itemEntity.getProjectCurrency().getCurrency().getSymbol())){
+                symbol=itemEntity.getProjectCurrency().getCurrency().getSymbol();
             }else{
-                symbol=scopeSupply.getProjectCurrency().getCurrency().getCode();
+                symbol=itemEntity.getProjectCurrency().getCurrency().getCode();
             }
         }
         this.currency=symbol;

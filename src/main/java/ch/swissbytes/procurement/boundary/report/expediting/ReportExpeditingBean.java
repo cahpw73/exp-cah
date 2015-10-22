@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
@@ -103,7 +104,7 @@ public class ReportExpeditingBean implements Serializable {
     public void doSave(){
         log.info("saving changes to scope supply entity");
         for(ExpeditingDto dto : expeditingDtosList){
-            ScopeSupplyEntity supplyEntity = itemService.findById(dto.getItemId());
+            ItemEntity supplyEntity = itemService.findById(dto.getItemId());
             supplyEntity.setExcludeFromExpediting(dto.getExcludeFromExpediting());
             itemService.doUpdate(supplyEntity);
         }
@@ -121,7 +122,7 @@ public class ReportExpeditingBean implements Serializable {
         }
         expeditingDtosList.clear();
         for (PurchaseOrderEntity p : purchaseOrderList) {
-            for(ScopeSupplyEntity s : p.getPurchaseOrderProcurementEntity().getScopeSupplyList()){
+            for(ItemEntity s : p.getPurchaseOrderProcurementEntity().getScopeSupplyList()){
                 ExpeditingDto dto = new ExpeditingDto(p,s);
                 expeditingDtosList.add(dto);
             }

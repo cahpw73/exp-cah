@@ -35,7 +35,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private Configuration configuration;
     private ResourceUtils resourceUtils;
     private PurchaseOrderEntity po;
-    private List<ScopeSupplyEntity> scopeSupplyList;
+    private List<ItemEntity> itemEntityList;
     private String preamble;
     private List<ClausesEntity> clausesList;
     private Connection connection;
@@ -54,12 +54,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               Configuration configuration, PurchaseOrderEntity po, List<ScopeSupplyEntity> scopeSupplyList,
+                               Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
                                String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
-        this.scopeSupplyList = scopeSupplyList;
+        this.itemEntityList = itemEntityList;
         this.preamble = preamble;
         this.clausesList = clausesList;
         this.cashflowEntity = cashflowEntity;
@@ -291,7 +291,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if(StringUtils.isNotEmpty(preamble)){
             dtos.add(new PurchaseOrderReportDto(null, this.preamble));
         }
-        for (ScopeSupplyEntity entity : this.scopeSupplyList) {
+        for (ItemEntity entity : this.itemEntityList) {
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
             dtos.add(dto);
         }

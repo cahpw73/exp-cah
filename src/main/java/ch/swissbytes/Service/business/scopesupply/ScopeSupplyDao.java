@@ -4,10 +4,7 @@ import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSuppl
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.Service.infrastructure.Filter;
-import ch.swissbytes.domain.model.entities.AttachmentScopeSupply;
-import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
-import ch.swissbytes.domain.model.entities.TransitDeliveryPointEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
@@ -112,10 +109,23 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
         super.update(entity);
     }
 
-    public List<ScopeSupplyEntity> findByPOOId(Long poEntityId) {
+    /*public List<ScopeSupplyEntity> findByPOOId(Long poEntityId) {
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");
         sb.append(" FROM ScopeSupplyEntity x ");
+        sb.append(" WHERE x.status.id = :ENABLED ");
+        sb.append(" AND x.purchaseOrder.id = :PO_ID ");
+        sb.append(" ORDER BY x.ordered ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PO_ID", poEntityId);
+        return super.findBy(sb.toString(),map);
+    }*/
+
+    public List<ItemEntity> findByPOOId(Long poEntityId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ItemEntity x ");
         sb.append(" WHERE x.status.id = :ENABLED ");
         sb.append(" AND x.purchaseOrder.id = :PO_ID ");
         sb.append(" ORDER BY x.ordered ");

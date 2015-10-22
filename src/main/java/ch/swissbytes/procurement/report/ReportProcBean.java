@@ -78,7 +78,7 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
-    public void printPurchaseOrder(final PurchaseOrderEntity po,List<ScopeSupplyEntity> list,String preamble,List<ClausesEntity> clausesList,boolean draft) {
+    public void printPurchaseOrder(final PurchaseOrderEntity po,List<ItemEntity> list,String preamble,List<ClausesEntity> clausesList,boolean draft) {
         log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
         PurchaseOrderEntity purchaseOrder=service.findById(po.getId());

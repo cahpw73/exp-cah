@@ -461,7 +461,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
 
-    public BigDecimal calculateProjectValue(List<ScopeSupplyEntity> items, ProjectCurrencyEntity currency) {
+    public BigDecimal calculateProjectValue(List<ItemEntity> items, ProjectCurrencyEntity currency) {
         BigDecimal poValue = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
         if (currency != null) {
             poValue = calculatePOValue(items, currency);
@@ -470,12 +470,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         return poValue;
     }
 
-    public BigDecimal calculatePOValue(List<ScopeSupplyEntity> list, ProjectCurrencyEntity currency) {
+    public BigDecimal calculatePOValue(List<ItemEntity> list, ProjectCurrencyEntity currency) {
         BigDecimal poValue = new BigDecimal("0");
         if (currency == null) {
             return poValue;
         }
-        for (ScopeSupplyEntity item : list) {
+        for (ItemEntity item : list) {
             BigDecimal amount = item.getCost() != null ? item.getCost() : null;
             BigDecimal exchangeRateSource = item.getProjectCurrency() != null ? item.getProjectCurrency().getExchangeRate() : null;
             BigDecimal exchangeRateTarget = currency.getExchangeRate();
@@ -483,13 +483,13 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return poValue;
     }
-    private BigDecimal calculatePOValueByCurrency(List<ScopeSupplyEntity> list, ProjectCurrencyEntity currency){
+    private BigDecimal calculatePOValueByCurrency(List<ItemEntity> list, ProjectCurrencyEntity currency){
         BigDecimal poValue = new BigDecimal("0");
         if (currency == null) {
             return poValue;
         }
 
-        for (ScopeSupplyEntity item : list) {
+        for (ItemEntity item : list) {
             if(item.getProjectCurrency()!=null&&item.getProjectCurrency().getCurrency().getId().longValue()==currency.getCurrency().getId()) {
                 BigDecimal amount = item.getCost() != null ? item.getCost() : new BigDecimal("0");
                 BigDecimal quantity = new BigDecimal(item.getQuantity() != null ? item.getQuantity().toString() : "0");
@@ -499,7 +499,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return poValue;
     }
 
-    public Map<ProjectCurrencyEntity, BigDecimal> getTotalValuesByCurrency(List<ScopeSupplyEntity> items) {
+    public Map<ProjectCurrencyEntity, BigDecimal> getTotalValuesByCurrency(List<ItemEntity> items) {
         Map<ProjectCurrencyEntity, BigDecimal> totals = new HashMap<>();
         List<ProjectCurrencyEntity> currencies = findAllCurrenciesOnPO(null, items);
         for (ProjectCurrencyEntity pce : currencies) {
@@ -508,12 +508,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         return totals;
     }
 
-    private List<ProjectCurrencyEntity> findAllCurrenciesOnPO(ProjectCurrencyEntity defaultCurrency, List<ScopeSupplyEntity> items) {
+    private List<ProjectCurrencyEntity> findAllCurrenciesOnPO(ProjectCurrencyEntity defaultCurrency, List<ItemEntity> items) {
         List<ProjectCurrencyEntity> currencies = new ArrayList<>();
         if(defaultCurrency!=null) {
             currencies.add(defaultCurrency);
         }
-        for (ScopeSupplyEntity item : items) {
+        for (ItemEntity item : items) {
             if (item.getProjectCurrency() != null && !hasCurrency(currencies, item.getProjectCurrency().getCurrency())) {
                 currencies.add(item.getProjectCurrency());
             }
@@ -521,7 +521,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return currencies;
     }
 
-    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency( List<ScopeSupplyEntity> items, List<CashflowDetailEntity> milestones) {
+    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency( List<ItemEntity> items, List<CashflowDetailEntity> milestones) {
         Map<ProjectCurrencyEntity, BigDecimal> balance = new HashMap<>();
         Map<ProjectCurrencyEntity, BigDecimal> totals = getTotalValuesByCurrency( items);
 

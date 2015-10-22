@@ -156,7 +156,7 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         return dao.findByPurchaseOrder(purchaseOrderId);
     }
 
-    public List<ScopeSupplyEntity> scopeSupplyListByPOOId(final Long purchaseOrderId){
+    public List<ItemEntity> getItemsBYPOId(final Long purchaseOrderId){
         return dao.findByPOOId(purchaseOrderId);
     }
 
