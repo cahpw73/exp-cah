@@ -528,7 +528,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private List<Object> getSummaryItemsPO() {
         Query query = entityManager.createNativeQuery("select cu.id,cu.code,cu.symbol,po.orderedvariation,sum (total_cost),po.variation\n" +
-                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "inner join currency cu on pc.currency_id=cu.id\n" +
                 "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
@@ -539,7 +539,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private int getQuantityCurrenciesUsedSummaryPO(Integer orderStart, Integer orderEnd) {
         Query query = entityManager.createNativeQuery("select cu.id\n" +
-                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "inner join currency cu on pc.currency_id=cu.id\n" +
                 "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + orderStart + " and " + orderEnd + "\n" +
@@ -550,7 +550,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private void currenciesUsedSummaryPO() {
         Query query = entityManager.createNativeQuery("select cu.id\n" +
-                "from scope_supply sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "inner join currency cu on pc.currency_id=cu.id\n" +
                 "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + 1 + " and " + po.getOrderedVariation() + "\n" +

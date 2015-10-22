@@ -62,7 +62,7 @@
 	<parameter name="poSummaryList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
 		<![CDATA[select sum(total_cost)as total,currency_id,c.code,c.symbol
-from scope_supply ss
+from item ss
 left join project_currency pc on pc.id=ss.project_currency_id
 inner join currency c on pc.currency_id=c.id
 where purchase_order_id=$P{purchaseOrderId} and status_id=1
