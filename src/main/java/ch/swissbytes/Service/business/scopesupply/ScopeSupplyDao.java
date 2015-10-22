@@ -6,10 +6,13 @@ import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.domain.types.TimeMeasurementEnum;
+import org.apache.commons.beanutils.BeanUtilsBean;
 
 import javax.inject.Inject;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +44,95 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
                 attachmentDao.save(attachment);
             }
         }
+    }
+
+    public void createScopeSupplyFrom(ItemEntity item){
+      /*  private Long id;*/
+        ScopeSupplyEntity scopeSupplyEntity=new ScopeSupplyEntity();
+        scopeSupplyEntity.setLastUpdate(item.getLastUpdate());
+        scopeSupplyEntity.setUnit(item.getUnit());
+        scopeSupplyEntity.setQuantity(item.getQuantity());
+        scopeSupplyEntity.setDescription(item.getDescription());
+        scopeSupplyEntity.setForecastExWorkDate(item.getForecastExWorkDate());
+        scopeSupplyEntity.setExWorkDateDescription(item.getExWorkDateDescription());
+        scopeSupplyEntity.setDeliveryLeadTimeQt(item.getDeliveryLeadTimeQt());
+        scopeSupplyEntity.setDeliveryLeadTimeMs(item.getDeliveryLeadTimeMs());
+        scopeSupplyEntity.setGetDeliveryLeadTimeDescription(item.getGetDeliveryLeadTimeDescription());
+        scopeSupplyEntity.setForecastSiteDate(item.getForecastSiteDate());
+        scopeSupplyEntity.setSiteDateDescription(item.getSiteDateDescription());
+        scopeSupplyEntity.setPurchaseOrder(item.getPurchaseOrder());
+        scopeSupplyEntity.setPoDeliveryDate(item.getPoDeliveryDate());
+        scopeSupplyEntity.setRequiredSiteDate(item.getRequiredSiteDate());
+        scopeSupplyEntity.setDeliveryDateObs(item.getDeliveryDateObs());
+        scopeSupplyEntity.setRequiredSiteDate(item.getRequiredSiteDate());
+        scopeSupplyEntity.setIsForecastSiteDateManual(item.getIsForecastSiteDateManual());
+        scopeSupplyEntity.setProjectCurrency(item.getProjectCurrency());
+        scopeSupplyEntity.setExcludeFromExpediting(scopeSupplyEntity.getExcludeFromExpediting());
+        scopeSupplyEntity.setDescriptionAttachment(scopeSupplyEntity.getDescriptionAttachment());
+        scopeSupplyEntity.setTotalCost(item.getTotalCost());
+        scopeSupplyEntity.setTo(item.getTo());
+        scopeSupplyEntity.setStatusEnum(item.getStatusEnum());
+        scopeSupplyEntity.setStatus(item.getStatus());
+        scopeSupplyEntity.setActualExWorkDate(item.getActualExWorkDate());
+        scopeSupplyEntity.setActualSiteDate(item.getActualSiteDate());
+        scopeSupplyEntity.setActualExWorkDateObs(item.getActualExWorkDateObs());
+        scopeSupplyEntity.setActualSiteDateObs(item.getActualSiteDateObs());
+        scopeSupplyEntity.setCode(item.getCode());
+        scopeSupplyEntity.setCost(item.getCost());
+        scopeSupplyEntity.setCurrency(item.getProjectCurrency().getCurrency().getCode());
+        scopeSupplyEntity.setCostCode(item.getCostCode());
+        scopeSupplyEntity.setDate(item.getDate());
+        scopeSupplyEntity.setIsEditable(item.getIsEditable());
+        scopeSupplyEntity.setSpIncoTermDescription(item.getSpIncoTermDescription());
+        scopeSupplyEntity.setSpIncoTerm(item.getSpIncoTerm());
+        scopeSupplyEntity.setResponsibleExpeditingObservation(item.getResponsibleExpeditingObservation());
+        scopeSupplyEntity.setResponsibleExpediting(item.getResponsibleExpediting());
+        scopeSupplyEntity.setUnit(item.getUnit());
+        scopeSupplyEntity.setTagNo(item.getTagNo());
+        scopeSupplyEntity.setOrdered(item.getOrdered());
+        scopeSupplyEntity.setFrom(item.getFrom());
+        scopeSupplyEntity.setItemEntity(item);
+        save(scopeSupplyEntity);
+    }
+
+    public void updateScopeSupplyFrom(ItemEntity item){
+      /*  private Long id;*/
+        List<ScopeSupplyEntity>list=findBy(item.getId());
+        boolean changeQuantity=list.size()==1;
+        for(ScopeSupplyEntity scopeSupplyEntity:list) {
+            scopeSupplyEntity.setLastUpdate(item.getLastUpdate());
+            scopeSupplyEntity.setUnit(item.getUnit());
+            if(changeQuantity) {
+                scopeSupplyEntity.setQuantity(item.getQuantity());
+            }
+            scopeSupplyEntity.setDescription(item.getDescription());
+            scopeSupplyEntity.setProjectCurrency(item.getProjectCurrency());
+            scopeSupplyEntity.setTotalCost(item.getTotalCost());
+            scopeSupplyEntity.setStatusEnum(item.getStatusEnum());
+            scopeSupplyEntity.setStatus(item.getStatus());
+            scopeSupplyEntity.setCode(item.getCode());
+            scopeSupplyEntity.setCost(item.getCost());
+            scopeSupplyEntity.setCurrency(item.getProjectCurrency().getCurrency().getCode());
+            scopeSupplyEntity.setCostCode(item.getCostCode());
+            scopeSupplyEntity.setIsEditable(item.getIsEditable());
+            scopeSupplyEntity.setUnit(item.getUnit());
+            scopeSupplyEntity.setOrdered(item.getOrdered());
+            scopeSupplyEntity.setItemEntity(item);
+            update(scopeSupplyEntity);
+        }
+    }
+
+    public List<ScopeSupplyEntity> findBy(Long itemId){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT ss ");
+        sb.append("FROM ScopeSupplyEntity ss ");
+        sb.append("WHERE ss.status.id=:ENABLED ");
+        sb.append("AND ss.itemEntity.id=:ITEM_ID ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("ITEM_ID", itemId);
+        return super.findBy(sb.toString(),map);
+
     }
 
     public ScopeSupplyEntity load(final Long id){

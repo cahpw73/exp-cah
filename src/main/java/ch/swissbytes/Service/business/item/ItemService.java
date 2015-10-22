@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.item;
 
 
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
@@ -28,6 +29,8 @@ public class ItemService  implements Serializable {
 
     @Inject
     private EnumService enumService;
+    @Inject
+    private ScopeSupplyDao scopeSupplyDao;
 
 
     public void doSave(ScopeSupplyEntity entity){
@@ -54,24 +57,34 @@ public class ItemService  implements Serializable {
             //@TODO Review Date_SS  estamos poniendo este valor por defecto con la fecha del dia, este campo aparentemente esta siendo usado en attachment modulo expediting
             entity.setDate(new Date());
             dao.doSave(entity);
+            scopeSupplyDao.createScopeSupplyFrom(entity);
         }
     }
 
     public void doUpdate(List<ItemEntity> supplyList, PurchaseOrderEntity po) {
+        boolean newOne=false;
         for (ItemEntity entity : supplyList){
+            newOne=false;
             if(entity!=null) {
+                entity.setTotalCost(entity.getCost()!=null&&entity.getQuantity()!=null?entity.getCost().multiply(entity.getQuantity()):new BigDecimal("0"));
+                entity.setLastUpdate(new Date());
                 if (entity.getId()==null||entity.getId() < 0L) {
                     entity.setId(null);
+                    newOne=true;
                     entity.setStatus(enumService.getStatusEnumEnable());
                     entity.setPurchaseOrder(po);
                     entity.setIsForecastSiteDateManual(false);
                     //@TODO Review Date_SS  estamos poniendo este valor por defecto con la fecha del dia, este campo aparentemente esta siendo usado en attachment modulo expediting
                     entity.setDate(new Date());
-
+                    dao.doSave(entity);
+                }else {
+                    dao.doUpdate(entity);
                 }
-                entity.setTotalCost(entity.getCost()!=null&&entity.getQuantity()!=null?entity.getCost().multiply(entity.getQuantity()):new BigDecimal("0"));
-                entity.setLastUpdate(new Date());
-                dao.doUpdate(entity);
+                if(newOne){
+                    scopeSupplyDao.createScopeSupplyFrom(entity);
+                }else {
+                    scopeSupplyDao.updateScopeSupplyFrom(entity);
+                }
             }
         }
     }

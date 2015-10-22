@@ -426,7 +426,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     public PurchaseOrderEntity findPOToCreateVariation(Long id) {
         List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
         PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
-
         if (po.getPurchaseOrderProcurementEntity().getSupplier() != null) {
             addPrefixToVariation(po);
             po.getPurchaseOrderProcurementEntity().getSupplier().getContacts().addAll(contactService.findByContactsBySupplier(po.getPurchaseOrderProcurementEntity().getSupplier().getId()));
@@ -440,7 +439,6 @@ public class PurchaseOrderService extends Service implements Serializable {
                 po.getPurchaseOrderProcurementEntity().setCashflow(cashflows.get(0));
                 po.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPurchaseOrderProcurementEntity().getCashflow().getId()));
             }
-
         }
         return list.isEmpty() ? null : list.get(0);
     }
