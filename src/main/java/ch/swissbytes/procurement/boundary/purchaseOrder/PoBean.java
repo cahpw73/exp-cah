@@ -95,6 +95,8 @@ public class PoBean extends Bean {
     @Inject
     private PoListBean listBean;
 
+    private String anchor;
+
 
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
@@ -720,4 +722,11 @@ public class PoBean extends Bean {
         return "";
     }
 
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public void setAnchor(String anchor) {
+        this.anchor = anchor;
+    }
 }

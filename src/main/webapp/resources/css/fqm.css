@@ -40,5 +40,10 @@ footer {
     opacity: 0.5;
 }
 
+.anchor{
+    padding-top: -150px; margin-top: -150px;
+    visibility: hidden;
+}
+
 
 

@@ -25,6 +25,7 @@
                                     styleClass="btn btn-primary btn-sm"
                                     value="#{msgs['project.purchase.order.btn.new.purchase.order']}">
                                 <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                <f:param name="anchor" value="anchor"/>
                             </h:link>
 
                             <div class="clearfix"/>
@@ -129,15 +130,18 @@
                 <div class="clearfix"></div>
                 <br/>
                 <br/>
-
                 <div class="panel panel-default panel-tab" style="margin-top: 60px;">
                     <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
+                        <a name="anchor" id="anchor" style="display: none" href="#anchor"/>
                         <p:dataTable id="projectListId"
                                      value="#{poListBean.purchaseOrders}" var="_p">
                             <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40">
                                 #{_p.po}
+                                <a class="anchor"  name="anchor#{_p.id}">
+                                    anchor#{_p.id}
+                                        </a>
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
                                 #{_p.variation}
@@ -152,11 +156,11 @@
                                 #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="125">
-
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
                                         rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
                                         style="float: left!important; color: #428BCA; margin-right:5px;">
                                     <f:param name="poId" value="#{_p.id}"/>
+                                    <f:param name="anchor" value="anchor#{_p.id}"/>
                                 </h:link>
                                 &#160;
                                 <h:link value="#{msgs['project.list.action.view']}" outcome="edit"
@@ -164,6 +168,7 @@
                                         style="float: left!important; color: #428BCA; margin-right:5px; ">
                                     <f:param name="poId" value="#{_p.id}"/>
                                     <f:param name="modeView" value="true"/>
+                                    <f:param name="anchor" value="anchor#{_p.id}"/>
                                 </h:link>
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.print.po']}"
@@ -277,6 +282,7 @@
                             </p:column>
 
                         </p:dataTable>
+
                         <br/>
                     </div>
                 </div>
