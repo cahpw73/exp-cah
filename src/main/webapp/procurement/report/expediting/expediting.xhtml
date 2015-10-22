@@ -16,7 +16,7 @@
                 position: fixed;
                 width: 100% !important;
                 background-color: #eee !important;
-                top:210px!important;
+                top: 210px !important;
             }
 
             .ui-datatable-tablewrapper {
@@ -94,6 +94,7 @@
                 <br/>
                 <br/>
                 <br/>
+
                 <div class="row">
                     <div class="col-md-12">
                         <p:dataTable id="expeditingTblId" var="_l" lazy="true"
@@ -128,15 +129,15 @@
 
                 <div class="clearfix"/>
                 <br/>
+                <ui:remove>
+                    <div class="form-group">
+                        <div class="pull-left">
 
-                <div class="form-group">
-                    <div class="pull-left">
+                            <h:commandButton id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                                             value="#{msgs['lbl.save']}"
+                                             action="#{reportExpeditingBean.doSave}">
+                            </h:commandButton>
 
-                        <h:commandButton id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
-                                         value="#{msgs['lbl.save']}"
-                                         action="#{reportExpeditingBean.doSave}">
-                        </h:commandButton>
-                        <ui:remove>
                             &#160;
                             <h:button class="btn btn-primary btn-sm" outcome="../report"
                                       immediate="true"
@@ -145,9 +146,10 @@
                             <h:link outcome="../report"
                                     value="#{msgs['lbl.close']}"
                                     styleClass="btn btn-primary btn-sm"/>
-                        </ui:remove>
+
+                        </div>
                     </div>
-                </div>
+                </ui:remove>
             </h:form>
         </div>
     </ui:define>

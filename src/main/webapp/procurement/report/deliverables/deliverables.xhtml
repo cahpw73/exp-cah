@@ -16,7 +16,7 @@
                 position: fixed;
                 width: 100% !important;
                 background-color: #eee !important;
-                top:210px!important;
+                top: 210px !important;
             }
 
             .ui-datatable-tablewrapper {
@@ -27,62 +27,60 @@
             <h:form prependId="false">
                 <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
                     <div style="width: 100%; vertical-align: middle; display: table-cell">
+                        <div style="font-size: 11pt!important; height: 52px; padding-top: 15px; padding-left: 15px;">#{msgs['report.deliverables.title']}</div>
+                        <div class="row">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-1 control-label procurement-text-lbl-ltr"
+                                               for="projectDelId"
+                                               value="#{msgs['report.deliverables.lbl.project']}"/>
 
-                        <div style="font-size: 11pt!important; height: 52px; padding-top: 15px; padding-left: 30px;">#{msgs['report.deliverables.title']}</div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="projectDelId"
-                                                   value="#{msgs['report.deliverables.lbl.project']}"/>
-
-                                    <div class="col-md-7">
-                                        <h:selectOneMenu id="projectDelId"
-                                                         value="#{reportDeliverableBean.selectedProject}"
-                                                         styleClass="form-control" converter="projectConverter">
-                                            <f:selectItem
-                                                    itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
-                                                    noSelectionOption="true"/>
-                                            <f:selectItems value="#{reportDeliverableBean.projectList}"
-                                                           var="_p"
-                                                           itemValue="#{_p}"
-                                                           itemLabel="#{_p.projectNumber}"/>
-                                            <p:ajax async="false" process="@this" event="change"
-                                                    update="deliverablesTblId printBtnId poNoDelId"
-                                                    listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
-                            </div>
-                            <br/>
-
-                            <div class="row">
-                                <div class="form-group">
-                                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
-                                                   for="poNoDelId" value="#{msgs['report.deliverables.lbl.po.no']}"/>
-
-                                    <div class="col-md-7">
-                                        <div class="left-inner-addon">
-                                            <i class="fa fa-search fa-lg"></i>
-                                            <h:inputText id="poNoDelId" styleClass="form-control input-search"
-                                                         value="#{reportDeliverableBean.termsPoNo}"
-                                                         jsf:placeholder="#{msgs['lbl.search']}">
-                                                <p:ajax event="keyup" process="@this" update="deliverablesTblId"
-                                                        listener="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}"
-                                                        async="false"/>
-                                            </h:inputText>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
-                                                       value="#{msgs['lbl.print']}"
-                                                       action="#{reportDeliverableBean.printReportDeliverables}"
-                                                       target="_blank"
-                                                       disabled="#{!reportDeliverableBean.projectSelected}"/>
-                                    </div>
+                                <div class="col-md-3">
+                                    <h:selectOneMenu id="projectDelId"
+                                                     value="#{reportDeliverableBean.selectedProject}"
+                                                     styleClass="form-control" converter="projectConverter">
+                                        <f:selectItem
+                                                itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
+                                                noSelectionOption="true"/>
+                                        <f:selectItems value="#{reportDeliverableBean.projectList}"
+                                                       var="_p"
+                                                       itemValue="#{_p}"
+                                                       itemLabel="#{_p.projectNumber}"/>
+                                        <p:ajax async="false" process="@this" event="change"
+                                                update="deliverablesTblId printBtnId poNoDelId"
+                                                listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
+                                    </h:selectOneMenu>
                                 </div>
                             </div>
                         </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-1 control-label procurement-text-lbl-ltr"
+                                               for="poNoDelId" value="#{msgs['report.deliverables.lbl.po.no']}"/>
+
+                                <div class="col-md-3">
+                                    <div class="left-inner-addon">
+                                        <i class="fa fa-search fa-lg"></i>
+                                        <h:inputText id="poNoDelId" styleClass="form-control input-search"
+                                                     value="#{reportDeliverableBean.termsPoNo}"
+                                                     jsf:placeholder="#{msgs['lbl.search']}">
+                                            <p:ajax event="keyup" process="@this" update="deliverablesTblId"
+                                                    listener="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}"
+                                                    async="false"/>
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['lbl.print']}"
+                                                   action="#{reportDeliverableBean.printReportDeliverables}"
+                                                   target="_blank"
+                                                   disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="clearfix"/>
@@ -97,7 +95,7 @@
                 <br/>
                 <br/>
 
-                <div class="row">
+                <div class="col-md-12">
                     <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
                                  lazy="true" paginator="true" paginatorPosition="top"
                                  rows="#{tableCommonFeature.defaultPageSize}"
