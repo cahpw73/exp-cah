@@ -60,7 +60,7 @@ public class ItemEntity  implements Serializable,EntityTbl{
     private String costCode;
     private Boolean excludeFromExpediting;
     private ProjectCurrencyEntity projectCurrency;
-    private ScopeSupplyEntity scopeSupplyEntity;
+
 
 
 
@@ -480,15 +480,7 @@ public class ItemEntity  implements Serializable,EntityTbl{
         return quantity!=null&&cost!=null?cost.multiply(new BigDecimal(quantity.toString())):null;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="scope_supply_id")
-    public ScopeSupplyEntity getScopeSupplyEntity() {
-        return scopeSupplyEntity;
-    }
 
-    public void setScopeSupplyEntity(ScopeSupplyEntity scopeSupplyEntity) {
-        this.scopeSupplyEntity = scopeSupplyEntity;
-    }
 
     @Override
     public int hashCode() {
