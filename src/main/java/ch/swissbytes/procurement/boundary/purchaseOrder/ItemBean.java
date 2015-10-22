@@ -2,12 +2,9 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
-import ch.swissbytes.domain.interfaces.RecordEditable;
 import ch.swissbytes.domain.model.entities.ItemEntity;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
-import ch.swissbytes.procurement.boundary.BeanEditableList;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
@@ -44,7 +41,7 @@ public class ItemBean implements Serializable {
     private EnumService enumService;
 
 
-    private List<ItemEntity> itemList;
+        private List<ItemEntity> itemList;
 
     private List<ItemEntity> scopeSupplyList;
 
