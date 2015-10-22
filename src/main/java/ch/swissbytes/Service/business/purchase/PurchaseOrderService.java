@@ -130,12 +130,11 @@ public class PurchaseOrderService extends Service implements Serializable {
         List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, purchaseOrderId);
         if (!list.isEmpty()) {
             PurchaseOrderEntity entity = list.get(0);
-
             entity.setStatus(getStatusDelete());
             dao.update(entity);
             deleteComment(purchaseOrderId);
             deleteScopeSupply(purchaseOrderId);
-            //deleteSupplier(purchaseOrderId);
+            deleteItem(purchaseOrderId);
         }
     }
 
@@ -147,6 +146,14 @@ public class PurchaseOrderService extends Service implements Serializable {
             ScopeSupplyEntity scopeSupply = scopeSupplyList.get(0);
             scopeSupply.setStatus(getStatusDelete());
             scopeSupplyDao.update(scopeSupply);
+        }
+    }
+    private void deleteItem(final Long purchaseOrderId) {
+        List<ItemEntity> scopeSupplyList = itemService.findByPoId(purchaseOrderId);
+        if (!scopeSupplyList.isEmpty()) {
+            ItemEntity scopeSupply = scopeSupplyList.get(0);
+            scopeSupply.setStatus(getStatusDelete());
+            itemService.delete(scopeSupply);
         }
     }
 

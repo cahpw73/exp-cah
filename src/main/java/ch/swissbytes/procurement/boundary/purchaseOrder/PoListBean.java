@@ -288,6 +288,7 @@ public class PoListBean implements Serializable {
     public void doDeletePo() {
         log.info("do delete purchase order");
         service.doDelete(currentPurchaseOrder.getId());
+        findPOs();
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
