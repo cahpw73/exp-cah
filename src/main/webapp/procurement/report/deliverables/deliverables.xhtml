@@ -11,12 +11,24 @@
         <f:viewAction action="#{mainMenuBean.select(1)}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form prependId="false">
-            <div class="col-md-12">
-                <div class="panel panel-default panel-tab">
-                    <div class="procurement-panel-header">#{msgs['report.deliverables.title']}</div>
-                    <!-- Default panel contents -->
-                    <div class="panel-body">
+        <style>
+            .ui-paginator {
+                position: fixed;
+                width: 100% !important;
+                background-color: #eee !important;
+                top:210px!important;
+            }
+
+            .ui-datatable-tablewrapper {
+                margin-top: 0px !important;
+            }
+        </style>
+        <div class="col-md-12">
+            <h:form prependId="false">
+                <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
+                    <div style="width: 100%; vertical-align: middle; display: table-cell">
+
+                        <div style="font-size: 11pt!important; height: 52px; padding-top: 15px; padding-left: 30px;">#{msgs['report.deliverables.title']}</div>
                         <div class="col-md-4">
                             <div class="row">
                                 <div class="form-group">
@@ -34,8 +46,9 @@
                                             <f:selectItems value="#{reportDeliverableBean.projectList}"
                                                            var="_p"
                                                            itemValue="#{_p}"
-                                                           itemLabel="#{_p.title}"/>
-                                            <p:ajax async="false" process="@this" event="change" update="deliverablesTblId printBtnId poNoDelId"
+                                                           itemLabel="#{_p.projectNumber}"/>
+                                            <p:ajax async="false" process="@this" event="change"
+                                                    update="deliverablesTblId printBtnId poNoDelId"
                                                     listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
                                         </h:selectOneMenu>
                                     </div>
@@ -55,7 +68,8 @@
                                                          value="#{reportDeliverableBean.termsPoNo}"
                                                          jsf:placeholder="#{msgs['lbl.search']}">
                                                 <p:ajax event="keyup" process="@this" update="deliverablesTblId"
-                                                        listener="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}" async="false"/>
+                                                        listener="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}"
+                                                        async="false"/>
                                             </h:inputText>
                                         </div>
                                     </div>
@@ -63,55 +77,67 @@
                                         <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
                                                        value="#{msgs['lbl.print']}"
                                                        action="#{reportDeliverableBean.printReportDeliverables}"
-                                                       target="_blank" disabled="#{!reportDeliverableBean.projectSelected}"/>
+                                                       target="_blank"
+                                                       disabled="#{!reportDeliverableBean.projectSelected}"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"/>
-                        <br/>
-
-                        <div>
-                            <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
-                                         lazy="true">
-                                <p:column headerText="#{msgs['report.deliverables.column.po.no']}" width="50">
-                                    #{_l.poNo}
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.var.no']}" width="50">
-                                    #{_l.varNo}
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.po.description']}" width="100">
-                                    #{_l.poDescription}
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.del.no']}" width="50">
-                                    #{_l.delNo}
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.description']}" width="100">
-                                    #{_l.description}
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.qty']}" width="50">
-                                    #{_l.qty}
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.required.date']}" width="100">
-                                    <h:outputText value="#{_l.requiredDate}">
-                                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.forecast.date']}" width="100">
-                                    <h:outputText value="#{_l.forecastDate}">
-                                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column headerText="#{msgs['report.deliverables.column.received.date']}" width="100">
-                                    <h:outputText value="#{_l.receivedDate}">
-                                        <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                                    </h:outputText>
-                                </p:column>
-                            </p:dataTable>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </h:form>
+                <div class="clearfix"/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+                <div class="row">
+                    <p:dataTable id="deliverablesTblId" value="#{reportDeliverableBean.deliverableDtoList}" var="_l"
+                                 lazy="true" paginator="true" paginatorPosition="top"
+                                 rows="#{tableCommonFeature.defaultPageSize}"
+                                 rowsPerPageTemplate="#{configuration.getPagesSize(reportExpeditingBean.expeditingDtosList.size())}">
+                        <p:column headerText="#{msgs['report.deliverables.column.po.no']}" width="50">
+                            #{_l.poNo}
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.var.no']}" width="50">
+                            #{_l.varNo}
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.po.description']}" width="100">
+                            #{_l.poDescription}
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.del.no']}" width="50">
+                            #{_l.delNo}
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.description']}" width="100">
+                            #{_l.description}
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.qty']}" width="50">
+                            #{_l.qty}
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.required.date']}" width="100">
+                            <h:outputText value="#{_l.requiredDate}">
+                                <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.forecast.date']}" width="100">
+                            <h:outputText value="#{_l.forecastDate}">
+                                <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['report.deliverables.column.received.date']}" width="100">
+                            <h:outputText value="#{_l.receivedDate}">
+                                <f:convertDateTime pattern="#{configuration.formatDate}"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>
