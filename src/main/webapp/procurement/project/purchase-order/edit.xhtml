@@ -107,38 +107,33 @@
                             <br/>
                             <ul class="nav nav-tabs" role="tablist">
                                 <li id="headerTab" class="active">
-                                    <a href="#headerPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.header']}</a>
+                                    <a href="#headerPo" role="tab" data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.header']}</a>
                                 </li>
                                 <li id="supplierTab">
                                     <a href="#supplierPo" role="tab"
-                                       data-toggle="tab">#{msgs['purchase.order.tab.supplier']}</a>
+                                       data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.supplier']}</a>
                                 </li>
                                 <li id="itemTab">
-                                    <a href="#itemPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.items']}</a>
+                                    <a href="#itemPo" role="tab" data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.items']}</a>
                                 </li>
                                 <li id="textTab">
-                                    <a href="#textPo" role="tab" data-toggle="tab">#{msgs['purchase.order.tab.text']}</a>
+                                    <a href="#textPo" role="tab" data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.text']}</a>
                                 </li>
                                 <li id="deliverableTab">
                                     <a href="#deliverablesPo" role="tab"
-                                       data-toggle="tab">#{msgs['purchase.order.tab.deliverables']}</a>
+                                       data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.deliverables']}</a>
                                 </li>
                                 <li id="cashflowTab">
                                     <a href="#cashflowPo" role="tab"
-                                       data-toggle="tab">#{msgs['purchase.order.tab.cashflow']}</a>
+                                       data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.cashflow']}</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+                    <p:remoteCommand name="updateMessages" update="poEditGlbMsgs" />
                     <!-- Tab Projects -->
-                    <div class="tab-content">
+                    <div class="tab-content" style="margin-top: 8em;">
                         <ui:include src="components/po-main-data.xhtml">
                             <ui:param name="UPDATE"
                                       value=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"/>
