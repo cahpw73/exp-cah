@@ -5,33 +5,69 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
-import ch.swissbytes.domain.interfaces.RecordEditable;
-import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.domain.types.TimeMeasurementEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "item")
-public class ItemEntity extends RecordEditable<ItemEntity> implements Serializable{
+public class ItemEntity  implements Serializable,EntityTbl{
 
-    //It will be used by
     private Long id;
-    private String itemNo;//Code*
-    private String equipNo;//TagNo*
-    private String qty;//quantity*
-    private String unit;//unit*
-    private String description;//description*
-    private BigDecimal unitCost;//cost*
-    private BigDecimal totalCost;//new
-    private BigDecimal costCode;//new
-    private Date deliveryDate;//poDeliveryDate*
-    private StatusEnum statusEnum;
+    private BigDecimal cost;
+    private String currency;
+    private String code;
+    private BigDecimal quantity;
+    private String unit;
+    private String description;
+    private Date forecastExWorkDate;
+    private String exWorkDateDescription;
+    private Integer deliveryLeadTimeQt;
+    private TimeMeasurementEnum deliveryLeadTimeMs;
+    private String getDeliveryLeadTimeDescription;
+    private Date forecastSiteDate;
+    private String siteDateDescription;
     private Date lastUpdate;
-    private ProjectCurrencyEntity projectCurrency;//new
-    private PurchaseOrderProcurementEntity po;//no copy
+    private PurchaseOrderEntity purchaseOrder;
+    private StatusEntity status;
+    private Date poDeliveryDate;
+    private Date actualExWorkDate;
+    private Date requiredSiteDate;
+    private Date actualSiteDate;
+    private String deliveryDateObs;
+    private String actualExWorkDateObs;
+    private String requiredSiteDateObs;
+    private String actualSiteDateObs;
+    private Boolean isForecastSiteDateManual;
+    private String spIncoTerm;
+    private String spIncoTermDescription;
+    private String responsibleExpediting;
+    private String responsibleExpeditingObservation;
+    private Integer ordered;
+    private String tagNo;
+    private String from;
+    private String to;
+    private Date date;
+    private String descriptionAttachment;
+    private BigDecimal totalCost;
+    private String costCode;
+    private Boolean excludeFromExpediting;
+    private ProjectCurrencyEntity projectCurrency;
+
+
+
+
+    private List<TransitDeliveryPointEntity> tdpList=new ArrayList<>();
+    private List<AttachmentScopeSupply> attachments=new ArrayList<>();
+
+
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -40,21 +76,138 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Column (name = "status",nullable = false)
+    @Column(name="cost", precision=18, scale=5)
+//    @DecimalMin(value = "0",message = "just positive values")
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    @Size(max = 50)
+    @Column(name="code", length = 50)
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Column(name="quantity")
+    public BigDecimal getQuantity() {
+        return quantity;
+    }
+
+    @Size(max = 50)
+    @Column(name="unit", length = 50)
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
+    }
+
+    @Size(max = 1000)
+    @Column(name="description",length = 1000)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    //@TODO Cambiamos el valor nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    @Column(name="EX_WORK_DATE")
+    public Date getForecastExWorkDate() {
+        return forecastExWorkDate;
+    }
+
+    public void setForecastExWorkDate(Date forecastExWorkDate) {
+        this.forecastExWorkDate = forecastExWorkDate;
+    }
+
+    @Size(max = 1000)
+    @Column(name="EX_WORK_DATE_DESCRIPTION", length = 1000)
+    public String getExWorkDateDescription() {
+        return exWorkDateDescription;
+    }
+
+    public void setExWorkDateDescription(String exWorkDateDescription) {
+        this.exWorkDateDescription = exWorkDateDescription;
+    }
+
+    //TODO Cambiamos el valur nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    @Column(name="DELIVERY_LEAD_TIME_QT")
+    public Integer getDeliveryLeadTimeQt() {
+        return deliveryLeadTimeQt;
+    }
+
+    public void setDeliveryLeadTimeQt(Integer deliveryLeadTimeQt) {
+        this.deliveryLeadTimeQt = deliveryLeadTimeQt;
+    }
+
+
+    @Column(name="DELIVERY_LEAD_TIME_MS")
     @Enumerated(EnumType.ORDINAL)
-    public StatusEnum getStatusEnum() {
-        return statusEnum;
+    public TimeMeasurementEnum getDeliveryLeadTimeMs() {
+        return deliveryLeadTimeMs;
     }
 
-    public void setStatusEnum(StatusEnum status) {
-        this.statusEnum = status;
+    public void setDeliveryLeadTimeMs(TimeMeasurementEnum deliveryLeadTimeMs) {
+        this.deliveryLeadTimeMs = deliveryLeadTimeMs;
+    }
+    @Column(name="DELIVERY_LEAD_TIME_DESCRIPTION", length = 1000)
+    public String getGetDeliveryLeadTimeDescription() {
+        return getDeliveryLeadTimeDescription;
     }
 
-    @Column(name = "last_update",nullable = false)
+    public void setGetDeliveryLeadTimeDescription(String getDeliveryLeadTimeDescription) {
+        this.getDeliveryLeadTimeDescription = getDeliveryLeadTimeDescription;
+    }
+
+    //TODO Cambiamos el valur nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
+    @Column(name="SITE_DATE")
+    public Date getForecastSiteDate() {
+        return forecastSiteDate;
+    }
+
+    public void setForecastSiteDate(Date forecastSiteDate) {
+        this.forecastSiteDate = forecastSiteDate;
+    }
+
+    @Size(max = 1000)
+    @Column(name="SITE_DATE_DESCRIPTION", length = 1000)
+    public String getSiteDateDescription() {
+        return siteDateDescription;
+    }
+
+    public void setSiteDateDescription(String siteDateDescription) {
+        this.siteDateDescription = siteDateDescription;
+    }
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="purchase_order_id")
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+    @Column(name="LAST_UPDATE", nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {
         return lastUpdate;
@@ -64,58 +217,225 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
         this.lastUpdate = lastUpdate;
     }
 
-    @Column(name = "item_no", nullable = false)
-    public String getItemNo() {
-        return itemNo;
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="status_id", nullable=false)
+    public StatusEntity getStatus() {
+        return status;
     }
 
-    public void setItemNo(String itemNo) {
-        this.itemNo = itemNo;
+    public void setStatus(StatusEntity status) {
+        this.status = status;
     }
 
-    @Column(name = "equip_no")
-    public String getEquipNo() {
-        return equipNo;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ItemEntity)) return false;
+
+        ItemEntity that = (ItemEntity) o;
+        return that.hashCode()==this.hashCode();
     }
 
-    public void setEquipNo(String equipNo) {
-        this.equipNo = equipNo;
+
+    @Column(name="DELIVERY_DATE")
+    public Date getPoDeliveryDate() {
+        return poDeliveryDate;
     }
 
-    @Column(name = "qty")
-    public String getQty() {
-        return qty;
+    public void setPoDeliveryDate(Date poDeliveryDate) {
+        this.poDeliveryDate = poDeliveryDate;
     }
 
-    public void setQty(String qty) {
-        this.qty = qty;
+    @Column(name="ACTUAL_EX_WORK_DATE")
+    public Date getActualExWorkDate() {
+        return actualExWorkDate;
     }
 
-    @Column(name = "unit")
-    public String getUnit() {
-        return unit;
+    public void setActualExWorkDate(Date actualExWorkDate) {
+        this.actualExWorkDate = actualExWorkDate;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+
+    @Column(name="REQUIRED_SITE_DATE")
+    public Date getRequiredSiteDate() {
+        return requiredSiteDate;
     }
 
-    @Column(name = "description")
-    public String getDescription() {
-        return description;
+    public void setRequiredSiteDate(Date requiredSiteDate) {
+        this.requiredSiteDate = requiredSiteDate;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    @Column(name="ACTUAL_SITE_DATE")
+    public Date getActualSiteDate() {
+        return actualSiteDate;
     }
 
-    @Column(name="unit_cost", precision=18, scale=5)
-    public BigDecimal getUnitCost() {
-        return unitCost;
+    public void setActualSiteDate(Date actualSiteDate) {
+        this.actualSiteDate = actualSiteDate;
     }
 
-    public void setUnitCost(BigDecimal unitCost) {
-        this.unitCost = unitCost;
+
+    @Column(name="DELIVERY_DATE_OBS",length = 1000)
+    public String getDeliveryDateObs() {
+        return deliveryDateObs;
+    }
+
+    public void setDeliveryDateObs(String deliveryDateObs) {
+        this.deliveryDateObs = deliveryDateObs;
+    }
+
+    @Column(name="ACTUAL_EX_WORK_DATE_OBS",length = 1000)
+    public String getActualExWorkDateObs() {
+        return actualExWorkDateObs;
+    }
+
+    public void setActualExWorkDateObs(String actualExWorkDateObs) {
+        this.actualExWorkDateObs = actualExWorkDateObs;
+    }
+    @Column(name="REQUIRED_SITE_DATE_OBS",length = 1000)
+    public String getRequiredSiteDateObs() {
+        return requiredSiteDateObs;
+    }
+
+    public void setRequiredSiteDateObs(String requiredSiteDateObs) {
+        this.requiredSiteDateObs = requiredSiteDateObs;
+    }
+    @Column(name="ACTUAL_SITE_DATE_OBS",length = 1000)
+    public String getActualSiteDateObs() {
+        return actualSiteDateObs;
+    }
+
+    public void setActualSiteDateObs(String actualSiteDateObs) {
+        this.actualSiteDateObs = actualSiteDateObs;
+    }
+
+    @NotNull
+    @Column(name="IS_FORECAST_SITE_DATE_MANUAL",nullable = false)
+    public Boolean getIsForecastSiteDateManual() {
+        return isForecastSiteDateManual;
+    }
+
+    public void setIsForecastSiteDateManual(Boolean isForecastSiteDateManual) {
+        this.isForecastSiteDateManual = isForecastSiteDateManual;
+    }
+
+    @Transient
+    public List<TransitDeliveryPointEntity> getTdpList() {
+        return tdpList;
+    }
+
+    @Transient
+    public List<AttachmentScopeSupply> getAttachments() {
+        return attachments;
+    }
+
+    @Size(max = 5, message = "currency at most need 5 characters")
+    @Column(name="CURRENCY",length = 5)
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    @Column(name="sp_inco_term",length=50)
+    public String getSpIncoTerm() {
+        return spIncoTerm;
+    }
+
+    public void setSpIncoTerm(String spIncoTerm) {
+        this.spIncoTerm = spIncoTerm;
+    }
+    @Column(name="sp_inco_term_description", length=1000)
+    public String getSpIncoTermDescription() {
+        return spIncoTermDescription;
+    }
+
+    public void setSpIncoTermDescription(String spIncoTermDescription) {
+        this.spIncoTermDescription = spIncoTermDescription;
+    }
+
+    @Column(name="RESPONSIBLE_EXPEDITING",length=100)
+    public String getResponsibleExpediting() {
+        return responsibleExpediting;
+    }
+
+
+    public void setResponsibleExpediting(String responsibleExpediting) {
+        this.responsibleExpediting = responsibleExpediting;
+    }
+
+    @Column(name="RESPONSIBLE_EXPEDITING_OBSERVATION",length=1000)
+    public String getResponsibleExpeditingObservation() {
+        return responsibleExpeditingObservation;
+    }
+
+    public void setResponsibleExpeditingObservation(String responsibleExpeditingObservation) {
+        this.responsibleExpeditingObservation = responsibleExpeditingObservation;
+    }
+
+    @Transient
+    public String getCustomLeadTime(){
+        return Integer.toString(deliveryLeadTimeQt!=null?deliveryLeadTimeQt.intValue():0)+"-"+Integer.toString(deliveryLeadTimeMs.ordinal());
+
+    }
+
+    @Column(name="ORDERED")
+    public Integer getOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(Integer ordered) {
+        this.ordered = ordered;
+    }
+
+    @Size(max = 1000)
+    @Column(name="TAG_NO", length = 1000)
+    public String getTagNo() {
+        return tagNo;
+    }
+
+    public void setTagNo(String tagNo) {
+        this.tagNo = tagNo;
+    }
+
+    @Size(max = 100)
+    @Column(name = "TO_SS",  length = 100)
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+    @Size(max = 100)
+    @Column(name = "FROM_SS", length = 100)
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+    @Column(name = "DATE_SS")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Size(max = 950)
+    @Column(name = "DESCRIPTION_ATTACHMENT", length = 1000)
+    public String getDescriptionAttachment() {
+        return descriptionAttachment;
+    }
+
+    public void setDescriptionAttachment(String descriptionAttachment) {
+        this.descriptionAttachment = descriptionAttachment;
     }
 
     @Column(name="total_cost", precision=18, scale=5)
@@ -127,23 +447,13 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
         this.totalCost = totalCost;
     }
 
-    @Column(name="cost_code", precision=18, scale=5)
-    public BigDecimal getCostCode() {
+    @Column(name="cost_code")
+    public String getCostCode() {
         return costCode;
     }
 
-    public void setCostCode(BigDecimal costCode) {
+    public void setCostCode(String costCode) {
         this.costCode = costCode;
-    }
-
-    @Column(name = "delivery_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -156,31 +466,53 @@ public class ItemEntity extends RecordEditable<ItemEntity> implements Serializab
         this.projectCurrency = projectCurrency;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="po_id")
-    public PurchaseOrderProcurementEntity getPo() {
-        return po;
+    @Column(name = "exclude_from_expediting")
+    public Boolean getExcludeFromExpediting() {
+        return excludeFromExpediting;
     }
 
-    public void setPo(PurchaseOrderProcurementEntity po) {
-        this.po = po;
+    public void setExcludeFromExpediting(Boolean excludeFromExpediting) {
+        this.excludeFromExpediting = excludeFromExpediting;
+    }
+
+    @Transient
+    public BigDecimal calculateTotal(){
+        return quantity!=null&&cost!=null?cost.multiply(new BigDecimal(quantity.toString())):null;
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ItemEntity entity = (ItemEntity) o;
-
-        if (id != null ? !id.equals(entity.id) : entity.id != null) return false;
-
-        return true;
-    }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        result = 31 * result + (unit != null ? unit.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (forecastExWorkDate != null ? forecastExWorkDate.hashCode() : 0);
+        result = 31 * result + (exWorkDateDescription != null ? exWorkDateDescription.hashCode() : 0);
+        result = 31 * result + (deliveryLeadTimeQt != null ? deliveryLeadTimeQt.hashCode() : 0);
+        result = 31 * result + (deliveryLeadTimeMs != null ? deliveryLeadTimeMs.hashCode() : 0);
+        result = 31 * result + (getDeliveryLeadTimeDescription != null ? getDeliveryLeadTimeDescription.hashCode() : 0);
+        result = 31 * result + (forecastSiteDate != null ? forecastSiteDate.hashCode() : 0);
+        result = 31 * result + (siteDateDescription != null ? siteDateDescription.hashCode() : 0);
+        result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        result = 31 * result + (purchaseOrder != null ? purchaseOrder.hashCode() : 0);
+        result = 31 * result + (status != null ? status.getId() : 0);
+        result = 31 * result + (poDeliveryDate != null ? poDeliveryDate.hashCode() : 0);
+        result = 31 * result + (actualExWorkDate != null ? actualExWorkDate.hashCode() : 0);
+        result = 31 * result + (requiredSiteDate != null ? requiredSiteDate.hashCode() : 0);
+        result = 31 * result + (actualSiteDate != null ? actualSiteDate.hashCode() : 0);
+        result = 31 * result + (deliveryDateObs != null ? deliveryDateObs.hashCode() : 0);
+        result = 31 * result + (actualExWorkDateObs != null ? actualExWorkDateObs.hashCode() : 0);
+        result = 31 * result + (requiredSiteDateObs != null ? requiredSiteDateObs.hashCode() : 0);
+        result = 31 * result + (actualSiteDateObs != null ? actualSiteDateObs.hashCode() : 0);
+        result = 31 * result + (isForecastSiteDateManual != null ? isForecastSiteDateManual.hashCode() : 0);
+        result = 31 * result + (spIncoTerm != null ? spIncoTerm.hashCode() : 0);
+        result = 31 * result + (spIncoTermDescription != null ? spIncoTermDescription.hashCode() : 0);
+        result = 31 * result + (responsibleExpediting != null ? responsibleExpediting.hashCode() : 0);
+        result = 31 * result + (responsibleExpeditingObservation != null ? responsibleExpeditingObservation.hashCode() : 0);
+        return result;
     }
 }

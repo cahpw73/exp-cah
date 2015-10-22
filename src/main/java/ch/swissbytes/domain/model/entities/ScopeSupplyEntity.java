@@ -63,6 +63,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     private String costCode;
     private Boolean excludeFromExpediting;
     private ProjectCurrencyEntity projectCurrency;
+    private ItemEntity itemEntity;
 
 
 
@@ -481,6 +482,15 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     @Transient
     public BigDecimal calculateTotal(){
         return quantity!=null&&cost!=null?cost.multiply(new BigDecimal(quantity.toString())):null;
+    }
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="item_id")
+    public ItemEntity getItemEntity() {
+        return itemEntity;
+    }
+
+    public void setItemEntity(ItemEntity itemEntity) {
+        this.itemEntity = itemEntity;
     }
 
     @Override
