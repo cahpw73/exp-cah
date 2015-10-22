@@ -11,6 +11,17 @@
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
     </f:metadata>
     <ui:define name="body">
+        <style>
+            .ui-paginator {
+                position: fixed;
+                width: 100%!important;
+                background-color: #eee!important;
+            }
+
+            .ui-datatable-tablewrapper{
+                margin-top: 30px!important;
+            }
+        </style>
         <h:form prependId="false">
             <div class="col-md-12">
                 <h:panelGroup>
@@ -56,7 +67,7 @@
                 <p:dataTable id="projectListId" value="#{projectListBean.projectList}" var="_p"
                              paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}"
-                             paginatorPosition="bottom">
+                             paginatorPosition="top" styleClass="proc-paginator">
                     <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                     <p:column headerText="#{msgs['project.list.column.number']}" width="100">
                         #{_p.projectNumber}
