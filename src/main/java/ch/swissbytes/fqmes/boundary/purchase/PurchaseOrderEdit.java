@@ -622,6 +622,7 @@ public class PurchaseOrderEdit implements Serializable {
             scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
             scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
             ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
+            ss.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
             ss.getTdpList().clear();
             ss.getAttachments().clear();
             for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
@@ -641,6 +642,7 @@ public class PurchaseOrderEdit implements Serializable {
             final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
             if (index >= 0 && index < scopeSupplies.size()) {
                 ScopeSupplyEntity sse = scopeSupplyService.clone(selectedScopeSupply);
+                sse.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
                 sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
                 sse.getAttachments().addAll(selectedScopeSupply.getAttachments());
                 scopeSupplies.set(index, sse);
