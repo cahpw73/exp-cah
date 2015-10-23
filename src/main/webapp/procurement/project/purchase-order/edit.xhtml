@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <p:remoteCommand name="updateMessages" update="poEditGlbMsgs" />
+                    <p:remoteCommand name="updateMessages" update="poEditGlbMsgs" async="false" />
                     <!-- Tab Projects -->
                     <div class="tab-content" style="margin-top: 8em;">
                         <ui:include src="components/po-main-data.xhtml">
@@ -188,7 +188,7 @@
             </h:panelGroup>
         </p:dialog>
 
-        <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="500">
+        <p:dialog header="New Contact" resizable="false" widgetVar="contactModal" width="550">
             <ui:include src="../../admin/supplier/components/contactEdit.xhtml"/>
         </p:dialog>
         <p:dialog header="New Supplier" widgetVar="supplierModal" width="1065" height="600" resizable="false">
@@ -196,6 +196,7 @@
                 <ui:include src="../../admin/supplier/components/templateSupplier.xhtml">
                     <ui:param name="MODE" value="PO"/>
                     <ui:param name="FORM" value="supplierId"/>
+                    <ui:param name="PROCESS" value="editPoForm"/>
                 </ui:include>
             </h:form>
         </p:dialog>
