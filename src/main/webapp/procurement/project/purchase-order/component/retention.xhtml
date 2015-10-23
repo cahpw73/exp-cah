@@ -5,14 +5,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-    <div class="panel panel-default panel-tab">
+    <div class="panel panel-default panel-tab" style="width: 720px;">
         <div class="procurement-panel-header">#{TITLE}</div>
         <!-- Default panel contents -->
         <div class="panel-body">
             <div class="row">
-                <!--COL1-->
                 <div style="float: left; margin-left: 99px;">
-                    <div style="width: 120px!important;">
+                    <div style="width: 130px!important;">
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
@@ -27,8 +26,10 @@
                         </div>
                     </div>
                 </div>
-                <!--COL2-->
-                <div style="float: left; margin-left: 103px;">
+            </div>
+            <div class="row">
+                <!--COL1-->
+                <div style="float: left; margin-left: 30px;">
                     <div style="width: 200px!important;">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
@@ -49,13 +50,13 @@
                         </div>
                     </div>
                 </div>
-                <!--COL3-->
+                <!--COL2-->
                 <div style="float: left;">
                     <div style="width: 204px!important;">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                            value="#{msgs['po.cashflow.lbl.retention.amt']}"
-                                           style="padding-left: 17px !important;"/>
+                                           style="padding-left: 5px !important;"/>
 
                             <div style="width: 150px; float: left; margin-left: 21px;">
 
@@ -66,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <!--COL4-->
+                <!--COL3-->
                 <div style="float: left; margin-left: 13px;">
                     <div style="width: 270px!important;">
                         <div class="form-group">
@@ -98,12 +99,13 @@
             </div>
             <div class="row">
                 <div style="float: left; margin-left: 0px;">
-                    <div style="width: 280px!important;">
+                    <div style="width: 197px!important;">
                         <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                            <h:outputLabel styleClass="control-label procurement-text-lbl-ltr"
+                                           style="float: left; padding-top: 7px; padding-right: 15px;"
                                            value="#{msgs['po.cashflow.lbl.retention.exp.date']}"/>
 
-                            <div style="width: 150px; float: left;">
+                            <div style="width: 111px; float: left;">
                                 <p:calendar type="text" styleClass="calendar"
                                             navigator="true" mask="#{configuration.mask}"
                                             pattern="#{configuration.formatDate}"
