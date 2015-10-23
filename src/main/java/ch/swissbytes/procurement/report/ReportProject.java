@@ -30,8 +30,6 @@ public class ReportProject extends ReportView implements Serializable {
     protected String sortByName = "";
 
 
-
-
     /**
      * @param filenameJasper   - fileName the reports to use
      * @param reportNameMsgKey - Message key for name the file to save
@@ -49,31 +47,32 @@ public class ReportProject extends ReportView implements Serializable {
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("FORMAT_DATE_TIME", configuration.getFormatDateTime());
         addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("STATUS_PROCUREMENT",lookupValueFactory.getStatusPOProcurement());
+        addParameters("STATUS_PROCUREMENT", lookupValueFactory.getStatusPOProcurement());
         loadParameters();
         loadAdditionalParameters();
     }
-    protected void loadAdditionalParameters(){
+
+    protected void loadAdditionalParameters() {
     }
 
     private void loadParameters() {
-        if(project.getClient()!=null) {
+        if (project.getClient() != null) {
             addParameters("projectIdFilter", project.getId());
             addParameters("projectCode", project.getProjectNumber());
             addParameters("projectName", project.getTitle());
-            ProjectCurrencyEntity defaultCurrency=getCurrencyDefault();
-            addParameters("projectCurrency", defaultCurrency!=null?defaultCurrency.getCurrency().getCode():null);
-            addParameters("projectDefaultExchangeRate",defaultCurrency!=null?defaultCurrency.getExchangeRate():null);
+            ProjectCurrencyEntity defaultCurrency = getCurrencyDefault();
+            addParameters("projectCurrency", defaultCurrency != null ? defaultCurrency.getCurrency().getCode() : null);
+            addParameters("projectDefaultExchangeRate", defaultCurrency != null ? defaultCurrency.getExchangeRate() : null);
             addParameters("client", project.getClient() != null ? project.getClient().getName() : "");
-            if(project.getClient()!=null && project.getClient().getClientLogo()!=null){
+            if (project.getClient() != null && project.getClient().getClientLogo() != null) {
                 InputStream logo = new ByteArrayInputStream(project.getClient().getClientLogo().getFile());
                 addParameters("logoFooter", logo);
             }
         }
         addParameters("sortBy", getStrSort());
-        addParameters("sortByName",sortByName);
+        addParameters("sortByName", sortByName);
         Date now = new Date();
-        addParameters("currentDate",Util.convertUTC(now,configuration.getTimeZone()));
+        addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
     }
 
     @Override
@@ -88,60 +87,50 @@ public class ReportProject extends ReportView implements Serializable {
     public ProjectCurrencyEntity getCurrencyDefault() {
         ProjectCurrencyEntity currencyDefault = null;
 
-        for(ProjectCurrencyEntity pc : project.getCurrencies()){
-            if(pc.getProjectDefault()){
+        for (ProjectCurrencyEntity pc : project.getCurrencies()) {
+            if (pc.getProjectDefault()) {
                 currencyDefault = pc;
                 break;
             }
         }
-        if(project.getCurrencies().size()>=1&&currencyDefault==null){
+        if (project.getCurrencies().size() >= 1 && currencyDefault == null) {
             return project.getCurrencies().get(0);
         }
         return currencyDefault;
     }
-   /* public BigDecimal getExchangeRateDefault() {
-        BigDecimal exchangeRate = new BigDecimal("0");
-        for(ProjectCurrencyEntity pc : project.getCurrencies()){
-            if(pc.getProjectDefault()){
-                exchangeRate = pc.getExchangeRate();
-                break;
-            }
-        }
-        return exchangeRate;
-    }*/
 
-    protected String getStrSort(){
+    protected String getStrSort() {
         Boolean poNo = sortMap.get("poNo");
         Boolean supplier = sortMap.get("supplier");
         Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
-        if(poNo && supplier && deliveryDate){
+        if (poNo && supplier && deliveryDate) {
             strSort = "po.po,po.orderedvariation,sp.company,po.po_delivery_date, ";
-            sortByName =  "Po No, Variation, Supplier, Delivery Date, ";
-        }else if(!poNo && supplier && deliveryDate){
+            sortByName = "Po No, Variation, Supplier, Delivery Date, ";
+        } else if (!poNo && supplier && deliveryDate) {
             strSort = "sp.company,po.po_delivery_date,po.orderedvariation, ";
-            sortByName =  "Supplier, Delivery Date, Variation, ";
-        }else if(!poNo && !supplier && deliveryDate){
+            sortByName = "Supplier, Delivery Date, Variation, ";
+        } else if (!poNo && !supplier && deliveryDate) {
             strSort = "po.po_delivery_date,po.orderedvariation, ";
-            sortByName =  "Delivery Date, Variation, ";
-        }else if(poNo && supplier && !deliveryDate){
+            sortByName = "Delivery Date, Variation, ";
+        } else if (poNo && supplier && !deliveryDate) {
             strSort = "po.po,po.orderedvariation,sp.company, ";
-            sortByName =  "Po No, Variation, Supplier, ";
-        }else if(poNo && !supplier && !deliveryDate){
+            sortByName = "Po No, Variation, Supplier, ";
+        } else if (poNo && !supplier && !deliveryDate) {
             strSort = "po.po,po.orderedvariation, ";
-            sortByName =  "Po No, Variation, ";
-        }else if(!poNo && supplier && !deliveryDate){
+            sortByName = "Po No, Variation, ";
+        } else if (!poNo && supplier && !deliveryDate) {
             strSort = "sp.company,po.orderedvariation, ";
-            sortByName =  "Supplier, Variation, ";
-        }else if(poNo && !supplier && deliveryDate){
+            sortByName = "Supplier, Variation, ";
+        } else if (poNo && !supplier && deliveryDate) {
             strSort = "po.po,po.orderedvariation,po.po_delivery_date, ";
-            sortByName =  "Po No, Variation, Delivery Date, ";
+            sortByName = "Po No, Variation, Delivery Date, ";
         }
 
-        if(strSort.length()>1){
-            sortByName = sortByName.substring(0,sortByName.length()-2);
-            strSort = strSort.substring(0,strSort.length() - 2);
-        }else{
+        if (strSort.length() > 1) {
+            sortByName = sortByName.substring(0, sortByName.length() - 2);
+            strSort = strSort.substring(0, strSort.length() - 2);
+        } else {
             sortByName = "Variation";
             strSort = "po.orderedvariation";
         }
