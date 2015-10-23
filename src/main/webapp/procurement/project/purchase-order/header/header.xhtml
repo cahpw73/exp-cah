@@ -318,11 +318,27 @@
             <div class="clearfix"/>
 
             <div class="row">
-                <h:panelGroup id="groupSecurityDeposit">
+                <h:panelGroup id="groupRetention">
                     <div style="width: 345px!important; float: left!important;">
                         <div class="form-group">
                             <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                            style="margin-left: 13px;"
+                                           value="#{msgs['po.header.lbl.security.retention']}"/>
+                            <h:inputHidden id="checkBoxRetention"
+                                           value="#{cashflowBean.cashflow.applyRetention}">
+                            </h:inputHidden>
+                            <input type="checkbox" name="my-checkbox"
+                                   id="switchRetention"
+                                   data-on-text="#{msgs['lbl.yes']}" data-off-text="#{msgs['lbl.no']}">
+                            </input>
+                        </div>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup id="groupSecurityDeposit">
+                    <div style="width: 345px!important; float: left!important;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                                           style="margin-left: 38px;"
                                            value="#{msgs['po.header.lbl.security.deposit']}"/>
                             <h:inputHidden id="checkBoxSecurityDeposit"
                                            value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.securityDeposit}">

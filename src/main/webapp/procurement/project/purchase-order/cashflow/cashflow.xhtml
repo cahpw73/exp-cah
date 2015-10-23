@@ -6,7 +6,7 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
     <h:panelGroup id="cashflowSectionId">
         <div class="clearfix"></div>
-        <div style="width: 1500px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <div style="width: 1450px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
             <div class="row">
                 <div class="col-md-6">
                     <h:panelGroup id="retention">
@@ -19,6 +19,7 @@
                             <ui:param name="FORM" value="#{cashflowBean.cashflow.form}"/>
                             <ui:param name="EXPIRATION" value="#{cashflowBean.cashflow.expDate}"/>
                             <ui:param name="CURRENCY" value="#{cashflowBean.cashflow.projectCurrency}"/>
+                            <ui:param name="UPDATE" value="groupRetention"/>
                         </ui:include>
                     </h:panelGroup>
                 </div>

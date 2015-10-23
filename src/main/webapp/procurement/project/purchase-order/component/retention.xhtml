@@ -18,7 +18,7 @@
                                     <h:selectBooleanCheckbox value="#{APPLY}"
                                                              id="apply#{NUMBER_ID}"
                                                              disabled="#{!poBean.beingEdited}">
-                                        <p:ajax async="false" process="@this"
+                                        <p:ajax async="false" process="@this" resetValues="true" partialSubmit="true"
                                                 oncomplete="doChangeProc(); restartSwitches();" update="#{UPDATE}" listener="#{poBean.loadSecurityDeposit(APPLY)}"/>
                                     </h:selectBooleanCheckbox> #{LABEL_CHECKBOX}
                                 </label>

@@ -98,7 +98,8 @@
                                                      value="#{msgs['po.main.data.lbl.button.validate']}">
                                         <p:ajax async="false"
                                                 update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
-                                                process="@form"/>
+                                                process="@form"
+                                                oncomplete="restartSwitches();"/>
                                     </h:commandButton>
                                 </h:panelGroup>
                             </div>

@@ -149,6 +149,9 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() == null) {
             purchaseOrder.getPurchaseOrderProcurementEntity().setLiquidatedDamagesApplicable(false);
         }
+        if (cashflowBean.getCashflow().getApplyRetention() == null) {
+            cashflowBean.getCashflow().setApplyRetention(false);
+        }
     }
 
     public void load() {
@@ -171,7 +174,7 @@ public class PoBean extends Bean {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
             } else {
-                    throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
+                throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
             }
             initializeValuesBooleanInHeaderSection();
         }
@@ -183,12 +186,12 @@ public class PoBean extends Bean {
             purchaseOrder = service.findById(Long.valueOf(poId));
             ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
             log.info("STATUs " + status);
-            if (status != null&&isFinalOrCommitted(status)) {
-                log.info("modeView "+modeView);
-                if ((modeView==null|| !modeView)) {
+            if (status != null && isFinalOrCommitted(status)) {
+                log.info("modeView " + modeView);
+                if ((modeView == null || !modeView)) {
                     try {
                         log.info("redirecting to project list!");
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("list.jsf?projectId="+purchaseOrder.getProjectEntity().getId());
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("list.jsf?projectId=" + purchaseOrder.getProjectEntity().getId());
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
@@ -196,8 +199,9 @@ public class PoBean extends Bean {
             }
         }
     }
-    private boolean isFinalOrCommitted(ProcurementStatus status){
-        return status.ordinal()==ProcurementStatus.COMMITTED.ordinal()||status.ordinal()==ProcurementStatus.FINAL.ordinal();
+
+    private boolean isFinalOrCommitted(ProcurementStatus status) {
+        return status.ordinal() == ProcurementStatus.COMMITTED.ordinal() || status.ordinal() == ProcurementStatus.FINAL.ordinal();
     }
 
     @Override
@@ -228,7 +232,7 @@ public class PoBean extends Bean {
         log.info("trying to update purchase order on procurement module");
         if (validate()) {
             collectData();
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus()==null){
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus() == null) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             }
             if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
@@ -262,7 +266,7 @@ public class PoBean extends Bean {
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             poId = purchaseOrder.getId().toString();
             loadPurchaseOrder();
-            log.info("saved po "+poId);
+            log.info("saved po " + poId);
             RequestContext context = RequestContext.getCurrentInstance();
             log.info("restarting changes!");
             context.execute("restartChanges();");
@@ -281,7 +285,7 @@ public class PoBean extends Bean {
             doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             loadPurchaseOrder();
-            log.info("saved po "+poId);
+            log.info("saved po " + poId);
             RequestContext context = RequestContext.getCurrentInstance();
             log.info("restarting changes!");
             context.execute("restartChanges();");
@@ -342,6 +346,9 @@ public class PoBean extends Bean {
         if (!cashflowBean.validateRetention()) {
             validated = false;
         }
+        if(!cashflowBean.validateSecurityDeposit()){
+            validated = false;
+        }
         if (cashflowBean.getCashflow().getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Enter a valid Payment Terms");
             validated = false;
@@ -350,19 +357,19 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("The variation number is already being used");
             validated = false;
         }
-        if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() == null){
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() == null) {
             Messages.addFlashGlobalError("Enter a valid Supplier");
             validated = false;
         }
-        if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null){
+        if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
             Messages.addFlashGlobalError("Enter a valid Class");
             validated = false;
         }
-        if(purchaseOrder.getPoDeliveryDate() == null){
+        if (purchaseOrder.getPoDeliveryDate() == null) {
             Messages.addFlashGlobalError("Enter a valid Delivery Date");
             validated = false;
         }
-        if(StringUtils.isEmpty(purchaseOrder.getPurchaseOrderProcurementEntity().getPoint())){
+        if (StringUtils.isEmpty(purchaseOrder.getPurchaseOrderProcurementEntity().getPoint())) {
             Messages.addFlashGlobalError("Enter a valid Delivery Point");
             validated = false;
         }
@@ -419,32 +426,32 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Enter a valid Payment Terms");
             validate = false;
         }
-        if(!balanceEqualZero()){
+        if (!balanceEqualZero()) {
             Messages.addFlashGlobalError("The Balance must be zero");
             validate = false;
         }
-        if(validate){
+        if (validate) {
             Messages.addFlashGlobalInfo("This PO has been validated");
         }
     }
 
-    private boolean balanceEqualZero(){
-        if(!itemBean.getScopeSupplyList().isEmpty()){
-            if(cashflowBean.getCashflow()!=null){
-                if(!cashflowBean.getCashflowDetailList().isEmpty()){
+    private boolean balanceEqualZero() {
+        if (!itemBean.getScopeSupplyList().isEmpty()) {
+            if (cashflowBean.getCashflow() != null) {
+                if (!cashflowBean.getCashflowDetailList().isEmpty()) {
                     Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(itemBean.getScopeSupplyList(), cashflowBean.getCashflowDetailList());
                     for (ProjectCurrencyEntity currency : balances.keySet()) {
-                        if(balances.get(currency).doubleValue() != 0d){
+                        if (balances.get(currency).doubleValue() != 0d) {
                             return false;
                         }
                     }
-                }else{
+                } else {
                     return false;
                 }
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
         return true;
@@ -452,7 +459,7 @@ public class PoBean extends Bean {
 
     private boolean validateSecurityDeposit(final CashflowEntity cashflow) {
         boolean validate = true;
-        if(cashflow!=null){
+        if (cashflow != null) {
             boolean applySecurityDeposit = cashflow.getApplyRetentionSecurityDeposit() != null && cashflow.getApplyRetentionSecurityDeposit().booleanValue();
             if (applySecurityDeposit) {
                 if (StringUtils.isEmpty(cashflow.getFormSecurityDeposit())) {
@@ -478,7 +485,7 @@ public class PoBean extends Bean {
 
     private boolean validateRetention(final CashflowEntity cashflow) {
         boolean validate = true;
-        if(cashflow!=null){
+        if (cashflow != null) {
             boolean applyRetentionSelected = cashflow.getApplyRetention() != null && cashflow.getApplyRetention().booleanValue();
             if (applyRetentionSelected) {
                 if (StringUtils.isEmpty(cashflow.getForm())) {
@@ -517,7 +524,7 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() != null && purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getId() != null) {
             phone = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getPhone();
             if (StringUtils.isEmpty(phone)) {
-                if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null){
+                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null) {
                     String phoneSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getPhone();
                     if (StringUtils.isNotEmpty(phoneSupplier))
                         return phoneSupplier;
@@ -532,9 +539,9 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity() != null && purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getId() != null) {
             fax = purchaseOrder.getPurchaseOrderProcurementEntity().getContactEntity().getFax();
             if (StringUtils.isEmpty(fax)) {
-                if(purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null ) {
+                if (purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier() != null) {
                     String faxSupplier = purchaseOrder.getPurchaseOrderProcurementEntity().getSupplier().getFax();
-                    if (StringUtils.isNotEmpty((faxSupplier))){
+                    if (StringUtils.isNotEmpty((faxSupplier))) {
                         return faxSupplier;
                     }
                 }
@@ -715,8 +722,8 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setSecurityDeposit(applyRetention);
     }
 
-    public String verifyAndGetProjectId(){
-        if(purchaseOrder!=null && purchaseOrder.getProjectEntity()!=null){
+    public String verifyAndGetProjectId() {
+        if (purchaseOrder != null && purchaseOrder.getProjectEntity() != null) {
             return purchaseOrder.getProjectEntity().getId().toString();
         }
         return "";
