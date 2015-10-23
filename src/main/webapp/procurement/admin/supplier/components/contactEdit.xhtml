@@ -3,13 +3,13 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
     <h:form id="editContact" prependId="false" class="form-horizontal">
-
+        <div class="col-md-12">
             <div class="row">
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.title']}"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="title" value="#{contactBean.contact.title}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
@@ -17,10 +17,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.first.name']} *"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="firstName" value="#{contactBean.contact.firstName}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control" required="true"/>
@@ -28,10 +28,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.surname']} *"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="name" value="#{contactBean.contact.surName}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control" required="true"
@@ -41,10 +41,10 @@
                 </div>
 
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.job.title']}"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="jobTitle" value="#{contactBean.contact.jobTitle}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
@@ -52,10 +52,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.phone']}"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="phone" value="#{contactBean.contact.phone}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
@@ -63,10 +63,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.mobile']}"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="mobile" value="#{contactBean.contact.mobile}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
@@ -74,10 +74,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.fax']}"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <h:inputText id="fax" value="#{contactBean.contact.fax}"
                                      disabled="#{MODE eq 'VIEW'}"
                                      styleClass="form-control"/>
@@ -85,10 +85,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                    <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                    value="#{msgs['supplier.contact.lbl.email']}"/>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <p:inputText id="contactEmail" value="#{contactBean.contact.email}"
                                      required="true"
                                      requiredMessage="Email is required"
@@ -99,34 +99,36 @@
                 </div>
 
             </div>
-            <div class="row pull-right">
-                <h:panelGroup rendered="#{MODE ne 'VIEW'}">
-                <h:commandButton value="#{msgs['lbl.save']}"
-                                 rendered="#{MODULE==null}"
-                                 action="#{poBean.doSaveContact}"
-                                 styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update="editContact :editPoForm:contactDetail" process="editContact"/>
-                </h:commandButton>
-                <h:panelGroup rendered="#{MODULE eq 'EXPEDITING'}">
-                <h:commandButton value="#{msgs['lbl.save']}"
-                                 rendered="#{OP eq 'CREATE'}"
-                                 action="#{purchaseOrderCreate.doSaveContact}"
-                                 styleClass="btn btn-primary btn-sm">
-                    <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
-                </h:commandButton>
-                    <h:commandButton value="#{msgs['lbl.save']}"
-                                     rendered="#{OP eq 'EDIT'}"
-                                     action="#{purchaseOrderEdit.doSaveContact}"
-                                     styleClass="btn btn-primary btn-sm">
-                        <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
-                    </h:commandButton>
-                </h:panelGroup>
-                &#160;
-                </h:panelGroup>
-                <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">
-                    #{msgs['lbl.cancel']}
-                </button>
+            <div class="row" style="padding-right: 90px;">
+                <div class="pull-right">
+                    <h:panelGroup rendered="#{MODE ne 'VIEW'}">
+                        <h:commandButton value="#{msgs['lbl.save']}"
+                                         rendered="#{MODULE==null}"
+                                         action="#{poBean.doSaveContact}"
+                                         styleClass="btn btn-primary btn-sm">
+                            <p:ajax async="false" update="editContact :editPoForm:contactDetail" process="editContact"/>
+                        </h:commandButton>
+                        <h:panelGroup rendered="#{MODULE eq 'EXPEDITING'}">
+                            <h:commandButton value="#{msgs['lbl.save']}"
+                                             rendered="#{OP eq 'CREATE'}"
+                                             action="#{purchaseOrderCreate.doSaveContact}"
+                                             styleClass="btn btn-primary btn-sm">
+                                <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
+                            </h:commandButton>
+                            <h:commandButton value="#{msgs['lbl.save']}"
+                                             rendered="#{OP eq 'EDIT'}"
+                                             action="#{purchaseOrderEdit.doSaveContact}"
+                                             styleClass="btn btn-primary btn-sm">
+                                <p:ajax async="false" update="editContact #{RENDER}" process="editContact"/>
+                            </h:commandButton>
+                        </h:panelGroup>
+                        &#160;
+                    </h:panelGroup>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="PF('contactModal').hide();">
+                        #{msgs['lbl.cancel']}
+                    </button>
+                </div>
             </div>
-
+        </div>
     </h:form>
 </ui:composition>

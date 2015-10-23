@@ -45,8 +45,10 @@
                                              action="#{poBean.saveSupplier}"
                                              styleClass="btn btn-primary btn-sm">
                                 <p:ajax async="false"
+                                        partialSubmit="true"
+                                        resetValues="true"
                                         update=":editPoForm:supplierSupId :editPoForm:supplierHeader :supplierId :editPoForm"
-                                        process="@form"/>
+                                        process=":editPoForm :supplierId"/>
                             </h:commandButton>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE eq 'CUSTOM' and supplierProcBean.supplierMode}">
