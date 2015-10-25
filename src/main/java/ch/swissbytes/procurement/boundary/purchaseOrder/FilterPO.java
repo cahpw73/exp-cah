@@ -40,13 +40,11 @@ public class FilterPO extends Filter {
     }
 
     public void setPOOO(){
-        System.out.println("set p0000");
         purchaseOrderNumberOption=PurchaseOrderNumberOption.P0000;
         classEnum=null;
     }
 
     public void setP1000(){
-        System.out.println("set p1000");
         purchaseOrderNumberOption=PurchaseOrderNumberOption.P1000;
         classEnum=null;
     }
@@ -59,7 +57,6 @@ public class FilterPO extends Filter {
         classEnum=null;
     }
     public void setP4000(){
-        System.out.println("set p40000");
         purchaseOrderNumberOption=PurchaseOrderNumberOption.P4000;
         classEnum=null;
     }

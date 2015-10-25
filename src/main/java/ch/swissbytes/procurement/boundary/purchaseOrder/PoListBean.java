@@ -94,7 +94,21 @@ public class PoListBean implements Serializable {
     private PurchaseOrderTbl poList;
 
     private FilterPO filter;
+    private boolean loaded=false;
+    private boolean showButtons=false;
 
+    public boolean isShowButtons() {
+        return showButtons;
+    }
+
+    public void setShowButtons(boolean showButtons) {
+        this.showButtons = showButtons;
+    }
+
+
+    public void renderButtons(){
+        setShowButtons(true);
+    }
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
@@ -110,30 +124,41 @@ public class PoListBean implements Serializable {
     }
 
     public void load() {
+        log.info("loading PO List Bean");
         Date start = new Date();
-        if (StringUtils.isNotEmpty(projectId) && StringUtils.isNotBlank(projectId)) {
-            try {
-                Long.parseLong(projectId);
-            } catch (NumberFormatException nfe) {
-                throw new IllegalArgumentException("project Id invalid");
-            }
-            project = projectService.findProjectById(Long.parseLong(projectId));
-            if (project == null) {
-                throw new IllegalArgumentException("project Id invalid");
-            }
-            Date d1 = new Date();
-            maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-            allPurchaseOrders = service.findAllPOs(Long.parseLong(projectId));
-            Date d2 = new Date();
-            log.info("getting all max variations takes [" + (d2.getTime() - d1.getTime()) + "]ms");
-            ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
-            findPOs();
+        System.out.println("loaded 1 "+loaded);
+        if(!loaded) {
+            loaded=true;
+            System.out.println("loaded 2 "+loaded);
+            if (StringUtils.isNotEmpty(projectId) && StringUtils.isNotBlank(projectId)) {
+                try {
+                    Long.parseLong(projectId);
+                } catch (NumberFormatException nfe) {
+                    System.out.println("zero exception ");
+                    throw new IllegalArgumentException("project Id invalid");
+                }
+                project = projectService.findProjectById(Long.parseLong(projectId));
+                if (project == null) {
+                    System.out.println("first exception ");
+                    throw new IllegalArgumentException("project Id invalid");
+                }
+                Date d1 = new Date();
+                maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+                allPurchaseOrders = service.findAllPOs(Long.parseLong(projectId));
+                Date d2 = new Date();
+                log.info("getting all max variations takes [" + (d2.getTime() - d1.getTime()) + "]ms");
+                ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
+                findPOs();
 
-        } else {
-            throw new IllegalArgumentException("project Id invalid");
+            } else {
+                System.out.println("second exception ");
+                throw new IllegalArgumentException("project Id invalid");
+            }
+            Date end = new Date();
+            log.info("loading list Bean takes [" + (end.getTime() - start.getTime()) + "]ms");
         }
-        Date end = new Date();
-        log.info("loading list Bean takes [" + (end.getTime() - start.getTime()) + "]ms");
+        log.info("finished loading!!!!!!!!!!!!!");
+
     }
 
     @PreDestroy
@@ -479,7 +504,7 @@ public class PoListBean implements Serializable {
     }
 
     public void setProject(ProjectEntity project) {
-        this.project = project;
+            this.project = project;
     }
 
     public String getProjectId() {
@@ -487,7 +512,12 @@ public class PoListBean implements Serializable {
     }
 
     public void setProjectId(String projectId) {
-        this.projectId = projectId;
+        System.out.println("setting project id "+projectId);
+        System.out.println("loaded value "+loaded);
+        if(projectId!=null&&!loaded) {
+            System.out.println("setttt "+projectId);
+            this.projectId = projectId;
+        }
     }
 
     public PurchaseOrderEntity getCurrentPurchaseOrder() {
@@ -695,7 +725,7 @@ public class PoListBean implements Serializable {
 
 
     public void findPOs() {
-        log.info("Find the list of POs");
+        log.info("Find the list of POs from "+projectId);
         Date d1 = new Date();
         purchaseOrders = service.findPosBy(getFilter());
         log.info("purchaseOrders size: " + purchaseOrders.size());
