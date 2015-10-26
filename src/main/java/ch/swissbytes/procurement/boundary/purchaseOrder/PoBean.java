@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -651,6 +652,29 @@ public class PoBean extends Bean {
         return toString(retention);
     }
 
+    public void calculatePercentageValue(CashflowDetailEntity detailEntity){
+        log.info("calculate percentage in milestone");
+        if (detailEntity.getProjectCurrency() != null && detailEntity.getOrderAmt() != null) {
+            Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
+            final Iterator<ProjectCurrencyEntity> it = totals.keySet().iterator();
+            ProjectCurrencyEntity n;
+            while (it.hasNext()) {
+                n = it.next();
+                if (n.getId().longValue() == detailEntity.getProjectCurrency().getId().longValue()) {
+                    detailEntity.setPercentage(calculateBasedPaymentValueAndTotalValue(detailEntity.getOrderAmt(), totals.get(detailEntity.getProjectCurrency())));
+                    break;
+                } else {
+                    detailEntity.setOrderAmt(null);
+                }
+            }
+            if (detailEntity.getOrderAmt() != null) {
+                detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
+            } else {
+                detailEntity.setProjectAmt(null);
+            }
+        }
+    }
+
     public void calculatePaymentValue(CashflowDetailEntity detailEntity) {
         log.info("calculatePaymentValue...");
         if (detailEntity.getProjectCurrency() != null && detailEntity.getPercentage() != null) {
@@ -672,6 +696,11 @@ public class PoBean extends Bean {
                 detailEntity.setProjectAmt(null);
             }
         }
+    }
+
+    private BigDecimal calculateBasedPaymentValueAndTotalValue(final BigDecimal paymentValue, final BigDecimal totalValue) {
+        BigDecimal percentageValueBig = paymentValue.multiply(new BigDecimal(100)).divide(totalValue,2, RoundingMode.HALF_UP);
+        return percentageValueBig;
     }
 
     private BigDecimal calculateBasedPercentageAndTotalValue(final BigDecimal iPercentage, final BigDecimal totalValue) {

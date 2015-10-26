@@ -65,24 +65,24 @@
                 </ui:remove>
             </div>
         </div>
-        <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
+        <div style="width: 1300px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
             <div style="width: 240px!important; float: left!important;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                    for="poProject" value="#{msgs['po.main.data.lbl.project']}"/>
 
-                    <div style="width: 145px; float: left;">
+                    <div style="width: 85px; float: left;">
                         <h:inputText id="poProject" readonly="true" styleClass="form-control view-po"
                                      value="#{poBean.purchaseOrder.projectEntity.projectNumber}"/>
                     </div>
                 </div>
             </div>
-            <div style="width: 290px!important; float: left!important;">
+            <div style="width: 290px!important; float: left!important; margin-left: 15px;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                    for="poOrderNumber" value="#{msgs['po.main.data.lbl.order.number']}"/>
 
-                    <div style="width: 145px; float: left;">
+                    <div style="width: 85px; float: left;">
                         <h:inputText id="poOrderNumber"
                                      value="#{poBean.purchaseOrder.po}"
                                      maxlength="50"
@@ -96,13 +96,13 @@
                     </div>
                 </div>
             </div>
-            <div style="width: 280px!important; float: left!important; margin-left: -10px;">
+            <div style="width: 390px!important; float: left!important; margin-left: -10px;">
                 <div class="form-group">
                     <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                    for="poOrderTitle" value="#{msgs['po.main.data.lbl.order.title']}"/>
 
-                    <div style="width: 198px; float: left;margin-left: -19px;">
-                        <h:inputText id="poOrderTitle"
+                    <div style="width: 329px; float: left;margin-left: -84px;">
+                        <h:inputText id="poOrderTitle" style="text-transform: uppercase;"
                                      value="#{poBean.purchaseOrder.poTitle}"
                                      maxlength="250"
                                      styleClass="form-control" required="true"
@@ -111,7 +111,7 @@
                         <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
                         <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
                                      value="#{poBean.purchaseOrder.poTitle}"
-                                     rendered="#{poBean.beingViewed}"/>
+                                     rendered="#{poBean.beingViewed}" style="text-transform: uppercase;"/>
                     </div>
                 </div>
             </div>

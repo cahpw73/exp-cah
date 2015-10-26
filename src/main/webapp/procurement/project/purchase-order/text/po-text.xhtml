@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <h:outputLabel value="#{msgs['po.text.lbl.standard']}" for="standardTextDt"/>
                     <p:dataTable id="standardTextDt" var="_t" value="#{poTextBean.textSnippetList}" scrollable="true"
-                                 scrollHeight="300">
+                                 scrollHeight="405">
                         <p:column style="width:20px" rendered="#{poBean.beingEdited}">
                             <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4"/>
                             <p:draggable id="draggable" for="dragIcon"
@@ -17,13 +17,13 @@
                                          revert="true" helper="clone"/>
                         </p:column>
                         <p:column headerText="#{msgs['project.standard.text.column.code']}"
-                                  style="width: 100px!important;">
+                                  style="width: 70px!important;">
                             <h:outputText id="texSnippetCode" value="#{_t.code}" styleClass="content-big-text"/>
                         </p:column>
                         <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
                             <h:outputText id="texSnippetSt" value="#{_t.description}" styleClass="content-big-text"/>
                         </p:column>
-                        <p:column headerText="action" style="width: 110px!important;">
+                        <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;">
                             <h:commandLink value="Copy to Preamble"
                                            action="#{poTextBean.copyToPreamble(_t.description)}">
                                 <p:ajax async="false" process="@this" update=":editPoForm:preambleTxtId"/>

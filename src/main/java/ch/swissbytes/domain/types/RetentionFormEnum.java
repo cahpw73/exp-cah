@@ -8,7 +8,7 @@ import java.io.Serializable;
 public enum RetentionFormEnum implements Serializable {
 
 
-    Cash(0,"Cash"), BANK_GUARANTEE(1,"Bank Guarantee"), INSURANCE_BOND(2,"Insurance Bond"), STANDBY_LC(3,"Standby LC");
+            Cash(0,"CASH"), BANK_GUARANTEE(1,"BANK GUARANTEE"), INSURANCE_BOND(2,"INSURANCE BOND"), STANDBY_LC(3,"STANDBY LC");
 
     private Integer id;
     private String label;

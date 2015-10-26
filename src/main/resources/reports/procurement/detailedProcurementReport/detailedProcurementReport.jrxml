@@ -206,7 +206,7 @@ order by po.po]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Cost Code</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="301" y="3" width="153" height="12"/>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="368" y="3" width="153" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -295,6 +295,13 @@ order by po.po]]>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item Description</style>]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="a428440d-f198-45a5-8c08-746435a1243a" x="229" y="3" width="120" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -319,11 +326,17 @@ order by po.po]]>
 				<subreportParameter name="sortBy">
 					<subreportParameterExpression><![CDATA[$P{sortBy}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="projectCurrency">
+					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="projectId">
 					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="projectDefaultExchangeRate">
+					<subreportParameterExpression><![CDATA[$P{projectDefaultExchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedPOSubreport.jasper"]]></subreportExpression>

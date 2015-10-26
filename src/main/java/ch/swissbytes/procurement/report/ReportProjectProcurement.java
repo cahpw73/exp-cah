@@ -38,28 +38,7 @@ public class ReportProjectProcurement extends ReportProject implements Serializa
 
     @Override
     protected void loadAdditionalParameters() {
-        //ProjectCurrencyEntity projectCurrency = getProjectCurrencyDefaultByProjectId();
         addParameters("SUBREPORT_DIR", "reports/procurement/uncommittedDataReport/");
-        /*if(projectCurrency.getCurrency()!=null){
-            addParameters("currencyCode",projectCurrency.getCurrency().getCode());
-        }
-*/
-    }
-
-    private ProjectCurrencyEntity getProjectCurrencyDefaultByProjectId(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT p ");
-        sb.append(" FROM ProjectCurrencyEntity pc ");
-        sb.append(" WHERE pc.project.id = :PROJECT_ID ");
-        sb.append(" AND pc.projectDefault = true ");
-        Query query = entityManager.createQuery(sb.toString());
-        query.setParameter("PROJECT_ID",project.getId());
-        List<ProjectCurrencyEntity> list = query.getResultList();
-        ProjectCurrencyEntity entity = new ProjectCurrencyEntity();
-        if(!list.isEmpty()){
-            entity = list.get(0);
-        }
-        return entity;
     }
 
     @Override
