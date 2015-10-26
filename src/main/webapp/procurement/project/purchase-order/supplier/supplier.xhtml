@@ -19,7 +19,7 @@
                                                    for="supplierSupId"
                                                    value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
-                                    <div style="width: 200px; float: left;">
+                                    <div style="width: 340px; float: left;">
                                         <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
                                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
 
@@ -206,7 +206,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="width: 290px!important; float: left!important; margin-left: -13px">
+                    <div style="width: 290px!important; float: left!important; margin-left: 28px">
                         <div class="form-group">
                             <h:commandButton
                                     id="btnAddContact"
@@ -239,7 +239,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 440px!important; float: left!important; margin-left: -43px">
+                        <div style="width: 440px!important; float: left!important; margin-left: 0px">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                for="faxSupId" value="#{msgs['po.supplier.lbl.fax']}"/>
@@ -263,7 +263,7 @@
                                                for="projectEmailSupId"
                                                value="#{msgs['po.supplier.lbl.project.email']}"/>
 
-                                <div style="width: 180px; float: left;">
+                                <div style="width: 290px; float: left;">
                                     <h:inputText id="projectEmailSupId" disabled="true"
                                                  readonly="true"
                                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.contactEntity.email}"

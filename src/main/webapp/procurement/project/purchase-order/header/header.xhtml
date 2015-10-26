@@ -83,13 +83,13 @@
             <div class="clearfix"/>
             <br/>
 
-            <div style="width: 900px!important; float: left!important;">
-                <div style="width: 310px!important; float: left!important;">
+            <div style="width: 1100px!important; float: left!important;">
+                <div style="width: 440px!important; float: left!important;">
                     <div class="form-group">
-                        <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                        <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                        for="supplierHeader" value="#{msgs['po.supplier.panel.lbl.supplier']}"/>
 
-                        <div style="width: 210px; float: left; margin-left: -15px;">
+                        <div style="width: 340px; float: left; margin-left: -29px;">
 
                             <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
@@ -135,7 +135,7 @@
                         <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                        for="headerClass" value="#{msgs['po.header.lbl.class']}"/>
 
-                        <div style="width: 145px; float: left;">
+                        <div style="width: 185px; float: left;">
                             <h:selectOneMenu id="headerClass" onclick="doChangeProc();"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
                                              styleClass="form-control" rendered="#{poBean.beingEdited}">
@@ -165,7 +165,7 @@
                 <!-- Default panel contents -->
                 <div class="panel-body">
                     <div style="float: left;">
-                        <div style="width: 240px!important;">
+                        <div style="width: 350px!important;">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                                for="headerDate" value="#{msgs['po.header.lbl.panel.delivery.date']}"/>
@@ -194,20 +194,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width: 240px!important;">
+                        <div style="width: 350px!important;">
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
                                                for="headerPoint" value="#{msgs['po.header.lbl.panel.delivery.point']}"/>
 
-                                <div style="width: 145px; float: left;">
-                                    <h:inputText id="headerPoint"
+                                <div style="width: 215px; float: left;">
+                                    <h:inputText id="headerPoint" style="text-transform: uppercase;"
                                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.point}"
                                                  maxlength="250"
                                                  styleClass="form-control" rendered="#{poBean.beingEdited}"/>
                                     <p:message for="headerPoint" id="msgHeaderPoint"/>
                                     <h:inputText id="headerPointVi" readonly="true" styleClass="form-control view-po"
                                                  value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.point}"
-                                                 rendered="#{poBean.beingViewed}"/>
+                                                 rendered="#{poBean.beingViewed}" style="text-transform: uppercase;"/>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +219,7 @@
                                                for="headerInstruction"
                                                value="#{msgs['po.header.lbl.panel.delivery.instructions']}"/>
 
-                                <div style="width: 370px; float: left; margin-left: 24px;">
+                                <div style="width: 430px; float: left; margin-left: 24px;">
                                     <p:inputTextarea id="headerInstruction" type="text" style="height: 75px;"
                                                      maxlength="950" class="form-control"
                                                      jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
