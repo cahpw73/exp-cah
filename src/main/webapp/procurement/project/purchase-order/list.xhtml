@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </h:panelGroup>
-                <p:remoteCommand name="renderBodyButtons" update="filterButtons" autoRun="true"  action="#{poListBean.renderButtons()}"/>
+                <p:remoteCommand name="renderBodyButtons" ignoreAutoUpdate="true" update="filterButtons" autoRun="true"  action="#{poListBean.renderButtons()}"/>
                 <div class="clearfix"></div>
                 <br/>
                 <br/>
@@ -193,6 +193,7 @@
                                 </p:commandLink>
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.variation']}"
+
                                                rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
                                                action="#{poListBean.createVarNumberToPO(_p)}" ignoreAutoUpdate="true" partialSubmit="true"
                                                process="@this"
@@ -267,6 +268,7 @@
                                         value="#{msgs['project.list.action.release']}"
                                         action="#{poListBean.doReleasePo}"
                                         async="false"
+
                                         style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                         rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
                                     <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"

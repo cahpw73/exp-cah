@@ -351,6 +351,7 @@ public class PoListBean implements Serializable {
             canCreateVar = true;
         }
         Date time2 = new Date();
+        log.info("variation time for "+entity.getId());
         log.info("variation time [" + (time2.getTime() - time1.getTime()) + "]ms");
         return canCreateVar;
     }

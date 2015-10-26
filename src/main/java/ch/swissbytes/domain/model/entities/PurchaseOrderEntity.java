@@ -314,14 +314,15 @@ public class PurchaseOrderEntity implements Serializable{
         return commentForProject;
     }
 
-    public boolean isLocked() {
+    /*public boolean isLocked() {
         return locked;
     }
 
     public void setLocked(boolean locked) {
         this.locked = locked;
-    }
+    }*/
 
+/*
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="locked_by", nullable=false)
     public UserEntity getLockedBy() {
@@ -331,7 +332,8 @@ public class PurchaseOrderEntity implements Serializable{
     public void setLockedBy(UserEntity lockedBy) {
         this.lockedBy = lockedBy;
     }
-    @Column(name="LAST_ACTIVITY_UPDATE", nullable=false)
+*/
+   /* @Column(name="LAST_ACTIVITY_UPDATE", nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastActivityUpdate() {
         return lastActivityUpdate;
@@ -339,7 +341,7 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setLastActivityUpdate(Date lastActivityUpdate) {
         this.lastActivityUpdate = lastActivityUpdate;
-    }
+    }*/
 
     @Override
     public int hashCode() {
