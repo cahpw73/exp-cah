@@ -95,6 +95,8 @@ public class PoListBean implements Serializable {
 
     private FilterPO filter;
     private boolean showButtons = false;
+    private Date start;
+    private Date end;
 
     public boolean isShowButtons() {
         return showButtons;
@@ -427,6 +429,15 @@ public class PoListBean implements Serializable {
             }
         }
         return canUncommit;
+    }
+
+    public void startTable(){
+        start=new Date();
+        log.info("starting table "+start);
+    }
+    public void endTable(){
+        end=new Date();
+        log.info("table completely loaded "+(end.getTime()-start.getTime()));
     }
 
     public boolean canDelete(PurchaseOrderEntity entity) {
