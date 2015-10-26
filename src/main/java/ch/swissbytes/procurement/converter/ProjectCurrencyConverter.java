@@ -34,7 +34,6 @@ public class ProjectCurrencyConverter implements Converter {
         try {
             Long id = Long.parseLong(value);
             ProjectCurrencyEntity pc=service.findById(id);
-            log.info("pc "+pc.getId());
             return pc;
         } catch (NumberFormatException nfe) {
             return null;
