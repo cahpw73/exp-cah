@@ -11,7 +11,7 @@
                     <h:panelGroup id="itemsGroup">
                         <p:dataTable id="itemsDt" var="_i"
                                      value="#{itemBean.scopeSupplyList}">
-                            <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="50"
+                            <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="55"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viItemNo" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.code}"/>
@@ -24,7 +24,7 @@
                                 </h:panelGroup>
                             </p:column>
                             <p:column headerText="#{msgs['po.items.dt.column.cost.code']}"
-                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}"  width="70">
                                 <h:panelGroup id="viCostCode" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.costCode}">
                                     </h:outputText>
@@ -81,7 +81,7 @@
                                 </h:panelGroup>
                             </p:column>
 
-                            <p:column headerText="#{msgs['po.items.dt.column.description']}" width="500"
+                            <p:column headerText="#{msgs['po.items.dt.column.description']}" width="570"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
                                     <p:inputTextarea value="#{_i.description}"
