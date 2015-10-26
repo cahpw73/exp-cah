@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedItemSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f08510a1-4d03-4892-b8f0-4857c77586f0">
 	<property name="ireport.zoom" value="1.6105100000000017"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="444"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="poIdFilter" class="java.lang.Long"/>
 	<parameter name="poEntityId" class="java.lang.Long"/>
-	<parameter name="code" class="java.lang.String"/>
+	<parameter name="projectCurrency" class="java.lang.String"/>
+	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<queryString>
-		<![CDATA[select ss.cost_code,ss.quantity,ss.unit,ss.description,ss.cost,ss.total_cost, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
-from scope_supply ss left join purchase_order po on ss.purchase_order_id=po.id
+		<![CDATA[select ss.cost_code,ss.quantity,ss.unit,ss.description,ss.cost,ss.total_cost, pc.exchange_rate as exchange_rate_ini
+from item ss left join purchase_order po on ss.purchase_order_id=po.id
      left join p_order p on p.id=po.po_id
      left join project_currency pc on pc.id=ss.project_currency_id
-     left join project_currency pc2 on p.currency_id=pc2.id
 where ss.status_id = 1 and po.id = $P{poIdFilter}
 order by ss.ordered]]>
 	</queryString>
 	<field name="cost_code" class="java.lang.String"/>
-	<field name="quantity" class="java.lang.Integer"/>
+	<field name="quantity" class="java.math.BigDecimal"/>
 	<field name="unit" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="cost" class="java.math.BigDecimal"/>
 	<field name="total_cost" class="java.math.BigDecimal"/>
 	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
-	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
 	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{cost}.multiply(new java.math.BigDecimal($F{quantity})),$F{exchange_rate_ini},$F{exchange_rate_default})]]></variableExpression>
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{cost}.multiply($F{quantity}),$F{exchange_rate_ini},$P{projectDefaultExchangeRate})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -72,19 +71,19 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:""))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="703f00b5-59f7-4dcb-b60e-7dd73c8a3afc" positionType="Float" x="656" y="0" width="45" height="12"/>
+				<reportElement uuid="703f00b5-59f7-4dcb-b60e-7dd73c8a3afc" positionType="Float" x="644" y="0" width="57" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{code}!=null?($P{code}+" "):"")+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{cost},$F{exchange_rate_ini},$F{exchange_rate_default}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{projectCurrency}!=null?($P{projectCurrency}+" "):"")+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{cost},$F{exchange_rate_ini},$P{projectDefaultExchangeRate}))]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7c297fde-dc17-4025-a9ab-daf4e6d12c2d" positionType="Float" x="705" y="0" width="45" height="12"/>
+			<textField>
+				<reportElement uuid="46815041-9e4c-4ca3-ada9-b9c1f8e8cd1c" x="705" y="0" width="57" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{code}!=null?($P{code}+" "):"")+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{cost}.multiply(new java.math.BigDecimal($F{quantity})),$F{exchange_rate_ini},$F{exchange_rate_default}))]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{projectCurrency}!=null?($P{projectCurrency}+" "):"")+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{cost}.multiply($F{quantity}),$F{exchange_rate_ini},$P{projectDefaultExchangeRate}))]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -96,17 +95,17 @@ order by ss.ordered]]>
 				<text><![CDATA[<style size="6" isBold="true" pdfFontName="Helvetica-Bold">SubTotal:</style>]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="808c67fe-3aa9-4c7d-9811-828c6c30f23f" x="705" y="1" width="46" height="1"/>
+				<reportElement uuid="808c67fe-3aa9-4c7d-9811-828c6c30f23f" x="705" y="1" width="57" height="1"/>
 				<graphicElement>
 					<pen lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="73f5ae15-8c25-40a4-8bbb-d65ee82eb4b5" x="705" y="2" width="46" height="10"/>
+				<reportElement uuid="73f5ae15-8c25-40a4-8bbb-d65ee82eb4b5" x="705" y="2" width="57" height="10"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{code}!=null&&$V{variable1}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+ $P{code}+" "+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1}) +"</style>":null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{projectCurrency}!=null&&$V{variable1}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+ $P{projectCurrency}+" "+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1}) +"</style>":null]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
