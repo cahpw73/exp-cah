@@ -199,10 +199,11 @@
                                     </h:outputText>
                                 </h:panelGroup>
                                 <h:panelGroup id="edOrderAmt" rendered="#{_l.isEditable}">
-                                    <h:inputText id="orderAmt" value="#{_l.orderAmt}" styleClass="form-control"
-                                                 readonly="true">
+                                    <h:inputText id="orderAmt" value="#{_l.orderAmt}" styleClass="form-control">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
+                                        <p:ajax event="blur" process="forecastDt"
+                                                listener="#{poBean.calculatePercentageValue(_l)}" update="forecastDt"/>
                                     </h:inputText>
                                 </h:panelGroup>
                             </p:column>
