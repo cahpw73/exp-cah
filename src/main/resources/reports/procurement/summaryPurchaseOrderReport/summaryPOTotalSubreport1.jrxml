@@ -7,8 +7,8 @@
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[select sum(sp.total_cost) as total_cost
-from purchase_order po left outer join scope_supply sp on sp.purchase_order_id = po.id
+		<![CDATA[select sum(sp.cost*sp.quantity) as total_cost
+from purchase_order po left outer join item sp on sp.purchase_order_id = po.id
 where po.po = $P{poNoFilter}  and po.project_id = $P{projectIdFilter}]]>
 	</queryString>
 	<field name="total_cost" class="java.math.BigDecimal"/>

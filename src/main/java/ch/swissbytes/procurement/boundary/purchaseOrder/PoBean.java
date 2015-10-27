@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -347,7 +348,7 @@ public class PoBean extends Bean {
         if (!cashflowBean.validateRetention()) {
             validated = false;
         }
-        if(!cashflowBean.validateSecurityDeposit()){
+        if (!cashflowBean.validateSecurityDeposit()) {
             validated = false;
         }
         if (cashflowBean.getCashflow().getPaymentTerms() == null) {
@@ -365,6 +366,19 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
             Messages.addFlashGlobalError("Enter a valid Class");
             validated = false;
+        } else {
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()){
+                try {
+                    Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
+                    if (purchaseOrder.getPo().length() > 4) {
+                        Messages.addFlashGlobalError("The length of PO Number has been between 1 to 4");
+                        validated = false;
+                    }
+                } catch (NumberFormatException nfe) {
+                    Messages.addFlashGlobalError("Enter a numeric PO Number because was selected class PO");
+                    validated = false;
+                }
+            }
         }
         if (purchaseOrder.getPoDeliveryDate() == null) {
             Messages.addFlashGlobalError("Enter a valid Delivery Date");
@@ -398,7 +412,21 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
             Messages.addFlashGlobalError("Enter a valid Class");
             validate = false;
+        }else {
+            if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()){
+                try {
+                    Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
+                    if (purchaseOrder.getPo().length() > 4) {
+                        Messages.addFlashGlobalError("The length of PO Number has been between 1 to 4");
+                        validate = false;
+                    }
+                } catch (NumberFormatException nfe) {
+                    Messages.addFlashGlobalError("Enter a numeric PO Number because was selected class PO");
+                    validate = false;
+                }
+            }
         }
+
         if (purchaseOrder.getPoDeliveryDate() == null) {
             Messages.addFlashGlobalError("Enter a valid Delivery Date");
             validate = false;
@@ -652,7 +680,7 @@ public class PoBean extends Bean {
         return toString(retention);
     }
 
-    public void calculatePercentageValue(CashflowDetailEntity detailEntity){
+    public void calculatePercentageValue(CashflowDetailEntity detailEntity) {
         log.info("calculate percentage in milestone");
         if (detailEntity.getProjectCurrency() != null && detailEntity.getOrderAmt() != null) {
             Map<ProjectCurrencyEntity, BigDecimal> totals = service.getTotalValuesByCurrency(itemBean.getScopeSupplyList());
@@ -699,7 +727,7 @@ public class PoBean extends Bean {
     }
 
     private BigDecimal calculateBasedPaymentValueAndTotalValue(final BigDecimal paymentValue, final BigDecimal totalValue) {
-        BigDecimal percentageValueBig = paymentValue.multiply(new BigDecimal(100)).divide(totalValue,2, RoundingMode.HALF_UP);
+        BigDecimal percentageValueBig = paymentValue.multiply(new BigDecimal(100)).divide(totalValue, 2, RoundingMode.HALF_UP);
         return percentageValueBig;
     }
 
