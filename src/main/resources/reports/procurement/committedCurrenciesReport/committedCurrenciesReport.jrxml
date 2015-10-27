@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="committedCurrenciesReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
-	<property name="ireport.zoom" value="1.8627639691774651"/>
+	<property name="ireport.zoom" value="1.6934217901613318"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="5"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -20,10 +20,12 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="projectCurrency" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po,po.variation,order_date,po_delivery_date,por.order_title,sp.company,po_status,po.id
+		<![CDATA[select po,po.variation,order_date,po_delivery_date,po.po_title,sp.company,ct.email,po_status,po.id
 from purchase_order po inner join p_order por on por.id=po.po_id
 inner join supplier_proc sp on sp.id=por.supplier_id
+inner join contact ct on ct.supplier_id = sp.id
 where po.status_id=1 and po.project_id=$P{PROJECT_ID} and por.po_status=0
 order by $P!{sortBy}]]>
 	</queryString>
@@ -31,8 +33,9 @@ order by $P!{sortBy}]]>
 	<field name="variation" class="java.lang.String"/>
 	<field name="order_date" class="java.sql.Timestamp"/>
 	<field name="po_delivery_date" class="java.sql.Timestamp"/>
-	<field name="order_title" class="java.lang.String"/>
+	<field name="po_title" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
 	<field name="po_status" class="java.lang.Integer"/>
 	<field name="id" class="java.lang.Long"/>
 	<background>
@@ -198,18 +201,25 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="220" y="7" width="52" height="12"/>
+				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="331" y="7" width="52" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5a10bbc6-5e88-466d-b673-c1374071fa26" x="275" y="7" width="58" height="12"/>
+				<reportElement uuid="5a10bbc6-5e88-466d-b673-c1374071fa26" x="386" y="7" width="58" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Payment Due</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6e7ea55d-bf15-4f79-8262-ce3fc857a32f" x="226" y="7" width="100" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">email</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -244,16 +254,26 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement uuid="28c9bd95-7745-481d-8361-350de6be8063" x="220" y="0" width="49" height="12"/>
-				<subreportParameter name="PO_ID">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				<reportElement uuid="28c9bd95-7745-481d-8361-350de6be8063" x="331" y="0" width="49" height="12"/>
+				<subreportParameter name="projectCurrency">
+					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PO_Value.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement uuid="b886d09b-dcf0-4d30-bc9e-484034984339" x="226" y="0" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
