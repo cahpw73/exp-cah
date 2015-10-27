@@ -13,7 +13,10 @@
     </f:metadata>
     <ui:define name="body">
         <script>
-            win.onload = renderBodyButtons();
+            window.onload =function() {
+                renderBodyButtons();
+            };
+
         </script>
         <h:form id="listPooFormId" prependId="false">
             <div class="col-md-12">
@@ -142,7 +145,8 @@
                         </div>
                     </div>
                 </h:panelGroup>
-                <p:remoteCommand name="renderBodyButtons" ignoreAutoUpdate="true" update="filterButtons" autoRun="true"  action="#{poListBean.renderButtons()}"/>
+                <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"   update="filterButtons"
+                                 process="@this"  action="#{poListBean.renderButtons()}"/>
                 <div class="clearfix"></div>
                 <br/>
                 <br/>
