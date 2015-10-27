@@ -36,6 +36,21 @@ public class ReportSummaryPurchaseOrder extends ReportProject implements Seriali
     protected void loadAdditionalParameters() {
         addParameters("SUBREPORT_DIR","reports/procurement/summaryPurchaseOrderReport/");
     }
+    @Override
+    protected String getStrSort() {
+        Boolean poNo = sortMap.get("poNo");
+        String strSort = "";
+        if (poNo) {
+            strSort = "po.po, ";
+            sortByName = "Po No ";
+        }
+
+        if (strSort.length() > 1) {
+            sortByName = sortByName.substring(0, sortByName.length() - 2);
+            strSort = strSort.substring(0, strSort.length() - 2);
+        }
+        return strSort;
+    }
 
     @Override
     public void printDocument(Long documentId) {

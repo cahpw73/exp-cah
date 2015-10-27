@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="retention" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bb9e1961-3cbe-48bd-813f-1e1b1924ee48">
-	<property name="ireport.zoom" value="1.948717100000002"/>
-	<property name="ireport.x" value="37"/>
+	<property name="ireport.zoom" value="1.6105100000000017"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -10,21 +10,21 @@
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="projectCurrency" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po.po, po.variation,sp.company,c.code,cf.percentage,cf.amt,cf.form,cf.exp_date
+		<![CDATA[select po.po, po.variation,sp.company,ct.email,cf.percentage,cf.amt,cf.form,cf.exp_date
 from purchase_order po inner join p_order p on po.po_id=p.id
      left outer join supplier_proc sp on sp.id=p.supplier_id
      left outer join cashflow cf on cf.po_id=p.id
-     left outer join project_currency pc on pc.id=p.currency_id
-     left outer join currency c on c.id=pc.currency_id
      left outer join project pr on pr.id=po.project_id
+     inner join contact ct on ct.supplier_id = sp.id
 where po.po=$P{poNoFilter} and pr.id=$P{projectIdFilter}
 order by $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
-	<field name="code" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
 	<field name="percentage" class="java.lang.Float"/>
 	<field name="amt" class="java.math.BigDecimal"/>
 	<field name="form" class="java.lang.String"/>
@@ -47,42 +47,42 @@ order by $P!{sortBy}]]>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="542f7648-5a9f-46aa-93f4-14b004f9b5da" x="0" y="1" width="60" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="542f7648-5a9f-46aa-93f4-14b004f9b5da" x="0" y="1" width="30" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="79868e94-c159-46c9-971d-1b374e937561" x="63" y="1" width="60" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="79868e94-c159-46c9-971d-1b374e937561" x="31" y="1" width="40" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d946f772-c949-4071-995d-dab3edd03dda" x="126" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="d946f772-c949-4071-995d-dab3edd03dda" x="72" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="c8920748-7892-42d0-b86b-65b6cc8bb024" x="300" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="c8920748-7892-42d0-b86b-65b6cc8bb024" x="350" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="826d64ec-3609-4f5b-b668-03b7c043abcd" x="375" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="826d64ec-3609-4f5b-b668-03b7c043abcd" x="422" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="bc959b40-128a-4870-b635-8db8e64e6bc9" x="451" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="bc959b40-128a-4870-b635-8db8e64e6bc9" x="498" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="8"/>
@@ -90,18 +90,25 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{amt}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="fa313712-5381-4451-85f7-c8649ae5e3c7" x="536" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="fa313712-5381-4451-85f7-c8649ae5e3c7" x="583" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{form}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="43d038d2-ed0c-4dba-a0f8-3ecd9e25852c" x="640" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="43d038d2-ed0c-4dba-a0f8-3ecd9e25852c" x="687" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exp_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{exp_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8df2fa26-f591-402f-99ec-04a065296879" x="246" y="1" width="100" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

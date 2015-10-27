@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedItemSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f08510a1-4d03-4892-b8f0-4857c77586f0">
 	<property name="ireport.zoom" value="1.6105100000000017"/>
-	<property name="ireport.x" value="370"/>
+	<property name="ireport.x" value="258"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintSummaryPO" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -69,15 +69,13 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<queryString>
-		<![CDATA[select po.po,sp.company,ct.email
+		<![CDATA[select po.po
 from purchase_order po inner join p_order p on po.po_id = p.id
-left join supplier_proc sp on p.supplier_id=sp.id inner join contact ct on ct.supplier_id = sp.id
 where po.project_id=$P{projectIdFilter}
-order by $P!{sortBy}]]>
+group by po.po
+order by po.po]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
-	<field name="company" class="java.lang.String"/>
-	<field name="email" class="java.lang.String"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -266,20 +264,13 @@ order by $P!{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po}+"</style>"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="4281d71b-c091-4d65-9417-e5cd2b5722ea" x="64" y="1" width="170" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{company}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+"</style>":null]]></textFieldExpression>
-			</textField>
 			<subreport>
 				<reportElement uuid="0cc93b17-b147-48bb-adcb-a420f30badee" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="13" width="555" height="14" isPrintWhenDetailOverflows="true"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
@@ -290,11 +281,11 @@ order by $P!{sortBy}]]>
 				<subreportParameter name="sortBy">
 					<subreportParameterExpression><![CDATA[$P{sortBy}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="TIME_ZONE">
-					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="projectCurrency">
 					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="projectIdFilter">
 					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
@@ -329,13 +320,6 @@ order by $P!{sortBy}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryPOTotalSubreport1.jasper"]]></subreportExpression>
 			</subreport>
-			<textField>
-				<reportElement uuid="79f92316-eeca-4710-8bdd-574e1ceb9613" x="237" y="1" width="95" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{email}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{email}+"</style>":""]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>

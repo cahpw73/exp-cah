@@ -115,7 +115,7 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
     public void printCommittedCurrenciesReport(final ProjectEntity project,final Map<String, Boolean> sortMap) {
-        log.info("printDetailedProcurementReport");
+        log.info("printCommittedCurrenciesReport");
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportCommittedCurrencies("/procurement/committedCurrenciesReport/committedCurrenciesReport", "Procurement.Committed.Currencies", messages, locale, configuration,  project, sortMap);

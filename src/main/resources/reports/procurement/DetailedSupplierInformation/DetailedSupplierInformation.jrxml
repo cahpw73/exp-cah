@@ -19,17 +19,18 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po.po, por.order_title,sp.company,sp.street ,sp.suburb,sp.id,sp.phone,sp.supplier_id as code,sp.fax
+		<![CDATA[select po.po, po.po_title,sp.company,ct.email,sp.street ,sp.suburb,sp.id,sp.phone,sp.supplier_id as code,sp.fax
 from purchase_order po inner join project pr on pr.id=po.project_id
 inner join p_order por on por.id=po.po_id
 inner join supplier_proc sp on sp.id=por.supplier_id
+inner join contact ct on ct.supplier_id = sp.id
 where  pr.id=$P{PROJECT_ID} and sp.status=0
-
 ORDER BY $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
-	<field name="order_title" class="java.lang.String"/>
+	<field name="po_title" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
 	<field name="street" class="java.lang.String"/>
 	<field name="suburb" class="java.lang.String"/>
 	<field name="id" class="java.lang.Long"/>
@@ -170,21 +171,21 @@ ORDER BY $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Company</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ee7143f4-a893-4e75-b6e9-ef90929396f6" x="115" y="8" width="58" height="10"/>
+				<reportElement uuid="ee7143f4-a893-4e75-b6e9-ef90929396f6" x="215" y="8" width="68" height="10"/>
 				<textElement markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Address</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="180" y="19" width="68" height="10"/>
+				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="242" y="19" width="68" height="10"/>
 				<textElement markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Mobile No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0ac7059b-92e4-4352-adbb-cad5fb266ad5" x="259" y="8" width="114" height="10"/>
+				<reportElement uuid="0ac7059b-92e4-4352-adbb-cad5fb266ad5" x="295" y="8" width="80" height="10"/>
 				<textElement markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -249,6 +250,13 @@ ORDER BY $P!{sortBy}]]>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Brands</style>]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="a43920d8-d2aa-4006-9759-dc18f65cc24a" x="116" y="8" width="90" height="10"/>
+				<textElement markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -261,14 +269,14 @@ ORDER BY $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{company}!=null?"<style isBold='true' size='7'  pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="115" y="2" width="58" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="215" y="2" width="68" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{street})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{suburb})+"</style>"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" positionType="Float" x="25" y="16" width="222" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" positionType="Float" x="25" y="16" width="285" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -297,7 +305,7 @@ ORDER BY $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{fax}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{fax}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="259" y="2" width="114" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="295" y="2" width="80" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
@@ -319,6 +327,13 @@ ORDER BY $P!{sortBy}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "category.jasper"]]></subreportExpression>
 			</subreport>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7d319b5c-d3f5-4d8f-bcc9-a46842427aab" x="116" y="2" width="90" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
