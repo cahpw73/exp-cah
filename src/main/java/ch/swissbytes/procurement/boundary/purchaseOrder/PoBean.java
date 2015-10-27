@@ -375,7 +375,7 @@ public class PoBean extends Bean {
                         validated = false;
                     }
                 } catch (NumberFormatException nfe) {
-                    Messages.addFlashGlobalError("Invalid PO Number, you have chosen PO Class");
+                    Messages.addFlashGlobalError("PO Number must be a number because Class chosen is PO");
                     validated = false;
                 }
             }
