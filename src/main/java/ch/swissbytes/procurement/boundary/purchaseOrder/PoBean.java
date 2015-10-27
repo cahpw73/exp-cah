@@ -371,11 +371,11 @@ public class PoBean extends Bean {
                 try {
                     Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
                     if (purchaseOrder.getPo().length() > 4) {
-                        Messages.addFlashGlobalError("The length of PO Number has been between 1 to 4");
+                        Messages.addFlashGlobalError("PO Number must be between 1 and 4 digits long");
                         validated = false;
                     }
                 } catch (NumberFormatException nfe) {
-                    Messages.addFlashGlobalError("Enter a numeric PO Number because was selected class PO");
+                    Messages.addFlashGlobalError("Invalid PO Number, you have chosen PO Class");
                     validated = false;
                 }
             }
