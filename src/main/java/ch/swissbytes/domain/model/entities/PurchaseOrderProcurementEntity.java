@@ -106,7 +106,7 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     }
 
 
-    @Size(max = 250,message = "lklkl")
+    @Size(max = 250)
     @Column(name="point",length = 250)
     public String getPoint() {
         return point;

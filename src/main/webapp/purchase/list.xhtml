@@ -84,6 +84,8 @@
         <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
         <h:form id="purchaseListForm" styleClass="fq-form-table">
+            <p:remoteCommand name="start" autoRun="true" action="#{poListBean.startTable}"/>
+            <p:remoteCommand name="end" autoRun="true" action="#{poListBean.endTable}"/>
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
                          styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"

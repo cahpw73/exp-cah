@@ -43,6 +43,9 @@ public class PurchaseOrderEntity implements Serializable{
     private ProjectEntity projectEntity;
     private PurchaseOrderProcurementEntity purchaseOrderProcurementEntity;
     private Integer orderedVariation;
+    private boolean locked;
+    private UserEntity lockedBy;
+    private Date lastActivityUpdate;
 
 
     private String poReference;
@@ -310,6 +313,35 @@ public class PurchaseOrderEntity implements Serializable{
         }
         return commentForProject;
     }
+
+    /*public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }*/
+
+/*
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="locked_by", nullable=false)
+    public UserEntity getLockedBy() {
+        return lockedBy;
+    }
+
+    public void setLockedBy(UserEntity lockedBy) {
+        this.lockedBy = lockedBy;
+    }
+*/
+   /* @Column(name="LAST_ACTIVITY_UPDATE", nullable=false)
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getLastActivityUpdate() {
+        return lastActivityUpdate;
+    }
+
+    public void setLastActivityUpdate(Date lastActivityUpdate) {
+        this.lastActivityUpdate = lastActivityUpdate;
+    }*/
 
     @Override
     public int hashCode() {

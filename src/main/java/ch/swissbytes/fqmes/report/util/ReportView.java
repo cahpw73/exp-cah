@@ -63,7 +63,7 @@ public abstract class ReportView implements Serializable {
 
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
-            exportReport(jasperPrint, outputStream, response, reportName.toString());
+            exportReport(jasperPrint, outputStream, response,getOnlyReportNameFormat(reportName.toString()));
 
             outputStream.writeTo(response.getOutputStream());
             response.setContentLength(outputStream.size());
@@ -92,7 +92,7 @@ public abstract class ReportView implements Serializable {
             connection = getDataSource().getConnection();
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, connection);
-            exportReport(jasperPrint, outputStream, response, reportName.toString());
+            exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
             outputStream.writeTo(response.getOutputStream());
             response.setContentLength(outputStream.size());
         } catch (SQLException e) {
@@ -111,6 +111,31 @@ public abstract class ReportView implements Serializable {
         }
 
         fcontext.responseComplete();
+    }
+
+    private static String getOnlyReportNameFormat(final String reportName) {
+        String fileFormat = reportName;
+        if (StringUtils.isEmpty(fileFormat)) {
+            fileFormat = "report";
+
+        } else {
+
+            // For filename report (jasperreports)
+          //  fileFormat = fileFormat.replace(' ', '-');
+
+            // For windows -> filename
+            fileFormat = fileFormat.replace(',', ' ');
+            fileFormat = fileFormat.replace('\\', ' ');
+            fileFormat = fileFormat.replace('/', ' ');
+            fileFormat = fileFormat.replace(':', ' ');
+            fileFormat = fileFormat.replace('*', ' ');
+            fileFormat = fileFormat.replace('?', ' ');
+            fileFormat = fileFormat.replace('\"', ' ');
+            fileFormat = fileFormat.replace('<', ' ');
+            fileFormat = fileFormat.replace('>', ' ');
+            fileFormat = fileFormat.replace('|', ' ');
+        }
+        return fileFormat;
     }
 
     protected JRDataSource createDataSource(Collection<?> beanCollection) {

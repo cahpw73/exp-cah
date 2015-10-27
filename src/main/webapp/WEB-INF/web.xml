@@ -80,6 +80,13 @@
         <filter-name>NoCacheFilter</filter-name>
         <url-pattern>/procurement/project/purchase-order/*</url-pattern>
     </filter-mapping>
-
+  <!--  <filter>
+        <filter-name>ResetActivity</filter-name>
+        <filter-class>ch.swissbytes.Service.security.ResetActivity</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ResetActivity</filter-name>
+        <url-pattern>/procurement/project/purchase-order/*</url-pattern>
+    </filter-mapping>-->
 
 </web-app>
