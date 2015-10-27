@@ -44,7 +44,7 @@ ORDER BY sur_name]]>
 				<textFieldExpression><![CDATA[$F{job_title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b43d4346-e9fb-483e-a5f0-551b49b86846" x="145" y="0" width="73" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="b43d4346-e9fb-483e-a5f0-551b49b86846" x="242" y="0" width="73" height="15" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
