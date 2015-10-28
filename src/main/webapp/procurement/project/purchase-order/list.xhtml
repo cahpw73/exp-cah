@@ -12,12 +12,6 @@
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
-        <script>
-            window.onload =function() {
-                renderBodyButtons();
-            };
-
-        </script>
         <h:form id="listPooFormId" prependId="false">
             <div class="col-md-12">
                 <h:panelGroup id="filterButtons">
@@ -154,11 +148,11 @@
                     <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
+                        <h:inputHidden id="scrollTopId" value="#{poListBean.scrollTop}"/>
                         <p:dataTable id="projectListId"
                                      value="#{poListBean.purchaseOrders}" var="_p">
                             <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40">
                                 #{_p.po}
-                                <a class="anchor"  name="anchor#{_p.id}"></a>
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
                                 #{_p.variation}
@@ -173,20 +167,21 @@
                                 #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
                             </p:column>
                             <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="125">
-                                <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
-                                        rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
-                                        style="float: left!important; color: #428BCA; margin-right:5px;">
-                                    <f:param name="poId" value="#{_p.id}"/>
-                                    <f:param name="anchor" value="anchor#{_p.id}"/>
-                                </h:link>
+                                <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
+                                               rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
+                                               style="float: left!important; color: #428BCA; margin-right:5px;"
+                                               action="#{poListBean.redirectToEdit}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                </h:commandLink>
                                 &#160;
-                                <h:link value="#{msgs['project.list.action.view']}" outcome="edit"
-                                        rendered="#{poListBean.canView(_p)}"
-                                        style="float: left!important; color: #428BCA; margin-right:5px; ">
-                                    <f:param name="poId" value="#{_p.id}"/>
-                                    <f:param name="modeView" value="true"/>
-                                    <f:param name="anchor" value="anchor#{_p.id}"/>
-                                </h:link>
+                                <h:commandLink value="#{msgs['project.list.action.view']}"
+                                               rendered="#{poListBean.canView(_p)}"
+                                               style="float: left!important; color: #428BCA; margin-right:5px;"
+                                               action="#{poListBean.redirectToView}">
+                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                                 value="#{_p}"/>
+                                </h:commandLink>
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.print.po']}"
                                                action="#{poListBean.loadCurrentPo(_p)}"
@@ -197,7 +192,6 @@
                                 </p:commandLink>
                                 &#160;
                                 <p:commandLink value="#{msgs['project.list.action.variation']}"
-
                                                rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
                                                action="#{poListBean.createVarNumberToPO(_p)}" ignoreAutoUpdate="true" partialSubmit="true"
                                                process="@this"
@@ -472,6 +466,6 @@
                 <br/>
             </div>
         </p:dialog>
-
+        <h:outputScript name="js/scrollSneak.js"/>
     </ui:define>
 </ui:composition>

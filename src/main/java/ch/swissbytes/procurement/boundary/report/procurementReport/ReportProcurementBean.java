@@ -62,6 +62,7 @@ public class ReportProcurementBean implements Serializable {
     private String detailedSupplierReport = "Detailed Supplier Report";
     private String uncommitedDataReport = "Uncommitted Data Report";
     private String materialRequisitionReport = "Materials Requisition Report";
+    private String committedCurrenciesReport = "Committed Currencies Report";
 
     @PostConstruct
     public void create() {
@@ -150,6 +151,8 @@ public class ReportProcurementBean implements Serializable {
                 case "mrr":
                     reportTitle = materialRequisitionReport;
                     break;
+                case "cc":
+                    reportTitle = committedCurrenciesReport;
             }
         }
         log.info("report title: " + reportTitle);
