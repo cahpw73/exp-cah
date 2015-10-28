@@ -16,7 +16,7 @@ navigator.urls[8]={"url":"/user/edit","level":"../../../"};
 navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
 navigator.urls[10]={"url":"/profile/profile","level":"../../../"};
 
-/**** Redireccionamiento hacia project*****/
+/****Redirection to project*****/
 //Quitar el segundo boton porque ya no se lo necesita
 $("#projectListLinkId").click(function(e){
     verifyToLeaveProjectEdit(e)
@@ -40,7 +40,7 @@ function leavePageToProjectList(e,level){
     leavingPage(e,target,"confCancelPurchaseList");
 }
 
-/*****Redireccionamiento hacia PO List*******/
+/*****Redirection to PO List*******/
 function verifyToLeavePOEdit(e){
     if(hasChanges){
         if(e.preventDefault) e.preventDefault();
@@ -59,7 +59,7 @@ function leavePageToPOList(level){
     PF('confGotoPoListDlg').show();
 }
 
-/****Redireccionamiento hacia Supplier List ***/
+/****Redirection to Supplier List ***/
 function verifyToLeaveSupplierEdit(e){
     if(hasChanges){
         if(e.preventDefault) e.preventDefault();
@@ -72,7 +72,7 @@ function verifyToLeaveSupplierEdit(e){
     }
     return false;
 }
-/***Redirecinamiento hacia User List***/
+/***Redirection to User List***/
 function verifyToLeaveUserEdit(e){
     if(hasChanges){
         if(e.preventDefault) e.preventDefault();
@@ -86,7 +86,7 @@ function verifyToLeaveUserEdit(e){
     return false;
 }
 
-/***Redirecionamiento hacia Logo List**/
+/***Redirection to Logo List**/
 function verifyToLeaveLogoEdit(e){
     if(hasChanges){
         if(e.preventDefault) e.preventDefault();
@@ -100,7 +100,7 @@ function verifyToLeaveLogoEdit(e){
     return false;
 }
 
-/**Redirecionamiento hacia Client List**/
+/**Redirection to Client List**/
 function verifyToLeaveClientEdit(e){
     if(hasChanges){
         if(e.preventDefault) e.preventDefault();
@@ -113,7 +113,7 @@ function verifyToLeaveClientEdit(e){
     }
     return false;
 }
-/***Redirecionamiento hacia profile ProjectList de Profile***/
+/***Redirection to profile ProjectList de Profile***/
 function verifyToLeaveProfileProcurementEdit(e){
     if(hasChanges){
         if(e.preventDefault) e.preventDefault();

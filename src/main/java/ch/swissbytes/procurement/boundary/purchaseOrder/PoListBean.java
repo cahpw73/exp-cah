@@ -97,6 +97,7 @@ public class PoListBean implements Serializable {
     private boolean showButtons = false;
     private Date start;
     private Date end;
+    private String scrollTop = "0";
 
     public boolean isShowButtons() {
         return showButtons;
@@ -105,7 +106,6 @@ public class PoListBean implements Serializable {
     public void setShowButtons(boolean showButtons) {
         this.showButtons = showButtons;
     }
-
 
     public void renderButtons() {
         setShowButtons(true);
@@ -738,5 +738,21 @@ public class PoListBean implements Serializable {
 
     public void setPurchaseOrders(List<PurchaseOrderEntity> purchaseOrders) {
         this.purchaseOrders = purchaseOrders;
+    }
+
+    public String getScrollTop() {
+        return scrollTop;
+    }
+
+    public void setScrollTop(String scrollTop) {
+        this.scrollTop = scrollTop;
+    }
+
+    public String redirectToView(){
+        return "edit.xhtml?faces-redirect=true&poId=" + currentPurchaseOrder.getId()+"&modeView=true&anchor="+scrollTop;
+    }
+
+    public String redirectToEdit(){
+        return "edit.xhtml?faces-redirect=true&poId=" + currentPurchaseOrder.getId()+"&anchor="+scrollTop;
     }
 }
