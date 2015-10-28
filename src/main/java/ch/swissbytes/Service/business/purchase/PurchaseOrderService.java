@@ -589,4 +589,11 @@ public class PurchaseOrderService extends Service implements Serializable {
     public List<PurchaseOrderEntity> findAllPOs(final Long projectId) {
         return dao.findAllPOs(projectId);
     }
+
+    public void resetActivity(PurchaseOrderEntity purchaseOrderEntity){
+
+    }
+    public void isLocked(){
+
+    }
 }

@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.purchase;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 
 import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
+import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
@@ -11,8 +12,11 @@ import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.component.export.DataExporter;
+
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -245,7 +249,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        map.put("VARIATION", purchaseOrder.getVariation()!=null?purchaseOrder.getVariation().trim().toLowerCase():"");
+        map.put("VARIATION", purchaseOrder.getVariation() != null ? purchaseOrder.getVariation().trim().toLowerCase() : "");
         map.put("PO_NUMBER",purchaseOrder.getPo()== null?"":purchaseOrder.getPo().trim().toLowerCase());
         map.put("ID",purchaseOrder.getId()==null?-1L:purchaseOrder.getId());
         map.put("PROJECT_ID",purchaseOrder.getProjectEntity().getId());
@@ -313,4 +317,36 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("PROJECT_ID",projectId);
         return super.findBy(sb.toString(),parameters);
     }
+
+    public void resetActivity(PurchaseOrderEntity purchaseOrderEntity){
+        StringBuilder sb=new StringBuilder();
+        sb.append("UPDATE PurchaseOrderEntity ");
+        sb.append("SET  lastActivityUpdate =:DATE ");
+        sb.append("WHERE ID=:PO_ID ");
+        Query query=entityManager.createQuery(sb.toString());
+        query.setParameter("DATE", new Date());
+        query.setParameter("PO_ID", purchaseOrderEntity.getId());
+        query.executeUpdate();
+    }
+    public void lockPO(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity){
+       updateLock(purchaseOrderEntity,userEntity,true);
+    }
+    private void updateLock(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity,boolean lock){
+        StringBuilder sb=new StringBuilder();
+        sb.append("UPDATE PurchaseOrderEntity ");
+        sb.append("SET lastActivityUpdate =:DATE ");
+        sb.append("lockedBy =:USER ");
+        sb.append("locked =:LOCKED ");
+        sb.append("WHERE ID=:PO_ID ");
+        Query query=entityManager.createQuery(sb.toString());
+        query.setParameter("DATE", new Date());
+        query.setParameter("PO_ID", purchaseOrderEntity.getId());
+        query.setParameter("USER", userEntity);
+        query.setParameter("LOCKED", lock);
+        query.executeUpdate();
+    }
+    public void unLockPO(PurchaseOrderEntity purchaseOrderEntity){
+        updateLock(purchaseOrderEntity,null,false);
+    }
+
 }

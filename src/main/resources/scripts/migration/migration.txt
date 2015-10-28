@@ -1794,4 +1794,7 @@ INSERT INTO item (id,cost_code,delivery_date,description,last_update,total_cost,
 SELECT id,cost_code,delivery_date,description,last_update,total_cost,unit,project_currency_id,actual_ex_work_date,actual_ex_work_date_obs,actual_site_date,actual_site_date_obs,code,cost,currency,date_ss,delivery_date_obs,delivery_lead_time_ms,delivery_lead_time_qt,description_attachment,ex_work_date_description,exclude_from_expediting,ex_work_date,site_date,from_ss,delivery_lead_time_description,is_forecast_site_date_manual,ordered,quantity,required_site_date,required_site_date_obs,responsible_expediting,responsible_expediting_observation,site_date_description,sp_inco_term,sp_inco_term_description,tag_no,to_ss,purchase_order_id,status_id FROM scope_supply;
 SELECT SETVAL('item_id_seq', (SELECT MAX(ID)+1 FROM ITEM));
 
-alter table add column
+alter table purchase_order  add column locked boolean;
+alter table purchase_order  add column last_activity_update timestamp;
+alter table purchase_order  add column locked_by bigint;
+ALTER TABLE purchase_order  ADD FOREIGN KEY (locked_by) REFERENCES users(id);
