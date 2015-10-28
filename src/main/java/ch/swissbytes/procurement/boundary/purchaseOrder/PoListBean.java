@@ -332,6 +332,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
+        log.info("evaluating if it is possible to create validation");
         return canCreateVariation(entity);
     }
 
