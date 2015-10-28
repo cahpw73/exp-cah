@@ -323,10 +323,10 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append("UPDATE PurchaseOrderEntity ");
         sb.append("SET  lastActivityUpdate =:DATE ");
         sb.append("WHERE ID=:PO_ID ");
-        Query query=entityManager.createQuery(sb.toString());
-        query.setParameter("DATE", new Date());
-        query.setParameter("PO_ID", purchaseOrderEntity.getId());
-        query.executeUpdate();
+        Map<String,Object> parameters=new HashMap<>();
+        parameters.put("DATE", new Date());
+        parameters.put("PO_ID", purchaseOrderEntity.getId());
+        super.executeUpdate(sb.toString(), parameters);
     }
     public void lockPO(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity){
        updateLock(purchaseOrderEntity,userEntity,true);
@@ -334,16 +334,16 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     private void updateLock(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity,boolean lock){
         StringBuilder sb=new StringBuilder();
         sb.append("UPDATE PurchaseOrderEntity ");
-        sb.append("SET lastActivityUpdate =:DATE ");
-        sb.append("lockedBy =:USER ");
+        sb.append("SET lastActivityUpdate =:DATE, ");
+        sb.append("lockedBy =:USER, ");
         sb.append("locked =:LOCKED ");
         sb.append("WHERE ID=:PO_ID ");
-        Query query=entityManager.createQuery(sb.toString());
-        query.setParameter("DATE", new Date());
-        query.setParameter("PO_ID", purchaseOrderEntity.getId());
-        query.setParameter("USER", userEntity);
-        query.setParameter("LOCKED", lock);
-        query.executeUpdate();
+        Map<String,Object> parameters=new HashMap<>();
+        parameters.put("DATE", new Date());
+        parameters.put("PO_ID", purchaseOrderEntity.getId());
+        parameters.put("USER", userEntity);
+        parameters.put("LOCKED", lock);
+        super.executeUpdate(sb.toString(),parameters);
     }
     public void unLockPO(PurchaseOrderEntity purchaseOrderEntity){
         updateLock(purchaseOrderEntity,null,false);

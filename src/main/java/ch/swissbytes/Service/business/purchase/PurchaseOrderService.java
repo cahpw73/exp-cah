@@ -18,6 +18,7 @@ import ch.swissbytes.domain.types.IncoTermsEnum;
 import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
 import org.apache.commons.lang.StringUtils;
@@ -310,7 +311,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity savePOOnProcurementNewVariation(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
-        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(new Date(),configuration.getTimeZone()));
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(new Date(), configuration.getTimeZone()));
         PurchaseOrderProcurementEntity po = dao.savePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
         purchaseOrderEntity.setPurchaseOrderProcurementEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
@@ -590,10 +591,31 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findAllPOs(projectId);
     }
 
+    @Transactional
     public void resetActivity(PurchaseOrderEntity purchaseOrderEntity){
+        dao.resetActivity(purchaseOrderEntity);
+    }
+    public boolean canEdit(PurchaseOrderEntity po, UserEntity user){
+        PurchaseOrderEntity purchaseOrderEntity=findById(po.getId());
+        boolean canEdit=true;
+        if(purchaseOrderEntity.isLocked()!=null&&purchaseOrderEntity.isLocked()){
+            if(purchaseOrderEntity.getLockedBy().getId().longValue()!=user.getId().longValue()){
+                Date date=new Date();
+                long difference=date.getTime()-purchaseOrderEntity.getLastActivityUpdate().getTime();
+                if(difference<=1800000){
+                    canEdit=false;
+                }
+            }
+        }
+        return canEdit;
+    }
+
+    @Transactional
+    public void lock(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity){
+        dao.lockPO(purchaseOrderEntity,userEntity);
 
     }
-    public void isLocked(){
-
+    public void unlock(PurchaseOrderEntity po){
+        dao.unLockPO(po);
     }
 }

@@ -314,7 +314,7 @@ public class PurchaseOrderEntity implements Serializable{
         return commentForProject;
     }
 
-    @Column(name="locked")
+   @Column(name="locked")
     public Boolean isLocked() {
         return locked;
     }
@@ -325,7 +325,7 @@ public class PurchaseOrderEntity implements Serializable{
 
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="locked_by", nullable=false)
+    @JoinColumn(name="locked_by")
     public UserEntity getLockedBy() {
         return lockedBy;
     }

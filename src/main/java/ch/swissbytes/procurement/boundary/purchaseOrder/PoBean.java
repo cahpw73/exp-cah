@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
+import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
@@ -16,6 +17,8 @@ import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
+import org.picketlink.Identity;
+import org.picketlink.idm.model.basic.User;
 import org.primefaces.context.RequestContext;
 
 import javax.faces.context.FacesContext;
@@ -96,6 +99,11 @@ public class PoBean extends Bean {
 
     @Inject
     private PoListBean listBean;
+
+    @Inject
+    private UserService userService;
+    @Inject
+    private Identity identity;
 
     private String anchor;
 
@@ -197,6 +205,23 @@ public class PoBean extends Bean {
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
+                }
+            }
+        }
+    }
+
+    public void validateIsLocked() {
+        if (poId != null) {
+            purchaseOrder = service.findById(Long.valueOf(poId));
+            ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
+            log.info("STATUs " + status);
+            log.info("modeView " + modeView);
+            if ((modeView == null || !modeView)) {
+                User user = (User) identity.getAccount();
+                UserEntity userEntity = userService.findByUsername(user.getLoginName());
+                if (!service.canEdit(purchaseOrder, userEntity)) {
+                    putModeView();
+                    Messages.addGlobalError("you cannot edit");
                 }
             }
         }
@@ -367,7 +392,7 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Enter a valid Class");
             validated = false;
         } else {
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()){
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()) {
                 try {
                     Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
                     if (purchaseOrder.getPo().length() > 4) {
@@ -412,8 +437,8 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
             Messages.addFlashGlobalError("Enter a valid Class");
             validate = false;
-        }else {
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()){
+        } else {
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()) {
                 try {
                     Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
                     if (purchaseOrder.getPo().length() > 4) {

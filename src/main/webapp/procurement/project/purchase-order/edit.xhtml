@@ -12,7 +12,9 @@
         <f:viewParam name="poId" value="#{poBean.poId}"/>
         <f:viewParam name="modeView" value="#{poBean.modeView}"/>
         <f:viewParam name="anchor" value="#{poBean.anchor}"/>
+        <f:viewAction action="#{poBean.validateIsLocked}"/>
         <f:viewAction action="#{poBean.canEditPo}"/>
+
         <f:viewAction action="#{poBean.load}"/>
     </f:metadata>
     <ui:define name="body">
