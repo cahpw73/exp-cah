@@ -22,6 +22,7 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
     private Date requisitionDate;
     private StatusEnum statusEnum;
     private Date lastUpdate;
+    private String rTFNo;
     private PurchaseOrderProcurementEntity purchaseOrderProcurementEntity;
 
     @Id
@@ -93,6 +94,15 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
 
     public void setPurchaseOrderProcurementEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
         this.purchaseOrderProcurementEntity = purchaseOrderProcurementEntity;
+    }
+
+    @Column(name = "RTF_NO" ,length = 250)
+    public String getrTFNo() {
+        return rTFNo;
+    }
+
+    public void setrTFNo(String rTFNo) {
+        this.rTFNo = rTFNo;
     }
 
     @Override
