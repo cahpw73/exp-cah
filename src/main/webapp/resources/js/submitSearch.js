@@ -12,3 +12,14 @@ $(function () {
         }
     });
 });
+
+$(function () {
+    $("#reportForm input").keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            $("#searchBtnId").click();
+            return false;
+        } else {
+            return true;
+        }
+    });
+});

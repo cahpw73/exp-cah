@@ -302,20 +302,6 @@ order by $P!{sortBy}]]>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
-			<subreport>
-				<reportElement uuid="bcbeb8af-5eed-4c32-bf88-91c3b3f5da7f" x="414" y="0" width="40" height="12"/>
-				<subreportParameter name="projectCurrency">
-					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PO_ID">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="patternDecimal">
-					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "POValue.jasper"]]></subreportExpression>
-			</subreport>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="05b4fe34-d58d-4887-a0ca-170b6603c7be" x="332" y="0" width="80" height="12"/>
 				<textElement verticalAlignment="Middle">

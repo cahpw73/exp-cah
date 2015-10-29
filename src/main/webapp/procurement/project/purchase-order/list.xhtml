@@ -150,8 +150,10 @@
                     <div class="panel-body">
                         <h:inputHidden id="scrollTopId" value="#{poListBean.scrollTop}"/>
                         <p:dataTable id="projectListId"
+                                     binding="#{poListBean.dataTable}"
                                      value="#{poListBean.purchaseOrders}" var="_p">
-                            <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40">
+                            <p:ajax event="sort" listener="#{poListBean.sortListener}"/>
+                            <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40" sortBy="#{_p.po}">
                                 #{_p.po}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
@@ -160,7 +162,7 @@
                             <p:column headerText="#{msgs['project.purchase.order.column.title']}" width="130">
                                 #{_p.poTitle}
                             </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110">
+                            <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110" sortBy="#{_p.purchaseOrderProcurementEntity.supplier.company}">
                                 #{_p.purchaseOrderProcurementEntity.supplier.company}
                             </p:column>
                             <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="50">

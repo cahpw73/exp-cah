@@ -273,7 +273,7 @@ order by $P!{sortBy}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Currency</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Currency</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="56088b04-03a4-4c2b-b5fa-a0d8d3818e2c" x="646" y="4" width="50" height="12"/>
