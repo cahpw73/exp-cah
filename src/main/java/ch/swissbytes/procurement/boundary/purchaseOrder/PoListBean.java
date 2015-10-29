@@ -14,12 +14,17 @@ import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.data.SortEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -71,6 +76,9 @@ public class PoListBean implements Serializable {
 
     @Inject
     private POManagerTable poManagerTable;
+
+    @Inject
+    private PoListManagerTable managerTable;
 
 
     private String projectId;
@@ -754,5 +762,26 @@ public class PoListBean implements Serializable {
 
     public String redirectToEdit(){
         return "edit.xhtml?faces-redirect=true&poId=" + currentPurchaseOrder.getId()+"&anchor="+scrollTop;
+    }
+
+    public DataTable getDataTable() {
+        return managerTable.getDataTable();
+    }
+
+    public void setDataTable(DataTable datatable) {
+        ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
+        ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+        if (managerTable.isSortInitialized()) {
+            log.info("sorting by "+managerTable.getSortBy());
+            datatable.setValueExpression("sortBy", expressionFactory.createValueExpression(elContext, managerTable.getSortBy(), Object.class));
+            datatable.setSortOrder(managerTable.getDirection());
+        }
+        managerTable.setDataTable(datatable);
+    }
+
+    public void sortListener(SortEvent event) {
+        managerTable.setSortBy(event.getSortColumn().getValueExpression("sortBy").getExpressionString());
+        managerTable.setDirection(event.isAscending() ? "ascending" : "descending");
+        managerTable.setSortInitialized(true);
     }
 }

@@ -746,10 +746,10 @@
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="230" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
+					<jr:column width="223" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="230" height="15"/>
+								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="223" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="3"/>
@@ -760,12 +760,12 @@
 								<reportElement uuid="57bf7b90-461a-44f5-ba8f-190752cebaa5" x="0" y="0" width="1" height="16"/>
 							</line>
 							<line>
-								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="230" height="1"/>
+								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="223" height="1"/>
 							</line>
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="1" y="12" width="229" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="0" y="12" width="223" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Top" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -773,7 +773,7 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial",8).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="230" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="223" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 									<font size="10" isBold="true" isItalic="false"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
