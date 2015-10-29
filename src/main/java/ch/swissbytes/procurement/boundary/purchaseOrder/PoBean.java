@@ -210,6 +210,11 @@ public class PoBean extends Bean {
         }
     }
 
+    public String closePo(){
+        service.resetActivity(purchaseOrder);
+        return "list.xhtml?faces-redirect=true";
+    }
+
     public void validateIsLocked() {
         if (poId != null) {
             purchaseOrder = service.findById(Long.valueOf(poId));

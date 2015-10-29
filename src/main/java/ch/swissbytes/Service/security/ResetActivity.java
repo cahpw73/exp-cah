@@ -4,13 +4,9 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
-import ch.swissbytes.procurement.boundary.purchaseOrder.PoBean;
-import org.omnifaces.util.Faces;
 import org.picketlink.Identity;
-import org.picketlink.idm.jpa.annotations.Identifier;
 import org.picketlink.idm.model.basic.User;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -51,18 +47,6 @@ public class ResetActivity implements Filter {
         return check;
     }
 
-  /*  private Map<String, String> getHeadersInfo(HttpServletRequest request) {
-        Map<String, String> map = new HashMap<>();
-        Enumeration headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
-            String value = request.getHeader(key);
-            map.put(key, value);
-           // log.info(key+"  "+value);
-        }
-        return map;
-    }*/
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpReq = (HttpServletRequest) request;
@@ -70,14 +54,12 @@ public class ResetActivity implements Filter {
         final String url = ((HttpServletRequest) httpReq).getRequestURI();
         String viewMode = ((HttpServletRequest) httpReq).getParameter("modeView") != null ? ((HttpServletRequest) httpReq).getParameter("modeView") : "false";
         if (url.endsWith("edit.jsf")) {
-            if (isAJAXRequest(((HttpServletRequest) httpReq)) ) {
-                if(!viewMode.equals("true")) {
+            if (isAJAXRequest(((HttpServletRequest) httpReq))) {
+                if (!viewMode.equals("true")) {
                     String poId = ((HttpServletRequest) httpReq).getParameter("poId");
-
                     PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
                     User user = (User) identity.getAccount();
                     UserEntity userEntity = userService.findByUsername(user.getLoginName());
-                    //if (po != null) {
                     if (service.canEdit(po, userEntity)) {
                         service.resetActivity(po);
                     }
