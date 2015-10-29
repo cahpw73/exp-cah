@@ -174,7 +174,7 @@
                                     <p:calendar id="headerDate" type="text" styleClass="calendar"
                                                 navigator="true" mask="#{configuration.mask}"
                                                 pattern="#{configuration.formatDate}"
-                                                converter="#{dateConverter}"
+                                                converter="#{dateConverter}" widgetVar="calendarHeaderDeliveryDate"
                                                 jsf:placeholder="#{configuration.formatDate}"
                                                 converterMessage="#{msgs['validator.date.invalid']}"
                                                 value="#{poBean.purchaseOrder.poDeliveryDate}"
