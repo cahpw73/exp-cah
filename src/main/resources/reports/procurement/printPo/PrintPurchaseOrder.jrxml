@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.366026910730142"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="288"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -377,16 +377,17 @@
 				<textFieldExpression><![CDATA[$P{country}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" style="Arial-Bold" positionType="Float" x="329" y="3" width="91" height="13" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a941a99d-3165-42b0-994c-cb34d3876b7b" style="Arial-Bold" positionType="Float" x="326" y="3" width="91" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Consign  To:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" style="Arial" positionType="Float" x="329" y="18" width="184" height="64" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="dc1885b7-2ec6-49ea-aa66-2759d6f6f517" style="Arial" positionType="Float" x="326" y="18" width="192" height="64" isRemoveLineWhenBlank="true"/>
 				<textElement markup="styled">
 					<font size="10" isBold="false"/>
+					<paragraph leftIndent="1" rightIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{deliveryInstructions}]]></textFieldExpression>
 			</textField>
@@ -422,21 +423,21 @@
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="044e4acd-803d-41c3-a313-213208aad718" style="Arial" positionType="Float" x="248" y="55" width="74" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{contactPhone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="d1bef5e9-2778-4162-a6d1-784166efd790" style="Arial" positionType="Float" x="248" y="68" width="74" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{contactFax}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="f08eb8ef-1835-493c-8f71-48eb658b00e2" style="Arial" positionType="Float" x="226" y="55" width="22" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Tel:]]></text>
 			</staticText>
@@ -464,7 +465,7 @@
 			<staticText>
 				<reportElement uuid="d2526442-82de-4ff2-8ab9-6bbeeac833fd" style="Arial" positionType="Float" x="226" y="68" width="22" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement markup="styled">
-					<font size="8"/>
+					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Fax:]]></text>
 			</staticText>
@@ -555,9 +556,10 @@
 				<textFieldExpression><![CDATA[$P{paymentTerm}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="329" y="13" width="184" height="70"/>
+				<reportElement uuid="1835df28-8c51-4833-ad26-08856b24f6ff" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="326" y="13" width="192" height="70"/>
 				<textElement markup="styled">
 					<font size="8"/>
+					<paragraph leftIndent="1" rightIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{invoiceTo}]]></textFieldExpression>
 			</textField>
@@ -629,7 +631,7 @@
 				<textFieldExpression><![CDATA[$P{securityDeposit}!=null&&$P{securityDeposit}.equalsIgnoreCase("yes")?$P{securityDepositForm}:null]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="669e4caf-b5bf-4856-bb1d-b09568d37db7" style="Arial-Bold" isPrintRepeatedValues="false" x="329" y="0" width="106" height="13">
+				<reportElement uuid="669e4caf-b5bf-4856-bb1d-b09568d37db7" style="Arial-Bold" isPrintRepeatedValues="false" x="326" y="0" width="106" height="13">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -744,10 +746,10 @@
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="210" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
+					<jr:column width="230" uuid="8e80d24f-f4c6-47f5-a36f-1b1192066aac">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="210" height="15"/>
+								<reportElement uuid="9ea25aa8-a2aa-4866-b73c-c9297b6c6f61" style="Arial-Bold" positionType="Float" x="0" y="0" width="230" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="3"/>
@@ -758,12 +760,12 @@
 								<reportElement uuid="57bf7b90-461a-44f5-ba8f-190752cebaa5" x="0" y="0" width="1" height="16"/>
 							</line>
 							<line>
-								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="210" height="1"/>
+								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="230" height="1"/>
 							</line>
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="1" y="12" width="209" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="1" y="12" width="229" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Top" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -771,9 +773,9 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial",8).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="210" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="230" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
-									<font size="11" isBold="true" isItalic="false"/>
+									<font size="10" isBold="true" isItalic="false"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{poTitle}]]></textFieldExpression>
@@ -783,29 +785,30 @@
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="68" uuid="a51c0290-202f-48c3-91aa-6d489ff4d64b">
+					<jr:column width="75" uuid="a51c0290-202f-48c3-91aa-6d489ff4d64b">
 						<jr:columnHeader height="16" rowSpan="1">
 							<staticText>
-								<reportElement uuid="820b6b18-bd3f-4abb-b324-42a75cd1b677" style="Arial-Bold" x="0" y="0" width="68" height="15"/>
+								<reportElement uuid="edc7f1b9-247f-4114-8e3f-222ba9388e73" style="Arial-Bold" positionType="Float" x="0" y="0" width="75" height="15"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Delivery Date]]></text>
+								<text><![CDATA[Unit Price]]></text>
 							</staticText>
 							<line>
-								<reportElement uuid="6aeec973-a565-40d2-a6bc-a39fc666bb91" x="0" y="0" width="1" height="16"/>
+								<reportElement uuid="6aeec973-a565-40d2-a6bc-a39fc666bb91" x="0" y="0" width="1" height="15"/>
 							</line>
 							<line>
-								<reportElement uuid="801de382-24e3-4369-844e-a4cb777112a7" x="0" y="15" width="68" height="1"/>
+								<reportElement uuid="801de382-24e3-4369-844e-a4cb777112a7" x="0" y="15" width="75" height="1"/>
 							</line>
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="8a3719f0-8bb7-4286-9148-d9c9310a7de9" style="Arial" positionType="Float" x="0" y="12" width="68" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Center" markup="styled">
-									<font size="7"/>
+								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
+									<font fontName="Arial" size="7"/>
+									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{deliveryDate}.getTime())):null]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($F{currency},$P{patternDecimal},$F{cost})]]></textFieldExpression>
 							</textField>
 							<line>
 								<reportElement uuid="efda876a-d7d6-4f9b-a728-04c74d5fa200" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
@@ -819,7 +822,7 @@
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Unit Price]]></text>
+								<text><![CDATA[Total]]></text>
 							</staticText>
 							<line>
 								<reportElement uuid="ade10ac4-b66a-4a8d-8f7e-a828963c5c94" x="0" y="15" width="75" height="1"/>
@@ -832,44 +835,43 @@
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
-									<font fontName="Arial" size="8"/>
+									<font fontName="Arial" size="7"/>
 									<paragraph leftIndent="2" rightIndent="5"/>
 								</textElement>
-								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($F{currency},$P{patternDecimal},$F{cost})]]></textFieldExpression>
+								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($F{currency},$P{patternDecimal},$F{totalCost})]]></textFieldExpression>
 							</textField>
 							<line>
 								<reportElement uuid="34bad98b-40a4-46d7-9383-a4cbca77d309" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
 							</line>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="75" uuid="9a4b29d1-b3f6-4583-aa39-399420671397">
+					<jr:column width="55" uuid="9a4b29d1-b3f6-4583-aa39-399420671397">
 						<jr:columnHeader height="16" rowSpan="1">
-							<staticText>
-								<reportElement uuid="edc7f1b9-247f-4114-8e3f-222ba9388e73" style="Arial-Bold" positionType="Float" x="0" y="0" width="75" height="15"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-									<font size="7" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Total]]></text>
-							</staticText>
 							<line>
-								<reportElement uuid="d5ea7b03-f062-49ee-a99a-95d56aef5d84" x="0" y="15" width="75" height="1"/>
+								<reportElement uuid="d5ea7b03-f062-49ee-a99a-95d56aef5d84" x="0" y="15" width="55" height="1"/>
 							</line>
 							<line>
 								<reportElement uuid="befb7a79-4785-417c-9507-4c92ad61b9ca" x="0" y="0" width="1" height="15"/>
 							</line>
+							<staticText>
+								<reportElement uuid="820b6b18-bd3f-4abb-b324-42a75cd1b677" style="Arial-Bold" x="0" y="0" width="55" height="15"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Delivery Date]]></text>
+							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
-									<font fontName="Arial" size="8"/>
-									<paragraph leftIndent="2" rightIndent="5"/>
-								</textElement>
-								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($F{currency},$P{patternDecimal},$F{totalCost})]]></textFieldExpression>
-							</textField>
 							<line>
 								<reportElement uuid="babb8532-8718-4e59-9e51-2f92c7cc08ff" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
 							</line>
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="8a3719f0-8bb7-4286-9148-d9c9310a7de9" style="Arial" positionType="Float" x="0" y="12" width="55" height="12" isRemoveLineWhenBlank="true"/>
+								<textElement textAlignment="Center" markup="styled">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{deliveryDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{deliveryDate}.getTime())):null]]></textFieldExpression>
+							</textField>
 						</jr:detailCell>
 					</jr:column>
 				</jr:table>
