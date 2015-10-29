@@ -15,11 +15,11 @@
                         <h:panelGroup id="requisitionsGroup">
                             <p:dataTable id="requisitionDt" var="_req"
                                          value="#{requisitionBean.filteredList()}">
-                                <p:column headerText="#{msgs['po.header.column.req.no']}">
-                                    <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
-                                    <p:inputText id="requisitionNoTxt" rendered="#{_req.isEditable}"
-                                                 value="#{_req.requisitionNumber}"
-                                                 required="true" requiredMessage="Enter a Req No"
+                                <p:column headerText="#{msgs['po.header.lbl.rtf']}">
+                                    <h:outputText rendered="#{not _req.isEditable}" value="#{_req.rTFNo}"/>
+                                    <p:inputText id="rTFNoTxt" rendered="#{_req.isEditable}"
+                                                 value="#{_req.rTFNo}"
+                                                 required="true" requiredMessage="Enter a RTF No"
                                                  maxlength="250" styleClass="form-control"/>
                                 </p:column>
                                 <p:column headerText="#{msgs['po.header.column.originator']}">
@@ -27,6 +27,13 @@
                                     <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}"
                                                  maxlength="250"
                                                  styleClass="form-control"/>
+                                </p:column>
+                                <p:column headerText="#{msgs['po.header.column.req.no']}">
+                                    <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>
+                                    <p:inputText id="requisitionNoTxt" rendered="#{_req.isEditable}"
+                                                 value="#{_req.requisitionNumber}"
+                                                 required="true" requiredMessage="Enter a Req No"
+                                                 maxlength="250" styleClass="form-control"/>
                                 </p:column>
                                 <p:column headerText="#{msgs['po.header.column.req.date']}">
                                     <h:outputText rendered="#{not _req.isEditable}"
@@ -261,6 +268,7 @@
 
             <div class="clearfix"/>
             <div>
+                <ui:remove>
                 <div style="width: 345px!important; float: left!important;">
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
@@ -272,10 +280,10 @@
                                      styleClass="form-control"/>
                     </div>
                 </div>
+                </ui:remove>
                 <div style="width: 345px!important; float: left!important;">
                     <div class="form-group">
                         <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
-                                       style="margin-left: 22px;"
                                        for="requisitionDt"
                                        value="#{msgs['po.header.lbl.liquidated.damages.applicable']}"/>
                         <h:inputHidden id="checkboxLiquidatedDamages"
