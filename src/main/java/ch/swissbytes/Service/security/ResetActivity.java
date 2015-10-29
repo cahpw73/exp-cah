@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.procurement.boundary.purchaseOrder.PoBean;
 import org.omnifaces.util.Faces;
 import org.picketlink.Identity;
 import org.picketlink.idm.jpa.annotations.Identifier;
@@ -32,6 +33,9 @@ public class ResetActivity implements Filter {
     private UserService userService;
     @Inject
     private Identity identity;
+
+    @Inject
+    private PoBean poBean;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -64,21 +68,19 @@ public class ResetActivity implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
         final String url = ((HttpServletRequest) httpReq).getRequestURI();
-        String viewMode = ((HttpServletRequest) httpReq).getParameter("") != null ? ((HttpServletRequest) httpReq).getParameter("modeView") : "false";
+     //   String viewMode = ((HttpServletRequest) httpReq).getParameter("modeView") != null ? ((HttpServletRequest) httpReq).getParameter("modeView") : "false";
         if (url.endsWith("edit.jsf")) {
-            if (isAJAXRequest(((HttpServletRequest) httpReq)) && viewMode.equals("false")) {
-                String poId = ((HttpServletRequest) httpReq).getParameter("poId");
-                try {
-                    PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
+            if (isAJAXRequest(((HttpServletRequest) httpReq)) ) {
+                if(!poBean.getModeView()) {
+                    String poId = ((HttpServletRequest) httpReq).getParameter("poId");
+
+                    //PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
                     User user = (User) identity.getAccount();
                     UserEntity userEntity = userService.findByUsername(user.getLoginName());
-                    if (po != null) {
-                        if (service.canEdit(po, userEntity)) {
-                            service.resetActivity(po);
-                        }
+                    //if (po != null) {
+                    if (service.canEdit(poBean.getPurchaseOrder(), userEntity)) {
+                        service.resetActivity(poBean.getPurchaseOrder());
                     }
-                } catch (NumberFormatException nfe) {
-
                 }
             }
         }
