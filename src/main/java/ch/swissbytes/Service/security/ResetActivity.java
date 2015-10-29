@@ -64,30 +64,32 @@ public class ResetActivity implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
         final String url = ((HttpServletRequest) httpReq).getRequestURI();
-        if(url.endsWith("edit.jsf")){
-            String poId = ((HttpServletRequest) httpReq).getParameter("poId");
-            try {
-                PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
-                User user = (User) identity.getAccount();
-                UserEntity userEntity = userService.findByUsername(user.getLoginName());
-                if (isAJAXRequest(httpReq)) {
+        String viewMode = ((HttpServletRequest) httpReq).getParameter("") != null ? ((HttpServletRequest) httpReq).getParameter("modeView") : "false";
+        if (url.endsWith("edit.jsf")) {
+            if (isAJAXRequest(((HttpServletRequest) httpReq)) && viewMode.equals("false")) {
+                String poId = ((HttpServletRequest) httpReq).getParameter("poId");
+                try {
+                    PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
+                    User user = (User) identity.getAccount();
+                    UserEntity userEntity = userService.findByUsername(user.getLoginName());
                     if (po != null) {
                         if (service.canEdit(po, userEntity)) {
                             service.resetActivity(po);
                         }
                     }
-                }
-            }catch (NumberFormatException nfe){
+                } catch (NumberFormatException nfe) {
 
+                }
             }
         }
         chain.doFilter(request, response);
     }
-    private PurchaseOrderEntity findPurchaseOrder(String poId){
-        boolean valid=false;
-        try{
+
+    private PurchaseOrderEntity findPurchaseOrder(String poId) {
+        boolean valid = false;
+        try {
             Long.parseLong(poId);
-        }catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
 
         }
         return null;

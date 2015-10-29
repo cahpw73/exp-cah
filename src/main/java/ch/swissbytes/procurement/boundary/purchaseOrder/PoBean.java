@@ -213,15 +213,15 @@ public class PoBean extends Bean {
     public void validateIsLocked() {
         if (poId != null) {
             purchaseOrder = service.findById(Long.valueOf(poId));
-            ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
-            log.info("STATUs " + status);
-            log.info("modeView " + modeView);
+            //ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
             if ((modeView == null || !modeView)) {
                 User user = (User) identity.getAccount();
                 UserEntity userEntity = userService.findByUsername(user.getLoginName());
                 if (!service.canEdit(purchaseOrder, userEntity)) {
                     putModeView();
-                    Messages.addGlobalError("you cannot edit");
+                    Messages.addFlashError("editPoForm:poEditGlbMsgs", "you cannot edit");
+                }else{
+                    service.lock(purchaseOrder,userEntity);
                 }
             }
         }

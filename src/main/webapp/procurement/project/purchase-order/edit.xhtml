@@ -12,10 +12,11 @@
         <f:viewParam name="poId" value="#{poBean.poId}"/>
         <f:viewParam name="modeView" value="#{poBean.modeView}"/>
         <f:viewParam name="anchor" value="#{poBean.anchor}"/>
-        <f:viewAction action="#{poBean.validateIsLocked}"/>
-        <f:viewAction action="#{poBean.canEditPo}"/>
+
 
         <f:viewAction action="#{poBean.load}"/>
+        <f:viewAction action="#{poBean.validateIsLocked}"/>
+        <f:viewAction action="#{poBean.canEditPo}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form id="editPoForm" class="form-horizontal">
@@ -30,7 +31,7 @@
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
                             <p:messages id="poEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
-                                        infoClass="alert alert-info" />
+                                        infoClass="alert alert-info"/>
                             <br/>
                             <h:panelGroup rendered="#{poBean.beingCreated}">
                                 <div class="procurement-panel-header" >#{msgs['purchase.order.new.po.title']}</div>
