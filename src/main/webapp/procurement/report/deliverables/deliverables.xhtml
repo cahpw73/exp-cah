@@ -11,6 +11,7 @@
         <f:viewAction action="#{mainMenuBean.select(1)}"/>
     </f:metadata>
     <ui:define name="body">
+        <h:outputScript name="js/submitSearch.js"/>
         <style>
             .ui-paginator {
                 position: fixed;
@@ -24,7 +25,7 @@
             }
         </style>
         <div class="col-md-12">
-            <h:form prependId="false">
+            <h:form id="reportForm" prependId="false">
                 <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
                     <div style="width: 100%; vertical-align: middle; display: table-cell">
                         <div style="font-size: 11pt!important; height: 52px; padding-top: 15px; padding-left: 15px;">#{msgs['report.deliverables.title']}</div>
@@ -46,9 +47,16 @@
                                                        itemValue="#{_p}"
                                                        itemLabel="#{_p.projectNumber}"/>
                                         <p:ajax async="false" process="@this" event="change"
-                                                update="deliverablesTblId printBtnId poNoDelId"
+                                                update="deliverablesTblId printBtnId poNoDelId searchBtnId"
                                                 listener="#{reportDeliverableBean.searchPurchaseOrder}"/>
                                     </h:selectOneMenu>
+                                </div>
+                                <div>
+                                    <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['lbl.print']}"
+                                                   action="#{reportDeliverableBean.printReportDeliverables}"
+                                                   target="_blank"
+                                                   disabled="#{!reportDeliverableBean.projectSelected}"/>
                                 </div>
                             </div>
                         </div>
@@ -65,17 +73,13 @@
                                         <h:inputText id="poNoDelId" styleClass="form-control input-search"
                                                      value="#{reportDeliverableBean.termsPoNo}"
                                                      jsf:placeholder="#{msgs['lbl.search']}">
-                                            <p:ajax event="keyup" process="@this" update="deliverablesTblId"
-                                                    listener="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}"
-                                                    async="false"/>
                                         </h:inputText>
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
-                                                   value="#{msgs['lbl.print']}"
-                                                   action="#{reportDeliverableBean.printReportDeliverables}"
-                                                   target="_blank"
+                                    <h:commandButton id="searchBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['lbl.search']}"
+                                                   action="#{reportDeliverableBean.filterDeliverableDtoListByPoNo}"
                                                    disabled="#{!reportDeliverableBean.projectSelected}"/>
                                 </div>
                             </div>
