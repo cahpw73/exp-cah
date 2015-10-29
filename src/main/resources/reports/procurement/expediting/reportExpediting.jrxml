@@ -164,28 +164,28 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 	<columnHeader>
 		<band height="23" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="99445596-ba52-4e38-80fa-ac9b348940a6" x="72" y="5" width="70" height="16"/>
+				<reportElement uuid="99445596-ba52-4e38-80fa-ac9b348940a6" x="43" y="5" width="40" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="85fe0f1e-04a7-4e6d-83c2-b184f530563f" x="216" y="5" width="200" height="16"/>
+				<reportElement uuid="85fe0f1e-04a7-4e6d-83c2-b184f530563f" x="128" y="5" width="285" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Description</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="40aa10e8-ef7b-47f6-9b77-074273155223" x="1" y="5" width="70" height="16"/>
+				<reportElement uuid="40aa10e8-ef7b-47f6-9b77-074273155223" x="1" y="5" width="40" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Po No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="39ff3434-b8bd-4e43-a039-5080e2c1dcac" x="144" y="5" width="70" height="16"/>
+				<reportElement uuid="39ff3434-b8bd-4e43-a039-5080e2c1dcac" x="85" y="5" width="40" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>

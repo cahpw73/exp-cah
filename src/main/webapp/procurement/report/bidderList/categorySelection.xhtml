@@ -18,11 +18,11 @@
                     <div class="procurement-panel-header">Bidder List</div>
                     <!-- Default panel contents -->
                     <div class="panel-body">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                value="#{msgs['report.deliverables.lbl.project']}"/>
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     <h:selectOneMenu id="projectDelId"
                                                      required="true"
                                                      requiredMessage="Please select a project"
@@ -34,7 +34,7 @@
                                         <f:selectItems value="#{projectListBean.projectList}"
                                                        var="_p"
                                                        itemValue="#{_p}"
-                                                       itemLabel="#{_p.title}"/>
+                                                       itemLabel="#{_p.projectNumber}"/>
                                     </h:selectOneMenu>
                                     <p:message for="projectDelId"/>
                                 </div>
@@ -43,12 +43,12 @@
                         <div class="clearfix"/>
                         <br/>
 
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
+                                <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                value="#{msgs['lbl.admin.category']}"/>
 
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     <div class="left-inner-addon">
                                         <i class="fa fa-search fa-lg"></i>
                                         <h:inputText styleClass="form-control input-search"

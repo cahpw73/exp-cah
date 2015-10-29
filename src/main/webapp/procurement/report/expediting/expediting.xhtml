@@ -11,6 +11,7 @@
         <f:viewAction action="#{mainMenuBean.select(1)}"/>
     </f:metadata>
     <ui:define name="body">
+        <h:outputScript name="js/submitSearch.js"/>
         <style>
             .ui-paginator {
                 position: fixed;
@@ -24,7 +25,7 @@
             }
         </style>
         <div class="col-md-12">
-            <h:form id="bidderForm" prependId="false">
+            <h:form id="reportForm" prependId="false">
                 <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
                     <div style="width: 100%; vertical-align: middle; display: table-cell">
                         <div class="row">
@@ -46,10 +47,16 @@
                                                        itemValue="#{_p}"
                                                        itemLabel="#{_p.projectNumber}"/>
                                         <p:ajax async="false" process="@this" event="change"
-                                                update="expeditingTblId printBtnId poNoDelId"
+                                                update="expeditingTblId printBtnId poNoDelId searchBtnId"
                                                 delay="600"
                                                 listener="#{reportExpeditingBean.searchPurchaseOrder}"/>
                                     </h:selectOneMenu>
+                                </div>
+                                <div>
+                                    <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['lbl.print']}"
+                                                   action="#{reportExpeditingBean.printReportExpediting}"
+                                                   target="_blank" disabled="#{!reportExpeditingBean.projectSelected}"/>
                                 </div>
                             </div>
                         </div>
@@ -66,17 +73,14 @@
                                         <h:inputText id="poNoDelId" styleClass="form-control input-search"
                                                      value="#{reportExpeditingBean.termsPoNo}"
                                                      jsf:placeholder="#{msgs['lbl.search']}">
-                                            <p:ajax event="keyup" process="@this" update="expeditingTblId" delay="600"
-                                                    listener="#{reportExpeditingBean.filterExpeditingDtoListByPoNo}"
-                                                    async="false"/>
                                         </h:inputText>
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandLink id="printBtnId" styleClass="btn btn-primary btn-sm"
-                                                   value="#{msgs['lbl.print']}"
-                                                   action="#{reportExpeditingBean.printReportExpediting}"
-                                                   target="_blank" disabled="#{!reportExpeditingBean.projectSelected}"/>
+                                    <h:commandButton id="searchBtnId" styleClass="btn btn-primary btn-sm"
+                                                   value="#{msgs['lbl.search']}"
+                                                   action="#{reportExpeditingBean.filterExpeditingDtoListByPoNo}"
+                                                   disabled="#{!reportExpeditingBean.projectSelected}"/>
                                 </div>
                             </div>
                         </div>

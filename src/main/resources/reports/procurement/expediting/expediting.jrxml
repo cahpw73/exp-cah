@@ -31,28 +31,28 @@ order by po.po,po.orderedvariation]]>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="707754a7-7b44-439c-9dcc-832002c2e22c" x="1" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="707754a7-7b44-439c-9dcc-832002c2e22c" x="1" y="1" width="40" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0cc52fbb-275f-4758-b02d-7db3e466e0af" x="72" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="0cc52fbb-275f-4758-b02d-7db3e466e0af" x="43" y="1" width="40" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="060a2a3d-94e5-455a-bcff-8fed1182ec77" x="144" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="060a2a3d-94e5-455a-bcff-8fed1182ec77" x="85" y="1" width="40" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="428d927a-9f14-4590-8d18-eb9751ccc1e9" x="216" y="1" width="200" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="428d927a-9f14-4590-8d18-eb9751ccc1e9" x="128" y="1" width="285" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
