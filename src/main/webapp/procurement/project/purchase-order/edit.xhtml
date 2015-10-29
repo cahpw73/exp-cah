@@ -3,13 +3,14 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Users</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
         <f:viewParam name="projectId" value="#{poBean.projectId}"/>
-        <f:viewParam name="poId" value="#{poBean.poId}"/>
+        <f:viewParam name="poId" value="#{poBean.poId}"  />
         <f:viewParam name="modeView" value="#{poBean.modeView}"/>
         <f:viewParam name="anchor" value="#{poBean.anchor}"/>
 
@@ -19,7 +20,12 @@
         <f:viewAction action="#{poBean.canEditPo}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editPoForm" class="form-horizontal">
+        <ui:remove>
+        <!--<o:form id="editPoForm"  ></o:form>-->
+        </ui:remove>
+        <o:form id="editPoForm" includeViewParams="true">
+        <!--<h:form id="editPoForm" >-->
+            <div class="form-horizontal">
             <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed});"
                              autoRun="true"/>
 
@@ -179,8 +185,9 @@
                     </div>
                 </div>
             </div>
-        </h:form>
-
+            </div>
+        <!--</h:form>-->
+        </o:form>
         <p:dialog header="New Custom Text" widgetVar="textSnippetModal1"
                   resizable="true">
             <h:panelGroup id="textSnippetModalId">

@@ -34,8 +34,8 @@ public class ResetActivity implements Filter {
     @Inject
     private Identity identity;
 
-    @Inject
-    private PoBean poBean;
+   /* @Inject
+    private PoBean poBean;*/
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -68,18 +68,18 @@ public class ResetActivity implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
         final String url = ((HttpServletRequest) httpReq).getRequestURI();
-     //   String viewMode = ((HttpServletRequest) httpReq).getParameter("modeView") != null ? ((HttpServletRequest) httpReq).getParameter("modeView") : "false";
+        String viewMode = ((HttpServletRequest) httpReq).getParameter("modeView") != null ? ((HttpServletRequest) httpReq).getParameter("modeView") : "false";
         if (url.endsWith("edit.jsf")) {
             if (isAJAXRequest(((HttpServletRequest) httpReq)) ) {
-                if(!poBean.getModeView()) {
+                if(!viewMode.equals("true")) {
                     String poId = ((HttpServletRequest) httpReq).getParameter("poId");
 
-                    //PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
+                    PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
                     User user = (User) identity.getAccount();
                     UserEntity userEntity = userService.findByUsername(user.getLoginName());
                     //if (po != null) {
-                    if (service.canEdit(poBean.getPurchaseOrder(), userEntity)) {
-                        service.resetActivity(poBean.getPurchaseOrder());
+                    if (service.canEdit(po, userEntity)) {
+                        service.resetActivity(po);
                     }
                 }
             }
