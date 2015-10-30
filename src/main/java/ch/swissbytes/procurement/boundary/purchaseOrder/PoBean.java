@@ -225,13 +225,10 @@ public class PoBean extends Bean {
     public void validateIsLocked() {
         if (poId != null) {
             purchaseOrder = service.findById(Long.valueOf(poId));
-            //ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
             if ((modeView == null || !modeView)) {
-                /*User user = (User) identity.getAccount();
-                UserEntity userEntity = userService.findByUsername(user.getLoginName());*/
                 if (!service.canEdit(purchaseOrder, userSession.getCurrentUser())) {
                     putModeView();
-                    Messages.addFlashError("editPoForm:poEditGlbMsgs", "you cannot edit");
+                    Messages.addGlobalError( "You cannot edit this PO. please try later.");
                 }else{
                     service.lock(purchaseOrder,userSession.getCurrentUser());
                 }
@@ -378,6 +375,11 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
+        if(!service.canEdit(purchaseOrder,userSession.getCurrentUser())){
+            Messages.addFlashGlobalError("You cannot edit this PO because it is being edited right now.");
+            validated = false;
+        }
+
         if (cashflowBean.getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Please enter Payment Terms");
             validated = false;

@@ -20,13 +20,12 @@
         <f:viewAction action="#{poBean.canEditPo}"/>
     </f:metadata>
     <ui:define name="body">
-        <ui:remove>
-        <!--<o:form id="editPoForm"  ></o:form>-->
-        </ui:remove>
+
+
         <o:form id="editPoForm" includeViewParams="true">
         <!--<h:form id="editPoForm" >-->
             <div class="form-horizontal">
-            <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed});"
+            <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed}); "
                              autoRun="true"/>
 
             <div class="col-md-12" style="margin-top: 7px;">
@@ -37,6 +36,7 @@
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
                             <p:messages id="poEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
+
                                         infoClass="alert alert-info"/>
                             <br/>
                             <h:panelGroup rendered="#{poBean.beingCreated}">
