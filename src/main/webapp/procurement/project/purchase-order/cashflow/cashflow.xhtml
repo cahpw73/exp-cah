@@ -48,11 +48,11 @@
                         <h:outputLabel styleClass="col-sm-4 control-label procurement-text-lbl-ltr"
                                        for="termCfId" value="#{msgs['po.cashflow.lbl.payment.terms']}"/>
 
-                        <div style="width: 250px; float: left;">
+                        <div style="width: 270px; float: left;">
                             <h:selectOneMenu id="termCfId" onclick="doChangeProc();"
                                              value="#{cashflowBean.cashflow.paymentTerms}"
                                              styleClass="form-control"
-                                             rendered="#{poBean.beingEdited and poBean.poIsOriginal()}">
+                                             rendered="#{poBean.beingEdited}">
                                 <f:selectItem
                                         itemLabel="Select a Payment Term"
                                         noSelectionOption="true"/>
@@ -65,7 +65,7 @@
                             </h:selectOneMenu>
                             <h:inputText id="termCfIdVi" readonly="true" styleClass="form-control view-po"
                                          value="#{cashflowBean.cashflow.paymentTerms.label}"
-                                         rendered="#{poBean.beingViewed or !poBean.poIsOriginal()}"/>
+                                         rendered="#{poBean.beingViewed}"/>
                         </div>
                     </div>
                 </div>
