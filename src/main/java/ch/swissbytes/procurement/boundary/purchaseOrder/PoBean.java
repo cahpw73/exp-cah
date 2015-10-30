@@ -335,7 +335,7 @@ public class PoBean extends Bean {
     }
 
     public String backToList() {
-        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId();
+        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId()+"&anchor="+anchor;
     }
 
     private void sortPurchaseListByVariationAndDoUpdate() {

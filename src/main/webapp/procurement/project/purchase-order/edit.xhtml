@@ -77,8 +77,9 @@
                                     </ui:remove>
                                     <h:commandLink id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
                                                    action="#{poBean.closePo()}"
+
                                                    styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
-                                                   fragment="#{poBean.anchor}">
+                                                   >
                                         <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                                     </h:commandLink>
                                     &#160;
