@@ -13,32 +13,46 @@
     </f:metadata>
     <ui:define name="body">
         <h:form prependId="false">
-            <div class="col-md-12 panel-tab-users">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="left-inner-addon">
-                            <i class="fa fa-search fa-lg"></i>
-                            <h:inputText id="searchTermId" styleClass="form-control input-search"
-                                         value="#{clientListBean.term}"
-                                         jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
-                            </h:inputText>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div>
-                            <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this,searchTermId" update="clienttListId"/>
-                            </h:commandButton>
-                            &#160;
-                            <h:link value="#{msgs['lbl.clean']}" outcome="list" styleClass="btn btn-primary btn-sm"/>
-                        </div>
-                    </div>
-                    <div class="pull-right">
-                        <div class="col-md-3">
-                            <h:link value="#{msgs['client.add']}" outcome="edit" styleClass="btn btn-primary btn-sm"/>
+            <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; top:61px; height: 70px; display: table">
+                <div style="width: 100%; vertical-align: middle; display: table-cell">
+                    <div class="col-md-12">
+                        <p:messages id="clientListGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                                    warnClass="alert" closable="true"
+                                    infoClass="alert alert-info" />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="left-inner-addon">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <h:inputText id="searchTermId" styleClass="form-control input-search"
+                                                 value="#{clientListBean.term}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}" type="search" maxlength="250">
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div>
+                                    <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
+                                        <p:ajax process="@this,searchTermId" update="clienttListId"/>
+                                    </h:commandButton>
+                                    &#160;
+                                    <h:link value="#{msgs['lbl.clean']}" outcome="list" styleClass="btn btn-primary btn-sm"/>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <div class="col-md-3">
+                                    <h:link value="#{msgs['client.add']}" outcome="edit" styleClass="btn btn-primary btn-sm"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            <br/>
+            <br/>
+            <div class="col-md-12 panel-tab-users">
+
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
                     <p:column headerText="Name" width="220">
                         <h:outputText value="#{_cl.name}" escape="false"/>

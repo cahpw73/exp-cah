@@ -5,7 +5,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-    <h:form id="editUserForm" prependId="false" class="form-horizontal">
+    <h:form id="editProfileForm" prependId="false" class="form-horizontal">
+        <div class="col-md-12">
+            <p:messages id="profileGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                        warnClass="alert" closable="true"
+                        infoClass="alert alert-info" />
+        </div>
         <div class="col-md-6">
             <br></br>
 
@@ -85,9 +90,11 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <h:commandButton value="#{msgs['lbl.save.change']}"
+                    <h:commandLink value="#{msgs['lbl.save.change']}"
                                      action="#{userProfileBean.doUpdate}"
-                                     styleClass="btn btn-primary btn-sm"/>
+                                     styleClass="btn btn-primary btn-sm">
+                        <p:ajax async="false" update="editProfileForm" process="@form"/>
+                    </h:commandLink>
                     &#160;
                     <h:link id="profileProcBtnId" styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.close']}"
                             outcome="/procurement/project/list" onclick="verifyToLeaveProfileProcurementEdit(event)" />
@@ -99,15 +106,6 @@
             </div>
             <div class="clearfix"></div>
             <br/>
-            <ui:remove>
-                <div class="row">
-                    <div class="col-md-4">
-                        <h:commandButton value="#{msgs['lbl.switch.expediting.procurement']}"
-                                         styleClass="btn btn-primary btn-sm" type="submit"
-                                         action="/home?faces-redirect=true"/>
-                    </div>
-                </div>
-            </ui:remove>
         </div>
     </h:form>
 </ui:composition>

@@ -87,12 +87,12 @@
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
 
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
-                                           action="#{projectBean.editItem(_pt)}" update="projectTextDt :glbMsgs"
+                                           action="#{projectBean.editItem(_pt)}" update="projectTextDt :editForm:projectGlbMsgs"
                                            async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
                                            process=":editForm:itemsGroup"
                                            action="#{projectBean.confirmItem(_pt)}"
-                                           update="projectTextDt :glbMsgs" async="false"/>
+                                           update="projectTextDt :editForm:projectGlbMsgs" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
                                            action="#{projectBean.cancelEditionItem(_pt)}" update="projectTextDt"

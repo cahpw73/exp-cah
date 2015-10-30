@@ -12,6 +12,11 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editForm" prependId="false">
+            <div class="col-md-12">
+                <p:messages id="categoryGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                            warnClass="alert" closable="true"
+                            infoClass="alert alert-info" />
+            </div>
             <div class="col-md-9">
                 <div class="panel panel-default panel-tab">
                     <div class="procurement-panel-header">#{msgs['lbl.admin.category.title']}</div>

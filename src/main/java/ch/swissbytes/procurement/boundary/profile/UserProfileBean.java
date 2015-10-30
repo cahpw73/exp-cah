@@ -69,7 +69,7 @@ public class UserProfileBean implements Serializable {
         confirmPass = userEntity.getPassword();
     }
 
-    public String doUpdate(){
+    public void doUpdate(){
         log.info("do update");
         if(dataValidateToUpdate()) {
             if(!oldPassword.equals(userEntity.getPassword())){
@@ -77,9 +77,7 @@ public class UserProfileBean implements Serializable {
             }
             userService.doUpdate(userEntity);
             Messages.addFlashGlobalInfo("User has been updated.");
-            return "profile?faces-redirect=true";
         }
-        return "";
     }
 
     private boolean dataValidateToUpdate() {

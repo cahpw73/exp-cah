@@ -12,8 +12,12 @@
         <f:viewAction action="#{clientBean.load}"/>
     </f:metadata>
     <ui:define name="body">
-
         <h:form id="editForm" prependId="false" class="form-horizontal">
+            <div class="col-md-12">
+                <p:messages id="clientEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                            warnClass="alert" closable="true"
+                            infoClass="alert alert-info" />
+            </div>
             <div class="col-md-12" style="margin-top: 25px;">
                 <h:panelGroup>
                     <div class="procurement-panel-header">#{clientBean.titlePage}</div>

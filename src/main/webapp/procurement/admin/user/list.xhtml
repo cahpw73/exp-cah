@@ -23,6 +23,11 @@
             }
         </style>
         <h:form id="formUser" prependId="false">
+            <div class="col-md-12">
+                <p:messages id="userListGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                            warnClass="alert" closable="true"
+                            infoClass="alert alert-info" />
+            </div>
             <p:remoteCommand name="updateExpeditingList" update="procuremetListId"/>
             <p:remoteCommand name="updateProcurementList" update="expeditingListId"/>
 
@@ -90,9 +95,9 @@
                                     <p:commandLink style=" color: #428BCA; "
                                                    value="#{msgs['lbl.reset']}"
                                                    action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}">
-                                        <p:ajax process="@this" update=":glbMsgs" async="false"
+                                        <p:ajax process="@this" update=":formUser:userListGlbMsgs" async="false"
                                                 onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
-                                        <p:ajax process="@this" update=":glbMsgs" async="false"/>
+                                        <p:ajax process="@this" update=":formUser:userListGlbMsgs" async="false"/>
                                     </p:commandLink>
                                 </div>
                             </p:column>
@@ -182,9 +187,9 @@
                                 </h:link>
                                 <p:commandLink style=" color: #428BCA; " value="#{msgs['lbl.reset']}"
                                                action="#{verificationTokenBean.sendLostPasswordToken(_u.email)}">
-                                    <p:ajax process="@this" update=":glbMsgs"
+                                    <p:ajax process="@this" update=":formUser:userListGlbMsgs"
                                             onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
-                                    <p:ajax process="@this" update=":glbMsgs"/>
+                                    <p:ajax process="@this" update=":formUser:userListGlbMsgs"/>
                                 </p:commandLink>
                             </p:column>
 

@@ -85,7 +85,7 @@
                                                  action="#{projectBean.addCurrency}"
                                                  styleClass="btn btn-primary btn-sm"
                                                  rendered="#{projectBean.createCurrency}">
-                                    <p:ajax update="currencyListId currencyGroup :glbMsgs"
+                                    <p:ajax update="currencyListId currencyGroup :editForm:projectGlbMsgs"
                                             process="currencyGroup" async="false"/>
                                 </h:commandButton>
                                 <h:commandButton value="#{msgs['lbl.update']}"
