@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="poId" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'UTF8') as clause
+		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'WIN1252') as clause
 from clauses_text cx
 inner join text tx on cx.text_id=tx.id
 where tx.status=0  and cx.status=0 and po_id=$P{poId}
@@ -32,7 +32,9 @@ order by ordered]]>
 		<band height="39" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="503" height="15"/>
-				<textElement verticalAlignment="Middle" markup="styled"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font isPdfEmbedded="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
 			</textField>
 		</band>
