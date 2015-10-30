@@ -124,7 +124,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("liquidatedDamagesApplicable", po.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : null);
         addParameters("vendorDrawingData", po.getPurchaseOrderProcurementEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getVendorDrawingData()).toUpperCase() : null);
         addParameters("exchangeRateVariation", po.getPurchaseOrderProcurementEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(po.getPurchaseOrderProcurementEntity().getExchangeRateVariation()).toUpperCase() : null);
-        addParameters("rtfNo", po.getPurchaseOrderProcurementEntity().getRTFNo());
+        addParameters("rtfNo", collectRTFNo());
         addParameters("mrNo", collectMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
@@ -227,6 +227,19 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         StringBuilder sb = new StringBuilder();
         for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
             sb.append(requisitionEntity.getRequisitionNumber());
+            sb.append(",");
+        }
+        Integer limit = sb.toString().length();
+        if (sb.toString().length() > 0) {
+            limit = limit - 1;
+        }
+        return sb.toString().substring(0, limit);
+    }
+
+    private String collectRTFNo(){
+        StringBuilder sb = new StringBuilder();
+        for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
+            sb.append(requisitionEntity.getrTFNo());
             sb.append(",");
         }
         Integer limit = sb.toString().length();
