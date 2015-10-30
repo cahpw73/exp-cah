@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.util.Encode;
 import org.omnifaces.util.Messages;
 import org.picketlink.annotations.PicketLink;
@@ -43,6 +44,9 @@ public class Authenticator extends BaseAuthenticator{
     @Inject
     private UserDao userDao;
 
+    @Inject
+    private UserSession userSession;
+
 
     @Override
     public void authenticate(){
@@ -51,6 +55,7 @@ public class Authenticator extends BaseAuthenticator{
         final  String passwordHashed= Encode.encode(credentials.getPassword());
         UserEntity userEntity=getUserEntity(credentials.getUserId(),passwordHashed);
         if(userEntity!=null){
+            userSession.setCurrentUser(userEntity);
             List<String> roleList = new ArrayList<>();
             List<RoleEntity> roleEntities = roleDao.getRolesAssignedBy(userDao.findUserByUserName(userEntity.getUsername()).get(0).getId());
             for (RoleEntity re : roleEntities){

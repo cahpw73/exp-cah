@@ -4,9 +4,11 @@ import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
+import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -16,6 +18,8 @@ import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
+import org.picketlink.Identity;
+import org.picketlink.idm.model.basic.User;
 import org.primefaces.context.RequestContext;
 
 import javax.faces.context.FacesContext;
@@ -97,12 +101,21 @@ public class PoBean extends Bean {
     @Inject
     private PoListBean listBean;
 
+    @Inject
+    private UserService userService;
+   /* @Inject
+    private Identity identity;*/
+
+    @Inject
+    private UserSession userSession;
+
     private String anchor;
 
 
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
     private boolean loaded = false;
+
 
 
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
@@ -197,6 +210,27 @@ public class PoBean extends Bean {
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
+                }
+            }
+        }
+    }
+
+    public String closePo(){
+        if(service.canUnlock(userSession.getCurrentUser(),purchaseOrder)) {
+            service.unlock(purchaseOrder);
+        }
+        return backToList();
+    }
+
+    public void validateIsLocked() {
+        if (poId != null) {
+            purchaseOrder = service.findById(Long.valueOf(poId));
+            if ((modeView == null || !modeView)) {
+                if (!service.canEdit(purchaseOrder, userSession.getCurrentUser())) {
+                    putModeView();
+                    Messages.addGlobalError( "You cannot edit this PO. please try later.");
+                }else{
+                    service.lock(purchaseOrder,userSession.getCurrentUser());
                 }
             }
         }
@@ -298,7 +332,7 @@ public class PoBean extends Bean {
     }
 
     public String backToList() {
-        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId();
+        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId()+"&anchor="+anchor;
     }
 
     private void sortPurchaseListByVariationAndDoUpdate() {
@@ -341,6 +375,11 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
+        if(!service.canEdit(purchaseOrder,userSession.getCurrentUser())){
+            Messages.addFlashGlobalError("You cannot edit this PO because it is being edited right now.");
+            validated = false;
+        }
+
         if (cashflowBean.getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Please enter Payment Terms");
             validated = false;
@@ -367,7 +406,7 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Enter a valid Class");
             validated = false;
         } else {
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()){
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()) {
                 try {
                     Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
                     if (purchaseOrder.getPo().length() > 4) {
@@ -412,8 +451,8 @@ public class PoBean extends Bean {
         if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz() == null) {
             Messages.addFlashGlobalError("Enter a valid Class");
             validate = false;
-        }else {
-            if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()){
+        } else {
+            if (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal()) {
                 try {
                     Integer poNumber = Integer.valueOf(purchaseOrder.getPo());
                     if (purchaseOrder.getPo().length() > 4) {

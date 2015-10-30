@@ -3,21 +3,29 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Users</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
         <f:viewParam name="projectId" value="#{poBean.projectId}"/>
-        <f:viewParam name="poId" value="#{poBean.poId}"/>
+        <f:viewParam name="poId" value="#{poBean.poId}"  />
         <f:viewParam name="modeView" value="#{poBean.modeView}"/>
         <f:viewParam name="anchor" value="#{poBean.anchor}"/>
-        <f:viewAction action="#{poBean.canEditPo}"/>
+
+
         <f:viewAction action="#{poBean.load}"/>
+        <f:viewAction action="#{poBean.validateIsLocked}"/>
+        <f:viewAction action="#{poBean.canEditPo}"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="editPoForm" class="form-horizontal">
-            <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed});"
+
+
+        <o:form id="editPoForm" includeViewParams="true">
+        <!--<h:form id="editPoForm" >-->
+            <div class="form-horizontal">
+            <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed}); "
                              autoRun="true"/>
 
             <div class="col-md-12" style="margin-top: 7px;">
@@ -28,7 +36,8 @@
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
                             <p:messages id="poEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
-                                        infoClass="alert alert-info" />
+
+                                        infoClass="alert alert-info"/>
                             <br/>
                             <h:panelGroup rendered="#{poBean.beingCreated}">
                                 <div class="procurement-panel-header" >#{msgs['purchase.order.new.po.title']}</div>
@@ -58,12 +67,21 @@
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
                                     &#160;
-                                    <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
+                                    <ui:remove>
+                                    <h:link id="cancelPOCreateBtn1" value="#{msgs['lbl.close']}"
                                             styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
                                             fragment="#{poBean.anchor}"
                                             outcome="list">
                                         <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                                     </h:link>
+                                    </ui:remove>
+                                    <h:commandLink id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
+                                                   action="#{poBean.closePo()}"
+
+                                                   styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
+                                                   >
+                                        <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
+                                    </h:commandLink>
                                     &#160;
                                     <h:commandButton
                                             styleClass="btn btn-primary btn-sm"
@@ -176,8 +194,9 @@
                     </div>
                 </div>
             </div>
-        </h:form>
-
+            </div>
+        <!--</h:form>-->
+        </o:form>
         <p:dialog header="New Custom Text" widgetVar="textSnippetModal1"
                   resizable="true">
             <h:panelGroup id="textSnippetModalId">

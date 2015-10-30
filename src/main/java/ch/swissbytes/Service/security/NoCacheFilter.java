@@ -46,7 +46,6 @@ public class NoCacheFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("cache filter...........");
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
          if (!isAJAXRequest(httpReq)) {
@@ -56,7 +55,7 @@ public class NoCacheFilter implements Filter {
                  httpRes.setDateHeader("Expires", 0); // Proxies.
              }
          }
-        getHeadersInfo(httpReq);
+       // getHeadersInfo(httpReq);
         chain.doFilter(request, response);
     }
 
