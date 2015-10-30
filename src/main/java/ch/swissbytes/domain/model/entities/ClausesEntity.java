@@ -58,6 +58,7 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
         this.clauses = clauses;
     }
 
+
     @Column (name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)
     public StatusEnum getStatus() {
