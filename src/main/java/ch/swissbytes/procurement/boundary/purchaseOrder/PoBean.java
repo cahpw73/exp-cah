@@ -8,6 +8,7 @@ import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.boundary.Bean;
@@ -102,8 +103,11 @@ public class PoBean extends Bean {
 
     @Inject
     private UserService userService;
+   /* @Inject
+    private Identity identity;*/
+
     @Inject
-    private Identity identity;
+    private UserSession userSession;
 
     private String anchor;
 
@@ -111,6 +115,7 @@ public class PoBean extends Bean {
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
     private boolean loaded = false;
+
 
 
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
@@ -211,8 +216,10 @@ public class PoBean extends Bean {
     }
 
     public String closePo(){
-        service.resetActivity(purchaseOrder);
-        return "list.xhtml?faces-redirect=true";
+        if(service.canUnlock(userSession.getCurrentUser(),purchaseOrder)) {
+            service.unlock(purchaseOrder);
+        }
+        return backToList();
     }
 
     public void validateIsLocked() {
@@ -220,13 +227,13 @@ public class PoBean extends Bean {
             purchaseOrder = service.findById(Long.valueOf(poId));
             //ProcurementStatus status = purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus();
             if ((modeView == null || !modeView)) {
-                User user = (User) identity.getAccount();
-                UserEntity userEntity = userService.findByUsername(user.getLoginName());
-                if (!service.canEdit(purchaseOrder, userEntity)) {
+                /*User user = (User) identity.getAccount();
+                UserEntity userEntity = userService.findByUsername(user.getLoginName());*/
+                if (!service.canEdit(purchaseOrder, userSession.getCurrentUser())) {
                     putModeView();
                     Messages.addFlashError("editPoForm:poEditGlbMsgs", "you cannot edit");
                 }else{
-                    service.lock(purchaseOrder,userEntity);
+                    service.lock(purchaseOrder,userSession.getCurrentUser());
                 }
             }
         }

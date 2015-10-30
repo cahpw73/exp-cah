@@ -1,5 +1,6 @@
 package ch.swissbytes.fqm.boundary;
 
+import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.types.ModuleSystemEnum;
 import org.apache.commons.lang.StringUtils;
 import org.picketlink.Identity;
@@ -24,6 +25,8 @@ public class UserSession implements Serializable{
     private boolean hasAccessBoth;
     @Inject
     private Identity identity;
+
+    private UserEntity currentUser;
 
      public boolean isProcurement() {
         if (StringUtils.isNotEmpty(currentModule) && StringUtils.isNotBlank(currentModule)) {
@@ -97,4 +100,11 @@ public class UserSession implements Serializable{
     }
 
 
+    public UserEntity getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(UserEntity currentUser) {
+        this.currentUser = currentUser;
+    }
 }

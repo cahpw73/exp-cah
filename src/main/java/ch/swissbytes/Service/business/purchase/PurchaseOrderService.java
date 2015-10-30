@@ -615,7 +615,20 @@ public class PurchaseOrderService extends Service implements Serializable {
         dao.lockPO(purchaseOrderEntity,userEntity);
 
     }
+    @Transactional
     public void unlock(PurchaseOrderEntity po){
         dao.unLockPO(po);
+    }
+
+    public boolean canUnlock(UserEntity user,PurchaseOrderEntity po){
+        boolean canUnlock=false;
+        PurchaseOrderEntity poEntity=findById(po.getId());
+        if(poEntity.isLocked()){
+            UserEntity locker=poEntity.getLockedBy();
+            if(locker!=null&&locker.getId().longValue()==user.getId().longValue()){
+                canUnlock=true;
+            }
+        }
+        return canUnlock;
     }
 }
