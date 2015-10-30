@@ -88,5 +88,14 @@
         <filter-name>ResetActivity</filter-name>
         <url-pattern>/procurement/project/purchase-order/*</url-pattern>
     </filter-mapping>
-
+    <filter>
+        <filter-name>gzipResponseFilter</filter-name>
+        <filter-class>org.omnifaces.filter.GzipResponseFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>gzipResponseFilter</filter-name>
+        <url-pattern>/procurement/project/purchase-order/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
 </web-app>
