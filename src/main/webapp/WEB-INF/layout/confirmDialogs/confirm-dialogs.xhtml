@@ -53,6 +53,36 @@
         </div>
     </p:confirmDialog>
 
+    <p:confirmDialog widgetVar="confGotoPoListDlg1" severity="alert" global="true" id="confGotoPoListDlgId1"
+                     header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:form>
+                <h:commandLink id="cancelPOCreateBtn1" value="#{msgs['lbl.yes']}"
+                               action="#{poBean.closePo()}" style="color: #ffffff"
+                               styleClass="btn btn-primary btn-sm">
+                    <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
+                </h:commandLink>
+
+                &#160;
+                <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
+                        onclick="PF('confGotoPoListDlg1').hide();">
+                    #{msgs['lbl.no']}
+                </button>
+            </h:form>
+        </div>
+    </p:confirmDialog>
+
     <p:confirmDialog widgetVar="confGoToSupplierListDlg" severity="alert" global="true" id="confGoToSupplierListDlgId"
                      header="Cancel">
         <f:facet name="message">
@@ -152,7 +182,8 @@
         </div>
     </p:confirmDialog>
 
-    <p:confirmDialog widgetVar="confGoToProjectListFromProfileDlg" severity="alert" global="true" id="confGoToProjectListFromProfileId"
+    <p:confirmDialog widgetVar="confGoToProjectListFromProfileDlg" severity="alert" global="true"
+                     id="confGoToProjectListFromProfileId"
                      header="Cancel">
         <f:facet name="message">
             <div>

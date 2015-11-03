@@ -50,13 +50,17 @@ function verifyToLeavePOEdit(e){
                 return false;
             }
         }
+    }else{
+        if(e.preventDefault) e.preventDefault();
+        console.log("hasChanges: " + hasChanges)
+        document.getElementById("editPoForm:cancelPOCreateBtn1").click();
     }
     return false;
 }
 function leavePageToPOList(level){
     target=level+"procurement/project/purchase-order/list.jsf";
     console.log("hasChanges true");
-    PF('confGotoPoListDlg').show();
+    PF('confGotoPoListDlg1').show();
 }
 
 /****Redirection to Supplier List ***/

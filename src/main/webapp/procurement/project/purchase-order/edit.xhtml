@@ -23,6 +23,11 @@
 
 
         <o:form id="editPoForm" includeViewParams="true">
+            <h:commandLink id="cancelPOCreateBtn1" value="#{msgs['lbl.close']}"
+                           action="#{poBean.closePo()}" style="margin-top: -200px!important;"
+                           styleClass="btn btn-primary btn-sm">
+                <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
+            </h:commandLink>
         <!--<h:form id="editPoForm" >-->
             <div class="form-horizontal">
             <p:remoteCommand name="onload" oncomplete="initializeSwitch(#{poBean.beingViewed}); "
@@ -32,7 +37,7 @@
 
                 <div class="col-md-12 panel-tab-users">
                     <!-- Nav tabs -->
-                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 100px; display: table; margin-top: -44px">
+                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 100px; display: table; margin-top: -55px">
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
                             <p:messages id="poEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
@@ -44,6 +49,9 @@
                             </h:panelGroup>
                             <h:panelGroup rendered="#{poBean.beingOnlyEdited}">
                                 <div class="procurement-panel-header">#{msgs['purchase.order.edit.po.title']}</div>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{poBean.beingViewed}">
+                                <div class="procurement-panel-header">#{msgs['purchase.order.view.po.title']}</div>
                             </h:panelGroup>
                             <br/>
                             <div class="pull-left" style="margin-left: 14px!important;">
@@ -67,21 +75,13 @@
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
                                     &#160;
-                                    <ui:remove>
-                                    <h:link id="cancelPOCreateBtn1" value="#{msgs['lbl.close']}"
+
+                                    <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
                                             styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
                                             fragment="#{poBean.anchor}"
                                             outcome="list">
                                         <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                                     </h:link>
-                                    </ui:remove>
-                                    <h:commandLink id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
-                                                   action="#{poBean.closePo()}"
-
-                                                   styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
-                                                   >
-                                        <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
-                                    </h:commandLink>
                                     &#160;
                                     <h:commandButton
                                             styleClass="btn btn-primary btn-sm"

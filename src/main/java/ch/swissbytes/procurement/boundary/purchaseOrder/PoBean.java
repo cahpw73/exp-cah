@@ -215,10 +215,18 @@ public class PoBean extends Bean {
     }
 
     public String closePo() {
+        log.info("closing session in PO");
         if (purchaseOrder.getId() != null && service.canUnlock(userSession.getCurrentUser(), purchaseOrder)) {
             service.unlock(purchaseOrder);
         }
         return backToList();
+    }
+
+    public void closePo1() {
+        log.info("closing session in PO111");
+        if (purchaseOrder.getId() != null && service.canUnlock(userSession.getCurrentUser(), purchaseOrder)) {
+            service.unlock(purchaseOrder);
+        }
     }
 
     public void validateIsLocked() {
