@@ -11,6 +11,7 @@ import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTimeZone;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -99,7 +100,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("poId", po.getPurchaseOrderProcurementEntity().getId());
         addParameters("orderDate", po.getPurchaseOrderProcurementEntity().getOrderDate());
         addParameters("deliveryDate", po.getPoDeliveryDate());
-        addParameters("deliveryDateStr", po.getPoDeliveryDate() != null ? new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(org.joda.time.DateTimeZone.forID(configuration.getTimeZone()).convertUTCToLocal(po.getPoDeliveryDate().getTime())).toUpperCase() : "");
+        addParameters("deliveryDateStr", convertDeliveryDate());
         addParameters("deliveryPoint", po.getPurchaseOrderProcurementEntity().getPoint() != null ? po.getPurchaseOrderProcurementEntity().getPoint().toUpperCase() : null);
         addParameters("deliveryInstructions", po.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
         addParameters("procManager", po.getPurchaseOrderProcurementEntity().getProcManager());
@@ -155,6 +156,21 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
+    }
+    private String  convertDeliveryDate(){
+        String converted="";
+        if(po.getPoDeliveryDate() != null) {
+            log.info("TIME ZONE "+configuration.getTimeZone());
+            log.info("HARD FORMAT "+configuration.getHardFormatDate());
+
+            DateTimeZone dtz =org.joda.time.DateTimeZone.forID(configuration.getTimeZone());
+            long utc=dtz.convertUTCToLocal(po.getPoDeliveryDate().getTime());
+            log.info("delivery date "+po.getPoDeliveryDate());
+            log.info("dtz "+utc);
+            converted=new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(utc).toUpperCase();
+        }
+        log.info("converted "+converted);
+        return converted;
     }
 
     private void loadParamLogos() {

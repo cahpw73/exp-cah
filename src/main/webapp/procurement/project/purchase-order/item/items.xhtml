@@ -187,7 +187,7 @@
                                 <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_i.isEditable}"
                                                process=":editPoForm:itemsDt"
                                                action="#{itemBean.confirmItem(_i)}"
-                                               update=":glbMsgs itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
+                                               update=":editPoForm:poEditGlbMsgs itemsDt :editPoForm:orderValueCf :editPoForm:orderValueCfVi :editPoForm:balanceId :editPoForm:deliverableDt"
                                                async="false"/>
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_i.isEditable}"

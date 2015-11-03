@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.scopesupply;
 
 import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.Service;
+import ch.swissbytes.Service.business.item.ItemDao;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
@@ -29,6 +30,9 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
     @Inject
     private AttachmentScopeSupplyService attachmentService;
 
+    @Inject
+    private ItemDao itemDao;
+
     private static final Logger log = Logger.getLogger(ScopeSupplyService.class.getName());
 
     public ScopeSupplyService() {
@@ -45,6 +49,11 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
            sse.getTdpList().addAll(tdpService.findByScopeSupply(sse.getId()));
             sse.getAttachments().addAll(attachmentService.findByScopeSupplyLazy(sse.getId()));
         }
+        return list;
+    }
+
+    public List<ItemEntity> findItemsByPurchaseOrder(final Long purchaseOrderId){
+        List<ItemEntity> list=dao.findItemsByPurchaseOrder(purchaseOrderId);
         return list;
     }
 
@@ -174,5 +183,15 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
     @Transactional
     public void doUpdate(ScopeSupplyEntity scopeSupply){
         dao.doUpdate(scopeSupply);
+    }
+
+    @Transactional
+    public void doItemsUpdate(List<ItemEntity> items){
+        int index = 1;
+        for (ItemEntity ssp : items) {
+            ssp.setOrdered(index);
+            itemDao.doUpdate(ssp);
+            index++;
+        }
     }
 }

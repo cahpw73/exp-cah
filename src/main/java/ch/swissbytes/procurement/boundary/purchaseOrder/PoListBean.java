@@ -148,7 +148,7 @@ public class PoListBean implements Serializable {
             }
             Date d1 = new Date();
             maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-            allPurchaseOrders = service.findAllPOs(Long.parseLong(projectId));
+            //allPurchaseOrders = service.findAllPOs(Long.parseLong(projectId));
             Date d2 = new Date();
             log.info("getting all max variations takes [" + (d2.getTime() - d1.getTime()) + "]ms");
             ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
@@ -340,12 +340,10 @@ public class PoListBean implements Serializable {
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
-        log.info("evaluating if it is possible to create validation");
         return canCreateVariation(entity);
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
-        Date time1 = new Date();
         boolean canCreateVar = false;
         boolean poCommitted = false;
         if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
@@ -359,9 +357,6 @@ public class PoListBean implements Serializable {
         if (isLastVariationAndCanCreateVariation || (existsLastVariationAndHasStatusIncomplete && !existNextVariation && poCommitted)) {
             canCreateVar = true;
         }
-        Date time2 = new Date();
-        log.info("variation time for "+entity.getId());
-        log.info("variation time [" + (time2.getTime() - time1.getTime()) + "]ms");
         return canCreateVar;
     }
 
@@ -391,8 +386,10 @@ public class PoListBean implements Serializable {
             }
         }
         if (po.getOrderedVariation() != null && entity.getOrderedVariation() != null) {
-            if (po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal() && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()) {
-                return true;
+            if(po.getPurchaseOrderProcurementEntity().getPoProcStatus()!=null){
+                if (po.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal() && po.getOrderedVariation().intValue() > entity.getOrderedVariation().intValue()) {
+                    return true;
+                }
             }
         }
         return false;
@@ -413,7 +410,7 @@ public class PoListBean implements Serializable {
                 }
             }
         } catch (NumberFormatException nef) {
-            log.info("Trying create variation to : " + entity.getVariation());
+
         }
 
         return nextVariationBool;
@@ -735,6 +732,7 @@ public class PoListBean implements Serializable {
         //log.info("Find the list of POs from "+projectId);
         Date d1 = new Date();
         purchaseOrders = service.findPosBy(getFilter());
+        allPurchaseOrders.addAll(purchaseOrders);
         log.info("purchaseOrders size: " + purchaseOrders.size());
         Date d2 = new Date();
         log.info("getting all POs [" + (d2.getTime() - d1.getTime()) + "]ms");

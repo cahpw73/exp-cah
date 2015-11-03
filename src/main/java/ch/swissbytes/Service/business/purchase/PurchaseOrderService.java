@@ -80,7 +80,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private Configuration configuration;
 
-    private final String PREFIX="v";
+    private final String PREFIX = "v";
 
     public PurchaseOrderService() {
         super.initialize(dao);
@@ -98,14 +98,14 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public void doSave(PurchaseOrderEntity newPurchaseOrder, List<CommentEntity> comments, List<ScopeSupplyEntity> scopeSupplies, SupplierEntity supplier) {
-        if(newPurchaseOrder.getPurchaseOrderProcurementEntity().getId() == null){
+        if (newPurchaseOrder.getPurchaseOrderProcurementEntity().getId() == null) {
             newPurchaseOrder.setProject(newPurchaseOrder.getProjectEntity().getProjectNumber());
             dao.save(newPurchaseOrder.getPurchaseOrderProcurementEntity());
         }
         dao.save(newPurchaseOrder);
         removePrefixIfAny(newPurchaseOrder);
         supplier.setPurchaseOrder(newPurchaseOrder);
-       // supplierDao.persist(supplier);
+        // supplierDao.persist(supplier);
         commentDao.persist(comments, newPurchaseOrder);
         scopeSupplyDao.persist(scopeSupplies, newPurchaseOrder);
     }
@@ -140,7 +140,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
 
-
     private void deleteScopeSupply(final Long purchaseOrderId) {
         List<ScopeSupplyEntity> scopeSupplyList = scopeSupplyDao.findByPurchaseOrder(purchaseOrderId);
         if (!scopeSupplyList.isEmpty()) {
@@ -149,6 +148,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             scopeSupplyDao.update(scopeSupply);
         }
     }
+
     private void deleteItem(final Long purchaseOrderId) {
         List<ItemEntity> scopeSupplyList = itemService.findByPoId(purchaseOrderId);
         if (!scopeSupplyList.isEmpty()) {
@@ -224,20 +224,20 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findPOMaxVariations(projectId);
     }
 
-    public PurchaseOrderEntity findPOWithMaxVariation(String project,String po){
-        Date date1=new Date();
-        List<PurchaseOrderEntity> list = dao.findPOWithMaxVariation(project,po);
-        Date date2=new Date();
-        log.info("Time for max variation ["+(date2.getTime()-date1.getTime())+"]ms");
-        if(!list.isEmpty()){
+    public PurchaseOrderEntity findPOWithMaxVariation(String project, String po) {
+        Date date1 = new Date();
+        List<PurchaseOrderEntity> list = dao.findPOWithMaxVariation(project, po);
+        Date date2 = new Date();
+        log.info("Time for max variation [" + (date2.getTime() - date1.getTime()) + "]ms");
+        if (!list.isEmpty()) {
             return list.get(0);
         }
         return null;
     }
 
-    public boolean findPOByOneVariation(String project,String po,String variation){
+    public boolean findPOByOneVariation(String project, String po, String variation) {
         List<PurchaseOrderEntity> list = dao.findPOByOneVariation(project, po, variation);
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             return true;
         }
         return false;
@@ -260,10 +260,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         String incoTerms = getStrToIncoTerm(po.getPoint());
         String fullIncoTerms = po.getPoint();
-        if(exitsDeliveryPointInIncoTerms(incoTerms)){
+        if (exitsDeliveryPointInIncoTerms(incoTerms)) {
             purchaseOrderEntity.setIncoTerm(incoTerms);
             purchaseOrderEntity.setFullIncoTerms(fullIncoTerms);
-        }else{
+        } else {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
@@ -271,7 +271,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
         //items
-        itemService.doSave(po.getScopeSupplyList(), purchaseOrderEntity,incoTerms,fullIncoTerms);
+        itemService.doSave(po.getScopeSupplyList(), purchaseOrderEntity, incoTerms, fullIncoTerms);
         //deliverable
         deliverableDao.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getDeliverables());
         //CashFlow
@@ -282,28 +282,29 @@ public class PurchaseOrderService extends Service implements Serializable {
         return purchaseOrderEntity;
     }
 
-    public boolean exitsDeliveryPointInIncoTerms(String point){
-        for(IncoTermsEnum i : IncoTermsEnum.values()){
-            if(i.name().equalsIgnoreCase(point)){
+    public boolean exitsDeliveryPointInIncoTerms(String point) {
+        for (IncoTermsEnum i : IncoTermsEnum.values()) {
+            if (i.name().equalsIgnoreCase(point)) {
                 return true;
             }
         }
-        return  false;
+        return false;
     }
 
-    public String getStrToIncoTerm(String point){
-        return point!=null&&point.length()>2? point.substring(0,3):point;
+    public String getStrToIncoTerm(String point) {
+        return point != null && point.length() > 2 ? point.substring(0, 3) : point;
     }
 
     public void addPrefixToVariation(PurchaseOrderEntity purchaseOrderEntity) {
-        if(purchaseOrderEntity!=null&&StringUtils.isNotEmpty(purchaseOrderEntity.getVariation())&&StringUtils.isNotBlank(purchaseOrderEntity.getVariation())) {
+        if (purchaseOrderEntity != null && StringUtils.isNotEmpty(purchaseOrderEntity.getVariation()) && StringUtils.isNotBlank(purchaseOrderEntity.getVariation())) {
             purchaseOrderEntity.setVariation(PREFIX + purchaseOrderEntity.getVariation());
         }
     }
-    public void removePrefixIfAny(PurchaseOrderEntity purchaseOrder){
-        if(purchaseOrder!=null&&StringUtils.isNotEmpty(purchaseOrder.getVariation())&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
-            while(purchaseOrder.getVariation().toLowerCase().trim().startsWith(PREFIX)&&StringUtils.isNotBlank(purchaseOrder.getVariation())){
-                purchaseOrder.setVariation(purchaseOrder.getVariation().substring(1,purchaseOrder.getVariation().length()));
+
+    public void removePrefixIfAny(PurchaseOrderEntity purchaseOrder) {
+        if (purchaseOrder != null && StringUtils.isNotEmpty(purchaseOrder.getVariation()) && StringUtils.isNotBlank(purchaseOrder.getVariation())) {
+            while (purchaseOrder.getVariation().toLowerCase().trim().startsWith(PREFIX) && StringUtils.isNotBlank(purchaseOrder.getVariation())) {
+                purchaseOrder.setVariation(purchaseOrder.getVariation().substring(1, purchaseOrder.getVariation().length()));
             }
         }
     }
@@ -337,10 +338,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
         String incoTerms = getStrToIncoTerm(po.getPoint());
-        if(exitsDeliveryPointInIncoTerms(incoTerms)){
+        if (exitsDeliveryPointInIncoTerms(incoTerms)) {
             purchaseOrderEntity.setIncoTerm(incoTerms);
             purchaseOrderEntity.setFullIncoTerms(po.getPoint());
-        }else{
+        } else {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
@@ -359,12 +360,13 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
-    public void markCMSAsExported(PurchaseOrderEntity purchaseOrderEntity){
+    public void markCMSAsExported(PurchaseOrderEntity purchaseOrderEntity) {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setCmsExported(true);
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
     }
+
     @Transactional
-    public void markJDEAsExported(PurchaseOrderEntity purchaseOrderEntity){
+    public void markJDEAsExported(PurchaseOrderEntity purchaseOrderEntity) {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setJdeExported(true);
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
     }
@@ -374,10 +376,10 @@ public class PurchaseOrderService extends Service implements Serializable {
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
         String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
-        if(exitsDeliveryPointInIncoTerms(incoTerms)){
+        if (exitsDeliveryPointInIncoTerms(incoTerms)) {
             purchaseOrderEntity.setIncoTerm(incoTerms);
             purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
-        }else{
+        } else {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
@@ -489,14 +491,15 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return poValue;
     }
-    private BigDecimal calculatePOValueByCurrency(List<ItemEntity> list, ProjectCurrencyEntity currency){
+
+    private BigDecimal calculatePOValueByCurrency(List<ItemEntity> list, ProjectCurrencyEntity currency) {
         BigDecimal poValue = new BigDecimal("0");
         if (currency == null) {
             return poValue;
         }
 
         for (ItemEntity item : list) {
-            if(item.getProjectCurrency()!=null&&item.getProjectCurrency().getCurrency().getId().longValue()==currency.getCurrency().getId()) {
+            if (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency().getId().longValue() == currency.getCurrency().getId()) {
                 BigDecimal amount = item.getCost() != null ? item.getCost() : new BigDecimal("0");
                 BigDecimal quantity = new BigDecimal(item.getQuantity() != null ? item.getQuantity().toString() : "0");
                 poValue = poValue.add(amount.multiply(quantity));
@@ -516,7 +519,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     private List<ProjectCurrencyEntity> findAllCurrenciesOnPO(ProjectCurrencyEntity defaultCurrency, List<ItemEntity> items) {
         List<ProjectCurrencyEntity> currencies = new ArrayList<>();
-        if(defaultCurrency!=null) {
+        if (defaultCurrency != null) {
             currencies.add(defaultCurrency);
         }
         for (ItemEntity item : items) {
@@ -527,14 +530,14 @@ public class PurchaseOrderService extends Service implements Serializable {
         return currencies;
     }
 
-    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency( List<ItemEntity> items, List<CashflowDetailEntity> milestones) {
+    public Map<ProjectCurrencyEntity, BigDecimal> getBalanceByCurrency(List<ItemEntity> items, List<CashflowDetailEntity> milestones) {
         Map<ProjectCurrencyEntity, BigDecimal> balance = new HashMap<>();
-        Map<ProjectCurrencyEntity, BigDecimal> totals = getTotalValuesByCurrency( items);
+        Map<ProjectCurrencyEntity, BigDecimal> totals = getTotalValuesByCurrency(items);
 
-        for(ProjectCurrencyEntity currencyEntity:totals.keySet()){
-            BigDecimal totalPayment=cashflowService.getTotalMilestonePayments(milestones, currencyEntity);
-            BigDecimal total=totals.get(currencyEntity);
-            balance.put(currencyEntity,total.add(totalPayment.multiply(new BigDecimal(-1))));
+        for (ProjectCurrencyEntity currencyEntity : totals.keySet()) {
+            BigDecimal totalPayment = cashflowService.getTotalMilestonePayments(milestones, currencyEntity);
+            BigDecimal total = totals.get(currencyEntity);
+            balance.put(currencyEntity, total.add(totalPayment.multiply(new BigDecimal(-1))));
         }
         return balance;
     }
@@ -555,12 +558,12 @@ public class PurchaseOrderService extends Service implements Serializable {
     It finds all purchase orders that haave the same Po Number and are under the same
     Project.
     * */
-    public List<PurchaseOrderEntity> findRelatives(Long purchaseOrderId){
-        List<PurchaseOrderEntity> list=new ArrayList<>();
-        PurchaseOrderEntity po=load(purchaseOrderId);
-        if(po!=null){
-            for (PurchaseOrderEntity poe:dao.findByProjectAndPo(po.getProjectEntity().getId(),po.getPo())){
-                if(poe.getId().longValue()!=purchaseOrderId.longValue()){
+    public List<PurchaseOrderEntity> findRelatives(Long purchaseOrderId) {
+        List<PurchaseOrderEntity> list = new ArrayList<>();
+        PurchaseOrderEntity po = load(purchaseOrderId);
+        if (po != null) {
+            for (PurchaseOrderEntity poe : dao.findByProjectAndPo(po.getProjectEntity().getId(), po.getPo())) {
+                if (poe.getId().longValue() != purchaseOrderId.longValue()) {
                     list.add(poe);
                 }
             }
@@ -568,22 +571,23 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return list;
     }
-    public String joinRequisitionsNumbers(){
+
+    public String joinRequisitionsNumbers() {
         return null;
     }
 
 
-    public String generateName(PurchaseOrderEntity po){
-        String fileName=po.getProjectEntity().getProjectNumber()!=null?po.getProjectEntity().getProjectNumber()+"-":"";
-        fileName=fileName+(po.getPo()!=null?po.getPo()+" ":"");
-        if(po.getVariationNumber()!=null && !po.getVariationNumber().equalsIgnoreCase("v0")&& !po.getVariationNumber().equalsIgnoreCase("0")){
-            fileName=fileName+po.getVariationNumber().toUpperCase()+" ";
+    public String generateName(PurchaseOrderEntity po) {
+        String fileName = po.getProjectEntity().getProjectNumber() != null ? po.getProjectEntity().getProjectNumber() + "-" : "";
+        fileName = fileName + (po.getPo() != null ? po.getPo() + " " : "");
+        if (po.getVariationNumber() != null && !po.getVariationNumber().equalsIgnoreCase("v0") && !po.getVariationNumber().equalsIgnoreCase("0")) {
+            fileName = fileName + po.getVariationNumber().toUpperCase() + " ";
         }
-        return fileName+(po.getPoTitle()!=null?po.getPoTitle():"");
+        return fileName + (po.getPoTitle() != null ? po.getPoTitle() : "");
     }
 
 
-    public List<PurchaseOrderEntity> findPosBy(FilterPO filter){
+    public List<PurchaseOrderEntity> findPosBy(FilterPO filter) {
         return dao.findPOsBy(filter);
     }
 
@@ -592,18 +596,19 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
-    public void resetActivity(PurchaseOrderEntity purchaseOrderEntity){
+    public void resetActivity(PurchaseOrderEntity purchaseOrderEntity) {
         dao.resetActivity(purchaseOrderEntity);
     }
-    public boolean canEdit(PurchaseOrderEntity po, UserEntity user){
-        PurchaseOrderEntity purchaseOrderEntity=findById(po.getId());
-        boolean canEdit=true;
-        if(purchaseOrderEntity.isLocked()!=null&&purchaseOrderEntity.isLocked()){
-            if(purchaseOrderEntity.getLockedBy().getId().longValue()!=user.getId().longValue()){
-                Date date=new Date();
-                long difference=date.getTime()-purchaseOrderEntity.getLastActivityUpdate().getTime();
-                if(difference<=1800000){
-                    canEdit=false;
+
+    public boolean canEdit(PurchaseOrderEntity po, UserEntity user) {
+        PurchaseOrderEntity purchaseOrderEntity = findById(po.getId());
+        boolean canEdit = true;
+        if (purchaseOrderEntity.isLocked() != null && purchaseOrderEntity.isLocked()) {
+            if (purchaseOrderEntity.getLockedBy().getId().longValue() != user.getId().longValue()) {
+                Date date = new Date();
+                long difference = date.getTime() - purchaseOrderEntity.getLastActivityUpdate().getTime();
+                if (difference <= 1800000) {
+                    canEdit = false;
                 }
             }
         }
@@ -611,22 +616,23 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
-    public void lock(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity){
-        dao.lockPO(purchaseOrderEntity,userEntity);
+    public void lock(PurchaseOrderEntity purchaseOrderEntity, UserEntity userEntity) {
+        dao.lockPO(purchaseOrderEntity, userEntity);
 
     }
+
     @Transactional
-    public void unlock(PurchaseOrderEntity po){
+    public void unlock(PurchaseOrderEntity po) {
         dao.unLockPO(po);
     }
 
-    public boolean canUnlock(UserEntity user,PurchaseOrderEntity po){
-        boolean canUnlock=false;
-        PurchaseOrderEntity poEntity=findById(po.getId());
-        if(poEntity.isLocked()){
-            UserEntity locker=poEntity.getLockedBy();
-            if(locker!=null&&locker.getId().longValue()==user.getId().longValue()){
-                canUnlock=true;
+    public boolean canUnlock(UserEntity user, PurchaseOrderEntity po) {
+        boolean canUnlock = false;
+        PurchaseOrderEntity poEntity = findById(po.getId());
+        if (poEntity.isLocked()!=null && poEntity.isLocked()) {
+            UserEntity locker = poEntity.getLockedBy();
+            if (locker != null && locker.getId().longValue() == user.getId().longValue()) {
+                canUnlock = true;
             }
         }
         return canUnlock;

@@ -38,9 +38,9 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     protected void applyCriteriaValues(Query query, Filter f) {
         query.setParameter("DELETED", StatusEnum.DELETED.getId());
         if (f != null) {
-            FilterPO filter=(FilterPO)f;
-            if(filter.getProjectId()!=null){
-                query.setParameter("PROJECT_ID", filter.getProjectId() );
+            FilterPO filter = (FilterPO) f;
+            if (filter.getProjectId() != null) {
+                query.setParameter("PROJECT_ID", filter.getProjectId());
             }
         }
     }
@@ -54,8 +54,8 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb = new StringBuilder();
         sb.append(" AND x.status.id<>:DELETED ");
         if (f != null) {
-            FilterPO filter=(FilterPO)f;
-            if(filter.getProjectId()!=null){
+            FilterPO filter = (FilterPO) f;
+            if (filter.getProjectId() != null) {
                 sb.append(" AND x.projectEntity.id =:PROJECT_ID");
             }
         }
@@ -76,13 +76,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-    public List<PurchaseOrderEntity> findPOMaxVariations(Long projectId){
+    public List<PurchaseOrderEntity> findPOMaxVariations(Long projectId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po.po,MAX(po.orderedVariation) ");
         sb.append(" FROM PurchaseOrderEntity po");
         sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
-      //  sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");
+        //  sb.append(" AND po.purchaseOrderProcurementEntity.id = p.id ");
         sb.append(" GROUP BY po.po ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
@@ -90,7 +90,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-    public List<PurchaseOrderEntity> findPOWithMaxVariation(String project,String po){
+    public List<PurchaseOrderEntity> findPOWithMaxVariation(String project, String po) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
@@ -113,22 +113,22 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("PO", po);
         map.put("INCOMPLETE", ProcurementStatus.INCOMPLETE);
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
     }
 
-    public List<PurchaseOrderEntity> findPOsBy(FilterPO filterPO){
+    public List<PurchaseOrderEntity> findPOsBy(FilterPO filterPO) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE  po.projectEntity.id = :PROJECT ");
         sb.append(" AND po.status.id = :ENABLED ");
-        if(filterPO.getClassEnum()!=null&&
-                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||
-                        filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal()||
-                filterPO.getClassEnum().ordinal()==ClassEnum.MINING_FLEET.ordinal())){
+        if (filterPO.getClassEnum() != null &&
+                (filterPO.getClassEnum().ordinal() == ClassEnum.CONSTRUCTION_CONTRACT.ordinal() ||
+                        filterPO.getClassEnum().ordinal() == ClassEnum.SERVICE_CONTRACT.ordinal() ||
+                        filterPO.getClassEnum().ordinal() == ClassEnum.MINING_FLEET.ordinal())) {
             sb.append(" AND po.purchaseOrderProcurementEntity.clazz = :CLAZZ ");
         }
-        if(filterPO.getPurchaseOrderNumberOption()!=null){
+        if (filterPO.getPurchaseOrderNumberOption() != null) {
             sb.append(" AND (po.po >= :BEGINNING ");
             sb.append(" AND po.po <= :ENDING )");
         }
@@ -136,20 +136,20 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("PROJECT", filterPO.getProjectId());
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        if(filterPO.getClassEnum()!=null&&
-                (filterPO.getClassEnum().ordinal()== ClassEnum.CONSTRUCTION_CONTRACT.ordinal()||
-                        filterPO.getClassEnum().ordinal()== ClassEnum.SERVICE_CONTRACT.ordinal()||
-                filterPO.getClassEnum().ordinal()==ClassEnum.MINING_FLEET.ordinal())){
+        if (filterPO.getClassEnum() != null &&
+                (filterPO.getClassEnum().ordinal() == ClassEnum.CONSTRUCTION_CONTRACT.ordinal() ||
+                        filterPO.getClassEnum().ordinal() == ClassEnum.SERVICE_CONTRACT.ordinal() ||
+                        filterPO.getClassEnum().ordinal() == ClassEnum.MINING_FLEET.ordinal())) {
             map.put("CLAZZ", filterPO.getClassEnum());
         }
-        if(filterPO.getPurchaseOrderNumberOption()!=null){
+        if (filterPO.getPurchaseOrderNumberOption() != null) {
             map.put("BEGINNING", filterPO.getPurchaseOrderNumberOption().getBeginning());
             map.put("ENDING", filterPO.getPurchaseOrderNumberOption().getEnding());
         }
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
     }
 
-    public List<PurchaseOrderEntity> findPOByOneVariation(String project, String po, String variation){
+    public List<PurchaseOrderEntity> findPOByOneVariation(String project, String po, String variation) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po, PurchaseOrderProcurementEntity p ");
@@ -163,7 +163,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("PO", po);
         map.put("VARIATION", variation);
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
     }
 
     public List<PurchaseOrderEntity> findPOByProjectIdAndPoNo(final Long projectId, final String poNo) {
@@ -174,7 +174,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
-        if(projectId != null){
+        if (projectId != null) {
             sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
             map.put("PROJECT_ID", projectId);
         }
@@ -198,19 +198,19 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return entityManaged;
     }
 
-    public PurchaseOrderProcurementEntity findPOEntityById(final Long poId){
+    public PurchaseOrderProcurementEntity findPOEntityById(final Long poId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM  PurchaseOrderProcurementEntity p ");
         sb.append(" WHERE p.id = :PO_ID ");
         Map<String, Object> map = new HashMap<>();
-        map.put("PO_ID",poId);
-        List<PurchaseOrderProcurementEntity> list = super.findBy(sb.toString(),map);
+        map.put("PO_ID", poId);
+        List<PurchaseOrderProcurementEntity> list = super.findBy(sb.toString(), map);
         PurchaseOrderProcurementEntity entity = null;
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             entity = list.get(0);
         }
-        return  entity;
+        return entity;
     }
 
     @Override
@@ -219,7 +219,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     }
 
     @Override
-    public String orderBy(){
+    public String orderBy() {
         return " ORDER BY x.po,x.orderedVariation ";
     }
 
@@ -238,7 +238,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-   public List<PurchaseOrderEntity> findByVariation(PurchaseOrderEntity purchaseOrder){
+    public List<PurchaseOrderEntity> findByVariation(PurchaseOrderEntity purchaseOrder) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po ");
@@ -250,9 +250,9 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("VARIATION", purchaseOrder.getVariation() != null ? purchaseOrder.getVariation().trim().toLowerCase() : "");
-        map.put("PO_NUMBER",purchaseOrder.getPo()== null?"":purchaseOrder.getPo().trim().toLowerCase());
-        map.put("ID",purchaseOrder.getId()==null?-1L:purchaseOrder.getId());
-        map.put("PROJECT_ID",purchaseOrder.getProjectEntity().getId());
+        map.put("PO_NUMBER", purchaseOrder.getPo() == null ? "" : purchaseOrder.getPo().trim().toLowerCase());
+        map.put("ID", purchaseOrder.getId() == null ? -1L : purchaseOrder.getId());
+        map.put("PROJECT_ID", purchaseOrder.getProjectEntity().getId());
         return super.findBy(sb.toString(), map);
     }
 
@@ -294,59 +294,62 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
-    public VPurchaseOrder findVPOById(Long id){
-        StringBuilder sb=new StringBuilder();
+    public VPurchaseOrder findVPOById(Long id) {
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT v ");
         sb.append("FROM VPurchaseOrder v ");
         sb.append("WHERE v.poId=:ID ");
-        Map<String,Object> parameters=new HashMap<>();
-        parameters.put("ID",id);
-        List<VPurchaseOrder>list=this.findBy(sb.toString(), parameters);
-        return list.isEmpty()?null:list.get(0);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ID", id);
+        List<VPurchaseOrder> list = this.findBy(sb.toString(), parameters);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     public List<PurchaseOrderEntity> findAllPOs(final Long projectId) {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT po ");
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         sb.append(" ORDER BY po.po ");
-        Map<String,Object> parameters=new HashMap<>();
-        parameters.put("ENABLED",StatusEnum.ENABLE.getId());
-        parameters.put("PROJECT_ID",projectId);
-        return super.findBy(sb.toString(),parameters);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ENABLED", StatusEnum.ENABLE.getId());
+        parameters.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), parameters);
     }
 
-    public void resetActivity(PurchaseOrderEntity purchaseOrderEntity){
-        StringBuilder sb=new StringBuilder();
+    public void resetActivity(PurchaseOrderEntity purchaseOrderEntity) {
+        StringBuilder sb = new StringBuilder();
         sb.append("UPDATE PurchaseOrderEntity ");
         sb.append("SET  lastActivityUpdate =:DATE ");
         sb.append("WHERE ID=:PO_ID ");
-        Map<String,Object> parameters=new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("DATE", new Date());
         parameters.put("PO_ID", purchaseOrderEntity.getId());
         super.executeUpdate(sb.toString(), parameters);
     }
-    public void lockPO(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity){
-       updateLock(purchaseOrderEntity,userEntity,true);
+
+    public void lockPO(PurchaseOrderEntity purchaseOrderEntity, UserEntity userEntity) {
+        updateLock(purchaseOrderEntity, userEntity, true);
     }
-    private void updateLock(PurchaseOrderEntity purchaseOrderEntity,UserEntity userEntity,boolean lock){
-        StringBuilder sb=new StringBuilder();
+
+    private void updateLock(PurchaseOrderEntity purchaseOrderEntity, UserEntity userEntity, boolean lock) {
+        StringBuilder sb = new StringBuilder();
         sb.append("UPDATE PurchaseOrderEntity ");
         sb.append("SET lastActivityUpdate =:DATE, ");
         sb.append("lockedBy =:USER, ");
         sb.append("locked =:LOCKED ");
         sb.append("WHERE ID=:PO_ID ");
-        Map<String,Object> parameters=new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("DATE", new Date());
         parameters.put("PO_ID", purchaseOrderEntity.getId());
         parameters.put("USER", userEntity);
         parameters.put("LOCKED", lock);
-        super.executeUpdate(sb.toString(),parameters);
+        super.executeUpdate(sb.toString(), parameters);
     }
-    public void unLockPO(PurchaseOrderEntity purchaseOrderEntity){
-        updateLock(purchaseOrderEntity,null,false);
+
+    public void unLockPO(PurchaseOrderEntity purchaseOrderEntity) {
+        updateLock(purchaseOrderEntity, null, false);
     }
 
 }

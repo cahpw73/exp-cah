@@ -148,6 +148,16 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
         return query.getResultList();
 
     }
+
+    public List<ItemEntity> findItemsByPurchaseOrder(final Long purchaseOrderId){
+        String hql = "SELECT ss FROM ItemEntity ss where ss.purchaseOrder.id=:purchase_id AND  ss.status.id<>:DELETED ORDER BY ss.id" ;
+        TypedQuery<ItemEntity> query = this.entityManager.createQuery(
+                hql, ItemEntity.class);
+        query.setParameter("purchase_id", purchaseOrderId);
+        query.setParameter("DELETED", StatusEnum.DELETED.getId());
+        return query.getResultList();
+
+    }
     public void update(List<ScopeSupplyEntity>scopeSupplyEntities,PurchaseOrderEntity purchaseOrderEntity){
         for(ScopeSupplyEntity scopeSupplyEntity:scopeSupplyEntities){
             if(scopeSupplyEntity.getId()==null){//new one

@@ -57,11 +57,13 @@ public class ResetActivity implements Filter {
             if (isAJAXRequest(((HttpServletRequest) httpReq))) {
                 if (!viewMode.equals("true")) {
                     String poId = ((HttpServletRequest) httpReq).getParameter("poId");
-                    PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
-                    User user = (User) identity.getAccount();
-                    UserEntity userEntity = userService.findByUsername(user.getLoginName());
-                    if (service.canEdit(po, userEntity)) {
-                        service.resetActivity(po);
+                    if(poId!=null) {
+                        PurchaseOrderEntity po = service.findById(Long.valueOf(poId));
+                        User user = (User) identity.getAccount();
+                        UserEntity userEntity = userService.findByUsername(user.getLoginName());
+                        if (service.canEdit(po, userEntity)) {
+                            service.resetActivity(po);
+                        }
                     }
                 }
             }

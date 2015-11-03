@@ -117,7 +117,6 @@ public class PoBean extends Bean {
     private boolean loaded = false;
 
 
-
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
@@ -215,8 +214,8 @@ public class PoBean extends Bean {
         }
     }
 
-    public String closePo(){
-        if(service.canUnlock(userSession.getCurrentUser(),purchaseOrder)) {
+    public String closePo() {
+        if (purchaseOrder.getId() != null && service.canUnlock(userSession.getCurrentUser(), purchaseOrder)) {
             service.unlock(purchaseOrder);
         }
         return backToList();
@@ -228,9 +227,9 @@ public class PoBean extends Bean {
             if ((modeView == null || !modeView)) {
                 if (!service.canEdit(purchaseOrder, userSession.getCurrentUser())) {
                     putModeView();
-                    Messages.addGlobalError( "You cannot edit this PO. please try later.");
-                }else{
-                    service.lock(purchaseOrder,userSession.getCurrentUser());
+                    Messages.addGlobalError("You cannot edit this PO. please try later.");
+                } else {
+                    service.lock(purchaseOrder, userSession.getCurrentUser());
                 }
             }
         }
@@ -286,7 +285,7 @@ public class PoBean extends Bean {
     private String doLastOperationsOverPO(boolean edit) {
         log.info("purchase order updated [" + purchaseOrder.getId() + "]");
         sortPurchaseListByVariationAndDoUpdate();
-        sortScopeSupplyAndDoUpdate();
+        sortItemsAndDoUpdate();
         sortCashflowDetailAndDoUpdate();
         Messages.addFlashGlobalInfo("The Purchase Order " + purchaseOrder.getPoTitle() + " has been saved.", null);
         return !edit ? backToList() : "edit?faces-redirect=true&poId=" + purchaseOrder.getId() + "";
@@ -332,7 +331,7 @@ public class PoBean extends Bean {
     }
 
     public String backToList() {
-        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId()+"&anchor="+anchor;
+        return "list.xhtml?faces-redirect=true&projectId=" + purchaseOrder.getProjectEntity().getId() + "&anchor=" + anchor;
     }
 
     private void sortPurchaseListByVariationAndDoUpdate() {
@@ -346,15 +345,10 @@ public class PoBean extends Bean {
         }
     }
 
-    private void sortScopeSupplyAndDoUpdate() {
-        List<ScopeSupplyEntity> sspList = scopeSupplyService.findByPurchaseOrder(purchaseOrder.getId());
-        sortBean.sortScopeSupplyEntity(sspList);
-        int index = 1;
-        for (ScopeSupplyEntity ssp : sspList) {
-            ssp.setOrdered(index);
-            scopeSupplyService.doUpdate(ssp);
-            index++;
-        }
+    private void sortItemsAndDoUpdate() {
+        List<ItemEntity> sspList = scopeSupplyService.findItemsByPurchaseOrder(purchaseOrder.getId());
+        sortBean.sortItemEntity(sspList);
+        scopeSupplyService.doItemsUpdate(sspList);
     }
 
     private void sortCashflowDetailAndDoUpdate() {
@@ -375,7 +369,7 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
-        if(!service.canEdit(purchaseOrder,userSession.getCurrentUser())){
+        if (purchaseOrder.getId() != null && !service.canEdit(purchaseOrder, userSession.getCurrentUser())) {
             Messages.addFlashGlobalError("You cannot edit this PO because it is being edited right now.");
             validated = false;
         }
