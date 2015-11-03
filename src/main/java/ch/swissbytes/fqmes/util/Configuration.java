@@ -110,7 +110,7 @@ public class Configuration implements Serializable {
     }
 
     public String getHardFormatDate(){
-        return "dd MMM YYYY";
+        return "dd MMM yyyy";
     }
     public String getFormatDateTime(){
         log.log(Level.FINE,"format date time");

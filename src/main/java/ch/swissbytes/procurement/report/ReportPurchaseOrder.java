@@ -167,7 +167,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             long utc=dtz.convertUTCToLocal(po.getPoDeliveryDate().getTime());
             log.info("delivery date "+po.getPoDeliveryDate());
             log.info("dtz "+utc);
-            converted=new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(utc).toUpperCase();
+            Date date=new Date();
+            date.setTime(utc);
+            log.info("date "+date);
+            converted=new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(date).toUpperCase();
         }
         log.info("converted "+converted);
         return converted;
