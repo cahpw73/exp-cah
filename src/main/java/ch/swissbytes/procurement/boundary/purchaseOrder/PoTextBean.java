@@ -49,7 +49,7 @@ public class PoTextBean implements Serializable {
 
     private TextEntity textEntity;
 
-    private Long tempClausesId=1000L;
+    private Long tempClausesId = 1000L;
 
 
     @PostConstruct
@@ -62,12 +62,18 @@ public class PoTextBean implements Serializable {
         clausesEntities = new ArrayList<>();
     }
 
-    public void copyToPreamble(String text){
+    public void copyToPreamble(String text) {
         textEntity.setPreamble(text);
     }
 
-    public void copyToClauses(ProjectTextSnippetEntity text){
-        droppedTextSnippetList.add(createClausesEntity(text));
+    public void copyToClauses(ProjectTextSnippetEntity text) {
+        ClausesEntity clauses = createClausesEntity(text);
+        droppedTextSnippetList.add(clauses);
+        int index = 1;
+        for(ClausesEntity c : droppedTextSnippetList){
+            c.setNumberClause(index+".0");
+            index++;
+        }
         textSnippetList.remove(text);
     }
 
@@ -76,7 +82,7 @@ public class PoTextBean implements Serializable {
         log.info("destroy poTextBean");
     }
 
-    public void loadProjectTextSnippets(final Long projectId){
+    public void loadProjectTextSnippets(final Long projectId) {
         log.info("loading projectTextSnippet list");
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
     }
@@ -86,32 +92,39 @@ public class PoTextBean implements Serializable {
         log.info("loadText");
         textEntity = textService.findByPoId(purchaseOrderProcurementEntity.getId());
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
-        if(textEntity!=null){
+        if (textEntity != null) {
             clausesEntities = textService.findClausesByTextId(textEntity.getId());
 
             droppedTextSnippetList = clausesEntities;
             List<ProjectTextSnippetEntity> listToRemove = new ArrayList<>();
-            for(ClausesEntity ce : droppedTextSnippetList){
-                if(ce.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
-                    ProjectTextSnippetEntity pt =  projectTextSnippetService.findById(ce.getProjectTextSnippet().getId());
+            for (ClausesEntity ce : droppedTextSnippetList) {
+                if (ce.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                    ProjectTextSnippetEntity pt = projectTextSnippetService.findById(ce.getProjectTextSnippet().getId());
                     listToRemove.add(pt);
                 }
             }
             textSnippetList.removeAll(listToRemove);
         }
     }
-    public void loadTextNewPO(final Long projectId){
+
+    public void loadTextNewPO(final Long projectId) {
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
     }
 
     public void onStandardTextDrop(DragDropEvent ddEvent) {
         log.info("on standard text drop");
         ProjectTextSnippetEntity poText = ((ProjectTextSnippetEntity) ddEvent.getData());
-        droppedTextSnippetList.add(createClausesEntity(poText));
+        ClausesEntity clausesEntity = createClausesEntity(poText);
+        droppedTextSnippetList.add(clausesEntity);
+        int index = 1;
+        for(ClausesEntity c : droppedTextSnippetList){
+            c.setNumberClause(index+".0");
+            index++;
+        }
         textSnippetList.remove(poText);
     }
 
-    private ClausesEntity createClausesEntity(ProjectTextSnippetEntity poText){
+    private ClausesEntity createClausesEntity(ProjectTextSnippetEntity poText) {
         ClausesEntity entity = new ClausesEntity();
         entity.setId(tempClausesId);
         tempClausesId++;
@@ -125,18 +138,23 @@ public class PoTextBean implements Serializable {
 
     public void onRowReorder(ReorderEvent event) {
         log.info("on row reorder");
+        int index = 1;
+        for(ClausesEntity c : droppedTextSnippetList){
+            c.setNumberClause(index+".0");
+            index++;
+        }
     }
 
-    public void removeClauses(){
+    public void removeClauses() {
         for (ClausesEntity ts : selectedClausesTextList) {
             textSnippetList.add(projectTextSnippetService.findById(ts.getProjectTextSnippet().getId()));
-            if(ts.getId() > 0 && ts.getId() < 1000){
-                for(ClausesEntity pl : droppedTextSnippetList){
-                    if(ts.getId().intValue() == pl.getId().intValue()){
+            if (ts.getId() > 0 && ts.getId() < 1000) {
+                for (ClausesEntity pl : droppedTextSnippetList) {
+                    if (ts.getId().intValue() == pl.getId().intValue()) {
                         pl.setStatus(StatusEnum.DELETED);
                     }
                 }
-            }else {
+            } else {
                 droppedTextSnippetList.remove(ts);
             }
         }
@@ -177,7 +195,7 @@ public class PoTextBean implements Serializable {
     public void confirmItem(ClausesEntity entity) {
         log.info("confirm text");
         int index = droppedTextSnippetList.indexOf(entity);
-        droppedTextSnippetList.set(index,entity);
+        droppedTextSnippetList.set(index, entity);
         entity.stopEditing();
     }
 
@@ -191,8 +209,8 @@ public class PoTextBean implements Serializable {
         }
     }
 
-    public boolean hasStatusEnable(ClausesEntity entity){
-        if(entity != null && entity.getStatus() != null){
+    public boolean hasStatusEnable(ClausesEntity entity) {
+        if (entity != null && entity.getStatus() != null) {
             return StatusEnum.ENABLE.ordinal() == entity.getStatus().ordinal();
         }
         return true;
@@ -204,8 +222,8 @@ public class PoTextBean implements Serializable {
 
     public List<ClausesEntity> filteredList() {
         log.info("filteredList()");
-        for(ClausesEntity c : droppedTextSnippetList){
-            log.info("drooped text Id: " + c.getId()+" code: "+ c.getCode());
+        for (ClausesEntity c : droppedTextSnippetList) {
+            log.info("drooped text Id: " + c.getId() + " code: " + c.getCode());
         }
         List<ClausesEntity> list = new ArrayList<>();
         for (ClausesEntity r : this.droppedTextSnippetList) {
@@ -213,8 +231,8 @@ public class PoTextBean implements Serializable {
                 list.add(r);
             }
         }
-        for(ClausesEntity c : list){
-            log.info("list text Id: " + c.getId()+" code: "+ c.getCode());
+        for (ClausesEntity c : list) {
+            log.info("list text Id: " + c.getId() + " code: " + c.getCode());
         }
         log.info("list size: " + list.size());
         return list;

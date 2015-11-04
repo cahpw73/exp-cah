@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Clauses" pageWidth="517" pageHeight="802" columnWidth="517" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6b55f88e-f7d8-4c7c-862f-5aecda0b1890">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="2.0000000000000013"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<parameter name="poId" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'WIN1252') as clause
+		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'WIN1252') as clause, number_clause,ordered+1 as index
 from clauses_text cx
 inner join text tx on cx.text_id=tx.id
 where tx.status=0  and cx.status=0 and po_id=$P{poId}
 order by ordered]]>
 	</queryString>
 	<field name="clause" class="java.lang.String"/>
+	<field name="number_clause" class="java.lang.String"/>
+	<field name="index" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -31,11 +34,16 @@ order by ordered]]>
 	<detail>
 		<band height="39" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="0" y="0" width="503" height="15"/>
+				<reportElement uuid="1c1b6240-4d3a-4a61-87ff-e100b4ac76aa" x="26" y="0" width="491" height="15"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a6da80ca-bdbd-44fa-9de3-54b115df2219" style="Arial-Bold" x="0" y="0" width="25" height="15"/>
+				<textElement verticalAlignment="Top" markup="styled"/>
+				<textFieldExpression><![CDATA[$F{number_clause}!=null?$F{number_clause}:$F{index}+".0"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

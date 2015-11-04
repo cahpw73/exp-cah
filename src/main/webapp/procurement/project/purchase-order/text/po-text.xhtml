@@ -60,20 +60,11 @@
                                      value="#{poTextBean.droppedTextSnippetList}"
                                      selectionMode="multiple" selection="#{poTextBean.selectedClausesTextList}"
                                      rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
-                            <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}"/>
-                            <ui:remove>
-                                <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}"
-                                          rendered="#{poTextBean.hasStatusEnable(_dt)}">
-                                    <h:panelGroup id="viCode" rendered="#{!_dt.isEditable}">
-                                        <h:outputText value="#{_dt.code}"/>
-                                    </h:panelGroup>
-                                    <h:panelGroup id="edCostCode" rendered="#{_dt.isEditable}">
-                                        <h:inputText id="costCodeItem" value="#{_dt.code}" styleClass="form-control">
-                                        </h:inputText>
-                                    </h:panelGroup>
-
-                                </p:column>
-                            </ui:remove>
+                            <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}" update="clausesAuxDt"/>
+                            <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}"
+                                      rendered="#{poTextBean.hasStatusEnable(_dt)}">
+                                <h:outputText value="#{_dt.numberClause}"/>
+                            </p:column>
                             <p:column id="textAuxCl" headerText="#{msgs['po.text.lbl.standard.column.text']}"
                                       rendered="#{poTextBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
                                 <h:panelGroup id="viDescription" rendered="#{!_dt.isEditable}">

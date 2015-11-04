@@ -23,6 +23,7 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
     private StatusEnum status;
     private Date lastUpdate;
     private Integer ordered;
+    private String numberClause;
     private TextEntity text;
     private ProjectTextSnippetEntity projectTextSnippet;
 
@@ -86,6 +87,15 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
 
     public void setOrdered(Integer ordered) {
         this.ordered = ordered;
+    }
+
+    @Column(name = "number_clause")
+    public String getNumberClause() {
+        return numberClause;
+    }
+
+    public void setNumberClause(String numberClause) {
+        this.numberClause = numberClause;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
