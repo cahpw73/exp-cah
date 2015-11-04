@@ -125,7 +125,9 @@ public class ClientBean extends Bean implements Serializable {
                 case 5:
                     client.setClientLogoLeft(logoBean.getLogo());
                     break;
-
+                case 6:
+                    client.setHeaderLogo(logoBean.getLogo());
+                    break;
             }
         }
     }
@@ -140,6 +142,11 @@ public class ClientBean extends Bean implements Serializable {
 
     public void startClientLogoLeft(){
         currentLogo=5;
+        logoBean.restart();
+    }
+
+    public void startHeaderLogo(){
+        currentLogo = 6;
         logoBean.restart();
     }
 

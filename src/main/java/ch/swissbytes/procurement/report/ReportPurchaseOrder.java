@@ -177,6 +177,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private void loadParamLogos() {
+        if(po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null){
+            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
+            addParameters("headerLogo", logo);
+        }
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientLogo() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
             addParameters("logo", logo);

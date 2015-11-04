@@ -16,7 +16,7 @@
             <div class="col-md-12">
                 <p:messages id="clientEditGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                             warnClass="alert" closable="true"
-                            infoClass="alert alert-info" />
+                            infoClass="alert alert-info"/>
             </div>
             <div class="col-md-12" style="margin-top: 25px;">
                 <h:panelGroup>
@@ -39,20 +39,22 @@
                                 <p:message for="name"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                           for="title"
-                                           value="Header Text"/>
+                        <ui:remove>
+                            <div class="form-group">
+                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                               for="title"
+                                               value="Header Text"/>
 
-                            <div class="col-sm-5">
-                                <p:inputTextarea id="title"
-                                                 value="#{clientBean.client.title}"
-                                                 maxlength="950"
-                                                 styleClass="form-control"
-                                                 style="height: 350px!important; width: 700px!important;"/>
-                                <p:message for="title"/>
+                                <div class="col-sm-5">
+                                    <p:inputTextarea id="title"
+                                                     value="#{clientBean.client.title}"
+                                                     maxlength="950"
+                                                     styleClass="form-control"
+                                                     style="height: 350px!important; width: 700px!important;"/>
+                                    <p:message for="title"/>
+                                </div>
                             </div>
-                        </div>
+                        </ui:remove>
 
                         <h:panelGroup id="logoGroupId">
                             <div class="form-group">
@@ -85,14 +87,13 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                               for="clientLogoLeft" value="#{msgs['project.detail.client.logo.left']}"/>
+                                               for="reportLogo" value="#{msgs['project.detail.report.header.logo']}"/>
 
                                 <div class="col-sm-5">
-                                    <h:selectOneMenu id="clientLogoLeft" onchange="doChangeProc();"
-                                                     value="#{clientBean.client.clientLogoLeft}"
+                                    <h:selectOneMenu id="headerLogo" onchange="doChangeProc();"
+                                                     value="#{clientBean.client.headerLogo}"
                                                      styleClass="form-control" converter="logoConverter">
                                         <f:selectItem itemLabel="#{msgs['lbl.select']}"
                                                       noSelectionOption="true"/>
@@ -101,13 +102,13 @@
                                                        itemValue="#{_l}"
                                                        itemLabel="#{_l.description}"/>
                                     </h:selectOneMenu>
-                                    <p:message for="clientLogoLeft"/>
+                                    <p:message for="headerLogo" id="msgHeaderLogo"/>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="pull-right">
                                         <h:commandLink styleClass="btn btn-primary btn-sm"
                                                        type="button" onclick="doChangeProc();PF('logoModal').show();"
-                                                       action="#{clientBean.startClientLogoLeft}"
+                                                       action="#{clientBean.startHeaderLogo}"
                                                        value="#{msgs['project.detail.btn.new.logo']}">
                                             <p:ajax
                                                     async="false" process="logoGroupId"
@@ -116,6 +117,40 @@
                                     </div>
                                 </div>
                             </div>
+                            <ui:remove>
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                                   for="clientLogoLeft"
+                                                   value="#{msgs['project.detail.client.logo.left']}"/>
+
+                                    <div class="col-sm-5">
+                                        <h:selectOneMenu id="clientLogoLeft" onchange="doChangeProc();"
+                                                         value="#{clientBean.client.clientLogoLeft}"
+                                                         styleClass="form-control" converter="logoConverter">
+                                            <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                          noSelectionOption="true"/>
+                                            <f:selectItems value="#{logoBean.logos}"
+                                                           var="_l"
+                                                           itemValue="#{_l}"
+                                                           itemLabel="#{_l.description}"/>
+                                        </h:selectOneMenu>
+                                        <p:message for="clientLogoLeft"/>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="pull-right">
+                                            <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                           type="button"
+                                                           onclick="doChangeProc();PF('logoModal').show();"
+                                                           action="#{clientBean.startClientLogoLeft}"
+                                                           value="#{msgs['project.detail.btn.new.logo']}">
+                                                <p:ajax
+                                                        async="false" process="logoGroupId"
+                                                        update=":logoModalId"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:remove>
 
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
@@ -155,23 +190,28 @@
 
 
                 <div class="col-md-8" style="padding-left: 0px!important;">
-                    <div>
-                        <div style="width: 250px!important; margin-right: 50px!important; float: left;">
-                            <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
-                                           for="showTitleId" style="padding-left: 15px!important;"
-                                           value="#{msgs['client.show.title']}"/>
-                            <p:selectBooleanCheckbox id="showTitleId" value="#{clientBean.client.showTitle}" style="float: left!important;"/>
+                    <ui:remove>
+                        <div>
+                            <div style="width: 250px!important; margin-right: 50px!important; float: left;">
+                                <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
+                                               for="showTitleId" style="padding-left: 15px!important;"
+                                               value="#{msgs['client.show.title']}"/>
+                                <p:selectBooleanCheckbox id="showTitleId" value="#{clientBean.client.showTitle}"
+                                                         style="float: left!important;"/>
+                            </div>
+                            <div style="width: 250px!important; float: left;">
+                                <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
+                                               for="bigImageId" style="padding-left: 15px!important;"
+                                               value="#{msgs['client.show.big.image']}"/>
+                                <p:selectBooleanCheckbox id="bigImageId" value="#{clientBean.client.bigImage}"
+                                                         style="float: left!important;"/>
+                            </div>
                         </div>
-                        <div style="width: 250px!important; float: left;">
-                            <h:outputLabel styleClass="col-sm-8 control-label procurement-text-lbl-ltr"
-                                           for="bigImageId" style="padding-left: 15px!important;"
-                                           value="#{msgs['client.show.big.image']}"/>
-                            <p:selectBooleanCheckbox id="bigImageId" value="#{clientBean.client.bigImage}" style="float: left!important;"/>
-                        </div>
-                    </div>
+                    </ui:remove>
 
                     <div class="clearfix"></div>
                     <br/>
+
                     <div class="row">
                         <div class="col-md-4">
                             <h:commandButton value="#{msgs['lbl.save']}"
@@ -182,8 +222,9 @@
                             <h:commandButton value="#{msgs['lbl.save']}" rendered="#{clientBean.beingOnlyEdited}"
                                              action="#{clientBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
                             &#160;
-                            <h:link id="clientEditBtnId" styleClass="btn btn-primary btn-sm" value="#{msgs['lbl.close']}"
-                                    outcome="list" onclick="verifyToLeaveClientEdit(event)" />
+                            <h:link id="clientEditBtnId" styleClass="btn btn-primary btn-sm"
+                                    value="#{msgs['lbl.close']}"
+                                    outcome="list" onclick="verifyToLeaveClientEdit(event)"/>
                         </div>
                     </div>
                 </div>
