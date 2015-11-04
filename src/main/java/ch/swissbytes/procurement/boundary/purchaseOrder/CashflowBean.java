@@ -24,10 +24,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 
@@ -233,6 +230,12 @@ public class CashflowBean implements Serializable {
         for (PaymentTermsEnum s : PaymentTermsEnum.values()) {
             paymentTerms.add(s);
         }
+        Collections.sort(paymentTerms, new Comparator<PaymentTermsEnum>() {
+            @Override
+            public int compare(PaymentTermsEnum o1, PaymentTermsEnum o2) {
+                return o1.getOrdered() > o2.getOrdered() ? 1 : -1;
+            }
+        });
         return paymentTerms;
     }
 
@@ -262,6 +265,12 @@ public class CashflowBean implements Serializable {
     private void calculatePaymentDatePO(CashflowDetailEntity detailEntity) {
         if (cashflow.getPaymentTerms() != null && detailEntity.getClaimDate() != null) {
             switch (cashflow.getPaymentTerms()) {
+                case NET_60:
+                    detailEntity.setPaymentDate(DateUtil.sumNDays(detailEntity.getClaimDate(), 60));
+                    break;
+                case NET_45:
+                    detailEntity.setPaymentDate(DateUtil.sumNDays(detailEntity.getClaimDate(), 45));
+                    break;
                 case NET_30:
                     detailEntity.setPaymentDate(DateUtil.sumNDays(detailEntity.getClaimDate(), 30));
                     break;
