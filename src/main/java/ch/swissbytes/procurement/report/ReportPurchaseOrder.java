@@ -93,7 +93,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         String variation = generateVariation(po.getVariationNumber());
         addParameters("variation", variation);
         loadParamSupplier();
-        loadParamClients();
+        //loadParamClients();
         Processor processor = new Processor(true);
         processor.useArial();
         addParameters("poNo", po.getPo());
