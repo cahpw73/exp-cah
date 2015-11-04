@@ -54,22 +54,24 @@
             <div class="col-md-12 panel-tab-users">
 
                 <p:dataTable id="clienttListId" value="#{clientListBean.clients}" var="_cl">
-                    <p:column headerText="Name" width="220">
+                    <p:column headerText="#{msgs['client.list.column.name']}" width="220">
                         <h:outputText value="#{_cl.name}" escape="false"/>
                     </p:column>
+                    <ui:remove>
                     <p:column headerText="Description">
                         <p:editor id="descriptionClId" value="#{_cl.title}" controls="" styleClass="view-description" style="height: 180px!important;"/>
                     </p:column>
+
                     <p:column headerText="Report Logo" width="130">
                         #{_cl.reportLogo.description}
                     </p:column>
-                    <p:column headerText="Company Logo" width="130">
+                    </ui:remove>
+                    <p:column headerText="#{msgs['client.list.column.header.logo']}" width="130">
+                        #{_cl.headerLogo.description}
+                    </p:column>
+                    <p:column headerText="#{msgs['client.list.column.company.logo']}" width="130">
                         #{_cl.clientLogo.description}
                     </p:column>
-                    <p:column headerText="Client Logo Left" width="130">
-                        #{_cl.clientLogoLeft.description}
-                    </p:column>
-
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="130">
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit" styleClass="btn btn-link btn-sm"
                                 style="float: left!important; color: #428BCA; padding-left: 0px!important; padding-right: 0px!important;">

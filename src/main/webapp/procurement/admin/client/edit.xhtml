@@ -57,36 +57,40 @@
                         </ui:remove>
 
                         <h:panelGroup id="logoGroupId">
-                            <div class="form-group">
-                                <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
-                                               for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
+                            <ui:remove>
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                                                   for="reportLogo" value="#{msgs['project.detail.report.logo']}"/>
 
-                                <div class="col-sm-5">
-                                    <h:selectOneMenu id="reportLogo" onchange="doChangeProc();"
-                                                     value="#{clientBean.client.reportLogo}"
-                                                     styleClass="form-control" converter="logoConverter">
-                                        <f:selectItem itemLabel="#{msgs['lbl.select']}"
-                                                      noSelectionOption="true"/>
-                                        <f:selectItems value="#{logoBean.logos}"
-                                                       var="_l"
-                                                       itemValue="#{_l}"
-                                                       itemLabel="#{_l.description}"/>
-                                    </h:selectOneMenu>
-                                    <p:message for="reportLogo" id="msgReportLogo"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="pull-right">
-                                        <h:commandLink styleClass="btn btn-primary btn-sm"
-                                                       type="button" onclick="doChangeProc();PF('logoModal').show();"
-                                                       action="#{clientBean.startReportLogo}"
-                                                       value="#{msgs['project.detail.btn.new.logo']}">
-                                            <p:ajax
-                                                    async="false" process="logoGroupId"
-                                                    update=":logoModalId"/>
-                                        </h:commandLink>
+                                    <div class="col-sm-5">
+                                        <h:selectOneMenu id="reportLogo" onchange="doChangeProc();"
+                                                         value="#{clientBean.client.reportLogo}"
+                                                         styleClass="form-control" converter="logoConverter">
+                                            <f:selectItem itemLabel="#{msgs['lbl.select']}"
+                                                          noSelectionOption="true"/>
+                                            <f:selectItems value="#{logoBean.logos}"
+                                                           var="_l"
+                                                           itemValue="#{_l}"
+                                                           itemLabel="#{_l.description}"/>
+                                        </h:selectOneMenu>
+                                        <p:message for="reportLogo" id="msgReportLogo"/>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="pull-right">
+                                            <h:commandLink styleClass="btn btn-primary btn-sm"
+                                                           type="button"
+                                                           onclick="doChangeProc();PF('logoModal').show();"
+                                                           action="#{clientBean.startReportLogo}"
+                                                           value="#{msgs['project.detail.btn.new.logo']}">
+                                                <p:ajax
+                                                        async="false" process="logoGroupId"
+                                                        update=":logoModalId"/>
+                                            </h:commandLink>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </ui:remove>
+
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
                                                for="reportLogo" value="#{msgs['project.detail.report.header.logo']}"/>
