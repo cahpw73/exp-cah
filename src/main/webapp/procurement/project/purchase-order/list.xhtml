@@ -8,14 +8,17 @@
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(0)}"/>
-        <f:viewParam name="projectId" value="#{poListBean.projectId}" />
+        <f:viewParam name="projectId" value="#{poListBean.projectId}"/>
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
         <h:form id="listPooFormId" prependId="false">
             <div class="col-md-12">
+                <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"
+                                 update="filterButtons"
+                                 process="@this" action="#{poListBean.renderButtons()}"/>
                 <h:panelGroup id="filterButtons">
-                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 90px; display: table; margin-top: -19px">
+                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 125px; display: table; margin-top: -19px">
                         <div style="width: 100%; vertical-align: middle; display: table-cell;">
                             <p:messages id="poGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
@@ -31,276 +34,273 @@
                             <div class="clearfix"/>
                             <br/>
                             <h:panelGroup rendered="#{poListBean.showButtons}">
-                            <div style="width: 100%; text-align: center">
-                                <div style="display: inline-block; margin:0 auto;">
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setPOOO()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p0000Selected?'button-selected':''}"
-                                                   value="#{msgs['lbl.0000']}" style="margin-right: 1px;">
-                                        <f:ajax execute="@this" render="projectListId filterButtons"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
+                                <div style="width: 100%; text-align: center">
+                                    <div style="display: inline-block; margin:0 auto;">
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setPOOO()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p0000Selected?'button-selected':''}"
+                                                       value="#{msgs['lbl.0000']}" style="margin-right: 1px;">
+                                            <f:ajax execute="@this" render="projectListId filterButtons"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
 
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP1000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p1000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.1000']}">
-                                        <f:ajax  render="projectListId filterButtons" execute="@this" />
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP2000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p2000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.2000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP3000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p3000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.3000']}">
-                                        <p:ajax async="false" update="projectListId filterButtons" ignoreAutoUpdate="true"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP4000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p4000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.4000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP5000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p5000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.5000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP6000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p6000Selected?'button-selected':''}"
-                                                   value="#{msgs['lbl.6000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP7000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p7000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.7000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP8000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p8000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.8000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setP9000()}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.p9000Selected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.9000']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setCC}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.CCSelected?'button-selected':''}"
-                                                   style="margin-right: 1px;"
-                                                   value="#{msgs['lbl.CC']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setSC}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.SCSelected?'button-selected':''}"
-                                                   value="#{msgs['lbl.SC']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
-                                    <h:commandLink action="#{poListBean.findPOs()}"
-                                                   actionListener="#{poListBean.filter.setMF}"
-                                                   styleClass="btn btn-primary btn-sm #{poListBean.filter.MFSelected?'button-selected':''}"
-                                                   value="#{msgs['lbl.MF']}">
-                                        <f:ajax render="projectListId filterButtons" execute="@this"/>
-                                        <f:param name="projectId" value="#{poListBean.projectId}"/>
-                                    </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP1000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p1000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.1000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP2000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p2000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.2000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP3000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p3000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.3000']}">
+                                            <p:ajax async="false" update="projectListId filterButtons"
+                                                    ignoreAutoUpdate="true"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP4000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p4000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.4000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP5000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p5000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.5000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP6000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p6000Selected?'button-selected':''}"
+                                                       value="#{msgs['lbl.6000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP7000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p7000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.7000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP8000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p8000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.8000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setP9000()}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.p9000Selected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.9000']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setCC}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.CCSelected?'button-selected':''}"
+                                                       style="margin-right: 1px;"
+                                                       value="#{msgs['lbl.CC']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setSC}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.SCSelected?'button-selected':''}"
+                                                       value="#{msgs['lbl.SC']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                        <h:commandLink action="#{poListBean.findPOs()}"
+                                                       actionListener="#{poListBean.filter.setMF}"
+                                                       styleClass="btn btn-primary btn-sm #{poListBean.filter.MFSelected?'button-selected':''}"
+                                                       value="#{msgs['lbl.MF']}">
+                                            <f:ajax render="projectListId filterButtons" execute="@this"/>
+                                            <f:param name="projectId" value="#{poListBean.projectId}"/>
+                                        </h:commandLink>
+                                    </div>
                                 </div>
-                            </div>
                             </h:panelGroup>
+                            <div class="clearfix"></div>
+                            <br/>
+                            <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
                         </div>
                     </div>
                 </h:panelGroup>
-                <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"   update="filterButtons"
-                                 process="@this"  action="#{poListBean.renderButtons()}"/>
                 <div class="clearfix"></div>
                 <br/>
                 <br/>
-                <div class="panel panel-default panel-tab" style="margin-top: 60px;">
-                    <div class="procurement-panel-header">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
-                    <!-- Default panel contents -->
-                    <div class="panel-body">
-                        <h:inputHidden id="scrollTopId" value="#{poListBean.scrollTop}"/>
-                        <p:dataTable id="projectListId"
-                                     binding="#{poListBean.dataTable}"
-                                     value="#{poListBean.purchaseOrders}" var="_p">
-                            <p:ajax event="sort" listener="#{poListBean.sortListener}"/>
-                            <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40" sortBy="#{_p.po}">
-                                #{_p.po}
-                            </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
-                                #{_p.variation}
-                            </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.title']}" width="130">
-                                #{_p.poTitle}
-                            </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110" sortBy="#{_p.purchaseOrderProcurementEntity.supplier.company}">
-                                #{_p.purchaseOrderProcurementEntity.supplier.company}
-                            </p:column>
-                            <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="50">
-                                #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
-                            </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="125">
-                                <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
-                                               rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
-                                               style="float: left!important; color: #428BCA; margin-right:5px;"
-                                               action="#{poListBean.redirectToEdit}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                </h:commandLink>
-                                &#160;
-                                <h:commandLink value="#{msgs['project.list.action.view']}"
-                                               rendered="#{poListBean.canView(_p)}"
-                                               style="float: left!important; color: #428BCA; margin-right:5px;"
-                                               action="#{poListBean.redirectToView}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                </h:commandLink>
-                                &#160;
-                                <p:commandLink value="#{msgs['project.list.action.print.po']}"
-                                               action="#{poListBean.loadCurrentPo(_p)}"
-                                               rendered="#{permissionBean.hasPermission(1406)}"
-                                               oncomplete="PF('printPoDlg').show();"
-                                               update=":printPoGroupId" async="false"
-                                               style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
-                                </p:commandLink>
-                                &#160;
-                                <p:commandLink value="#{msgs['project.list.action.variation']}"
-                                               rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
-                                               action="#{poListBean.createVarNumberToPO(_p)}" ignoreAutoUpdate="true" partialSubmit="true"
-                                               process="@this"
-                                               update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
-                                               style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
-                                </p:commandLink>
-                                &#160;
-                                <p:commandLink ajax="true"
-                                               value="#{msgs['project.list.action.commit']}"
-                                               action="#{poListBean.doCommitPo}"
-                                               update="@form"
-                                               style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                               rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                    <p:confirm header="#{msgs['lbl.confirmation']}"
-                                               message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
-                                               icon="ui-icon-alert">
-                                    </p:confirm>
-                                </p:commandLink>
-                                &#160;
-                                <p:commandLink ajax="true"
-                                               value="#{msgs['project.list.action.uncommit']}"
-                                               action="#{poListBean.doUncommit}"
-                                               update="@form"
-                                               style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                               rendered="#{poListBean.canUncommit(_p) and permissionBean.hasUserPermission(1409)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                    <p:confirm header="#{msgs['lbl.confirmation']}"
-                                               message="#{msgs['project.list.lbl.msg.confirmation.uncommit']}"
-                                               icon="ui-icon-alert">
-                                    </p:confirm>
-                                </p:commandLink>
-                                &#160;
-                                <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
-                                               update="projectListId"
-                                               rendered="#{poListBean.canExportCMS(_p)}"
-                                               onclick="PF('cmsExport').show();"
-                                               style="float: left!important; color: #428BCA; padding-top: 0px!important;">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                </p:commandLink>
-                                &#160;
-                                <p:commandLink
-                                        id="exportJde"
-                                        update="projectListId"
-                                        value="#{msgs['project.list.action.export.jde']}"
-                                        onclick="PF('jdeExport').show();"
-                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.canExportJDE(_p)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                </p:commandLink>
-                                &#160;
-                                <p:commandLink
-                                        update="@form" ajax="true"
-                                        value="#{msgs['project.list.action.finalise']}"
-                                        action="#{poListBean.doFinalise()}"
-                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.actionForReady(_p)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                    <p:confirm header="#{msgs['lbl.confirmation']}"
-                                               message="#{msgs['project.list.lbl.msg.confirmation.finalise']}"
-                                               icon="ui-icon-alert">
-                                    </p:confirm>
-                                </p:commandLink>
+                <h:inputHidden id="scrollTopId" value="#{poListBean.scrollTop}"/>
+                <p:dataTable id="projectListId" style="margin-top: 60px!important;"
+                             binding="#{poListBean.dataTable}"
+                             value="#{poListBean.purchaseOrders}" var="_p">
+                    <p:ajax event="sort" listener="#{poListBean.sortListener}"/>
+                    <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40" sortBy="#{_p.po}">
+                        #{_p.po}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
+                        #{_p.variation}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.purchase.order.column.title']}" width="130">
+                        #{_p.poTitle}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110"
+                              sortBy="#{_p.purchaseOrderProcurementEntity.supplier.company}">
+                        #{_p.purchaseOrderProcurementEntity.supplier.company}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="50">
+                        #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="125">
+                        <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
+                                       rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
+                                       style="float: left!important; color: #428BCA; margin-right:5px;"
+                                       action="#{poListBean.redirectToEdit}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                        </h:commandLink>
+                        &#160;
+                        <h:commandLink value="#{msgs['project.list.action.view']}"
+                                       rendered="#{poListBean.canView(_p)}"
+                                       style="float: left!important; color: #428BCA; margin-right:5px;"
+                                       action="#{poListBean.redirectToView}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                        </h:commandLink>
+                        &#160;
+                        <p:commandLink value="#{msgs['project.list.action.print.po']}"
+                                       action="#{poListBean.loadCurrentPo(_p)}"
+                                       rendered="#{permissionBean.hasPermission(1406)}"
+                                       oncomplete="PF('printPoDlg').show();"
+                                       update=":printPoGroupId" async="false"
+                                       style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
+                        </p:commandLink>
+                        &#160;
+                        <p:commandLink value="#{msgs['project.list.action.variation']}"
+                                       rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
+                                       action="#{poListBean.createVarNumberToPO(_p)}" ignoreAutoUpdate="true"
+                                       partialSubmit="true"
+                                       process="@this"
+                                       update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
+                                       style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
+                        </p:commandLink>
+                        &#160;
+                        <p:commandLink ajax="true"
+                                       value="#{msgs['project.list.action.commit']}"
+                                       action="#{poListBean.doCommitPo}"
+                                       update="@form"
+                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                       rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
+                        &#160;
+                        <p:commandLink ajax="true"
+                                       value="#{msgs['project.list.action.uncommit']}"
+                                       action="#{poListBean.doUncommit}"
+                                       update="@form"
+                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                       rendered="#{poListBean.canUncommit(_p) and permissionBean.hasUserPermission(1409)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['project.list.lbl.msg.confirmation.uncommit']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
+                        &#160;
+                        <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
+                                       update="projectListId"
+                                       rendered="#{poListBean.canExportCMS(_p)}"
+                                       onclick="PF('cmsExport').show();"
+                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                        </p:commandLink>
+                        &#160;
+                        <p:commandLink
+                                id="exportJde"
+                                update="projectListId"
+                                value="#{msgs['project.list.action.export.jde']}"
+                                onclick="PF('jdeExport').show();"
+                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                rendered="#{poListBean.canExportJDE(_p)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                        </p:commandLink>
+                        &#160;
+                        <p:commandLink
+                                update="@form" ajax="true"
+                                value="#{msgs['project.list.action.finalise']}"
+                                action="#{poListBean.doFinalise()}"
+                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                rendered="#{poListBean.actionForReady(_p)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['project.list.lbl.msg.confirmation.finalise']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
 
-                                <p:commandLink
-                                        update="@form" ajax="true"
-                                        value="#{msgs['project.list.action.release']}"
-                                        action="#{poListBean.doReleasePo}"
-                                        async="false"
+                        <p:commandLink
+                                update="@form" ajax="true"
+                                value="#{msgs['project.list.action.release']}"
+                                action="#{poListBean.doReleasePo}"
+                                async="false"
 
-                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                    <p:confirm header="#{msgs['lbl.confirmation']}"
-                                               message="#{msgs['project.list.lbl.msg.confirmation.release']}"
-                                               icon="ui-icon-alert">
-                                    </p:confirm>
-                                </p:commandLink>
-                                <p:commandLink
-                                        update="@form" ajax="true"
-                                        value="#{msgs['project.list.action.delete']}"
-                                        action="#{poListBean.doDeletePo}"
-                                        async="false"
-                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                        rendered="#{poListBean.canDelete(_p)}">
-                                    <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                                 value="#{_p}"/>
-                                    <p:confirm header="#{msgs['lbl.confirmation']}"
-                                               message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
-                                               icon="ui-icon-alert">
-                                    </p:confirm>
+                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['project.list.lbl.msg.confirmation.release']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
+                        <p:commandLink
+                                update="@form" ajax="true"
+                                value="#{msgs['project.list.action.delete']}"
+                                action="#{poListBean.doDeletePo}"
+                                async="false"
+                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                rendered="#{poListBean.canDelete(_p)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
 
-                                </p:commandLink>
+                        </p:commandLink>
 
-                            </p:column>
+                    </p:column>
 
-                        </p:dataTable>
-
-                        <br/>
-                    </div>
-                </div>
+                </p:dataTable>
+                <br/>
             </div>
 
         </h:form>
