@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="../../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Admin - Project</ui:define>
     <f:metadata>
@@ -12,7 +13,7 @@
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
-        <h:form id="listPooFormId" prependId="false">
+        <o:form id="listPooFormId" includeViewParams="true" prependId="false">
             <div class="col-md-12">
                 <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"
                                  update="filterButtons"
@@ -302,9 +303,7 @@
                 </p:dataTable>
                 <br/>
             </div>
-
-        </h:form>
-
+        </o:form>
         <p:dialog id="variationModalId" header="Create Variation" widgetVar="variationModal"
                   resizable="false">
             <h:panelGroup id="variationGroupId">

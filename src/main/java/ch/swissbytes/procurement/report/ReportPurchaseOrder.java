@@ -94,6 +94,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("variation", variation);
         loadParamSupplier();
         //loadParamClients();
+        if (po.getProjectEntity().getClient() != null) {
+            addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
+        }
         Processor processor = new Processor(true);
         processor.useArial();
         addParameters("poNo", po.getPo());
