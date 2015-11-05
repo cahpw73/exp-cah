@@ -23,7 +23,8 @@
                         <p:column headerText="#{msgs['po.text.lbl.standard.column.text']}">
                             <h:outputText id="texSnippetSt" value="#{_t.description}" styleClass="content-big-text"/>
                         </p:column>
-                        <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;">
+                        <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;"
+                                  rendered="#{!poBean.modeView}">
                             <h:commandLink value="Copy to Preamble"
                                            action="#{poTextBean.copyToPreamble(_t.description)}">
                                 <p:ajax async="false" process="@this" update=":editPoForm:preambleTxtId"/>

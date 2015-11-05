@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.util;
 
 import org.joda.time.DateTime;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -464,5 +465,15 @@ public class DateUtil {
         System.out.println("getPreviousDay: "+getPreviousDay(1));
         System.out.println("Date Iso: "+getStringDateIsoToDate("2015-01-06T14:40Z"));
         System.out.println("N days sum: " + sumNDays(new Date(),1));
+
+
+        String s = "Colón";
+        try {
+            byte[] b = s.getBytes("LATIN1");
+            System.out.println("" + s);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
 }

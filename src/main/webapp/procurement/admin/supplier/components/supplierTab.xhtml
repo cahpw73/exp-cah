@@ -40,7 +40,7 @@
 
                     <div class="col-sm-8">
                         <h:inputText id="suburbId" maxlength="50"
-                                     style="max-width: 186px!important; width: 186px!important; margin-left: -14px;"
+                                     style="max-width: 468px!important; width: 648px!important; margin-left: -14px;"
                                      readonly="#{supplierProcBean.beingViewed}"
                                      value="#{supplierProcBean.supplier.suburb}"
                                      requiredMessage="Town is required"
@@ -57,61 +57,57 @@
             <br/>
 
             <div class="row">
-                <div class="form-group">
-                    <h:outputLabel class="control-label col-sm-2"
-                                   value="#{msgs['supplier.lbl.state']}"
-                                   for="streetId"
-                                   style="width: 153px;"/>
+                <!--State and PostCode-->
+                <div>
+                    <div style="width: 440px!important; float: left;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-2 control-label" style="width: 152px;"
+                                           for="stateSupId" value="#{msgs['po.supplier.panel.lbl.state']}"/>
 
-                    <div class="form-inline">
-                        <h:inputText id="supStateId" maxlength="50"
-                                     style="max-width: 186px!important; width: 186px!important;"
-                                     readonly="#{supplierProcBean.beingViewed}"
-                                     value="#{supplierProcBean.supplier.state}"
-                                     class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                                     tabindex="#{tabIndex+2}"/>
+                            <div style="width: 200px; float: left;">
+                                <h:inputText id="stateSupId"
+                                             readonly="#{supplierProcBean.beingViewed}"
+                                             value="#{supplierProcBean.supplier.state}"
+                                             tabindex="#{tabIndex+1}"
+                                             styleClass="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"/>
+                                <p:message for="stateSupId" id="msgStateSupId"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 240px!important; float: left; margin-left: -18px;">
+                        <div class="form-group">
+                            <h:outputLabel styleClass="col-sm-5 control-label"
+                                           for="postcodeSupId"
+                                           value="#{msgs['po.supplier.panel.lbl.postcode']}"/>
 
-                        <div style=" margin-left:152px;max-width: 181px;">
-                            <p:message for="supStateId"/>
+                            <div style="width: 100px; float: left;">
+                                <h:inputText id="postcodeSupId"
+                                             readonly="#{supplierProcBean.beingViewed}"
+                                             value="#{supplierProcBean.supplier.postCode}"
+                                             tabindex="#{tabIndex+1}"
+                                             styleClass="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"/>
+                                <p:message for="postcodeSupId" id="msgPostcodeSupId"/>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div style="float: left; display:inline-flex; width: 345px;">
-                        <h:outputLabel class="control-label col-sm-2"
-                                       for="postCode" style="width: 153px;"
-                                       value="#{msgs['supplier.lbl.postcode']}"/>
-                        <h:inputText id="postCode" maxlength="50"
-                                     style="max-width: 186px!important; width: 186px!important;"
-                                     readonly="#{supplierProcBean.beingViewed}"
-                                     value="#{supplierProcBean.supplier.postCode}"
-                                     class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                                     tabindex="#{tabIndex+3}"/>
+                <div class="clearfix"/>
+                <div style="width: 660px!important;">
+                    <div class="form-group">
+                        <h:outputLabel styleClass="col-sm-2 control-label" style="width: 152px;"
+                                       for="countrySupId" value="#{msgs['po.supplier.panel.lbl.country']}"/>
 
-                    </div>
-                    <div style="float: left;display:inline-flex; width: 275px;">
-                        <h:outputLabel class="control-label" style="margin-left: 15px;"
-                                       value="#{msgs['supplier.lbl.country']}"/>
-
-                        <h:inputText maxlength="50"
-                                     style="max-width: 186px; width: 186px; margin-left: 25px;"
-                                     readonly="#{supplierProcBean.beingViewed}"
-                                     required="true"
-                                     id="country"
-                                     requiredMessage="Country is required"
-                                     value="#{supplierProcBean.supplier.country}"
-                                     class="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"
-                                     tabindex="#{tabIndex+4}"/>
-
-                    </div>
-                    <div class="clearfix"></div>
-                    <div style="width: 186px!important; margin-left: 433px!important;">
-                        <p:message for="country"/>
+                        <div style="width: 468px; float: left;">
+                            <h:inputText id="countrySupId"
+                                         readonly="#{supplierProcBean.beingViewed}"
+                                         value="#{supplierProcBean.supplier.country}"
+                                         tabindex="#{tabIndex+1}"
+                                         styleClass="form-control #{beingViewed?'text-lbl-ltr label-general-po control-label':''}"/>
+                            <p:message for="countrySupId" id="msgCountrySupId"/>
+                        </div>
                     </div>
                 </div>
-
                 <div class="clearfix"></div>
-
             </div>
         </div>
     </div>

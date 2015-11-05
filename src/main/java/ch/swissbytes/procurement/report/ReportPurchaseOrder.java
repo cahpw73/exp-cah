@@ -18,6 +18,7 @@ import javax.persistence.Query;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -198,6 +199,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private void loadParamSupplier() {
         if (po.getPurchaseOrderProcurementEntity().getSupplier() != null) {
             addParameters("company", po.getPurchaseOrderProcurementEntity().getSupplier().getCompany());
+            String street = po.getPurchaseOrderProcurementEntity().getSupplier().getStreet();
+            try {
+                byte[] b = street.getBytes("UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             addParameters("street", po.getPurchaseOrderProcurementEntity().getSupplier().getStreet());
             addParameters("state", po.getPurchaseOrderProcurementEntity().getSupplier().getState());
             addParameters("suburb", po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb());

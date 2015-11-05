@@ -15,6 +15,9 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="supplierId" prependId="false">
+            <p:messages id="supplierGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                        warnClass="alert" closable="true" autoUpdate="true"
+                        infoClass="alert alert-info"/>
             <div class="col-md-12">
                 <ui:include src="components/templateSupplier.xhtml">
                     <ui:param name="FORM" value="supplierId"/>
