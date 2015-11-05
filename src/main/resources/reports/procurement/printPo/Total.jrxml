@@ -113,10 +113,10 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</datasetParameter>
 						<dataSourceExpression><![CDATA[$P{poSummaryList}]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="98" uuid="535f7483-b6f6-4f28-84e5-2427fce160e0">
+					<jr:column width="83" uuid="535f7483-b6f6-4f28-84e5-2427fce160e0">
 						<jr:columnFooter height="12" rowSpan="1">
 							<textField>
-								<reportElement uuid="4e3f4279-73dd-461d-a6f8-0979eeb2e210" style="Arial-Bold" x="0" y="0" width="98" height="12"/>
+								<reportElement uuid="4e3f4279-73dd-461d-a6f8-0979eeb2e210" style="Arial-Bold" x="0" y="0" width="83" height="12"/>
 								<textElement verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 									<paragraph leftIndent="5"/>
@@ -126,7 +126,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" style="Arial" x="0" y="0" width="98" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="bed56199-7eb8-468d-8016-b1869cbcf367" style="Arial" x="0" y="0" width="83" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="5"/>
@@ -141,6 +141,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="7509a19c-8cfd-469f-bea0-1442ed893467" style="Arial-Bold" x="0" y="0" width="20" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
+									<paragraph rightIndent="1"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCodeTotal1}]]></textFieldExpression>
 							</textField>
@@ -150,15 +151,16 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="f50ede8f-1783-4b4b-91b9-f85a77f232c9" style="Arial" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
+									<paragraph rightIndent="1"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="42" uuid="582ec6e2-b2fa-4c52-b08d-9fa41be4fd03">
+					<jr:column width="49" uuid="582ec6e2-b2fa-4c52-b08d-9fa41be4fd03">
 						<jr:columnFooter height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="4897806c-d50e-437d-a34e-1afd7c5ea0f7" style="Arial-Bold" x="0" y="0" width="42" height="12"/>
+								<reportElement uuid="4897806c-d50e-437d-a34e-1afd7c5ea0f7" style="Arial-Bold" x="0" y="0" width="49" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 								</textElement>
@@ -167,7 +169,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="eda36e1d-97cf-48ae-b8e4-d99723be36e1" style="Arial" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="eda36e1d-97cf-48ae-b8e4-d99723be36e1" style="Arial" x="0" y="0" width="49" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
@@ -201,6 +203,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="afbdfa20-04b9-4a9a-ae2c-0e71345919af" style="Arial-Bold" x="0" y="0" width="20" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
+									<paragraph rightIndent="1"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCodeTotal2}]]></textFieldExpression>
 							</textField>
@@ -210,15 +213,16 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="dd398f1a-17bb-4553-9d31-e3606fcbc235" style="Arial" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
+									<paragraph rightIndent="1"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="42" uuid="9c257b78-80ec-4005-84ba-6c351f809370">
+					<jr:column width="49" uuid="9c257b78-80ec-4005-84ba-6c351f809370">
 						<jr:columnFooter height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="4f480545-b9cc-43e7-b5c7-43e1c1a2df9e" style="Arial-Bold" x="0" y="0" width="42" height="12"/>
+								<reportElement uuid="4f480545-b9cc-43e7-b5c7-43e1c1a2df9e" style="Arial-Bold" x="0" y="0" width="49" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 								</textElement>
@@ -227,7 +231,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="e0e37304-c6a7-403f-9fcc-0055f5e15356" style="Arial" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="e0e37304-c6a7-403f-9fcc-0055f5e15356" style="Arial" x="0" y="0" width="49" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>
@@ -261,6 +265,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="9e8cf393-f9c7-48ed-8bd7-9105085bbd35" style="Arial-Bold" x="0" y="0" width="20" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
+									<paragraph rightIndent="1"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCodeTotal3}]]></textFieldExpression>
 							</textField>
@@ -270,15 +275,16 @@ group by pc.currency_id,c.code,c.symbol]]>
 								<reportElement uuid="106fa6a6-6c7a-476b-aaf1-f2486da9a4c5" style="Arial" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
+									<paragraph rightIndent="1"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{currencyCode3}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="42" uuid="41644287-e2bc-487a-a19e-a91498db5dc0">
+					<jr:column width="49" uuid="41644287-e2bc-487a-a19e-a91498db5dc0">
 						<jr:columnFooter height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="712691d9-c13c-4069-9e69-3704e26c48a0" style="Arial-Bold" x="0" y="0" width="42" height="12"/>
+								<reportElement uuid="712691d9-c13c-4069-9e69-3704e26c48a0" style="Arial-Bold" x="0" y="0" width="49" height="12"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7" isBold="true"/>
 								</textElement>
@@ -287,7 +293,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 						</jr:columnFooter>
 						<jr:detailCell height="12" rowSpan="1">
 							<textField isBlankWhenNull="true">
-								<reportElement uuid="5d3fb8db-8b96-4e68-a3b1-be4ca30d2dca" style="Arial" x="0" y="0" width="42" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="5d3fb8db-8b96-4e68-a3b1-be4ca30d2dca" style="Arial" x="0" y="0" width="49" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 									<font size="7"/>
 								</textElement>

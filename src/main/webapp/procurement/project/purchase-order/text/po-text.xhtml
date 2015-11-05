@@ -25,12 +25,12 @@
                         </p:column>
                         <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;"
                                   rendered="#{!poBean.modeView}">
-                            <h:commandLink value="Copy to Preamble"
+                            <h:commandLink value="Preamble"
                                            action="#{poTextBean.copyToPreamble(_t.description)}">
                                 <p:ajax async="false" process="@this" update=":editPoForm:preambleTxtId"/>
                             </h:commandLink>
                             &#160;
-                            <h:commandLink value="Copy to Clauses"
+                            <h:commandLink value="Clauses"
                                            action="#{poTextBean.copyToClauses(_t)}">
                                 <p:ajax async="false" process="@this" update=":editPoForm:standardTextDt :editPoForm:clausesAuxDt"/>
                             </h:commandLink>
