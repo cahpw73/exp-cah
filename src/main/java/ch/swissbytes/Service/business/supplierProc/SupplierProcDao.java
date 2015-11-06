@@ -110,7 +110,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         sb.append(" SELECT s ");
         sb.append(" FROM SupplierProcEntity s ");
         sb.append(" WHERE s.status = :ENABLE ");
-        sb.append(" ORDER BY s.company ");
+        sb.append(" ORDER BY s.supplierId ");
         Map<String,Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),params);

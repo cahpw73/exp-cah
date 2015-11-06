@@ -218,7 +218,7 @@ public class SupplierProcEntity implements Serializable {
 
     @Transient
     public String getFullName(){
-        return company+(supplierId!=null&&supplierId.trim().length()>0?"("+supplierId.trim()+") ":"");
+        return (supplierId!=null&&supplierId.trim().length()>0?"("+supplierId.trim()+") ":"")+company;
     }
 
     @Override

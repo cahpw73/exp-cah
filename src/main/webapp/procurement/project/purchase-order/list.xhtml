@@ -13,13 +13,22 @@
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
+        <style>
+            thead, tbody { display: block; }
+
+            tbody {
+                height: 500px;       /* Just for the demo          */
+                overflow-y: auto;    /* Trigger vertical scroll    */
+                overflow-x: hidden;  /* Hide the horizontal scroll */
+            }
+        </style>
         <o:form id="listPooFormId" includeViewParams="true" prependId="false">
             <div class="col-md-12">
                 <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"
                                  update="filterButtons"
                                  process="@this" action="#{poListBean.renderButtons()}"/>
                 <h:panelGroup id="filterButtons">
-                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 125px; display: table; margin-top: -6px">
+                    <div style="position: fixed; width: 93.2%; background-color: #eeeeee; z-index: 1000; height: 131px; display: table; margin-top: -6px">
                         <div style="width: 100%; vertical-align: middle; display: table-cell;">
                             <p:messages id="poGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
@@ -155,23 +164,23 @@
                              binding="#{poListBean.dataTable}"
                              value="#{poListBean.purchaseOrders}" var="_p">
                     <p:ajax event="sort" listener="#{poListBean.sortListener}"/>
-                    <p:column headerText="#{msgs['project.purchase.order.column.po.no']}" width="40" sortBy="#{_p.po}">
+                    <p:column id="colPO" headerText="#{msgs['project.purchase.order.column.po.no']}" style="width: 119px;" sortBy="#{_p.po}">
                         #{_p.po}
                     </p:column>
-                    <p:column headerText="#{msgs['project.purchase.order.column.var.no']}" width="40">
+                    <p:column id="colVar" headerText="#{msgs['project.purchase.order.column.var.no']}" style="width: 119px;">
                         #{_p.variation}
                     </p:column>
-                    <p:column headerText="#{msgs['project.purchase.order.column.title']}" width="130">
+                    <p:column id="colTitle" headerText="#{msgs['project.purchase.order.column.title']}" style="width: 385px;">
                         #{_p.poTitle}
                     </p:column>
-                    <p:column headerText="#{msgs['project.purchase.order.column.supplier']}" width="110"
+                    <p:column id="colSupplier" headerText="#{msgs['project.purchase.order.column.supplier']}" style="width: 326px;"
                               sortBy="#{_p.purchaseOrderProcurementEntity.supplier.company}">
                         #{_p.purchaseOrderProcurementEntity.supplier.company}
                     </p:column>
-                    <p:column headerText="#{msgs['project.purchase.order.column.status']}" width="50">
+                    <p:column id="colStatus" headerText="#{msgs['project.purchase.order.column.status']}" style="width: 148px;">
                         #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
                     </p:column>
-                    <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="125">
+                    <p:column id="colAction" headerText="#{msgs['lbl.dt.column.actions']}" style="width: 370px;">
                         <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
                                        rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
                                        style="float: left!important; color: #428BCA; margin-right:5px;"
