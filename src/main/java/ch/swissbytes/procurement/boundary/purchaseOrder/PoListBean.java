@@ -761,16 +761,10 @@ public class PoListBean implements Serializable {
 
 
     public void findPOs() {
-        //log.info("Find the list of POs from "+projectId);
-        Date d1 = new Date();
         purchaseOrders.clear();
-        purchaseOrders.add( new PurchaseOrderEntity());
         List<PurchaseOrderEntity> list = service.findPosBy(getFilter());
         purchaseOrders.addAll(list);
         allPurchaseOrders.addAll(purchaseOrders);
-        log.info("purchaseOrders size: " + purchaseOrders.size());
-        Date d2 = new Date();
-        log.info("getting all POs [" + (d2.getTime() - d1.getTime()) + "]ms");
     }
 
     public List<PurchaseOrderEntity> getPurchaseOrders() {

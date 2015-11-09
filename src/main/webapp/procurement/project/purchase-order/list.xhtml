@@ -13,15 +13,6 @@
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
-        <style>
-            thead, tbody { display: block; }
-
-            tbody {
-                height: 500px;       /* Just for the demo          */
-                overflow-y: auto;    /* Trigger vertical scroll    */
-                overflow-x: hidden;  /* Hide the horizontal scroll */
-            }
-        </style>
         <o:form id="listPooFormId" includeViewParams="true" prependId="false">
             <div class="col-md-12">
                 <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"
