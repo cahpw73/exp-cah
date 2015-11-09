@@ -106,7 +106,7 @@ public class Util {
     }
     public static String removeSpecialCharactersForJasperReport(String target){
         String value=target!=null?target:"";
-        value=value.replaceAll("&\\s+", "&amp; ");
+        value=value.replaceAll("&", "&amp;");
         return value;
     }
 

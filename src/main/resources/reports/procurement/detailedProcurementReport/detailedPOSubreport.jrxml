@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedPOSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="858d46b2-620c-4e2a-9685-a346bf5fdf9e">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="765"/>
+	<property name="ireport.x" value="236"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -63,14 +63,14 @@ order by $P!{sortBy}]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{company}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>":"")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="3cec5e63-8f2e-427c-900b-91b4e5b61c4d" positionType="Float" x="368" y="0" width="153" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{po_title}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po_title}+"</style>":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po_title}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po_title}+"</style>":"")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="fd6bfb72-7737-4710-addc-98595e04dbb3" positionType="Float" x="609" y="0" width="45" height="12"/>

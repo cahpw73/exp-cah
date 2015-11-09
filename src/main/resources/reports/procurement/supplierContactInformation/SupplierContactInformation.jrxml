@@ -251,7 +251,7 @@ ORDER BY $P!{sortBy} ASC]]>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{street}+" "+$F{suburb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{street}!=null?$F{street}:"")+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{suburb}!=null?$F{suburb}:"")]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" x="355" y="1" width="199" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>

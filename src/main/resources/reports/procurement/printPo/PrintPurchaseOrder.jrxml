@@ -710,7 +710,7 @@
 						</jr:columnHeader>
 						<jr:detailCell height="24" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="0" y="12" width="223" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="0" y="12" width="222" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Top" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -718,7 +718,7 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial",8).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="1" width="223" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="0" y="0" width="222" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 									<font size="10" isBold="true" isItalic="false"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
