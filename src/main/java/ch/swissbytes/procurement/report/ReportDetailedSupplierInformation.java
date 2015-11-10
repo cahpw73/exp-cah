@@ -25,14 +25,12 @@ public class ReportDetailedSupplierInformation extends ReportProject {
 
     @Override
     protected String getStrSort() {
-        String str = super.getStrSort();
-        if (!str.isEmpty()) {
-            //remove this after fixing original method on super class.
-            int index = str.indexOf("po.orderedvariation");
-            str = str.substring(0, index);
-            if (str.trim().length() > 0) {
-                str = str + ",";
-            }
+        Boolean supplier = sortMap.get("supplier");
+        sortByName="";
+        String str="";
+        if(supplier){
+            sortByName="Supplier";
+            str=str+"sp.company,";
         }
         str = str + "sp.id";
         return str;
