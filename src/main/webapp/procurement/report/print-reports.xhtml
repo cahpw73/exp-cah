@@ -23,11 +23,12 @@
                                 <div style="width: 340px!important; float: left!important;">
                                     <div class="form-group">
                                         <h:outputLabel styleClass=" control-label"
-                                                      style="text-align: left !important;direction: ltr !important;"
-                                                      value="#{msgs['project.list.lbl.msg.select.po']}"/>
+                                                       style="text-align: left !important;direction: ltr !important;"
+                                                       value="#{msgs['project.list.lbl.msg.select.po']}"/>
                                     </div>
                                     <div class="clearfix"></div>
                                     <br/>
+
                                     <div class="row">
                                         <div class="form-group">
                                             <h:outputLabel styleClass="col-sm-3 control-label "
@@ -52,46 +53,47 @@
                                         </div>
                                     </div>
                                     <br/>
+
                                     <div class="form-group">
                                         <h:outputLabel styleClass="control-label"
-                                                      style="text-align: left !important;direction: ltr !important;"
-                                                      value="#{msgs['project.list.lbl.msg.conf.print.po']}"/>
+                                                       style="text-align: left !important;direction: ltr !important;"
+                                                       value="#{msgs['project.list.lbl.msg.conf.print.po']}"/>
                                     </div>
                                     <br/>
-                                    <div class="form-group">
-                                        <div class="checkbox-inline">
-                                            <label>
-                                                <h:selectBooleanCheckbox id="poNoBoxId" value="#{reportProcurementBean.sortByPoNo}">
-                                                    <p:ajax event="change" process="@this"/>
-                                                </h:selectBooleanCheckbox> PO No
-                                            </label>
+                                    <h:panelGroup id="groupOptionPrint">
+                                        <div class="form-group">
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <h:selectBooleanCheckbox id="poNoBoxId"
+                                                                             value="#{reportProcurementBean.sortByPoNo}">
+                                                        <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                                listener="#{reportProcurementBean.resetOptionPrint(1)}"
+                                                                async="false"/>
+                                                    </h:selectBooleanCheckbox> PO No
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <h:selectBooleanCheckbox id="supplierBoxId"
+                                                                             value="#{reportProcurementBean.sortBySupplier}">
+                                                        <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                                listener="#{reportProcurementBean.resetOptionPrint(2)}"
+                                                                async="false"/>
+                                                    </h:selectBooleanCheckbox> Supplier
+                                                </label>
+                                            </div>
+                                            <div class="checkbox-inline">
+                                                <label>
+                                                    <h:selectBooleanCheckbox id="deliveryBoxId"
+                                                                             value="#{reportProcurementBean.sortByDeliveryDate}">
+                                                        <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                                listener="#{reportProcurementBean.resetOptionPrint(3)}"
+                                                                async="false"/>
+                                                    </h:selectBooleanCheckbox> Delivery Date
+                                                </label>
+                                            </div>
                                         </div>
-                                        <ui:remove>
-                                        <div class="checkbox-inline">
-                                            <label>
-                                                <h:selectBooleanCheckbox id="varBoxId" value="#{reportProcurementBean.sortByVarNo}">
-                                                    <p:ajax event="change" process="@this"/>
-                                                </h:selectBooleanCheckbox> Var No
-                                            </label>
-                                        </div>
-                                        </ui:remove>
-                                        <div class="checkbox-inline">
-                                            <label>
-                                                <h:selectBooleanCheckbox id="supplierBoxId"
-                                                                         value="#{reportProcurementBean.sortBySupplier}">
-                                                    <p:ajax event="change" process="@this"/>
-                                                </h:selectBooleanCheckbox> Supplier
-                                            </label>
-                                        </div>
-                                        <div class="checkbox-inline">
-                                            <label>
-                                                <h:selectBooleanCheckbox id="deliveryBoxId"
-                                                                         value="#{reportProcurementBean.sortByDeliveryDate}">
-                                                    <p:ajax event="change" process="@this"/>
-                                                </h:selectBooleanCheckbox> Delivery Date
-                                            </label>
-                                        </div>
-                                    </div>
+                                    </h:panelGroup>
                                     <br/>
 
                                     <div class="form-group">

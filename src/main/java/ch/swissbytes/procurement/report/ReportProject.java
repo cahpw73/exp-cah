@@ -106,7 +106,7 @@ public class ReportProject extends ReportView implements Serializable {
         String strSort = "";
         if (poNo && supplier && deliveryDate) {
             strSort = "po.po,po.orderedvariation,sp.company,po.po_delivery_date, ";
-            sortByName = "Po No, Variation, Supplier, Delivery Date, ";
+            sortByName = "PO No, Variation, Supplier, Delivery Date, ";
         } else if (!poNo && supplier && deliveryDate) {
             strSort = "sp.company,po.po_delivery_date,po.orderedvariation, ";
             sortByName = "Supplier, Delivery Date, Variation, ";
@@ -115,16 +115,16 @@ public class ReportProject extends ReportView implements Serializable {
             sortByName = "Delivery Date, Variation, ";
         } else if (poNo && supplier && !deliveryDate) {
             strSort = "po.po,po.orderedvariation,sp.company, ";
-            sortByName = "Po No, Variation, Supplier, ";
+            sortByName = "PO No, Variation, Supplier, ";
         } else if (poNo && !supplier && !deliveryDate) {
             strSort = "po.po,po.orderedvariation, ";
-            sortByName = "Po No, Variation, ";
+            sortByName = "PO No, Variation, ";
         } else if (!poNo && supplier && !deliveryDate) {
             strSort = "sp.company,po.orderedvariation, ";
             sortByName = "Supplier, Variation, ";
         } else if (poNo && !supplier && deliveryDate) {
             strSort = "po.po,po.orderedvariation,po.po_delivery_date, ";
-            sortByName = "Po No, Variation, Delivery Date, ";
+            sortByName = "PO No, Variation, Delivery Date, ";
         }
 
         if (strSort.length() > 1) {

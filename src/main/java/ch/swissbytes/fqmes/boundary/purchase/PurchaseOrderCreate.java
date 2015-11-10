@@ -1,6 +1,7 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.scopeSupply.ScopeSupplyBean;
@@ -17,6 +18,7 @@ import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
+import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -154,11 +156,11 @@ public class PurchaseOrderCreate implements Serializable {
     @Deprecated
     public String doSave() {
         //TODO probably it should be deleted (all this method)
-        /*if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
+        if(ModuleSystemEnum.EXPEDITING.name().equalsIgnoreCase(userSession.getCurrentModule())){
             log.log(Level.SEVERE, "Somebody is trying to save a PO from expediting module and this is not allowed");
             Messages.addGlobalError("you cannot save a PO");
             return "";
-        }*/
+        }
         savePurchase();
         if (!conversation.isTransient()) {
             conversation.end();

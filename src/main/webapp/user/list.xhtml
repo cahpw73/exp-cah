@@ -12,7 +12,7 @@
     <ui:define name="body">
         <h:form id="userListForm" prependId="false" role="form">
             <h2 class="sub-header">#{msgs['user.list.title']}</h2>
-            <p:dataTable value="#{usersBean.list}" var="_user"
+            <p:dataTable value="#{usersBean.userList}" var="_user"
                          paginator="true" rows="5" lazy="true"
                          styleClass="data-table-po-sc"
                          rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
@@ -25,9 +25,11 @@
                 <p:column headerText="#{msgs['user.list.column.email']}">
                     #{_user.email}
                 </p:column>
+                <ui:remove>
                 <p:column headerText="#{msgs['user.list.column.role']}">
                     #{_user.roleEntity.name}
                 </p:column>
+                </ui:remove>
                 <p:column headerText="#{msgs['user.list.column.action']}">
                     <div class="pull-right">
                         <h:commandLink id="btnGoToUserEdit" action="#{usersBean.goToEditUser(_user.id)}"

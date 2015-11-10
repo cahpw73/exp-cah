@@ -234,9 +234,9 @@ public class UserBean implements Serializable {
                 case SENIOR:
                     expeditingRoles.add(roleDao.findById(r.getId()).get(0));
                     break;
-                case JUNIOR:
+                /*case JUNIOR:
                     expeditingRoles.add(roleDao.findById(r.getId()).get(0));
-                    break;
+                    break;*/
                 case VISITOR:
                     expeditingRoles.add(roleDao.findById(r.getId()).get(0));
                     break;

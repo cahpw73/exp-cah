@@ -171,24 +171,21 @@ public class ReportProcurementBean implements Serializable {
         return "report?faces-redirect=true";
     }
 
-    private String getDescriptionSort(Map<String, Boolean> sortMap) {
-        Boolean poNo = sortMap.get("poNo");
-        Boolean supplier = sortMap.get("supplier");
-        Boolean deliveryDate = sortMap.get("deliveryDate");
-        String strSort = "";
-        if (poNo) {
-            strSort = strSort + "PO No,";
+    public void resetOptionPrint(Integer option){
+        switch (option){
+            case 1:
+                sortBySupplier = false;
+                sortByDeliveryDate = false;
+                break;
+            case 2:
+                sortByPoNo = false;
+                sortByDeliveryDate = false;
+                break;
+            case 3:
+                sortByPoNo = false;
+                sortBySupplier = false;
+                break;
         }
-        if (supplier) {
-            strSort = strSort + "Supplier,";
-        }
-        if (deliveryDate) {
-            strSort = strSort + "Delivery Date,";
-        }
-        if (strSort.length() > 1) {
-            strSort = strSort.substring(0, strSort.length() - 1);
-        }
-        return strSort;
     }
 
     public List<ProjectEntity> getProjectList() {

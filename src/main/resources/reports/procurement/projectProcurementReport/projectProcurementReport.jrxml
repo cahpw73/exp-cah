@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.7715610000000057"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000052"/>
+	<property name="ireport.x" value="321"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -210,35 +210,35 @@ order by $P!{sortBy}]]>
 				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="27" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="4" width="50" height="12"/>
+				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="4" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="52" y="4" width="50" height="12"/>
+				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="38" y="4" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="104" y="4" width="60" height="12"/>
+				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="76" y="4" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Date</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="165" y="4" width="140" height="12"/>
+				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="139" y="4" width="150" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="306" y="4" width="120" height="12"/>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="292" y="4" width="120" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -304,7 +304,7 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5cd0780e-d227-4357-aa9b-9d33abf553a0" x="427" y="4" width="100" height="12"/>
+				<reportElement uuid="5cd0780e-d227-4357-aa9b-9d33abf553a0" x="415" y="4" width="110" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -315,35 +315,35 @@ order by $P!{sortBy}]]>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="103c46e8-97ea-4be6-9bc4-a5850d2fcaa5" positionType="Float" x="0" y="2" width="50" height="12"/>
+				<reportElement uuid="103c46e8-97ea-4be6-9bc4-a5850d2fcaa5" positionType="Float" x="0" y="2" width="35" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="0412d82d-3455-4b91-9206-d00b45f12c38" positionType="Float" x="52" y="2" width="50" height="12"/>
+				<reportElement uuid="0412d82d-3455-4b91-9206-d00b45f12c38" positionType="Float" x="38" y="2" width="35" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="49dd09e1-aec2-488c-92d2-f0f8a90a1d4d" positionType="Float" x="104" y="2" width="60" height="12"/>
+				<reportElement uuid="49dd09e1-aec2-488c-92d2-f0f8a90a1d4d" positionType="Float" x="76" y="2" width="60" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{order_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{order_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="77cd2fe4-8907-4dec-9699-c41fbc2d133f" positionType="Float" x="165" y="2" width="140" height="12"/>
+				<reportElement uuid="77cd2fe4-8907-4dec-9699-c41fbc2d133f" positionType="Float" x="139" y="2" width="150" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8eab6a20-dccf-4f85-aab1-d0735b42c60a" positionType="Float" x="306" y="2" width="120" height="12"/>
+				<reportElement uuid="8eab6a20-dccf-4f85-aab1-d0735b42c60a" positionType="Float" x="292" y="2" width="120" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -370,7 +370,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement uuid="fc769b33-5c9a-4705-abad-9929e6a0c275" x="427" y="2" width="100" height="12"/>
+				<reportElement uuid="fc769b33-5c9a-4705-abad-9929e6a0c275" x="415" y="2" width="110" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
