@@ -24,9 +24,9 @@ order by name]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="37825c82-6a63-42d0-8979-a2d22f6a6e6e" x="0" y="0" width="100" height="15" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="37825c82-6a63-42d0-8979-a2d22f6a6e6e" x="0" y="0" width="100" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>

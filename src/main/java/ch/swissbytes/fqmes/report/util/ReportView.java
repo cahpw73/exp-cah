@@ -102,7 +102,7 @@ public abstract class ReportView implements Serializable {
             //LOG.error(" Error to the fill the reports!.", e);
             e.printStackTrace();
         } catch (Exception e) {
-            //LOG.error(" Unknown error!.", e);
+            //LOG.error(" Unknown error!.", e);r
             e.printStackTrace();
         } finally {
             if (connection != null) {
