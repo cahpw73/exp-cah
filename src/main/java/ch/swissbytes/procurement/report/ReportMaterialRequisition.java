@@ -21,5 +21,35 @@ public class ReportMaterialRequisition extends ReportProject {
         addParameters("SUBREPORT_DIR","reports/procurement/MaterialRequisitions/");
     }
 
+    protected String getStrSort() {
+        Boolean poNo = sortMap.get("poNo");
+        Boolean supplier = sortMap.get("supplier");
+        Boolean deliveryDate = sortMap.get("deliveryDate");
+        Boolean mrNo = sortMap.get("mrNo");
+        String strSort = "";
+        if (!poNo && !supplier && deliveryDate && !mrNo) {
+            strSort = "po.po_delivery_date,po.orderedvariation, ";
+            sortByName = "Delivery Date, Variation, ";
+        } else if (poNo && !supplier && !deliveryDate && !mrNo) {
+            strSort = "po.po,po.orderedvariation, ";
+            sortByName = "PO No, Variation, ";
+        } else if (!poNo && supplier && !deliveryDate && !mrNo) {
+            strSort = "sp.company,po.orderedvariation, ";
+            sortByName = "Supplier, Variation, ";
+        } else if (!poNo && !supplier && !deliveryDate && mrNo){
+            strSort = "sp.company,po.orderedvariation, ";
+            sortByName = "Supplier, Variation, ";
+        }
+
+        if (strSort.length() > 1) {
+            sortByName = sortByName.substring(0, sortByName.length() - 2);
+            strSort = strSort.substring(0, strSort.length() - 2);
+        } else {
+            sortByName = "Variation";
+            strSort = "po.orderedvariation";
+        }
+        return strSort;
+    }
+
 
 }

@@ -92,6 +92,18 @@
                                                     </h:selectBooleanCheckbox> Delivery Date
                                                 </label>
                                             </div>
+                                            <h:panelGroup rendered="#{reportProcurementBean.materialRequisitionReport}">
+                                                <div class="checkbox-inline">
+                                                    <label>
+                                                        <h:selectBooleanCheckbox id="mrnoBoxId"
+                                                                                 value="#{reportProcurementBean.sortMrNo}">
+                                                            <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                                    listener="#{reportProcurementBean.resetOptionPrint(4)}"
+                                                                    async="false"/>
+                                                        </h:selectBooleanCheckbox> Delivery Date
+                                                    </label>
+                                                </div>
+                                            </h:panelGroup>
                                         </div>
                                     </h:panelGroup>
                                     <br/>
