@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetailedSupplierInformation" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="322"/>
+	<property name="ireport.x" value="792"/>
 	<property name="ireport.y" value="240"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
@@ -302,7 +302,7 @@ ORDER BY $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{fax}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{fax}+"</style>":null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="324" y="2" width="80" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="94a1cf35-45b5-4a33-826e-a23361c6c785" x="324" y="2" width="89" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
