@@ -69,11 +69,7 @@ public class PoTextBean implements Serializable {
     public void copyToClauses(ProjectTextSnippetEntity text) {
         ClausesEntity clauses = createClausesEntity(text);
         droppedTextSnippetList.add(clauses);
-        int index = 1;
-        for(ClausesEntity c : droppedTextSnippetList){
-            c.setNumberClause(index+".0");
-            index++;
-        }
+        reorderDroppedTextSnippetList();
         textSnippetList.remove(text);
     }
 
@@ -116,11 +112,7 @@ public class PoTextBean implements Serializable {
         ProjectTextSnippetEntity poText = ((ProjectTextSnippetEntity) ddEvent.getData());
         ClausesEntity clausesEntity = createClausesEntity(poText);
         droppedTextSnippetList.add(clausesEntity);
-        int index = 1;
-        for(ClausesEntity c : droppedTextSnippetList){
-            c.setNumberClause(index+".0");
-            index++;
-        }
+        reorderDroppedTextSnippetList();
         textSnippetList.remove(poText);
     }
 
@@ -138,11 +130,7 @@ public class PoTextBean implements Serializable {
 
     public void onRowReorder(ReorderEvent event) {
         log.info("on row reorder");
-        int index = 1;
-        for(ClausesEntity c : droppedTextSnippetList){
-            c.setNumberClause(index+".0");
-            index++;
-        }
+        reorderDroppedTextSnippetList();
     }
 
     public void removeClauses() {
@@ -159,6 +147,17 @@ public class PoTextBean implements Serializable {
             }
         }
         selectedClausesTextList.clear();
+        reorderDroppedTextSnippetList();
+    }
+
+    private void reorderDroppedTextSnippetList(){
+        int index = 1;
+        for(ClausesEntity c : droppedTextSnippetList){
+            if(c.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
+                c.setNumberClause(index+".0");
+                index++;
+            }
+        }
     }
 
     public List<ProjectTextSnippetEntity> getTextSnippetList() {
