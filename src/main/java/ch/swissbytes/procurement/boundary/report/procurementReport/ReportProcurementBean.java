@@ -50,6 +50,7 @@ public class ReportProcurementBean implements Serializable {
     private Boolean sortByVarNo;
     private Boolean sortBySupplier;
     private Boolean sortByDeliveryDate;
+    private Boolean sortMrNo;
 
     private String reportName;
 
@@ -88,6 +89,7 @@ public class ReportProcurementBean implements Serializable {
         sortMap.put("poNo", sortByPoNo);
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
+        sortMap.put("mrNo",sortMrNo);
         if (selectedProject != null) {
             switch (reportName) {
                 case "ppr":
@@ -158,12 +160,8 @@ public class ReportProcurementBean implements Serializable {
         log.info("report title: " + reportTitle);
     }
 
-    public void resetValuesProjectProc() {
-        sortByPoNo = false;
-        sortByVarNo = false;
-        sortBySupplier = false;
-        sortByDeliveryDate = false;
-        selectedProject = new ProjectEntity();
+    public boolean isMaterialRequisitionReport(){
+        return reportTitle.equals(materialRequisitionReport);
     }
 
     public String backToReports() {
@@ -176,15 +174,22 @@ public class ReportProcurementBean implements Serializable {
             case 1:
                 sortBySupplier = false;
                 sortByDeliveryDate = false;
+                sortMrNo = false;
                 break;
             case 2:
                 sortByPoNo = false;
                 sortByDeliveryDate = false;
+                sortMrNo = false;
                 break;
             case 3:
                 sortByPoNo = false;
                 sortBySupplier = false;
+                sortMrNo = false;
                 break;
+            case 4:
+                sortByDeliveryDate = false;
+                sortByPoNo = false;
+                sortBySupplier = false;
         }
     }
 
@@ -246,5 +251,13 @@ public class ReportProcurementBean implements Serializable {
 
     public void setReportTitle(String reportTitle) {
         this.reportTitle = reportTitle;
+    }
+
+    public Boolean getSortMrNo() {
+        return sortMrNo;
+    }
+
+    public void setSortMrNo(Boolean sortMrNo) {
+        this.sortMrNo = sortMrNo;
     }
 }

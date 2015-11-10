@@ -104,27 +104,15 @@ public class ReportProject extends ReportView implements Serializable {
         Boolean supplier = sortMap.get("supplier");
         Boolean deliveryDate = sortMap.get("deliveryDate");
         String strSort = "";
-        if (poNo && supplier && deliveryDate) {
-            strSort = "po.po,po.orderedvariation,sp.company,po.po_delivery_date, ";
-            sortByName = "PO No, Variation, Supplier, Delivery Date, ";
-        } else if (!poNo && supplier && deliveryDate) {
-            strSort = "sp.company,po.po_delivery_date,po.orderedvariation, ";
-            sortByName = "Supplier, Delivery Date, Variation, ";
-        } else if (!poNo && !supplier && deliveryDate) {
+        if (!poNo && !supplier && deliveryDate) {
             strSort = "po.po_delivery_date,po.orderedvariation, ";
             sortByName = "Delivery Date, Variation, ";
-        } else if (poNo && supplier && !deliveryDate) {
-            strSort = "po.po,po.orderedvariation,sp.company, ";
-            sortByName = "PO No, Variation, Supplier, ";
         } else if (poNo && !supplier && !deliveryDate) {
             strSort = "po.po,po.orderedvariation, ";
             sortByName = "PO No, Variation, ";
         } else if (!poNo && supplier && !deliveryDate) {
             strSort = "sp.company,po.orderedvariation, ";
             sortByName = "Supplier, Variation, ";
-        } else if (poNo && !supplier && deliveryDate) {
-            strSort = "po.po,po.orderedvariation,po.po_delivery_date, ";
-            sortByName = "PO No, Variation, Delivery Date, ";
         }
 
         if (strSort.length() > 1) {
