@@ -161,7 +161,7 @@ public class ReportProcurementBean implements Serializable {
     }
 
     public boolean isMaterialRequisitionReport(){
-        return reportTitle.equals("mrr");
+        return reportTitle.equals(materialRequisitionReport);
     }
 
     public String backToReports() {

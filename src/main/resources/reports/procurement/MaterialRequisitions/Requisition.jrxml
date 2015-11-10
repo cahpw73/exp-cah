@@ -35,14 +35,7 @@ order by originator]]>
 				<textFieldExpression><![CDATA[$F{requisition_number}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="d71469b0-7a1a-47d1-ab73-665b5c0cb20a" x="33" y="0" width="27" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{requisition_date}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="3428f607-f294-4782-9f59-2d54951d9836" x="68" y="0" width="76" height="14" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="3428f607-f294-4782-9f59-2d54951d9836" x="30" y="0" width="76" height="14" isPrintWhenDetailOverflows="true"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
