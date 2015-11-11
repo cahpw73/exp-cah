@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.3660269107301422"/>
+	<property name="ireport.zoom" value="1.5026296018031569"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="312"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -127,6 +127,7 @@
 	<parameter name="securityDepositForm" class="java.lang.String"/>
 	<parameter name="townPostcodeState" class="java.lang.String"/>
 	<parameter name="headerLogo" class="java.io.InputStream"/>
+	<parameter name="clauseList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -844,6 +845,9 @@
 				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" x="13" y="0" width="506" height="5" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
 				</reportElement>
+				<subreportParameter name="clauseList">
+					<subreportParameterExpression><![CDATA[$P{clauseList}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="poId">
 					<subreportParameterExpression><![CDATA[$P{poId}]]></subreportParameterExpression>
 				</subreportParameter>

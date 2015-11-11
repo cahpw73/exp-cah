@@ -46,79 +46,41 @@ public class UserDeleteBean implements Serializable {
 
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("create UserDeleteBean");
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("destroy UserDeleteBean");
     }
 
-    public void loadUserSelected(final Long id){
+    public void loadUserSelected(final Long id) {
         log.info("Loading User EntityTbl....");
         userSelected = userService.findUserById(id);
         password = userSelected.getPassword();
         userId = userSelected.getStatus().getId();
         statusEnum = StatusEnum.valueOf(userSelected.getStatus().getId());
-        //roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
         log.info("UserSelected: " + userSelected.getFirstName());
     }
 
-    public String doSave(){
+    public String doDelete() {
         log.info("trying to delete user");
-        if(dataValidate()){
-            RoleEntity roleEntity = enumService.getFindRoleByRoleEnumId(roleEnum.getId());
-            StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(StatusEnum.DELETED.getId());
-            if(roleEntity != null || statusEntity != null){
-                //userSelected.setRoleEntity(roleEntity);
-                userSelected.setStatus(statusEntity);
-                if(!password.equals(userSelected.getPassword())){
-                    userSelected.setPassword(getEncodePass(userSelected.getPassword()));
-                }
-                userService.doUpdate(userSelected);
-                Messages.addFlashGlobalInfo("User was delete!");
-                return "list?faces-redirect=true";
-            }else{
-                Messages.addGlobalError("There are data invalid! ");
-                return "";
-            }
+        StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(StatusEnum.DELETED.getId());
+        if (statusEntity != null) {
+            userSelected.setStatus(statusEntity);
+            userService.doUpdate(userSelected);
+            Messages.addFlashGlobalInfo("User was delete!");
+            return "list?faces-redirect=true";
+        } else {
+            Messages.addGlobalError("There are data invalid! ");
+            return "";
         }
-        return "";
-    }
-
-    private boolean dataValidate() {
-        boolean result = true;
-        if(userService.validateDuplicityEmail(userSelected.getEmail(),userSelected.getId())){
-            //TODO get Message from MessagesProvider
-            Messages.addError("userEditForm:inputEmail", "Email was already registered!");
-            result = false;
-        }
-        if(userService.validateDuplicityUsername(userSelected.getUsername(),userSelected.getId())){
-            //TODO get Message from MessagesProvider
-            Messages.addError("userEditForm:inputUsername", "Username was already registered!");
-            result = false;
-        }
-        return result;
-    }
-
-    private String getEncodePass(String pass){
-        return Encode.encode(pass);
     }
 
     public List<RoleEnum> getRoles() {
         List<RoleEnum> roles = Arrays.asList(RoleEnum.values());
         return roles;
-    }
-
-    public List<StatusEnum> getStatuses(){
-        List<StatusEnum> statuses = new ArrayList<>();
-        for(StatusEnum s : StatusEnum.values()){
-            if(!s.equalsTo(StatusEnum.DELETED)){
-                statuses.add(s);
-            }
-        }
-        return statuses;
     }
 
     public UserEntity getUserSelected() {

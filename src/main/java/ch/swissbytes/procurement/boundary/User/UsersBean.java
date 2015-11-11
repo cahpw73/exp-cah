@@ -12,6 +12,7 @@ import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.boundary.user.VerificationTokenBean;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -58,6 +59,12 @@ public class UsersBean implements Serializable {
     private boolean searchActiveUsers;
 
     private boolean searchProcurementActiveUsers;
+
+    private UserEntity userSelected;
+
+    private String roleName;
+
+    private String statusName;
 
     @PostConstruct
     public void init (){
@@ -156,6 +163,30 @@ public class UsersBean implements Serializable {
         }
     }
 
+    public void loadCurrentUserToProcurement(){
+        statusName = StatusEnum.valueOf(userSelected.getStatus().getId()).getLabel();
+        roleName = getAccessLevelProcurement(userSelected.getId());
+    }
+    public void loadCurrentUserToExpediting(){
+        statusName = StatusEnum.valueOf(userSelected.getStatus().getId()).getLabel();
+        roleName = getAccessLevelExpediting(userSelected.getId());
+    }
+
+
+    public String doDelete() {
+        log.info("trying to delete user");
+        StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(StatusEnum.DELETED.getId());
+        if (statusEntity != null) {
+            userSelected.setStatus(statusEntity);
+            userService.doUpdate(userSelected);
+            Messages.addFlashGlobalInfo("User was delete!");
+            return "list?faces-redirect=true";
+        } else {
+            Messages.addGlobalError("There are data invalid! ");
+            return "";
+        }
+    }
+
     public List<UserEntity> getUserList() {
         return userList;
     }
@@ -195,5 +226,29 @@ public class UsersBean implements Serializable {
 
     public void setSearchProcurementActiveUsers(boolean searchProcurementActiveUsers) {
         this.searchProcurementActiveUsers = searchProcurementActiveUsers;
+    }
+
+    public UserEntity getUserSelected() {
+        return userSelected;
+    }
+
+    public void setUserSelected(UserEntity userSelected) {
+        this.userSelected = userSelected;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }

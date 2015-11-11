@@ -99,6 +99,14 @@
                                                 onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
                                         <p:ajax process="@this" update=":formUser:userListGlbMsgs" async="false"/>
                                     </p:commandLink>
+                                    <p:commandLink style=" color: #428BCA; "
+                                                   value="#{msgs['lbl.delete']}"
+                                                   action="#{usersBean.loadCurrentUserToProcurement}"
+                                                   oncomplete="PF('deleteUserDlg').show();"
+                                                   update=":deleteUserDlgId">
+                                        <f:setPropertyActionListener target="#{usersBean.userSelected}"
+                                                                     value="#{_u}"/>
+                                    </p:commandLink>
                                 </div>
                             </p:column>
                         </p:dataTable>
@@ -191,6 +199,14 @@
                                             onstart="PF('waitingDlg').show()" oncomplete="PF('waitingDlg').hide()"/>
                                     <p:ajax process="@this" update=":formUser:userListGlbMsgs"/>
                                 </p:commandLink>
+                                <p:commandLink style=" color: #428BCA; "
+                                               value="#{msgs['lbl.delete']}"
+                                               action="#{usersBean.loadCurrentUserToExpediting}"
+                                               oncomplete="PF('deleteUserDlg').show();"
+                                               update=":deleteUserDlgId">
+                                    <f:setPropertyActionListener target="#{usersBean.userSelected}"
+                                                                 value="#{_u}"/>
+                                </p:commandLink>
                             </p:column>
 
 
@@ -254,5 +270,13 @@
             </p:confirmDialog>
             <h:outputScript name="js/bootstrap.min.js"/>
         </h:form>
+        <p:dialog id="deleteUserDlgId" widgetVar="deleteUserDlg" resizable="false" height="310" width="700">
+            <div id="du-modal-container">
+                <ui:include src="/user/delete.xhtml">
+                    <ui:param name="BEAN" value="#{usersBean}"/>
+                    <ui:param name="modeProcurement" value="true"/>
+                </ui:include>
+            </div>
+        </p:dialog>
     </ui:define>
 </ui:composition>

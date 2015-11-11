@@ -12,47 +12,68 @@
                 <div class="form-group">
                     <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.username']}"/>
                     <div class="col-sm-9">
-                        <h:outputText class="form-control" id="inputUsername" value="#{userDeleteBean.userSelected.username}" />
+                        <h:outputText class="form-control" id="inputUsername" value="#{BEAN.userSelected.username}" />
                     </div>
                 </div>
                 <div class="form-group">
                     <p:outputLabel for="inputFirstName" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.first.name']}"/>
                     <div class="col-sm-9">
-                        <h:outputText class="form-control" id="inputFirstName" value="#{userDeleteBean.userSelected.firstName}"/>
+                        <h:outputText class="form-control" id="inputFirstName" value="#{BEAN.userSelected.firstName}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <p:outputLabel for="inputName" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.name']}"/>
                     <div class="col-sm-9">
-                        <h:outputText class="form-control" id="inputName" value="#{userDeleteBean.userSelected.name}"/>
+                        <h:outputText class="form-control" id="inputName" value="#{BEAN.userSelected.name}"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                      <p:outputLabel for="inputEmail" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.email']}"/>
                      <div class="col-sm-9">
-                         <h:outputText class="form-control" id="inputEmail" value="#{userDeleteBean.userSelected.email}"/>
+                         <h:outputText class="form-control" id="inputEmail" value="#{BEAN.userSelected.email}"/>
                      </div>
                 </div>
+                <ui:remove>
+                <h:panelGroup rendered="#{modeExpediting}">
 
-                <div class="form-group">
-                     <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.Role']}"/>
-                     <div class="col-sm-9">
-                         <h:outputText id="inputRole" styleClass="form-control" value="#{userDeleteBean.roleEnum.label}"/>
-                     </div>
-                </div>
-                <div class="form-group">
-                    <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label text-lbl-ltr"
-                                   value="#{msgs['user.delete.lbl.status']}"/>
-
-                    <div class="col-sm-9">
-                        <h:outputText id="inputStatus" styleClass="form-control" value="#{userDeleteBean.statusEnum.label}"/>
+                    <div class="form-group">
+                         <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.Role']}"/>
+                         <div class="col-sm-9">
+                             <h:outputText id="inputRole" styleClass="form-control" value="#{BEAN.roleEnum.label}"/>
+                         </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label text-lbl-ltr"
+                                       value="#{msgs['user.delete.lbl.status']}"/>
+
+                        <div class="col-sm-9">
+                            <h:outputText id="inputStatus" styleClass="form-control" value="#{BEAN.statusEnum.label}"/>
+                        </div>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup id="groupRoleStatus" rendered="#{modeProcurement}">
+
+                    <div class="form-group">
+                        <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.delete.lbl.Role']}"/>
+                        <div class="col-sm-9">
+                            <h:outputText  styleClass="form-control" value="#{BEAN.roleName}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label text-lbl-ltr"
+                                       value="#{msgs['user.delete.lbl.status']}"/>
+
+                        <div class="col-sm-9">
+                            <h:outputText  styleClass="form-control" value="#{BEAN.statusName}"/>
+                        </div>
+                    </div>
+                </h:panelGroup>
+                </ui:remove>
                 <div>
                     <div class="pull-right">
                         <h:commandButton value="#{msgs['user.delete.lbl.button.save']}" styleClass="btn btn-primary btn-sm"
-                                         action="#{userDeleteBean.doSave}"/>
+                                         action="#{BEAN.doDelete}"/>
                         &#160;
                         <button type="button" onclick="PF('deleteUserDlg').hide();" class="btn btn-primary btn-sm">
                             #{msgs['user.delete.lbl.button.cancel']}

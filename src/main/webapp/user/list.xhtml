@@ -56,9 +56,12 @@
             </div>
         </h:form>
 
-        <p:dialog id="deleteUserDlgId" widgetVar="deleteUserDlg" resizable="false" height="400" width="700">
+        <p:dialog id="deleteUserDlgId" widgetVar="deleteUserDlg" resizable="false" height="310" width="700">
             <div id="du-modal-container">
-                <ui:include src="delete.xhtml"/>
+                <ui:include src="delete.xhtml">
+                    <ui:param name="BEAN" value="#{userDeleteBean}"/>
+                    <ui:param name="modeExpediting" value="true"/>
+                </ui:include>
             </div>
         </p:dialog>
     </ui:define>

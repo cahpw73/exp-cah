@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.report.dtos.ClausesReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
 import ch.swissbytes.procurement.util.ResourceUtils;
@@ -121,6 +122,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("poSummaryList", createDataSource(getPOSummary()));
         }
         addParameters("poList", createDataSource(getPOReportDto()));
+        addParameters("clauseList", createDataSource(getClausesReportDto()));
         addParameters("totalClauses", this.clausesList.size());
         addParameters("poTitle", po.getPoTitle());
         addParameters("projectName", po.getProjectEntity().getTitle().toUpperCase());
@@ -339,6 +341,15 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
         for (ItemEntity entity : this.itemEntityList) {
             PurchaseOrderReportDto dto = new PurchaseOrderReportDto(entity);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
+    private List<ClausesReportDto> getClausesReportDto(){
+        List<ClausesReportDto> dtos = new ArrayList<>();
+        for(ClausesEntity entity : clausesList) {
+            ClausesReportDto dto = new ClausesReportDto(entity);
             dtos.add(dto);
         }
         return dtos;

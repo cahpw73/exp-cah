@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="username" value="#{msgs['lbl.crud.user.username']} *"/>
                                 <div class="col-sm-5">
-                                    <h:inputText id="username" value="#{userBean.userEntity.username}"
+                                    <h:inputText id="username" value="#{userBean.userEntity.username}" autocomplete="off"
                                                  styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.user.name.required']}"/>
                                     <p:message for="username" id="msgInputUsername"/>
@@ -48,7 +48,7 @@
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.name']} *"/>
                                 <div class="col-sm-5">
-                                    <h:inputText id="name" value="#{userBean.userEntity.firstName}"
+                                    <h:inputText id="name" value="#{userBean.userEntity.firstName}" autocomplete="off"
                                                  styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                                     <p:message for="name" id="msgname"/>
@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr" for="name" value="#{msgs['lbl.crud.user.surname']} *"/>
                                 <div class="col-sm-5">
-                                    <h:inputText id="surname" value="#{userBean.userEntity.name}"
+                                    <h:inputText id="surname" value="#{userBean.userEntity.name}"  autocomplete="off"
                                                  styleClass="form-control" required="true" maxlength="100"
                                                  requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
                                     <p:message for="surname" id="msgsurname"/>
