@@ -76,15 +76,15 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="109" splitType="Stretch">
+		<band height="101" splitType="Stretch">
 			<line>
-				<reportElement uuid="f14c0566-a9a5-422f-8eac-79a302df5ed9" x="0" y="108" width="555" height="1"/>
+				<reportElement uuid="f14c0566-a9a5-422f-8eac-79a302df5ed9" x="0" y="99" width="555" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="2562a892-240b-42e0-8f45-47221a4b3ba5" x="555" y="0" width="1" height="109"/>
+				<reportElement uuid="2562a892-240b-42e0-8f45-47221a4b3ba5" x="555" y="0" width="1" height="100"/>
 			</line>
 			<line>
-				<reportElement uuid="e30653dd-5d5e-4b7c-abee-1ad51cbab846" x="0" y="0" width="1" height="109"/>
+				<reportElement uuid="e30653dd-5d5e-4b7c-abee-1ad51cbab846" x="0" y="0" width="1" height="100"/>
 			</line>
 			<line>
 				<reportElement uuid="44e049db-565f-4258-b9d2-c10221c96a81" x="0" y="0" width="555" height="1"/>
@@ -124,13 +124,6 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 				</textElement>
 				<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="71e25921-b9a1-4fae-8b71-a38fddca6dd0" x="92" y="93" width="200" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="74b09047-d21f-4da3-9a9b-4bd1e0fe1aad" x="10" y="53" width="80" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -144,13 +137,6 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">DELIVERABLES REPORT</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="99fa26cf-7f14-480a-aeaf-3f73ae83eb4a" x="10" y="93" width="80" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Project Currency:</style>]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="5b0ef68c-51f5-4fb0-a35b-942c616983f4" x="475" y="54" width="48" height="12"/>
@@ -196,14 +182,14 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Po No</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="39ff3434-b8bd-4e43-a039-5080e2c1dcac" x="104" y="5" width="100" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Po Description</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Description</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="3c970962-6b32-4a25-9567-406aec9cc471" x="414" y="5" width="70" height="16"/>
@@ -218,13 +204,6 @@ where po.status_id = 1 and po.project_id = $P{projectIdFilter}
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="29428c2b-61dd-4db2-ba00-8cf2264c69bc" x="485" y="5" width="70" height="16"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Required Date</style>]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="4c4df347-33c0-4e7c-b46b-369f8f152c46" x="0" y="5" width="555" height="1"/>
