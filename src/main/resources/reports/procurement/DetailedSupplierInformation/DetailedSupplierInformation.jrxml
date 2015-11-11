@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DetailedSupplierInformation" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="792"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.zoom" value="1.8627639691774651"/>
+	<property name="ireport.x" value="70"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -273,7 +273,7 @@ ORDER BY $P!{sortBy}]]>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{street})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{suburb})+($F{country}!=null?" "+$F{country}:" ")+"</style>"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" positionType="Float" x="25" y="16" width="285" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="69170ee1-7543-44b6-99a6-9bd4f33a116d" positionType="Float" x="25" y="16" width="523" height="12" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -308,22 +308,6 @@ ORDER BY $P!{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{phone}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{phone}+"</style>":null]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement uuid="8f76ef1f-420f-4679-806b-dd95427a4a57" positionType="Float" x="480" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
-				<subreportParameter name="SUPPLIER_ID">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BrandInformation.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="e65f7ab5-197d-40e3-858e-81fa3e885763" positionType="Float" x="408" y="16" width="68" height="12" isPrintWhenDetailOverflows="true"/>
-				<subreportParameter name="SUPPLIER_ID">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "category.jasper"]]></subreportExpression>
-			</subreport>
 		</band>
 	</detail>
 	<columnFooter>

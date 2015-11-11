@@ -69,7 +69,7 @@
                              rowsPerPageTemplate="#{configuration.getPagesSize(projectListBean.projectList.size())}"
                              paginatorPosition="top" styleClass="proc-paginator">
                     <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
-                    <p:column headerText="#{msgs['project.list.column.number']}" width="100">
+                    <p:column headerText="#{msgs['project.list.column.number']}" width="50">
                         #{_p.projectNumber}
                     </p:column>
                     <p:column headerText="#{msgs['project.list.column.title']}" width="90">
@@ -77,12 +77,6 @@
                     </p:column>
                     <p:column headerText="#{msgs['project.list.column.company']}" width="90">
                         #{_p.client.name}
-                    </p:column>
-                    <p:column headerText="#{msgs['project.list.column.report.logo']}" width="90">
-                        #{_p.client.reportLogo.description}
-                    </p:column>
-                    <p:column headerText="#{msgs['project.list.column.company.logo']}" width="90">
-                        #{_p.client.clientLogo.description}
                     </p:column>
 
                     <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">

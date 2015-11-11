@@ -54,9 +54,7 @@ from project_text_snippet cx]]>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<componentElement>
-				<reportElement uuid="71432b94-b9e6-4ac9-bc0e-e41c021eb7f0" key="table" x="0" y="1" width="517" height="16">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
+				<reportElement uuid="71432b94-b9e6-4ac9-bc0e-e41c021eb7f0" key="table" x="0" y="1" width="517" height="16"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Table Dataset 1" uuid="44df6e41-de23-49e4-a3d5-fb63e9ff455e">
 						<dataSourceExpression><![CDATA[$P{clauseList}]]></dataSourceExpression>

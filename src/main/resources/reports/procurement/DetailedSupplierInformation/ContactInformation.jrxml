@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContactInformation" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="129f5268-5874-4488-acf4-750be2049f78">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUPPLIER_ID" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\swissbytes\\expediting\\src\\main\\resources\\reports\\procurement\\DetailedSupplierInformation\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select first_name,sur_name,phone,fax,job_title,email
  from contact
@@ -58,6 +61,22 @@ ORDER BY sur_name]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement uuid="72dd3a4d-e535-43f0-8d3b-3b71256432f7" positionType="Float" x="457" y="0" width="68" height="12"/>
+				<subreportParameter name="SUPPLIER_ID">
+					<subreportParameterExpression><![CDATA[$P{SUPPLIER_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BrandInformation.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="efc2855c-4fe8-4f8c-84f8-d902326d89e0" positionType="Float" x="383" y="0" width="68" height="12"/>
+				<subreportParameter name="SUPPLIER_ID">
+					<subreportParameterExpression><![CDATA[$P{SUPPLIER_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Category.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
