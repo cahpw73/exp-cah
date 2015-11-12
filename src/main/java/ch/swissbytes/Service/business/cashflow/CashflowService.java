@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -36,6 +37,12 @@ public class CashflowService implements Serializable {
             entity.setStatusEnum(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             entity.setPo(po);
+            if(StringUtils.isNotEmpty(entity.getForm())){
+                entity.setForm(entity.getForm().toUpperCase());
+            }
+            if(StringUtils.isNotEmpty(entity.getFormSecurityDeposit())){
+                entity.setFormSecurityDeposit(entity.getFormSecurityDeposit().toUpperCase());
+            }
             dao.doSave(entity);
             for(CashflowDetailEntity cf : entity.getCashflowDetailList()){
                 if(cf.getId() < 0L) {
@@ -52,6 +59,12 @@ public class CashflowService implements Serializable {
 
     public void doUpdate(CashflowEntity entity, PurchaseOrderProcurementEntity po){
         entity.setLastUpdate(new Date());
+        if(StringUtils.isNotEmpty(entity.getForm())){
+            entity.setForm(entity.getForm().toUpperCase());
+        }
+        if(StringUtils.isNotEmpty(entity.getFormSecurityDeposit())){
+            entity.setFormSecurityDeposit(entity.getFormSecurityDeposit().toUpperCase());
+        }
         if(entity.getId()!=null){
             dao.doUpdate(entity);
         }else{

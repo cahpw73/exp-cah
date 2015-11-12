@@ -104,6 +104,7 @@ td, th {
 .menu-ddp .ui-selectonemenu-label {
     box-shadow: none !important;
     height: 27px !important;
+    text-transform: uppercase!important;
 }
 
 textarea.form-control {

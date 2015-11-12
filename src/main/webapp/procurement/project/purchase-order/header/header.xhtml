@@ -193,10 +193,8 @@
                                     </p:calendar>
                                     <p:message for="headerDate" id="msgHeaderDate"/>
                                     <h:inputText id="headerDateVi" readonly="true" styleClass="form-control view-po"
-                                                 value="#{poBean.purchaseOrder.poDeliveryDate}"
+                                                 value="#{util.toLocal(poBean.purchaseOrder.poDeliveryDate)}"
                                                  rendered="#{poBean.beingViewed}">
-                                        <f:convertDateTime timeZone="#{configuration.timeZone}"
-                                                           pattern="#{configuration.formatDate}"/>
                                     </h:inputText>
                                 </div>
                             </div>

@@ -163,10 +163,8 @@
                         </p:calendar>
                         <p:message for="poOrderDate"/>
                         <h:inputText id="poOrderDateVi" readonly="true" styleClass="form-control view-po"
-                                     value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate}"
+                                     value="#{util.toLocal(poBean.purchaseOrder.purchaseOrderProcurementEntity.orderDate)}"
                                      rendered="#{poBean.beingViewed}">
-                            <f:convertDateTime timeZone="#{configuration.timeZone}"
-                                               pattern="#{configuration.formatDate}"/>
                         </h:inputText>
                     </div>
                 </div>

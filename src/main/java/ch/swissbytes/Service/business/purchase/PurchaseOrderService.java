@@ -258,6 +258,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
         String incoTerms = getStrToIncoTerm(po.getPoint());
         String fullIncoTerms = po.getPoint();
         if (exitsDeliveryPointInIncoTerms(incoTerms)) {
@@ -337,6 +339,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setPurchaseOrderProcurementEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
+        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
         String incoTerms = getStrToIncoTerm(po.getPoint());
         if (exitsDeliveryPointInIncoTerms(incoTerms)) {
             purchaseOrderEntity.setIncoTerm(incoTerms);
