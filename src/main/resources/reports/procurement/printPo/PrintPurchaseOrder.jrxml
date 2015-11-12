@@ -621,7 +621,7 @@
 								<reportElement uuid="3adb40b7-d166-4d29-8883-bf11f0dec75a" x="0" y="15" width="30" height="1"/>
 							</line>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="7a67ec09-bced-4a6a-80ce-dd9fa0058d20" style="Arial" x="1" y="12" width="29" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
@@ -649,9 +649,9 @@
 								<reportElement uuid="dde78e6c-00b3-4146-98c8-3df07463445a" x="0" y="0" width="1" height="15"/>
 							</line>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<line>
-								<reportElement uuid="3fba5d02-4753-4433-babc-681364649041" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+								<reportElement uuid="3fba5d02-4753-4433-babc-681364649041" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="27"/>
 							</line>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="7f712b51-cdaf-45b1-89bb-29f13ecae49f" style="Arial" x="0" y="12" width="30" height="12"/>
@@ -678,7 +678,7 @@
 								<reportElement uuid="42afb9be-a914-4006-98ee-5e2b261201d3" x="0" y="0" width="1" height="15"/>
 							</line>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="24419a91-2071-4568-b2fe-fe7a8f98cf31" style="Arial" x="0" y="12" width="30" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
@@ -688,7 +688,7 @@
 								<textFieldExpression><![CDATA[$F{unit}]]></textFieldExpression>
 							</textField>
 							<line>
-								<reportElement uuid="b70cc4f1-19bc-4a40-87e7-b80375bed879" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+								<reportElement uuid="b70cc4f1-19bc-4a40-87e7-b80375bed879" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="27"/>
 							</line>
 						</jr:detailCell>
 					</jr:column>
@@ -709,9 +709,9 @@
 								<reportElement uuid="03952024-08bd-4796-ae63-92b00c05fac2" x="0" y="15" width="223" height="1"/>
 							</line>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="0" y="12" width="222" height="12" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" style="Arial" positionType="Float" x="0" y="12" width="213" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement verticalAlignment="Top" markup="styled">
 									<font size="7"/>
 									<paragraph leftIndent="3" rightIndent="2"/>
@@ -727,7 +727,7 @@
 								<textFieldExpression><![CDATA[$F{poTitle}]]></textFieldExpression>
 							</textField>
 							<line>
-								<reportElement uuid="77566b8b-922d-4b10-8a6b-b0326dedf2b8" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+								<reportElement uuid="77566b8b-922d-4b10-8a6b-b0326dedf2b8" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="27"/>
 							</line>
 						</jr:detailCell>
 					</jr:column>
@@ -747,7 +747,7 @@
 								<reportElement uuid="801de382-24e3-4369-844e-a4cb777112a7" x="0" y="15" width="75" height="1"/>
 							</line>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="3d2df9b5-b04f-4d2d-8f62-4c2ba795748a" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
@@ -757,7 +757,7 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($F{currency},$P{patternDecimal},$F{cost})]]></textFieldExpression>
 							</textField>
 							<line>
-								<reportElement uuid="efda876a-d7d6-4f9b-a728-04c74d5fa200" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+								<reportElement uuid="efda876a-d7d6-4f9b-a728-04c74d5fa200" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="27"/>
 							</line>
 						</jr:detailCell>
 					</jr:column>
@@ -777,7 +777,7 @@
 								<reportElement uuid="d3e5eca2-5f27-4c17-a506-c8d96594d60d" x="0" y="0" width="1" height="15"/>
 							</line>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="77e1e071-4535-4249-882a-6e0c2d9958ef" style="Arial" x="0" y="12" width="75" height="12" isRemoveLineWhenBlank="true"/>
 								<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
@@ -787,7 +787,7 @@
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.formatMoney($F{currency},$P{patternDecimal},$F{totalCost})]]></textFieldExpression>
 							</textField>
 							<line>
-								<reportElement uuid="34bad98b-40a4-46d7-9383-a4cbca77d309" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+								<reportElement uuid="34bad98b-40a4-46d7-9383-a4cbca77d309" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="27"/>
 							</line>
 						</jr:detailCell>
 					</jr:column>
@@ -807,9 +807,9 @@
 								<text><![CDATA[Delivery Date]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell height="24" rowSpan="1">
+						<jr:detailCell height="27" rowSpan="1">
 							<line>
-								<reportElement uuid="babb8532-8718-4e59-9e51-2f92c7cc08ff" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="24"/>
+								<reportElement uuid="babb8532-8718-4e59-9e51-2f92c7cc08ff" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="27"/>
 							</line>
 							<textField isBlankWhenNull="true">
 								<reportElement uuid="8a3719f0-8bb7-4286-9148-d9c9310a7de9" style="Arial" positionType="Float" x="0" y="12" width="55" height="12" isRemoveLineWhenBlank="true"/>

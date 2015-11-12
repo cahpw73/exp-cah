@@ -13,6 +13,14 @@
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
+       <style>
+            table{
+                display: block;
+            }
+            thead{
+                position: fixed;
+            }
+        </style>
         <o:form id="listPooFormId" includeViewParams="true" prependId="false">
             <div class="col-md-12">
                 <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"

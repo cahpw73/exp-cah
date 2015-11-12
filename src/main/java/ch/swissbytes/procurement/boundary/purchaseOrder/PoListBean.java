@@ -763,6 +763,7 @@ public class PoListBean implements Serializable {
 
     public void findPOs() {
         purchaseOrders.clear();
+        purchaseOrders.add(new PurchaseOrderEntity());
         List<PurchaseOrderEntity> list = service.findPosBy(getFilter());
         purchaseOrders.addAll(list);
         allPurchaseOrders.addAll(purchaseOrders);
