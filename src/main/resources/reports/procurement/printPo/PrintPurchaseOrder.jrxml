@@ -944,6 +944,9 @@
 				<subreportParameter name="exchangeRate">
 					<subreportParameterExpression><![CDATA[$P{exchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="variation">
+					<subreportParameterExpression><![CDATA[$P{variation}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="TIME_ZONE">
 					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -974,14 +977,14 @@
 				<subreportParameter name="currencyLbl1">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="currenciesNumber">
-					<subreportParameterExpression><![CDATA[$P{currenciesNumber}]]></subreportParameterExpression>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="currencyLbl2">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="currencyId3">
-					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				<subreportParameter name="currenciesNumber">
+					<subreportParameterExpression><![CDATA[$P{currenciesNumber}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE2">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></subreportParameterExpression>
