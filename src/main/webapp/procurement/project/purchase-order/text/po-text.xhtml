@@ -61,7 +61,7 @@
                                      value="#{poTextBean.droppedTextSnippetList}"
                                      selectionMode="multiple" selection="#{poTextBean.selectedClausesTextList}"
                                      rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
-                            <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}" update="clausesAuxDt"/>
+                            <p:ajax event="rowReorder" listener="#{poTextBean.onRowReorder}" update="clausesAuxDt :editPoForm:bbtnt"/>
                             <p:column id="textAuxClId" headerText="#{msgs['po.text.lbl.standard.column.text.id']}"
                                       rendered="#{poTextBean.hasStatusEnable(_dt)}">
                                 <h:outputText value="#{_dt.numberClause}"/>
