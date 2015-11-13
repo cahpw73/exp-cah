@@ -7,7 +7,7 @@ import java.io.Serializable;
 public enum ClassEnum implements FqmEnum<ClassEnum>, Serializable  {
 
     PO("PO",0),
-    SERVICE_CONTRACT("SERVICE_CONTRACT",1),
+    SERVICE_CONTRACT("Service Contract",1),
     CONSTRUCTION_CONTRACT("Construction Contract",2),
     MINING_FLEET("Mining Fleet",3);
 

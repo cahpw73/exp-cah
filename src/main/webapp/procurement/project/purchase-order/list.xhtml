@@ -13,11 +13,12 @@
         <f:viewAction action="#{poListBean.load}" onPostback="false"/>
     </f:metadata>
     <ui:define name="body">
-       <style>
-            table{
+        <style>
+            table {
                 display: block;
             }
-            thead{
+
+            thead {
                 position: fixed;
             }
         </style>
@@ -32,7 +33,9 @@
                             <p:messages id="poGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
                                         infoClass="alert alert-info"/>
-                            <div class="procurement-panel-header" style="margin-left: 0px!important;">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
+
+                            <div class="procurement-panel-header"
+                                 style="margin-left: 0px!important;">#{msgs['project.purchase.order.list.title']} #{poListBean.project.title}</div>
                             <div class="clearfix"></div>
                             <br/>
                             <h:link outcome="edit"
@@ -155,6 +158,7 @@
                         </div>
                     </div>
                 </h:panelGroup>
+
                 <div class="clearfix"></div>
                 <br/>
                 <br/>
@@ -163,20 +167,25 @@
                              binding="#{poListBean.dataTable}"
                              value="#{poListBean.purchaseOrders}" var="_p">
                     <p:ajax event="sort" listener="#{poListBean.sortListener}"/>
-                    <p:column id="colPO" headerText="#{msgs['project.purchase.order.column.po.no']}" style="width: 119px;" sortBy="#{_p.po}">
+                    <p:column id="colPO" headerText="#{msgs['project.purchase.order.column.po.no']}"
+                              style="width: 119px;" sortBy="#{_p.po}">
                         #{_p.po}
                     </p:column>
-                    <p:column id="colVar" headerText="#{msgs['project.purchase.order.column.var.no']}" style="width: 119px;">
+                    <p:column id="colVar" headerText="#{msgs['project.purchase.order.column.var.no']}"
+                              style="width: 119px;">
                         #{_p.variation}
                     </p:column>
-                    <p:column id="colTitle" headerText="#{msgs['project.purchase.order.column.title']}" style="width: 385px;">
+                    <p:column id="colTitle" headerText="#{msgs['project.purchase.order.column.title']}"
+                              style="width: 385px;">
                         #{_p.poTitle}
                     </p:column>
-                    <p:column id="colSupplier" headerText="#{msgs['project.purchase.order.column.supplier']}" style="width: 326px;"
+                    <p:column id="colSupplier" headerText="#{msgs['project.purchase.order.column.supplier']}"
+                              style="width: 326px;"
                               sortBy="#{_p.purchaseOrderProcurementEntity.supplier.company}">
                         #{_p.purchaseOrderProcurementEntity.supplier.company}
                     </p:column>
-                    <p:column id="colStatus" headerText="#{msgs['project.purchase.order.column.status']}" style="width: 148px;">
+                    <p:column id="colStatus" headerText="#{msgs['project.purchase.order.column.status']}"
+                              style="width: 148px;">
                         #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
                     </p:column>
                     <p:column id="colAction" headerText="#{msgs['lbl.dt.column.actions']}" style="width: 370px;">
@@ -412,7 +421,6 @@
                 </div>
                 <div class="clearfix"></div>
                 <br/>
-
 
                 <div class="form-group">
                     <div class="pull-right">

@@ -5,11 +5,14 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
 import javax.inject.Inject;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,8 @@ public class SpreadsheetService implements Serializable {
     private CashflowService cashflowService;
     @Inject
     private ScopeSupplyService scopeSupplyService;
+    @Inject
+    private Util util;
 
     public SpreadsheetProcessor processor;
 
@@ -37,8 +42,11 @@ public class SpreadsheetService implements Serializable {
         log.info("purchaseOrder list size: " + list.size());
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
-        generateSpreadsheetPurchaseOrder(list);
+        processor.createSpreadsheet("PkgHdr");
+        createHeaderCMS(list.get(0));
+        createHeaderPO();
         generateSpreadsheetPurchaseOrderDetail(list);
+        /*generateSpreadsheetPurchaseOrder(list);*/
         log.info("written successfully...");
         return processor.getContentSheet();
 
@@ -100,8 +108,23 @@ public class SpreadsheetService implements Serializable {
     }
 
     private void prepareDetailContent(PurchaseOrderEntity entity, ItemEntity ss) {
-        firstSide(entity, ss);
-        secondSide(10, entity, ss);
+       /* firstSide(entity, ss);
+        secondSide(10, entity, ss);*/
+        processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz()!=null?entity.getPurchaseOrderProcurementEntity().getClazz().getLabel():"");
+        processor.writeStringValue(1, entity.getPo()!=null?entity.getPo():"");
+        processor.writeStringValue(2, entity.getVariation()!=null?entity.getVariation():"");
+        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate()!=null?util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()):"") ;
+        processor.writeStringValue(4, entity.getPoTitle()!=null?entity.getPoTitle():"");
+        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier()!=null?entity.getPurchaseOrderProcurementEntity().getSupplier().getFullName():"");
+        processor.writeStringValue(6, ss.getCode()!=null?ss.getCode():"");
+        processor.writeStringValue(7, ss.getCostCode()!=null?ss.getCostCode():"");
+        processor.writeStringValue(8, ss.getDescription()!=null?ss.getDescription():"");
+        processor.writeStringValue(9, ss.getProjectCurrency()!=null?ss.getProjectCurrency().getCurrency().getCode():"");
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
+        processor.writeStringValue(10, ss.getCost()!=null? decFormat.format(ss.getCost()):"");
+        processor.writeStringValue(11, ss.getUnit()!=null?ss.getUnit():"");
+        processor.writeStringValue(12, ss.getQuantity()!=null? ss.getQuantity().toString():"");
+        processor.writeStringValue(13, ss.getTotalCost()!=null? decFormat.format(ss.getTotalCost()):"");
     }
 
     private void prepareDetailContentMultiCurrencies(PurchaseOrderEntity entity, ItemEntity ss) {
@@ -112,21 +135,38 @@ public class SpreadsheetService implements Serializable {
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
-        processor.createSpreadsheet("PkgDetail");
-        // createHeaderPODetail(processor);
-        int rowNo = 0;
+        int rowNo = 2;
+        processor.createRow(rowNo);
         for (PurchaseOrderEntity entity : list) {
             List<ItemEntity> itemEntityList = scopeSupplyService.getItemsBYPOId(entity.getId());
             if (!itemEntityList.isEmpty()) {
-                boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(itemEntityList);
+                processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz()!=null?entity.getPurchaseOrderProcurementEntity().getClazz().getLabel():"");
+                processor.writeStringValue(1, entity.getPo()!=null?entity.getPo():"");
+                processor.writeStringValue(2, entity.getVariation()!=null?entity.getVariation():"");
+                processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate()!=null?util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()):"") ;
+                processor.writeStringValue(4, entity.getPoTitle()!=null?entity.getPoTitle():"");
+                processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier()!=null?entity.getPurchaseOrderProcurementEntity().getSupplier().getFullName():"");
+                ItemEntity item = itemEntityList.get(0);
+                processor.writeStringValue(6, item.getCode()!=null?item.getCode():"");
+                processor.writeStringValue(7, item.getCostCode()!=null?item.getCostCode():"");
+                processor.writeStringValue(8, item.getDescription()!=null?item.getDescription():"");
+                processor.writeStringValue(9, item.getProjectCurrency()!=null?item.getProjectCurrency().getCurrency().getCode():"");
+                DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
+                processor.writeStringValue(10, item.getCost()!=null? decFormat.format(item.getCost()):"");
+                processor.writeStringValue(11, item.getUnit()!=null?item.getUnit():"");
+                processor.writeStringValue(12, item.getQuantity()!=null? item.getQuantity().toString():"");
+                processor.writeStringValue(13, item.getTotalCost()!=null? decFormat.format(item.getTotalCost()):"");
+
+                /*boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(itemEntityList);*/
+                itemEntityList.remove(0);
+                rowNo++;
                 for (ItemEntity ss : itemEntityList) {
                     processor.createRow(rowNo);
-                    if (hasMultiCurrencies) {
+                    /*if (hasMultiCurrencies) {
                         prepareDetailContentMultiCurrencies(entity, ss);
-                    } else {
+                    } else {*/
                         prepareDetailContent(entity, ss);
-                    }
-
+                    //}
                     rowNo++;
                 }
             }
@@ -202,19 +242,28 @@ public class SpreadsheetService implements Serializable {
         return currencies.size() > 1;
     }
 
-    private void createHeaderPO(SpreadsheetProcessor sp) {
-        sp.createRow(0);
-        sp.writeStringValue(0, "PackageTypeCode");
-        sp.writeStringValue(1, "PackageNumber");//*
-        sp.writeStringValue(2, "PackageAmendment");
-        sp.writeStringValue(3, "AwardDate");//*
-        sp.writeStringValue(4, "PackageTitle");//*
-        sp.writeStringValue(5, "ContractorVendorName");
-        sp.writeStringValue(6, "PaymentTermsNotes");//*
-        sp.writeStringValue(7, "CER/CAR Number");
-        sp.writeStringValue(8, "Responsibility");
-        sp.writeStringValue(9, "SAP Cross Reference");
-        sp.writeStringValue(10, "Pkg Default Currency Code");//*
+    private void createHeaderCMS(PurchaseOrderEntity entity){
+        processor.createRow(0);
+        processor.writeStringValue(0, "PROJECT: ");
+        processor.writeStringValue(1, entity.getProjectEntity().getProjectNumber());
+    }
+
+    private void createHeaderPO() {
+        processor.createRow(1);
+        processor.writeStringValue(0, "Class");
+        processor.writeStringValue(1, "PO No.");//*
+        processor.writeStringValue(2, "Var");
+        processor.writeStringValue(3, "PO Date");//*
+        processor.writeStringValue(4, "Title");//*
+        processor.writeStringValue(5, "Supplier");
+        processor.writeStringValue(6, "Item");//*
+        processor.writeStringValue(7, "Cost Code");
+        processor.writeStringValue(8, "Description");
+        processor.writeStringValue(9, "Currency");
+        processor.writeStringValue(10, "Unit Price");//*
+        processor.writeStringValue(11, "UOM");
+        processor.writeStringValue(12, "Qty");
+        processor.writeStringValue(13, "Total Price");//*
     }
 
     private void createHeaderPODetail(SpreadsheetProcessor sp) {
@@ -242,10 +291,6 @@ public class SpreadsheetService implements Serializable {
         sp.writeStringValue(20, "SortSelectCode02");
         sp.writeStringValue(21, "SortSelectCode03");
         sp.writeStringValue(22, "SortSelectCode04");
-        sp.writeStringValue(23, "UserSelect01");
-        sp.writeStringValue(24, "UserSelect02");
-        sp.writeStringValue(25, "UserSelect03");
-        sp.writeStringValue(26, "UserSelect04");
     }
 
 }

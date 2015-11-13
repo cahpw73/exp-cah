@@ -36,20 +36,6 @@
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
-                            <ui:remove>
-                                <p:column headerText="#{msgs['po.items.dt.column.equip.no']}"
-                                          rendered="#{itemBean.hasNotStatusDeleted(_i)}">
-                                    <h:panelGroup id="viEquipNo" rendered="#{!_i.isEditable}">
-                                        <h:outputText value="#{_i.tagNo}"/>
-                                    </h:panelGroup>
-                                    <h:panelGroup id="edEquipNo" rendered="#{_i.isEditable}">
-                                        <p:inputText id="equipNo" required="true" maxlength="1000" value="#{_i.tagNo}"
-                                                     styleClass="form-control">
-
-                                        </p:inputText>
-                                    </h:panelGroup>
-                                </p:column>
-                            </ui:remove>
                             <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viQty" rendered="#{!_i.isEditable}">
