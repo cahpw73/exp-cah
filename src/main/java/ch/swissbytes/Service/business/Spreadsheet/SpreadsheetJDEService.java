@@ -79,7 +79,7 @@ public class SpreadsheetJDEService implements Serializable {
                 processor.writeStringValue(9, item.getQuantity()!=null? item.getQuantity().toString():"");
                 processor.writeStringValue(10, item.getTotalCost()!=null? decFormat.format(item.getTotalCost()):"");
                 processor.writeStringValue(11, entity.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms()!=null? entity.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms().getLabel():"");
-                processor.writeStringValue(5, item.getCostCode()!=null?item.getCostCode():"");
+                processor.writeStringValue(12, item.getCostCode()!=null?item.getCostCode():"");
                 itemEntityList.remove(0);
                 rowNo++;
                 for (ItemEntity ss : itemEntityList) {
@@ -106,7 +106,7 @@ public class SpreadsheetJDEService implements Serializable {
         processor.writeStringValue(9, item.getQuantity()!=null? item.getQuantity().toString():"");
         processor.writeStringValue(10, item.getTotalCost()!=null? decFormat.format(item.getTotalCost()):"");
         processor.writeStringValue(11, entity.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms()!=null? entity.getPurchaseOrderProcurementEntity().getCashflow().getPaymentTerms().getLabel():"");
-        processor.writeStringValue(5, item.getCostCode()!=null?item.getCostCode():"");
+        processor.writeStringValue(12, item.getCostCode()!=null?item.getCostCode():"");
     }
 
 
