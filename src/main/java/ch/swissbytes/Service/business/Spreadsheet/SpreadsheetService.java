@@ -52,70 +52,13 @@ public class SpreadsheetService implements Serializable {
 
     }
 
-    private void generateSpreadsheetPurchaseOrder(final List<PurchaseOrderEntity> list) {
-        processor.createSpreadsheet("PkgHdr");
-        // createHeaderPO(processor);
-        int rowNo = 0;
-        for (PurchaseOrderEntity purchaseOrder : list) {
-            processor.createRow(rowNo);
-            prepareHeaderContent(purchaseOrder);
-            rowNo++;
-        }
-    }
-
-    private void prepareHeaderContent(PurchaseOrderEntity purchaseOrder) {
-        //Package Type Code
-        processor.writeStringValue(0, "");
-        //Package Number
-        processor.writeStringValue(1, purchaseOrder.getPo());
-        //Package Amendment
-        processor.writeStringValue(2, purchaseOrder.getVariation());
-        //Award Date
-        processor.writeStringValue(3, getAwardDate(purchaseOrder));
-        //Package Title.
-        processor.writeStringValue(4, purchaseOrder.getPoTitle());
-        //Contractor Vendor Name
-        processor.writeStringValue(5, getPaymentTerm(purchaseOrder));
-        //Payment Terms Notes
-        processor.writeStringValue(6, "");
-        //CER/CAR Number
-        processor.writeStringValue(7, "");
-        //Responsibility
-        processor.writeStringValue(8, "");
-        //SAP Cross Reference
-        processor.writeStringValue(9, "");
-        //Pkg Default Currency Code
-        processor.writeStringValue(10, "");
-    }
-
-    private String getPaymentTerm(PurchaseOrderEntity purchaseOrder) {
-        List<CashflowEntity> cashflowList = cashflowService.findByPoId(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
-        if (!cashflowList.isEmpty()) {
-            CashflowEntity cashflowEntity = cashflowList.get(0);
-            if (cashflowEntity.getPaymentTerms() != null) {
-                return cashflowEntity.getPaymentTerms().getLabel();
-            }
-        }
-        return "";
-    }
-
-    private String getAwardDate(PurchaseOrderEntity purchaseOrder) {
-        if (purchaseOrder.getPoDeliveryDate() != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat(configuration.getFormatDate());
-            return formatter.format(purchaseOrder.getPoDeliveryDate());
-        }
-        return "";
-    }
-
     private void prepareDetailContent(PurchaseOrderEntity entity, ItemEntity ss) {
-       /* firstSide(entity, ss);
-        secondSide(10, entity, ss);*/
-        processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz()!=null?entity.getPurchaseOrderProcurementEntity().getClazz().getLabel():"");
-        processor.writeStringValue(1, entity.getPo()!=null?entity.getPo():"");
-        processor.writeStringValue(2, entity.getVariation()!=null?entity.getVariation():"");
-        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate()!=null?util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()):"") ;
-        processor.writeStringValue(4, entity.getPoTitle()!=null?entity.getPoTitle():"");
-        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier()!=null?entity.getPurchaseOrderProcurementEntity().getSupplier().getFullName():"");
+        processor.writeStringValue(0, "");
+        processor.writeStringValue(1, "");
+        processor.writeStringValue(2, "");
+        processor.writeStringValue(3, "") ;
+        processor.writeStringValue(4, "");
+        processor.writeStringValue(5, "");
         processor.writeStringValue(6, ss.getCode()!=null?ss.getCode():"");
         processor.writeStringValue(7, ss.getCostCode()!=null?ss.getCostCode():"");
         processor.writeStringValue(8, ss.getDescription()!=null?ss.getDescription():"");
@@ -125,13 +68,6 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(11, ss.getUnit()!=null?ss.getUnit():"");
         processor.writeStringValue(12, ss.getQuantity()!=null? ss.getQuantity().toString():"");
         processor.writeStringValue(13, ss.getTotalCost()!=null? decFormat.format(ss.getTotalCost()):"");
-    }
-
-    private void prepareDetailContentMultiCurrencies(PurchaseOrderEntity entity, ItemEntity ss) {
-        firstSide(entity, ss);
-        //PayItemCurrency
-        processor.writeStringValue(10, ss.getProjectCurrency().getCurrency().getCode());
-        secondSide(11, entity, ss);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
@@ -173,75 +109,6 @@ public class SpreadsheetService implements Serializable {
         }
     }
 
-    private void firstSide(PurchaseOrderEntity entity, ItemEntity ss) {
-        //Package Number
-        processor.writeStringValue(0, entity.getPo());
-        // Package Amendment
-        processor.writeStringValue(1, entity.getVariation());
-        //WA/Release
-        processor.writeStringValue(2, "");
-        //Item Number
-        processor.writeStringValue(3, ss.getCode());
-        //Facility Code
-        processor.writeStringValue(4, "");
-        //Trade Commodity Code
-        processor.writeStringValue(5, "");
-        //Phase Code
-        processor.writeStringValue(6, "");
-        //Item Description
-        processor.writeStringValue(7, ss.getDescription());
-        //PayItem Group
-        processor.writeStringValue(8, "");
-        //Pay Item Payment Type
-        processor.writeStringValue(9, "");
-    }
-
-    private void secondSide(int start, PurchaseOrderEntity entity, ItemEntity ss) {
-        //Unit Price
-        int col=start;
-        processor.writeDoubleValue(col, ss.getCost() != null ? ss.getCost().doubleValue() : null);
-        //Unit of Measure
-        processor.writeStringValue(col++, ss.getUnit());
-        //Committed Qty
-        processor.writeStringValue(col++, "");
-        //Committed Install Hrs.
-        processor.writeStringValue(col++, "");
-        //Committed Costs.
-        processor.writeStringValue(col++, "");
-        //Forecast Quantity
-        processor.writeStringValue(col++, "");
-        //Forecast Install Hrs.
-        processor.writeStringValue(col++, "");
-        //Forecast Costs
-        processor.writeStringValue(col++, "");
-        //Sort Select Code 01
-        processor.writeStringValue(col++, "");
-        //Sort Select Code 02
-        processor.writeStringValue(col++, "");
-        //Sort Select  Code 03
-        processor.writeStringValue(col++, "");
-        //Sort Select Code 04
-        processor.writeStringValue(col++, "");
-        //User Select 01
-        processor.writeStringValue(col++, "");
-        //User Select 02
-        processor.writeStringValue(col++, "");
-        //User Select 03
-        processor.writeStringValue(col++, "");
-        //User Select 04
-        processor.writeStringValue(col++, "");
-    }
-
-    private boolean verifyMultiCurrenciesByScopeSupply(List<ItemEntity> itemEntityList) {
-        List<ProjectCurrencyEntity> currencies = new ArrayList<>();
-        for (ItemEntity ss : itemEntityList) {
-            if (ss.getProjectCurrency() != null && !currencies.contains(ss.getProjectCurrency())) {
-                currencies.add(ss.getProjectCurrency());
-            }
-        }
-        return currencies.size() > 1;
-    }
-
     private void createHeaderCMS(PurchaseOrderEntity entity){
         processor.createRow(0);
         processor.writeStringValue(0, "PROJECT: ");
@@ -264,33 +131,6 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(11, "UOM");
         processor.writeStringValue(12, "Qty");
         processor.writeStringValue(13, "Total Price");//*
-    }
-
-    private void createHeaderPODetail(SpreadsheetProcessor sp) {
-        sp.createRow(0);
-        sp.writeStringValue(0, "PackageNumber");//*
-        sp.writeStringValue(1, "PackageAmendment");
-        sp.writeStringValue(2, "WA/Release");
-        sp.writeStringValue(3, "Item Number");//*
-        sp.writeStringValue(4, "FacilityCode");
-        sp.writeStringValue(5, "TradeCommodityCode");
-        sp.writeStringValue(6, "PhaseCode");
-        sp.writeStringValue(7, "ItemDescription");//*
-        sp.writeStringValue(8, "PayItemGroup");
-        sp.writeStringValue(9, "PayItemPaymentType");
-        sp.writeStringValue(10, "PayItemCurrency");
-        sp.writeStringValue(11, "UnitPrice");//*
-        sp.writeStringValue(12, "UnitOfMeasure");
-        sp.writeStringValue(13, "CommittedQty");
-        sp.writeStringValue(14, "CommittedInstallHrs");
-        sp.writeStringValue(15, "CommittedCosts");
-        sp.writeStringValue(16, "ForecastQty");
-        sp.writeStringValue(17, "ForecastInstallHrs");
-        sp.writeStringValue(18, "ForecastCosts");
-        sp.writeStringValue(19, "SortSelectCode01");
-        sp.writeStringValue(20, "SortSelectCode02");
-        sp.writeStringValue(21, "SortSelectCode03");
-        sp.writeStringValue(22, "SortSelectCode04");
     }
 
 }
