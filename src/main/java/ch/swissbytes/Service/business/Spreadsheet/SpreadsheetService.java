@@ -46,7 +46,6 @@ public class SpreadsheetService implements Serializable {
         createHeaderCMS(list.get(0));
         createHeaderPO();
         generateSpreadsheetPurchaseOrderDetail(list);
-        /*generateSpreadsheetPurchaseOrder(list);*/
         log.info("written successfully...");
         return processor.getContentSheet();
 
@@ -92,17 +91,11 @@ public class SpreadsheetService implements Serializable {
                 processor.writeStringValue(11, item.getUnit()!=null?item.getUnit():"");
                 processor.writeStringValue(12, item.getQuantity()!=null? item.getQuantity().toString():"");
                 processor.writeStringValue(13, item.getTotalCost()!=null? decFormat.format(item.getTotalCost()):"");
-
-                /*boolean hasMultiCurrencies = verifyMultiCurrenciesByScopeSupply(itemEntityList);*/
                 itemEntityList.remove(0);
                 rowNo++;
                 for (ItemEntity ss : itemEntityList) {
                     processor.createRow(rowNo);
-                    /*if (hasMultiCurrencies) {
-                        prepareDetailContentMultiCurrencies(entity, ss);
-                    } else {*/
                         prepareDetailContent(entity, ss);
-                    //}
                     rowNo++;
                 }
             }
