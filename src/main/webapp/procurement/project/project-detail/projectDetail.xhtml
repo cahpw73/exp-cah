@@ -82,5 +82,17 @@
                                  style="height: 135px!important; width: 366px!important"/>
             </div>
         </div>
+        <div class="form-group">
+            <h:outputLabel styleClass="col-sm-2 control-label procurement-text-lbl-ltr"
+                           value="#{msgs['project.detail.folder.name']}"/>
+
+            <div class="col-sm-5">
+                <div style="width: 370px">
+                    <h:inputText id="folderName" value="#{projectBean.projectEntity.folderName}"
+                                 styleClass="form-control" required="true"
+                                 maxlength="255"/>
+                </div>
+            </div>
+        </div>
     </div>
 </ui:composition>

@@ -96,7 +96,10 @@ public class Configuration implements Serializable {
 
     public String getFormatDate(){
         log.log(Level.FINE,"format date");
-        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+        String string = laguangeDefault;
+        if(languagePreference!=null) {
+            string = StringUtils.isNotEmpty(languagePreference.getLanguage()) ? languagePreference.getLanguage() : laguangeDefault;
+        }
         String[] parts = string.split("-");
         Locale locale;
         if(parts.length>1){
@@ -143,7 +146,11 @@ public class Configuration implements Serializable {
     }
 
     public String getTimeZone(){
-        return StringUtil.isNotNull(languagePreference.getTimeZone())?languagePreference.getTimeZone(): TimeZone.getDefault().getID();
+        if(languagePreference!=null) {
+            return StringUtil.isNotNull(languagePreference.getTimeZone()) ? languagePreference.getTimeZone() : TimeZone.getDefault().getID();
+        }else{
+            return TimeZone.getDefault().getID();
+        }
     }
 
     public TimeZone getTimeZone2(){

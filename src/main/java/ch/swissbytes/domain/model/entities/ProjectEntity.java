@@ -31,6 +31,7 @@ public class ProjectEntity implements Serializable {
     private StatusEnum status;
     private Date lastUpdate;
     private String invoiceTo;
+    private String folderName;
 
     private List<ProjectCurrencyEntity> currencies = new ArrayList<>();
     private List<ProjectTextSnippetEntity> projectTextSnippetList = new ArrayList<>();
@@ -67,6 +68,15 @@ public class ProjectEntity implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Column(name = "folder_name")
+    public String getFolderName() {
+        return folderName;
+    }
+
+    public void setFolderName(String folderName) {
+        this.folderName = folderName;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

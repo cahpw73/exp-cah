@@ -37,7 +37,37 @@ public class SpreadsheetProcessor implements Serializable {
     }
 
     public void writeDoubleValue(int colNo, Double value) {
-        row.createCell(colNo).setCellValue(value==null?"":value.toString());
+        row.createCell(colNo).setCellValue(value == null ? "" : value.toString());
+    }
+
+    public void doSaveWorkBook(final String path, final String fileName) {
+        FileOutputStream out = null;
+        File file = createDirectoryFiles(path);
+        File newFile = new File(file.getAbsolutePath()+File.separator+fileName);
+        try {
+            if(newFile.createNewFile()){
+                System.out.println("created file");
+            }
+            out = new FileOutputStream(newFile);
+            workbook.write(out);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private File createDirectoryFiles(String path) {
+        File theDir = new File(path);
+        if (!theDir.exists()) {
+            try {
+                theDir.mkdirs();
+            } catch (SecurityException se) {
+
+            }
+        }
+        return theDir;
     }
 
     public ByteArrayOutputStream saveWorkBook() {
@@ -53,9 +83,10 @@ public class SpreadsheetProcessor implements Serializable {
         return null;
     }
 
-    public InputStream getContentSheet(){
-        ByteArrayOutputStream output=saveWorkBook();
-        if(output!=null) {
+
+    public InputStream getContentSheet() {
+        ByteArrayOutputStream output = saveWorkBook();
+        if (output != null) {
             return new ByteArrayInputStream(output.toByteArray());
         }
         return null;

@@ -252,7 +252,7 @@
                         &#160;
                         <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
                                        update="projectListId"
-
+                                       rendered="#{poListBean.canExportCMS(_p)}"
                                        onclick="PF('cmsExport').show();"
                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;">
                             <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -265,7 +265,7 @@
                                 value="#{msgs['project.list.action.export.jde']}"
                                 onclick="PF('jdeExport').show();"
                                 style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                >
+                                rendered="#{poListBean.canExportJDE(_p)}">
                             <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                          value="#{_p}"/>
                         </p:commandLink>

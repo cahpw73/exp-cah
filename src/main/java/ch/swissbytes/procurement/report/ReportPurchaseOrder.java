@@ -651,7 +651,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         String result = "";
         Query query = entityManager.createNativeQuery("select distinct po.orderedvariation, po.id\n" +
                 "from purchase_order po  \n" +
-                "where po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + "\n" +
+                "where po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() +" and  po.status_id = 1 "+ "\n" +
                 "order by po.orderedvariation");
         List<Object> list = query.getResultList();
         for (Object record : list) {

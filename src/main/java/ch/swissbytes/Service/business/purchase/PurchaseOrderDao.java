@@ -238,6 +238,20 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
+    public List<PurchaseOrderEntity> findPOListWithoutExportCMS(Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po LEFT JOIN po.purchaseOrderProcurementEntity p");
+        sb.append(" WHERE po.status.id = :ENABLED ");
+        sb.append(" AND po.projectEntity.id  = :PROJECT_ID");
+        sb.append(" AND p.cmsExported = false");
+        sb.append(" ORDER BY po.po ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), map);
+    }
+
     public List<PurchaseOrderEntity> findByVariation(PurchaseOrderEntity purchaseOrder) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po ");

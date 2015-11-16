@@ -37,6 +37,10 @@ public class Util {
 
     private static final Logger log = Logger.getLogger(Util.class.getName());
 
+    public void setConfiguration(Configuration configuration){
+        this.configuration=configuration;
+    }
+
     public static String cutIfAny(String str, Integer length) {
         String target = str;
         if (str != null) {

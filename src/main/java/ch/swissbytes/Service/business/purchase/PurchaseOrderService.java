@@ -454,6 +454,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findByProjectAndPo(projectId, poNo);
     }
 
+    public List<PurchaseOrderEntity> findPOListWithoutExportCMS(final Long projectId) {
+        return dao.findPOListWithoutExportCMS(projectId);
+    }
+
     public List<PurchaseOrderEntity> findByProjectIdCustomizedSort(final Long projectId, Map<String, Boolean> sortByMap) {
         return dao.findByProjectCustomizedSort(projectId, sortByMap);
     }
