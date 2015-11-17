@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,12 +35,13 @@ public class SpreadsheetService implements Serializable {
     @Inject
     private ScopeSupplyService scopeSupplyService;
 
-
     public SpreadsheetProcessor processor;
+
+    int rowNo = 2;
 
     public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) {
         String pathCMS = System.getProperty("fqmes.path.export.cms");
-        pathCMS = pathCMS.replace("{project_field}",folderName);
+        pathCMS = pathCMS.replace("{project_field}", folderName);
         processWorkbook(list);
         log.info("written successfully...");
         processor.doSaveWorkBook(pathCMS, generateFileName());
@@ -54,7 +57,7 @@ public class SpreadsheetService implements Serializable {
     private String generateFileName() {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
         String dateStr = format.format(new Date());
-        String fileName = dateStr+"Commitemnts.xlsx";
+        String fileName = dateStr + "Commitemnts.xlsx";
         return fileName;
     }
 
@@ -68,30 +71,15 @@ public class SpreadsheetService implements Serializable {
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
-        Util util = new Util();
-        Configuration configuration = new Configuration();
-        util.setConfiguration(configuration);
-        int rowNo = 2;
+
         for (PurchaseOrderEntity entity : list) {
-            List<ItemEntity> itemEntityList = scopeSupplyService.getItemsBYPOId(entity.getId());
+            BigDecimal totalForCurrency = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
+            List<ItemEntity> itemEntityList = scopeSupplyService.getItemsOrderedByCurrency(entity.getId());
             if (!itemEntityList.isEmpty()) {
+                boolean hasOneItem = itemEntityList.size() == 1;
                 processor.createRow(rowNo);
-                processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz() != null ? entity.getPurchaseOrderProcurementEntity().getClazz().getLabel() : "");
-                processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
-                processor.writeStringValue(2, entity.getVariation() != null ? entity.getVariation() : "");
-                processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
-                processor.writeStringValue(4, entity.getPoTitle() != null ? entity.getPoTitle() : "");
-                processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getFullName() : "");
                 ItemEntity item = itemEntityList.get(0);
-                processor.writeStringValue(6, item.getCode() != null ? item.getCode() : "");
-                processor.writeStringValue(7, item.getCostCode() != null ? item.getCostCode() : "");
-                processor.writeStringValue(8, item.getDescription() != null ? item.getDescription() : "");
-                processor.writeStringValue(9, item.getProjectCurrency() != null ? item.getProjectCurrency().getCurrency().getCode() : "");
-                DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-                processor.writeStringValue(10, item.getCost() != null ? decFormat.format(item.getCost()) : "");
-                processor.writeStringValue(11, item.getUnit() != null ? item.getUnit() : "");
-                processor.writeStringValue(12, item.getQuantity() != null ? item.getQuantity().toString() : "");
-                processor.writeStringValue(13, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
+                prepareFirstLineContent(entity, item, hasOneItem);
                 itemEntityList.remove(0);
                 rowNo++;
                 for (ItemEntity ss : itemEntityList) {
@@ -100,6 +88,33 @@ public class SpreadsheetService implements Serializable {
                     rowNo++;
                 }
             }
+        }
+    }
+
+    private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, boolean hasOneItem) {
+        Util util = new Util();
+        Configuration configuration = new Configuration();
+        util.setConfiguration(configuration);
+        processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz() != null ? entity.getPurchaseOrderProcurementEntity().getClazz().getLabel() : "");
+        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
+        processor.writeStringValue(2, entity.getVariation() != null ? entity.getVariation() : "");
+        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
+        processor.writeStringValue(4, entity.getPoTitle() != null ? entity.getPoTitle() : "");
+        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getFullName() : "");
+        processor.writeStringValue(6, item.getCode() != null ? item.getCode() : "");
+        processor.writeStringValue(7, item.getCostCode() != null ? item.getCostCode() : "");
+        processor.writeStringValue(8, item.getDescription() != null ? item.getDescription() : "");
+        processor.writeStringValue(9, item.getProjectCurrency() != null ? item.getProjectCurrency().getCurrency().getCode() : "");
+        DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
+        processor.writeStringValue(10, item.getCost() != null ? decFormat.format(item.getCost()) : "");
+        processor.writeStringValue(11, item.getUnit() != null ? item.getUnit() : "");
+        processor.writeStringValue(12, item.getQuantity() != null ? item.getQuantity().toString() : "");
+        processor.writeStringValue(13, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
+        if (hasOneItem) {
+            rowNo++;
+            processor.createRow(rowNo);
+            processor.writeStringValue(12, entity.getPo().toUpperCase() + " TOTAL");
+            processor.writeStringValue(13, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
         }
     }
 

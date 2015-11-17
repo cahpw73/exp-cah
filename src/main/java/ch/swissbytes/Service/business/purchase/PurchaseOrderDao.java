@@ -244,11 +244,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po LEFT JOIN po.purchaseOrderProcurementEntity p");
         sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id  = :PROJECT_ID");
-        sb.append(" AND p.cmsExported = false");
-        sb.append(" ORDER BY po.po ");
+        sb.append(" AND ( p.cmsExported = false OR p.cmsExported = null)");
+        sb.append(" AND p.poProcStatus = :COMMITTED");
+        sb.append(" ORDER BY po.po, po.orderedVariation ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE.getId());
         map.put("PROJECT_ID", projectId);
+        map.put("COMMITTED",ProcurementStatus.COMMITTED);
         return super.findBy(sb.toString(), map);
     }
 

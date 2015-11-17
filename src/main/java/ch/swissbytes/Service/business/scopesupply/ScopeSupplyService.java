@@ -169,6 +169,10 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         return dao.findByPOOId(purchaseOrderId);
     }
 
+    public List<ItemEntity> getItemsOrderedByCurrency(final Long poId){
+        return  dao.findOrderedByCurrency(poId);
+    }
+
     public List<ProjectCurrencyEntity>findCurrenciesBy(final Long purchaseOrderId){
         List<ScopeSupplyEntity>list=scopeSupplyListByPOId(purchaseOrderId);
         List<ProjectCurrencyEntity>currencies=new ArrayList<>();

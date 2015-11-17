@@ -237,6 +237,19 @@ public class ScopeSupplyDao extends GenericDao<ScopeSupplyEntity> implements Ser
         return super.findBy(sb.toString(),map);
     }
 
+    public List<ItemEntity> findOrderedByCurrency(Long poEntityId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ItemEntity x ");
+        sb.append(" WHERE x.status.id = :ENABLED ");
+        sb.append(" AND x.purchaseOrder.id = :PO_ID ");
+        sb.append(" ORDER BY x.projectCurrency.id ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PO_ID", poEntityId);
+        return super.findBy(sb.toString(),map);
+    }
+
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
     }
