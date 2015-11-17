@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.ItemEntity;
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
@@ -79,16 +80,51 @@ public class SpreadsheetService implements Serializable {
                 boolean hasOneItem = itemEntityList.size() == 1;
                 processor.createRow(rowNo);
                 ItemEntity item = itemEntityList.get(0);
+                ProjectCurrencyEntity currentCurrency = item.getProjectCurrency();
+                int itemListSize = itemEntityList.size();
                 prepareFirstLineContent(entity, item, hasOneItem);
                 itemEntityList.remove(0);
                 rowNo++;
+                if (item.getTotalCost() != null) {
+                    totalForCurrency = totalForCurrency.add(item.getTotalCost());
+                }
+                boolean hasOnlyOneCurrency = true;
                 for (ItemEntity ss : itemEntityList) {
-                    processor.createRow(rowNo);
-                    prepareDetailContent(ss);
+                    if (ss.getTotalCost() != null && currentCurrency != null && ss.getProjectCurrency() != null) {
+                        if (currentCurrency.getId().longValue() == ss.getProjectCurrency().getId().longValue()) {
+                            totalForCurrency = totalForCurrency.add(ss.getTotalCost());
+                            processor.createRow(rowNo);
+                            prepareDetailContent(ss);
+                            rowNo++;
+                        }else {
+                            hasOnlyOneCurrency = false;
+                            currentCurrency = ss.getProjectCurrency();
+                            createRowTotalPrice(entity,totalForCurrency);
+                            totalForCurrency = ss.getTotalCost();
+                            rowNo++;
+                            processor.createRow(rowNo);
+                            prepareDetailContent(ss);
+                            rowNo++;
+                        }
+                    }
+                    if(!hasOnlyOneCurrency && ss.getId().longValue() == itemEntityList.get(itemEntityList.size()-1).getId().longValue()){
+                        createRowTotalPrice(entity,totalForCurrency);
+                        rowNo++;
+                    }
+                }
+                if(hasOnlyOneCurrency && itemListSize>1){
+                    createRowTotalPrice(entity,totalForCurrency);
                     rowNo++;
                 }
             }
         }
+    }
+
+    private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency){
+        DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
+        processor.createRow(rowNo);
+        processor.writeStringValue(12, entity.getPo().toUpperCase() + " TOTAL");
+        processor.writeStringValue(13, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
     }
 
     private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, boolean hasOneItem) {
