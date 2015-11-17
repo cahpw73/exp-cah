@@ -85,17 +85,17 @@ public class ExportationPOBean implements Serializable {
         log.info("exportCMS");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporter.generateWorkbookToExport(list, fName);
-        for (PurchaseOrderEntity po : list) {
+        /*for (PurchaseOrderEntity po : list) {
             poService.markCMSAsExported(po);
-        }
+        }*/
     }
 
     public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws FileNotFoundException {
         log.info("exportJDE");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporterToJDE.generateWorkbookToExport(list, fName);
-        for(PurchaseOrderEntity po : list) {
+        /*for(PurchaseOrderEntity po : list) {
             poService.markJDEAsExported(po);
-        }
+        }*/
     }
 }
