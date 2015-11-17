@@ -2,8 +2,10 @@ package ch.swissbytes.procurement.jobs;
 
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDEService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
+import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +43,9 @@ public class ExportationPOBean implements Serializable {
     @Inject
     private PurchaseOrderService poService;
 
+    @Inject
+    private CashflowService cashflowService;
+
 
     @PostConstruct
     public void create() {
@@ -54,12 +59,21 @@ public class ExportationPOBean implements Serializable {
 
     public void dailyExportation() {
         List<ProjectEntity> projectEntities = projectService.findAllProjects();
-        List<PurchaseOrderEntity> poList = new ArrayList<>();
+        List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
+        List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
         for (ProjectEntity p : projectEntities) {
-            poList = poService.findPOListWithoutExportCMS(p.getId());
+            poListCMS = poService.findPOListWithoutExportCMS(p.getId());
+            poListJDE = poService.findPOListWithoutExportJDE(p.getId());
             try {
-                if (!poList.isEmpty()) {
-                    exportCMS(poList, p);
+                if (!poListCMS.isEmpty()) {
+                    exportCMS(poListCMS, p);
+                }
+                if(!poListJDE.isEmpty()){
+                    for(PurchaseOrderEntity po : poListJDE){
+                        List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
+                        po.getPurchaseOrderProcurementEntity().setCashflow(!cashflows.isEmpty() ? cashflows.get(0) : null);
+                    }
+                    exportJDE(poListJDE, p);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -71,21 +85,17 @@ public class ExportationPOBean implements Serializable {
         log.info("exportCMS");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporter.generateWorkbookToExport(list, fName);
-        /*for (PurchaseOrderEntity po : list) {
+        for (PurchaseOrderEntity po : list) {
             poService.markCMSAsExported(po);
-        }*/
+        }
     }
 
-    public StreamedContent exportJDE() {
+    public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws FileNotFoundException {
         log.info("exportJDE");
-        StreamedContent content = null;
-       /* if (currentPurchaseOrder != null && currentPurchaseOrder.getId() != null) {
-            List<PurchaseOrderEntity> list = new ArrayList<>();
-            list.add(service.findById(currentPurchaseOrder.getId()));
-            InputStream is = exporterToJDE.generateWorkbook(list);
-            service.markJDEAsExported(currentPurchaseOrder);
-            content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
-        }*/
-        return content;
+        String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        exporterToJDE.generateWorkbookToExport(list, fName);
+        for(PurchaseOrderEntity po : list) {
+            poService.markJDEAsExported(po);
+        }
     }
 }

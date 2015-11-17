@@ -28,7 +28,7 @@ public class JobExportCMSandJDE implements Serializable {
         log.info("Shut down in progress JobExportCMSandJDE");
     }
 
-    @Schedule(dayOfMonth = "*", hour = "14", minute = "45", info = "Every day at 1:00 am", persistent = false)
+    @Schedule(dayOfMonth = "*", hour = "17", minute = "12", info = "Every day at 1:00 am", persistent = false)
     public void startExportationDaily() {
         log.info("startExportationDaily");
         try {
@@ -37,15 +37,4 @@ public class JobExportCMSandJDE implements Serializable {
             log.info("Error background job CronNotifier.startTracingActivities " + e.getMessage());
         }
     }
-
-    /*@Schedule( dayOfMonth = "*", hour = "2", minute = "0", info = "Every day at 2:00 am", persistent = false)
-    public void startArchiveRequest() {
-        log.info("startArchiveRequest");
-        try {
-            log.info("start archive requests ");
-            //verificationRequestAction.doArchiveRequest();
-        } catch (Exception e) {
-            //log.error("Error background job CronNotifier.startTracingActivities " + e.getMessage());
-        }
-    }*/
 }

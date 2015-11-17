@@ -44,7 +44,7 @@ public class SpreadsheetService implements Serializable {
         String pathCMS = System.getProperty("fqmes.path.export.cms");
         pathCMS = pathCMS.replace("{project_field}", folderName);
         processWorkbook(list);
-        log.info("written successfully...");
+        log.info("written CMS successfully...");
         processor.doSaveWorkBook(pathCMS, generateFileName());
     }
 
@@ -72,7 +72,6 @@ public class SpreadsheetService implements Serializable {
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
-
         for (PurchaseOrderEntity entity : list) {
             BigDecimal totalForCurrency = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
             List<ItemEntity> itemEntityList = scopeSupplyService.getItemsOrderedByCurrency(entity.getId());
@@ -136,7 +135,7 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(2, entity.getVariation() != null ? entity.getVariation() : "");
         processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
         processor.writeStringValue(4, entity.getPoTitle() != null ? entity.getPoTitle() : "");
-        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getFullName() : "");
+        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() : "");
         processor.writeStringValue(6, item.getCode() != null ? item.getCode() : "");
         processor.writeStringValue(7, item.getCostCode() != null ? item.getCostCode() : "");
         processor.writeStringValue(8, item.getDescription() != null ? item.getDescription() : "");
