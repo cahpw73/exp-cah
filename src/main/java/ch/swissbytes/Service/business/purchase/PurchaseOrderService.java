@@ -321,9 +321,13 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         purchaseOrderEntity.setPoDeliveryDate(null);
+        purchaseOrderEntity.setIntroEmail(null);
+        purchaseOrderEntity.setIntroEmailSentComment(null);
+        purchaseOrderEntity.setRequiredDate(null);
+        purchaseOrderEntity.setRequiredSiteDateComment(null);
+        purchaseOrderEntity.setActualDate(null);
+        purchaseOrderEntity.setActualSiteDateComment(null);
         dao.save(purchaseOrderEntity);
-        //requisitionDao.doSave(purchaseOrderEntity.getPoEntity(), po.getRequisitions());
-        //deliverableDao.doSave(purchaseOrderEntity.getPoEntity(), po.getDeliverables());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().clear();
         cashflowService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow(), po);
 

@@ -18,15 +18,14 @@
                                 <p:column headerText="#{msgs['po.header.lbl.rtf']}">
                                     <h:outputText rendered="#{not _req.isEditable}" value="#{_req.rTFNo}"/>
                                     <p:inputText id="rTFNoTxt" rendered="#{_req.isEditable}"
-                                                 value="#{_req.rTFNo}"
-                                                 required="true" requiredMessage="Enter a RTF No"
-                                                 maxlength="250" styleClass="form-control"/>
+                                                 value="#{_req.rTFNo}" maxlength="250" styleClass="form-control rTFNoClass" onblur="clearOriginator();">
+                                    </p:inputText>
                                 </p:column>
                                 <p:column headerText="#{msgs['po.header.column.originator']}">
                                     <h:outputText rendered="#{not _req.isEditable}" value="#{_req.originator}"/>
-                                    <h:inputText rendered="#{_req.isEditable}" value="#{_req.originator}"
-                                                 maxlength="250"
-                                                 styleClass="form-control"/>
+                                    <h:inputText id="originatorTxt" rendered="#{_req.isEditable}" value="#{_req.originator}"
+                                                 maxlength="250" styleClass="form-control originatorClass" onblur="clearRtfNo();">
+                                    </h:inputText>
                                 </p:column>
                                 <p:column headerText="#{msgs['po.header.column.req.no']}">
                                     <h:outputText rendered="#{not _req.isEditable}" value="#{_req.requisitionNumber}"/>

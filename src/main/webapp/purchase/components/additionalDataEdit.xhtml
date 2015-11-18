@@ -17,6 +17,7 @@
             <div class="form-group input-general-po">
                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.intro.email.sent']}"/>
+
                 <div class="calendar-general-po">
                     <p:calendar id="introEmailDate" type="text"
                                 styleClass="calendar-date-po"
@@ -33,7 +34,7 @@
         </div>
         <div class="section-text-area-po">
             <p:inputTextarea style="max-height: 29px;"
-                              maxlength="950" type="text"
+                             maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
                              jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
         </div>
@@ -51,6 +52,7 @@
             <div class="form-group input-general-po">
                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.req.site.date']}"/>
+
                 <div class="calendar-general-po">
                     <p:calendar id="requiredSiteDate" type="text"
                                 navigator="true"
@@ -85,6 +87,7 @@
             <div class="form-group input-general-po">
                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.actual.site.date']}"/>
+
                 <div class="calendar-general-po">
                     <p:calendar id="actualSiteDate" type="text"
                                 navigator="true"

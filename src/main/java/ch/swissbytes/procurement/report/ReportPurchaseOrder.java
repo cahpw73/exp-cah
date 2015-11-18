@@ -274,7 +274,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private String collectRTFNo(){
         StringBuilder sb = new StringBuilder();
         for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
-            sb.append(requisitionEntity.getrTFNo());
+            if(StringUtils.isNotEmpty(requisitionEntity.getrTFNo()) && StringUtils.isNotBlank(requisitionEntity.getrTFNo())) {
+                sb.append(requisitionEntity.getrTFNo());
+            }else if(StringUtils.isNotEmpty(requisitionEntity.getOriginator()) && StringUtils.isNotBlank(requisitionEntity.getOriginator())){
+                sb.append(requisitionEntity.getOriginator());
+            }
             sb.append(",");
         }
         Integer limit = sb.toString().length();

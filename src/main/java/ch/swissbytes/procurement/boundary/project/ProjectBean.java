@@ -377,7 +377,6 @@ public class ProjectBean extends Bean implements Serializable {
     public List<ProjectCurrencyEntity> filteredProjectCurrencies() {
         List<ProjectCurrencyEntity> list = new ArrayList<>();
         for (ProjectCurrencyEntity p : projectCurrencyList) {
-            log.info("currency default: " + p.getProjectDefault());
             if (p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()) {
                 list.add(p);
             }

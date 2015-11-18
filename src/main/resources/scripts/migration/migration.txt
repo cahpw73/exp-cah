@@ -1735,6 +1735,8 @@ SELECT SETVAL('brand_id_seq', (SELECT MAX(ID)+1 FROM BRAND));
 SELECT SETVAL('currency_id_seq', (SELECT MAX(ID)+1 FROM CURRENCY)); 
 SELECT SETVAL('supplier_proc_id_seq', (SELECT MAX(ID)+1 FROM SUPPLIER_PROC));
 
+Old values deliverable
+//*****
 delete from deliverable_item;
 insert into deliverable_item (id,item,last_update,status)values(1,'Control Philosophy & Functional Description',CURRENT_DATE,0);
 insert into deliverable_item (id,item,last_update,status)values(2,'Electrical Termination Diagrams',CURRENT_DATE,0);
@@ -1746,6 +1748,21 @@ insert into deliverable_item (id,item,last_update,status)values(7,'Initial Mecha
 insert into deliverable_item (id,item,last_update,status)values(8,'Initial Structural Detail Drawings',CURRENT_DATE,0);
 insert into deliverable_item (id,item,last_update,status)values(9,'Instrument Data Sheets',CURRENT_DATE,0);
 insert into deliverable_item (id,item,last_update,status)values(10,'Lubrication Schedule',CURRENT_DATE,0);
+//*****
+
+New values deliverable
+delete from deliverable_item;
+insert into deliverable_item (id,item,last_update,status)values(1,'Drawing List',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(2,'Manufacturing Schedule',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(3,'Certified General Arrangement drawings with foundation loads',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(4,'Electrical Schematic Diagrams',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(5,'Control System Philosophy',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(6,'Equipment Data Sheets',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(7,'Inspection and Test Plans',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(8,'Manuals',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(9,'Recommended Spare Parts',CURRENT_DATE,0);
+insert into deliverable_item (id,item,last_update,status)values(10,'Lubrication Schedules',CURRENT_DATE,0);
+
 
 alter table user_role drop constraint pk_user_role;
 ALTER TABLE user_role ADD PRIMARY KEY (id);

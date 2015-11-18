@@ -20,12 +20,15 @@ public class SpreadsheetProcessor implements Serializable {
     //Create row object
     private XSSFRow row;
 
+    private String passwordSheet = System.getProperty("fqmes.excel.sheet.password");
+
     public void createWorkbook() {
         workbook = new XSSFWorkbook();
     }
 
     public void createSpreadsheet(String name) {
         spreadsheet = workbook.createSheet(name);
+        spreadsheet.protectSheet(passwordSheet);
     }
 
     public void createRow(int rowNo) {
