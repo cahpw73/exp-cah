@@ -119,6 +119,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
         supplier.getContacts().clear();
         supplier.getContacts().addAll(contactBean.getList());
+        supplier.setSupplierId(supplier.getSupplierId().toUpperCase());
         return service.save(supplier);
 
     }

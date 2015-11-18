@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Total" pageWidth="519" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7f4c05cf-e643-4bad-91f0-341124488f51">
-	<property name="ireport.zoom" value="2.000000000000001"/>
+	<property name="ireport.zoom" value="1.818181818181819"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
@@ -85,13 +85,13 @@ group by pc.currency_id,c.code,c.symbol]]>
 		<band height="22" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{isOriginal}==false]]></printWhenExpression>
 			<line>
-				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="0" y="0" width="463" height="1"/>
+				<reportElement uuid="b1cedb27-7bb9-45da-ad87-262509b1182f" positionType="Float" x="0" y="0" width="517" height="1"/>
 			</line>
 			<line>
 				<reportElement uuid="5ed796be-aab1-48cf-b9b1-b48be773228d" stretchType="RelativeToBandHeight" x="388" y="0" width="1" height="22"/>
 			</line>
 			<line>
-				<reportElement uuid="3b685ebc-3977-425d-a97d-7ed8c5829bd6" stretchType="RelativeToBandHeight" x="463" y="0" width="1" height="22"/>
+				<reportElement uuid="3b685ebc-3977-425d-a97d-7ed8c5829bd6" stretchType="RelativeToBandHeight" x="517" y="0" width="1" height="22"/>
 			</line>
 			<line>
 				<reportElement uuid="ace7ef41-4863-4552-9277-3791176ae74d" stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="22"/>
@@ -304,14 +304,14 @@ group by pc.currency_id,c.code,c.symbol]]>
 				</jr:table>
 			</componentElement>
 			<line>
-				<reportElement uuid="7057ee64-8b16-40db-ba8a-5e4ce1f00f6e" positionType="Float" x="0" y="21" width="463" height="1"/>
+				<reportElement uuid="7057ee64-8b16-40db-ba8a-5e4ce1f00f6e" positionType="Float" x="0" y="21" width="517" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="22">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="65894a56-969f-41de-9301-99a2536df9a3" style="Arial-Bold" x="392" y="0" width="64" height="20"/>
+				<reportElement uuid="65894a56-969f-41de-9301-99a2536df9a3" style="Arial-Bold" x="392" y="0" width="124" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="9"/>
 				</textElement>
@@ -321,7 +321,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 				<reportElement uuid="862a1f4f-83ea-4b47-bfd5-1406583d06a8" positionType="Float" stretchType="RelativeToBandHeight" x="227" y="0" width="1" height="22"/>
 			</line>
 			<line>
-				<reportElement uuid="bd72d16e-5375-44b6-88e7-c4f517c4a0de" positionType="Float" stretchType="RelativeToBandHeight" x="463" y="0" width="1" height="22"/>
+				<reportElement uuid="bd72d16e-5375-44b6-88e7-c4f517c4a0de" positionType="Float" stretchType="RelativeToBandHeight" x="517" y="0" width="1" height="22"/>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="d8a7cd26-1cbf-4294-afca-beee137858a8" style="Arial-Bold" x="229" y="0" width="157" height="20"/>
@@ -344,7 +344,7 @@ group by pc.currency_id,c.code,c.symbol]]>
 	<summary>
 		<band splitType="Stretch">
 			<line>
-				<reportElement uuid="1c9eb102-2665-466d-bf65-4d874bc69088" positionType="Float" x="227" y="-1" width="236" height="1"/>
+				<reportElement uuid="1c9eb102-2665-466d-bf65-4d874bc69088" positionType="Float" x="227" y="-1" width="290" height="1"/>
 			</line>
 		</band>
 	</summary>

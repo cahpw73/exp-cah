@@ -112,6 +112,23 @@ public class Configuration implements Serializable {
         return localPattern;
     }
 
+    public String getFormatDatePlaceHolder(){
+        String string = laguangeDefault;
+        if(languagePreference!=null) {
+            string = StringUtils.isNotEmpty(languagePreference.getLanguage()) ? languagePreference.getLanguage() : laguangeDefault;
+        }
+        String[] parts = string.split("-");
+        Locale locale;
+        if(parts.length>1){
+            locale=new Locale(parts[0],parts[1]);
+        }else{
+            locale=new Locale(parts[0],"");
+        }
+        DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+        String localPattern  = ((SimpleDateFormat)formatter).toPattern();
+        return localPattern.toUpperCase();
+    }
+
     public String getHardFormatDate(){
         return "dd MMM yyyy";
     }

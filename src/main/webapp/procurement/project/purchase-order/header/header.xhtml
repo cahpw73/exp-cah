@@ -181,13 +181,13 @@
                                                 navigator="true" mask="#{configuration.mask}"
                                                 pattern="#{configuration.formatDate}"
                                                 converter="#{dateConverter}" widgetVar="calendarHeaderDeliveryDate"
-                                                jsf:placeholder="#{configuration.formatDate}"
+                                                jsf:placeholder="#{configuration.formatDatePlaceHolder}"
                                                 converterMessage="#{msgs['validator.date.invalid']}"
                                                 value="#{poBean.purchaseOrder.poDeliveryDate}"
                                                 timeZone="#{configuration.timeZone}"
                                                 onselect="calendarChanges();" onchange="calendarChanges();"
                                                 rendered="#{poBean.beingEdited}"
-                                                onclick="doChangeProc();">
+                                                onclick="doChangeProc();" style="text-transform: uppercase!important;">
                                         <p:ajax process="@this" event="dateSelect" rendered="#{poBean.beingEdited}"/>
                                     </p:calendar>
                                     <p:message for="headerDate" id="msgHeaderDate"/>

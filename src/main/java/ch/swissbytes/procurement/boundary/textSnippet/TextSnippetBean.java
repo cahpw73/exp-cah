@@ -87,6 +87,7 @@ public class TextSnippetBean implements Serializable {
             return "";
         }
         selected.setLastUpdate(new Date());
+        selected.setCode(selected.getCode().toUpperCase());
         service.doUpdate(selected);
         return "textSnippet?faces-redirect=true";
     }

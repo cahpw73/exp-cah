@@ -92,8 +92,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         resourceUtils = new ResourceUtils();
         loadParamLogos();
         addParameters("purchaseOrderId", po.getId());
-        String variation = generateVariation(po.getVariationNumber());
-        addParameters("variation", variation);
+        String variation = generateVariation(po.getVariation());
+        addParameters("variation", variation != null ? "v" + variation : variation);
         loadParamSupplier();
         //loadParamClients();
         if (po.getProjectEntity().getClient() != null) {
@@ -135,14 +135,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("mrNo", collectMRNo());
         processor.clear();
         addParameters("invoiceTo", Util.removeSpecialCharactersForJasperReport(processor.processSnippetText(po.getProjectEntity().getInvoiceTo())));
-        if(po.getPurchaseOrderProcurementEntity().getContactEntity() != null){
+        if (po.getPurchaseOrderProcurementEntity().getContactEntity() != null) {
             addParameters("contactName", po.getPurchaseOrderProcurementEntity().getContactEntity().getFullName());
-            addParameters("contactEmail",po.getPurchaseOrderProcurementEntity().getContactEntity().getEmail());
-            if(StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone()))
+            addParameters("contactEmail", po.getPurchaseOrderProcurementEntity().getContactEntity().getEmail());
+            if (StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone()))
                 addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getContactEntity().getPhone());
             else
-            addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getSupplier().getPhone());
-            if(StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getContactEntity().getFax()))
+                addParameters("contactPhone", po.getPurchaseOrderProcurementEntity().getSupplier().getPhone());
+            if (StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getContactEntity().getFax()))
                 addParameters("contactFax", po.getPurchaseOrderProcurementEntity().getContactEntity().getFax());
             else
                 addParameters("contactFax", po.getPurchaseOrderProcurementEntity().getSupplier().getFax());
@@ -163,27 +163,28 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
     }
-    private String  convertDeliveryDate(){
-        String converted="";
-        if(po.getPoDeliveryDate() != null) {
-            log.info("TIME ZONE "+configuration.getTimeZone());
-            log.info("HARD FORMAT "+configuration.getHardFormatDate());
 
-            DateTimeZone dtz =org.joda.time.DateTimeZone.forID(configuration.getTimeZone());
-            long utc=dtz.convertUTCToLocal(po.getPoDeliveryDate().getTime());
-            log.info("delivery date "+po.getPoDeliveryDate());
-            log.info("dtz "+utc);
-            Date date=new Date();
+    private String convertDeliveryDate() {
+        String converted = "";
+        if (po.getPoDeliveryDate() != null) {
+            log.info("TIME ZONE " + configuration.getTimeZone());
+            log.info("HARD FORMAT " + configuration.getHardFormatDate());
+
+            DateTimeZone dtz = org.joda.time.DateTimeZone.forID(configuration.getTimeZone());
+            long utc = dtz.convertUTCToLocal(po.getPoDeliveryDate().getTime());
+            log.info("delivery date " + po.getPoDeliveryDate());
+            log.info("dtz " + utc);
+            Date date = new Date();
             date.setTime(utc);
-            log.info("date "+date);
-            converted=new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(date).toUpperCase();
+            log.info("date " + date);
+            converted = new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(date).toUpperCase();
         }
-        log.info("converted "+converted);
+        log.info("converted " + converted);
         return converted;
     }
 
     private void loadParamLogos() {
-        if(po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null){
+        if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
             addParameters("headerLogo", logo);
         }
@@ -216,25 +217,26 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("phone", po.getPurchaseOrderProcurementEntity().getSupplier().getPhone());
             addParameters("fax", po.getPurchaseOrderProcurementEntity().getSupplier().getFax());
             addParameters("supplierId", po.getPurchaseOrderProcurementEntity().getSupplier().getId());
-            addParameters("townPostcodeState",getTownPostCodeStateParameter());
+            addParameters("townPostcodeState", getTownPostCodeStateParameter());
         }
     }
-    private String getTownPostCodeStateParameter(){
-        StringBuilder sb=new StringBuilder();
-        boolean hasPrevious=false;
-        if(StringUtils.isNotEmpty( po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb())&&StringUtils.isNotBlank(po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb())){
+
+    private String getTownPostCodeStateParameter() {
+        StringBuilder sb = new StringBuilder();
+        boolean hasPrevious = false;
+        if (StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb()) && StringUtils.isNotBlank(po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb())) {
             sb.append(po.getPurchaseOrderProcurementEntity().getSupplier().getSuburb());
-            hasPrevious=true;
+            hasPrevious = true;
         }
-        if(StringUtils.isNotEmpty( po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode())&&StringUtils.isNotBlank( po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode())){
-            if(hasPrevious){
+        if (StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode()) && StringUtils.isNotBlank(po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode())) {
+            if (hasPrevious) {
                 sb.append(", ");
             }
             sb.append(po.getPurchaseOrderProcurementEntity().getSupplier().getPostCode());
-            hasPrevious=true;
+            hasPrevious = true;
         }
-        if(StringUtils.isNotEmpty( po.getPurchaseOrderProcurementEntity().getSupplier().getState())&&StringUtils.isNotBlank( po.getPurchaseOrderProcurementEntity().getSupplier().getState())){
-            if(hasPrevious){
+        if (StringUtils.isNotEmpty(po.getPurchaseOrderProcurementEntity().getSupplier().getState()) && StringUtils.isNotBlank(po.getPurchaseOrderProcurementEntity().getSupplier().getState())) {
+            if (hasPrevious) {
                 sb.append(", ");
             }
             sb.append(po.getPurchaseOrderProcurementEntity().getSupplier().getState());
@@ -271,12 +273,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         return sb.toString().substring(0, limit);
     }
 
-    private String collectRTFNo(){
+    private String collectRTFNo() {
         StringBuilder sb = new StringBuilder();
         for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
-            if(StringUtils.isNotEmpty(requisitionEntity.getrTFNo()) && StringUtils.isNotBlank(requisitionEntity.getrTFNo())) {
+            if (StringUtils.isNotEmpty(requisitionEntity.getrTFNo()) && StringUtils.isNotBlank(requisitionEntity.getrTFNo())) {
                 sb.append(requisitionEntity.getrTFNo());
-            }else if(StringUtils.isNotEmpty(requisitionEntity.getOriginator()) && StringUtils.isNotBlank(requisitionEntity.getOriginator())){
+            } else if (StringUtils.isNotEmpty(requisitionEntity.getOriginator()) && StringUtils.isNotBlank(requisitionEntity.getOriginator())) {
                 sb.append(requisitionEntity.getOriginator());
             }
             sb.append(",");
@@ -340,7 +342,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private List<PurchaseOrderReportDto> getPOReportDto() {
         List<PurchaseOrderReportDto> dtos = new ArrayList<>();
         dtos.add(new PurchaseOrderReportDto(po.getPoTitle()));
-        if(StringUtils.isNotEmpty(preamble)){
+        if (StringUtils.isNotEmpty(preamble)) {
             dtos.add(new PurchaseOrderReportDto(null, this.preamble));
         }
         for (ItemEntity entity : this.itemEntityList) {
@@ -350,9 +352,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         return dtos;
     }
 
-    private List<ClausesReportDto> getClausesReportDto(){
+    private List<ClausesReportDto> getClausesReportDto() {
         List<ClausesReportDto> dtos = new ArrayList<>();
-        for(ClausesEntity entity : clausesList) {
+        for (ClausesEntity entity : clausesList) {
             ClausesReportDto dto = new ClausesReportDto(entity);
             dtos.add(dto);
         }
@@ -404,7 +406,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                         }
                     }
                 }
-                if(total1HasChanges){
+                if (total1HasChanges) {
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode1((String) values[2]);
                     } else {
@@ -425,7 +427,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                         }
                     }
                 }
-                if(total2HasChanges){
+                if (total2HasChanges) {
                     dto.setPlus1("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode2((String) values[2]);
@@ -447,7 +449,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                         }
                     }
                 }
-                if(total3HasChanges){
+                if (total3HasChanges) {
                     dto.setPlus2("plus");
                     if (values[2] != null && StringUtils.isNotEmpty((String) values[2])) {
                         dto.setCurrencyCode3((String) values[2]);
@@ -655,7 +657,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         String result = "";
         Query query = entityManager.createNativeQuery("select distinct po.orderedvariation, po.id\n" +
                 "from purchase_order po  \n" +
-                "where po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() +" and  po.status_id = 1 "+ "\n" +
+                "where po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and  po.status_id = 1 " + "\n" +
                 "order by po.orderedvariation");
         List<Object> list = query.getResultList();
         for (Object record : list) {
@@ -668,7 +670,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             }
         }
 
-        if(poMinId.longValue() != -1L && poMaxId.longValue() != -1L){
+        if (poMinId.longValue() != -1L && poMaxId.longValue() != -1L) {
             if (poMinId.longValue() != poMaxId.longValue()) {
                 PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
                 PurchaseOrderEntity poMax = findPurchaseOrderById(poMaxId);

@@ -39,6 +39,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     public void doSave(TextSnippetEntity textSnippet){
         textSnippet.setLastUpdate(new Date());
         textSnippet.setStatus(StatusEnum.ENABLE);
+        textSnippet.setCode(textSnippet.getCode().toUpperCase());
         super.doSave(textSnippet);
     }
 

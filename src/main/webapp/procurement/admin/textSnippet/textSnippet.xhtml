@@ -57,7 +57,7 @@
                                 <h:form id="editForm" prependId="false">
                                     <h:inputText id="codeTS" value="#{textSnippetBean.textSnippet.code}"
                                                  jsf:placeholder="Enter code"
-                                                 required="true"
+                                                 required="true" style="text-transform: uppercase;"
                                                  requiredMessage="Enter valid code"
                                                  styleClass="form-control" maxlength="50"/>
                                     <p:message for="codeTS"/>
@@ -107,7 +107,7 @@
 
                                     <p:inputText id="codeTS2" value="#{textSnippetBean.selected.code}"
                                                  jsf:placeholder="Enter text snippet"
-                                                 onchange="doChangeProc();"
+                                                 onchange="doChangeProc();" style="text-transform: uppercase;"
                                                  disabled="#{textSnippetBean.selected eq null}"
                                                  styleClass="form-control" maxlength="50"/>
                                     <p:message for="codeTS2"/>

@@ -76,6 +76,8 @@ public class BidListBean implements Serializable {
     }
 
     public void generateReport(){
+        packageNo = packageNo.toUpperCase();
+        description = description.toUpperCase();
         reportProcBean.printBidderList(supplierSelected,packageNo,description,comments,project);
     }
 

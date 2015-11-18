@@ -46,6 +46,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     public SupplierProcEntity save(SupplierProcEntity supplier) {
         supplier.setLastUpdate(new Date());
         supplier.setStatus(StatusEnum.ENABLE);
+        supplier.setSupplierId(supplier.getSupplierId().toUpperCase());
         supplier = super.save(supplier);
         supplierBrandDao.doSave(supplier.getBrands(), supplier);
         supplierCategoryDao.doSave(supplier.getCategories(), supplier);
@@ -57,6 +58,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
     @Transactional
     public SupplierProcEntity update(SupplierProcEntity supplier) {
         supplier.setLastUpdate(new Date());
+        supplier.setSupplierId(supplier.getSupplierId().toUpperCase());
         supplier = super.update(supplier);
         supplierBrandDao.doUpdate(supplier.getBrands(), supplier);
         supplierCategoryDao.doUpdate(supplier.getCategories(), supplier);

@@ -71,7 +71,7 @@ from project_text_snippet cx]]>
 					<jr:column width="490" uuid="638efe6a-d8cb-4206-821a-6ae00813b725">
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="38208962-ff1a-4bc2-9dc4-d5680c149f6e" x="0" y="0" width="455" height="15" isRemoveLineWhenBlank="true"/>
+								<reportElement uuid="38208962-ff1a-4bc2-9dc4-d5680c149f6e" x="0" y="0" width="470" height="15" isRemoveLineWhenBlank="true"/>
 								<textElement markup="styled"/>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
 							</textField>
