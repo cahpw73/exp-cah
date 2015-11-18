@@ -38,6 +38,9 @@ public class ProjectService implements Serializable {
         if (entity != null) {
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
+            entity.setProjectNumber(entity.getProjectNumber().toUpperCase());
+            entity.setTitle(entity.getTitle().toUpperCase());
+            entity.setInvoiceTo(entity.getInvoiceTo().toUpperCase());
             projectDao.doSave(entity);
             for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
                 if (pc.getId() < 0) {
@@ -74,6 +77,9 @@ public class ProjectService implements Serializable {
     public ProjectEntity doUpdate(ProjectEntity entity) {
         if (entity != null) {
             entity.setLastUpdate(new Date());
+            entity.setProjectNumber(entity.getProjectNumber().toUpperCase());
+            entity.setTitle(entity.getTitle().toUpperCase());
+            entity.setInvoiceTo(entity.getInvoiceTo().toUpperCase());
             projectDao.doUpdate(entity);
             for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
                 if (pc.getId() < 0) {
