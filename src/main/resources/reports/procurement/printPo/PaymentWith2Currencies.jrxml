@@ -73,7 +73,7 @@ order by ordered]]>
 				<text><![CDATA[Milestone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="56" y="3" width="60" height="28"/>
+				<reportElement uuid="8b627b2c-4d62-458d-b5c9-193aa4286346" style="Arial-Bold" x="76" y="3" width="80" height="28"/>
 				<textElement markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -93,7 +93,7 @@ order by ordered]]>
 				<reportElement uuid="583bf7cc-1356-46ab-b571-7dc857b0f43c" x="0" y="36" width="518" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="119" y="3" width="38" height="20"/>
+				<reportElement uuid="c5778ae3-9220-45a7-84bd-7855b02c4646" style="Arial-Bold" x="56" y="3" width="17" height="20"/>
 				<textElement markup="styled">
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -175,14 +175,14 @@ order by ordered]]>
 				<textFieldExpression><![CDATA[$F{item}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9cd4a9f1-e541-4987-8e12-48e134cbcb4c" style="Arial" x="56" y="4" width="60" height="14"/>
+				<reportElement uuid="9cd4a9f1-e541-4987-8e12-48e134cbcb4c" style="Arial" x="78" y="4" width="78" height="14"/>
 				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{milestone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="6fed0ae7-e9f8-44c4-8276-b8025fa4acfe" style="Arial" x="119" y="4" width="38" height="14"/>
+				<reportElement uuid="6fed0ae7-e9f8-44c4-8276-b8025fa4acfe" style="Arial" x="56" y="4" width="17" height="14"/>
 				<textElement markup="styled">
 					<font size="8"/>
 				</textElement>

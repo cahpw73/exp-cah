@@ -2,6 +2,8 @@ package ch.swissbytes.procurement.report.dtos;
 
 import ch.swissbytes.domain.model.entities.ClausesEntity;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by Christian on 11/11/2015.
  */

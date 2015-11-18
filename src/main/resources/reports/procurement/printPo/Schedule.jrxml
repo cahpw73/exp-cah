@@ -56,7 +56,7 @@
 				<text><![CDATA[PAYMENT SCHEDULE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1276d79c-2742-4994-9bf1-bda6cb683d56" style="Arial" x="20" y="62" width="476" height="31" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
+				<reportElement uuid="1276d79c-2742-4994-9bf1-bda6cb683d56" style="Arial" x="0" y="62" width="476" height="31" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true">
 					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue() == 1)]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="styled">
@@ -70,7 +70,7 @@
 				<text><![CDATA[SCHEDULE E]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="20" y="3" width="366" height="15"/>
+				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="0" y="3" width="366" height="15"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" isBold="false" isItalic="true"/>
 				</textElement>

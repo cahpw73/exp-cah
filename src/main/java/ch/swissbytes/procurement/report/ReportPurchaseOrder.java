@@ -356,6 +356,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         List<ClausesReportDto> dtos = new ArrayList<>();
         for (ClausesEntity entity : clausesList) {
             ClausesReportDto dto = new ClausesReportDto(entity);
+            try {
+                dto.setClause(new String(dto.getClause().getBytes(),"CP1252"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             dtos.add(dto);
         }
         return dtos;
