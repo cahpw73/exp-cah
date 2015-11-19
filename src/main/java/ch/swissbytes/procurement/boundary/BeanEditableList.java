@@ -44,7 +44,7 @@ public class BeanEditableList<T> extends Bean {
 
     }
 
-    private RecordEditable find(Long id) {
+    public RecordEditable find(Long id) {
         RecordEditable recordEditable = null;
         for (T re : list) {
             RecordEditable r = (RecordEditable) re;

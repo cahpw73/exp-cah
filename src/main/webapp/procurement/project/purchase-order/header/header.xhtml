@@ -56,8 +56,8 @@
                                                    update="requisitionDt "/>
                                     <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_req.isEditable}"
                                                    process=":editPoForm:requisitionsGroup"
-                                                   action="#{requisitionBean.confirm(_req.id)}"
-                                                   update="requisitionDt "/>
+                                                   action="#{requisitionBean.confirm(_req)}"
+                                                   update="requisitionDt :editPoForm:poEditGlbMsgs"/>
                                     &#160;
                                     <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_req.isEditable}"
                                                    process="@this"
