@@ -25,6 +25,7 @@
 	</parameter>
 	<parameter name="currenciesNumber" class="java.lang.Integer"/>
 	<parameter name="variation" class="java.lang.String"/>
+	<parameter name="titleReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 1]]>
 	</queryString>
@@ -74,7 +75,7 @@
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" isBold="false" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["PURCHASE ORDER No. "+($P{projectNumber}+"-"+$P{poNo})+($P{variation}!=null?$P{variation}:"")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{titleReport}.toUpperCase()+" "+($P{projectNumber}+"-"+$P{poNo})+($P{variation}!=null?$P{variation}:"")]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

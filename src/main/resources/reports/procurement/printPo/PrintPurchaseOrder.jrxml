@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.8181818181818206"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="260"/>
+	<property name="ireport.x" value="62"/>
+	<property name="ireport.y" value="192"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -128,6 +128,7 @@
 	<parameter name="townPostcodeState" class="java.lang.String"/>
 	<parameter name="headerLogo" class="java.io.InputStream"/>
 	<parameter name="clauseList" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="titleReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -193,7 +194,7 @@
 				<textElement textAlignment="Center" markup="styled">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{variation}!=null?"VARIATION No."+$P{variation}+" TO ":"")+"PURCHASE ORDER No : "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{variation}!=null?"VARIATION No."+$P{variation}+" TO ":"")+" "+$P{titleReport}.toUpperCase()+": "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="2" y="157" width="47" height="12"/>
@@ -818,6 +819,9 @@
 				<subreportParameter name="purchaseOrderId">
 					<subreportParameterExpression><![CDATA[$P{purchaseOrderId}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="titleReport">
+					<subreportParameterExpression><![CDATA[$P{titleReport}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -849,13 +853,6 @@
 	</pageFooter>
 	<lastPageFooter>
 		<band height="93">
-			<staticText>
-				<reportElement uuid="c468b76e-51e2-4afc-8756-a7a5f0089c0b" style="Arial-Bold" x="17" y="4" width="225" height="28" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="Arial" size="8" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[We hereby confirm our understanding and acceptance of this Purchase Order in its entirety]]></text>
-			</staticText>
 			<staticText>
 				<reportElement uuid="fac54615-b300-434d-9c8b-ee53e94a6af7" style="Arial" x="356" y="7" width="140" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -920,6 +917,13 @@
 			<line>
 				<reportElement uuid="40cf4880-4dce-4d34-a35d-277c30b902cb" x="47" y="64" width="156" height="1"/>
 			</line>
+			<textField>
+				<reportElement uuid="7b96c376-5959-437c-bfaf-c2220fb6973c" style="Arial-Bold" x="17" y="4" width="225" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["We hereby confirm our understanding and acceptance of this " + $P{titleReport}+ " in its entirety"]]></textFieldExpression>
+			</textField>
 		</band>
 	</lastPageFooter>
 	<summary>
@@ -934,6 +938,9 @@
 				</subreportParameter>
 				<subreportParameter name="TIME_ZONE">
 					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="titleReport">
+					<subreportParameterExpression><![CDATA[$P{titleReport}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="PO_ID">
 					<subreportParameterExpression><![CDATA[$P{poId}]]></subreportParameterExpression>
@@ -962,14 +969,14 @@
 				<subreportParameter name="currencyLbl1">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="currenciesNumber">
-					<subreportParameterExpression><![CDATA[$P{currenciesNumber}]]></subreportParameterExpression>
+				<subreportParameter name="currencyId3">
+					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="currencyLbl2">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl2}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="currencyId3">
-					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>
+				<subreportParameter name="currenciesNumber">
+					<subreportParameterExpression><![CDATA[$P{currenciesNumber}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE2">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE2}]]></subreportParameterExpression>

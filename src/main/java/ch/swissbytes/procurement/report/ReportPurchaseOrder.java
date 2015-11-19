@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.report;
 
 import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.ClassEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
@@ -121,6 +122,16 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         } else if (po.getOrderedVariation().intValue() > 1) {
             addParameters("poSummaryList", createDataSource(getPOSummary()));
         }
+        if(po.getPurchaseOrderProcurementEntity().getClazz()!=null) {
+            if (po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal() || po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.MINING_FLEET.ordinal()) {
+                addParameters("titleReport", "Purchase Order");
+            } else {
+                addParameters("titleReport", "Contract");
+            }
+        }else{
+            addParameters("titleReport", "Purchase Order");
+        }
+
         addParameters("poList", createDataSource(getPOReportDto()));
         addParameters("clauseList", createDataSource(getClausesReportDto()));
         addParameters("totalClauses", this.clausesList.size());
