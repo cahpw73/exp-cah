@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
@@ -44,9 +45,12 @@ public class SpreadsheetJDEService implements Serializable {
     public Configuration configuration = new Configuration();
 
     int rowNo;
+    int rowNoMilestone;
+
 
     public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) {
         rowNo = 2;
+        rowNoMilestone = 2;
         String pathJDE = System.getProperty("fqmes.path.export.jde");
         pathJDE = pathJDE.replace("{project_field}", folderName);
         processWorkbook(list);
@@ -74,10 +78,15 @@ public class SpreadsheetJDEService implements Serializable {
         createPagePackageMilestone(list);
     }
 
-    private void createPagePackageMilestone(final List<PurchaseOrderEntity> list){
+    private void createPagePackageMilestone(final List<PurchaseOrderEntity> list) {
         processor.createSpreadsheet("PkgScInf");
+        createHeaderCMS(list.get(0));
+        createHeaderMilestone();
+        generateSpreadsheetCashflowDetail(list);
     }
-    private void createPagePackageHeader(final List<PurchaseOrderEntity> list){
+
+
+    private void createPagePackageHeader(final List<PurchaseOrderEntity> list) {
         processor.createSpreadsheet("PkgHdr");
         createHeaderCMS(list.get(0));
         createHeaderPO();
@@ -91,6 +100,26 @@ public class SpreadsheetJDEService implements Serializable {
         processor.writeStringBoldValue(5, "EXPORT TO CMS");
         processor.writeStringBoldValue(6, "DATE:");
         processor.writeStringValue(7, configuration.convertDateToExportFile(new Date()));
+    }
+
+    private void generateSpreadsheetCashflowDetail(List<PurchaseOrderEntity> list) {
+        for (PurchaseOrderEntity entity : list) {
+            List<CashflowDetailEntity> cashflowDetailList = cashflowService.findOrderedByCurrencyAndItem(entity.getPurchaseOrderProcurementEntity().getCashflow().getId());
+            if (!cashflowDetailList.isEmpty()) {
+                processor.createRow(rowNoMilestone);
+                CashflowDetailEntity cashflowDetail = cashflowDetailList.get(0);
+                boolean hasOneMilestone = cashflowDetailList.size() == 1;
+                int cashflowDetailSize = cashflowDetailList.size();
+                prepareFirstLineContentCashflowDetail(entity, cashflowDetail, hasOneMilestone);
+                cashflowDetailList.remove(0);
+                rowNoMilestone++;
+                for (CashflowDetailEntity cf : cashflowDetailList){
+                    processor.createRow(rowNoMilestone);
+                    prepareDetailContentCashflowDetail(entity, cf);
+                    rowNoMilestone++;
+                }
+            }
+        }
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
@@ -146,8 +175,21 @@ public class SpreadsheetJDEService implements Serializable {
         processor.createRow(rowNo);
         processor.writeStringBoldValue(9, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
         processor.writeStringBoldValue(10, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
-        processor.writeStringValue(14,entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention()?"Yes":"No");
-        processor.writeStringValue(15,entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit()?"Yes":"No");
+        processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
+        processor.writeStringValue(15, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
+    }
+
+    private void prepareFirstLineContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail, boolean hasOneMilestone) {
+        Util util = new Util();
+        util.setConfiguration(configuration);
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
+        processor.writeStringValue(0, entity.getPo() != null ? entity.getPo() : "");
+        processor.writeStringValue(1, entity.getVariation() != null ? entity.getVariation() : "");
+        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : "");
+        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : "");
+        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : "");
+        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : "");
+        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : "");
     }
 
     private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, boolean hasOneItem) {
@@ -172,9 +214,18 @@ public class SpreadsheetJDEService implements Serializable {
             processor.createRow(rowNo);
             processor.writeStringBoldValue(9, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
             processor.writeStringBoldValue(10, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
-            processor.writeStringValue(14,entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention()?"Yes":"No");
-            processor.writeStringValue(15,entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit()?"Yes":"No");
+            processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
+            processor.writeStringValue(15, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
         }
+    }
+
+    private void prepareDetailContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail) {
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
+        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : "");
+        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : "");
+        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : "");
+        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : "");
+        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : "");
     }
 
     private void prepareDetailContent(PurchaseOrderEntity entity, ItemEntity item) {
@@ -210,9 +261,19 @@ public class SpreadsheetJDEService implements Serializable {
         processor.writeStringBoldValue(10, "Total Price");
         processor.writeStringBoldValue(11, "Terms");
         processor.writeStringBoldValue(12, "Cost Code");
-        processor.writeStringBoldValue(13, "Schedule E");
-        processor.writeStringBoldValue(14, "Retention");
-        processor.writeStringBoldValue(15, "Security");
+        processor.writeStringBoldValue(13, "Retention");
+        processor.writeStringBoldValue(14, "Security");
+    }
+
+    private void createHeaderMilestone() {
+        processor.createRow(1);
+        processor.writeStringBoldValue(0, "Po");
+        processor.writeStringBoldValue(1, "Variation");
+        processor.writeStringBoldValue(2, "Milestone Number");
+        processor.writeStringBoldValue(3, "Milestone Description");
+        processor.writeStringBoldValue(4, "Currency");
+        processor.writeStringBoldValue(5, "Amount");
+        processor.writeStringBoldValue(6, "Date");
     }
 
 }

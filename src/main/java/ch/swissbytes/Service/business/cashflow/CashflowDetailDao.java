@@ -50,6 +50,17 @@ public class CashflowDetailDao extends GenericDao<CashflowDetailEntity> implemen
         return super.findBy(sb.toString(),map);
     }
 
+    public List<CashflowDetailEntity> findOrderedByCurrencyAndItem(Long cashId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM CashflowDetailEntity x ");
+        sb.append(" WHERE x.cashflowEntity.id = :CASH_ID ");
+        sb.append(" ORDER BY x.projectCurrency.id,x.ordered ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("CASH_ID", cashId);
+        return super.findBy(sb.toString(),map);
+    }
+
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {

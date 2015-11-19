@@ -113,6 +113,10 @@ public class CashflowService implements Serializable {
         return cashflowDetailDao.findByCashflowId(cashflowId);
     }
 
+    public List<CashflowDetailEntity> findOrderedByCurrencyAndItem(final Long cashflowId){
+        return cashflowDetailDao.findOrderedByCurrencyAndItem(cashflowId);
+    }
+
     public BigDecimal getTotalMilestonePayments(List<CashflowDetailEntity> detail,ProjectCurrencyEntity currency){
         BigDecimal total=new BigDecimal("0");
         for(CashflowDetailEntity milestonePayment:detail){

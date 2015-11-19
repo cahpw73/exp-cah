@@ -1815,3 +1815,7 @@ alter table purchase_order  add column locked boolean;
 alter table purchase_order  add column last_activity_update timestamp;
 alter table purchase_order  add column locked_by bigint;
 ALTER TABLE purchase_order  ADD FOREIGN KEY (locked_by) REFERENCES users(id);
+
+update contact set email=ltrim(rtrim((email)));
+update cashflow set apply_retention = false where apply_retention is null;
+update cashflow set apply_retention_security_deposit = false where apply_retention_security_deposit is null;
