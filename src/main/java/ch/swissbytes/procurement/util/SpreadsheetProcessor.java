@@ -1,8 +1,9 @@
 package ch.swissbytes.procurement.util;
 
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
 
@@ -37,6 +38,16 @@ public class SpreadsheetProcessor implements Serializable {
 
     public void writeStringValue(int colNo, String value) {
         row.createCell(colNo).setCellValue(value);
+    }
+
+    public void writeStringBoldValue(int colNo, String value){
+        XSSFCellStyle style= workbook.createCellStyle();
+        XSSFFont font= workbook.createFont();
+        font.setBold(true);
+        style.setFont(font);
+        Cell cell0 = row.createCell(colNo);
+        cell0.setCellValue(value);
+        cell0.setCellStyle(style);
     }
 
     public void writeDoubleValue(int colNo, Double value) {

@@ -38,9 +38,12 @@ public class SpreadsheetService implements Serializable {
 
     public SpreadsheetProcessor processor;
 
-    int rowNo = 2;
+    public Configuration configuration = new Configuration();
+
+    int rowNo;
 
     public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) {
+        rowNo = 2;
         String pathCMS = System.getProperty("fqmes.path.export.cms");
         pathCMS = pathCMS.replace("{project_field}", folderName);
         processWorkbook(list);
@@ -58,7 +61,7 @@ public class SpreadsheetService implements Serializable {
     private String generateFileName() {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
         String dateStr = format.format(new Date());
-        String fileName = dateStr + "Commitemnts.xlsx";
+        String fileName = dateStr.toUpperCase() + " - " + "Commitemnts.xlsx";
         return fileName;
     }
 
@@ -95,10 +98,10 @@ public class SpreadsheetService implements Serializable {
                             processor.createRow(rowNo);
                             prepareDetailContent(ss);
                             rowNo++;
-                        }else {
+                        } else {
                             hasOnlyOneCurrency = false;
                             currentCurrency = ss.getProjectCurrency();
-                            createRowTotalPrice(entity,totalForCurrency);
+                            createRowTotalPrice(entity, totalForCurrency);
                             totalForCurrency = ss.getTotalCost();
                             rowNo++;
                             processor.createRow(rowNo);
@@ -106,24 +109,24 @@ public class SpreadsheetService implements Serializable {
                             rowNo++;
                         }
                     }
-                    if(!hasOnlyOneCurrency && ss.getId().longValue() == itemEntityList.get(itemEntityList.size()-1).getId().longValue()){
-                        createRowTotalPrice(entity,totalForCurrency);
+                    if (!hasOnlyOneCurrency && ss.getId().longValue() == itemEntityList.get(itemEntityList.size() - 1).getId().longValue()) {
+                        createRowTotalPrice(entity, totalForCurrency);
                         rowNo++;
                     }
                 }
-                if(hasOnlyOneCurrency && itemListSize>1){
-                    createRowTotalPrice(entity,totalForCurrency);
+                if (hasOnlyOneCurrency && itemListSize > 1) {
+                    createRowTotalPrice(entity, totalForCurrency);
                     rowNo++;
                 }
             }
         }
     }
 
-    private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency){
+    private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency) {
         DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
         processor.createRow(rowNo);
-        processor.writeStringValue(12, entity.getPo().toUpperCase() + " TOTAL");
-        processor.writeStringValue(13, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
+        processor.writeStringBoldValue(12, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
+        processor.writeStringBoldValue(13, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
     }
 
     private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, boolean hasOneItem) {
@@ -133,7 +136,7 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz() != null ? entity.getPurchaseOrderProcurementEntity().getClazz().getLabel() : "");
         processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
         processor.writeStringValue(2, entity.getVariation() != null ? entity.getVariation() : "");
-        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? util.toLocal(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
+        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? configuration.convertDateToExportFile(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
         processor.writeStringValue(4, entity.getPoTitle() != null ? entity.getPoTitle() : "");
         processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() : "");
         processor.writeStringValue(6, item.getCode() != null ? item.getCode() : "");
@@ -148,8 +151,8 @@ public class SpreadsheetService implements Serializable {
         if (hasOneItem) {
             rowNo++;
             processor.createRow(rowNo);
-            processor.writeStringValue(12, entity.getPo().toUpperCase() + " TOTAL");
-            processor.writeStringValue(13, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
+            processor.writeStringBoldValue(12, entity.getPo().toUpperCase() + " TOTAL");
+            processor.writeStringBoldValue(13, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
         }
     }
 
@@ -173,26 +176,29 @@ public class SpreadsheetService implements Serializable {
 
     private void createHeaderCMS(PurchaseOrderEntity entity) {
         processor.createRow(0);
-        processor.writeStringValue(0, "PROJECT: ");
+        processor.writeStringBoldValue(0, "PROJECT: ");
         processor.writeStringValue(1, entity.getProjectEntity().getProjectNumber());
+        processor.writeStringBoldValue(5, "EXPORT TO CMS");
+        processor.writeStringBoldValue(6, "DATE:");
+        processor.writeStringValue(7, configuration.convertDateToExportFile(new Date()));
     }
 
     private void createHeaderPO() {
         processor.createRow(1);
-        processor.writeStringValue(0, "Class");
-        processor.writeStringValue(1, "PO No.");//*
-        processor.writeStringValue(2, "Var");
-        processor.writeStringValue(3, "PO Date");//*
-        processor.writeStringValue(4, "Title");//*
-        processor.writeStringValue(5, "Supplier");
-        processor.writeStringValue(6, "Item");//*
-        processor.writeStringValue(7, "Cost Code");
-        processor.writeStringValue(8, "Description");
-        processor.writeStringValue(9, "Currency");
-        processor.writeStringValue(10, "Unit Price");//*
-        processor.writeStringValue(11, "UOM");
-        processor.writeStringValue(12, "Qty");
-        processor.writeStringValue(13, "Total Price");//*
+        processor.writeStringBoldValue(0, "Class");
+        processor.writeStringBoldValue(1, "PO No.");//*
+        processor.writeStringBoldValue(2, "Var");
+        processor.writeStringBoldValue(3, "PO Date");//*
+        processor.writeStringBoldValue(4, "Title");//*
+        processor.writeStringBoldValue(5, "Supplier");
+        processor.writeStringBoldValue(6, "Item");//*
+        processor.writeStringBoldValue(7, "Cost Code");
+        processor.writeStringBoldValue(8, "Description");
+        processor.writeStringBoldValue(9, "Currency");
+        processor.writeStringBoldValue(10, "Unit Price");//*
+        processor.writeStringBoldValue(11, "UOM");
+        processor.writeStringBoldValue(12, "Qty");
+        processor.writeStringBoldValue(13, "Total Price");//*
     }
 
 }

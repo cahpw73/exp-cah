@@ -132,9 +132,25 @@ public class Configuration implements Serializable {
     public String getHardFormatDate(){
         return "dd MMM yyyy";
     }
+
+    public String getHardFormatDateExportFile(){
+        return "dd-MMM-yy";
+    }
+
+    public String convertDateToExportFile(Date date) {
+        String converted = "";
+        if (date != null) {
+            DateTimeZone dtz = org.joda.time.DateTimeZone.forID(getTimeZone());
+            long utc = dtz.convertUTCToLocal(date.getTime());
+            date.setTime(utc);
+            converted = new java.text.SimpleDateFormat(getHardFormatDateExportFile(), new Locale("en")).format(date).toUpperCase();
+        }
+        return converted;
+    }
+
     public String getFormatDateTime(){
         log.log(Level.FINE,"format date time");
-        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;;
+        String string = StringUtils.isNotEmpty(languagePreference.getLanguage())?languagePreference.getLanguage():laguangeDefault;
         String[] parts = string.split("-");
         Locale locale;
         if(parts.length>1){

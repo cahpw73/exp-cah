@@ -68,13 +68,13 @@ public class ExportationPOBean implements Serializable {
                 if (!poListCMS.isEmpty()) {
                     exportCMS(poListCMS, p);
                 }
-                if(!poListJDE.isEmpty()){
+               /* if(!poListJDE.isEmpty()){
                     for(PurchaseOrderEntity po : poListJDE){
                         List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
                         po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0)? cashflows.get(0) : null);
                     }
                     exportJDE(poListJDE, p);
-                }
+                }*/
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
