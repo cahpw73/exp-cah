@@ -122,8 +122,8 @@ public class SpreadsheetService implements Serializable {
         }
     }
 
-    private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency) {
-        DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
+        private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency) {
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.createRow(rowNo);
         processor.writeStringBoldValue(12, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
         processor.writeStringBoldValue(13, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
@@ -131,7 +131,6 @@ public class SpreadsheetService implements Serializable {
 
     private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, boolean hasOneItem) {
         Util util = new Util();
-        Configuration configuration = new Configuration();
         util.setConfiguration(configuration);
         processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz() != null ? entity.getPurchaseOrderProcurementEntity().getClazz().getLabel() : "");
         processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
@@ -143,7 +142,7 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(7, item.getCostCode() != null ? item.getCostCode() : "");
         processor.writeStringValue(8, item.getDescription() != null ? item.getDescription() : "");
         processor.writeStringValue(9, item.getProjectCurrency() != null ? item.getProjectCurrency().getCurrency().getCode() : "");
-        DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.writeStringValue(10, item.getCost() != null ? decFormat.format(item.getCost()) : "");
         processor.writeStringValue(11, item.getUnit() != null ? item.getUnit() : "");
         processor.writeStringValue(12, item.getQuantity() != null ? item.getQuantity().toString() : "");
