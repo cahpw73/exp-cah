@@ -32,8 +32,8 @@ public class UserService implements Serializable {
     private UserRoleService userRoleService;
 
     @Transactional
-    public void doSave(UserEntity user){
-        if(user != null){
+    public void doSave(UserEntity user) {
+        if (user != null) {
             user.setLastUpdate(new Date());
             userDao.doSave(user);
         }
@@ -45,37 +45,33 @@ public class UserService implements Serializable {
     }
 
     @Transactional
-    public void doSaveUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList){
-        if(user != null){
+    public void doSaveUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList) {
+        if (user != null) {
             user.setLastUpdate(new Date());
             userDao.doSave(user);
-            for(ModuleGrantedAccessEntity mga : moduleGrAcList){
-
-                    mga.setUserEntity(user);
-                    moduleGrantedAccessService.doSave(mga);
-
+            for (ModuleGrantedAccessEntity mga : moduleGrAcList) {
+                mga.setUserEntity(user);
+                moduleGrantedAccessService.doSave(mga);
             }
-            for(UserRoleEntity ure : userRoleList){
-
-                    ure.setUser(user);
-                    userRoleService.doSave(ure);
-
+            for (UserRoleEntity ure : userRoleList) {
+                ure.setUser(user);
+                userRoleService.doSave(ure);
             }
         }
     }
 
     @Transactional
-    public void doUpdateUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList){
-        if(user != null){
+    public void doUpdateUser(UserEntity user, List<ModuleGrantedAccessEntity> moduleGrAcList, List<UserRoleEntity> userRoleList) {
+        if (user != null) {
             user.setLastUpdate(new Date());
             userDao.doUpdate(user);
-            for(ModuleGrantedAccessEntity mga : moduleGrAcList){
-                if(mga!=null) {
+            for (ModuleGrantedAccessEntity mga : moduleGrAcList) {
+                if (mga != null) {
                     moduleGrantedAccessService.doUpdate(mga);
                 }
             }
-            for(UserRoleEntity ure : userRoleList){
-                if(ure!=null) {
+            for (UserRoleEntity ure : userRoleList) {
+                if (ure != null) {
                     userRoleService.doUpdate(ure);
                 }
             }
@@ -83,88 +79,88 @@ public class UserService implements Serializable {
     }
 
 
-    public List<UserEntity> findUserByEmail(final String email){
+    public List<UserEntity> findUserByEmail(final String email) {
         return userDao.findUserByEmail(email);
     }
 
-    public boolean existsEmail(final String email){
+    public boolean existsEmail(final String email) {
         log.info("existsEmail(final String email)");
-        List<UserEntity> list  = userDao.findUserByEmail(email);
+        List<UserEntity> list = userDao.findUserByEmail(email);
         boolean validateEmail = false;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             validateEmail = true;
         }
         return validateEmail;
     }
 
-    public boolean existsUsername(final String username){
+    public boolean existsUsername(final String username) {
         List<UserEntity> list = userDao.findUserByUserName(username);
         boolean validateUsername = false;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             validateUsername = verifyStatusDelete(list);
         }
         return validateUsername;
     }
 
-    public boolean validateDuplicityEmail(final String email, final Long id){
+    public boolean validateDuplicityEmail(final String email, final Long id) {
         log.info("existsEmail(final String email)");
-        List<UserEntity> list  = userDao.findDuplicityEmail(email, id);
+        List<UserEntity> list = userDao.findDuplicityEmail(email, id);
         boolean validateEmail = false;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             validateEmail = true;
         }
         return validateEmail;
-    } 
-    public boolean validateDuplicityUsername(final String username, final Long id){
+    }
+
+    public boolean validateDuplicityUsername(final String username, final Long id) {
         List<UserEntity> list = userDao.findDuplicityUserName(username, id);
         boolean validateUsername = false;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             validateUsername = verifyStatusDelete(list);
         }
         return validateUsername;
     }
 
-    private boolean verifyStatusDelete(final List<UserEntity> list){
+    private boolean verifyStatusDelete(final List<UserEntity> list) {
         boolean result = false;
-        for(UserEntity user : list){
-            if(!StatusEnum.DELETED.equalsTo(user.getStatus().getId())){
-                result =  true;
+        for (UserEntity user : list) {
+            if (!StatusEnum.DELETED.equalsTo(user.getStatus().getId())) {
+                result = true;
                 break;
             }
         }
         return result;
     }
 
-    public List<RoleEntity> findRoleById(Integer id){
+    public List<RoleEntity> findRoleById(Integer id) {
         return userDao.findRoleById(id);
     }
 
-    public List<UserEntity> getUserList(){
+    public List<UserEntity> getUserList() {
         return userDao.getUserList();
     }
 
 
-    public boolean canAccess(final String userName, final String password){
-        return userDao.getUser(userName,password)!=null;
+    public boolean canAccess(final String userName, final String password) {
+        return userDao.getUser(userName, password) != null;
     }
 
     public UserEntity findUserById(Long userId) {
-        List<UserEntity> list = userDao.findById(UserEntity.class,userId);
+        List<UserEntity> list = userDao.findById(UserEntity.class, userId);
         UserEntity entity = null;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             entity = list.get(0);
         }
         return entity;
     }
 
 
-
-    public UserEntity getByUserName(final String userName){
+    public UserEntity getByUserName(final String userName) {
         return userDao.getUser(userName);
     }
 
     public UserEntity getUserEntity(String username, String pass) {
-        return userDao.getUser(username,pass);
+        return userDao.getUser(username, pass);
     }
 
     public List<UserEntity> findAllUser() {
@@ -178,14 +174,14 @@ public class UserService implements Serializable {
     public UserEntity findByUsername(String username) {
         List<UserEntity> list = userDao.findUserByUserName(username);
         UserEntity entity = null;
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             entity = list.get(0);
         }
         return entity;
     }
 
 
-    public List<ModuleGrantedAccessEntity> getModulesGranted(final String userName){
+    public List<ModuleGrantedAccessEntity> getModulesGranted(final String userName) {
         return userDao.getModuleGrantedAccess(userName);
     }
 }

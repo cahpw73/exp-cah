@@ -146,8 +146,6 @@ public class UserBean implements Serializable {
             getModuleProcurement().setModuleAccess(moduleAccessProcurement);
             getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
-
-
             getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
             if(userRoleList.size()>1) {
                 getUserProcurement().setRole(roleProcurement);

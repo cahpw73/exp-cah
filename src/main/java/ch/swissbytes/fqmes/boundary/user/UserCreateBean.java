@@ -1,10 +1,10 @@
 package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.role.RoleDao;
 import ch.swissbytes.Service.business.user.UserService;
-import ch.swissbytes.domain.model.entities.RoleEntity;
-import ch.swissbytes.domain.model.entities.StatusEntity;
-import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
@@ -36,18 +36,29 @@ public class UserCreateBean implements Serializable {
     @Inject
     private EnumService enumService;
 
+    @Inject
+    private RoleDao roleDao;
+
     private UserEntity userEntity;
 
-    private Integer roleId;
-
-    private String roleName;
-
     private Integer statusId;
+
+    private RoleEntity roleExpediting;
+
+    private List<ModuleGrantedAccessEntity> moduleGrantedAccessList;
+
+    private List<UserRoleEntity> userRoleList;
 
     @PostConstruct
     private void init(){
         userEntity = new UserEntity();
+        moduleGrantedAccessList = new ArrayList<>();
+        userRoleList  = new ArrayList<>();
+        ModuleGrantedAccessEntity moduleExpediting = new ModuleGrantedAccessEntity();
+        UserRoleEntity userExpediting = new UserRoleEntity();
 
+        moduleGrantedAccessList.add(moduleExpediting);
+        userRoleList.add(userExpediting);
     }
 
     @PreDestroy
@@ -58,18 +69,16 @@ public class UserCreateBean implements Serializable {
     public String doSave(){
         log.info("trying to create user");
         if(dataValidate()){
-            RoleEntity roleEntity = enumService.getFindRoleByRoleEnumId(RoleEnum.valueOf(roleName).getId());
-            StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(statusId);
-            if(roleEntity != null){
-               // userEntity.setRoleEntity(roleEntity);
-                userEntity.setStatus(statusEntity);
-                userEntity.setPassword(getEncodePass(userEntity.getPassword()));
-                userService.doSave(userEntity);
-                return "list?faces-redirect=true";
-            }else{
-                Messages.addGlobalError("RoleName not exist");
-                return "";
-            }
+            userEntity.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.ENABLE.getId()));
+            userEntity.setPassword(getEncodePass(userEntity.getPassword()));
+            getModuleExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
+            getModuleExpediting().setModuleAccess(true);
+            getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
+            getUserExpediting().setRole(roleExpediting);
+            userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
+
+            //userService.doSave(userEntity);
+            return "list?faces-redirect=true";
         }
         return "";
     }
@@ -104,6 +113,36 @@ public class UserCreateBean implements Serializable {
         return statuses;
     }
 
+    public List<RoleEntity> getExpeditingRoles() {
+        List<RoleEnum> roles = Arrays.asList(RoleEnum.values());
+        List<RoleEntity> expeditingRoles = new ArrayList<>();
+        for(RoleEnum r : roles){
+            switch (r){
+                case SENIOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;
+                /*case JUNIOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;*/
+                case VISITOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;
+                case ADMINISTRATOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;
+            }
+        }
+        return expeditingRoles;
+    }
+
+    public ModuleGrantedAccessEntity getModuleExpediting(){
+        return moduleGrantedAccessList.get(0);
+    }
+
+    public UserRoleEntity getUserExpediting(){
+        return userRoleList.get(0);
+    }
+
     private String getEncodePass(String pass){
         return Encode.encode(pass);
     }
@@ -116,27 +155,23 @@ public class UserCreateBean implements Serializable {
         this.userEntity = userEntity;
     }
 
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
     public Integer getStatusId() {
         return statusId;
     }
 
     public void setStatusId(Integer statusId) {
         this.statusId = statusId;
+    }
+
+    public RoleEntity getRoleExpediting() {
+        return roleExpediting;
+    }
+
+    public void setRoleExpediting(RoleEntity roleExpediting) {
+        this.roleExpediting = roleExpediting;
+    }
+
+    public String roleName(final Integer roleId){
+        return RoleEnum.valueOf(roleId).getLabel();
     }
 }

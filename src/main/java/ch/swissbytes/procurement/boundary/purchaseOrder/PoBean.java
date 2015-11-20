@@ -11,6 +11,7 @@ import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
+import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
@@ -97,17 +98,15 @@ public class PoBean extends Bean {
     @Inject
     private Configuration configuration;
 
-
     @Inject
     private PoListBean listBean;
 
     @Inject
     private UserService userService;
-   /* @Inject
-    private Identity identity;*/
 
     @Inject
     private UserSession userSession;
+
 
     private String anchor;
 
@@ -118,11 +117,14 @@ public class PoBean extends Bean {
 
 
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
+        Util util = new Util();
+        util.setConfiguration(configuration);
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
         purchaseOrder.setProjectEntity(projectEntity);
         purchaseOrder.setProject(projectEntity.getProjectNumber());
         purchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
-        purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(new Date());
+        Date orderDate = util.toLocalDate(new Date());
+        purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(orderDate);
         purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         poTextBean.loadTextNewPO(projectEntity.getId());
         putModeCreation();
