@@ -32,10 +32,12 @@
                 </ui:remove>
                 <p:column headerText="#{msgs['user.list.column.action']}">
                     <div class="pull-right">
-                        <h:commandLink id="btnGoToUserEdit" action="#{usersBean.goToEditUser(_user.id)}"
-                                       rendered="#{permissionBean.hasPermission(3)}" styleClass="btn btn-primary btn-sm color-btn-data-table"
-                                       value="#{msgs['lbl.edit']}">
-                        </h:commandLink>
+                        <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit"
+                                styleClass="btn btn-primary btn-sm"
+                                style="color: #ffffff;">
+                            <f:param name="isCreateUser" value="false"/>
+                            <f:param name="userId" value="#{_user.id}"/>
+                        </h:link>
                         &#160;
                         <h:commandLink id="btnGoToUserDelete" action="#{userDeleteBean.loadUserSelected(_user.id)}"
                                        value="#{msgs['lbl.delete']}"

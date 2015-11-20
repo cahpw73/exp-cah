@@ -190,8 +190,11 @@ public class UserDao extends GenericDao implements Serializable {
         sb.append(" SELECT u ");
         sb.append(" FROM UserEntity u ");
         sb.append(" WHERE u.status.id = :ENABLE ");
+        sb.append(" OR u.status.id = :DISABLE ");
+        sb.append(" ORDER BY u.username");
         Map<String,Object> parameters = new HashMap<>();
         parameters.put("ENABLE", StatusEnum.ENABLE.getId());
+        parameters.put("DISABLE",StatusEnum.DISABLED.getId());
         return super.findBy(sb.toString(), parameters);
     }
 

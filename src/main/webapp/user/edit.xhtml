@@ -79,15 +79,19 @@
                      </div>
                 </div>
                 <div class="form-group">
-                     <h:outputLabel for="inputRole" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.edit.lbl.Role']}"/>
-                     <div class="col-sm-9">
-                         <h:selectOneMenu id="inputRole" class="form-control" value="#{userEditBean.roleEnum}">
-                             <f:selectItems value="#{userEditBean.roles}"
-                                            var="_role"
-                                            itemValue="#{_role}"
-                                            itemLabel="#{_role.label}"/>
-                          </h:selectOneMenu>
-                     </div>
+                    <p:outputLabel value="#{msgs['user.create.lbl.Role']}" styleClass="col-sm-3 control-label text-lbl-ltr"/>
+                    <div class="col-md-9">
+                        <h:selectOneMenu id="roleExpediting" value="#{userEditBean.roleExpediting}"
+                                         converter="roleConverter"
+                                         styleClass="form-control">
+                            <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
+                            <f:selectItems value="#{userEditBean.expeditingRoles}"
+                                           var="_er"
+                                           itemValue="#{_er}"
+                                           itemLabel="#{userEditBean.roleName(_er.id)}"/>
+                        </h:selectOneMenu>
+                        <p:message for="roleExpediting" id="msgRoleExp"/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <h:outputLabel for="inputStatus" styleClass="col-sm-3 control-label text-lbl-ltr"

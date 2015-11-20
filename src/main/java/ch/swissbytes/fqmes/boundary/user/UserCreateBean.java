@@ -76,8 +76,6 @@ public class UserCreateBean implements Serializable {
             getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
             getUserExpediting().setRole(roleExpediting);
             userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
-
-            //userService.doSave(userEntity);
             return "list?faces-redirect=true";
         }
         return "";

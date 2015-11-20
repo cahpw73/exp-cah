@@ -1,10 +1,12 @@
 package ch.swissbytes.fqmes.boundary.user;
 
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.moduleGrantedAccess.ModuleGrantedAccessService;
+import ch.swissbytes.Service.business.role.RoleDao;
 import ch.swissbytes.Service.business.user.UserService;
-import ch.swissbytes.domain.model.entities.RoleEntity;
-import ch.swissbytes.domain.model.entities.StatusEntity;
-import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.Service.business.userRole.UserRoleService;
+import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.RoleEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.util.Encode;
@@ -32,8 +34,24 @@ public class UserEditBean implements Serializable {
 
     @Inject
     private UserService userService;
+
     @Inject
     private EnumService enumService;
+
+    @Inject
+    private RoleDao roleDao;
+
+    @Inject
+    private ModuleGrantedAccessService moduleGrantedAccessService;
+
+    @Inject
+    private UserRoleService userRoleService;
+
+    private RoleEntity roleExpediting;
+
+    private List<ModuleGrantedAccessEntity> moduleGrantedAccessList;
+
+    private List<UserRoleEntity> userRoleList;
 
     private StatusEnum statusEnum;
     private RoleEnum roleEnum;
@@ -44,61 +62,79 @@ public class UserEditBean implements Serializable {
     private Integer statusId;
     private String password;
 
+    private String oldPassword;
+    private String confirmPass;
+
+    private boolean moduleAccessExpediting;
+
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("create UserEditBean");
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("destroy UserEditBean");
     }
 
-    public String loadUserSelected(){
+    public String loadUserSelected() {
         log.info("Loading User EntityTbl....");
-        if(userId != null){
+        if (userId != null) {
             userSelected = userService.findUserById(userId);
-            password = userSelected.getPassword();
-            statusId = userSelected.getStatus().getId();
             statusEnum = StatusEnum.valueOf(userSelected.getStatus().getId());
-            //roleEnum = RoleEnum.valueOf(userSelected.getRoleEntity().getId());
-        }else{
+            oldPassword = userSelected.getPassword();
+            confirmPass = userSelected.getPassword();
+
+            moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
+            userRoleList = userRoleService.findListByUserId(userId);
+
+            if (moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getModuleAccess() != null) {
+                moduleAccessExpediting = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getModuleAccess();
+            }
+            roleExpediting = userRoleService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getRole();
+
+        } else {
             return "list.jsf?faces-redirect=true";
         }
         return "";
     }
 
-    public String doSave(){
+    public String doSave() {
         log.info("trying to edit user");
-        if(dataValidate()){
-            RoleEntity roleEntity = enumService.getFindRoleByRoleEnumId(roleEnum.getId());
-            StatusEntity statusEntity = enumService.getFindRoleByStatusEnumId(statusEnum.getId());
-            if(roleEntity != null || statusEntity != null){
-                //userSelected.setRoleEntity(roleEntity);
-                userSelected.setStatus(statusEntity);
-                if(!password.equals(userSelected.getPassword())){
-                    userSelected.setPassword(getEncodePass(userSelected.getPassword()));
-                }
-                userService.doUpdate(userSelected);
-                Messages.addFlashGlobalInfo("User was updated!");
-                return "list?faces-redirect=true";
-            }else{
-                Messages.addGlobalError("There are data invalid! ");
-                return "";
+        if (dataValidate()) {
+            if (statusEnum.ordinal() == StatusEnum.ENABLE.ordinal())
+                userSelected.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.ENABLE.getId()));
+            else if (statusEnum.ordinal() == StatusEnum.DISABLED.ordinal())
+                userSelected.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.DISABLED.getId()));
+
+            if(!oldPassword.equals(userSelected.getPassword())){
+                userSelected.setPassword(getEncodePass(userSelected.getPassword()));
             }
+            getModuleExpediting().setModuleAccess(moduleAccessExpediting);
+
+            if(roleExpediting!=null) {
+                getUserExpediting().setRole(roleExpediting);
+            }
+
+            userService.doUpdateUser(userSelected, moduleGrantedAccessList, userRoleList);
+
+            return "list?faces-redirect=true";
+
+        } else {
+            Messages.addGlobalError("There are data invalid! ");
+            return "";
         }
-        return "";
     }
 
     private boolean dataValidate() {
         boolean result = true;
-        if(userService.validateDuplicityEmail(userSelected.getEmail(),userSelected.getId())){
+        if (userService.validateDuplicityEmail(userSelected.getEmail(), userSelected.getId())) {
             //TODO get Message from MessagesProvider
             Messages.addError("userEditForm:inputEmail", "Email was already registered!");
             result = false;
         }
-        if(userService.validateDuplicityUsername(userSelected.getUsername(),userSelected.getId())){
+        if (userService.validateDuplicityUsername(userSelected.getUsername(), userSelected.getId())) {
             //TODO get Message from MessagesProvider
             Messages.addError("userEditForm:inputUsername", "Username was already registered!");
             result = false;
@@ -106,7 +142,7 @@ public class UserEditBean implements Serializable {
         return result;
     }
 
-    private String getEncodePass(String pass){
+    private String getEncodePass(String pass) {
         return Encode.encode(pass);
     }
 
@@ -115,14 +151,36 @@ public class UserEditBean implements Serializable {
         return roles;
     }
 
-    public List<StatusEnum> getStatuses(){
+    public List<StatusEnum> getStatuses() {
         List<StatusEnum> statuses = new ArrayList<>();
-        for(StatusEnum s : StatusEnum.values()){
-            if(!s.equalsTo(StatusEnum.DELETED)){
+        for (StatusEnum s : StatusEnum.values()) {
+            if (!s.equalsTo(StatusEnum.DELETED)) {
                 statuses.add(s);
             }
         }
         return statuses;
+    }
+
+    public List<RoleEntity> getExpeditingRoles() {
+        List<RoleEnum> roles = Arrays.asList(RoleEnum.values());
+        List<RoleEntity> expeditingRoles = new ArrayList<>();
+        for (RoleEnum r : roles) {
+            switch (r) {
+                case SENIOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;
+                /*case JUNIOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;*/
+                case VISITOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;
+                case ADMINISTRATOR:
+                    expeditingRoles.add(roleDao.findById(r.getId()).get(0));
+                    break;
+            }
+        }
+        return expeditingRoles;
     }
 
     public UserEntity getUserSelected() {
@@ -179,5 +237,25 @@ public class UserEditBean implements Serializable {
 
     public void setRoleEnum(RoleEnum roleEnum) {
         this.roleEnum = roleEnum;
+    }
+
+    public RoleEntity getRoleExpediting() {
+        return roleExpediting;
+    }
+
+    public void setRoleExpediting(RoleEntity roleExpediting) {
+        this.roleExpediting = roleExpediting;
+    }
+
+    public String roleName(final Integer roleId) {
+        return RoleEnum.valueOf(roleId).getLabel();
+    }
+
+    public ModuleGrantedAccessEntity getModuleExpediting(){
+        return moduleGrantedAccessList.get(0);
+    }
+
+    public UserRoleEntity getUserExpediting(){
+        return userRoleList.get(0);
     }
 }
