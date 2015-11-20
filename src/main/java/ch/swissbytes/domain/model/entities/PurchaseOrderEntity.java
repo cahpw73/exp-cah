@@ -28,6 +28,7 @@ public class PurchaseOrderEntity implements Serializable{
     private String incoTerm;
     private String fullIncoTerms;
     private Date poDeliveryDate;
+    private Date poExpeditingDeliveryDate;
     private String deliveryDateComment;
     private String responsibleExpediting;
     private Date introEmail;
@@ -139,6 +140,15 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setPoDeliveryDate(Date poDeliveryDate) {
         this.poDeliveryDate = poDeliveryDate;
+    }
+
+    @Column(name="po_expediting_delivery_date")
+    public Date getPoExpeditingDeliveryDate() {
+        return poExpeditingDeliveryDate;
+    }
+
+    public void setPoExpeditingDeliveryDate(Date poExpeditingDeliveryDate) {
+        this.poExpeditingDeliveryDate = poExpeditingDeliveryDate;
     }
 
     @Size(max = 1000)

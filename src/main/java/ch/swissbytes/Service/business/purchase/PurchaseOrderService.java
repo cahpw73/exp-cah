@@ -257,6 +257,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         // purchaseOrderEntity.setPo(purchaseOrderEntity.getProjectEntity().getProjectNumber());
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
+        purchaseOrderEntity.setPoExpeditingDeliveryDate(purchaseOrderEntity.getPoDeliveryDate());
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
@@ -342,6 +343,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         collectLists(po, purchaseOrderEntity);
         purchaseOrderEntity.setPurchaseOrderProcurementEntity(po);
         purchaseOrderEntity.setLastUpdate(new Date());
+        purchaseOrderEntity.setPoExpeditingDeliveryDate(purchaseOrderEntity.getPoDeliveryDate());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
         purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
