@@ -113,7 +113,7 @@ public class UsersBean implements Serializable {
     public void doProcurementClean(){
         userList.clear();
         loadUsers();
-        searchTerm = "";
+        searchProcurementTerm = "";
         searchActiveUsers = false;
     }
 

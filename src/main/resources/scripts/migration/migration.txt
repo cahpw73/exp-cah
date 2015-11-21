@@ -1819,3 +1819,5 @@ ALTER TABLE purchase_order  ADD FOREIGN KEY (locked_by) REFERENCES users(id);
 update contact set email=ltrim(rtrim((email)));
 update cashflow set apply_retention = false where apply_retention is null;
 update cashflow set apply_retention_security_deposit = false where apply_retention_security_deposit is null;
+
+update purchase_order set po_expediting_delivery_date = po_delivery_date;
