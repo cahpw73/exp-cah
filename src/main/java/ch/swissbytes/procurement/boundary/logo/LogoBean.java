@@ -152,7 +152,7 @@ public class LogoBean implements Serializable {
         logo = service.findById(logoSelected.getId());
         if (logoSelected != null) {
             if (logIsUsedInReports()) {
-                Messages.addFlashError("Can not delete Logo", "You cannot delete " + logoSelected.getDescription() + " because it is already being used");
+                Messages.addFlashGlobalError("Can not delete Logo "+ logoSelected.getDescription() + " because it is already being used");
             } else {
                 logo.setLastUpdate(Util.convertUTC(new Date(),configuration.getTimeZone()));
                 service.delete(logo);

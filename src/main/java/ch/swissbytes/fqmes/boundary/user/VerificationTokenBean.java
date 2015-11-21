@@ -60,7 +60,6 @@ public class VerificationTokenBean implements Serializable {
             if (tokenEntity != null) {
                 StringBuilder builder = new StringBuilder();
                 builder.append(getResetPasswordURL()).append("token=").append(tokenEntity.getToken());
-                ;
                 String link = String.format("<a href=%s>%s</a>", builder.toString(),configuration.getMessage("reset.link"));
                 try {
                     MimeMultipart multipart = createMimeMultipart(link);
