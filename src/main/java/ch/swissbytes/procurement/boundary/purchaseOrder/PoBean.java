@@ -16,6 +16,7 @@ import ch.swissbytes.procurement.boundary.Bean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
+import ch.swissbytes.procurement.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.omnifaces.util.Messages;
@@ -123,7 +124,7 @@ public class PoBean extends Bean {
         purchaseOrder.setProjectEntity(projectEntity);
         purchaseOrder.setProject(projectEntity.getProjectNumber());
         purchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
-        Date orderDate = util.toLocalDate(new Date());
+        Date orderDate = util.toLocalDate(DateUtil.setZeroHour(new Date()));
         purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(orderDate);
         purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         poTextBean.loadTextNewPO(projectEntity.getId());

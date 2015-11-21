@@ -404,7 +404,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         List<Object> listAux = new ArrayList<>();
         listAux.addAll(list);
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
-        dto.setTitle("Variation No." + getDesriptionBetweenVariation());
+        dto.setTitle("Variation No. " + getDesriptionBetweenVariation());
         boolean total1HasChanges = false;
         boolean total2HasChanges = false;
         boolean total3HasChanges = false;
@@ -690,7 +690,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             if (poMinId.longValue() != poMaxId.longValue()) {
                 PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
                 PurchaseOrderEntity poMax = findPurchaseOrderById(poMaxId);
-                result = "v" + poMin.getVariation() + " - v" + poMax.getVariation();
+                result = poMin.getVariation() + " - " + poMax.getVariation();
             } else if (poMinId.longValue() == poMaxId.longValue()) {
                 PurchaseOrderEntity poMin = findPurchaseOrderById(poMinId);
                 result = poMin.getVariation();
