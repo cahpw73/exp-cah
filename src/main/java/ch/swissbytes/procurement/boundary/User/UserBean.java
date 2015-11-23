@@ -111,17 +111,26 @@ public class UserBean implements Serializable {
             confirmPass = userEntity.getPassword();
 
             moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
+            if(moduleGrantedAccessList.size()==1){
+                ModuleGrantedAccessEntity moduleProcurement = new ModuleGrantedAccessEntity();
+                moduleProcurement.setUserEntity(userEntity);
+                moduleProcurement.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                moduleGrantedAccessList.add(moduleProcurement);
+            }
             userRoleList = userRoleService.findListByUserId(userId);
 
             if(moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getModuleAccess() != null){
                 moduleAccessExpediting =  moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getModuleAccess();
             }
-            if(moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getModuleAccess() != null){
+            ModuleGrantedAccessEntity moduleGrantedAccessProcurement = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT);
+            if(moduleGrantedAccessProcurement !=  null && moduleGrantedAccessProcurement.getModuleAccess() != null){
                 moduleAccessProcurement = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getModuleAccess();
             }
 
             roleExpediting =  userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.EXPEDITING).getRole();
-            roleProcurement = userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getRole();
+            if(userRoleService.findByUserIdAndModuleSystem(userId,ModuleSystemEnum.PROCUREMENT).getRole()!=null) {
+                roleProcurement = userRoleService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.PROCUREMENT).getRole();
+            }
 
             if(StatusEnum.ENABLE.getId().intValue() == userEntity.getStatus().getId().intValue())
                 userActive = true;
@@ -140,10 +149,14 @@ public class UserBean implements Serializable {
 
             userEntity.setPassword(getEncodePass(userEntity.getPassword()));
 
-            getModuleProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+            if(getModuleProcurement()!=null) {
+                getModuleProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+            }
             getModuleExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
 
-            getModuleProcurement().setModuleAccess(moduleAccessProcurement);
+            if(getModuleProcurement()!=null) {
+                getModuleProcurement().setModuleAccess(moduleAccessProcurement);
+            }
             getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
             getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
@@ -326,7 +339,7 @@ public class UserBean implements Serializable {
     }
 
     public ModuleGrantedAccessEntity getModuleProcurement(){
-        return moduleGrantedAccessList.get(1);
+        return moduleGrantedAccessList.size()> 1? moduleGrantedAccessList.get(1):new ModuleGrantedAccessEntity();
     }
 
     public UserRoleEntity getUserExpediting(){

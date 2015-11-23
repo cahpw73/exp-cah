@@ -178,23 +178,27 @@
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.supplier']}"/>
                                 <div class="inputText-general-po">
-                                    <p:selectOneMenu styleClass="menu-po-status"
-                                                     filter="true"
-                                                     id="supplierNameId"
-                                                     style="min-width:345px; max-width:345px;"
-                                                     filterMatchMode="contains"
-                                                     value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier}"
-                                                     converter="supplierConverter">
-                                        <f:selectItem itemLabel="Select One" itemValue=""/>
-                                        <f:selectItems var="_supplier"
-                                                       value="#{supplierProcList.suppliers}"
-                                                       itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
-                                        <p:ajax async="false" event="change"
-                                                update="supplierAddress supplierPhoneTxt supplierSuburb supplierState
-                                                 btnViewContact btnAddContact
-                                                supplierPostCode supplierCountry contactId"/>
-                                    </p:selectOneMenu>
-                                    <p:message for="supplierNameId" />
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
+                                    <ui:remove>
+                                        <p:selectOneMenu styleClass="menu-po-status"
+                                                         filter="true" disabled="true"
+                                                         id="supplierNameId"
+                                                         style="min-width:345px; max-width:345px;"
+                                                         filterMatchMode="contains"
+                                                         value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier}"
+                                                         converter="supplierConverter">
+                                            <f:selectItem itemLabel="Select One" itemValue=""/>
+                                            <f:selectItems var="_supplier"
+                                                           value="#{supplierProcList.suppliers}"
+                                                           itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
+                                            <p:ajax async="false" event="change"
+                                                    update="supplierAddress supplierPhoneTxt supplierSuburb supplierState
+                                                     btnViewContact btnAddContact
+                                                    supplierPostCode supplierCountry contactId"/>
+                                        </p:selectOneMenu>
+                                        <p:message for="supplierNameId" />
+                                    </ui:remove>
                                 </div>
                             </div>
                         </div>

@@ -67,7 +67,11 @@ public class UserService implements Serializable {
             userDao.doUpdate(user);
             for (ModuleGrantedAccessEntity mga : moduleGrAcList) {
                 if (mga != null) {
-                    moduleGrantedAccessService.doUpdate(mga);
+                    if(mga.getId()!=null){
+                        moduleGrantedAccessService.doUpdate(mga);
+                    }else{
+                        moduleGrantedAccessService.doSave(mga);
+                    }
                 }
             }
             for (UserRoleEntity ure : userRoleList) {
