@@ -17,7 +17,7 @@
                     removeLabel="Remove from Supplier"
                     converter="categoryConverter"
                     itemLabel="#{_category.name}" itemValue="#{_category}">
-            <p:ajax async="false" event="transfer" process="categoryPickList" update="categoryPickList" listener="#{categoryBrandBean.sortCategoryList}"/>
+            <p:ajax async="false" event="transfer" process="categoryPickList" listener="#{categoryBrandBean.sortCategoryList}"/>
         </p:pickList>
     </div>
     <div style="float: left; margin-left: 25px;">
