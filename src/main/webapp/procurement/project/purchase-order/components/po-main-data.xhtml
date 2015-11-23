@@ -86,8 +86,7 @@
                         <h:inputText id="poOrderNumber"
                                      value="#{poBean.purchaseOrder.po}"
                                      maxlength="50"
-                                     styleClass="form-control" required="true"
-                                     requiredMessage="#{msgs['po.number.valid']}"
+                                     styleClass="form-control"
                                      rendered="#{poBean.beingEdited}"/>
                         <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
                         <h:inputText id="poOrderNumberVi" readonly="true" styleClass="form-control view-po"
@@ -105,8 +104,7 @@
                         <h:inputText id="poOrderTitle" style="text-transform: uppercase;"
                                      value="#{poBean.purchaseOrder.poTitle}"
                                      maxlength="250"
-                                     styleClass="form-control" required="true"
-                                     requiredMessage="#{msgs['po.title.valid']}"
+                                     styleClass="form-control"
                                      rendered="#{poBean.beingEdited}"/>
                         <p:message for="poOrderTitle" id="msgInputPoOrderTitle"/>
                         <h:inputText id="poProjectVi" readonly="true" styleClass="form-control view-po"
@@ -124,8 +122,7 @@
                     <div style="width: 100px; float: left;">
                         <h:inputText id="poVarNumber" maxlength="50"
                                      value="#{poBean.purchaseOrder.variation}"
-                                     styleClass="form-control" required="true"
-                                     requiredMessage="#{msgs['po.variation.valid']}"
+                                     styleClass="form-control"
                                      rendered="#{poBean.beingEdited}"/>
                         <p:message for="poVarNumber" id="msgInputPoVarNumber"/>
                         <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"

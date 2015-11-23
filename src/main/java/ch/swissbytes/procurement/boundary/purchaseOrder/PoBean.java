@@ -380,11 +380,22 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
+        if(StringUtils.isEmpty(purchaseOrder.getPo())){
+            Messages.addFlashGlobalError("Enter a valid PO Number");
+            validated = false;
+        }
+        if(StringUtils.isEmpty(purchaseOrder.getPoTitle())){
+            Messages.addFlashGlobalError("Enter a valid PO Title");
+            validated = false;
+        }
+        if(StringUtils.isEmpty(purchaseOrder.getVariation())){
+            Messages.addFlashGlobalError("Enter a valid Var Number");
+            validated = false;
+        }
         if (purchaseOrder.getId() != null && !service.canEdit(purchaseOrder, userSession.getCurrentUser())) {
             Messages.addFlashGlobalError("You cannot edit this PO because it is being edited right now.");
             validated = false;
         }
-
         if (cashflowBean.getPaymentTerms() == null) {
             Messages.addFlashGlobalError("Please enter Payment Terms");
             validated = false;
