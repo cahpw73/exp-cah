@@ -48,7 +48,6 @@ public class TextService implements Serializable {
             entity.setPo(po);
             dao.doSave(entity);
         }
-        //TODO @alvaro check it please urgent.
         Integer order=0;
         for(ClausesEntity ps: entity.getClausesList()){
             if(ps.getId() >= 1000 || ps.getId() < 0){

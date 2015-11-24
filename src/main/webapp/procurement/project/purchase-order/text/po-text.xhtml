@@ -32,7 +32,8 @@
                             &#160;
                             <h:commandLink value="Clauses"
                                            action="#{poTextBean.copyToClauses(_t)}">
-                                <p:ajax async="false" process="@this" update=":editPoForm:standardTextDt :editPoForm:clausesAuxDt"/>
+                                <p:ajax async="false" process="@this"
+                                        update=":editPoForm:standardTextDt :editPoForm:clausesAuxDt :editPoForm:bbtnt"/>
                             </h:commandLink>
                         </p:column>
                     </p:dataTable>

@@ -175,8 +175,8 @@ public class SpreadsheetJDEService implements Serializable {
         processor.createRow(rowNo);
         processor.writeStringBoldValue(9, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
         processor.writeStringBoldValue(10, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
-        processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
-        processor.writeStringValue(15, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
+        processor.writeStringValue(13, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
+        processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
     }
 
     private void prepareFirstLineContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail, boolean hasOneMilestone) {
@@ -214,8 +214,8 @@ public class SpreadsheetJDEService implements Serializable {
             processor.createRow(rowNo);
             processor.writeStringBoldValue(9, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
             processor.writeStringBoldValue(10, item.getTotalCost() != null ? decFormat.format(item.getTotalCost()) : "");
-            processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
-            processor.writeStringValue(15, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
+            processor.writeStringValue(13, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
+            processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
         }
     }
 

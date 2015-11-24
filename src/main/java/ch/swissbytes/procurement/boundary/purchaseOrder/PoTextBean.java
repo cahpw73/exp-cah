@@ -17,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -121,7 +122,12 @@ public class PoTextBean implements Serializable {
         entity.setId(tempClausesId);
         tempClausesId++;
         entity.setLastUpdate(new Date());
-        entity.setClauses(poText.getDescription());
+        try {
+            entity.setClauses(new String(poText.getDescription().getBytes(),"CP1252"));
+            entity.setIsEditable(true);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         entity.setCode(poText.getCode());
         entity.setStatus(StatusEnum.ENABLE);
         entity.setProjectTextSnippet(poText);
