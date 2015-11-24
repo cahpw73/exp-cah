@@ -61,7 +61,7 @@ public class SpreadsheetService implements Serializable {
     private String generateFileName() {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
         String dateStr = format.format(new Date());
-        String fileName = dateStr.toUpperCase() + " - " + "Commitemnts.xlsx";
+        String fileName = dateStr.toUpperCase() + " - " + "Commitments.xlsx";
         return fileName;
     }
 
