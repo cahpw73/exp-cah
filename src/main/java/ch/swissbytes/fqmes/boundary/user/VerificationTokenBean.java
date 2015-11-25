@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.user.UserService;
 import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.model.entities.VerificationTokenEntity;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.CreateEmailSender;
 import ch.swissbytes.fqmes.util.EmailSender;
 import com.sun.mail.util.SocketConnectException;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +45,8 @@ public class VerificationTokenBean implements Serializable {
     @Inject
     private Configuration configuration;
 
-    private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
+    @Inject
+    private CreateEmailSender createEmailSender;
 
     private UserEntity userEntity;
 
@@ -52,37 +54,13 @@ public class VerificationTokenBean implements Serializable {
 
 
     public String sendLostPasswordToken()   {
-        log.info("Sending token to email...");
+        log.info("Sending token to email without parameter email");
         if(isValidEmail(mail)){
             log.info("user is not null");
             VerificationTokenEntity tokenEntity = verificationTokenService.getVerificationTokenGenerated(userEntity);
             log.info("token is not null");
             if (tokenEntity != null) {
-                StringBuilder builder = new StringBuilder();
-                builder.append(getResetPasswordURL()).append("token=").append(tokenEntity.getToken());
-                String link = String.format("<a href=%s>%s</a>", builder.toString(),configuration.getMessage("reset.link"));
-                try {
-                    MimeMultipart multipart = createMimeMultipart(link);
-                    sendMail(userEntity.getEmail(),multipart);
-                    Messages.addFlashGlobalInfo("Your token generated was sent");
-                    log.info("Token was generated and sent to email");
-                } catch (MessagingException e) {
-                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
-                    log.log(Level.SEVERE,"Messaging has error" + e.getMessage());
-                    e.printStackTrace();
-                } catch (SocketConnectException e) {
-                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
-                    e.printStackTrace();
-                    log.log(Level.SEVERE,"Messaging has error" + e.getCause());
-                } catch (ConnectException e) {
-                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
-                    log.log(Level.SEVERE,"Messaging has error" + e.getCause());
-                    e.printStackTrace();
-                }catch(Exception ex){
-                    Messages.addFlashGlobalError("It cannot send the email to restart the password.");
-                    log.log(Level.SEVERE,"Messaging has error" + ex.getCause());
-                    ex.printStackTrace();
-                }
+                createEmailSender.createEmailAndSend(userEntity,tokenEntity);
                 return "login?faces-redirect=true";
             }
         }
@@ -90,38 +68,13 @@ public class VerificationTokenBean implements Serializable {
     }
 
     public String sendLostPasswordToken(final String email)   {
-        log.info("Sending token to email... " + email);
+        log.info("Sending token to email with parameter email: " + email);
         if(isValidEmail(email)){
             log.info("user is not null");
             VerificationTokenEntity tokenEntity = verificationTokenService.getVerificationTokenGenerated(userEntity);
             log.info("token is not null");
             if (tokenEntity != null) {
-                StringBuilder builder = new StringBuilder();
-                builder.append(getResetPasswordURL()).append("token=").append(tokenEntity.getToken());
-                ;
-                String link = String.format("<a href=%s>%s</a>", builder.toString(),configuration.getMessage("reset.link"));
-                try {
-                    MimeMultipart multipart = createMimeMultipart(link);
-                    sendMail(userEntity.getEmail(),multipart);
-                    Messages.addFlashGlobalInfo("Email was sent successfully ");
-                    log.info("Token was generated and sent to email");
-                } catch (MessagingException e) {
-                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
-                    log.log(Level.SEVERE,"Messaging has error" + e.getMessage());
-                    e.printStackTrace();
-                } catch (SocketConnectException e) {
-                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
-                    e.printStackTrace();
-                    log.log(Level.SEVERE,"Messaging has error" + e.getCause());
-                } catch (ConnectException e) {
-                    Messages.addFlashGlobalError("Error occurred while sending the token to your email");
-                    log.log(Level.SEVERE,"Messaging has error" + e.getCause());
-                    e.printStackTrace();
-                }catch(Exception ex){
-                    Messages.addFlashGlobalError("It cannot send the email to restart the password.");
-                    log.log(Level.SEVERE,"Messaging has error" + ex.getCause());
-                    ex.printStackTrace();
-                }
+                createEmailSender.createEmailAndSend(userEntity,tokenEntity);
                 return "login?faces-redirect=true";
             }
         }
@@ -148,12 +101,6 @@ public class VerificationTokenBean implements Serializable {
         return result;
     }
 
-    private String getResetPasswordURL() {
-        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String url = req.getRequestURL().toString();
-        String domainUrl = url.substring(0, url.length() - req.getRequestURI().length()) + req.getContextPath() + "/";
-        return domainUrl + "resetpassword.jsf?";
-    }
 
     private UserEntity getUserByEmail(String email) {
         return userService.findUserByEmail(email).get(0);
@@ -167,39 +114,6 @@ public class VerificationTokenBean implements Serializable {
         return "Reset Password";
     }
 
-    private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
-
-        email.setFrom(sendMailInfo);
-        email.setTo(mail);
-        email.setSubject("Reset Password");
-        //email.setBody(message);
-        email.setContent(multipart);
-        email.send();
-    }
-
-    private MimeMultipart createMimeMultipart(final String link) {
-        try {
-            //Create the html body
-            MimeMultipart multipart = new MimeMultipart("related");
-            // first part  (the html)
-            BodyPart messageBodyPart = new MimeBodyPart();
-            StringBuilder sbHtmlText = new StringBuilder();
-            sbHtmlText.append("<p> " + configuration.getMessage("reset.message.request") + " </p>\n");
-            sbHtmlText.append("<p> " + "Please " + link +  " </p>\n");
-            sbHtmlText.append("\t\t\t\t\t<br/>\n");
-            sbHtmlText.append("<p> " +configuration.getMessage("reset.message.warning") +  " </p>\n");
-
-            messageBodyPart.setContent(sbHtmlText.toString(), "text/html");
-            multipart.addBodyPart(messageBodyPart);
-
-            // add it
-            multipart.addBodyPart(messageBodyPart);
-            return multipart;
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public VerificationTokenEntity getActiveVerificationToken(String token){
         return verificationTokenService.getActiveVerificationToken(token);

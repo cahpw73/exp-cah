@@ -122,12 +122,7 @@ public class PoTextBean implements Serializable {
         entity.setId(tempClausesId);
         tempClausesId++;
         entity.setLastUpdate(new Date());
-        try {
-            entity.setClauses(new String(poText.getDescription().getBytes(),"CP1252"));
-            //entity.setIsEditable(true);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        entity.setClauses(poText.getDescription());
         entity.setCode(poText.getCode());
         entity.setStatus(StatusEnum.ENABLE);
         entity.setProjectTextSnippet(poText);

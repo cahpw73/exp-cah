@@ -1,16 +1,24 @@
 package ch.swissbytes.procurement.util;
 
+import ch.swissbytes.fqmes.util.CreateEmailSender;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 
+import javax.inject.Inject;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Christian on 20/07/2015.
  */
 public class SpreadsheetProcessor implements Serializable {
+
+    private static final Logger log = Logger.getLogger(SpreadsheetProcessor.class.getName());
+
+    private CreateEmailSender createEmailSender = new CreateEmailSender();
 
     //Create blank workbook
     private XSSFWorkbook workbook;
@@ -66,8 +74,12 @@ public class SpreadsheetProcessor implements Serializable {
             workbook.write(out);
             out.close();
         } catch (FileNotFoundException e) {
+            log.log(Level.SEVERE, e.getMessage());
+           //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
             e.printStackTrace();
         } catch (IOException e) {
+            log.log(Level.SEVERE, e.getMessage());
+            //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
             e.printStackTrace();
         }
     }
