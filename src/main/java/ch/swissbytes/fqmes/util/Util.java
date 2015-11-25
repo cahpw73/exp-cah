@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.util;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.interfaces.ManageFile;
+import com.google.common.base.CharMatcher;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
@@ -37,8 +38,8 @@ public class Util {
 
     private static final Logger log = Logger.getLogger(Util.class.getName());
 
-    public void setConfiguration(Configuration configuration){
-        this.configuration=configuration;
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     public static String cutIfAny(String str, Integer length) {
@@ -80,7 +81,7 @@ public class Util {
         if (utcDate != null) {
             DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
             long local = zone.convertUTCToLocal(utcDate.getTime());
-            SimpleDateFormat sdf=new SimpleDateFormat(configuration.getFormatDate(),new Locale("en"));
+            SimpleDateFormat sdf = new SimpleDateFormat(configuration.getFormatDate(), new Locale("en"));
             return sdf.format(new Date(local));
         }
         return "";
@@ -92,25 +93,28 @@ public class Util {
         if (utcDate != null) {
             DateTimeZone zone = DateTimeZone.forID(timeZone);
             long local = zone.convertUTCToLocal(utcDate.getTime());
-            SimpleDateFormat sdf=new SimpleDateFormat(formatDate,new Locale("en"));
+            SimpleDateFormat sdf = new SimpleDateFormat(formatDate, new Locale("en"));
             return sdf.format(new Date(local));
         }
         return "";
     }
-    public static Date toLocal(Date date,String timeZone){
-        DateTimeZone dtz= DateTimeZone.getDefault();
-        Date utcDate=convertUTC(date,dtz.toTimeZone().getID());
-        if(utcDate!=null){
+
+    public static Date toLocal(Date date, String timeZone) {
+        DateTimeZone dtz = DateTimeZone.getDefault();
+        Date utcDate = convertUTC(date, dtz.toTimeZone().getID());
+        if (utcDate != null) {
             DateTimeZone zone = DateTimeZone.forID(timeZone);
             long local = zone.convertUTCToLocal(utcDate.getTime());
-            Date localDate=new Date(local);
+            Date localDate = new Date(local);
             return localDate;
         }
         return null;
     }
-    public static String removeSpecialCharactersForJasperReport(String target){
-        String value=target!=null?target:"";
-        value=value.replaceAll("&", "&amp;");
+
+    public static String removeSpecialCharactersForJasperReport(String target) {
+        String value = target != null ? target : "";
+        value = value.replaceAll("&", "&amp;");
+        value = value.replaceAll("[\\p{Cntrl}&&[^\r\n]]", "");
         return value;
     }
 
@@ -172,32 +176,32 @@ public class Util {
         }
     }
 
-    public static String formatMoney(String currency, String pattern,BigDecimal money){
-        String codeCurrency=currency+" ";
-        if(money==null){
+    public static String formatMoney(String currency, String pattern, BigDecimal money) {
+        String codeCurrency = currency + " ";
+        if (money == null) {
             return null;
         }
-        if(StringUtils.isEmpty(codeCurrency)||StringUtils.isBlank(codeCurrency)){
-            codeCurrency="";
+        if (StringUtils.isEmpty(codeCurrency) || StringUtils.isBlank(codeCurrency)) {
+            codeCurrency = "";
         }
-        return codeCurrency+new DecimalFormat(pattern, new DecimalFormatSymbols()).format(money);
+        return codeCurrency + new DecimalFormat(pattern, new DecimalFormatSymbols()).format(money);
     }
 
     public static BigDecimal currencyToCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni, BigDecimal exchangeRateDefault) {
         log.info("amountIni: " + amountIni);
         BigDecimal amountUSD = currencyToUSDCurrency(amountIni, exchangeRateIni);
-        BigDecimal currencyEnd = usdCurrencyToCurrencyDefault(amountUSD, exchangeRateIni,exchangeRateDefault);
+        BigDecimal currencyEnd = usdCurrencyToCurrencyDefault(amountUSD, exchangeRateIni, exchangeRateDefault);
         log.info("amountConverted: " + currencyEnd);
         return currencyEnd;
     }
 
     private static BigDecimal currencyToUSDCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni) {
         BigDecimal amountUSD = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
-        if(exchangeRateIni == null && amountIni!=null){
+        if (exchangeRateIni == null && amountIni != null) {
             return amountIni;
-        }else if ( amountIni == null) {
+        } else if (amountIni == null) {
             return amountUSD;
-        }else if(exchangeRateIni != null && amountIni != null){
+        } else if (exchangeRateIni != null && amountIni != null) {
             amountUSD = amountIni.divide(exchangeRateIni, 5, RoundingMode.CEILING);
             return amountUSD;
         }
@@ -206,18 +210,19 @@ public class Util {
 
     private static BigDecimal usdCurrencyToCurrencyDefault(BigDecimal amountUSD, BigDecimal exchangeRateIni, BigDecimal exchangeRateEnd) {
         BigDecimal currencyEnd = new BigDecimal("0.00000").setScale(5, RoundingMode.CEILING);
-        if(exchangeRateIni == null && amountUSD!=null){
+        if (exchangeRateIni == null && amountUSD != null) {
             return amountUSD;
-        }else if (amountUSD != null && exchangeRateEnd != null) {
+        } else if (amountUSD != null && exchangeRateEnd != null) {
             currencyEnd = amountUSD.multiply(exchangeRateEnd);
         }
         return currencyEnd;
     }
-    public static String removePrefixForVariation(String variation,String PREFIX){
-        String finalVariation=variation;
-        if(StringUtils.isNotEmpty(finalVariation)&&StringUtils.isNotBlank(finalVariation)){
-            while(finalVariation.toLowerCase().trim().startsWith(PREFIX)&&StringUtils.isNotBlank(finalVariation)){
-                finalVariation=finalVariation.substring(1,finalVariation.length());
+
+    public static String removePrefixForVariation(String variation, String PREFIX) {
+        String finalVariation = variation;
+        if (StringUtils.isNotEmpty(finalVariation) && StringUtils.isNotBlank(finalVariation)) {
+            while (finalVariation.toLowerCase().trim().startsWith(PREFIX) && StringUtils.isNotBlank(finalVariation)) {
+                finalVariation = finalVariation.substring(1, finalVariation.length());
             }
         }
         return finalVariation;
