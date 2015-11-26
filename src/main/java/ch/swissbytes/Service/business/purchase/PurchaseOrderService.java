@@ -328,6 +328,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setRequiredSiteDateComment(null);
         purchaseOrderEntity.setActualDate(null);
         purchaseOrderEntity.setActualSiteDateComment(null);
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setCmsExported(false);
+        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setJdeExported(false);
         dao.save(purchaseOrderEntity);
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().clear();
         cashflowService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow(), po);

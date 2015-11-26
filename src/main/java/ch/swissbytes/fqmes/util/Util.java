@@ -1,9 +1,8 @@
 package ch.swissbytes.fqmes.util;
 
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.domain.interfaces.ManageFile;
-import com.google.common.base.CharMatcher;
+import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
