@@ -8,6 +8,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.fqmes.util.CreateEmailSender;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -15,12 +16,16 @@ import org.primefaces.model.StreamedContent;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -57,14 +62,16 @@ public class ExportationPOBean implements Serializable {
         log.info("Destroyed ExportationPOBean");
     }
 
-    public void dailyExportation() {
-        List<ProjectEntity> projectEntities = projectService.findAllProjects();
-        List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
-        List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
-        for (ProjectEntity p : projectEntities) {
-            poListCMS = poService.findPOListWithoutExportCMS(p.getId());
-            poListJDE = poService.findPOListWithoutExportJDE(p.getId());
-            try {
+    public void dailyExportation(CreateEmailSender createEmailSender) {
+        log.info("running process to export.");
+        try {
+            List<ProjectEntity> projectEntities = projectService.findAllProjects();
+            List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
+            List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
+            for (ProjectEntity p : projectEntities) {
+                log.info("processing PO's from Project[" + p.getProjectNumber() + "]");
+                poListCMS = poService.findPOListWithoutExportCMS(p.getId());
+                poListJDE = poService.findPOListWithoutExportJDE(p.getId());
                 if (!poListCMS.isEmpty()) {
                     exportCMS(poListCMS, p);
                 }
@@ -75,27 +82,33 @@ public class ExportationPOBean implements Serializable {
                     }
                     exportJDE(poListJDE, p);
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
+        } catch (FileNotFoundException e) {
+            log.log(Level.SEVERE, e.getMessage());
+            //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            log.log(Level.SEVERE, e.getMessage());
+            //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws FileNotFoundException {
+    public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
         log.info("exportCMS");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporter.generateWorkbookToExport(list, fName);
-        /*for (PurchaseOrderEntity po : list) {
+        for (PurchaseOrderEntity po : list) {
             poService.markCMSAsExported(po);
-        }*/
+        }
     }
 
-    public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws FileNotFoundException {
+    public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
         log.info("exportJDE");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporterToJDE.generateWorkbookToExport(list, fName);
-        /*for(PurchaseOrderEntity po : list) {
+        for(PurchaseOrderEntity po : list) {
             poService.markJDEAsExported(po);
-        }*/
+        }
     }
 }

@@ -5,6 +5,9 @@ import ch.swissbytes.domain.model.entities.VerificationTokenEntity;
 import com.sun.mail.util.SocketConnectException;
 import org.omnifaces.util.Messages;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.mail.BodyPart;
@@ -20,6 +23,7 @@ import java.util.logging.Logger;
 /**
  * Created by Christian on 25/11/2015.
  */
+
 public class CreateEmailSender implements Serializable {
 
     private static final Logger log = Logger.getLogger(CreateEmailSender.class.getName());
@@ -27,6 +31,7 @@ public class CreateEmailSender implements Serializable {
     private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
 
     private static final String sendToSmacneall  = "christian.alba.7333@yopmail.com"; //"smacneall@colleagues-info.com";
+
 
     @Inject
     private Configuration configuration;

@@ -1,8 +1,11 @@
 package ch.swissbytes.procurement.jobs;
 
+import ch.swissbytes.fqmes.util.CreateEmailSender;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.*;
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
@@ -11,13 +14,15 @@ import java.util.logging.Logger;
  */
 @Startup
 @Singleton
-@ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class JobExportCMSandJDE implements Serializable {
 
     private final Logger log = Logger.getLogger(JobExportCMSandJDE.class.getName());
 
     @EJB
     private ExportationPOBean exportationPOBean;
+
+    @Inject
+    private CreateEmailSender createEmailSender;
 
     @PostConstruct
     public void initialize() {
@@ -28,11 +33,11 @@ public class JobExportCMSandJDE implements Serializable {
         log.info("Shut down in progress JobExportCMSandJDE");
     }
 
-    @Schedule(dayOfMonth = "*", hour = "9", minute = "10", info = "Every day at 1:00 am", persistent = false)
+    @Schedule(dayOfMonth = "*", hour = "15", minute = "34", info = "Every day at 1:00 am")
     public void startExportationDaily() {
         log.info("startExportationDaily");
         try {
-            exportationPOBean.dailyExportation();
+            exportationPOBean.dailyExportation(createEmailSender);
         } catch (Exception e) {
             log.info("Error background job CronNotifier.startTracingActivities " + e.getMessage());
         }

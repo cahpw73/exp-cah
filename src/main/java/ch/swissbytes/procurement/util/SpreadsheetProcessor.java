@@ -6,6 +6,9 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import java.io.*;
 import java.util.logging.Level;
@@ -14,11 +17,13 @@ import java.util.logging.Logger;
 /**
  * Created by Christian on 20/07/2015.
  */
+
 public class SpreadsheetProcessor implements Serializable {
 
     private static final Logger log = Logger.getLogger(SpreadsheetProcessor.class.getName());
 
-    private CreateEmailSender createEmailSender = new CreateEmailSender();
+    /*@Inject
+    private CreateEmailSender createEmailSender;*/
 
     //Create blank workbook
     private XSSFWorkbook workbook;
@@ -62,26 +67,16 @@ public class SpreadsheetProcessor implements Serializable {
         row.createCell(colNo).setCellValue(value == null ? "" : value.toString());
     }
 
-    public void doSaveWorkBook(final String path, final String fileName) {
+    public void doSaveWorkBook(final String path, final String fileName) throws IOException {
         FileOutputStream out = null;
         File file = createDirectoryFiles(path);
         File newFile = new File(file.getAbsolutePath()+File.separator+fileName);
-        try {
-            if(newFile.createNewFile()){
-                System.out.println("created file");
-            }
-            out = new FileOutputStream(newFile);
-            workbook.write(out);
-            out.close();
-        } catch (FileNotFoundException e) {
-            log.log(Level.SEVERE, e.getMessage());
-           //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            log.log(Level.SEVERE, e.getMessage());
-            //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
-            e.printStackTrace();
+        if(newFile.createNewFile()){
+            System.out.println("created file");
         }
+        out = new FileOutputStream(newFile);
+        workbook.write(out);
+        out.close();
     }
 
     private File createDirectoryFiles(String path) {

@@ -7,13 +7,15 @@ import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.util.Configuration;
+import ch.swissbytes.fqmes.util.CreateEmailSender;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import java.io.File;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -35,14 +37,14 @@ public class SpreadsheetService implements Serializable {
     private CashflowService cashflowService;
     @Inject
     private ScopeSupplyService scopeSupplyService;
-
+    @Inject
     public SpreadsheetProcessor processor;
 
     public Configuration configuration = new Configuration();
 
     int rowNo;
 
-    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) {
+    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws IOException {
         rowNo = 2;
         String pathCMS = System.getProperty("fqmes.path.export.cms");
         pathCMS = pathCMS.replace("{project_field}", folderName);
