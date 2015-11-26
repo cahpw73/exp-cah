@@ -38,7 +38,7 @@ public class ReportProjectProcurement extends ReportProject implements Serializa
 
     @Override
     protected void loadAdditionalParameters() {
-        addParameters("SUBREPORT_DIR", "reports/procurement/uncommittedDataReport/");
+        addParameters("SUBREPORT_DIR", "reports/procurement/projectProcurementReport/");
     }
 
     @Override
