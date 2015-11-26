@@ -575,3 +575,7 @@ label.checkbox {
     overflow: hidden;
     white-space: nowrap;
 }
+
+.ui-editor-toolbar{
+    display: none!important;
+}

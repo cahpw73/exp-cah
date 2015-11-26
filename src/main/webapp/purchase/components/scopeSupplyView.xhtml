@@ -25,7 +25,7 @@
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" style="min-width: 100px;"
                   sortFunction="#{sortBean.sortStrings}">
-            #{_scopeSupply.description}
+            <p:editor value="#{_scopeSupply.description}" disabled="true" controls="" height="300"/>
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}" width="110"
                   sortFunction="#{sortBean.sortStrings}">
