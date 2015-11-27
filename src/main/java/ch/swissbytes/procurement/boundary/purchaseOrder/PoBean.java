@@ -746,9 +746,9 @@ public class PoBean extends Bean {
                 if (n.getId().longValue() == detailEntity.getProjectCurrency().getId().longValue()) {
                     detailEntity.setPercentage(calculateBasedPaymentValueAndTotalValue(detailEntity.getOrderAmt(), totals.get(detailEntity.getProjectCurrency())));
                     break;
-                } else {
+                } /*else {
                     detailEntity.setOrderAmt(null);
-                }
+                }*/
             }
             if (detailEntity.getOrderAmt() != null) {
                 detailEntity.setProjectAmt(calculateProjectValueByPaymentValueAndCurrency(detailEntity.getProjectCurrency().getCurrencyFactor(), detailEntity.getOrderAmt()));
