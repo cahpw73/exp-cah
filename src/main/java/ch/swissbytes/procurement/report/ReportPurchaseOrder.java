@@ -95,6 +95,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("purchaseOrderId", po.getId());
         String variation = generateVariation(po.getVariation());
         addParameters("variation", variation != null ? "v" + variation : variation);
+        addParameters("titleVariation", variation != null ? variation : variation);
         loadParamSupplier();
         //loadParamClients();
         if (po.getProjectEntity().getClient() != null) {

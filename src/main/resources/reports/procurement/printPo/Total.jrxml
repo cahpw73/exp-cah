@@ -73,9 +73,6 @@ group by pc.currency_id,c.code,c.symbol]]>
 	<field name="currency_id" class="java.lang.Long"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="symbol" class="java.lang.String"/>
-	<background>
-		<band/>
-	</background>
 	<title>
 		<band/>
 	</title>
@@ -340,16 +337,4 @@ group by pc.currency_id,c.code,c.symbol]]>
 			</line>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="1"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="1"/>
-	</pageFooter>
-	<lastPageFooter>
-		<band height="1"/>
-	</lastPageFooter>
-	<summary>
-		<band height="1"/>
-	</summary>
 </jasperReport>
