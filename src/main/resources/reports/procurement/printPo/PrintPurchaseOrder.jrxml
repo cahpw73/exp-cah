@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="2.0000000000000044"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="262"/>
+	<property name="ireport.y" value="598"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -830,7 +830,9 @@
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Total.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement uuid="bdd3c0e4-f198-42af-8bc8-5c619508c1f4" positionType="Float" x="0" y="12" width="519" height="1"/>
+				<reportElement uuid="bdd3c0e4-f198-42af-8bc8-5c619508c1f4" positionType="Float" x="0" y="12" width="519" height="1">
+					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
+				</reportElement>
 			</break>
 		</band>
 		<band height="6" splitType="Stretch">

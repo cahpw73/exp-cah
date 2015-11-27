@@ -27,7 +27,7 @@
                                   rendered="#{!poBean.modeView}">
                             <h:commandLink value="Preamble"
                                            action="#{poTextBean.copyToPreamble(_t.description)}">
-                                <p:ajax async="false" process="@this" update=":editPoForm:preambleTxtId"/>
+                                <p:ajax async="false" process="@this" update=":editPoForm:preambleGrp"/>
                             </h:commandLink>
                             &#160;
                             <h:commandLink value="Clauses"
@@ -41,18 +41,20 @@
             </div>
 
             <div style="width: 650px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
-                <div class="form-group">
-                    <h:outputLabel value="#{msgs['po.text.lbl.preamble']}" for="preambleTxtId"/>
-                    <p:inputTextarea id="preambleTxtId" styleClass="form-control"
-                                     value="#{poTextBean.textEntity.preamble}"
-                                     style=" height:70px!important; max-height: 70px; width: 100%!important;"
-                                     scrollHeight="71" maxlength="950" rendered="#{poBean.beingEdited}"/>
+                <h:panelGroup id="preambleGrp">
+                    <div class="form-group">
+                        <h:outputLabel value="#{msgs['po.text.lbl.preamble']}" for="preambleTxtId"/>
+                        <p:inputTextarea id="preambleTxtId" styleClass="form-control"
+                                         value="#{poTextBean.textEntity.preamble}"
+                                         style=" height:70px!important; max-height: 70px; width: 100%!important;"
+                                         scrollHeight="71" maxlength="950" rendered="#{poBean.beingEdited}"/>
 
-                    <p:inputTextarea styleClass="form-control" readonly="true"
-                                     value="#{poTextBean.textEntity.preamble}"
-                                     style=" height:70px!important; max-height: 70px; width: 100%!important;"
-                                     scrollHeight="71" rendered="#{poBean.beingViewed}"/>
-                </div>
+                        <p:inputTextarea styleClass="form-control" readonly="true"
+                                         value="#{poTextBean.textEntity.preamble}"
+                                         style=" height:70px!important; max-height: 70px; width: 100%!important;"
+                                         scrollHeight="71" rendered="#{poBean.beingViewed}"/>
+                    </div>
+                </h:panelGroup>
                 <div class="form-group">
                     <h:outputLabel value="#{msgs['po.text.lbl.clauses']}" for="clausesAuxDt"/>
 

@@ -103,3 +103,7 @@
 .ui-editor-toolbar{
     display: none!important;
 }
+
+.ui-selectlistbox-listcontainer{
+    height:360px!important;
+}
