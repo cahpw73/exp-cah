@@ -113,7 +113,9 @@ public class Util {
     public static String removeSpecialCharactersForJasperReport(String target) {
         String value = target != null ? target : "";
         value = value.replaceAll("&", "&amp;");
-        value = value.replaceAll("[\\p{Cntrl}&&[^\r\n]]", "");
+        //value = value.replaceAll("\u0009","   ");
+        value = value.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "");
+        log.info("");
         return value;
     }
 

@@ -13,43 +13,22 @@ order by originator]]>
 	<field name="originator" class="java.lang.String"/>
 	<field name="requisition_date" class="java.sql.Timestamp"/>
 	<field name="requisition_number" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="14" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="98d50143-42d6-474b-9db9-6cd1c0df1edb" x="0" y="0" width="27" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="98d50143-42d6-474b-9db9-6cd1c0df1edb" x="0" y="0" width="27" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{requisition_number}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="3428f607-f294-4782-9f59-2d54951d9836" x="30" y="0" width="76" height="14" isPrintWhenDetailOverflows="true"/>
-				<textElement>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="3428f607-f294-4782-9f59-2d54951d9836" x="30" y="0" width="76" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{originator}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>

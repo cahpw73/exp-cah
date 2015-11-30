@@ -50,6 +50,22 @@
                                                 onclick="doChangeProc();">
                                     </p:calendar>
                                 </p:column>
+                                <p:column headerText="#{msgs['po.header.column.ros.date']}">
+                                    <h:outputText rendered="#{not _req.isEditable}"
+                                                  value="#{util.toLocal(_req.requiredOnSiteDate)}"/>
+                                    <p:calendar id="rosDate" type="text" styleClass="calendar"
+                                                navigator="true" mask="#{configuration.mask}"
+                                                rendered="#{_req.isEditable}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                jsf:placeholder="#{configuration.formatDate}"
+                                                converterMessage="#{msgs['validator.date.invalid']}"
+                                                value="#{_req.requiredOnSiteDate}"
+                                                timeZone="#{configuration.timeZone}"
+                                                onselect="calendarChangesProc();" onchange="calendarChangesProc();"
+                                                onclick="doChangeProc();">
+                                    </p:calendar>
+                                </p:column>
                                 <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poBean.beingEdited}">
                                     <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_req.isEditable}"
                                                    process="@this" action="#{requisitionBean.edit(_req.id)}"

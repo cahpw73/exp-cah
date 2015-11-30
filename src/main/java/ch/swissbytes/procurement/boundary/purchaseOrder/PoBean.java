@@ -595,6 +595,8 @@ public class PoBean extends Bean {
 
     private void collectData() {
         purchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
+        log.info("Requisition List size: " + requisitionBean.getList().size());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions().clear();
         purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionBean.getList());
         purchaseOrder.getPurchaseOrderProcurementEntity().getDeliverables().addAll(deliverableBean.getList());
         purchaseOrder.getPurchaseOrderProcurementEntity().setCashflow(cashflowBean.getCashflow());

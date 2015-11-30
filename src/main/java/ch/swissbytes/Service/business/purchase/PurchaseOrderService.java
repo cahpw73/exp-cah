@@ -21,6 +21,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
+import ch.swissbytes.procurement.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
@@ -270,6 +271,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
+        verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.save(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
@@ -357,6 +359,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
+        verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.update(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
@@ -369,6 +372,52 @@ public class PurchaseOrderService extends Service implements Serializable {
         //Text
         textService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getTextEntity(), po);
         return purchaseOrderEntity;
+    }
+
+    public void verifyAndSetRequiredOnSideDate(PurchaseOrderEntity purchaseOrderEntity, List<RequisitionEntity> requisitions) {
+        if (hasRequisitionListDeleted(requisitions)) {
+            purchaseOrderEntity.setRequiredDate(null);
+        } else if (requisitions.size() == 1 && requisitions.get(0).getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
+            purchaseOrderEntity.setRequiredDate(requisitions.get(0).getRequiredOnSiteDate());
+        } else if (requisitions.size() == 1 && requisitions.get(0).getStatusEnum().ordinal() != StatusEnum.ENABLE.ordinal()){
+            purchaseOrderEntity.setRequiredDate(null);
+        } else if (requisitions.size() > 1) {
+            RequisitionEntity hasLessDateReq = requisitions.get(0);
+            for (RequisitionEntity r : requisitions) {
+                if(hasLessDateReq.getRequiredOnSiteDate() != null && hasLessDateReq.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()){
+                    if(r.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                        if(r.getRequiredOnSiteDate()!=null) {
+                            if (r.getRequiredOnSiteDate().before(hasLessDateReq.getRequiredOnSiteDate())) {
+                                hasLessDateReq = r;
+                            }
+                        }
+                    }
+                }else{
+                    hasLessDateReq = r;
+                }
+            }
+            if(hasLessDateReq.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()){
+                purchaseOrderEntity.setRequiredDate(hasLessDateReq.getRequiredOnSiteDate());
+            }else{
+                purchaseOrderEntity.setRequiredDate(null);
+            }
+        }
+
+    }
+
+    private boolean hasRequisitionListDeleted(List<RequisitionEntity> requisitions) {
+        if (requisitions.isEmpty()) {
+            return true;
+        } else {
+            boolean wasDeleted = true;
+            for (RequisitionEntity r : requisitions) {
+                if (r.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                    wasDeleted = false;
+                    break;
+                }
+            }
+            return wasDeleted;
+        }
     }
 
     @Transactional
@@ -466,7 +515,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findPOListWithoutExportCMS(projectId);
     }
 
-    public List<PurchaseOrderEntity> findPOListWithoutExportJDE(final Long projectId){
+    public List<PurchaseOrderEntity> findPOListWithoutExportJDE(final Long projectId) {
         return dao.findPOListWithoutExportJDE(projectId);
     }
 
@@ -649,7 +698,7 @@ public class PurchaseOrderService extends Service implements Serializable {
     public boolean canUnlock(UserEntity user, PurchaseOrderEntity po) {
         boolean canUnlock = false;
         PurchaseOrderEntity poEntity = findById(po.getId());
-        if (poEntity.isLocked()!=null && poEntity.isLocked()) {
+        if (poEntity.isLocked() != null && poEntity.isLocked()) {
             UserEntity locker = poEntity.getLockedBy();
             if (locker != null && locker.getId().longValue() == user.getId().longValue()) {
                 canUnlock = true;

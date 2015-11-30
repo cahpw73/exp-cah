@@ -20,6 +20,7 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
     private String requisitionNumber;
     private String originator;
     private Date requisitionDate;
+    private Date requiredOnSiteDate;
     private StatusEnum statusEnum;
     private Date lastUpdate;
     private String rTFNo;
@@ -84,6 +85,16 @@ public class RequisitionEntity extends RecordEditable<RequisitionEntity> impleme
 
     public void setRequisitionDate(Date requisitionDate) {
         this.requisitionDate = requisitionDate;
+    }
+
+    @Column(name = "required_on_site_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getRequiredOnSiteDate() {
+        return requiredOnSiteDate;
+    }
+
+    public void setRequiredOnSiteDate(Date requiredOnSiteDate) {
+        this.requiredOnSiteDate = requiredOnSiteDate;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
