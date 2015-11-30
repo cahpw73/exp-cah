@@ -234,7 +234,6 @@ public class Processor {
             style = style + (snippet.isCloseParagraph() ? System.getProperty("line.separator") : "");
             sb.append(style);
         }
-        System.out.println(sb.toString());
         return sb.toString();
     }
 

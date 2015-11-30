@@ -57,7 +57,9 @@
 						<jr:detailCell height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 								<reportElement uuid="38208962-ff1a-4bc2-9dc4-d5680c149f6e" x="0" y="0" width="475" height="15" isRemoveLineWhenBlank="true"/>
-								<textElement markup="styled"/>
+								<textElement textAlignment="Justified" markup="styled">
+									<paragraph tabStopWidth="80"/>
+								</textElement>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
