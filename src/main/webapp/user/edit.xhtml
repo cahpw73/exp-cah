@@ -36,7 +36,7 @@
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputFirstName" value="#{userEditBean.userSelected.firstName}"
                                      jsf:placeholder="#{msgs['user.edit.lbl.first.name']}" required="true"
-                                     requiredMessage="#{msgs['user.lbl.first.name.required']}"/>
+                                     requiredMessage="#{msgs['user.lbl.first.name.required']}" autocomplete="off"/>
                         <p:message for="inputFirstName" id="msgInputFirstName"/>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputName" value="#{userEditBean.userSelected.name}"
                                      jsf:placeholder="#{msgs['user.edit.lbl.name']}" required="true"
-                                     requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
+                                     requiredMessage="#{msgs['user.lbl.last.name.required']}" autocomplete="off"/>
                         <p:message for="inputName" id="msgInputName"/>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                      <div class="col-sm-9">
                          <h:inputText class="form-control" id="inputEmail" value="#{userEditBean.userSelected.email}"
                                       jsf:placeholder="#{msgs['user.edit.lbl.email']}" required="true"
-                                      requiredMessage="#{msgs['user.lbl.email.required']}">
+                                      requiredMessage="#{msgs['user.lbl.email.required']}" autocomplete="off">
                          </h:inputText>
                          <p:message for="inputEmail" id="msgInputEmail"/>
                      </div>
@@ -74,7 +74,7 @@
                      <p:outputLabel class="col-sm-3 control-label text-lbl-ltr" for="pwd2" value="#{msgs['user.edit.lbl.pwd.hash.confirm']}" />
                      <div class="col-sm-9">
                          <p:password id="pwd2" value="#{userEditBean.userSelected.password}" jsf:placeholder="#{msgs['user.edit.lbl.pwd.hash.confirm']}"
-                                     required="true" redisplay="true" requiredMessage="#{msgs['user.lbl.password.required']}" />
+                                     required="true" redisplay="true" requiredMessage="#{msgs['user.lbl.password.required']}" autocomplete="off"/>
                          <p:message id="msgPwd2" for="pwd2"/>
                      </div>
                 </div>

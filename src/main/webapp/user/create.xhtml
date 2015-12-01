@@ -17,13 +17,15 @@
         </h:panelGroup>
         <h2>#{msgs['user.create.title']}</h2>
         <h:form id="userCreateForm" class="form-horizontal" role="form">
+            <input style="display:none" type="text" name="fakeusernameremembered"/>
+            <input style="display:none" type="password" name="fakepasswordremembered"/>
             <div class="col-md-6">
                 <div class="form-group">
                     <p:outputLabel for="inputUsername" styleClass="col-sm-3 control-label text-lbl-ltr" value="#{msgs['user.create.lbl.username']}"/>
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputUsername" value="#{userCreateBean.userEntity.username}"
                                      jsf:placeholder="#{msgs['user.create.lbl.username']}" required="true"
-                                     requiredMessage="#{msgs['user.lbl.user.name.required']}">
+                                     requiredMessage="#{msgs['user.lbl.user.name.required']}" autocomplete="off">
                         </h:inputText>
                         <p:message for="inputUsername" id="msgInputUsername"/>
                     </div>
@@ -33,7 +35,7 @@
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputFirstName" value="#{userCreateBean.userEntity.firstName}"
                                      jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"
-                                     requiredMessage="#{msgs['user.lbl.first.name.required']}"/>
+                                     requiredMessage="#{msgs['user.lbl.first.name.required']}" autocomplete="off"/>
                         <p:message for="inputFirstName" id="msgInputFirstName"/>
                     </div>
                 </div>
@@ -42,7 +44,7 @@
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputName" value="#{userCreateBean.userEntity.name}"
                                      jsf:placeholder="#{msgs['user.create.lbl.name']}" required="true"
-                                     requiredMessage="#{msgs['user.lbl.last.name.required']}"/>
+                                     requiredMessage="#{msgs['user.lbl.last.name.required']}" autocomplete="off"/>
                         <p:message for="inputName" id="msgInputName"/>
                     </div>
                 </div>
@@ -52,7 +54,7 @@
                     <div class="col-sm-9">
                         <h:inputText class="form-control" id="inputEmail" value="#{userCreateBean.userEntity.email}"
                                      jsf:placeholder="#{msgs['user.create.lbl.email']}" required="true"
-                                     requiredMessage="#{msgs['user.lbl.email.required']}">
+                                     requiredMessage="#{msgs['user.lbl.email.required']}" autocomplete="off">
                         </h:inputText>
                         <p:message for="inputEmail" id="msgInputEmail"/>
                     </div>

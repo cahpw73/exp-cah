@@ -88,8 +88,8 @@ public class UserEditBean implements Serializable {
 
             moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
             userRoleList = userRoleService.findListByUserId(userId);
-
-            if (moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getModuleAccess() != null) {
+            ModuleGrantedAccessEntity mga = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING);
+            if (mga!=null && mga.getModuleAccess() != null) {
                 moduleAccessExpediting = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getModuleAccess();
             }
             roleExpediting = userRoleService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getRole();
@@ -111,7 +111,9 @@ public class UserEditBean implements Serializable {
             if(!oldPassword.equals(userSelected.getPassword())){
                 userSelected.setPassword(getEncodePass(userSelected.getPassword()));
             }
-            getModuleExpediting().setModuleAccess(moduleAccessExpediting);
+            if(!moduleGrantedAccessList.isEmpty()) {
+                getModuleExpediting().setModuleAccess(moduleAccessExpediting);
+            }
 
             if(roleExpediting!=null) {
                 getUserExpediting().setRole(roleExpediting);

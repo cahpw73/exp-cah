@@ -15,6 +15,10 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editUserForm" prependId="false" class="form-horizontal">
+            <h:panelGroup rendered="#{userBean.createUser}">
+                <input style="display:none" type="text" name="fakeusernameremembered"/>
+                <input style="display:none" type="password" name="fakepasswordremembered"/>
+            </h:panelGroup>
             <div class="col-md-6">
                 <div class="panel panel-default panel-tab">
                     <h:panelGroup rendered="#{userBean.createUser}">
