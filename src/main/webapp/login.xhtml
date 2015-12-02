@@ -40,8 +40,7 @@
                     <div style="border-width: 1px;border-color: #DBDBDB; border-radius:10px;
                                 border-style: solid; padding: 15px 15px 15px 15px;">
                         <h:form role="form" id="loginform">
-                            <input style="display:none" type="text" name="fakeusernameremembered"/>
-                            <input style="display:none" type="password" name="fakepasswordremembered"/>
+
                             <p:remoteCommand name="onload" action="#{authenticatorBean.validationLogin}"
                                              autoRun="true"/>
                             <h:inputHidden id="localeLanguage" value="#{languagePreference.language}"/>

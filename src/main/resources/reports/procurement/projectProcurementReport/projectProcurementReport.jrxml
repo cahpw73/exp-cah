@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.6105100000000052"/>
-	<property name="ireport.x" value="410"/>
+	<property name="ireport.zoom" value="1.6105100000000057"/>
+	<property name="ireport.x" value="194"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -74,7 +74,7 @@
 		<![CDATA[select po,po.variation,order_date,sp.company,ct.email,po.po_title,po_delivery_date,p.po_status,po.id as po_id
 from purchase_order po inner join p_order p on p.id=po.po_id
      left join supplier_proc sp on sp.id = p.supplier_id inner join contact ct on ct.supplier_id = sp.id
-where po.project_id=$P{projectIdFilter}
+where po.project_id=$P{projectIdFilter} and po.status_id = 1
 order by $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
@@ -231,14 +231,14 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Date</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="139" y="4" width="150" height="12"/>
+				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="139" y="4" width="200" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="292" y="4" width="120" height="12"/>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="344" y="4" width="180" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -283,18 +283,11 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e835c5be-7074-4ab0-9f75-ff700fc91aa2" x="540" y="15" width="70" height="12"/>
+				<reportElement uuid="e835c5be-7074-4ab0-9f75-ff700fc91aa2" x="535" y="15" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Value</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="5cd0780e-d227-4357-aa9b-9d33abf553a0" x="415" y="4" width="115" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -322,14 +315,14 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{order_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{order_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="77cd2fe4-8907-4dec-9699-c41fbc2d133f" positionType="Float" x="139" y="2" width="150" height="12"/>
+				<reportElement uuid="77cd2fe4-8907-4dec-9699-c41fbc2d133f" positionType="Float" x="139" y="2" width="200" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8eab6a20-dccf-4f85-aab1-d0735b42c60a" positionType="Float" x="292" y="2" width="120" height="12"/>
+				<reportElement uuid="8eab6a20-dccf-4f85-aab1-d0735b42c60a" positionType="Float" x="344" y="2" width="180" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -355,15 +348,8 @@ order by $P!{sortBy}]]>
 					<pen lineWidth="0.75" lineColor="#999999"/>
 				</graphicElement>
 			</line>
-			<textField>
-				<reportElement uuid="fc769b33-5c9a-4705-abad-9929e6a0c275" positionType="Float" x="415" y="2" width="115" height="12"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
-			</textField>
 			<subreport>
-				<reportElement uuid="4e3e8b79-6dcb-4f5d-9575-6476c00dc143" positionType="Float" x="540" y="2" width="70" height="12"/>
+				<reportElement uuid="4e3e8b79-6dcb-4f5d-9575-6476c00dc143" positionType="Float" x="535" y="2" width="70" height="12"/>
 				<subreportParameter name="PO_ID">
 					<subreportParameterExpression><![CDATA[$F{po_id}]]></subreportParameterExpression>
 				</subreportParameter>

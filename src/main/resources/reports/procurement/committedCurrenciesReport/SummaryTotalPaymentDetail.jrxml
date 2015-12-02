@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PO_Value" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2a15a69d-e051-43e0-bfe7-bd1b95841eb1">
-	<property name="ireport.zoom" value="2.727272727272727"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SummaryTotalPaymentDetail" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6bdf1685-5b1a-4e16-854b-2e8a5584c0e3">
+	<property name="ireport.zoom" value="2.143588810000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[select cu.code,sum(cd.order_amt) as order_amt,sum(cd.project_amt) as project_amt
 from cashflow_detail cd  left outer join cashflow c on cd.cashflow_id=c.id left outer join p_order p on c.po_id=p.id left outer join purchase_order po on po.po_id = p.id
+	      left outer join project pj on pj.id = po.project_id
               left outer join project_currency pc on pc.id = cd.project_currency_id left outer join  currency cu on cu.id = pc.currency_id
-where po.id = $P{PO_ID} and cd.status = 0
+where pj.id = $P{PROJECT_ID} and cd.status = 0 and p.po_status=0 and po.status_id=1
 group by code]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
@@ -18,32 +19,32 @@ group by code]]>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d0de471f-a90d-44b4-9dbc-b41b0cf5ba1d" positionType="Float" x="0" y="0" width="20" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="83656d4b-a839-488b-81ee-910aef0d5ccf" positionType="Float" x="20" y="0" width="50" height="12"/>
+				<reportElement uuid="99833445-5b2d-4ee3-9b28-4e035268a660" positionType="Float" x="20" y="0" width="50" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{order_amt})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a2ea686c-534c-4c3f-86a2-151a93366999" positionType="Float" x="80" y="0" width="20" height="12"/>
+				<reportElement uuid="bc4a758e-772f-4573-ab05-4ce896300c1a" positionType="Float" x="80" y="0" width="20" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f5e48b88-ff1d-4d44-9173-3daf9978907a" positionType="Float" x="100" y="0" width="50" height="12"/>
+				<reportElement uuid="2c602615-9774-4471-89d1-10519a866c6b" positionType="Float" x="100" y="0" width="50" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{project_amt})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="7ce11e7b-a08b-4a4d-8ee9-c72dd4545232" positionType="Float" x="0" y="0" width="20" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

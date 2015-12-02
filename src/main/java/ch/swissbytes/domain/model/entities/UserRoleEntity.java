@@ -28,7 +28,7 @@ public class UserRoleEntity {
         this.id = id;
     }
 
-    @Column (name = "module_system",nullable = false)
+    @Column (name = "module_system",nullable = true)
     @Enumerated(EnumType.ORDINAL)
     public ModuleSystemEnum getModuleSystem() {
         return moduleSystem;
