@@ -179,7 +179,7 @@ public class PoBean extends Bean {
                     if (projectEntity != null) {
                         initializeNewPurchaseOrder(projectEntity);
                     } else {
-                        throw new IllegalArgumentException(" It is not a project valid");
+                        throw new IllegalArgumentException("It is not a project valid");
                     }
                 } catch (NumberFormatException nfe) {
                     throw new IllegalArgumentException("It is not a project valid");
@@ -191,7 +191,7 @@ public class PoBean extends Bean {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
             } else {
-                throw new IllegalArgumentException("it is neither a project valid nor a purchase order valid");
+                throw new IllegalArgumentException("It is neither a project valid nor a purchase order valid");
             }
             initializeValuesBooleanInHeaderSection();
         }
@@ -380,15 +380,15 @@ public class PoBean extends Bean {
 
     private boolean validate() {
         boolean validated = true;
-        if(StringUtils.isEmpty(purchaseOrder.getPo())){
+        if (StringUtils.isEmpty(purchaseOrder.getPo())) {
             Messages.addFlashGlobalError("Enter a valid PO Number");
             validated = false;
         }
-        if(StringUtils.isEmpty(purchaseOrder.getPoTitle())){
+        if (StringUtils.isEmpty(purchaseOrder.getPoTitle())) {
             Messages.addFlashGlobalError("Enter a valid PO Title");
             validated = false;
         }
-        if(StringUtils.isEmpty(purchaseOrder.getVariation())){
+        if (StringUtils.isEmpty(purchaseOrder.getVariation())) {
             Messages.addFlashGlobalError("Enter a valid Var Number");
             validated = false;
         }
@@ -820,9 +820,18 @@ public class PoBean extends Bean {
         return toString(balances);
     }
 
+    /*public boolean isVariationThisPO() {
+        if(purchaseOrder!=null){
+            PurchaseOrderEntity firstVariation = service.findFirstPO(purchaseOrder);
+            if (firstVariation != null && firstVariation.getOrderedVariation().intValue() == purchaseOrder.getOrderedVariation().intValue()) {
+                return true;
+            }
+        }
+        return false;
+    }*/
+
     public boolean poIsOriginal() {
-        if (purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1 ||
-                purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal()) {
+        if (purchaseOrder.getOrderedVariation() == null || purchaseOrder.getOrderedVariation().intValue() == 1 ) {
             return true;
         }
         return false;

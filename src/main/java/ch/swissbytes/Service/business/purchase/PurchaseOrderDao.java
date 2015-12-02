@@ -384,4 +384,16 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         updateLock(purchaseOrderEntity, null, false);
     }
 
+    public List<PurchaseOrderEntity> findFirstPO(final PurchaseOrderEntity purchaseOrder) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.po= :PO_NUMBER ");
+        sb.append(" AND  po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND po.orderedVariation = 1 ");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("PO_NUMBER", purchaseOrder.getPo());
+        parameters.put("PROJECT_ID", purchaseOrder.getProjectEntity().getId());
+        return super.findBy(sb.toString(), parameters);
+    }
 }

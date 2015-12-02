@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.6105100000000057"/>
-	<property name="ireport.x" value="194"/>
+	<property name="ireport.x" value="410"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -71,9 +71,9 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="currencyCode" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po,po.variation,order_date,sp.company,ct.email,po.po_title,po_delivery_date,p.po_status,po.id as po_id
+		<![CDATA[select po,po.variation,order_date,sp.company,po.po_title,po_delivery_date,p.po_status,po.id as po_id
 from purchase_order po inner join p_order p on p.id=po.po_id
-     left join supplier_proc sp on sp.id = p.supplier_id inner join contact ct on ct.supplier_id = sp.id
+     left outer join supplier_proc sp on sp.id = p.supplier_id
 where po.project_id=$P{projectIdFilter} and po.status_id = 1
 order by $P!{sortBy}]]>
 	</queryString>
@@ -81,7 +81,6 @@ order by $P!{sortBy}]]>
 	<field name="variation" class="java.lang.String"/>
 	<field name="order_date" class="java.sql.Timestamp"/>
 	<field name="company" class="java.lang.String"/>
-	<field name="email" class="java.lang.String"/>
 	<field name="po_title" class="java.lang.String"/>
 	<field name="po_delivery_date" class="java.sql.Timestamp"/>
 	<field name="po_status" class="java.lang.Integer"/>
@@ -330,7 +329,7 @@ order by $P!{sortBy}]]>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="12a80dde-4677-4dd4-98e4-b6ac1918a2e4" positionType="Float" x="697" y="2" width="50" height="12"/>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po_delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{po_delivery_date}.getTime())):null]]></textFieldExpression>

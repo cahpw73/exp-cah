@@ -22,8 +22,7 @@
                                     <div style="width: 340px; float: left;">
                                         <h:selectOneMenu id="supplierSupId" onclick="doChangeProc();"
                                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
-
-                                                         styleClass="form-control" rendered="#{poBean.beingEdited}"
+                                                         styleClass="form-control" rendered="#{poBean.beingEdited and poBean.poIsOriginal()}"
                                                          converter="supplierConverter">
                                             <f:selectItem
                                                     itemLabel="#{msgs['po.supplier.panel.lbl.selection.supplier']}"
@@ -43,7 +42,7 @@
                                         <h:inputText id="supplierSupViId" readonly="true"
                                                      styleClass="form-control view-po"
                                                      value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
-                                                     rendered="#{poBean.beingViewed}"/>
+                                                     rendered="#{poBean.beingViewed or !poBean.poIsOriginal()}"/>
                                     </div>
                                 </div>
                             </div>
@@ -149,12 +148,12 @@
                                             onclick="PF('supplierModal').show(); doChangeProc();"
                                             action="#{poBean.addingSupplier}"
                                             styleClass="btn btn-primary btn-sm"
-                                            rendered="#{poBean.beingEdited}">
+                                            rendered="#{poBean.beingEdited and poBean.poIsOriginal()}">
                                         <p:ajax async="false" process="@this" update=":supplierId"/>
                                     </h:commandButton>
                                 </div>
                             </div>
-                            <div style="width: 440px!important;">
+                            <div style="width: 440px!important; #{poBean.poIsOriginal()?'margin-top: 27px;':'margin-top: 44px;'}">
                                 <div class="form-group">
                                     <h:outputLabel styleClass="col-sm-3 control-label procurement-text-lbl-ltr"
                                                    for="commentSupId"

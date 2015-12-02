@@ -5,66 +5,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
     <h:panelGroup id="poMainSectionId">
-        <div style="width: 1092px!important; margin-left: 15px!important; margin-right: 15px!important;">
-            <div class="col-sm-12" style="margin-bottom: 20px!important;">
-                <ui:remove>
-                <div class="pull-right">
-                    <h:panelGroup id="buttonGroup">
-
-                        <h:commandButton styleClass="btn btn-primary btn-sm"
-                                         action="#{poBean.doSave}"
-                                         rendered="#{poBean.beingCreated}"
-                                         value="#{msgs['lbl.save']}">
-                            <p:ajax async="false" update="#{UPDATE}" process="@form"
-                                    oncomplete="restartSwitches();"/>
-                        </h:commandButton>
-                        <h:commandButton styleClass="btn btn-primary btn-sm"
-                                         action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
-                                         value="#{msgs['lbl.save']}">
-                            <p:ajax async="false" update="#{UPDATE}" process="@form"
-                                    oncomplete="restartSwitches();"/>
-                        </h:commandButton>
-                        &#160;
-                        <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.close']}"
-                                styleClass="btn btn-primary btn-sm" onclick="verifyToLeavePOEdit(event)"
-                                outcome="list" >
-                            <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
-                        </h:link>
-                        &#160;
-                        <h:commandButton
-                                styleClass="btn btn-primary btn-sm"
-                                action="#{poBean.doSaveView}"
-                                rendered="#{poBean.beingCreated}"
-                                value="#{msgs['lbl.print']}">
-                            <p:ajax async="false" update="#{UPDATE}" process="@form"
-                                    oncomplete="restartSwitches();"/>
-                        </h:commandButton>
-                        <h:commandButton
-                                styleClass="btn btn-primary btn-sm"
-                                action="#{poBean.doUpdateView}"
-                                rendered="#{poBean.beingUpdated}"
-                                value="#{msgs['lbl.print']}">
-                            <p:ajax async="false" update="#{UPDATE}" process="@form"
-                                    oncomplete="restartSwitches();"/>
-                        </h:commandButton>
-                        <h:commandLink type="submit"
-                                       id="printDraftPO"
-                                       target="_blank"
-                                       style="display: none;"
-                                       action="#{poListBean.printPODraft()}">
-                        </h:commandLink>
-                        &#160;
-                        <h:commandButton styleClass="btn btn-primary btn-sm"
-                                         action="#{poBean.validateAll}"
-                                         rendered="#{poBean.beingCreated or poBean.beingUpdated}"
-                                         value="#{msgs['po.main.data.lbl.button.validate']}">
-                            <p:ajax async="false" update="#{UPDATE}" process="@form"/>
-                        </h:commandButton>
-                    </h:panelGroup>
-                </div>
-                </ui:remove>
-            </div>
-        </div>
         <div style="width: 1300px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
             <div style="width: 240px!important; float: left!important;">
                 <div class="form-group">
@@ -168,19 +108,6 @@
             </div>
         </div>
     </h:panelGroup>
-
-    <!--<script>-->
-        <!--setTimeout(function () {-->
-
-
-
-            <!--$("#editPoForm\\:cancelPOCreateBtn").click(function(e){-->
-                <!--e.preventDefault();-->
-                <!---->
-                <!--verifyToLeavePOEdit(e)-->
-            <!--})-->
-        <!--}, 5000);-->
-    <!--</script>-->
 
 </ui:composition>
 

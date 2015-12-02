@@ -706,4 +706,12 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return canUnlock;
     }
+
+    public PurchaseOrderEntity findFirstPO(final PurchaseOrderEntity purchaseOrder) {
+        List<PurchaseOrderEntity> list = dao.findFirstPO(purchaseOrder);
+        if(!list.isEmpty()){
+           return list.get(0);
+        }
+        return null;
+    }
 }

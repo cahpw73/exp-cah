@@ -113,7 +113,7 @@
 
                         <div style="width: 340px; float: left; margin-left: -29px;">
 
-                            <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited}"
+                            <h:selectOneMenu id="supplierHeader" rendered="#{poBean.beingEdited and poBean.poIsOriginal()}"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier}"
                                              styleClass="form-control" onclick="doChangeProc();"
                                              converter="supplierConverter">
@@ -136,7 +136,7 @@
 
                             <h:inputText id="headerProjectVi" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.supplier.company}"
-                                         rendered="#{poBean.beingViewed}"/>
+                                         rendered="#{poBean.beingViewed or !poBean.poIsOriginal()}"/>
                         </div>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
                                 onclick="PF('supplierModal').show(); doChangeProc();"
                                 action="#{poBean.addingSupplierHeader}"
                                 styleClass="btn btn-primary btn-sm"
-                                rendered="#{poBean.beingEdited}">
+                                rendered="#{poBean.beingEdited and poBean.poIsOriginal()}">
                             <p:ajax async="false" process="@this" update=":supplierId"/>
                         </h:commandButton>
                     </div>

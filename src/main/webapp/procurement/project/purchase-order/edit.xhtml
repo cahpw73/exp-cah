@@ -57,16 +57,18 @@
                             <div class="pull-left" style="margin-left: 14px!important;">
                                 <h:panelGroup id="buttonGroup">
 
-                                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                    <h:commandButton id="saveBtnNew"
+                                                     styleClass="btn btn-primary btn-sm"
                                                      action="#{poBean.doSave}"
                                                      rendered="#{poBean.beingCreated}"
                                                      value="#{msgs['lbl.save']}">
                                         <p:ajax async="false"
-                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
-                                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                    <h:commandButton id="saveBtnEdit"
+                                                     styleClass="btn btn-primary btn-sm"
                                                      action="#{poBean.doUpdate}" rendered="#{poBean.beingUpdated}"
                                                      value="#{msgs['lbl.save']}">
                                         <p:ajax async="false"
@@ -83,17 +85,17 @@
                                         <f:param name="projectId" value="#{poBean.purchaseOrder.projectEntity.id}"></f:param>
                                     </h:link>
                                     &#160;
-                                    <h:commandButton
+                                    <h:commandButton id="printBtnNew"
                                             styleClass="btn btn-primary btn-sm"
                                             action="#{poBean.doSaveView}"
                                             rendered="#{poBean.beingCreated}"
                                             value="#{msgs['lbl.print']}">
                                         <p:ajax async="false"
-                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
-                                    <h:commandButton
+                                    <h:commandButton id = "printBtnEdit"
                                             styleClass="btn btn-primary btn-sm"
                                             action="#{poBean.doUpdateView}"
                                             rendered="#{poBean.beingUpdated}"
@@ -115,7 +117,7 @@
                                                      rendered="#{poBean.beingCreated or poBean.beingUpdated}"
                                                      value="#{msgs['po.main.data.lbl.button.validate']}">
                                         <p:ajax async="false"
-                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
@@ -150,12 +152,10 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <p:remoteCommand name="updateMessages" update="poEditGlbMsgs" async="false" />
+                    <p:remoteCommand name="updateMessages" update="poEditGlbMsgs buttonGroup" async="false" />
                     <!-- Tab Projects -->
                     <div class="tab-content" style="margin-top: 8em;">
                         <ui:include src="components/po-main-data.xhtml">
-                            <ui:param name="UPDATE"
-                                      value=":glbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"/>
                         </ui:include>
 
                         <div class="clearfix"/>
