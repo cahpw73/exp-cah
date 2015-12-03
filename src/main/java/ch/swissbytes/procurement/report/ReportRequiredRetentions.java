@@ -33,6 +33,8 @@ public class ReportRequiredRetentions extends ReportProject implements Serializa
 
     protected void loadAdditionalParameters() {
         addParameters("SUBREPORT_DIR","reports/procurement/RequiredRetentionReport/");
+        LookupValueFactory lookupValueFactory = new LookupValueFactory();
+        addParameters("STATUS_PROCUREMENT", lookupValueFactory.getStatusPOProcurement());
     }
 
     @Override

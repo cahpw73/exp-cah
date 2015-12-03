@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintRequiredRetention" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.6105100000000014"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.7715610000000022"/>
+	<property name="ireport.x" value="210"/>
+	<property name="ireport.y" value="134"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -68,11 +68,11 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po.po
-from purchase_order po, p_order p
-where po.status_id = 1 and po.project_id = $P{projectIdFilter}
-      and po.po_id = p.id
-group by po.po
+		<![CDATA[select distinct po.po
+from purchase_order po
+     left outer join p_order p on p.id=po.po_id
+     left outer join cashflow cf on cf.po_id=p.id
+where po.status_id = 1 and po.project_id = $P{projectIdFilter} and cf.apply_retention = true
 order by po.po]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
@@ -181,7 +181,7 @@ order by po.po]]>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="24" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="6" width="30" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -190,73 +190,101 @@ order by po.po]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="31" y="6" width="40" height="12"/>
+				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="31" y="6" width="30" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="72" y="6" width="170" height="12"/>
+				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="63" y="6" width="170" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="422" y="6" width="70" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention Percent</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="498" y="6" width="80" height="12"/>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="484" y="6" width="34" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention Amount</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="523" y="6" width="70" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention</style>]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="6" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="583" y="6" width="100" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="598" y="6" width="80" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention Form</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="687" y="6" width="80" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="683" y="6" width="50" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Expiry Date</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Expiry</style>]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="20" width="802" height="1"/>
+				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="31" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="350" y="6" width="70" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
+				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="409" y="6" width="70" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Currency</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ea6171ca-287b-430b-9394-bf8166bbefa8" x="246" y="6" width="100" height="12"/>
+				<reportElement uuid="ea6171ca-287b-430b-9394-bf8166bbefa8" x="234" y="6" width="170" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="2e96a210-dc27-4326-bcf8-d8f27a4824c6" x="484" y="18" width="34" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Percent</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ce17c810-fc8f-4abe-a281-9dec962eeffb" x="523" y="18" width="70" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Amount</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f5c5f39e-91ec-4474-8e84-e45700841a68" x="598" y="18" width="80" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Form</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1e5bf348-8d17-4374-86af-10f29c0dcc0d" x="683" y="18" width="50" height="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Date</style>]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="a9303973-ee6f-4e91-b1ef-0f53e1294a46" x="0" y="0" width="802" height="25" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a9303973-ee6f-4e91-b1ef-0f53e1294a46" positionType="Float" x="0" y="0" width="802" height="12" isRemoveLineWhenBlank="true"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>

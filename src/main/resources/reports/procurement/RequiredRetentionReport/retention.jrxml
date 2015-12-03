@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="retention" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bb9e1961-3cbe-48bd-813f-1e1b1924ee48">
-	<property name="ireport.zoom" value="1.6105100000000017"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.3579476910000032"/>
+	<property name="ireport.x" value="362"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -12,99 +12,69 @@
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="projectCurrency" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po.po, po.variation,sp.company,ct.email,cf.percentage,cf.amt,cf.form,cf.exp_date
-from purchase_order po inner join p_order p on po.po_id=p.id
-     left outer join supplier_proc sp on sp.id=p.supplier_id
+		<![CDATA[select po.id as po_id,po,po.variation,sp.company as supplier,ct.email,cf.percentage,cf.form,cf.exp_date
+from purchase_order po
+     left outer join p_order p on p.id=po.po_id
+     left outer join supplier_proc sp on sp.id = p.supplier_id
      left outer join cashflow cf on cf.po_id=p.id
-     left outer join project pr on pr.id=po.project_id
-     inner join contact ct on ct.supplier_id = sp.id
-where po.po=$P{poNoFilter} and pr.id=$P{projectIdFilter}
-order by $P!{sortBy}]]>
+     left outer join contact ct on ct.id = p.contact_id
+where po.project_id=$P{projectIdFilter} and po.status_id = 1 and po.po=$P{poNoFilter} and cf.apply_retention = true
+order by orderedvariation]]>
 	</queryString>
+	<field name="po_id" class="java.lang.Long"/>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
-	<field name="company" class="java.lang.String"/>
+	<field name="supplier" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="percentage" class="java.lang.Float"/>
-	<field name="amt" class="java.math.BigDecimal"/>
 	<field name="form" class="java.lang.String"/>
 	<field name="exp_date" class="java.sql.Timestamp"/>
-	<variable name="poTotal" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
-	</variable>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="542f7648-5a9f-46aa-93f4-14b004f9b5da" x="0" y="1" width="30" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="542f7648-5a9f-46aa-93f4-14b004f9b5da" positionType="Float" x="0" y="1" width="30" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="79868e94-c159-46c9-971d-1b374e937561" x="31" y="1" width="40" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="79868e94-c159-46c9-971d-1b374e937561" positionType="Float" x="31" y="1" width="30" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d946f772-c949-4071-995d-dab3edd03dda" x="72" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="d946f772-c949-4071-995d-dab3edd03dda" positionType="Float" x="63" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{supplier}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="c8920748-7892-42d0-b86b-65b6cc8bb024" x="350" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="826d64ec-3609-4f5b-b668-03b7c043abcd" x="422" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="826d64ec-3609-4f5b-b668-03b7c043abcd" positionType="Float" x="484" y="1" width="34" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{percentage}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="bc959b40-128a-4870-b635-8db8e64e6bc9" x="498" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph rightIndent="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{amt}):null]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="fa313712-5381-4451-85f7-c8649ae5e3c7" x="583" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="fa313712-5381-4451-85f7-c8649ae5e3c7" positionType="Float" x="598" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{form}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="43d038d2-ed0c-4dba-a0f8-3ecd9e25852c" x="687" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="43d038d2-ed0c-4dba-a0f8-3ecd9e25852c" positionType="Float" x="683" y="1" width="50" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exp_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{exp_date}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="8df2fa26-f591-402f-99ec-04a065296879" x="246" y="1" width="100" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8df2fa26-f591-402f-99ec-04a065296879" positionType="Float" x="234" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -112,35 +82,15 @@ order by $P!{sortBy}]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="16" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="22712dba-1d8a-47b0-a9a9-9b1d1f587bc3" x="375" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font size="6" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="6" isBold="true" pdfFontName="Helvetica-Bold">PO Total:</style>]]></text>
-			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement uuid="bbc8de78-0803-4cd0-b5b2-a5e115209d3a" x="451" y="1" width="80" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font size="6" isBold="true"/>
-					<paragraph rightIndent="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{poTotal}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{poTotal}):null]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement uuid="2929fea8-3e81-44a8-9bf6-e8d5b1c2399e" x="0" y="14" width="802" height="1" isRemoveLineWhenBlank="true"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
-		</band>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="12" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2ab59356-5b4b-4c67-832a-7ca2b6d57167" x="304" y="0" width="100" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="6" isBold="true" pdfFontName="Helvetica-Bold">PO Total</style>]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

@@ -100,6 +100,13 @@ public class LookupValueFactory implements Serializable {
         }
         return result;
     }
+    public Map<Integer,String> getFormStatuses(){
+        Map<Integer,String> result = new HashMap<>();
+        for(ProcurementStatus procurementStatus : ProcurementStatus.values()){
+            result.put(procurementStatus.ordinal(),bundle.getString("popstatus." + procurementStatus.name().toUpperCase()));
+        }
+        return result;
+    }
 
     public Map<Integer,String> getPurchaseOrderStatuses(){
         log.info("getPurchaseOrderStatuses");
