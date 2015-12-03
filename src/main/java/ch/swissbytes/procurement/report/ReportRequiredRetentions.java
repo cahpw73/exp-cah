@@ -27,14 +27,49 @@ public class ReportRequiredRetentions extends ReportProject implements Serializa
      */
     public ReportRequiredRetentions(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                                     Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
+        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap);
         loadAdditionalParameters();
     }
 
     protected void loadAdditionalParameters() {
-        addParameters("SUBREPORT_DIR","reports/procurement/RequiredRetentionReport/");
-        LookupValueFactory lookupValueFactory = new LookupValueFactory();
-        addParameters("STATUS_PROCUREMENT", lookupValueFactory.getStatusPOProcurement());
+        addParameters("SUBREPORT_DIR", "reports/procurement/RequiredRetentionReport/");
+        addParameters("sortByPo", getStrSortByPO());
+        addParameters("sortBySupplier", getStrSortBySupplier());
+    }
+
+    private String getStrSortByPO() {
+        Boolean poNo = sortMap.get("poNo");
+        Boolean supplier = sortMap.get("supplier");
+        String strSort = "";
+        if (poNo) {
+            strSort = "po.po,po.orderedvariation, ";
+        }
+
+        if (strSort.length() > 1) {
+            strSort = strSort.substring(0, strSort.length() - 2);
+        }else {
+            if (!supplier && !poNo) {
+                strSort = "po.orderedvariation";
+            }
+        }
+        return strSort;
+    }
+
+    private String getStrSortBySupplier() {
+        Boolean supplier = sortMap.get("supplier");
+        Boolean poNo = sortMap.get("poNo");
+        String strSort = "";
+        if (supplier) {
+            strSort = "sp.company,po.orderedvariation, ";
+        }
+        if (strSort.length() > 1) {
+            strSort = strSort.substring(0, strSort.length() - 2);
+        } else {
+            if (!supplier && !poNo) {
+                strSort = "po.orderedvariation";
+            }
+        }
+        return strSort;
     }
 
     @Override
