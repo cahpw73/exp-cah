@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RetentionAmount" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8022a87a-33b1-4eb3-8a13-f80083e31743">
+	<property name="ireport.zoom" value="3.797498335832415"/>
+	<property name="ireport.x" value="30"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PO_ID" class="java.lang.Long"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select cu.code,((sum(cd.order_amt*(cast(c.percentage_security_deposit as numeric)/100))))as amount
+from cashflow_detail cd
+     left outer join cashflow c on cd.cashflow_id=c.id
+     left outer join p_order p on c.po_id=p.id
+     left outer join purchase_order po on po.po_id = p.id
+     left outer join project_currency pc on pc.id = cd.project_currency_id
+     left outer join  currency cu on cu.id = pc.currency_id
+where po.id = $P{PO_ID} and cd.status = 0 and po.status_id = 1
+group by cu.code]]>
+	</queryString>
+	<field name="code" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="84fdb07f-c76a-40a3-a96c-3ee29d4ae1f0" positionType="Float" x="0" y="0" width="20" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fce90e30-794d-46bb-ab12-9edba2af3d3d" positionType="Float" x="20" y="0" width="50" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{amount})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

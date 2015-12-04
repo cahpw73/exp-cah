@@ -141,6 +141,15 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
+    public void printRequiredSecurity(final ProjectEntity project, final Map<String, Boolean> sortMap) {
+        log.info("printRequiredRetentions");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportRequiredSecurityDeposits("/procurement/RequiredSecurityReport/RequiredSecurityReport", "Procurement.Required.Security.Deposits", messages, locale, configuration, project, sortMap);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
     public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
         log.info("printSummaryPurchaseOrder");
         openReport = false;

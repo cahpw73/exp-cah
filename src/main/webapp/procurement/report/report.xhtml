@@ -64,6 +64,12 @@
                 </li>
                 <li>
                     <h:link
+                            outcome="/procurement/report/print-reports">#{msgs['lbl.report.required.security']}
+                        <f:param name="reportName" value="rrs"/>
+                    </h:link>
+                </li>
+                <li>
+                    <h:link
                             outcome="/procurement/report/print-reports">#{msgs['lbl.report.commited.currency']}
                         <f:param name="reportName" value="cc"/>
                     </h:link>

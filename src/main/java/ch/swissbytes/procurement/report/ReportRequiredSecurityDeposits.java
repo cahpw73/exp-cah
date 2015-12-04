@@ -1,23 +1,17 @@
 package ch.swissbytes.procurement.report;
 
 
-import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
-import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.LookupValueFactory;
-import ch.swissbytes.fqmes.util.Util;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by christian on 11/06/14.
  */
-public class ReportRequiredRetentions extends ReportProject implements Serializable {
+public class ReportRequiredSecurityDeposits extends ReportProject implements Serializable {
 
     /**
      * @param filenameJasper   - fileName the reports to use
@@ -25,14 +19,14 @@ public class ReportRequiredRetentions extends ReportProject implements Serializa
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportRequiredRetentions(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                    Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
+    public ReportRequiredSecurityDeposits(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
+                                          Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
         super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap);
         loadAdditionalParameters();
     }
 
     protected void loadAdditionalParameters() {
-        addParameters("SUBREPORT_DIR", "reports/procurement/RequiredRetentionReport/");
+        addParameters("SUBREPORT_DIR", "reports/procurement/RequiredSecurityReport/");
     }
 
     @Override

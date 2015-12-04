@@ -57,6 +57,7 @@ public class ReportProcurementBean implements Serializable {
     private String reportTitle;
     private String projectProcurementReport = "Project Procurement Report";
     private String requiredRetentionReport = "Required Retentions Report";
+    private String requiredSecurityReport = "Required Security Deposits Report";
     private String summaryPOReport = "Summary Purchase Order Report";
     private String detailProcurementReport = "Detail Procurement Report";
     private String supplierContactInformation = "Supplier Contact Information";
@@ -119,6 +120,9 @@ public class ReportProcurementBean implements Serializable {
                 case "cc":
                     reportProcBean.printCommittedCurrenciesReport(selectedProject, sortMap);
                     break;
+                case "rrs":
+                    reportProcBean.printRequiredSecurity(selectedProject,sortMap);
+                    break;
             }
         } else {
             Messages.addFlashGlobalError("Select a project first");
@@ -155,6 +159,10 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "cc":
                     reportTitle = committedCurrenciesReport;
+                    break;
+                case "rrs":
+                    reportTitle = requiredSecurityReport;
+                    break;
             }
         }
         log.info("report title: " + reportTitle);

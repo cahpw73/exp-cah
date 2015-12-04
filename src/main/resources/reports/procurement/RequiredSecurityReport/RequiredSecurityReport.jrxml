@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintRequiredRetention" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.6105100000000026"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintRequiredSecurityDeposits" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
+	<property name="ireport.zoom" value="1.0000000000000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -73,7 +73,7 @@
 from purchase_order po
      left outer join p_order p on p.id=po.po_id
      left outer join cashflow cf on cf.po_id=p.id
-where po.status_id = 1 and po.project_id = $P{projectIdFilter} and cf.apply_retention = true
+where po.status_id = 1 and po.project_id = $P{projectIdFilter} and cf.apply_retention_security_deposit = true
 order by po.po]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
@@ -100,11 +100,11 @@ order by po.po]]>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement uuid="3dfbe9e2-8e19-44ab-bde1-b32a4408a818" x="256" y="7" width="318" height="31"/>
+				<reportElement uuid="3dfbe9e2-8e19-44ab-bde1-b32a4408a818" x="177" y="7" width="453" height="31"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">REQUIRED RETENTIONS REPORT</style>]]></text>
+				<text><![CDATA[<style size="16" isBold="true" pdfFontName="Helvetica-Bold">REQUIRED SECURITY DEPOSITS REPORT</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="2f22cde6-b21e-40cf-a6f9-c97a5fbe6503" x="350" y="45" width="40" height="12"/>
@@ -285,7 +285,7 @@ order by po.po]]>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="a9303973-ee6f-4e91-b1ef-0f53e1294a46" positionType="Float" x="0" y="0" width="802" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="4bbdf4e5-adca-4d95-baa2-6c6309dea6c6" x="0" y="0" width="802" height="12"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -311,7 +311,7 @@ order by po.po]]>
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "retention.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SecurityDeposit.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
