@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="summaryTotalCost" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="38ea7d1a-c3e1-4822-898f-a5b29742a774">
+	<property name="ireport.zoom" value="3.1384283767210035"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="poNoFilter" class="java.lang.String"/>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select c.code,sum(i.total_cost) as total
+from item i left outer join purchase_order po on i.purchase_order_id=po.id
+            left outer join p_order p on p.id = po.po_id
+	    left outer join project_currency pc on pc.id=i.project_currency_id
+	    left outer join currency c on c.id = pc.currency_id
+where po.project_id = $P{projectIdFilter} and po.po = $P{poNoFilter} and i.total_cost is not null
+group by c.code
+order by c.code]]>
+	</queryString>
+	<field name="code" class="java.lang.String"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="af14e567-dc2d-444b-9f21-ce933a41d6d3" positionType="Float" x="20" y="0" width="50" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{total})+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fd05a258-4e9a-4a41-9026-aa121ae6835e" positionType="Float" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{code}+"</style>":""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

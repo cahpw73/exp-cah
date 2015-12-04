@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="summaryPO" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="108e5b0d-81dd-443a-888c-5328aafbcc9e">
-	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.zoom" value="1.6105100000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
-	<parameter name="poIdFilter" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
@@ -18,9 +17,9 @@
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<queryString>
 		<![CDATA[select po.variation,po.po_title,p.po_status,po.id,po.project
-from purchase_order po inner join p_order p on po.po_id = p.id
-left join supplier_proc sp on p.supplier_id=sp.id inner join contact ct on ct.supplier_id = sp.id
-where po.po = $P{poNoFilter} and po.project_id=$P{projectIdFilter} and status_id=1
+from purchase_order po
+     left outer join p_order p on po.po_id = p.id
+where po.po = $P{poNoFilter} and po.project_id = $P{projectIdFilter} and status_id=1 and p.po_status=0
 order by po.orderedvariation]]>
 	</queryString>
 	<field name="variation" class="java.lang.String"/>
@@ -28,18 +27,6 @@ order by po.orderedvariation]]>
 	<field name="po_status" class="java.lang.Integer"/>
 	<field name="id" class="java.lang.Long"/>
 	<field name="project" class="java.lang.String"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
@@ -51,7 +38,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="76f56b55-de3e-4c34-9303-6fccd7707c0b" x="64" y="1" width="170" height="12"/>
+				<reportElement uuid="76f56b55-de3e-4c34-9303-6fccd7707c0b" x="64" y="1" width="190" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph leftIndent="10"/>
@@ -59,25 +46,58 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a66ceecb-30eb-4fe8-8529-50a2f905910d" x="336" y="1" width="70" height="12"/>
+				<reportElement uuid="a66ceecb-30eb-4fe8-8529-50a2f905910d" x="296" y="1" width="70" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po_status}!=null?$P{STATUS_PROCUREMENT}.get($F{po_status}):""]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="6d9c54ed-8ac8-4be3-928d-31b9ed600b49" x="458" y="1" width="80" height="12"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement uuid="6d9c54ed-8ac8-4be3-928d-31b9ed600b49" positionType="Float" x="370" y="1" width="70" height="12"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$P{poNoFilter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="project">
 					<subreportParameterExpression><![CDATA[$F{project}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="variation">
-					<subreportParameterExpression><![CDATA[$F{variation}]]></subreportParameterExpression>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryPOTotalCostSubreport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="c00b6fde-74ec-4dfd-822b-65da733834ad" positionType="Float" x="445" y="1" width="70" height="12"/>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProjectValue.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="9689ff72-bcc1-44be-998e-0da97770d694" positionType="Float" x="266" y="1" width="100" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="6" isBold="true" pdfFontName="Helvetica-Bold">PO Total</style>]]></text>
+			</staticText>
+			<subreport>
+				<reportElement uuid="2e6b7b82-4123-433a-9b9a-f78cff2846ef" positionType="Float" x="370" y="1" width="70" height="12"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$P{poNoFilter}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="projectIdFilter">
 					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
@@ -85,28 +105,23 @@ order by po.orderedvariation]]>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="projectDefaultExchangeRate">
-					<subreportParameterExpression><![CDATA[$P{projectDefaultExchangeRate}]]></subreportParameterExpression>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryTotalCost.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="5b73379c-cebd-4c18-a33e-a71ca28c4adf" x="445" y="1" width="70" height="12"/>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$P{poNoFilter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="projectIdFilter">
+					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryPOTotalCostSubreport.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "summaryProjectTotal.jasper"]]></subreportExpression>
 			</subreport>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="5253a906-7482-4ba2-875b-e31839d71dc6" x="407" y="1" width="50" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{projectCurrency}]]></textFieldExpression>
-			</textField>
 		</band>
-	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

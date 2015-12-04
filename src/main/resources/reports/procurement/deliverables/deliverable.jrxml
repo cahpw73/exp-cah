@@ -34,7 +34,7 @@ order by po.orderedvariation]]>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="1" y="1" width="50" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="8af78888-82d8-4c3a-be6e-f16c4d4bf3a5" x="1" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -42,7 +42,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="52" y="1" width="50" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="34fa05d7-56b0-40d6-bc03-6929bbcc0aba" x="37" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -50,7 +50,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="206" y="1" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="232" y="1" width="140" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -58,7 +58,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:""))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="307" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="374" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -66,7 +66,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="343" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="410" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -79,6 +79,13 @@ order by po.orderedvariation]]>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="907e72e5-bee4-4a1d-9991-7000228d1553" x="74" y="1" width="155" height="12" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

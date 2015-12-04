@@ -29,7 +29,7 @@ public class DeliverableDto implements Serializable {
     public DeliverableDto(PurchaseOrderEntity p, DeliverableEntity d) {
         this.poNo = p.getPo();
         this.varNo = p.getVariation();
-        this.poDescription = "";
+        this.poDescription = p.getPoTitle() != null?p.getPoTitle():"";
         this.delNo = d.getNoDays() != null ? d.getNoDays().toString() : "";
         this.description = StringUtils.isNotEmpty(d.getDescription()) ? d.getDescription() : "";
         this.qty = d.getQuantity() != null ? d.getQuantity().toString() : "";
