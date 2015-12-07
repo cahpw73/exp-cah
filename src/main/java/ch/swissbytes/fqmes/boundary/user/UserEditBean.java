@@ -89,7 +89,7 @@ public class UserEditBean implements Serializable {
             moduleGrantedAccessList = moduleGrantedAccessService.findListByUserId(userId);
             userRoleList = userRoleService.findListByUserId(userId);
             ModuleGrantedAccessEntity mga = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING);
-            if (mga!=null && mga.getModuleAccess() != null) {
+            if (mga != null && mga.getModuleAccess() != null) {
                 moduleAccessExpediting = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getModuleAccess();
             }
             roleExpediting = userRoleService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getRole();
@@ -108,15 +108,15 @@ public class UserEditBean implements Serializable {
             else if (statusEnum.ordinal() == StatusEnum.DISABLED.ordinal())
                 userSelected.setStatus(enumService.getStatusEntityByStatusEnumId(StatusEnum.DISABLED.getId()));
 
-            if(!oldPassword.equals(userSelected.getPassword())){
+            if (!oldPassword.equals(userSelected.getPassword())) {
                 userSelected.setPassword(getEncodePass(userSelected.getPassword()));
             }
-            if(!moduleGrantedAccessList.isEmpty()) {
+           /* if(!moduleGrantedAccessList.isEmpty()) {
                 getModuleExpediting().setModuleAccess(moduleAccessExpediting);
-            }
-
-            if(roleExpediting!=null) {
+            }*/
+            if (roleExpediting != null) {
                 getUserExpediting().setRole(roleExpediting);
+                getModuleExpediting().setModuleAccess(true);
             }
 
             userService.doUpdateUser(userSelected, moduleGrantedAccessList, userRoleList);
@@ -132,12 +132,10 @@ public class UserEditBean implements Serializable {
     private boolean dataValidate() {
         boolean result = true;
         if (userService.validateDuplicityEmail(userSelected.getEmail(), userSelected.getId())) {
-            //TODO get Message from MessagesProvider
             Messages.addError("userEditForm:inputEmail", "Email was already registered!");
             result = false;
         }
         if (userService.validateDuplicityUsername(userSelected.getUsername(), userSelected.getId())) {
-            //TODO get Message from MessagesProvider
             Messages.addError("userEditForm:inputUsername", "Username was already registered!");
             result = false;
         }
@@ -253,11 +251,11 @@ public class UserEditBean implements Serializable {
         return RoleEnum.valueOf(roleId).getLabel();
     }
 
-    public ModuleGrantedAccessEntity getModuleExpediting(){
+    public ModuleGrantedAccessEntity getModuleExpediting() {
         return moduleGrantedAccessList.get(0);
     }
 
-    public UserRoleEntity getUserExpediting(){
+    public UserRoleEntity getUserExpediting() {
         return userRoleList.get(0);
     }
 }

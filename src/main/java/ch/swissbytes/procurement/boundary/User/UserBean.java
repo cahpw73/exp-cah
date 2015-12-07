@@ -191,27 +191,10 @@ public class UserBean implements Serializable {
             }
 
             getModuleProcurement().setModuleAccess(moduleAccessProcurement);
-
             getModuleExpediting().setModuleAccess(moduleAccessExpediting);
 
-
-            // getUserProcurement().setRole(roleProcurement);
             getUserExpediting().setRole(roleExpediting);
             getUserProcurement().setRole(roleProcurement);
-            /*if (roleExpediting != null) {
-                getUserExpediting().setRole(roleExpediting);
-            }
-
-            if (userRoleList.size() > 1) {
-                getUserProcurement().setRole(roleProcurement);
-                getUserProcurement().setModuleSystem(ModuleSystemEnum.PROCUREMENT);
-            } else {
-                UserRoleEntity ure = new UserRoleEntity();
-                ure.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
-                ure.setRole(roleProcurement);
-                ure.setUser(userEntity);
-                userRoleList.add(ure);
-            }*/
             userService.doUpdateUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
@@ -287,10 +270,6 @@ public class UserBean implements Serializable {
             Messages.addFlashGlobalError("Must select at least one role");
             result = false;
         }
-        /*if (moduleAccessExpediting && roleExpediting == null) {
-            Messages.addFlashError("roleExpediting", "Select one");
-            result = false;
-        }*/
         if (!userEntity.getPassword().equals(confirmPass)) {
             Messages.addFlashError("pwd1", "Password should match with Confirm Password.");
             result = false;
@@ -312,10 +291,6 @@ public class UserBean implements Serializable {
             Messages.addFlashGlobalError("Must select at least one role");
             result = false;
         }
-        /*if (moduleAccessExpediting && roleExpediting == null) {
-            Messages.addFlashError("roleExpediting", "Select one");
-            result = false;
-        }*/
 
         if (!userEntity.getPassword().equals(confirmPass)) {
             Messages.addFlashError("pwd1", "Password should match with Confirm Password.");
