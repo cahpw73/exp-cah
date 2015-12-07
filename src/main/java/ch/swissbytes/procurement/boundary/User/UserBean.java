@@ -196,7 +196,9 @@ public class UserBean implements Serializable {
 
 
             // getUserProcurement().setRole(roleProcurement);
-            if (roleExpediting != null) {
+            getUserExpediting().setRole(roleExpediting);
+            getUserProcurement().setRole(roleProcurement);
+            /*if (roleExpediting != null) {
                 getUserExpediting().setRole(roleExpediting);
             }
 
@@ -209,7 +211,7 @@ public class UserBean implements Serializable {
                 ure.setRole(roleProcurement);
                 ure.setUser(userEntity);
                 userRoleList.add(ure);
-            }
+            }*/
             userService.doUpdateUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
@@ -281,20 +283,18 @@ public class UserBean implements Serializable {
             Messages.addFlashError("username", "Username was already registered!");
             result = false;
         }
-        if (moduleAccessProcurement && roleProcurement == null) {
-            Messages.addFlashError("roleProcurement", "Select one");
+        if (roleProcurement == null && roleExpediting == null) {
+            Messages.addFlashGlobalError("Must select at least one role");
             result = false;
         }
-        if (moduleAccessExpediting && roleExpediting == null) {
+        /*if (moduleAccessExpediting && roleExpediting == null) {
             Messages.addFlashError("roleExpediting", "Select one");
             result = false;
-        }
-
+        }*/
         if (!userEntity.getPassword().equals(confirmPass)) {
             Messages.addFlashError("pwd1", "Password should match with Confirm Password.");
             result = false;
         }
-
         return result;
     }
 
@@ -308,14 +308,14 @@ public class UserBean implements Serializable {
             Messages.addError("username", "Username was already registered!");
             result = false;
         }
-        if (moduleAccessProcurement && roleProcurement == null) {
-            Messages.addFlashError("roleProcurement", "Select one");
+        if (roleProcurement == null && roleExpediting == null) {
+            Messages.addFlashGlobalError("Must select at least one role");
             result = false;
         }
-        if (moduleAccessExpediting && roleExpediting == null) {
+        /*if (moduleAccessExpediting && roleExpediting == null) {
             Messages.addFlashError("roleExpediting", "Select one");
             result = false;
-        }
+        }*/
 
         if (!userEntity.getPassword().equals(confirmPass)) {
             Messages.addFlashError("pwd1", "Password should match with Confirm Password.");

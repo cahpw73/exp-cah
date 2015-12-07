@@ -75,22 +75,38 @@ public class UserCreateBean implements Serializable {
             getModuleExpediting().setModuleAccess(true);
             getUserExpediting().setModuleSystem(ModuleSystemEnum.EXPEDITING);
             getUserExpediting().setRole(roleExpediting);
+            initializeUserProcurement();
+
             userService.doSaveUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
         return "";
     }
 
+    private void initializeUserProcurement() {
+        moduleGrantedAccessList.add(new ModuleGrantedAccessEntity());
+        moduleGrantedAccessList.get(1).setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+        moduleGrantedAccessList.get(1).setModuleAccess(false);
+
+        userRoleList.add(new UserRoleEntity());
+        userRoleList.get(1).setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+        userRoleList.get(1).setRole(null);
+
+
+    }
+
     private boolean dataValidate() {
         boolean result = true;
         if(userService.existsEmail(userEntity.getEmail())){
-            //TODO get Message from MessagesProvider
             Messages.addError("userCreateForm:inputEmail", "Email was already registered!");
             result = false;
         }
         if(userService.existsUsername(userEntity.getUsername())){
-            //TODO get Message from MessagesProvider
             Messages.addError("userCreateForm:inputUsername", "Username was already registered!");
+            result = false;
+        }
+        if(roleExpediting==null){
+            Messages.addError("userCreateForm:roleExpediting", "Select must at least one role");
             result = false;
         }
         return result;

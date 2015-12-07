@@ -15,6 +15,8 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="editUserForm" prependId="false" class="form-horizontal">
+            <p:messages id="editUserGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                        warnClass="alert" closable="true" infoClass="alert alert-info"/>
             <h:panelGroup rendered="#{userBean.createUser}">
                 <input style="display:none" type="text" name="fakeusernameremembered"/>
                 <input style="display:none" type="password" name="fakepasswordremembered"/>
