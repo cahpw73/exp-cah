@@ -115,7 +115,6 @@ public class Util {
         value = value.replaceAll("&", "&amp;");
         value = value.replaceAll("\\u0009","          ");
         value = value.replaceAll("[\\p{Cntrl}&&[^\r\n\t]]", "");
-        log.info("");
         return value;
     }
 
@@ -189,10 +188,8 @@ public class Util {
     }
 
     public static BigDecimal currencyToCurrency(BigDecimal amountIni, BigDecimal exchangeRateIni, BigDecimal exchangeRateDefault) {
-        log.info("amountIni: " + amountIni);
         BigDecimal amountUSD = currencyToUSDCurrency(amountIni, exchangeRateIni);
         BigDecimal currencyEnd = usdCurrencyToCurrencyDefault(amountUSD, exchangeRateIni, exchangeRateDefault);
-        log.info("amountConverted: " + currencyEnd);
         return currencyEnd;
     }
 

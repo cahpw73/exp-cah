@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SupplierContactInformation" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
-	<property name="ireport.zoom" value="1.6934217901613324"/>
-	<property name="ireport.x" value="269"/>
+	<property name="ireport.zoom" value="1.8627639691774658"/>
+	<property name="ireport.x" value="599"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
@@ -19,7 +19,7 @@
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
 	<parameter name="sortByName" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po.po, po.po_title,sp.company,ct.email,sp.street,sp.suburb,sp.post_code,sp.state,ct.first_name,ct.sur_name,ct.phone,ct.fax
+		<![CDATA[select po.po, po.po_title,sp.company,ct.email,sp.street,sp.suburb,sp.post_code,sp.state,ct.first_name,ct.sur_name,ct.phone,ct.fax,po.variation,po.orderedvariation
 from purchase_order po left outer join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
      left outer join contact ct on ct.id=p.contact_id
@@ -38,6 +38,8 @@ order by $P!{sortBy}]]>
 	<field name="sur_name" class="java.lang.String"/>
 	<field name="phone" class="java.lang.String"/>
 	<field name="fax" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
+	<field name="orderedvariation" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -155,7 +157,7 @@ order by $P!{sortBy}]]>
 	<columnHeader>
 		<band height="17" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="80306f7f-4ea0-4729-88fa-4859e8e9b435" x="1" y="2" width="30" height="12"/>
+				<reportElement uuid="80306f7f-4ea0-4729-88fa-4859e8e9b435" x="1" y="2" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="3"/>
@@ -163,7 +165,7 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No.</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4e204ee7-5515-4399-b7e9-cdd2fe9dbbdc" x="32" y="2" width="85" height="12"/>
+				<reportElement uuid="4e204ee7-5515-4399-b7e9-cdd2fe9dbbdc" x="42" y="2" width="95" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="3"/>
@@ -171,21 +173,21 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="367c57a5-ff41-40e1-849f-a7d29ef3ed19" x="120" y="2" width="165" height="12"/>
+				<reportElement uuid="367c57a5-ff41-40e1-849f-a7d29ef3ed19" x="138" y="2" width="165" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ee7143f4-a893-4e75-b6e9-ef90929396f6" x="438" y="2" width="130" height="12"/>
+				<reportElement uuid="ee7143f4-a893-4e75-b6e9-ef90929396f6" x="459" y="2" width="130" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Address</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="574" y="2" width="100" height="12"/>
+				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="593" y="2" width="85" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -218,7 +220,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="75da15d8-ee0b-4f79-ab23-da3aa40864fa" x="286" y="2" width="150" height="12"/>
+				<reportElement uuid="75da15d8-ee0b-4f79-ab23-da3aa40864fa" x="307" y="2" width="150" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -229,15 +231,15 @@ order by $P!{sortBy}]]>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a9665574-f4ef-42f8-b72c-fe8cdb8c9b83" x="1" y="1" width="30" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="a9665574-f4ef-42f8-b72c-fe8cdb8c9b83" x="1" y="1" width="40" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{orderedvariation}>1?$F{po}+"v"+$F{variation}:$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="02137a4c-cd22-404a-a785-55f66335c612" x="32" y="1" width="85" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="02137a4c-cd22-404a-a785-55f66335c612" x="42" y="1" width="95" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph leftIndent="3"/>
@@ -245,14 +247,14 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b04f49de-067d-4866-b30a-57fd7b020665" x="120" y="1" width="165" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="b04f49de-067d-4866-b30a-57fd7b020665" x="138" y="1" width="165" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="438" y="1" width="130" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="459" y="1" width="130" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -265,14 +267,14 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b51bc22e-75c4-4983-83f2-d484e036b996" x="286" y="0" width="150" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="b51bc22e-75c4-4983-83f2-d484e036b996" x="307" y="0" width="150" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="6" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b37cd498-8f62-4ad9-8aa4-66991e409df5" x="574" y="1" width="100" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="b37cd498-8f62-4ad9-8aa4-66991e409df5" x="593" y="1" width="85" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
