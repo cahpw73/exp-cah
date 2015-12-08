@@ -30,7 +30,7 @@ public class CreateEmailSender implements Serializable {
 
     private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
 
-    private static final String sendToSmacneall  = "christian.alba.7333@yopmail.com"; //"smacneall@colleagues-info.com";
+    private static final String sendToSmacneall  = "smacneall@colleagues-info.com";
 
 
     @Inject
@@ -70,7 +70,7 @@ public class CreateEmailSender implements Serializable {
     public void createEmailToInfoErrorExportCmsOrJde(String error){
         try {
             MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error);
-            sendMail(sendToSmacneall,multipart);
+            sendMailExprtCmsOrJde(sendToSmacneall, multipart);
             Messages.addFlashGlobalInfo("Email was sent successfully ");
             log.info("Token was generated and sent to email");
         } catch (MessagingException e) {
@@ -90,6 +90,18 @@ public class CreateEmailSender implements Serializable {
             log.log(Level.SEVERE,"Messaging has error" + ex.getCause());
             ex.printStackTrace();
         }
+    }
+
+    private void sendMailExprtCmsOrJde(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
+        if(email == null){
+            email = new EmailSender();
+        }
+        email.setFrom(sendMailInfo);
+        email.setTo(mail);
+        email.setSubject("Error exporting CMS or JDE");
+        //email.setBody(message);
+        email.setContent(multipart);
+        email.send();
     }
 
     private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {

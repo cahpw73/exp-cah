@@ -19,10 +19,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -75,26 +72,24 @@ public class ExportationPOBean implements Serializable {
                 if (!poListCMS.isEmpty()) {
                     exportCMS(poListCMS, p);
                 }
-                if(!poListJDE.isEmpty()){
-                    for(PurchaseOrderEntity po : poListJDE){
+                if (!poListJDE.isEmpty()) {
+                    for (PurchaseOrderEntity po : poListJDE) {
                         List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
-                        po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0)? cashflows.get(0) : null);
+                        po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
                     }
                     exportJDE(poListJDE, p);
                 }
             }
-        } catch (FileNotFoundException e) {
+        }catch (Exception e){
             log.log(Level.SEVERE, e.getMessage());
-            //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            log.log(Level.SEVERE, e.getMessage());
-            //createEmailSender.createEmailToInfoErrorExportCmsOrJde(e.getMessage());
+            StringWriter errors = new StringWriter();
+            e.printStackTrace(new PrintWriter(errors));
+            createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString());
             e.printStackTrace();
         }
     }
 
-    public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
+    public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws Exception {
         log.info("exportCMS");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporter.generateWorkbookToExport(list, fName);
@@ -103,7 +98,7 @@ public class ExportationPOBean implements Serializable {
         }
     }
 
-    public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
+    public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws Exception {
         log.info("exportJDE");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporterToJDE.generateWorkbookToExport(list, fName);

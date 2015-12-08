@@ -44,7 +44,7 @@ public class SpreadsheetService implements Serializable {
 
     int rowNo;
 
-    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws IOException {
+    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
         rowNo = 2;
         String pathCMS = System.getProperty("fqmes.path.export.cms");
         pathCMS = pathCMS.replace("{project_field}", folderName);

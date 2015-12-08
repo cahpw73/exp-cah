@@ -67,7 +67,7 @@ public class SpreadsheetProcessor implements Serializable {
         row.createCell(colNo).setCellValue(value == null ? "" : value.toString());
     }
 
-    public void doSaveWorkBook(final String path, final String fileName) throws IOException {
+    public void doSaveWorkBook(final String path, final String fileName) throws Exception {
         FileOutputStream out = null;
         File file = createDirectoryFiles(path);
         File newFile = new File(file.getAbsolutePath()+File.separator+fileName);
