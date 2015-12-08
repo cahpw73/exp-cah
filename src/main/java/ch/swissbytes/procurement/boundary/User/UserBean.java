@@ -213,7 +213,7 @@ public class UserBean implements Serializable {
                 case FULL:
                     procurementRoles.add(roleDao.findById(r.getId()).get(0));
                     break;
-               /* case RESTRICTED:
+                /*case RESTRICTED:
                     procurementRoles.add(roleDao.findById(r.getId()).get(0));
                     break;*/
                 case READ_ONLY:
@@ -232,9 +232,9 @@ public class UserBean implements Serializable {
                 case SENIOR:
                     expeditingRoles.add(roleDao.findById(r.getId()).get(0));
                     break;
-                /*case JUNIOR:
+                case JUNIOR:
                     expeditingRoles.add(roleDao.findById(r.getId()).get(0));
-                    break;*/
+                    break;
                 case VISITOR:
                     expeditingRoles.add(roleDao.findById(r.getId()).get(0));
                     break;
