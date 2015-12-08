@@ -41,6 +41,7 @@ public class BidListBean implements Serializable {
     private String description;
     private String comments;
     private List<Long>supplierSelected;
+    private boolean canPrintSupplier = false;
 
     @PostConstruct
     public void create() {
@@ -83,6 +84,10 @@ public class BidListBean implements Serializable {
         }else{
             supplierSelected.add(idSupplier);
         }
+    }
+    public void supplierListClear(){
+        supplierSelected.clear();
+        canPrintSupplier = false;
     }
 
     public ProjectEntity getProject() {
@@ -137,5 +142,13 @@ public class BidListBean implements Serializable {
         List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category!=null?category.getId():null,project!=null?project.getId():null);
         log.info("list size: " + list.size());
         return list;
+    }
+
+    public boolean isCanPrintSupplier() {
+        return canPrintSupplier;
+    }
+
+    public void setCanPrintSupplier(boolean canPrintSupplier) {
+        this.canPrintSupplier = canPrintSupplier;
     }
 }

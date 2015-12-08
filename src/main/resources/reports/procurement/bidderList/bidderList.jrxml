@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bidderList" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8ff8c66-de8e-404b-af1b-5d1ecc90ee9d">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="23"/>
+	<property name="ireport.zoom" value="2.2"/>
+	<property name="ireport.x" value="32"/>
+	<property name="ireport.y" value="245"/>
 	<style name="ColumnHeader" isDefault="true" fill="Solid" fontSize="16"/>
 	<subDataset name="dataset1" uuid="6d7d3fba-e737-462e-b1ce-b85589b839ec"/>
 	<parameter name="supplier" class="java.util.List"/>
@@ -14,7 +14,7 @@
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="logo" class="java.io.InputStream"/>
 	<queryString>
-		<![CDATA[select company,suburb,street,phone,fax
+		<![CDATA[select company,suburb,street,phone,fax,post_code,state,country
 from supplier_proc
 WHERE $X{IN,id,supplier}
 ORDER BY $P{sortBy}]]>
@@ -24,6 +24,9 @@ ORDER BY $P{sortBy}]]>
 	<field name="street" class="java.lang.String"/>
 	<field name="phone" class="java.lang.String"/>
 	<field name="fax" class="java.lang.String"/>
+	<field name="post_code" class="java.lang.String"/>
+	<field name="state" class="java.lang.String"/>
+	<field name="country" class="java.lang.String"/>
 	<sortField name="company"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -141,7 +144,7 @@ ORDER BY $P{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Name and Address</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="209" y="0" width="100" height="16"/>
+				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="233" y="0" width="100" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -156,41 +159,48 @@ ORDER BY $P{sortBy}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="39" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="209" y="1" width="100" height="10"/>
-				<textElement>
+				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="233" y="1" width="100" height="10"/>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="db1fd75b-70e0-4e71-a5cc-62d6011cfbf9" x="347" y="1" width="100" height="10"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="932da991-ad63-4538-b8b8-02080d489b4d" x="22" y="1" width="128" height="10"/>
-				<textElement markup="styled">
+				<reportElement uuid="932da991-ad63-4538-b8b8-02080d489b4d" x="22" y="1" width="200" height="10"/>
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{company}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{company}+"</style>":null]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{company}!=null?"<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+"</style>":""]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="207fb81e-83c9-4992-8719-99c43c523d4c" x="22" y="11" width="128" height="10" isRemoveLineWhenBlank="true"/>
-				<textElement>
+				<reportElement uuid="207fb81e-83c9-4992-8719-99c43c523d4c" x="22" y="21" width="200" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{suburb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{suburb} +" "+ $F{post_code} +" "+ $F{state}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="27c5ece3-064c-490f-8f98-0db483495fbf" x="22" y="21" width="128" height="10" isRemoveLineWhenBlank="true"/>
-				<textElement>
+				<reportElement uuid="27c5ece3-064c-490f-8f98-0db483495fbf" x="22" y="11" width="200" height="10" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="471eaa06-e0d9-454c-a84e-75e64d21e498" x="22" y="31" width="200" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

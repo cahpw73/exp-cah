@@ -37,7 +37,7 @@
                                                                var="_p"
                                                                itemValue="#{_p}"
                                                                itemLabel="#{_p.projectNumber}"/>
-                                                <p:ajax async="false" update="countries"/>
+                                                <p:ajax async="false" update="countries" listener="#{bidListBean.supplierListClear()}"/>
                                             </h:selectOneMenu>
                                             <p:message for="projectDelId"/>
                                         </div>
@@ -78,7 +78,7 @@
                                                         styleClass="form-control" size="2">
                                         <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
                                                        itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
-                                        <p:ajax async="false" update="countries"/>
+                                        <p:ajax async="false" update="countries" listener="#{bidListBean.supplierListClear()}"/>
                                     </h:selectOneListbox>
                                 </div>
                                 <div class="col-sm-7">
@@ -126,20 +126,6 @@
                                     <br/>
 
                                     <div class="col-md-12">
-                                        <ui:remove>
-                                            <p:dataTable  var="_country"
-                                                         value="#{bidListBean.findCountriesByCategory(categoryBean.selectedCategory)}">
-                                                <p:column headerText="#{msgs['supplier.lbl.country']}">
-                                                    #{_country}
-                                                </p:column>
-                                                <p:column headerText="Selected">
-                                                    <h:selectBooleanCheckbox>
-                                                        <p:ajax async="false" process="@this"
-                                                                listener="#{bidListBean.selectCountry(_country)}"/>
-                                                    </h:selectBooleanCheckbox>
-                                                </p:column>
-                                            </p:dataTable>
-                                        </ui:remove>
                                         <p:dataTable id="countries"
                                                      value="#{bidListBean.supplieres1(categoryBean.selectedCategory)}"
                                                      var="_supplier">
@@ -153,7 +139,7 @@
                                                 #{_supplier.state}
                                             </p:column>
                                             <p:column headerText="Print">
-                                                <h:selectBooleanCheckbox>
+                                                <h:selectBooleanCheckbox value="#{bidListBean.canPrintSupplier}">
                                                     <p:ajax async="true" event="blur"
                                                             listener="#{bidListBean.selectSupplier(_supplier.id)}"/>
                                                 </h:selectBooleanCheckbox>
@@ -188,11 +174,6 @@
                     </div>
                 </div>
             </h:panelGroup>
-            <ui:remove>
-                <h:panelGroup rendered="#{not bidListBean.categorySelection}">
-                    <ui:include src="component/supplierList.xhtml"/>
-                </h:panelGroup>
-            </ui:remove>
         </h:form>
     </ui:define>
 </ui:composition>
