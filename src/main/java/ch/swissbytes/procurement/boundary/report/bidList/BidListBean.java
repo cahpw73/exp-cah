@@ -55,10 +55,6 @@ public class BidListBean implements Serializable {
         log.log(Level.FINE, "destroying bidListBean");
     }
 
-    public ProjectEntity getProject() {
-        return project;
-    }
-
     public List<String> findCountriesByCategory(CategoryEntity categoryEntity) {
         if (categoryEntity != null) {
             countries = supplierService.findCountriesByCategory(categoryEntity.getId());
@@ -87,6 +83,10 @@ public class BidListBean implements Serializable {
         }else{
             supplierSelected.add(idSupplier);
         }
+    }
+
+    public ProjectEntity getProject() {
+        return project;
     }
 
     public void setProject(ProjectEntity project) {
@@ -131,5 +131,11 @@ public class BidListBean implements Serializable {
 
     public List<SupplierProcEntity> suppliers(CategoryEntity categoryEntity) {
         return supplierService.findSupplierByCountriesAndCategory(categoryEntity!=null?categoryEntity.getId():null,countriesSelected);
+    }
+    public List<SupplierProcEntity> supplieres1(CategoryEntity category){
+        log.info("find supplier by category and project");
+        List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category!=null?category.getId():null,project!=null?project.getId():null);
+        log.info("list size: " + list.size());
+        return list;
     }
 }
