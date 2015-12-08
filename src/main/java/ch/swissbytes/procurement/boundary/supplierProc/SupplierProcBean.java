@@ -8,6 +8,7 @@ import ch.swissbytes.domain.types.ModeOperationEnum;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -191,17 +192,30 @@ public class SupplierProcBean extends Bean implements Serializable {
     }
 
     public void addCategoryBrand() {
+        boolean canModifyCategory = true;
         if (addingCategory) {
-            List<CategoryEntity> list =  new ArrayList<>();
-            list.addAll(categoryBrandBean.getCategories().getTarget());
-            supplier.getCategories().clear();
-            supplier.getCategories().addAll(list);
+            log.info("Suppliers categories size: " + supplier.getCategories().size());
+            log.info("categoryBrandBean.getCategories().getTarget() size: " + categoryBrandBean.getCategories().getTarget().size());
+            if(supplier.getCategories().size() > 0 && categoryBrandBean.getCategories().getTarget().size() == 0){
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('warningDeleteCategoryVar').show();");
+                canModifyCategory = false;
+            }else {
+                List<CategoryEntity> list = new ArrayList<>();
+                list.addAll(categoryBrandBean.getCategories().getTarget());
+                supplier.getCategories().clear();
+                supplier.getCategories().addAll(list);
+            }
         }
         if (addingBrand) {
             supplier.getBrands().clear();
             supplier.getBrands().addAll(categoryBrandBean.getBrands().getTarget());
         }
-        addingCategory = addingBrand = false;
+        if(canModifyCategory) {
+            addingCategory = addingBrand = false;
+        }else{
+            addingCategory = true; addingBrand = false;
+        }
     }
 
     public String getCriteria() {

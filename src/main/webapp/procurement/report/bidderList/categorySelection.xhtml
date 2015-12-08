@@ -37,7 +37,7 @@
                                                                var="_p"
                                                                itemValue="#{_p}"
                                                                itemLabel="#{_p.projectNumber}"/>
-                                                <p:ajax async="false" update="countries" listener="#{bidListBean.supplierListClear()}"/>
+                                                <p:ajax async="false" update="countries" listener="#{bidListBean.supplierListClear(categoryBean.selectedCategory)}"/>
                                             </h:selectOneMenu>
                                             <p:message for="projectDelId"/>
                                         </div>
@@ -78,20 +78,14 @@
                                                         styleClass="form-control" size="2">
                                         <f:selectItems value="#{categoryBean.categoryList}" var="_ca"
                                                        itemLabel="#{_ca.name}" itemValue="#{_ca}"/>
-                                        <p:ajax async="false" update="countries" listener="#{bidListBean.supplierListClear()}"/>
+                                        <p:ajax async="false" update="countries bidderDescription" listener="#{bidListBean.supplierListClear(categoryBean.selectedCategory)}"/>
                                     </h:selectOneListbox>
                                 </div>
                                 <div class="col-sm-7">
                                     <div>
                                         <div class="col-md-12">
                                             <h:commandLink styleClass="btn btn-primary btn-sm"
-                                                           value="#{msgs['lbl.close']}"
-                                                           action="#{bidListBean.putModeCategory}">
-                                                <p:ajax async="false" update="bidderForm"/>
-                                            </h:commandLink>
-                                            &#160;
-                                            <h:commandLink styleClass="btn btn-primary btn-sm"
-                                                           value="OK"
+                                                           value="#{msgs['bid.list.btn']}"
                                                            target="_blank"
                                                            action="#{bidListBean.generateReport}">
                                             </h:commandLink>
@@ -116,7 +110,8 @@
                                                            style="padding-left: 0px"/>
 
                                             <div class="col-md-9" style="padding-right: 0px!important;">
-                                                <h:inputText value="#{bidListBean.description}"
+                                                <h:inputText id="bidderDescription"
+                                                             value="#{bidListBean.description}"
                                                              styleClass="form-control"
                                                              style="text-transform: uppercase;"/>
                                             </div>
@@ -159,16 +154,6 @@
                                 </div>
                             </div>
                             <div class="clearfix"/>
-                            <br/>
-
-                            <div style="margin-left: 6px!important;">
-                                <h:commandLink styleClass="btn btn-primary btn-sm"
-                                               style="margin-left: 35px;"
-                                               value="#{msgs['bid.list.btn']}"
-                                               action="#{bidListBean.putModeSupplier}">
-                                    <p:ajax async="false" process="@form" update="bidderForm"/>
-                                </h:commandLink>
-                            </div>
                             <br/>
                         </div>
                     </div>

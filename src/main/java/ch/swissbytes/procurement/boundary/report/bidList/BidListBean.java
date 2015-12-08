@@ -40,7 +40,7 @@ public class BidListBean implements Serializable {
     private String packageNo;
     private String description;
     private String comments;
-    private List<Long>supplierSelected;
+    private List<Long> supplierSelected;
     private boolean canPrintSupplier = false;
 
     @PostConstruct
@@ -48,7 +48,7 @@ public class BidListBean implements Serializable {
         log.log(Level.FINE, "creating bidListBean");
         countries = new ArrayList<>();
         countriesSelected = new ArrayList<>();
-        supplierSelected=new ArrayList<>();
+        supplierSelected = new ArrayList<>();
     }
 
     @PreDestroy
@@ -72,22 +72,26 @@ public class BidListBean implements Serializable {
         }
     }
 
-    public void generateReport(){
+    public void generateReport() {
         packageNo = packageNo.toUpperCase();
         description = description.toUpperCase();
-        reportProcBean.printBidderList(supplierSelected,packageNo,description,comments,project);
+        reportProcBean.printBidderList(supplierSelected, packageNo, description, comments, project);
     }
 
-    public void selectSupplier(Long idSupplier){
-        if(supplierSelected.contains(idSupplier)){
+    public void selectSupplier(Long idSupplier) {
+        if (supplierSelected.contains(idSupplier)) {
             supplierSelected.remove(idSupplier);
-        }else{
+        } else {
             supplierSelected.add(idSupplier);
         }
     }
-    public void supplierListClear(){
+
+    public void supplierListClear(final CategoryEntity category) {
         supplierSelected.clear();
         canPrintSupplier = false;
+        if (category != null) {
+            description = category.getName();
+        }
     }
 
     public ProjectEntity getProject() {
@@ -135,12 +139,11 @@ public class BidListBean implements Serializable {
     }
 
     public List<SupplierProcEntity> suppliers(CategoryEntity categoryEntity) {
-        return supplierService.findSupplierByCountriesAndCategory(categoryEntity!=null?categoryEntity.getId():null,countriesSelected);
+        return supplierService.findSupplierByCountriesAndCategory(categoryEntity != null ? categoryEntity.getId() : null, countriesSelected);
     }
-    public List<SupplierProcEntity> supplieres1(CategoryEntity category){
-        log.info("find supplier by category and project");
-        List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category!=null?category.getId():null,project!=null?project.getId():null);
-        log.info("list size: " + list.size());
+
+    public List<SupplierProcEntity> supplieres1(CategoryEntity category) {
+        List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category != null ? category.getId() : null, project != null ? project.getId() : null);
         return list;
     }
 

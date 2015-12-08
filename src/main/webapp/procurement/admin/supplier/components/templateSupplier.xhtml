@@ -58,15 +58,12 @@
                                         process="@form" listener="#{bean.saveSupplier()}"/>
                             </h:commandButton>
                         </h:panelGroup>
-                        <h:commandButton id="sp1" value="#{msgs['lbl.save']}"
-                                         rendered="#{not supplierProcBean.supplierMode}"
-                                         styleClass="btn btn-primary btn-sm">
-                            <p:ajax listener="#{supplierProcBean.addCategoryBrand()}"
-                                    async="false"
-                                    process="@form"
-                                    oncomplete="activeCategoryBrandTab();"
-                                    update="idBtnSave idBtnCancel bodySupplier"/>
-                        </h:commandButton>
+
+                        <p:commandLink id="sp1" value="#{msgs['lbl.save']}" rendered="#{not supplierProcBean.supplierMode}"
+                                       styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                       async="false" process="@form" oncomplete="activeCategoryBrandTab();"
+                                       update="idBtnSave idBtnCancel bodySupplier"
+                                       action="#{supplierProcBean.addCategoryBrand()}"/>
                     </h:panelGroup>
                 </div>
             </div>
@@ -117,7 +114,7 @@
                                              rendered="#{not supplierProcBean.supplierMode}">
                                 <p:ajax async="false" listener="#{supplierProcBean.putModeSupplier}" process="@this"
                                         oncomplete="activeCategoryBrandTab();"
-                                        immediate="true" update="idBtnCancel idBtnCancel bodySupplier"/>
+                                        immediate="true" update="idBtnSave idBtnCancel bodySupplier"/>
                             </h:commandButton>
                         </h:panelGroup>
                     </h:panelGroup>

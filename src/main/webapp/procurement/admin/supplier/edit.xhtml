@@ -36,5 +36,25 @@
                 </ui:include>
             </h:form>
         </p:dialog>
+        <p:confirmDialog widgetVar="warningDeleteCategoryVar" severity="alert" global="true" id="warningDeleteCategoryDlg"
+                         header="Cancel">
+            <f:facet name="message">
+                <div>
+                    <div class="col-md-1">
+                        <h:graphicImage name="img/icon-alert.jpg"/>
+                    </div>
+                    <div class="col-md-11">
+                        Supplier would not have a category left after the delete
+                    </div>
+                </div>
+            </f:facet>
+
+            <div class="pull-right">
+                <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
+                        onclick="PF('warningDeleteCategoryVar').hide();">
+                    #{msgs['lbl.close']}
+                </button>
+            </div>
+        </p:confirmDialog>
     </ui:define>
 </ui:composition>
