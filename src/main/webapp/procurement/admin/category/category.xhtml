@@ -57,7 +57,10 @@
                                                type="submit" styleClass="btn btn-primary btn-commandLink-primeFaces"/>
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.delete']}" action="#{categoryBean.doDeleteCategory}" ajax="false"
-                                               type="submit" styleClass="btn btn-primary btn-commandLink-primeFaces" />
+                                               type="submit" styleClass="btn btn-primary btn-commandLink-primeFaces" >
+                                    <p:confirm header="Delete Category"
+                                               message="Are you sure delete this Category?"/>
+                                </p:commandLink>
 
                             </div>
                         </div>

@@ -82,6 +82,7 @@ public class BrandBean implements Serializable {
             selectedBrand.setLastUpdate(new Date());
             brandService.doUpdate(selectedBrand);
             loadBrands();
+            Messages.addFlashGlobalInfo("Brand " + selectedBrand.getName() + " was deleted");
             selectedBrand = null;
         }else{
             Messages.addFlashError("brandList","Select a brand first");

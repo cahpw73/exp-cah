@@ -70,8 +70,6 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
                 query.setParameter("PURCHASE_ORDER_STATUS_LIST", list);
             }
             prepareValueSubquery(query, filter);
-        } else {
-            log.info("filter is null");
         }
     }
 

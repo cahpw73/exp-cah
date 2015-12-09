@@ -57,8 +57,11 @@
                                 <h:commandButton value="#{msgs['lbl.add']}" action="#{brandBean.doSaveBrand}"
                                                type="submit" styleClass="btn btn-primary btn-sm"/>
                                 &#160;
-                                <h:commandButton value="#{msgs['lbl.delete']}" action="#{brandBean.doDeleteBrand}"
-                                               type="submit" styleClass="btn btn-primary btn-sm" />
+                                <p:commandLink value="#{msgs['lbl.delete']}" action="#{brandBean.doDeleteBrand}"
+                                                 ajax="false" type="submit" styleClass="btn btn-primary btn-commandLink-primeFaces">
+                                    <p:confirm header="Delete Brand"
+                                               message="Are you sure delete this Brand?"/>
+                                </p:commandLink>
 
                             </div>
                         </div>

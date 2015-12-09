@@ -83,7 +83,9 @@ public class CategoryBean implements Serializable {
             selectedCategory.setLastUpdate(new Date());
             categoryService.doUpdate(selectedCategory);
             loadCategories();
+            Messages.addFlashGlobalInfo("Category "+selectedCategory.getName()+" was deleted");
             selectedCategory = null;
+
         }else{
             Messages.addFlashError("categoryList","Select a category first");
         }
