@@ -73,12 +73,6 @@ group by pc.currency_id,c.code,c.symbol]]>
 	<field name="currency_id" class="java.lang.Long"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="symbol" class="java.lang.String"/>
-	<title>
-		<band/>
-	</title>
-	<pageHeader>
-		<band/>
-	</pageHeader>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{isOriginal}==false]]></printWhenExpression>

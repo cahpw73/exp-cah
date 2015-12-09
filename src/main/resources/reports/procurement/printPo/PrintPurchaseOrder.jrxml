@@ -588,7 +588,7 @@
 				<text><![CDATA[INVOICE TO:]]></text>
 			</staticText>
 		</band>
-		<band height="14" splitType="Stretch">
+		<band height="11" splitType="Stretch">
 			<componentElement>
 				<reportElement uuid="9283fa30-acc3-40bf-8ab6-8b873e2cab0e" key="table" style="table" positionType="Float" isPrintRepeatedValues="false" x="0" y="1" width="519" height="5"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
@@ -829,15 +829,10 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Total.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement uuid="bdd3c0e4-f198-42af-8bc8-5c619508c1f4" positionType="Float" x="0" y="12" width="519" height="1">
-					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
-				</reportElement>
-			</break>
 		</band>
-		<band height="6" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" positionType="Float" x="0" y="0" width="519" height="5" isRemoveLineWhenBlank="true">
+				<reportElement uuid="fac18dc2-cfab-4f1c-b0ce-dcb32450c865" positionType="Float" x="0" y="34" width="519" height="5" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$P{totalClauses}>0]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="clauseList">

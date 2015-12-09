@@ -31,13 +31,21 @@
 	<parameter name="poId" class="java.lang.Long"/>
 	<parameter name="clauseList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
-		<![CDATA[select 2 as two]]>
+		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'WIN1252') as clause, number_clause,ordered+1 as index
+from clauses_text cx
+inner join text tx on cx.text_id=tx.id
+where tx.status=0  and cx.status=0 and po_id=$P{poId}
+order by ordered]]>
 	</queryString>
-	<field name="two" class="java.lang.Integer"/>
+	<field name="clause" class="java.lang.String"/>
+	<field name="number_clause" class="java.lang.String"/>
+	<field name="index" class="java.lang.Integer"/>
 	<detail>
-		<band height="12" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<componentElement>
-				<reportElement uuid="71432b94-b9e6-4ac9-bc0e-e41c021eb7f0" key="table" x="0" y="1" width="517" height="10"/>
+				<reportElement uuid="71432b94-b9e6-4ac9-bc0e-e41c021eb7f0" key="table" x="0" y="15" width="517" height="1">
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Table Dataset 1" uuid="44df6e41-de23-49e4-a3d5-fb63e9ff455e">
 						<dataSourceExpression><![CDATA[$P{clauseList}]]></dataSourceExpression>
@@ -66,6 +74,16 @@
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="01bb33ce-263c-4192-9604-5bd7bcd7f55f" style="Arial-Bold" positionType="Float" x="0" y="0" width="25" height="15"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA[$F{number_clause}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="947a1315-2265-4718-9a87-926fd846f8d3" positionType="Float" x="26" y="0" width="475" height="15"/>
+				<textElement textAlignment="Justified" markup="styled"/>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
