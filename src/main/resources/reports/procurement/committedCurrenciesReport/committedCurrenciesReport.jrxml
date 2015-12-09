@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="committedCurrenciesReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.6934217901613322"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="104"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -151,9 +151,9 @@ order by $P!{sortBy}]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="28" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="80306f7f-4ea0-4729-88fa-4859e8e9b435" x="2" y="15" width="40" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="80306f7f-4ea0-4729-88fa-4859e8e9b435" x="2" y="6" width="40" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="3"/>
@@ -161,14 +161,14 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No.</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="367c57a5-ff41-40e1-849f-a7d29ef3ed19" x="43" y="15" width="30" height="12"/>
+				<reportElement uuid="367c57a5-ff41-40e1-849f-a7d29ef3ed19" x="43" y="6" width="30" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var.</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2dc85f3b-52cc-4618-9b58-1a98601009e2" x="76" y="15" width="170" height="12"/>
+				<reportElement uuid="2dc85f3b-52cc-4618-9b58-1a98601009e2" x="76" y="6" width="170" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -181,38 +181,24 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="56e2429c-4ed2-48dc-abf4-cd777ed08695" x="0" y="27" width="555" height="1"/>
+				<reportElement uuid="56e2429c-4ed2-48dc-abf4-cd777ed08695" x="0" y="19" width="555" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="251" y="15" width="70" height="12"/>
+				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="251" y="6" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5a10bbc6-5e88-466d-b673-c1374071fa26" x="408" y="15" width="50" height="12"/>
+				<reportElement uuid="5a10bbc6-5e88-466d-b673-c1374071fa26" x="331" y="6" width="50" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Payment Due</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="2053834e-1e2b-49ba-9d15-7e84179e3ce6" x="328" y="15" width="70" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Value</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="e4a495c7-b4e1-4975-9827-a2483cc61165" x="328" y="4" width="70" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -247,12 +233,18 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement uuid="21b95519-f087-4179-8a3f-a411706db522" positionType="Float" x="251" y="0" width="147" height="12" isPrintWhenDetailOverflows="true"/>
-				<subreportParameter name="PO_ID">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				<reportElement uuid="21b95519-f087-4179-8a3f-a411706db522" positionType="Float" x="251" y="0" width="130" height="12" isPrintWhenDetailOverflows="true"/>
+				<subreportParameter name="FORMAT_DATE">
+					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PO_Value.jasper"]]></subreportExpression>
@@ -315,7 +307,7 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<subreport>
-				<reportElement uuid="4cff71b6-6449-4a8b-9b1e-7476e8d3d6cc" positionType="Float" x="251" y="1" width="147" height="12"/>
+				<reportElement uuid="4cff71b6-6449-4a8b-9b1e-7476e8d3d6cc" positionType="Float" x="251" y="1" width="70" height="12"/>
 				<subreportParameter name="PROJECT_ID">
 					<subreportParameterExpression><![CDATA[$P{PROJECT_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -329,13 +321,13 @@ order by $P!{sortBy}]]>
 				<reportElement uuid="4be829e8-e827-4974-94b7-03f495824e17" positionType="Float" stretchType="RelativeToBandHeight" x="216" y="0" width="1" height="15"/>
 			</line>
 			<line>
-				<reportElement uuid="6b1a6bbe-da2e-47f6-af39-9966816d740c" positionType="Float" stretchType="RelativeToBandHeight" x="404" y="0" width="1" height="15"/>
+				<reportElement uuid="6b1a6bbe-da2e-47f6-af39-9966816d740c" positionType="Float" stretchType="RelativeToBandHeight" x="325" y="0" width="1" height="15"/>
 			</line>
 			<line>
-				<reportElement uuid="46f78fb6-4b69-4583-be76-8f7e40486138" positionType="Float" x="216" y="14" width="189" height="1"/>
+				<reportElement uuid="46f78fb6-4b69-4583-be76-8f7e40486138" positionType="Float" x="216" y="14" width="110" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="bf449493-4490-435a-9c8d-19fcf08757e9" positionType="Float" x="216" y="0" width="189" height="1"/>
+				<reportElement uuid="bf449493-4490-435a-9c8d-19fcf08757e9" positionType="Float" x="216" y="0" width="110" height="1"/>
 			</line>
 		</band>
 	</summary>

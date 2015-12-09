@@ -134,7 +134,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
 
         addParameters("poList", createDataSource(getPOReportDto()));
-        addParameters("clauseList", createDataSource(getClausesReportDto()));
+        //addParameters("clauseList", createDataSource(getClausesReportDto()));
         addParameters("totalClauses", this.clausesList.size());
         addParameters("poTitle", po.getPoTitle());
         addParameters("projectName", po.getProjectEntity().getTitle().toUpperCase());

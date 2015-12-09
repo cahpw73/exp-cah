@@ -5,16 +5,19 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select cu.code,sum(cd.order_amt) as order_amt,sum(cd.project_amt) as project_amt
+		<![CDATA[select cu.code,cd.order_amt,cd.project_amt,cd.payment_date
 from cashflow_detail cd  left outer join cashflow c on cd.cashflow_id=c.id left outer join p_order p on c.po_id=p.id left outer join purchase_order po on po.po_id = p.id
               left outer join project_currency pc on pc.id = cd.project_currency_id left outer join  currency cu on cu.id = pc.currency_id
 where po.id = $P{PO_ID} and cd.status = 0
-group by code]]>
+order by cu.id,cd.payment_date]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
 	<field name="order_amt" class="java.math.BigDecimal"/>
 	<field name="project_amt" class="java.math.BigDecimal"/>
+	<field name="payment_date" class="java.sql.Timestamp"/>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -31,19 +34,12 @@ group by code]]>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{order_amt})]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a2ea686c-534c-4c3f-86a2-151a93366999" positionType="Float" x="80" y="0" width="20" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement uuid="f5e48b88-ff1d-4d44-9173-3daf9978907a" positionType="Float" x="100" y="0" width="50" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<reportElement uuid="55f5a39c-b2d0-464a-95ae-afd11af9e934" positionType="Float" x="83" y="0" width="50" height="12"/>
+				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{project_amt})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{payment_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{payment_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
