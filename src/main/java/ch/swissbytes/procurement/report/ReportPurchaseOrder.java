@@ -14,6 +14,7 @@ import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
+import org.xml.sax.SAXParseException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -97,7 +98,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("variation", variation != null ? "v" + variation : variation);
         addParameters("titleVariation", variation != null ? variation : variation);
         loadParamSupplier();
-        //loadParamClients();
         if (po.getProjectEntity().getClient() != null) {
             addParameters("clientName", po.getProjectEntity().getClient().getName().trim());
         }
@@ -112,7 +112,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("deliveryInstructions", po.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
         addParameters("procManager", po.getPurchaseOrderProcurementEntity().getProcManager());
         addParameters("procManagerDetail", po.getPurchaseOrderProcurementEntity().getProcManagerDetail());
-        //  if (po.getPoEntity().getPoProcStatus().ordinal() != ProcurementStatus.FINAL.ordinal()) {
         if (draft) {
             InputStream watermark = resourceUtils.getResourceAsStream("/images/draft-report.jpg");
             log.info("InputStream watermark: " + watermark.toString());
@@ -134,7 +133,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }
 
         addParameters("poList", createDataSource(getPOReportDto()));
-        //addParameters("clauseList", createDataSource(getClausesReportDto()));
         addParameters("totalClauses", this.clausesList.size());
         addParameters("poTitle", po.getPoTitle());
         addParameters("projectName", po.getProjectEntity().getTitle().toUpperCase());
@@ -179,19 +177,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private String convertDeliveryDate() {
         String converted = "";
         if (po.getPoDeliveryDate() != null) {
-            log.info("TIME ZONE " + configuration.getTimeZone());
-            log.info("HARD FORMAT " + configuration.getHardFormatDate());
-
             DateTimeZone dtz = org.joda.time.DateTimeZone.forID(configuration.getTimeZone());
             long utc = dtz.convertUTCToLocal(po.getPoDeliveryDate().getTime());
-            log.info("delivery date " + po.getPoDeliveryDate());
-            log.info("dtz " + utc);
             Date date = new Date();
             date.setTime(utc);
-            log.info("date " + date);
             converted = new java.text.SimpleDateFormat(configuration.getHardFormatDate(), new Locale("en")).format(date).toUpperCase();
         }
-        log.info("converted " + converted);
         return converted;
     }
 
@@ -607,17 +598,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         return query.getResultList();
     }
 
-    private int getQuantityCurrenciesUsedSummaryPO(Integer orderStart, Integer orderEnd) {
-        Query query = entityManager.createNativeQuery("select cu.id\n" +
-                "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
-                "left join project_currency pc on pc.id= sp.project_currency_id\n" +
-                "inner join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + orderStart + " and " + orderEnd + "\n" +
-                "group by cu.id\n" +
-                "order by cu.id");
-        return query.getResultList().size();
-    }
-
     private void currenciesUsedSummaryPO() {
         Query query = entityManager.createNativeQuery("select cu.id\n" +
                 "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
@@ -708,8 +688,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         try {
             runReport(null);
         } catch (Exception ex) {
-
             if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
+                log.info("ex message contains SAXParseException;");
                 ex.printStackTrace();
             } else {
                 log.log(Level.WARNING, "A special character is being used [&]");

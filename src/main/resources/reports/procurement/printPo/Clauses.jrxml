@@ -42,38 +42,6 @@ order by ordered]]>
 	<field name="index" class="java.lang.Integer"/>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<componentElement>
-				<reportElement uuid="71432b94-b9e6-4ac9-bc0e-e41c021eb7f0" key="table" x="0" y="14" width="517" height="0">
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Table Dataset 1" uuid="44df6e41-de23-49e4-a3d5-fb63e9ff455e">
-						<dataSourceExpression><![CDATA[$P{clauseList}]]></dataSourceExpression>
-					</datasetRun>
-					<jr:column width="25" uuid="cdc2fbda-fad5-4c6d-8028-9fc1705176cb">
-						<jr:detailCell height="20" rowSpan="1">
-							<textField>
-								<reportElement uuid="92c65872-a791-4781-a7d4-c6bea47a21b7" style="Arial-Bold" x="0" y="0" width="25" height="15"/>
-								<textElement markup="styled">
-									<font isBold="true"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{numberClause}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="490" uuid="638efe6a-d8cb-4206-821a-6ae00813b725">
-						<jr:detailCell height="20" rowSpan="1">
-							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="38208962-ff1a-4bc2-9dc4-d5680c149f6e" x="0" y="0" width="475" height="15" isRemoveLineWhenBlank="true"/>
-								<textElement textAlignment="Justified" markup="styled">
-									<paragraph tabStopWidth="80"/>
-								</textElement>
-								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial").processSnippetText($F{clause}))]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="01bb33ce-263c-4192-9604-5bd7bcd7f55f" style="Arial-Bold" positionType="Float" x="0" y="0" width="25" height="15"/>
 				<textElement markup="styled"/>

@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLClientInfoException;
@@ -63,7 +64,7 @@ public abstract class ReportView implements Serializable {
 
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
-            exportReport(jasperPrint, outputStream, response,getOnlyReportNameFormat(reportName.toString()));
+            exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
 
             outputStream.writeTo(response.getOutputStream());
             response.setContentLength(outputStream.size());
