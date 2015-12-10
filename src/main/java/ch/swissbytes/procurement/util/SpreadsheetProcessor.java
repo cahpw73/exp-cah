@@ -1,17 +1,9 @@
 package ch.swissbytes.procurement.util;
 
-import ch.swissbytes.fqmes.util.CreateEmailSender;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.inject.Inject;
 import java.io.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -21,9 +13,6 @@ import java.util.logging.Logger;
 public class SpreadsheetProcessor implements Serializable {
 
     private static final Logger log = Logger.getLogger(SpreadsheetProcessor.class.getName());
-
-    /*@Inject
-    private CreateEmailSender createEmailSender;*/
 
     //Create blank workbook
     private XSSFWorkbook workbook;
@@ -43,6 +32,10 @@ public class SpreadsheetProcessor implements Serializable {
     public void createSpreadsheet(String name) {
         spreadsheet = workbook.createSheet(name);
         spreadsheet.protectSheet(passwordSheet);
+    }
+
+    public void configureWithColumn(int indexColumn, int numberOfCharacters) {
+        spreadsheet.setColumnWidth(indexColumn,numberOfCharacters);
     }
 
     public void createRow(int rowNo) {

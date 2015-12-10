@@ -7,15 +7,12 @@ import ch.swissbytes.domain.model.entities.ItemEntity;
 import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.CreateEmailSender;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import java.io.*;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -71,9 +68,22 @@ public class SpreadsheetService implements Serializable {
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         processor.createSpreadsheet("PkgHdr");
+        prepareWithColumns();
         createHeaderCMS(list.get(0));
         createHeaderPO();
         generateSpreadsheetPurchaseOrderDetail(list);
+    }
+
+    private void prepareWithColumns() {
+        processor.configureWithColumn(0,5000);
+        processor.configureWithColumn(3,3000);
+        processor.configureWithColumn(4,9000);
+        processor.configureWithColumn(5,8000);
+        processor.configureWithColumn(7,3000);
+        processor.configureWithColumn(8,10000);
+        processor.configureWithColumn(10,4000);
+        processor.configureWithColumn(12,4000);
+        processor.configureWithColumn(13,4000);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
@@ -124,7 +134,7 @@ public class SpreadsheetService implements Serializable {
         }
     }
 
-        private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency) {
+    private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency) {
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.createRow(rowNo);
         processor.writeStringBoldValue(12, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="694"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -147,65 +147,65 @@
 		</band>
 	</background>
 	<title>
-		<band height="170" splitType="Stretch">
+		<band height="226" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" style="Arial" positionType="Float" x="302" y="157" width="20" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="871b4c04-e112-407b-9981-ce4488bd8241" style="Arial" positionType="Float" x="302" y="211" width="20" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Date:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="aee23e51-51bc-4626-ba8c-f22adc399559" style="Arial" positionType="Float" x="436" y="157" width="48" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="aee23e51-51bc-4626-ba8c-f22adc399559" style="Arial" positionType="Float" x="436" y="211" width="48" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page: "+$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="a5f0e2e2-1481-4279-85ff-5f34f778ed8f" style="Arial" positionType="Float" x="494" y="157" width="23" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a5f0e2e2-1481-4279-85ff-5f34f778ed8f" style="Arial" positionType="Float" x="494" y="211" width="23" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}-($V{totalOfPagesSummary}!=null?$V{totalOfPagesSummary}:0)]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="6818e7b2-2a61-45a0-87b2-36d1ebe3aab3" style="Arial" positionType="Float" x="323" y="157" width="100" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="6818e7b2-2a61-45a0-87b2-36d1ebe3aab3" style="Arial" positionType="Float" x="323" y="211" width="100" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{orderDate}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE2},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($P{orderDate}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2f17b573-1c5b-4dd7-b4f7-ac7a8b2871e0" style="Arial" positionType="Float" x="484" y="157" width="9" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2f17b573-1c5b-4dd7-b4f7-ac7a8b2871e0" style="Arial" positionType="Float" x="484" y="211" width="9" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e7d1d6c2-a55d-4810-ac7c-d5d72723bf99" style="Arial-Bold" positionType="Float" x="124" y="112" width="271" height="15" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="e7d1d6c2-a55d-4810-ac7c-d5d72723bf99" style="Arial-Bold" positionType="Float" x="124" y="166" width="271" height="15" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" markup="styled">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{projectName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7d9223ac-2aa4-40ee-9cbe-00d1be4275ce" style="Arial-Bold" positionType="Float" x="0" y="128" width="519" height="15"/>
+				<reportElement uuid="7d9223ac-2aa4-40ee-9cbe-00d1be4275ce" style="Arial-Bold" positionType="Float" x="0" y="182" width="519" height="15"/>
 				<textElement textAlignment="Center" markup="styled">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($P{titleVariation}!=null?"VARIATION No."+$P{titleVariation}+" TO ":"")+" "+$P{titleReport}.toUpperCase()+": "+$P{projectNumber}+"-"+$P{poNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="2" y="157" width="47" height="12"/>
+				<reportElement uuid="47dbdb2b-b695-4e13-9804-b87989463f57" style="Arial" positionType="Float" x="2" y="211" width="47" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[RFT No/Orig]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="51" y="157" width="100" height="12"/>
+				<reportElement uuid="44f1bc1e-baf7-4ea4-82f3-9b3ac9c6bd79" style="Arial" positionType="Float" x="51" y="211" width="100" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 					<paragraph leftIndent="2"/>
@@ -213,22 +213,22 @@
 				<textFieldExpression><![CDATA[$P{rtfNo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="da851372-78b0-460f-a877-a4d4fa872a01" style="Arial" positionType="Float" x="159" y="157" width="28" height="12"/>
+				<reportElement uuid="da851372-78b0-460f-a877-a4d4fa872a01" style="Arial" positionType="Float" x="159" y="211" width="28" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[MR No.]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="188" y="157" width="105" height="12"/>
+				<reportElement uuid="1fe8b783-fc56-47e5-bea8-cec3a770d4cd" style="Arial" positionType="Float" x="188" y="211" width="105" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{mrNo}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealHeight" hAlign="Center">
-				<reportElement uuid="f7b24403-f5f3-4043-b402-5e87c9b53b39" x="0" y="0" width="519" height="100"/>
+			<image scaleImage="FillFrame" hAlign="Left">
+				<reportElement uuid="f7b24403-f5f3-4043-b402-5e87c9b53b39" x="0" y="0" width="519" height="150"/>
 				<imageExpression><![CDATA[$P{headerLogo}]]></imageExpression>
 			</image>
 		</band>

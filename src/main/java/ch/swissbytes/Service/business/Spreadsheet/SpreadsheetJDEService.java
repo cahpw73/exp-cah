@@ -79,6 +79,19 @@ public class SpreadsheetJDEService implements Serializable {
         createPagePackageMilestone(list);
     }
 
+    private void prepareWithColumns() {
+        processor.configureWithColumn(2,3000);
+        processor.configureWithColumn(3,8000);
+        processor.configureWithColumn(5,10000);
+        processor.configureWithColumn(7,4000);
+        processor.configureWithColumn(9,4000);
+        processor.configureWithColumn(10,4000);
+        processor.configureWithColumn(11,8500);
+        processor.configureWithColumn(12,3000);
+        processor.configureWithColumn(13,2500);
+        processor.configureWithColumn(14,2500);
+    }
+
     private void createPagePackageMilestone(final List<PurchaseOrderEntity> list) {
         processor.createSpreadsheet("PkgScInf");
         createHeaderCMS(list.get(0));
@@ -89,6 +102,7 @@ public class SpreadsheetJDEService implements Serializable {
 
     private void createPagePackageHeader(final List<PurchaseOrderEntity> list) {
         processor.createSpreadsheet("PkgHdr");
+        prepareWithColumns();
         createHeaderCMS(list.get(0));
         createHeaderPO();
         generateSpreadsheetPurchaseOrderDetail(list);
