@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<style name="overdue" markup="styled" fontSize="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[$F{overduedays}!=null && $F{overduedays}>0 && (($F{delivery_date}!=null && $F{required_site_date}!=null)?$F{delivery_date}.getTime()-$F{required_site_date}.getTime():-1)>0]]></conditionExpression>
+			<conditionExpression><![CDATA[($F{overduedays}!=null && $F{overduedays}>0) || (($F{delivery_date}!=null && $F{required_site_date}!=null)?$F{delivery_date}.getTime()-$F{required_site_date}.getTime():-1)>0]]></conditionExpression>
 			<style forecolor="#FF0033" markup="styled"/>
 		</conditionalStyle>
 	</style>
