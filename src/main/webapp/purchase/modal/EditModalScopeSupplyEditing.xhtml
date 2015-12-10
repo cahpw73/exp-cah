@@ -194,7 +194,7 @@
                 <h:commandButton onclick="PF('confCancelScopeSupplyEditDlg').show();"
                                  value="#{msgs['lbl.cancel']}"
                                  styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"/>
+                    <p:ajax process="@this" async="false"/>
                 </h:commandButton>
             </div>
         </div>
@@ -257,6 +257,7 @@
                             value="#{purchaseOrderEdit.scopeSupplyEditing.forecastExWorkDate}"
                             onselect="calendarChanges();" onchange="calendarChanges();">
                     <p:ajax event="dateSelect"
+                            async="false"
                             update=":scopeSupplyEditFormId:forescastSiteDateEditing :scopeSupplyEditFormId:tdpCreate"
                             listener="#{purchaseOrderEdit.calculateDate}"/>
                     <p:ajax event="change"
@@ -323,7 +324,7 @@
         <h:commandButton onclick="PF('confCancelScopeSupplyEditDlg').show();"
                          value="#{msgs['lbl.cancel']}"
                          styleClass="btn btn-primary btn-sm">
-            <p:ajax process="@this"/>
+            <p:ajax process="@this" async="false"/>
         </h:commandButton>
     </div>
 </div>
@@ -399,7 +400,7 @@
             <h:commandButton onclick="PF('confCancelScopeSupplyEditDlg').show();"
                              value="#{msgs['lbl.cancel']}"
                              styleClass="btn btn-primary btn-sm">
-                <p:ajax process="@this"/>
+                <p:ajax process="@this" async="false"/>
             </h:commandButton>
         </div>
     </div>
@@ -544,7 +545,7 @@
         <h:commandButton onclick="PF('confCancelScopeSupplyEditDlg').show();"
                          value="#{msgs['lbl.cancel']}"
                          styleClass="btn btn-primary btn-sm">
-            <p:ajax process="@this"/>
+            <p:ajax process="@this" async="false"/>
         </h:commandButton>
     </div>
 </div>

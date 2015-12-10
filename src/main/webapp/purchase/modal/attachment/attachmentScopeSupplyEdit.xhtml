@@ -38,7 +38,7 @@
                             timeZone="#{configuration.timeZone}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{configuration.formatDate}">
-                    <p:ajax event="dateSelect" process="@this"/>
+                    <p:ajax event="dateSelect" process="@this" async="false"/>
                     <p:ajax event="blur" async="false" process="@this"/>
                 </p:calendar>
             </div>
@@ -67,6 +67,7 @@
                 <p:column style="background-color:#ffffff!important;">
                     <p:commandLink styleClass="btn btn-primary btn-sm"
                                    style="color: #ffffff;"
+                                   async="false"
                                    action="#{purchaseOrderEdit.deleteAttachmentScopeSupply(_attachment.id)}"
                                    process="@this" update=":atachmentScopeSupplyModal:attachmentSS, :empForm:scopeSupplyList" value="#{msgs['lbl.delete']}">
                         <p:confirm header="Delete attachment" message="Are you sure delete this Attachment?" />

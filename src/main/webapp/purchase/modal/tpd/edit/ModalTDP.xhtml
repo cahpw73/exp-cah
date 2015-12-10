@@ -50,7 +50,7 @@
                             disabled="#{not purchaseOrderEdit.newTdp.isForecastSiteDateManual}"
                             converterMessage="#{msgs['validator.date.invalid']}"
                             jsf:placeholder="#{configuration.formatDate}">
-                    <p:ajax event="dateSelect" process="@this"/>
+                    <p:ajax event="dateSelect" process="@this" async="false"/>
                         </p:calendar>
             <div>
                 &#160;
@@ -88,6 +88,7 @@
                 <h:commandButton  value="#{msgs['lbl.save']}" styleClass="btn btn-primary btn-sm"
                                   actionListener="#{purchaseOrderEdit.doSaveTdp}">
                     <p:ajax onsuccess="PF('tdp').hide();"
+                            async="false"
                             process="TDP"
                             update=":scopeSupplyFormId:tdpCreate :scopeSupplyFormId:forescastSiteDateEdit"/>
                 </h:commandButton>

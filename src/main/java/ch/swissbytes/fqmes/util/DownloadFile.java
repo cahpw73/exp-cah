@@ -30,7 +30,7 @@ public class DownloadFile implements Serializable {
     }
 
     private void download(final String mimeType,final String name, final byte[]file){
-        log.info("private void download(final String mimeType="+mimeType+",final String name="+name+", final byte[]file)");
+        log.info("downloading( mimeType="+mimeType+",final String name="+name+")");
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
         response.setContentType(mimeType);

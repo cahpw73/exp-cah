@@ -49,12 +49,13 @@
                         pattern="#{configuration.formatDate}"
                         converterMessage="#{msgs['validator.date.invalid']}"
                         jsf:placeholder="#{configuration.formatDate}">
-                        <p:ajax event="dateSelect" process="@this"/>
+                        <p:ajax event="dateSelect" async="false" process="@this"/>
                     </p:calendar>
             <div>
                 &#160;
                 <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.tdpEdit.isForecastSiteDateManual}">
                     <p:ajax event="change" update=":TDPEdit:forecastDeliveryDateTdp4"
+                            async="false"
                             listener="#{purchaseOrderEdit.switchModeForecastSiteDateForTdp(true)}"/>
                 </p:selectBooleanCheckbox>
                 &#160;
@@ -89,6 +90,7 @@
                                   actionListener="#{purchaseOrderEdit.doUpdateTdpOnEdition()}">
                     <p:ajax onsuccess="PF('edittdp').hide();"
                             process="TDPEdit"
+                            async="false"
                             update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forescastSiteDateEditing"/>
                 </h:commandButton>
                 <button  type="button" class="btn btn-primary btn-sm"

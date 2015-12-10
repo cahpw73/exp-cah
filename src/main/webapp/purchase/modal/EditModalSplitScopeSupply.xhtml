@@ -108,8 +108,10 @@
                                     value="#{purchaseOrderEdit.scopeSupplySplit.poDeliveryDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                    async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                             <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                    async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                         <p:message id="msgSiteDate" for="exWorkDateSplit"/>
@@ -134,8 +136,10 @@
                                 value="#{purchaseOrderEdit.scopeSupplySplit.forecastExWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                    async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                             <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                    async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                         </div>
@@ -161,8 +165,10 @@
                                 value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
                             <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                    async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                             <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                    async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
@@ -215,7 +221,7 @@
                                              jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
                                              class="form-control">
 
-                                    <p:ajax event="change" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
+                                    <p:ajax event="change" async="false" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
                                 </h:inputText>
                                 <p:message  for="deliveryTimeId"/>
                             </h:panelGroup>
@@ -223,7 +229,7 @@
                                              value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeMs}"
                                              styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
                                 <f:selectItems value="#{allTimeMeasurement}"/>
-                                <p:ajax event="change" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
+                                <p:ajax event="change" async="false" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
                             </h:selectOneMenu>
                         </h:panelGroup>
                     </div>
@@ -243,14 +249,15 @@
                                             disabled="#{not purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
                                             value="#{purchaseOrderEdit.scopeSupplySplit.forecastSiteDate}"
                                             onselect="calendarChanges();" onchange="calendarChanges();">
-                                    <p:ajax event="dateSelect" />
-                                    <p:ajax event="change"/>
+                                    <p:ajax async="false" event="dateSelect" />
+                                    <p:ajax async="false" event="change"/>
                                 </p:calendar>
                             </div>
                             <div style="float: left;  ">
                                 <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
                                                           style="margin-left: 5px; margin-right: 5px;">
                                     <p:ajax update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                            async="false"
                                             listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
                                 </p:selectBooleanCheckbox>
                                 &#160;

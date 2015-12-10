@@ -46,7 +46,7 @@
                         pattern="#{configuration.formatDate}"
                         converterMessage="#{msgs['validator.date.invalid']}"
                         jsf:placeholder="#{configuration.formatDate}">
-                <p:ajax event="dateSelect" process="@this"/>
+                <p:ajax event="dateSelect" async="false" process="@this"/>
                     </p:calendar>
             <div>
                 &#160;
@@ -85,6 +85,7 @@
                                   actionListener="#{purchaseOrderEdit.doSaveOnEdition()}">
                     <p:ajax onsuccess="PF('tdp').hide();"
                             process="TDP"
+                            async="false"
                             update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forescastSiteDateEditing"/>
                 </h:commandButton>
                 <button  type="button" class="btn btn-primary btn-sm"
