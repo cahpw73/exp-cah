@@ -12,35 +12,76 @@
     </f:metadata>
     <ui:define name="body">
         First Quantum Minerals
-        <div style="text-align: center">
-            <div style="display: inline-block;">
-                <h:outputLabel value="#{msgs['dashboard.label.select.project']}" style="float: left;"/>
-                <div style="width:200px; margin:0px 15px 0px 15px; float: left">
-                    <h:selectOneMenu id="projectSOne"
-                                     value="#{dashboardBean.projectSelected}"
-                                     converter="projectConverter" styleClass="form-control">
-                        <f:selectItem
-                                itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
-                                noSelectionOption="true"/>
-                        <f:selectItems value="#{dashboardBean.projectList}"
-                                       var="_p"
-                                       itemValue="#{_p}"
-                                       itemLabel="#{_p.projectNumber}"/>
-                        <p:ajax event="change" update="dashboardTitle" process="@this" async="false"/>
-                    </h:selectOneMenu>
-                </div>
-                <p:commandLink id="updateListBtn"
-                               value="#{msgs['dashboard.btn.update.dashboard']}"
-                               styleClass="btn btn-primary btn-commandLink-primeFaces"/>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <br/>
-        <div>
-            <h:outputText id="dashboardTitle"
-                          value="#{dashboardBean.titleDashboard()}">
+        <h:form id="dashboardForm">
+            <div style="text-align: center">
+                <div style="display: inline-block;">
+                    <h:outputLabel value="#{msgs['dashboard.label.select.project']}" style="float: left;"/>
 
-            </h:outputText>
-        </div>
+                    <div style="width:200px; margin:0px 15px 0px 15px; float: left">
+                        <h:selectOneMenu id="projectSOne"
+                                         value="#{dashboardBean.projectSelected}"
+                                         converter="projectConverter" styleClass="form-control">
+                            <f:selectItem
+                                    itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
+                                    noSelectionOption="true"/>
+                            <f:selectItems value="#{dashboardBean.projectList}"
+                                           var="_p"
+                                           itemValue="#{_p}"
+                                           itemLabel="#{_p.projectNumber}"/>
+                            <p:ajax event="change" update="dashboardTitle dashboardPnl" process="@this"
+                                    async="false" listener="#{dashboardBean.refreshDataOfDashboard}"/>
+                        </h:selectOneMenu>
+                    </div>
+                    <p:commandLink id="updateListBtn"
+                                   value="#{msgs['dashboard.btn.update.dashboard']}"
+                                   styleClass="btn btn-primary btn-commandLink-primeFaces"/>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+
+            <div>
+                <h:outputText id="dashboardTitle"
+                              value="#{dashboardBean.getTitleDashboard()}">
+                </h:outputText>
+            </div>
+            <br/>
+            <h:panelGroup id="dashboardPnl">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div style="border-style:solid; border-width: 1px;">
+                            <div>
+                                <h:graphicImage library="img" name="NoImage.png"
+                                                width="250"
+                                                styleClass="logo-procurement-preview"
+                                                height="250"/>
+                            </div>
+                            <div>
+                                <h:outputText value="#{dashboardBean.totalOfPOs}"/>
+                                <h:outputText value="#{msgs['dasbhoard.label.total.of.pos']}"/>
+                                <p:commandLink value="#{msgs['dashboard.label.more']}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        hola
+                    </div>
+                    <div class="col-xs-4">
+                        hola
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        hola
+                    </div>
+                    <div class="col-xs-4">
+                        hola
+                    </div>
+                    <div class="col-xs-4">
+                        hola
+                    </div>
+                </div>
+            </h:panelGroup>
+        </h:form>
     </ui:define>
 </ui:composition>

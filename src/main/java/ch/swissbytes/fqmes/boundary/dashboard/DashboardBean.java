@@ -1,7 +1,9 @@
 package ch.swissbytes.fqmes.boundary.dashboard;
 
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -10,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 /**
@@ -24,15 +27,23 @@ public class DashboardBean implements Serializable {
     @Inject
     private ProjectService projectService;
 
+    @Inject
+    private PurchaseOrderService poService;
+
     private ProjectEntity projectSelected;
 
     private List<ProjectEntity> projectList;
+
+    private String totalOfPOs;
+
+    ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
 
     @PostConstruct
     public void init(){
         log.info("Created DashboardBean");
         projectList = projectService.findAllProjects();
+        loadDataOfDashboard();
     }
 
     @PreDestroy
@@ -40,8 +51,21 @@ public class DashboardBean implements Serializable {
 
     }
 
+    private void loadDataOfDashboard() {
+        List<PurchaseOrderEntity> poList = poService.findAllPOs(projectSelected!=null?projectSelected.getId():-1);
+        if(!poList.isEmpty()){
+            totalOfPOs = String.valueOf(poList.size());
+        }
+    }
+
+    public void refreshDataOfDashboard(){
+        loadDataOfDashboard();
+    }
+
     public String getTitleDashboard(){
-        return "";
+        String bundleStr = bundle.getString("dashboard.main.title");
+        String projectStr = projectSelected!=null?projectSelected.getProjectNumber():"";
+        return bundleStr +" "+ projectStr ;
     }
 
     public ProjectEntity getProjectSelected() {
@@ -54,5 +78,13 @@ public class DashboardBean implements Serializable {
 
     public List<ProjectEntity> getProjectList() {
         return projectList;
+    }
+
+    public String getTotalOfPOs() {
+        return totalOfPOs;
+    }
+
+    public void setTotalOfPOs(String totalOfPOs) {
+        this.totalOfPOs = totalOfPOs;
     }
 }
