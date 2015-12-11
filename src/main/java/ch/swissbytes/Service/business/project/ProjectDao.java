@@ -32,6 +32,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         super.saveAndFlush(entity);
     }
 
+    //TODO Review this function
     public List<ProjectEntity> getProjectList(){
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");

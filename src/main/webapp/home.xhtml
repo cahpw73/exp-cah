@@ -1,6 +1,9 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="WEB-INF/layout/template.xhtml">
 
     <ui:define name="title">Home</ui:define>
@@ -9,5 +12,35 @@
     </f:metadata>
     <ui:define name="body">
         First Quantum Minerals
+        <div style="text-align: center">
+            <div style="display: inline-block;">
+                <h:outputLabel value="#{msgs['dashboard.label.select.project']}" style="float: left;"/>
+                <div style="width:200px; margin:0px 15px 0px 15px; float: left">
+                    <h:selectOneMenu id="projectSOne"
+                                     value="#{dashboardBean.projectSelected}"
+                                     converter="projectConverter" styleClass="form-control">
+                        <f:selectItem
+                                itemLabel="#{msgs['report.deliverables.lbl.no.selection.project']}"
+                                noSelectionOption="true"/>
+                        <f:selectItems value="#{dashboardBean.projectList}"
+                                       var="_p"
+                                       itemValue="#{_p}"
+                                       itemLabel="#{_p.projectNumber}"/>
+                        <p:ajax event="change" update="dashboardTitle" process="@this" async="false"/>
+                    </h:selectOneMenu>
+                </div>
+                <p:commandLink id="updateListBtn"
+                               value="#{msgs['dashboard.btn.update.dashboard']}"
+                               styleClass="btn btn-primary btn-commandLink-primeFaces"/>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+        <div>
+            <h:outputText id="dashboardTitle"
+                          value="#{dashboardBean.titleDashboard()}">
+
+            </h:outputText>
+        </div>
     </ui:define>
 </ui:composition>
