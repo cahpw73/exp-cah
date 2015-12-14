@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.types.ClassEnum;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.purchaseOrder.FilterPO;
@@ -359,6 +360,23 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" GROUP BY po.id");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
+        parameters.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), parameters).size();
+    }
+
+    public int getNumberOfCompletedPOs(final Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT COUNT(po.id) ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND po.purchaseOrderStatus = :COMPLETED");
+        sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" GROUP BY po.id");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ENABLED", StatusEnum.ENABLE.getId());
+        parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
+        parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
         parameters.put("PROJECT_ID", projectId);
         return super.findBy(sb.toString(), parameters).size();
     }

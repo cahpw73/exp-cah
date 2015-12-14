@@ -11,6 +11,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -36,33 +37,49 @@ public class DashboardBean implements Serializable {
 
     private String totalOfPOs;
 
+    private String completedPOs;
+
+    private String numberCompletedPOs;
+
+    private String percentageCompletedPOs;
+
     ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("Created DashboardBean");
         projectList = projectService.findAllProjects();
         loadDataOfDashboard();
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
 
     }
 
     private void loadDataOfDashboard() {
-        totalOfPOs = String.valueOf(poService.getTotalNumberOfPOs(projectSelected!=null?projectSelected.getId():-1));
+        totalOfPOs = String.valueOf(poService.getTotalNumberOfPOs(projectSelected != null ? projectSelected.getId() : -1));
+        loadNumberPOsCompleted();
+    }
+    private void loadNumberPOsCompleted(){
+        numberCompletedPOs = String.valueOf(poService.getNumberOfCompletedPOs(projectSelected != null ? projectSelected.getId() : -1));
+        Double percentage = (Double.parseDouble(numberCompletedPOs) / Double.parseDouble(totalOfPOs)) * 100;
+        if (!percentage.isNaN()){
+            percentage = Math.round(percentage*100.0)/100.0;
+            percentageCompletedPOs = String.valueOf(percentage) + "%";
+            completedPOs = numberCompletedPOs + " / " + percentageCompletedPOs;
+        }
     }
 
-    public void refreshDataOfDashboard(){
+    public void refreshDataOfDashboard() {
         loadDataOfDashboard();
     }
 
-    public String getTitleDashboard(){
+    public String getTitleDashboard() {
         String bundleStr = bundle.getString("dashboard.main.title");
-        String projectStr = projectSelected!=null?projectSelected.getProjectNumber():"";
-        return bundleStr +" "+ projectStr ;
+        String projectStr = projectSelected != null ? projectSelected.getProjectNumber() : "";
+        return bundleStr + " " + projectStr;
     }
 
     public ProjectEntity getProjectSelected() {
@@ -83,5 +100,29 @@ public class DashboardBean implements Serializable {
 
     public void setTotalOfPOs(String totalOfPOs) {
         this.totalOfPOs = totalOfPOs;
+    }
+
+    public String getNumberCompletedPOs() {
+        return numberCompletedPOs;
+    }
+
+    public void setNumberCompletedPOs(String numberCompletedPOs) {
+        this.numberCompletedPOs = numberCompletedPOs;
+    }
+
+    public String getPercentageCompletedPOs() {
+        return percentageCompletedPOs;
+    }
+
+    public void setPercentageCompletedPOs(String percentageCompletedPOs) {
+        this.percentageCompletedPOs = percentageCompletedPOs;
+    }
+
+    public String getCompletedPOs() {
+        return completedPOs;
+    }
+
+    public void setCompletedPOs(String completedPOs) {
+        this.completedPOs = completedPOs;
     }
 }
