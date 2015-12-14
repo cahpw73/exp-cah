@@ -85,8 +85,6 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
                // log.info("persisting new content for ["+commentEntity.getFileName()+"] with size ["+ (commentEntity.getFile()!=null?commentEntity.getFile().length:"0")+"]");
                 super.save(commentEntity);
             }else{
-                log.info("value "+commentEntity.getPreviousHascode());
-                log.info("new value "+commentEntity.hashCode());
                 super.update(commentEntity);
             }
             for(AttachmentComment ac:commentEntity.getAttachments()){
