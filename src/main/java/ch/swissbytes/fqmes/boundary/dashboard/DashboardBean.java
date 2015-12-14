@@ -52,10 +52,7 @@ public class DashboardBean implements Serializable {
     }
 
     private void loadDataOfDashboard() {
-        List<PurchaseOrderEntity> poList = poService.findAllPOs(projectSelected!=null?projectSelected.getId():-1);
-        if(!poList.isEmpty()){
-            totalOfPOs = String.valueOf(poList.size());
-        }
+        totalOfPOs = String.valueOf(poService.getTotalNumberOfPOs(projectSelected!=null?projectSelected.getId():-1));
     }
 
     public void refreshDataOfDashboard(){

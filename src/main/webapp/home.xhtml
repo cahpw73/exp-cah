@@ -41,7 +41,7 @@
             <br/>
 
             <div>
-                <h:outputText id="dashboardTitle"
+                <h:outputText id="dashboardTitle" style="font-size: 25pt;"
                               value="#{dashboardBean.getTitleDashboard()}">
                 </h:outputText>
             </div>
@@ -49,17 +49,23 @@
             <h:panelGroup id="dashboardPnl">
                 <div class="row">
                     <div class="col-xs-4">
-                        <div style="border-style:solid; border-width: 1px;">
-                            <div>
+                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 60px;">
+                            <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
-                                                width="250"
+                                                width="200"
                                                 styleClass="logo-procurement-preview"
-                                                height="250"/>
+                                                height="200"/>
                             </div>
-                            <div>
-                                <h:outputText value="#{dashboardBean.totalOfPOs}"/>
-                                <h:outputText value="#{msgs['dasbhoard.label.total.of.pos']}"/>
-                                <p:commandLink value="#{msgs['dashboard.label.more']}"/>
+                            <div style="float: left; margin-top: 40px;">
+                                <div>
+                                    <h:outputText value="#{dashboardBean.totalOfPOs}" style="font-size: 25pt; font-weight: bold;"/>
+                                </div>
+                                <div style="margin-top: 15px;">
+                                    <h:outputText value="#{msgs['dasbhoard.label.total.of.pos']}" style="font-weight: bold;"/>
+                                </div>
+                                <div style="margin-top: 15px; text-align: right;">
+                                    <p:commandLink value="#{msgs['dashboard.label.more']}"/>
+                                </div>
                             </div>
                         </div>
                     </div>
