@@ -32,6 +32,8 @@ public class CreateEmailSender implements Serializable {
 
     private static final String sendToSmacneall  = "smacneall@colleagues-info.com";
 
+    private static final String sendToDevs = "alvaro.cardozo@swissbytes.ch,christian.alba@swissbytes.ch";
+
 
     @Inject
     private Configuration configuration;
@@ -70,7 +72,7 @@ public class CreateEmailSender implements Serializable {
     public void createEmailToInfoErrorExportCmsOrJde(String error){
         try {
             MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error);
-            sendMailExprtCmsOrJde(sendToSmacneall, multipart);
+            sendMailExprtCmsOrJde(sendToSmacneall, multipart,sendToDevs);
             Messages.addFlashGlobalInfo("Email was sent successfully ");
             log.info("Token was generated and sent to email");
         } catch (MessagingException e) {
@@ -92,16 +94,17 @@ public class CreateEmailSender implements Serializable {
         }
     }
 
-    private void sendMailExprtCmsOrJde(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
+    private void sendMailExprtCmsOrJde(String mail, MimeMultipart multipart,String recipients) throws MessagingException, SocketConnectException, ConnectException,Exception {
         if(email == null){
             email = new EmailSender();
         }
         email.setFrom(sendMailInfo);
         email.setTo(mail);
+        email.setToCC(recipients);
         email.setSubject("Error exporting CMS or JDE");
         //email.setBody(message);
         email.setContent(multipart);
-        email.send();
+        email.sendMultipleRecipients();
     }
 
     private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
