@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="materialRequisitionCustomize" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9c627130-241d-4ea2-a86d-c438b4f2e001">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PROJECT_ID" class="java.lang.Long"/>
+	<parameter name="sortBy" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="sortMrNo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select po,po.variation,order_date,po_delivery_date,po.po_title,sp.company,ct.email,po_status,por.id,
+       po.id,r.requisition_number,
+       CASE WHEN r.rtf_no is null THEN '' ELSE r.rtf_no END as rtf_no,
+       CASE WHEN r.originator is null THEN '' ELSE r.originator END as originator
+from requisition r
+     left outer join p_order por on r.po_id=por.id
+     left outer join purchase_order po on po.po_id=por.id
+     left outer join supplier_proc sp on sp.id=por.supplier_id
+     left outer join contact ct on ct.supplier_id = sp.id
+where r.status=0 and po.project_id=$P{PROJECT_ID} and po.status_id=1
+order by $P!{sortMrNo}]]>
+	</queryString>
+	<field name="po" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Timestamp"/>
+	<field name="po_delivery_date" class="java.sql.Timestamp"/>
+	<field name="po_title" class="java.lang.String"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="po_status" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="requisition_number" class="java.lang.String"/>
+	<field name="rtf_no" class="java.lang.String"/>
+	<field name="originator" class="java.lang.String"/>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="e5d9e943-14fc-423e-8fd3-64cd55be6816" positionType="Float" x="196" y="0" width="120" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="da31409c-d4bc-4905-80bf-de21190716a6" positionType="Float" x="321" y="0" width="45" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{po_delivery_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="5a4a4f44-49a3-4b71-bdfb-d49ad8af74df" positionType="Float" x="114" y="0" width="80" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fff137bf-531a-4c68-91c5-e6e2077f6565" positionType="Float" x="31" y="0" width="30" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="dd7cd648-d883-4f77-b131-a75b83ee2bd7" positionType="Float" x="62" y="0" width="50" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{order_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5ff6ee41-50eb-4c2e-9ee7-4f6e3aa0ea21" positionType="Float" x="0" y="0" width="30" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="205a6d45-1e43-4d27-8f90-87a65f376915" positionType="Float" x="0" y="12" width="555" height="1" isRemoveLineWhenBlank="true"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="879d83ee-c6ba-4a45-8159-01862d1a6c61" x="373" y="0" width="55" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requisition_number}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="828ee7cc-06dd-42c8-a584-a51e4600865a" x="430" y="0" width="55" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rtf_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="9826c338-bfcc-44e2-b083-e9e4d7f83694" x="486" y="0" width="55" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{originator}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

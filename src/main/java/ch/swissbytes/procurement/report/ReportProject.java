@@ -102,7 +102,7 @@ public class ReportProject extends ReportView implements Serializable {
     protected String getStrSort() {
         Boolean poNo = sortMap.get("poNo");
         Boolean supplier = sortMap.get("supplier");
-        Boolean deliveryDate = sortMap.get("deliveryDate");
+        Boolean deliveryDate = sortMap.get("deliveryDate")!=null?sortMap.get("deliveryDate"):false;
         String strSort = "";
         if (!poNo && !supplier && deliveryDate) {
             strSort = "po.po_delivery_date,po.orderedvariation, ";

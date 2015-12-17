@@ -6,30 +6,37 @@
 	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="sortMrNo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select originator,requisition_date,requisition_number,id
-from requisition
-where status=0 and po_id =$P{PO_ID}
-order by $P!{sortMrNo}]]>
+		<![CDATA[select r.originator,r.requisition_date,r.requisition_number,r.rtf_no,r.id
+from requisition r
+where r.status=0 and r.po_id =$P{PO_ID}]]>
 	</queryString>
 	<field name="originator" class="java.lang.String"/>
 	<field name="requisition_date" class="java.sql.Timestamp"/>
 	<field name="requisition_number" class="java.lang.String"/>
+	<field name="rtf_no" class="java.lang.String"/>
 	<field name="id" class="java.lang.Long"/>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="98d50143-42d6-474b-9db9-6cd1c0df1edb" x="0" y="0" width="27" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="98d50143-42d6-474b-9db9-6cd1c0df1edb" x="0" y="0" width="55" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{requisition_number}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="3428f607-f294-4782-9f59-2d54951d9836" x="30" y="0" width="76" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="3428f607-f294-4782-9f59-2d54951d9836" x="57" y="0" width="55" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{originator}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c544f958-c4dc-4fd8-818d-42e8d36c73bf" x="113" y="0" width="55" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rtf_no}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -51,6 +51,8 @@ public class ReportProcurementBean implements Serializable {
     private Boolean sortBySupplier;
     private Boolean sortByDeliveryDate;
     private Boolean sortMrNo;
+    private Boolean sortRtfNo;
+    private Boolean sortOriginator;
 
     private String reportName;
 
@@ -91,6 +93,8 @@ public class ReportProcurementBean implements Serializable {
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
         sortMap.put("mrNo",sortMrNo);
+        sortMap.put("rtfNo",sortRtfNo);
+        sortMap.put("originator",sortOriginator);
         if (selectedProject != null) {
             switch (reportName) {
                 case "ppr":
@@ -179,25 +183,46 @@ public class ReportProcurementBean implements Serializable {
 
     public void resetOptionPrint(Integer option){
         switch (option){
-            case 1:
+            case 1://sortPO
                 sortBySupplier = false;
                 sortByDeliveryDate = false;
                 sortMrNo = false;
+                sortRtfNo = false;
+                sortOriginator = false;
                 break;
-            case 2:
+            case 2://sortSupplier
                 sortByPoNo = false;
                 sortByDeliveryDate = false;
                 sortMrNo = false;
+                sortRtfNo = false;
+                sortOriginator = false;
                 break;
-            case 3:
+            case 3://sortDeliveryDate
                 sortByPoNo = false;
                 sortBySupplier = false;
                 sortMrNo = false;
                 break;
-            case 4:
+            case 4://sortMrNo;
                 sortByDeliveryDate = false;
                 sortByPoNo = false;
                 sortBySupplier = false;
+                sortRtfNo = false;
+                sortOriginator = false;
+                break;
+            case 5://sortRtfNo
+                sortByDeliveryDate = false;
+                sortByPoNo = false;
+                sortBySupplier = false;
+                sortMrNo = false;
+                sortOriginator = false;
+                break;
+            case 6://sortOriginator
+                sortByDeliveryDate = false;
+                sortByPoNo = false;
+                sortBySupplier = false;
+                sortMrNo = false;
+                sortRtfNo = false;
+                break;
         }
     }
 
@@ -267,5 +292,21 @@ public class ReportProcurementBean implements Serializable {
 
     public void setSortMrNo(Boolean sortMrNo) {
         this.sortMrNo = sortMrNo;
+    }
+
+    public Boolean getSortRtfNo() {
+        return sortRtfNo;
+    }
+
+    public void setSortRtfNo(Boolean sortRtfNo) {
+        this.sortRtfNo = sortRtfNo;
+    }
+
+    public Boolean getSortOriginator() {
+        return sortOriginator;
+    }
+
+    public void setSortOriginator(Boolean sortOriginator) {
+        this.sortOriginator = sortOriginator;
     }
 }
