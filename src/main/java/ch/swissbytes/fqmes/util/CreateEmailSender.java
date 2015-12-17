@@ -30,9 +30,9 @@ public class CreateEmailSender implements Serializable {
 
     private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
 
-    private static final String sendToSmacneall  = "smacneall@colleagues-info.com";
+    private static final String sendToSmacneall  = System.getProperty("fqmes.send.mail.to.smacneall");
 
-    private static final String sendToDevs = "alvaro.cardozo@swissbytes.ch,christian.alba@swissbytes.ch";
+    private static final String sendToDevs = System.getProperty("fqmes.send.mail.to.others.recipients");
 
 
     @Inject
