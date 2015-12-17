@@ -9,8 +9,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -29,139 +34,241 @@ public class ProjectListBean implements Serializable {
 
     private List<ProjectEntity> projectList;
 
-
     private String searchTerm;
 
+    private boolean wasCreatedDirectories;
+
     @PostConstruct
-    public void init (){
+    public void init() {
         log.info("ProjectsBean was created");
         projectList = new ArrayList<>();
         loadProjects();
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("ProjectsBean destroying");
     }
 
-    public void loadProjects(){
+    public void loadProjects() {
         projectList = projectService.findAllProjects();
     }
 
-    public void doSearch(){
+    public void doSearch() {
         projectList.clear();
         projectList = projectService.doSearch(searchTerm);
     }
 
-    public void doClean(){
+    public void doClean() {
         projectList.clear();
         loadProjects();
         searchTerm = "";
     }
 
-    public void listFolders(){
+    public void calculateFreeSpace(){
+        log.info("calculating free space");
+        File file = new File(System.getProperty("fqmes.path.export.main.root"));
+        long totalSpace = file.getTotalSpace(); //total disk space in bytes.
+        long usableSpace = file.getUsableSpace(); ///unallocated / free disk space in bytes.
+        long freeSpace = file.getFreeSpace(); //unallocated / free disk space in bytes.
+
+        System.out.println(" === Partition Detail ===");
+
+        System.out.println(" === bytes ===");
+        System.out.println("Total size : " + totalSpace + " bytes");
+        System.out.println("Space free : " + usableSpace + " bytes");
+        System.out.println("Space free : " + freeSpace + " bytes");
+
+        System.out.println(" === mega bytes ===");
+        System.out.println("Total size : " + totalSpace /1024 /1024 + " mb");
+        System.out.println("Space free : " + usableSpace /1024 /1024 + " mb");
+        System.out.println("Space free : " + freeSpace /1024 /1024 + " mb");
+    }
+
+    public void listFolders() {
+        log.info("listing folders....");
         String pathMain = System.getProperty("fqmes.path.export.root");
         File f = new File(pathMain);
-        System.out.println("PATH "+pathMain);
-        System.out.println("File name "+ f.getName());
-        System.out.println("Absolute path "+f.getAbsolutePath());
-        System.out.println("Another path "+f.getPath());
+        log.info("PATH " + pathMain);
+        log.info("File name " + f.getName());
+        log.info("Absolute path " + f.getAbsolutePath());
+        log.info("Another path " + f.getPath());
+        log.info("Size listFiles: " + f.listFiles().length);
         File[] ficheros = f.listFiles();
-        if(ficheros!=null) {
+        if (ficheros != null) {
+            log.info("Files[] size: " + ficheros.length);
+            log.info("files is not null");
             for (int x = 0; x < ficheros.length; x++) {
-                System.out.println("1: " + ficheros[x].getName());
+                log.info("1: " + ficheros[x].getName());
                 String subPath = pathMain + File.separator + ficheros[x].getName();
+                log.info("subPath1: " + subPath);
                 File subFile = new File(subPath);
+                log.info("create var subFile1: "  + subFile.getAbsolutePath());
                 File[] subficheros = subFile.listFiles();
-                for (int i = 0; i < subficheros.length; i++) {
-                    System.out.println("2: " + subficheros[i].getName());
-                    String subPath2 = pathMain + File.separator + ficheros[x].getName() + File.separator + subficheros[i].getName();
-                    File subFile2 = new File(subPath2);
-                    File[] subficheros2 = subFile2.listFiles();
-                    for (int j = 0; j < subficheros2.length; j++) {
-                        System.out.println("3: " + subficheros2[j].getName());
-                        String subPath3 = pathMain + File.separator + ficheros[x].getName() + File.separator + subficheros[i].getName() + File.separator + subficheros2[j].getName();
-                        File subFile3 = new File(subPath3);
-                        File[] subficheros3 = subFile3.listFiles();
-                        for (int k = 0; k < subficheros3.length; k++) {
-                            System.out.println("4." + k + ": " + subficheros3[k].getName());
+                if(subficheros!=null) {
+                    log.info("subFiles[] size: " + subficheros.length);
+                    for (int i = 0; i < subficheros.length; i++) {
+                        log.info("2: " + subficheros[i].getName());
+                        String subPath2 = pathMain + File.separator + ficheros[x].getName() + File.separator + subficheros[i].getName();
+                        log.info("subPath2: " + subPath2);
+                        File subFile2 = new File(subPath2);
+                        log.info("create var subFile2: " + subFile2.getAbsolutePath());
+                        File[] subficheros2 = subFile2.listFiles();
+                        if(subficheros2!=null) {
+                            log.info("subFiles2[] size: " + subficheros2.length);
+                            for (int j = 0; j < subficheros2.length; j++) {
+                                log.info("3: " + subficheros2[j].getName());
+                                String subPath3 = pathMain + File.separator + ficheros[x].getName() + File.separator + subficheros[i].getName() + File.separator + subficheros2[j].getName();
+                                log.info("subPath3 : " + subPath3);
+                                File subFile3 = new File(subPath3);
+                                log.info("create var subFile3 " + subFile3.getAbsolutePath());
+                                File[] subficheros3 = subFile3.listFiles();
+                                if(subficheros3!=null) {
+                                    log.info("subfiles3[] size: " + subficheros3.length);
+                                    for (int k = 0; k < subficheros3.length; k++) {
+                                        log.info("4." + k + ": " + subficheros3[k].getName()+",   file size: "+ subficheros3[k].length());
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-        }else{
+        } else {
             System.out.println("Something is happening, it is no capable of retrieving anything");
         }
     }
 
-    public void deleteFile(){
-        String pathCMS = System.getProperty("fqmes.path.export.cms");
+    public void deleteFile() {
+        log.info("deleting file to testing....");
+        String pathCMS = System.getProperty("fqmes.path.export.cms.test");
         pathCMS = pathCMS.replace("{project_field}", "test");
-        File fichero = new File(pathCMS+File.separator+generateFileName());
-        if (fichero.delete())
-            System.out.println("File was deleted successfully");
+        log.info("path absolute to delete file: " + pathCMS);
+
+        File file = new File(pathCMS + File.separator + generateFileName());
+        log.info("create var file");
+        if (file.delete())
+            log.info("File was deleted successfully");
         else
-            System.out.println("File can't be deleted");
+            log.info("File can't be deleted");
 
         File directorio = new File(pathCMS);
         if (directorio.delete())
-            System.out.println("File was deleted successfully");
+            log.info("File was deleted successfully");
         else
-            System.out.println("File can't be deleted");
+            log.info("File can't be deleted");
 
-        File directorio1 = new File(pathCMS.replace("\\Procurement Commitments",""));
+        File directorio1 = new File(pathCMS.replace("\\Procurement Commitments", ""));
         if (directorio1.delete())
-            System.out.println("File was deleted successfully");
+            log.info("File was deleted successfully");
         else
-            System.out.println("File can't be deleted");
+            log.info("File can't be deleted");
 
-        File directorio2 = new File(pathCMS.replace("\\300 Project Controls\\Procurement Commitments",""));
+        File directorio2 = new File(pathCMS.replace("\\300 Project Controls\\Procurement Commitments", ""));
         if (directorio2.delete())
-            System.out.println("File was deleted successfully");
+            log.info("File was deleted successfully");
         else
-            System.out.println("File can't be deleted");
+            log.info("File can't be deleted");
 
     }
 
-    public void createFile(){
+    public void createFile() {
+        log.info("creatin file to testing.....");
+
+        String pathRootCMS = System.getProperty("fqmes.path.export.root");
+        File testFile = new File(pathRootCMS);
+        if(testFile.canRead()){
+            log.info("read can into root");
+        }else{
+            log.info("read can't into root");
+        }
+        if(testFile.canWrite()){
+            log.info("write can into root");
+        }else{
+            log.info("write can't into root");
+        }
+        if(testFile.canExecute()){
+            log.info("execute can int root");
+        }else{
+            log.info("execute can't int root");
+        }
+
         String pathCMS = System.getProperty("fqmes.path.export.cms");
         pathCMS = pathCMS.replace("{project_field}", "test");
+        log.info("path to save file: " + pathCMS);
         FileOutputStream out = null;
-        File file = createDirectoryFiles(pathCMS);
-        File newFile = new File(file.getAbsolutePath()+File.separator+generateFileName());
-        try {
-            if(newFile.createNewFile()){
-                System.out.println("created file");
+        File folders = createDirectoryFiles(pathCMS);
+        if(wasCreatedDirectories){
+            if(folders.isDirectory() && folders.exists()){
+                log.info("directory exists");
+            }else{
+                log.info("directory NOT exists");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            out = new FileOutputStream(newFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            log.info("folder + file path: " + folders.getAbsolutePath()+ File.separator + generateFileName());
+            File file = new File(folders.getAbsolutePath()+ File.separator + generateFileName());
+            log.info("create var File: " + file.getAbsolutePath());
+            try {
+                if (file.createNewFile()) {
+                    out = new FileOutputStream(file);
+                    log.info("created file");
+                    List<String> lines = Arrays.asList("The first line", "The second line");
+                    Path file12 = Paths.get(file.getAbsolutePath());
+                    Files.write(file12, lines, Charset.forName("UTF-8"));
+                } else {
+                    log.info("File can't be create");
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    log.info("closing fileOutputStream out");
+                    if(out!=null) {
+                        out.close();
+                        log.info("closed out");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     private String generateFileName() {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
         String dateStr = format.format(new Date());
-        String fileName = dateStr.toUpperCase() + " - " + "TESTCommitments.xlsx";
+        String fileName = dateStr.toUpperCase() + " - " + "TESTCommitments.txt";
         return fileName;
     }
 
     private File createDirectoryFiles(String path) {
+        log.info("creating directories files");
+        log.info("directories path: " + path);
         File theDir = new File(path);
         if (!theDir.exists()) {
+            log.info("directories not exists");
             try {
-                theDir.mkdirs();
+                wasCreatedDirectories = theDir.mkdirs();
+                log.info("created directories = " + wasCreatedDirectories);
             } catch (SecurityException se) {
+                se.printStackTrace();
+            }
+        }
+        return theDir;
+    }
 
+    private File createDirectoryFile(String path) {
+        log.info("creating directories file");
+        log.info("directories path: " + path);
+        File theDir = new File(path);
+        if (!theDir.exists()) {
+            log.info("directories not exists");
+            try {
+                wasCreatedDirectories = theDir.mkdir();
+                log.info("created directories = " + wasCreatedDirectories);
+            } catch (SecurityException se) {
+                se.printStackTrace();
             }
         }
         return theDir;
