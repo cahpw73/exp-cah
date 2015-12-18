@@ -13,16 +13,28 @@
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="sortMrNo" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select po,po.variation,order_date,po_delivery_date,po.po_title,sp.company,ct.email,po_status,por.id,
-       po.id,r.requisition_number,
+		<![CDATA[select po.po,po.variation,por.order_date,po.po_delivery_date,po.po_title,sp.company,ct.email,po_status,
+       r.requisition_number as requisition_number,
        CASE WHEN r.rtf_no is null THEN '' ELSE r.rtf_no END as rtf_no,
-       CASE WHEN r.originator is null THEN '' ELSE r.originator END as originator
+       CASE WHEN r.originator is null THEN '' ELSE r.originator END as originator,orderedvariation
 from requisition r
      left outer join p_order por on r.po_id=por.id
      left outer join purchase_order po on po.po_id=por.id
      left outer join supplier_proc sp on sp.id=por.supplier_id
      left outer join contact ct on ct.supplier_id = sp.id
 where r.status=0 and po.project_id=$P{PROJECT_ID} and po.status_id=1
+union
+select po.po,po.variation,por.order_date,po.po_delivery_date,po.po_title,sp.company,ct.email,po_status,
+       ''as requisition_number,'' as rtf_no,'' as originator,orderedvariation
+from  purchase_order po
+     left outer join p_order por on po.po_id = por.id
+     left outer join supplier_proc sp on sp.id = por.supplier_id
+     left outer join contact ct on ct.supplier_id = sp.id
+where po.project_id=$P{PROJECT_ID} and po.status_id=1 and ct.status=0
+      and por.id not in ( select por.id
+                          from requisition r
+                          left outer join  p_order por on r.po_id=por.id
+                          where r.status=0 )
 order by $P!{sortMrNo}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
@@ -33,7 +45,6 @@ order by $P!{sortMrNo}]]>
 	<field name="company" class="java.lang.String"/>
 	<field name="email" class="java.lang.String"/>
 	<field name="po_status" class="java.lang.Integer"/>
-	<field name="id" class="java.lang.Long"/>
 	<field name="requisition_number" class="java.lang.String"/>
 	<field name="rtf_no" class="java.lang.String"/>
 	<field name="originator" class="java.lang.String"/>

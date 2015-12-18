@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintRequiredSecurityDeposits" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.0000000000000016"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.4641000000000028"/>
+	<property name="ireport.x" value="172"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -209,14 +209,14 @@ order by po.po]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Security</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="523" y="6" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Security</style>]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="6" width="802" height="1"/>
@@ -226,7 +226,7 @@ order by po.po]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Retention</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Security</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="683" y="6" width="50" height="12"/>
@@ -250,7 +250,7 @@ order by po.po]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="2e96a210-dc27-4326-bcf8-d8f27a4824c6" x="484" y="18" width="34" height="12"/>

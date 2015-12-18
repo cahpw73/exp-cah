@@ -33,15 +33,15 @@ public class ReportMaterialRequisition extends ReportProject {
         boolean originator = sortMap.get("originator");
         String strSort = "";
         if (mrNo){
-            strSort = "requisition_number,po.orderedvariation, ";
+            strSort = "requisition_number,po,orderedvariation, ";
             sortByName = "Mr No, Variation, ";
             showMaterialOriginal = false;
         }else if (rtfNo){
-            strSort = "rtf_no,po.orderedvariation, ";
+            strSort = "rtf_no,po,orderedvariation, ";
             sortByName = "Rtf No, Variation, ";
             showMaterialOriginal = false;
         }else if (originator){
-            strSort = "originator,po.orderedvariation, ";
+            strSort = "originator,po,orderedvariation, ";
             sortByName = "Originator, Variation, ";
             showMaterialOriginal = false;
         }

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="committedCurrenciesReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.6934217901613322"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="108"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -36,9 +36,6 @@ order by $P!{sortBy}]]>
 	<field name="company" class="java.lang.String"/>
 	<field name="po_status" class="java.lang.Integer"/>
 	<field name="id" class="java.lang.Long"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<title>
 		<band height="97" splitType="Stretch">
 			<textField isBlankWhenNull="true">
@@ -203,7 +200,7 @@ order by $P!{sortBy}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="15" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement uuid="f4b7f466-4fa7-4213-9329-4bad8453237a" positionType="Float" x="2" y="0" width="40" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
@@ -249,11 +246,14 @@ order by $P!{sortBy}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PO_Value.jasper"]]></subreportExpression>
 			</subreport>
+			<subreport>
+				<reportElement uuid="8edf6f2f-59e9-4ba8-a112-aaae17854e94" x="2" y="14" width="552" height="15"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreportCommittedCurrenciesOriginal.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
+		<band height="30"/>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="51" splitType="Stretch">
 			<staticText>

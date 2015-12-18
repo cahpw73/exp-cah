@@ -14,7 +14,7 @@ from cashflow_detail cd
      left outer join purchase_order po on po.po_id = p.id
      left outer join project_currency pc on pc.id = cd.project_currency_id
      left outer join  currency cu on cu.id = pc.currency_id
-where po.project_id = $P{projectIdFilter} and po.po=$P{poNoFilter} and c.apply_retention=true and cd.status = 0
+where po.project_id = $P{projectIdFilter} and po.po=$P{poNoFilter} and c.apply_retention_security_deposit=true and cd.status = 0
 group by cu.code]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>

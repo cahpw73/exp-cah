@@ -15,7 +15,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select po.id as po_id,po,po.variation,sp.company as supplier,ct.email,cf.percentage_security_deposit,cf.form_security_deposit,cf.expiration_date_security_deposit,po.orderedvariation
+		<![CDATA[select po.id as po_id,po,po.variation,sp.company as supplier,po.po_title,cf.percentage_security_deposit,cf.form_security_deposit,cf.expiration_date_security_deposit,po.orderedvariation
 from purchase_order po
      left outer join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
@@ -28,7 +28,7 @@ order by $P!{sortBy}]]>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
 	<field name="supplier" class="java.lang.String"/>
-	<field name="email" class="java.lang.String"/>
+	<field name="po_title" class="java.lang.String"/>
 	<field name="percentage_security_deposit" class="java.math.BigDecimal"/>
 	<field name="form_security_deposit" class="java.lang.String"/>
 	<field name="expiration_date_security_deposit" class="java.sql.Timestamp"/>
@@ -77,13 +77,6 @@ order by $P!{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{expiration_date_security_deposit}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{expiration_date_security_deposit}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8df2fa26-f591-402f-99ec-04a065296879" positionType="Float" x="234" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
-			</textField>
 			<subreport>
 				<reportElement uuid="e4cea41f-8b52-4541-98f7-81a7cc7b1658" x="409" y="1" width="70" height="12"/>
 				<subreportParameter name="patternDecimal">
@@ -106,6 +99,13 @@ order by $P!{sortBy}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "SecurityAmount.jasper"]]></subreportExpression>
 			</subreport>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6e6608fe-0a6c-49b4-9048-622638a544a1" x="235" y="1" width="170" height="12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>
