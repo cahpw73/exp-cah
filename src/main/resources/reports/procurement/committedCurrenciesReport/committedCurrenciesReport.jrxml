@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="committedCurrenciesReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.6934217901613322"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="108"/>
+	<property name="ireport.y" value="35"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -21,21 +21,11 @@
 	<parameter name="FORMAT_DATE_TIME" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="projectCurrency" class="java.lang.String"/>
+	<parameter name="showOriginal" class="java.lang.Boolean"/>
 	<queryString>
-		<![CDATA[select po,po.variation,order_date,po_delivery_date,po.po_title,sp.company,po_status,po.id
-from purchase_order po inner join p_order por on por.id=po.po_id
-inner join supplier_proc sp on sp.id=por.supplier_id
-where po.status_id=1 and po.project_id=$P{PROJECT_ID} and por.po_status=0
-order by $P!{sortBy}]]>
+		<![CDATA[select 1]]>
 	</queryString>
-	<field name="po" class="java.lang.String"/>
-	<field name="variation" class="java.lang.String"/>
-	<field name="order_date" class="java.sql.Timestamp"/>
-	<field name="po_delivery_date" class="java.sql.Timestamp"/>
-	<field name="po_title" class="java.lang.String"/>
-	<field name="company" class="java.lang.String"/>
-	<field name="po_status" class="java.lang.Integer"/>
-	<field name="id" class="java.lang.Long"/>
+	<field name="?column?" class="java.lang.Integer"/>
 	<title>
 		<band height="97" splitType="Stretch">
 			<textField isBlankWhenNull="true">
@@ -200,59 +190,55 @@ order by $P!{sortBy}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="f4b7f466-4fa7-4213-9329-4bad8453237a" positionType="Float" x="2" y="0" width="40" height="12" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph leftIndent="3"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="23e37522-c8a7-45f8-be30-688ba06b7613" positionType="Float" x="43" y="0" width="30" height="12" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="1a3f1aa9-8823-442b-9d08-eaefae85d959" positionType="Float" x="76" y="0" width="170" height="12" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement uuid="9c02706d-2042-4c22-85ec-8be0bb246101" positionType="Float" x="0" y="13" width="555" height="1" isRemoveLineWhenBlank="true"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
+		<band height="13" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{showOriginal}==true]]></printWhenExpression>
 			<subreport>
-				<reportElement uuid="21b95519-f087-4179-8a3f-a411706db522" positionType="Float" x="251" y="0" width="130" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="8edf6f2f-59e9-4ba8-a112-aaae17854e94" x="2" y="1" width="552" height="12"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sortBy">
+					<subreportParameterExpression><![CDATA[$P{sortBy}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="TIME_ZONE">
 					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="PROJECT_ID">
+					<subreportParameterExpression><![CDATA[$P{PROJECT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PO_ID">
-					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PO_Value.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="8edf6f2f-59e9-4ba8-a112-aaae17854e94" x="2" y="14" width="552" height="15"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreportCommittedCurrenciesOriginal.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="30"/>
+		<band height="15">
+			<printWhenExpression><![CDATA[$P{showOriginal}==false]]></printWhenExpression>
+			<subreport>
+				<reportElement uuid="e4ac8dce-0be6-4672-ae92-6c8576f798d1" x="2" y="1" width="552" height="12"/>
+				<subreportParameter name="FORMAT_DATE">
+					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sortBy">
+					<subreportParameterExpression><![CDATA[$P{sortBy}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PROJECT_ID">
+					<subreportParameterExpression><![CDATA[$P{PROJECT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patternDecimal">
+					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreportCommittedCurrenciesCustomize.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<pageFooter>
 		<band height="51" splitType="Stretch">
