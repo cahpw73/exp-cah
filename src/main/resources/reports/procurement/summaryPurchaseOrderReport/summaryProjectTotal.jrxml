@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="summaryProjectTotal" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a20a7a13-b620-4394-9b79-58fee17d65be">
-	<property name="ireport.zoom" value="4.594972986357222"/>
+	<property name="ireport.zoom" value="3.138428376721004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="poNoFilter" class="java.lang.String"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select cu.code,sum(cd.project_amt)as amount
+		<![CDATA[select cu.code,sum(cd.project_amt)as amount, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
 from cashflow_detail cd
      left outer join cashflow c on cd.cashflow_id=c.id
      left outer join p_order p on c.po_id=p.id
      left outer join purchase_order po on po.po_id = p.id
      left outer join project_currency pc on pc.id = cd.project_currency_id
-     left outer join  currency cu on cu.id = pc.currency_id
-where po.project_id = $P{projectIdFilter} and po.po=$P{poNoFilter} and cd.project_amt is not null
-group by cu.code
+     left outer join project pj on pj.id = po.project_id
+     left outer join project_currency pc2 on pc2.project_id=pj.id
+     left outer join  currency cu on cu.id = pc2.currency_id
+where po.project_id = $P{projectIdFilter} and po.po=$P{poNoFilter} and cd.project_amt is not null and pc2.project_default = true
+group by cu.code,pc.exchange_rate,pc2.exchange_rate
 order by cu.code]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
 	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -34,7 +38,7 @@ order by cu.code]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{amount})+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='6' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format(ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{amount},$F{exchange_rate_ini},$F{exchange_rate_default}))+"</style>"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
