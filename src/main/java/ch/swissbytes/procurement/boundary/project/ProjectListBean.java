@@ -14,10 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -65,7 +62,7 @@ public class ProjectListBean implements Serializable {
         searchTerm = "";
     }
 
-    public void calculateFreeSpace(){
+    public void calculateFreeSpace() {
         log.info("calculating free space");
         File file = new File(System.getProperty("fqmes.path.export.main.root"));
         long totalSpace = file.getTotalSpace(); //total disk space in bytes.
@@ -80,14 +77,36 @@ public class ProjectListBean implements Serializable {
         System.out.println("Space free : " + freeSpace + " bytes");
 
         System.out.println(" === mega bytes ===");
-        System.out.println("Total size : " + totalSpace /1024 /1024 + " mb");
-        System.out.println("Space free : " + usableSpace /1024 /1024 + " mb");
-        System.out.println("Space free : " + freeSpace /1024 /1024 + " mb");
+        System.out.println("Total size : " + totalSpace / 1024 / 1024 + " mb");
+        System.out.println("Space free : " + usableSpace / 1024 / 1024 + " mb");
+        System.out.println("Space free : " + freeSpace / 1024 / 1024 + " mb");
     }
 
-    public void listFolders() {
+    public void listFolderFQM() {
+        String path1824_1 = "D:\\PERDevl\\1824 - cobre panama\\300 Project Controls\\Procurement Commitments";
+        String path1824_2 = "D:\\PERDevl\\1824 - cobre panama\\500 Procurement\\Commitments to JDE";
+        String pathFQMA_1 = "D:\\PERDevl\\AFCE\\FQMEA\\300 Project Controls\\Procurement Commitments";
+        String pathFQMA_2 = "D:\\PERDevl\\AFCE\\FQMEA\\500 Procurement\\Commitments to JDE";
+        String pathPJO006_1 = "D:\\PERDevl\\PJO - Projects\\PJO006 Sentinel Trolley Assist\\300 Project Controls\\Procurement Commitments";
+        String pathPJO006_2 = "D:\\PERDevl\\PJO - Projects\\PJO006 Sentinel Trolley Assist\\500 Procurement\\Commitments to JDE";
+        Map<String, String> map = new HashMap<>();
+        map.put("path1824_1", path1824_1);
+        map.put("path1824_2", path1824_2);
+        map.put("pathFQMA_1", pathFQMA_1);
+        map.put("pathFQMA_2", pathFQMA_2);
+        map.put("pathPJO006_1", pathPJO006_1);
+        map.put("pathPJO006_2", pathPJO006_2);
+        for (Object value : map.values()) {
+            log.info("Path project to list: " + (String)value);
+            log.info(" ");
+            listFolders((String) value);
+            log.info(" ");
+        }
+    }
+
+    public void listFolders(String pathDir) {
         log.info("listing folders....");
-        String pathMain = System.getProperty("fqmes.path.export.root");
+        String pathMain = pathDir;
         File f = new File(pathMain);
         log.info("PATH " + pathMain);
         log.info("File name " + f.getName());
@@ -103,9 +122,9 @@ public class ProjectListBean implements Serializable {
                 String subPath = pathMain + File.separator + ficheros[x].getName();
                 log.info("subPath1: " + subPath);
                 File subFile = new File(subPath);
-                log.info("create var subFile1: "  + subFile.getAbsolutePath());
+                log.info("create var subFile1: " + subFile.getAbsolutePath());
                 File[] subficheros = subFile.listFiles();
-                if(subficheros!=null) {
+                if (subficheros != null) {
                     log.info("subFiles[] size: " + subficheros.length);
                     for (int i = 0; i < subficheros.length; i++) {
                         log.info("2: " + subficheros[i].getName());
@@ -114,7 +133,7 @@ public class ProjectListBean implements Serializable {
                         File subFile2 = new File(subPath2);
                         log.info("create var subFile2: " + subFile2.getAbsolutePath());
                         File[] subficheros2 = subFile2.listFiles();
-                        if(subficheros2!=null) {
+                        if (subficheros2 != null) {
                             log.info("subFiles2[] size: " + subficheros2.length);
                             for (int j = 0; j < subficheros2.length; j++) {
                                 log.info("3: " + subficheros2[j].getName());
@@ -123,10 +142,10 @@ public class ProjectListBean implements Serializable {
                                 File subFile3 = new File(subPath3);
                                 log.info("create var subFile3 " + subFile3.getAbsolutePath());
                                 File[] subficheros3 = subFile3.listFiles();
-                                if(subficheros3!=null) {
+                                if (subficheros3 != null) {
                                     log.info("subfiles3[] size: " + subficheros3.length);
                                     for (int k = 0; k < subficheros3.length; k++) {
-                                        log.info("4." + k + ": " + subficheros3[k].getName()+",   file size: "+ subficheros3[k].length());
+                                        log.info("4." + k + ": " + subficheros3[k].getName() + ",   file size: " + subficheros3[k].length());
                                     }
                                 }
                             }
@@ -139,14 +158,34 @@ public class ProjectListBean implements Serializable {
         }
     }
 
-    public void deleteFile() {
-        log.info("deleting file to testing....");
-        String pathCMS = System.getProperty("fqmes.path.export.cms.test");
-        pathCMS = pathCMS.replace("{project_field}", "test");
-        log.info("path absolute to delete file: " + pathCMS);
+    public void delete1824_1(){
+        String path1824_1 = "D:\\PERDevl\\1824 - cobre panama\\300 Project Controls\\Procurement Commitments";
+        String path1824_2 = "D:\\PERDevl\\1824 - cobre panama\\500 Procurement\\Commitments to JDE";
+        String pathFQMA_1 = "D:\\PERDevl\\AFCE\\FQMEA\\300 Project Controls\\Procurement Commitments";
+        String pathFQMA_2 = "D:\\PERDevl\\AFCE\\FQMEA\\500 Procurement\\Commitments to JDE";
+        String pathPJO006_1 = "D:\\PERDevl\\PJO - Projects\\PJO006 Sentinel Trolley Assist\\300 Project Controls\\Procurement Commitments";
+        String pathPJO006_2 = "D:\\PERDevl\\PJO - Projects\\PJO006 Sentinel Trolley Assist\\500 Procurement\\Commitments to JDE";
+        Map<String, String> map = new HashMap<>();
+        map.put("path1824_1", path1824_1);
+        map.put("path1824_2", path1824_2);
+        map.put("pathFQMA_1", pathFQMA_1);
+        map.put("pathFQMA_2", pathFQMA_2);
+        map.put("pathPJO006_1", pathPJO006_1);
+        map.put("pathPJO006_2", pathPJO006_2);
+        for (Object value : map.values()) {
+            log.info("Path project to list: " + (String)value);
+            log.info(" ");
+            deleteFile1824_1((String) value);
+            log.info(" ");
+        }
+    }
 
+    public void deleteFile1824_1(String pathDir) {
+        log.info("deleting file to testing....");
+        String pathCMS = pathDir;
+        log.info("path absolute to delete file: " + pathCMS);
         File file = new File(pathCMS + File.separator + generateFileName());
-        log.info("create var file");
+        log.info("deleting file");
         if (file.delete())
             log.info("File was deleted successfully");
         else
@@ -170,42 +209,78 @@ public class ProjectListBean implements Serializable {
         else
             log.info("File can't be deleted");
 
+        File directorio3 = new File(pathCMS.replace("\\Commitments to JDE", ""));
+        if (directorio3.delete())
+            log.info("File was deleted successfully");
+        else
+            log.info("File can't be deleted");
+
+        File directorio4 = new File(pathCMS.replace("\\500 Procurement\\Procurement Commitments", ""));
+        if (directorio4.delete())
+            log.info("File was deleted successfully");
+        else
+            log.info("File can't be deleted");
+
     }
 
-    public void createFile() {
+    public void delete1824_2(){
+        String path1824_2 = "D:\\PERDevl\\1824 - cobre panama\\500 Procurement\\Commitments to JDE";
+    }
+
+    public void createFQM(){
+        String path1824_1 = "D:\\PERDevl\\1824 - cobre panama\\300 Project Controls\\Procurement Commitments";
+        String path1824_2 = "D:\\PERDevl\\1824 - cobre panama\\500 Procurement\\Commitments to JDE";
+        String pathFQMA_1 = "D:\\PERDevl\\AFCE\\FQMEA\\300 Project Controls\\Procurement Commitments";
+        String pathFQMA_2 = "D:\\PERDevl\\AFCE\\FQMEA\\500 Procurement\\Commitments to JDE";
+        String pathPJO006_1 = "D:\\PERDevl\\PJO - Projects\\PJO006 Sentinel Trolley Assist\\300 Project Controls\\Procurement Commitments";
+        String pathPJO006_2 = "D:\\PERDevl\\PJO - Projects\\PJO006 Sentinel Trolley Assist\\500 Procurement\\Commitments to JDE";
+        Map<String, String> map = new HashMap<>();
+        map.put("path1824_1", path1824_1);
+        map.put("path1824_2", path1824_2);
+        map.put("pathFQMA_1", pathFQMA_1);
+        map.put("pathFQMA_2", pathFQMA_2);
+        map.put("pathPJO006_1", pathPJO006_1);
+        map.put("pathPJO006_2", pathPJO006_2);
+        for (Object value : map.values()) {
+            log.info("Path project to list: " + (String)value);
+            log.info(" ");
+            createFile((String) value);
+            log.info(" ");
+        }
+    }
+
+    public void createFile(String pathDir) {
         log.info("creatin file to testing.....");
 
-        String pathRootCMS = System.getProperty("fqmes.path.export.root");
-        File testFile = new File(pathRootCMS);
-        if(testFile.canRead()){
+        String pathCMS = pathDir;
+        File testFile = new File(pathCMS);
+        if (testFile.canRead()) {
             log.info("read can into root");
-        }else{
+        } else {
             log.info("read can't into root");
         }
-        if(testFile.canWrite()){
+        if (testFile.canWrite()) {
             log.info("write can into root");
-        }else{
+        } else {
             log.info("write can't into root");
         }
-        if(testFile.canExecute()){
+        if (testFile.canExecute()) {
             log.info("execute can int root");
-        }else{
+        } else {
             log.info("execute can't int root");
         }
 
-        String pathCMS = System.getProperty("fqmes.path.export.cms");
-        pathCMS = pathCMS.replace("{project_field}", "test");
         log.info("path to save file: " + pathCMS);
         FileOutputStream out = null;
         File folders = createDirectoryFiles(pathCMS);
-        if(wasCreatedDirectories){
-            if(folders.isDirectory() && folders.exists()){
+        if (wasCreatedDirectories) {
+            if (folders.isDirectory() && folders.exists()) {
                 log.info("directory exists");
-            }else{
+            } else {
                 log.info("directory NOT exists");
             }
-            log.info("folder + file path: " + folders.getAbsolutePath()+ File.separator + generateFileName());
-            File file = new File(folders.getAbsolutePath()+ File.separator + generateFileName());
+            log.info("folder + file path: " + folders.getAbsolutePath() + File.separator + generateFileName());
+            File file = new File(folders.getAbsolutePath() + File.separator + generateFileName());
             log.info("create var File: " + file.getAbsolutePath());
             try {
                 if (file.createNewFile()) {
@@ -221,10 +296,10 @@ public class ProjectListBean implements Serializable {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 try {
                     log.info("closing fileOutputStream out");
-                    if(out!=null) {
+                    if (out != null) {
                         out.close();
                         log.info("closed out");
                     }

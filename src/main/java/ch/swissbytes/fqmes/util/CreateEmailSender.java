@@ -69,9 +69,9 @@ public class CreateEmailSender implements Serializable {
         }
     }
 
-    public void createEmailToInfoErrorExportCmsOrJde(String error){
+    public void createEmailToInfoErrorExportCmsOrJde(final String error, final String messageError){
         try {
-            MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error);
+            MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error,messageError);
             sendMailExprtCmsOrJde(sendToSmacneall, multipart,sendToDevs);
             Messages.addFlashGlobalInfo("Email was sent successfully ");
             log.info("Token was generated and sent to email");
@@ -144,14 +144,14 @@ public class CreateEmailSender implements Serializable {
         return null;
     }
 
-    private MimeMultipart createMimeMultipartErrorExportCmsOrJde(final String error) {
+    private MimeMultipart createMimeMultipartErrorExportCmsOrJde(final String error,final String messageError) {
         try {
             //Create the html body
             MimeMultipart multipart = new MimeMultipart("related");
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
             StringBuilder sbHtmlText = new StringBuilder();
-            sbHtmlText.append("<p> " + "Something happened trying to export POs ?" + " </p>\n");
+            sbHtmlText.append("<p> " + messageError + " </p>\n");
             sbHtmlText.append("<br/>\n");
             sbHtmlText.append("<p> " + "Here you are the stack trace:" + " </p>\n");
             sbHtmlText.append("<p> " +  error +  " </p>\n");
