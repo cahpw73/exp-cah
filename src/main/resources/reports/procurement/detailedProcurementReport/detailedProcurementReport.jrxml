@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.4641000000000057"/>
-	<property name="ireport.x" value="166"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.771561000000007"/>
+	<property name="ireport.x" value="357"/>
+	<property name="ireport.y" value="71"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -178,52 +178,45 @@ order by po.po]]>
 	<columnHeader>
 		<band height="32" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="3" width="50" height="12"/>
+				<reportElement uuid="f76ff54b-d2e4-4556-adac-82615cd3b97c" x="0" y="3" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="52" y="3" width="50" height="12"/>
+				<reportElement uuid="5f90385b-3574-4727-ac3e-632042304738" x="40" y="3" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="122" y="3" width="100" height="12"/>
+				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="80" y="3" width="187" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="106" y="16" width="60" height="12"/>
+				<reportElement uuid="325db602-aa5d-4965-85f9-56e00813da74" x="80" y="16" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Cost Code</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="368" y="3" width="153" height="12"/>
+				<reportElement uuid="6143d663-01a9-4fbd-a883-504ee6df0e3f" x="290" y="3" width="211" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="609" y="16" width="45" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Currency</style>]]></text>
-			</staticText>
 			<line>
 				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="1" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="656" y="16" width="45" height="12"/>
+				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="637" y="16" width="50" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -233,74 +226,60 @@ order by po.po]]>
 				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="30" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="547" y="3" width="60" height="12"/>
+				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="560" y="3" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Status</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fc1eb6cc-76a8-4af1-8825-10d150c7059f" x="609" y="3" width="45" height="12"/>
+				<reportElement uuid="63882a48-d613-40dd-a325-9b38a4632fc0" x="694" y="3" width="50" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="63882a48-d613-40dd-a325-9b38a4632fc0" x="705" y="3" width="45" height="12"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="1fe69226-f15b-4a71-89c1-26440fa292e3" x="754" y="3" width="45" height="12"/>
+				<reportElement uuid="1fe69226-f15b-4a71-89c1-26440fa292e3" x="751" y="3" width="50" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b5562917-018f-46f7-bf65-9fa6019dc490" x="754" y="16" width="45" height="12"/>
+				<reportElement uuid="b5562917-018f-46f7-bf65-9fa6019dc490" x="751" y="16" width="50" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="46cc527b-7f19-4be5-a92c-664fd2c4c516" x="705" y="16" width="45" height="12"/>
+				<reportElement uuid="46cc527b-7f19-4be5-a92c-664fd2c4c516" x="694" y="16" width="50" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total Cost</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="397cbe38-6f80-4d11-b682-a6fe56f061b1" x="167" y="16" width="40" height="12"/>
+				<reportElement uuid="397cbe38-6f80-4d11-b682-a6fe56f061b1" x="141" y="16" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="be88f018-84da-4661-920d-3221adac7b64" x="228" y="16" width="40" height="12"/>
+				<reportElement uuid="be88f018-84da-4661-920d-3221adac7b64" x="192" y="16" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="08d0ee5d-b3f2-4d62-ade7-d3bf2f83da88" x="273" y="16" width="210" height="12"/>
+				<reportElement uuid="08d0ee5d-b3f2-4d62-ade7-d3bf2f83da88" x="238" y="16" width="210" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item Description</style>]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="a428440d-f198-45a5-8c08-746435a1243a" x="229" y="3" width="120" height="12"/>
-				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
-				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -362,7 +341,7 @@ order by po.po]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "totalOfOrderSubreport.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="0b566802-83c7-449a-830d-1e02f131c2d5" positionType="Float" mode="Transparent" x="572" y="28" width="100" height="12"/>
+				<reportElement uuid="0b566802-83c7-449a-830d-1e02f131c2d5" positionType="Float" mode="Transparent" x="554" y="28" width="100" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 					<paragraph rightIndent="3"/>
@@ -370,7 +349,7 @@ order by po.po]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total of Order:</style>]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b7191232-12e3-4667-961a-9c8f02e59822" positionType="Float" mode="Transparent" x="672" y="28" width="30" height="12"/>
+				<reportElement uuid="b7191232-12e3-4667-961a-9c8f02e59822" positionType="Float" mode="Transparent" x="654" y="28" width="30" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph rightIndent="2"/>

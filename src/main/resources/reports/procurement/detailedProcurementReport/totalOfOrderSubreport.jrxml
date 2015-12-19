@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totalOfOrderSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4103b2f4-fa66-4fe6-92e5-9357090839bd">
 	<property name="ireport.zoom" value="1.9487171000000016"/>
-	<property name="ireport.x" value="652"/>
+	<property name="ireport.x" value="416"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -42,7 +42,7 @@ order by ss.ordered]]>
 	<columnFooter>
 		<band height="12" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement uuid="4e9b287a-9549-4c5b-a488-73de91d93799" x="695" y="0" width="67" height="12"/>
+				<reportElement uuid="4e9b287a-9549-4c5b-a488-73de91d93799" x="694" y="0" width="50" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="6" isBold="true"/>
 				</textElement>
