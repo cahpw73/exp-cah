@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.771561000000007"/>
-	<property name="ireport.x" value="357"/>
-	<property name="ireport.y" value="71"/>
+	<property name="ireport.x" value="368"/>
+	<property name="ireport.y" value="21"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -216,7 +216,7 @@ order by po.po]]>
 				<reportElement uuid="ff5288b9-8424-4b9a-ac16-5955136280e5" x="0" y="1" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="637" y="16" width="50" height="12"/>
+				<reportElement uuid="c8bfb626-2d00-415a-bfe8-19b883612aff" x="589" y="16" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -226,35 +226,35 @@ order by po.po]]>
 				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="30" width="802" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="560" y="3" width="60" height="12"/>
+				<reportElement uuid="863c463b-772b-407c-a683-11077e572619" x="520" y="3" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Status</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="63882a48-d613-40dd-a325-9b38a4632fc0" x="694" y="3" width="50" height="12"/>
+				<reportElement uuid="63882a48-d613-40dd-a325-9b38a4632fc0" x="660" y="3" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1fe69226-f15b-4a71-89c1-26440fa292e3" x="751" y="3" width="50" height="12"/>
+				<reportElement uuid="1fe69226-f15b-4a71-89c1-26440fa292e3" x="731" y="3" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b5562917-018f-46f7-bf65-9fa6019dc490" x="751" y="16" width="50" height="12"/>
+				<reportElement uuid="b5562917-018f-46f7-bf65-9fa6019dc490" x="731" y="16" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="46cc527b-7f19-4be5-a92c-664fd2c4c516" x="694" y="16" width="50" height="12"/>
+				<reportElement uuid="46cc527b-7f19-4be5-a92c-664fd2c4c516" x="660" y="16" width="70" height="12"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -321,7 +321,7 @@ order by po.po]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "detailedPOSubreport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="faa4882f-e8b5-4ce1-950b-6963bb26702a" positionType="Float" x="0" y="28" width="800" height="12"/>
+				<reportElement uuid="faa4882f-e8b5-4ce1-950b-6963bb26702a" positionType="Float" x="660" y="29" width="70" height="12"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -341,7 +341,7 @@ order by po.po]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "totalOfOrderSubreport.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="0b566802-83c7-449a-830d-1e02f131c2d5" positionType="Float" mode="Transparent" x="554" y="28" width="100" height="12"/>
+				<reportElement uuid="0b566802-83c7-449a-830d-1e02f131c2d5" positionType="Float" mode="Transparent" x="524" y="28" width="100" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7"/>
 					<paragraph rightIndent="3"/>
@@ -349,7 +349,7 @@ order by po.po]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Total of Order:</style>]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b7191232-12e3-4667-961a-9c8f02e59822" positionType="Float" mode="Transparent" x="654" y="28" width="30" height="12"/>
+				<reportElement uuid="b7191232-12e3-4667-961a-9c8f02e59822" positionType="Float" mode="Transparent" x="624" y="28" width="30" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph rightIndent="2"/>
