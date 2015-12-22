@@ -10,6 +10,7 @@ import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.report.dtos.ClausesReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
+import ch.swissbytes.procurement.util.ImageUtil;
 import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,7 @@ import org.xml.sax.SAXParseException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -187,9 +189,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private void loadParamLogos() {
+        ImageUtil imageUtil = new ImageUtil();
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null) {
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
-            addParameters("headerLogo", logo);
+            if(imageUtil.hasDimensionHeaderLogoCorrect(po.getProjectEntity().getClient().getHeaderLogo().getFile())){
+                InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
+                addParameters("headerLogo", logo);
+            }else{
+                BufferedImage newHeaderLogo = imageUtil.getNewImageResized(po.getProjectEntity().getClient().getHeaderLogo().getFile());
+                InputStream logo = imageUtil.convertBufferedImageToInputStream(newHeaderLogo);
+                addParameters("headerLogo", logo);
+            }
+
         }
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientLogo() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
