@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProjectAmountTotalSubReport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e6731495-118d-4c6a-8a2f-04a1f3cbc27f">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select cu.code,sum(cd.project_amt)as amount, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
+from cashflow_detail cd
+     left outer join cashflow c on cd.cashflow_id=c.id
+     left outer join p_order p on c.po_id=p.id
+     left outer join purchase_order po on po.po_id = p.id
+     left outer join project_currency pc on pc.id = cd.project_currency_id
+     left outer join project pj on pj.id = po.project_id
+     left outer join project_currency pc2 on pc2.project_id=pj.id
+     left outer join  currency cu on cu.id = pc2.currency_id
+where po.project_id = $P{projectIdFilter} and cd.project_amt is not null and pc2.project_default = true
+      and po.status_id=1 and cd.status=0 and pc.status=0 and pc2.status=0
+group by cu.code,pc.exchange_rate,pc2.exchange_rate
+order by cu.code]]>
+	</queryString>
+	<field name="code" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{amount},$F{exchange_rate_ini},$F{exchange_rate_default})]]></variableExpression>
+	</variable>
+	<columnFooter>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="60594423-7d25-4bf9-8853-e5607218c8f2" positionType="Float" x="20" y="0" width="70" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1})+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="18ba7c8b-2a3a-49d6-bb7a-dfb843d000b2" positionType="Float" x="0" y="0" width="20" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{code}+"</style>":""]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
