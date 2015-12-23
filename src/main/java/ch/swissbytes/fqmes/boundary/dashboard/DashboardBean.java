@@ -95,6 +95,8 @@ public class DashboardBean implements Serializable {
             percentage = Math.round(percentage*100.0)/100.0;
             percentageOpenPOs = String.valueOf(percentage) + "%";
             openPOs = numberOpenPOs + " / " + percentageOpenPOs;
+        }else{
+            openPOs = "0 / 0.0%";
         }
     }
 
@@ -105,6 +107,8 @@ public class DashboardBean implements Serializable {
             percentage = Math.round(percentage*100.0)/100.0;
             percentageCompletedPOs = String.valueOf(percentage) + "%";
             completedPOs = numberCompletedPOs + " / " + percentageCompletedPOs;
+        }else{
+            completedPOs = "0 / 0.0%";
         }
     }
 
