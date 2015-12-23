@@ -455,25 +455,42 @@ public class DateUtil {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println("//**********************DIA");
-        System.out.println("Last Day Of PreviousMonth: "+getLastDayOfPrevious2Month());
-        System.out.println("Last date default: "+getLastDateDefault());
+    /**************************/
 
-        System.out.println("Max hour: "+getDateMaxHour(new Date()));
-        System.out.println("Min hour: "+getDateMinHour(new Date()));
-        System.out.println("getPreviousDay: "+getPreviousDay(1));
-        System.out.println("Date Iso: "+getStringDateIsoToDate("2015-01-06T14:40Z"));
-        System.out.println("N days sum: " + sumNDays(new Date(),1));
+    public static Date getNextMoth(int moths) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH,moths);
+        cal.set(cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.getActualMinimum(Calendar.DAY_OF_MONTH),
+                cal.getMinimum(Calendar.HOUR_OF_DAY),
+                cal.getMinimum(Calendar.MINUTE),
+                cal.getMinimum(Calendar.SECOND));
+        return cal.getTime();
+    }
 
-
-        String s = "Colón";
-        try {
-            byte[] b = s.getBytes("LATIN1");
-            System.out.println("" + s);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+    public static Date getLastDayOfMoth(Date date){
+        Date  fromDate = date;
+        Calendar c = Calendar.getInstance();
+        c.setTime(fromDate);
+        c.setFirstDayOfWeek(Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        fromDate = c.getTime();
+        Date result = null;
+        if(fromDate != null){
+            DateTime dateTime = new DateTime(fromDate);
+            dateTime = dateTime.withTime(MAX_HOURS_IN_DAY, MAX_MINUTES_IN_HOUR, MAX_SECONDS_IN_MINUTE, MAX_MILLIS_IN_SECOND);
+            result = dateTime.toDate();
         }
 
+        return result;
+    }
+
+
+
+    public static void main(String[] args) {
+        System.out.println("//**********************");
+        System.out.println("getNextMoth: " + getNextMoth(3));
+        System.out.println("lastDay: " + getLastDayOfMoth(getNextMoth(3)));
     }
 }

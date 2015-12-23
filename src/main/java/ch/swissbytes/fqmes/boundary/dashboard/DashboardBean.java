@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.procurement.util.DateUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -38,10 +40,14 @@ public class DashboardBean implements Serializable {
     private String totalOfPOs;
 
     private String completedPOs;
-
     private String numberCompletedPOs;
-
     private String percentageCompletedPOs;
+
+    private String openPOs;
+    private String numberOpenPOs;
+    private String percentageOpenPOs;
+
+    private String deliveryNextMoth;
 
     ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
@@ -60,9 +66,29 @@ public class DashboardBean implements Serializable {
 
     private void loadDataOfDashboard() {
         totalOfPOs = String.valueOf(poService.getTotalNumberOfPOs(projectSelected != null ? projectSelected.getId() : -1));
-        loadNumberPOsCompleted();
+        loadNumberCompletedPOs();
+        loadNumberOpenPOs();
+        loadNumberDeliveryNextMoth();
     }
-    private void loadNumberPOsCompleted(){
+
+    private void loadNumberDeliveryNextMoth() {
+        Date deliveryDateIni = DateUtil.getNextMoth(1);
+        Date deliveryDateEnd = DateUtil.getLastDayOfMoth(deliveryDateIni);
+        Long projectId = projectSelected != null ? projectSelected.getId() : -1;
+        deliveryNextMoth = String.valueOf(poService.getNumberDeliveryNextMoth(projectId,deliveryDateIni,deliveryDateEnd));
+    }
+
+    private void loadNumberOpenPOs() {
+        numberOpenPOs = String.valueOf(poService.getNumberOfOpenPOs(projectSelected != null ? projectSelected.getId() : -1));
+        Double percentage = (Double.parseDouble(numberOpenPOs) / Double.parseDouble(totalOfPOs)) * 100;
+        if (!percentage.isNaN()){
+            percentage = Math.round(percentage*100.0)/100.0;
+            percentageOpenPOs = String.valueOf(percentage) + "%";
+            openPOs = numberOpenPOs + " / " + percentageOpenPOs;
+        }
+    }
+
+    private void loadNumberCompletedPOs(){
         numberCompletedPOs = String.valueOf(poService.getNumberOfCompletedPOs(projectSelected != null ? projectSelected.getId() : -1));
         Double percentage = (Double.parseDouble(numberCompletedPOs) / Double.parseDouble(totalOfPOs)) * 100;
         if (!percentage.isNaN()){
@@ -124,5 +150,37 @@ public class DashboardBean implements Serializable {
 
     public void setCompletedPOs(String completedPOs) {
         this.completedPOs = completedPOs;
+    }
+
+    public String getNumberOpenPOs() {
+        return numberOpenPOs;
+    }
+
+    public void setNumberOpenPOs(String numberOpenPOs) {
+        this.numberOpenPOs = numberOpenPOs;
+    }
+
+    public String getPercentageOpenPOs() {
+        return percentageOpenPOs;
+    }
+
+    public void setPercentageOpenPOs(String percentageOpenPOs) {
+        this.percentageOpenPOs = percentageOpenPOs;
+    }
+
+    public String getOpenPOs() {
+        return openPOs;
+    }
+
+    public void setOpenPOs(String openPOs) {
+        this.openPOs = openPOs;
+    }
+
+    public String getDeliveryNextMoth() {
+        return deliveryNextMoth;
+    }
+
+    public void setDeliveryNextMoth(String deliveryNextMoth) {
+        this.deliveryNextMoth = deliveryNextMoth;
     }
 }

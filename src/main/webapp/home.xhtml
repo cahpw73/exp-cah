@@ -91,12 +91,48 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        hola
+                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px;">
+                            <div style="float: left">
+                                <h:graphicImage library="img" name="NoImage.png"
+                                                width="200"
+                                                styleClass="logo-procurement-preview"
+                                                height="200"/>
+                            </div>
+                            <div style="float: left; margin-top: 40px;">
+                                <div>
+                                    <h:outputText value="#{dashboardBean.openPOs}" style="font-size: 25pt; font-weight: bold;"/>
+                                </div>
+                                <div style="margin-top: 15px;">
+                                    <h:outputText value="#{msgs['dashboard.label.open.pos']}" style="font-weight: bold;"/>
+                                </div>
+                                <div style="margin-top: 15px; text-align: right;">
+                                    <p:commandLink value="#{msgs['dashboard.label.more']}"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        hola
+                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px;">
+                            <div style="float: left">
+                                <h:graphicImage library="img" name="NoImage.png"
+                                                width="200"
+                                                styleClass="logo-procurement-preview"
+                                                height="200"/>
+                            </div>
+                            <div style="float: left; margin-top: 40px;">
+                                <div>
+                                    <h:outputText value="#{dashboardBean.deliveryNextMoth}" style="font-size: 25pt; font-weight: bold;"/>
+                                </div>
+                                <div style="margin-top: 15px;">
+                                    <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}" style="font-weight: bold;"/>
+                                </div>
+                                <div style="margin-top: 15px; text-align: right;">
+                                    <p:commandLink value="#{msgs['dashboard.label.more']}"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-xs-4">
                         hola

@@ -135,6 +135,7 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     public void setProcManagerDetail(String procManagerDetail) {
         this.procManagerDetail = procManagerDetail;
     }
+
     @Column(name = "po_status")
     public ProcurementStatus getPoProcStatus() {
         return poProcStatus;

@@ -355,12 +355,14 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT COUNT(po.id) ");
         sb.append(" FROM PurchaseOrderEntity po ");
-        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
         sb.append(" GROUP BY po.id");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("PROJECT_ID", projectId);
+        parameters.put("COMMITTED",ProcurementStatus.COMMITTED);
         return super.findBy(sb.toString(), parameters).size();
     }
 
@@ -379,6 +381,46 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
         parameters.put("PROJECT_ID", projectId);
         return super.findBy(sb.toString(), parameters).size();
+    }
+
+    public int getNumberOfOpenPOs(Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT COUNT(po.id) ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND po.purchaseOrderStatus != :COMPLETED");
+        sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" GROUP BY po.id");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ENABLED", StatusEnum.ENABLE.getId());
+        parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
+        parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
+        parameters.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), parameters).size();
+    }
+
+    public int getNumberDeliveryNextMoth(Long projectId,Date nextMothIni,Date nextMothEnd) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT COUNT(po.id) ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND po.purchaseOrderStatus = :COMPLETED ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" AND po.poExpeditingDeliveryDate <= :NEXT_MOTH_END ");
+        sb.append(" AND po.poExpeditingDeliveryDate >= :NEXT_MOTH_INI ");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ENABLED", StatusEnum.ENABLE.getId());
+        parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
+        parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
+        parameters.put("PROJECT_ID", projectId);
+        parameters.put("NEXT_MOTH_INI", nextMothIni);
+        parameters.put("NEXT_MOTH_END", nextMothEnd);
+        List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
+        Object object = list.get(0);
+        Long result = (Long)object;
+        return result.intValue();
     }
 
     public void resetActivity(PurchaseOrderEntity purchaseOrderEntity) {
