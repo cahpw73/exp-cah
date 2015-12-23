@@ -457,7 +457,7 @@ public class DateUtil {
 
     /**************************/
 
-    public static Date getNextMoth(int moths) {
+    public static Date getNextNMoth(int moths) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH,moths);
         cal.set(cal.get(Calendar.YEAR),
@@ -490,7 +490,7 @@ public class DateUtil {
 
     public static void main(String[] args) {
         System.out.println("//**********************");
-        System.out.println("getNextMoth: " + getNextMoth(3));
-        System.out.println("lastDay: " + getLastDayOfMoth(getNextMoth(3)));
+        System.out.println("getNextMoth: " + getNextNMoth(3));
+        System.out.println("lastDay: " + getLastDayOfMoth(getNextNMoth(3)));
     }
 }

@@ -49,6 +49,8 @@ public class DashboardBean implements Serializable {
 
     private String deliveryNextMoth;
 
+    private String deliveryNext3Moth;
+
     ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
 
@@ -69,10 +71,18 @@ public class DashboardBean implements Serializable {
         loadNumberCompletedPOs();
         loadNumberOpenPOs();
         loadNumberDeliveryNextMoth();
+        loadNumberDeliveryNext3Moth();
+    }
+
+    private void loadNumberDeliveryNext3Moth() {
+        Date deliveryDateIni = DateUtil.getNextNMoth(3);
+        Date deliveryDateEnd = DateUtil.getLastDayOfMoth(deliveryDateIni);
+        Long projectId = projectSelected != null ? projectSelected.getId() : -1;
+        deliveryNext3Moth = String.valueOf(poService.getNumberDeliveryNextMoth(projectId,deliveryDateIni,deliveryDateEnd));
     }
 
     private void loadNumberDeliveryNextMoth() {
-        Date deliveryDateIni = DateUtil.getNextMoth(1);
+        Date deliveryDateIni = DateUtil.getNextNMoth(1);
         Date deliveryDateEnd = DateUtil.getLastDayOfMoth(deliveryDateIni);
         Long projectId = projectSelected != null ? projectSelected.getId() : -1;
         deliveryNextMoth = String.valueOf(poService.getNumberDeliveryNextMoth(projectId,deliveryDateIni,deliveryDateEnd));
@@ -182,5 +192,13 @@ public class DashboardBean implements Serializable {
 
     public void setDeliveryNextMoth(String deliveryNextMoth) {
         this.deliveryNextMoth = deliveryNextMoth;
+    }
+
+    public String getDeliveryNext3Moth() {
+        return deliveryNext3Moth;
+    }
+
+    public void setDeliveryNext3Moth(String deliveryNext3Moth) {
+        this.deliveryNext3Moth = deliveryNext3Moth;
     }
 }
