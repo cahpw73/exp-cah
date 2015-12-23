@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.fqmes.report.ReportBean;
 import ch.swissbytes.procurement.util.DateUtil;
 
 import javax.annotation.PostConstruct;
@@ -13,9 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -32,6 +31,9 @@ public class DashboardBean implements Serializable {
 
     @Inject
     private PurchaseOrderService poService;
+
+    @Inject
+    private ReportBean reportBean;
 
     private ProjectEntity projectSelected;
 
@@ -63,7 +65,29 @@ public class DashboardBean implements Serializable {
 
     @PreDestroy
     public void destroy() {
+        log.info("Destroy DashboardBean");
+    }
 
+    public void refreshDataOfDashboard() {
+        loadDataOfDashboard();
+    }
+
+    public String getTitleDashboard() {
+        String bundleStr = bundle.getString("dashboard.main.title");
+        String projectStr = projectSelected != null ? projectSelected.getProjectNumber() : "";
+        return bundleStr + " " + projectStr;
+    }
+
+    public void printDashboard(){
+        Map<String,String> parametersDashboard = new HashMap<>();
+        parametersDashboard.put("totalOfPOs",totalOfPOs);
+        parametersDashboard.put("completedPOs",completedPOs);
+        parametersDashboard.put("openPOs",openPOs);
+        parametersDashboard.put("deliveryNextMoth",deliveryNextMoth);
+        parametersDashboard.put("deliveryNext3Moth",deliveryNext3Moth);
+        parametersDashboard.put("mrrsOutstanding","0");
+        parametersDashboard.put("dashboardTitle",getTitleDashboard());
+        reportBean.printReportDashboard(parametersDashboard);
     }
 
     private void loadDataOfDashboard() {
@@ -110,16 +134,6 @@ public class DashboardBean implements Serializable {
         }else{
             completedPOs = "0 / 0.0%";
         }
-    }
-
-    public void refreshDataOfDashboard() {
-        loadDataOfDashboard();
-    }
-
-    public String getTitleDashboard() {
-        String bundleStr = bundle.getString("dashboard.main.title");
-        String projectStr = projectSelected != null ? projectSelected.getProjectNumber() : "";
-        return bundleStr + " " + projectStr;
     }
 
     public ProjectEntity getProjectSelected() {
