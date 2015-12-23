@@ -106,15 +106,15 @@ public class DashboardBean implements Serializable {
     }
 
     private void loadNumberDeliveryNext3Moth() {
-        Date deliveryDateIni = DateUtil.getNextNMoth(3);
-        Date deliveryDateEnd = DateUtil.getLastDayOfMoth(deliveryDateIni);
+        Date deliveryDateIni = DateUtil.getDateMinHour(DateUtil.getNextNDay(1));
+        Date deliveryDateEnd = DateUtil.getDateMaxHour(DateUtil.getLastDayOfTheFollowingMoth(DateUtil.getNextNDay(1), 90));
         Long projectId = projectSelected != null ? projectSelected.getId() : -1;
         deliveryNext3Moth = String.valueOf(poService.getNumberDeliveryNextMoth(projectId,deliveryDateIni,deliveryDateEnd));
     }
 
     private void loadNumberDeliveryNextMoth() {
-        Date deliveryDateIni = DateUtil.getNextNMoth(1);
-        Date deliveryDateEnd = DateUtil.getLastDayOfMoth(deliveryDateIni);
+        Date deliveryDateIni = DateUtil.getDateMinHour(DateUtil.getNextNDay(1));
+        Date deliveryDateEnd = DateUtil.getDateMaxHour(DateUtil.getLastDayOfTheFollowingMoth(DateUtil.getNextNDay(1),30));
         Long projectId = projectSelected != null ? projectSelected.getId() : -1;
         deliveryNextMoth = String.valueOf(poService.getNumberDeliveryNextMoth(projectId,deliveryDateIni,deliveryDateEnd));
     }

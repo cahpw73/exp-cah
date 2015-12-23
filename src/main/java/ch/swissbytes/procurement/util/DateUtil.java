@@ -486,11 +486,33 @@ public class DateUtil {
         return result;
     }
 
+    public static Date getNextNDay(int days) {
+        Date currentDay = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDay);
+        cal.add(Calendar.DATE,days);
+        return cal.getTime();
+    }
 
+    public static Date getLastDayOfTheFollowingMoth(Date currentDate,int days){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        cal.add(Calendar.DATE,days);
+        return cal.getTime();
+    }
 
     public static void main(String[] args) {
         System.out.println("//**********************");
-        System.out.println("getNextMoth: " + getNextNMoth(3));
-        System.out.println("lastDay: " + getLastDayOfMoth(getNextNMoth(3)));
+        System.out.println("getNextNDay: " + getNextNDay(1));
+        System.out.println("min hour: " + getDateMinHour(getNextNDay(1)));
+        System.out.println("max hour: " + getDateMaxHour(getNextNDay(1)));
+        System.out.println(" ");
+        System.out.println("getLastDayOfTheFollowingMoth: " + getLastDayOfTheFollowingMoth(getNextNDay(1),30));
+        System.out.println("max hour: " + getDateMaxHour(getLastDayOfTheFollowingMoth(getNextNDay(1),30)));
+        System.out.println(" ");
+        System.out.println("getLastDayOfTheFollowingMoth: " + getLastDayOfTheFollowingMoth(getNextNDay(1),90));
+        System.out.println("max hour: " + getDateMaxHour(getLastDayOfTheFollowingMoth(getNextNDay(1),90)));
+
+
     }
 }
