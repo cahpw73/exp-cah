@@ -558,7 +558,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dtos.add(dto);
     }
 
-    private void loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
+    private void  loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("Original Order Value");
 
@@ -602,7 +602,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 "from item sp left outer join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left outer join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "left outer join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id = 1 and po.status_id = 1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
+                "where sp.status_id = 1 and po.status_id = 1 and (cu.id is not null or cu.code is not null or cu.symbol is not null) " +
+                "and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
                 "group by cu.id,cu.code,cu.symbol,po.orderedvariation,po.variation\n" +
                 "order by po.orderedvariation");
         return query.getResultList();
