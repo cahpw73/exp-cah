@@ -13,7 +13,7 @@
 	<pageHeader>
 		<band height="357" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="7469391a-f959-4afa-846a-dffd3d650510" x="52" y="62" width="230" height="129"/>
+				<reportElement uuid="7469391a-f959-4afa-846a-dffd3d650510" x="52" y="62" width="230" height="129" backcolor="#800080"/>
 			</rectangle>
 			<rectangle>
 				<reportElement uuid="a0b21ff3-c75c-4172-b9dc-8fa155bfac05" x="282" y="62" width="230" height="129"/>

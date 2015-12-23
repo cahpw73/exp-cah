@@ -425,7 +425,8 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         sb.append(" AND NOT (po.purchaseOrderStatus = :COMPLETED ");
         sb.append(" OR po.purchaseOrderStatus = :DELETED ");
-        sb.append(" OR po.purchaseOrderStatus = :CANCELLED) ");
+        sb.append(" OR po.purchaseOrderStatus = :CANCELLED ");
+        sb.append(" OR po.purchaseOrderStatus = :MMR_REQUIRED) ");
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
         sb.append(" AND po.poExpeditingDeliveryDate <= :NEXT_MOTH_END ");
         sb.append(" AND po.poExpeditingDeliveryDate >= :NEXT_MOTH_INI ");
@@ -434,6 +435,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
         parameters.put("DELETED", ExpeditingStatusEnum.DELETED);
         parameters.put("CANCELLED", ExpeditingStatusEnum.CANCELLED);
+        parameters.put("MMR_REQUIRED",ExpeditingStatusEnum.MMR_REQUIRED);
         parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
         parameters.put("PROJECT_ID", projectId);
         parameters.put("NEXT_MOTH_INI", nextMothIni);

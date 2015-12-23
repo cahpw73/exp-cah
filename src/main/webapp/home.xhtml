@@ -13,6 +13,12 @@
     <ui:define name="body">
         First Quantum Minerals
         <h:form id="dashboardForm">
+            <div class="col-xs-3">
+
+            </div>
+            <div class="col-xs-9">
+
+            </div>
             <div style="text-align: center">
                 <div style="display: inline-block;">
                     <h:outputLabel value="#{msgs['dashboard.label.select.project']}" style="float: left;"/>
@@ -49,13 +55,19 @@
             <h:panelGroup id="dashboardPnl">
                 <div class="row">
                     <div class="col-xs-4" style="padding-right: 0px;">
-                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 60px; width: 100%;">
+                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; background-color: #800080;">
                             <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
                                                 width="200"
                                                 styleClass="logo-procurement-preview"
                                                 height="200"/>
                             </div>
+                            <div style="float: left; height: 200px; position:relative;">
+                                <div style="border-left:1px solid #ffffff; position: absolute; top: 45px; left: 50%; height: 103px; width: 50%; margin: -25%;">
+
+                                </div>
+                            </div>
+
                             <div style="float: left; margin-top: 40px;">
                                 <div>
                                     <h:outputText value="#{dashboardBean.totalOfPOs}" style="font-size: 25pt; font-weight: bold;"/>
@@ -70,7 +82,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4" style="padding-right: 0px; padding-left: 0px">
-                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px; width: 100%;">
+                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; background-color: #ffd700">
                             <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
                                                 width="200"
@@ -91,7 +103,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4" style=" padding-left: 0px">
-                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px; width: 100%;">
+                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; background-color: #add8e6;">
                             <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
                                                 width="200"
@@ -114,7 +126,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4" style="padding-right: 0px;">
-                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px; width: 100%;">
+                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; background-color: #32cd32 ">
                             <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
                                                 width="200"
@@ -135,7 +147,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4" style="padding-right: 0px; padding-left: 0px">
-                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px; width: 100%;">
+                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; background-color: #ffa500">
                             <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
                                                 width="200"
@@ -156,7 +168,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4" style="padding-left: 0px;">
-                        <div style="border-style:solid; border-width: 1px; float: left; padding-right: 40px; width: 100%;">
+                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; background-color: #ffc0cb">
                             <div style="float: left">
                                 <h:graphicImage library="img" name="NoImage.png"
                                                 width="200"
