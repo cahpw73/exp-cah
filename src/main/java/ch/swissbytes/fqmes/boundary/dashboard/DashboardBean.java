@@ -81,6 +81,11 @@ public class DashboardBean implements Serializable {
         return bundleStr + " " + projectStr;
     }
 
+    public String getTitleProject(){
+        String projectStr = projectSelected != null ? projectSelected.getProjectNumber() : "";
+        return  projectStr;
+    }
+
     public void printDashboard(){
         log.info("printing dashboard report");
         Map<String,String> parametersDashboard = new HashMap<>();

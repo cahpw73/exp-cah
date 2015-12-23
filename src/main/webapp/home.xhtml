@@ -76,7 +76,8 @@
                                                 <h:outputText value="#{msgs['dashboard.label.total.of.pos']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('totalPOsDlg').show();"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('totalPOsDlg').show();"
+                                                               style="color: #000000" update=":totalPOsGrId"/>
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +100,7 @@
                                                 <h:outputText value="#{msgs['dashboard.label.completed.pos']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('completedPOsDlg').show();"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('completedPOsDlg').show();" style="color: #000000"/>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +123,7 @@
                                                 <h:outputText value="#{msgs['dashboard.label.open.pos']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('openPOsDlg').show();"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('openPOsDlg').show();" style="color: #000000"/>
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +148,7 @@
                                                 <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNextMothDlg').show();"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNextMothDlg').show();" style="color: #000000"/>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +171,7 @@
                                                 <h:outputText value="#{msgs['dashboard.label.deliveries.3.next.moth']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNext3MothDlg').show();"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNext3MothDlg').show();" style="color: #000000"/>
                                             </div>
                                         </div>
                                     </div>
@@ -193,7 +194,7 @@
                                                 <h:outputText value="#{msgs['dashboard.label.mrrs.outstanding']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('mrrOutstandingDlg').show();"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('mrrOutstandingDlg').show();" style="color: #000000"/>
                                             </div>
                                         </div>
                                     </div>
@@ -206,38 +207,38 @@
         </div>
 
         <p:dialog id="totalPOsId" widgetVar="totalPOsDlg" height="100" resizable="false">
-            <div>
-                <div class="col-md-1">
-                    <h:graphicImage name="img/icon-info.jpg"/>
-                </div>
-                <div class="col-md-11">
-                    <strong>#{msgs['dashboard.label.total.of.pos']}</strong>
+            <h:panelGroup id="totalPOsGrId">
+                <div>
+                    <div class="col-md-1" style="padding-left: 1px">
+                        <h:graphicImage name="img/icon-info.jpg"/>
+                    </div>
+                    <div class="col-md-11">
+                        <strong>#{msgs['dashboard.label.total.of.pos']}</strong>
+                        <br/>
+                        The total numbers of existing POs in the project
+                    </div>
+                    <div class="clearfix"></div>
                     <br/>
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
-                </div>
-                <div class="clearfix"></div>
-                <br/>
-                <div class="col-md-11">
-                    <div class="pull-right">
-                        <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
-                                onclick="PF('totalPOsDlg').hide();">
-                            #{msgs['lbl.close']}
-                        </button>
+                    <div class="col-md-11">
+                        <div class="pull-right">
+                            <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
+                                    onclick="PF('totalPOsDlg').hide();">
+                                #{msgs['lbl.close']}
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </h:panelGroup>
         </p:dialog>
         <p:dialog id="completedPOsId" widgetVar="completedPOsDlg" height="100" resizable="false">
             <div>
-                <div class="col-md-1">
+                <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
                 </div>
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.completed.pos']}</strong>
                     <br/>
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
+                    Lorem ipsum ad his scripta blandit partiendo
                 </div>
                 <div class="clearfix"></div>
                 <br/>
@@ -253,14 +254,13 @@
         </p:dialog>
         <p:dialog id="openPOsId" widgetVar="openPOsDlg" height="100" resizable="false">
             <div>
-                <div class="col-md-1">
+                <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
                 </div>
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.open.pos']}</strong>
                     <br/>
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
+                    Lorem ipsum ad his scripta blandit partiendo
                 </div>
                 <div class="clearfix"></div>
                 <br/>
@@ -276,14 +276,13 @@
         </p:dialog>
         <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg" height="100" resizable="false">
             <div>
-                <div class="col-md-1">
+                <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
                 </div>
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.delivery.next.moth']}</strong>
                     <br/>
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
+                    Lorem ipsum ad his scripta blandit partiendo
                 </div>
                 <div class="clearfix"></div>
                 <br/>
@@ -299,14 +298,13 @@
         </p:dialog>
         <p:dialog id="deliveryNext3MothId" widgetVar="deliveryNext3MothDlg" height="100" resizable="false">
             <div>
-                <div class="col-md-1">
+                <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
                 </div>
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.deliveries.3.next.moth']}</strong>
                     <br/>
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
+                    Lorem ipsum ad his scripta blandit partiendo
                 </div>
                 <div class="clearfix"></div>
                 <br/>
@@ -322,14 +320,13 @@
         </p:dialog>
         <p:dialog id="mrrOutstandingId" widgetVar="mrrOutstandingDlg" height="100" resizable="false">
             <div>
-                <div class="col-md-1">
+                <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
                 </div>
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.mrrs.outstanding']}</strong>
                     <br/>
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
+                    Lorem ipsum ad his scripta blandit partiendo
                 </div>
                 <div class="clearfix"></div>
                 <br/>
