@@ -365,7 +365,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
-        log.info("total number POs:" + result);
         return result.intValue();
     }
 
@@ -389,7 +388,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
-        log.info("number of POs completed: " + result);
         return result.intValue();
     }
 
@@ -413,7 +411,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
-        log.info("number of open POs: " + result);
         return result.intValue();
     }
 
@@ -443,7 +440,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long)object;
-        log.info("number of delivery next moth: " + result);
         return result.intValue();
     }
 
@@ -463,7 +459,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long)object;
-        log.info("number of delivery next moth: " + result);
         return result.intValue();
     }
 

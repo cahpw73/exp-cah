@@ -37,7 +37,8 @@
                             <div style="margin-top: 10px; margin-bottom: 10px;">
                                 <p:commandLink id="updateListBtn"
                                                value="#{msgs['dashboard.btn.update.dashboard']}"
-                                               styleClass="btn btn-primary btn-commandLink-primeFaces"/>
+                                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                               action="#{dashboardBean.refreshDataOfDashboard}" update="dashboardTitle dashboardPnl"/>
                             </div>
                             <div>
                                 <h:commandLink value="#{msgs['dashboard.btn.download.pdf']}"

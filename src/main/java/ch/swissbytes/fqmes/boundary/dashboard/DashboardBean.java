@@ -71,6 +71,7 @@ public class DashboardBean implements Serializable {
     }
 
     public void refreshDataOfDashboard() {
+        log.info("refreshing data of dashboard");
         loadDataOfDashboard();
     }
 
@@ -81,6 +82,7 @@ public class DashboardBean implements Serializable {
     }
 
     public void printDashboard(){
+        log.info("printing dashboard report");
         Map<String,String> parametersDashboard = new HashMap<>();
         parametersDashboard.put("totalOfPOs",totalOfPOs);
         parametersDashboard.put("completedPOs",completedPOs);

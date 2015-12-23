@@ -13,7 +13,7 @@
 	<pageHeader>
 		<band height="357" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="7469391a-f959-4afa-846a-dffd3d650510" x="52" y="62" width="230" height="129" backcolor="#800080"/>
+				<reportElement uuid="7469391a-f959-4afa-846a-dffd3d650510" x="52" y="62" width="230" height="129" backcolor="#FFFFFF"/>
 			</rectangle>
 			<rectangle>
 				<reportElement uuid="a0b21ff3-c75c-4172-b9dc-8fa155bfac05" x="282" y="62" width="230" height="129"/>
@@ -121,6 +121,9 @@
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='22' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{dashboardTitle}+"</style>"]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement uuid="5a66255e-0415-4c3b-b7c0-9ed73db70be5" x="290" y="93" width="64" height="59"/>
+			</image>
 		</band>
 	</pageHeader>
 </jasperReport>
