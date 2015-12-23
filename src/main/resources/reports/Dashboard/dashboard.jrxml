@@ -80,11 +80,11 @@
 				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryNextMoth}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="7642bbda-9978-4a64-a670-9add29445df1" x="136" y="267" width="131" height="14"/>
+				<reportElement uuid="7642bbda-9978-4a64-a670-9add29445df1" x="78" y="267" width="198" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Delivery Next Moth</style>]]></text>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Deliveries to site for the following month</style>]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="c12e5037-defe-42b7-a759-417c87c2b2ce" x="369" y="231" width="140" height="30"/>
@@ -94,11 +94,11 @@
 				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryNext3Moth}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fdd0474f-31c5-4a90-9779-980286fa78c4" x="369" y="267" width="131" height="14"/>
+				<reportElement uuid="fdd0474f-31c5-4a90-9779-980286fa78c4" x="298" y="267" width="211" height="14"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Delivery Next 3 Moths</style>]]></text>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Deliveries to site for the following 3 months</style>]]></text>
 			</staticText>
 			<textField>
 				<reportElement uuid="33fc0b2d-e14c-438e-b874-570a2bc6a955" x="600" y="231" width="140" height="30"/>

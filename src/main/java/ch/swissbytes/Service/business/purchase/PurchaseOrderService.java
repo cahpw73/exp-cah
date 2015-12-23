@@ -680,6 +680,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.getNumberDeliveryNextMoth(projectId,nextMothIni,nextMothEnd);
     }
 
+    public int getNumberMrrOutstanding(final Long projectId){
+        return dao.getNumberMrrOutstanding(projectId);
+    }
+
     @Transactional
     public void resetActivity(PurchaseOrderEntity purchaseOrderEntity) {
         dao.resetActivity(purchaseOrderEntity);

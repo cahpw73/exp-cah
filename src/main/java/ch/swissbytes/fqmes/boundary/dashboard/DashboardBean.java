@@ -53,6 +53,8 @@ public class DashboardBean implements Serializable {
 
     private String deliveryNext3Moth;
 
+    private String mrrOutstanding;
+
     ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
 
@@ -85,7 +87,7 @@ public class DashboardBean implements Serializable {
         parametersDashboard.put("openPOs",openPOs);
         parametersDashboard.put("deliveryNextMoth",deliveryNextMoth);
         parametersDashboard.put("deliveryNext3Moth",deliveryNext3Moth);
-        parametersDashboard.put("mrrsOutstanding","0");
+        parametersDashboard.put("mrrsOutstanding",mrrOutstanding);
         parametersDashboard.put("dashboardTitle",getTitleDashboard());
         reportBean.printReportDashboard(parametersDashboard);
     }
@@ -96,6 +98,11 @@ public class DashboardBean implements Serializable {
         loadNumberOpenPOs();
         loadNumberDeliveryNextMoth();
         loadNumberDeliveryNext3Moth();
+        loadMrrOutstanding();
+    }
+
+    private void loadMrrOutstanding() {
+        mrrOutstanding = String.valueOf(poService.getNumberMrrOutstanding(projectSelected != null ? projectSelected.getId() : -1));
     }
 
     private void loadNumberDeliveryNext3Moth() {
@@ -218,5 +225,13 @@ public class DashboardBean implements Serializable {
 
     public void setDeliveryNext3Moth(String deliveryNext3Moth) {
         this.deliveryNext3Moth = deliveryNext3Moth;
+    }
+
+    public String getMrrOutstanding() {
+        return mrrOutstanding;
+    }
+
+    public void setMrrOutstanding(String mrrOutstanding) {
+        this.mrrOutstanding = mrrOutstanding;
     }
 }
