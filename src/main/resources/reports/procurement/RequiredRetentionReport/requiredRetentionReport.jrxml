@@ -250,7 +250,7 @@ order by po.po]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="2e96a210-dc27-4326-bcf8-d8f27a4824c6" x="484" y="18" width="34" height="12"/>

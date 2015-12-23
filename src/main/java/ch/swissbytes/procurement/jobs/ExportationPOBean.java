@@ -61,11 +61,13 @@ public class ExportationPOBean implements Serializable {
 
     public void dailyExportation(CreateEmailSender createEmailSender) {
         log.info("running process to export.");
+        String projectName = "";
         try {
             List<ProjectEntity> projectEntities = projectService.findAllProjects();
             List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
             List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
             for (ProjectEntity p : projectEntities) {
+                projectName = p.getProjectNumber();
                 log.info("processing PO's from Project[" + p.getProjectNumber() + "]");
                 poListCMS = poService.findPOListWithoutExportCMS(p.getId());
                 poListJDE = poService.findPOListWithoutExportJDE(p.getId());
@@ -81,10 +83,12 @@ public class ExportationPOBean implements Serializable {
                 }
             }
         }catch (Exception e){
+            String messageError = "Error Trying to export POs under project: " + projectName;
+            log.info(messageError);
             log.log(Level.SEVERE, e.getMessage());
             StringWriter errors = new StringWriter();
             e.printStackTrace(new PrintWriter(errors));
-            createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString());
+            createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString(),messageError);
             e.printStackTrace();
         }
     }
@@ -93,17 +97,17 @@ public class ExportationPOBean implements Serializable {
         log.info("exportCMS");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporter.generateWorkbookToExport(list, fName);
-        /*for (PurchaseOrderEntity po : list) {
+        for (PurchaseOrderEntity po : list) {
             poService.markCMSAsExported(po);
-        }*/
+        }
     }
 
     public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws Exception {
         log.info("exportJDE");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporterToJDE.generateWorkbookToExport(list, fName);
-        /*for(PurchaseOrderEntity po : list) {
+        for(PurchaseOrderEntity po : list) {
             poService.markJDEAsExported(po);
-        }*/
+        }
     }
 }

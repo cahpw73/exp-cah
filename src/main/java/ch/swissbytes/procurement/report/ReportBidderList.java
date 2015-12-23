@@ -47,6 +47,7 @@ public class ReportBidderList extends ReportView implements Serializable {
         this.project=project;
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("TIME_ZONE", configuration.getTimeZone());
+        addParameters("SUBREPORT_DIR", "reports/procurement/bidderList/");
         loadParameters();
     }
 

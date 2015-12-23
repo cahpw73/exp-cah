@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProjectValue" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5093952c-41f5-47f3-b10e-c7d712992916">
-	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PO_ID" class="java.lang.Long">
@@ -8,27 +8,35 @@
 	</parameter>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select cu.code,sum(cd.project_amt) as project_amt
+		<![CDATA[select cu.code,sum(cd.project_amt) as project_amt, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
 from cashflow_detail cd
      left outer join cashflow c on cd.cashflow_id=c.id
      left outer join p_order p on c.po_id=p.id
-     left outer join purchase_order po on po.po_id = p.id
-     left outer join project_currency pc on pc.id = cd.project_currency_id
-     left outer join  currency cu on cu.id = pc.currency_id
-where po.id = $P{PO_ID} and cd.status = 0
-group by cu.code
+     left outer join purchase_order po on po.po_id=p.id
+     left outer join project_currency pc on pc.id=cd.project_currency_id
+     left outer join project pj on pj.id = po.project_id
+     left outer join project_currency pc2 on pc2.project_id=pj.id
+     left outer join currency cu on cu.id = pc2.currency_id
+where po.id = $P{PO_ID} and cd.status = 0 and pc2.project_default = true
+and po.status_id=1 and cd.status=0 and pc.status=0 and pc2.status=0
+group by cu.code,pc.exchange_rate,pc2.exchange_rate
 order by cu.code]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
 	<field name="project_amt" class="java.math.BigDecimal"/>
-	<detail>
-		<band height="12" splitType="Stretch">
+	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{project_amt},$F{exchange_rate_ini},$F{exchange_rate_default})]]></variableExpression>
+	</variable>
+	<columnFooter>
+		<band height="12">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="ec3d99a8-ad51-4400-b782-0e49ff2d7bc7" x="20" y="0" width="50" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{project_amt})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1})]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="f23393d4-649e-4d92-9032-7b1a76483f3b" x="0" y="0" width="20" height="12" isRemoveLineWhenBlank="true"/>
@@ -38,5 +46,5 @@ order by cu.code]]>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 		</band>
-	</detail>
+	</columnFooter>
 </jasperReport>

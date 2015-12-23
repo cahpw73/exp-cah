@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SupplierContactInformation" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.8627639691774658"/>
-	<property name="ireport.x" value="599"/>
+	<property name="ireport.x" value="380"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
@@ -180,14 +180,14 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ee7143f4-a893-4e75-b6e9-ef90929396f6" x="459" y="2" width="130" height="12"/>
+				<reportElement uuid="ee7143f4-a893-4e75-b6e9-ef90929396f6" x="306" y="2" width="150" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Address</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="593" y="2" width="85" height="12"/>
+				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="459" y="2" width="75" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -220,7 +220,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="75da15d8-ee0b-4f79-ab23-da3aa40864fa" x="307" y="2" width="150" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="75da15d8-ee0b-4f79-ab23-da3aa40864fa" x="537" y="2" width="140" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -254,7 +254,7 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="459" y="1" width="130" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="72acf2db-9742-420c-b26f-a2f948c505ba" x="306" y="1" width="150" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -267,18 +267,11 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b51bc22e-75c4-4983-83f2-d484e036b996" x="307" y="0" width="150" height="12" isPrintWhenDetailOverflows="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="b37cd498-8f62-4ad9-8aa4-66991e409df5" x="593" y="1" width="85" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="b37cd498-8f62-4ad9-8aa4-66991e409df5" x="459" y="1" width="75" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{first_name}!=null?$F{first_name}:""+" "+$F{sur_name}!=null?$F{sur_name}:""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{first_name}!=null?$F{first_name}:"")+" "+($F{sur_name}!=null?$F{sur_name}:"")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="92593db6-8a8e-4127-8eff-f0bd8995d011" x="679" y="1" width="60" height="12" isPrintWhenDetailOverflows="true"/>
@@ -293,6 +286,13 @@ order by $P!{sortBy}]]>
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b51bc22e-75c4-4983-83f2-d484e036b996" x="537" y="1" width="140" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

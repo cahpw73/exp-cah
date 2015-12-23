@@ -127,16 +127,6 @@
                                 <f:convertDateTime pattern="#{configuration.formatDate}"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="#{msgs['report.deliverables.column.forecast.date']}" width="100">
-                            <h:outputText value="#{_l.forecastDate}">
-                                <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="#{msgs['report.deliverables.column.received.date']}" width="100">
-                            <h:outputText value="#{_l.receivedDate}">
-                                <f:convertDateTime pattern="#{configuration.formatDate}"/>
-                            </h:outputText>
-                        </p:column>
                     </p:dataTable>
                 </div>
             </h:form>

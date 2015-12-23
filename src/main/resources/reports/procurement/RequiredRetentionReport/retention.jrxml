@@ -15,7 +15,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select po.id as po_id,po,po.variation,sp.company as supplier,ct.email,cf.percentage,cf.form,cf.exp_date,po.orderedvariation
+		<![CDATA[select po.id as po_id,po,po.variation,sp.company as supplier,po.po_title,cf.percentage,cf.form,cf.exp_date,po.orderedvariation
 from purchase_order po
      left outer join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
@@ -28,7 +28,7 @@ order by $P!{sortBy}]]>
 	<field name="po" class="java.lang.String"/>
 	<field name="variation" class="java.lang.String"/>
 	<field name="supplier" class="java.lang.String"/>
-	<field name="email" class="java.lang.String"/>
+	<field name="po_title" class="java.lang.String"/>
 	<field name="percentage" class="java.lang.Float"/>
 	<field name="form" class="java.lang.String"/>
 	<field name="exp_date" class="java.sql.Timestamp"/>
@@ -77,13 +77,6 @@ order by $P!{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{exp_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{exp_date}.getTime())):null]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8df2fa26-f591-402f-99ec-04a065296879" positionType="Float" x="234" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
-			</textField>
 			<subreport>
 				<reportElement uuid="e4cea41f-8b52-4541-98f7-81a7cc7b1658" x="409" y="1" width="70" height="12"/>
 				<subreportParameter name="patternDecimal">
@@ -106,6 +99,13 @@ order by $P!{sortBy}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RetentionAmount.jasper"]]></subreportExpression>
 			</subreport>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="dcece624-5061-4858-bf72-d231f9887b3d" x="234" y="1" width="170" height="12"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>

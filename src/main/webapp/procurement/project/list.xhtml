@@ -30,7 +30,14 @@
                             <p:messages id="projectGlbMsgs" globalOnly="true" errorClass="alert alert-error"
                                         warnClass="alert" closable="true"
                                         infoClass="alert alert-info"/>
-
+                            <ui:remove>
+                            <div>
+                                <h:commandLink value="create file" action="#{projectListBean.createFQM}"/>
+                                <h:commandLink value="delete file" action="#{projectListBean.deleteFile}"/>
+                                <h:commandLink value="list files" action="#{projectListBean.listFolderFQM}"/>
+                                <h:commandLink value="free space" action="#{projectListBean.calculateFreeSpace}"/>
+                            </div>
+                            </ui:remove>
                             <div class="col-md-3" style="padding-left: 0px!important;">
                                 <div class="left-inner-addon">
                                     <i class="fa fa-search fa-lg"></i>
