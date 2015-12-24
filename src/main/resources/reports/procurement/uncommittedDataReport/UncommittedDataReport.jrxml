@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UncommittedDataReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a140c90f-67a1-4eb5-a6d1-729f1b3a1b05">
 	<property name="ireport.zoom" value="1.6934217901613318"/>
-	<property name="ireport.x" value="61"/>
+	<property name="ireport.x" value="34"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="PROJECT_ID" class="java.lang.Long"/>
 	<parameter name="sortBy" class="java.lang.String"/>
@@ -175,7 +175,7 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Date</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="502" y="7" width="50" height="12"/>
+				<reportElement uuid="06e85cc5-cc6c-44f6-b8fd-b525cecbe888" x="508" y="7" width="45" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -221,7 +221,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="390" y="7" width="70" height="12"/>
+				<reportElement uuid="ec428449-e8d0-4ae2-aa4b-4b564cf69664" x="387" y="7" width="70" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -229,7 +229,7 @@ order by $P!{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Value</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5a10bbc6-5e88-466d-b673-c1374071fa26" x="463" y="7" width="35" height="12"/>
+				<reportElement uuid="5a10bbc6-5e88-466d-b673-c1374071fa26" x="462" y="7" width="35" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -277,14 +277,14 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8ec7c54f-07f3-4a06-a8b9-dd3b0c00f170" positionType="Float" x="463" y="0" width="35" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="8ec7c54f-07f3-4a06-a8b9-dd3b0c00f170" positionType="Float" x="462" y="0" width="35" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po_delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{po_delivery_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="11c371d8-449e-4450-9b11-306e0e45d61b" positionType="Float" x="502" y="0" width="50" height="12" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="11c371d8-449e-4450-9b11-306e0e45d61b" positionType="Float" x="508" y="0" width="45" height="12" isPrintWhenDetailOverflows="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -297,7 +297,7 @@ order by $P!{sortBy}]]>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement uuid="932fe384-7a2c-4f21-b1f7-c51684b12c1f" positionType="Float" x="390" y="0" width="70" height="12"/>
+				<reportElement uuid="932fe384-7a2c-4f21-b1f7-c51684b12c1f" positionType="Float" x="387" y="0" width="70" height="12"/>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
 				</subreportParameter>

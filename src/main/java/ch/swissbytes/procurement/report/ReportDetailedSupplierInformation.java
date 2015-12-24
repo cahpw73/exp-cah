@@ -25,12 +25,20 @@ public class ReportDetailedSupplierInformation extends ReportProject {
 
     @Override
     protected String getStrSort() {
-        Boolean supplier = sortMap.get("supplier");
+        boolean supplier = sortMap.get("supplier");
+        boolean code = sortMap.get("code");
+        boolean country = sortMap.get("country");
         sortByName="";
         String str="";
         if(supplier){
             sortByName="Supplier";
             str=str+"sp.company,";
+        }else if(code){
+            sortByName="Code";
+            str=str+"sp.supplier_id,";
+        }else if(country){
+            sortByName="Country";
+            str=str+"sp.country,";
         }
         str = str + "sp.id";
         return str;
