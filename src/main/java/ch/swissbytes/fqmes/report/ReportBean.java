@@ -118,6 +118,15 @@ public class ReportBean implements Serializable {
         openReport = true;
     }
 
+    public void printReportDashboard(Map<String,String> parameterDashboard){
+        log.info("public void printReportDashboard()");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportDashboard("/Dashboard/dashboard", "Dashboard.Expediting", messages, locale, entityManager, configuration,parameterDashboard);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
     public List<Long> collectIds() {
         List<Long> ids = new ArrayList<>();
         for (VPurchaseOrder vpo : selected) {

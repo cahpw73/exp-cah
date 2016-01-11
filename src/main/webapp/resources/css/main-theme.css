@@ -579,3 +579,35 @@ label.checkbox {
 .ui-editor-toolbar{
     display: none!important;
 }
+
+.container-box-line-separator-dashboard{
+    float: left;
+    height: 200px;
+    position:relative;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.line-separator-dashboard{
+    border-left:2px solid #000;
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    height: 80px;
+    width: 50%;
+    margin: -25%;
+}
+.box-image-metric-dashboard{
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+.label-metric-dashboard{
+    font-size: 20pt;
+    font-weight: bold;
+}
+.box-data-metric{
+    float: left;
+    margin-top: 40px;
+    width: 200px;
+    color: #000000;
+}

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dashboard" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1c3e8e78-df78-4943-b135-87ba3f85e811">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="19"/>
+	<parameter name="totalNumberPOs" class="java.lang.String"/>
+	<parameter name="completedPOs" class="java.lang.String"/>
+	<parameter name="openPOs" class="java.lang.String"/>
+	<parameter name="deliveryNextMoth" class="java.lang.String"/>
+	<parameter name="deliveryNext3Moth" class="java.lang.String"/>
+	<parameter name="mrrOutStanding" class="java.lang.String"/>
+	<parameter name="dashboardTitle" class="java.lang.String"/>
+	<parameter name="iconTotalPO" class="java.io.InputStream"/>
+	<parameter name="iconCompletedPO" class="java.io.InputStream"/>
+	<parameter name="iconOpenPO" class="java.io.InputStream"/>
+	<parameter name="iconDeliveryNextMothPO" class="java.io.InputStream"/>
+	<parameter name="iconDeliveryNext3MothPO" class="java.io.InputStream"/>
+	<parameter name="iconMrrOutstanding" class="java.io.InputStream"/>
+	<pageHeader>
+		<band height="357" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="7469391a-f959-4afa-846a-dffd3d650510" x="52" y="62" width="230" height="129" backcolor="#FFFFFF"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="a0b21ff3-c75c-4172-b9dc-8fa155bfac05" x="282" y="62" width="230" height="129"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="d16ded07-aa7a-4caa-bdb2-4d159fb3743d" x="512" y="62" width="230" height="129"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="9cb460d5-519b-4cea-97ac-25cc191545d7" x="52" y="191" width="230" height="129"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="5a632bb5-e4fa-4c6b-9765-f9531a2a67e1" x="282" y="191" width="230" height="129"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="a440aced-3edb-4afd-bd96-af8d8af566a6" x="512" y="191" width="230" height="129"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="8c03d1d0-2266-4487-b344-eb3ab85f7603" x="136" y="140" width="131" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Total Number of POs</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4d84b13c-2f55-4479-8b33-d32acf26f4c1" x="136" y="103" width="140" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{totalNumberPOs}+"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="da71fe32-a799-43ea-9624-898aaceb0311" x="369" y="140" width="131" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Completed POs</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e7d7b6bb-57a2-4c9b-84fd-3be3ad09e0de" x="369" y="103" width="140" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{completedPOs}+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7313e0f6-0798-49db-81eb-049f81f466fa" x="600" y="103" width="140" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{openPOs}+"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fce76b50-872c-4fcd-93d8-d10e6202a59f" x="600" y="140" width="131" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Open POs</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="83fb1569-377d-4719-9475-8cb191cb5158" x="136" y="231" width="140" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryNextMoth}+"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7642bbda-9978-4a64-a670-9add29445df1" x="136" y="267" width="140" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Deliveries to site for the following month</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c12e5037-defe-42b7-a759-417c87c2b2ce" x="369" y="231" width="140" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryNext3Moth}+"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fdd0474f-31c5-4a90-9779-980286fa78c4" x="369" y="267" width="140" height="27"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">Deliveries to site for the following 3 months</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="33fc0b2d-e14c-438e-b874-570a2bc6a955" x="600" y="231" width="140" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='18' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{mrrOutStanding}+"</style>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fe91fcfa-41fb-4840-994e-b315fa7f55c2" x="600" y="267" width="131" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="9" isBold="true" pdfFontName="Helvetica-Bold">MRRs outstanding</style>]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="def81231-1f29-49b2-9a4a-3021cf958951" x="52" y="20" width="529" height="36"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<style size='22' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{dashboardTitle}+"</style>"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="5a66255e-0415-4c3b-b7c0-9ed73db70be5" x="292" y="93" width="64" height="59"/>
+				<imageExpression><![CDATA[$P{iconCompletedPO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="2b7adfcb-fb4b-4c96-b023-6942b790fa20" x="61" y="95" width="64" height="59"/>
+				<imageExpression><![CDATA[$P{iconTotalPO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="424edab9-54a6-4f28-a59f-9f4813df73e5" x="61" y="221" width="64" height="59"/>
+				<imageExpression><![CDATA[$P{iconDeliveryNextMothPO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="a6338a68-41cf-45ef-8c89-2b1ae23b8526" x="292" y="220" width="64" height="59"/>
+				<imageExpression><![CDATA[$P{iconDeliveryNext3MothPO}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="310e79f7-0619-48c2-b116-eefba6db824e" x="523" y="222" width="64" height="59"/>
+				<imageExpression><![CDATA[$P{iconMrrOutstanding}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="28666f9a-79fd-4cb5-9f19-c8bbfaf3ca4d" x="522" y="95" width="64" height="59"/>
+				<imageExpression><![CDATA[$P{iconOpenPO}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="e2e846e3-a482-4f96-8298-89ddd34e1832" x="129" y="103" width="1" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="dadd192d-0af0-4b6b-8a7b-be90b0bf0881" x="362" y="103" width="1" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="7aebc5f8-f443-4157-a2b7-d6ada01da062" x="593" y="104" width="1" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="0f80d06a-b1fd-47a0-ae37-80adfc240ede" x="130" y="234" width="1" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="22e0a43f-2891-4262-9add-27afaef3c97b" x="361" y="234" width="1" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="e25ce94b-52dc-47b9-a723-9c2ba6911159" x="593" y="234" width="1" height="45"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+</jasperReport>

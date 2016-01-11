@@ -62,16 +62,33 @@
                                     <br/>
                                     <h:panelGroup id="groupOptionPrint">
                                         <div class="form-group">
-                                            <div class="checkbox-inline">
-                                                <label>
-                                                    <h:selectBooleanCheckbox id="poNoBoxId"
-                                                                             value="#{reportProcurementBean.sortByPoNo}">
-                                                        <p:ajax event="change" process="@this" update="groupOptionPrint"
-                                                                listener="#{reportProcurementBean.resetOptionPrint(1)}"
-                                                                async="false"/>
-                                                    </h:selectBooleanCheckbox> PO No
-                                                </label>
-                                            </div>
+                                            <h:panelGroup rendered="#{!reportProcurementBean.detailSupplier}">
+                                                <div class="checkbox-inline">
+                                                    <label>
+                                                        <h:selectBooleanCheckbox id="poNoBoxId"
+                                                                                 value="#{reportProcurementBean.sortByPoNo}">
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
+                                                                    listener="#{reportProcurementBean.resetOptionPrint(1)}"
+                                                                    async="false"/>
+                                                        </h:selectBooleanCheckbox> PO No
+                                                    </label>
+                                                </div>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{reportProcurementBean.detailSupplier}">
+                                                <div class="checkbox-inline">
+                                                    <label>
+                                                        <h:selectBooleanCheckbox id="codeBoxId"
+                                                                                 value="#{reportProcurementBean.sortCode}">
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
+                                                                    listener="#{reportProcurementBean.resetOptionPrint(8)}"
+                                                                    async="false"/>
+                                                        </h:selectBooleanCheckbox> Code
+                                                    </label>
+                                                </div>
+                                            </h:panelGroup>
+
                                             <div class="checkbox-inline">
                                                 <label>
                                                     <h:selectBooleanCheckbox id="supplierBoxId"
@@ -82,12 +99,27 @@
                                                     </h:selectBooleanCheckbox> Supplier
                                                 </label>
                                             </div>
-                                            <h:panelGroup rendered="#{!reportProcurementBean.canshowFilterDeliveryDate()}">
+                                            <h:panelGroup>
+                                                <div class="checkbox-inline">
+                                                    <label>
+                                                        <h:selectBooleanCheckbox id="countryBoxId"
+                                                                                 value="#{reportProcurementBean.sortCountry}">
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
+                                                                    listener="#{reportProcurementBean.resetOptionPrint(9)}"
+                                                                    async="false"/>
+                                                        </h:selectBooleanCheckbox> Country
+                                                    </label>
+                                                </div>
+                                            </h:panelGroup>
+                                            <h:panelGroup
+                                                    rendered="#{!reportProcurementBean.canshowFilterDeliveryDate()}">
                                                 <div class="checkbox-inline">
                                                     <label>
                                                         <h:selectBooleanCheckbox id="deliveryBoxId"
                                                                                  value="#{reportProcurementBean.sortByDeliveryDate}">
-                                                            <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
                                                                     listener="#{reportProcurementBean.resetOptionPrint(3)}"
                                                                     async="false"/>
                                                         </h:selectBooleanCheckbox> Delivery Date
@@ -99,7 +131,8 @@
                                                     <label>
                                                         <h:selectBooleanCheckbox id="mrnoBoxId"
                                                                                  value="#{reportProcurementBean.sortMrNo}">
-                                                            <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
                                                                     listener="#{reportProcurementBean.resetOptionPrint(4)}"
                                                                     async="false"/>
                                                         </h:selectBooleanCheckbox> Mr No
@@ -109,17 +142,19 @@
                                                     <label>
                                                         <h:selectBooleanCheckbox id="rtfBoxId"
                                                                                  value="#{reportProcurementBean.sortRtfNo}">
-                                                            <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
                                                                     listener="#{reportProcurementBean.resetOptionPrint(5)}"
                                                                     async="false"/>
-                                                        </h:selectBooleanCheckbox> RTF No
+                                                        </h:selectBooleanCheckbox> RFT No
                                                     </label>
                                                 </div>
                                                 <div class="checkbox-inline">
                                                     <label>
                                                         <h:selectBooleanCheckbox id="originatorBoxId"
                                                                                  value="#{reportProcurementBean.sortOriginator}">
-                                                            <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
                                                                     listener="#{reportProcurementBean.resetOptionPrint(6)}"
                                                                     async="false"/>
                                                         </h:selectBooleanCheckbox> Originator
@@ -131,7 +166,8 @@
                                                     <label>
                                                         <h:selectBooleanCheckbox id="currencyBoxId"
                                                                                  value="#{reportProcurementBean.sortCurrency}">
-                                                            <p:ajax event="change" process="@this" update="groupOptionPrint"
+                                                            <p:ajax event="change" process="@this"
+                                                                    update="groupOptionPrint"
                                                                     listener="#{reportProcurementBean.resetOptionPrint(7)}"
                                                                     async="false"/>
                                                         </h:selectBooleanCheckbox> Currency

@@ -664,6 +664,26 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findAllPOs(projectId);
     }
 
+    public int getTotalNumberOfPOs(final Long projectId){
+        return dao.getTotalNumberOfPOs(projectId);
+    }
+
+    public int getNumberOfCompletedPOs(final Long projectId){
+        return  dao.getNumberOfCompletedPOs(projectId);
+    }
+
+    public int getNumberOfOpenPOs(final Long projectId){
+        return dao.getNumberOfOpenPOs(projectId);
+    }
+
+    public int getNumberDeliveryNextMoth(final Long projectId,final Date nextMothIni, final Date nextMothEnd) {
+        return dao.getNumberDeliveryNextMoth(projectId,nextMothIni,nextMothEnd);
+    }
+
+    public int getNumberMrrOutstanding(final Long projectId){
+        return dao.getNumberMrrOutstanding(projectId);
+    }
+
     @Transactional
     public void resetActivity(PurchaseOrderEntity purchaseOrderEntity) {
         dao.resetActivity(purchaseOrderEntity);
@@ -714,4 +734,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return null;
     }
+
+
 }
