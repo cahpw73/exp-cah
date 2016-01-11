@@ -46,11 +46,14 @@ public class ReportProcurementBean implements Serializable {
 
     private ProjectEntity selectedProject;
 
-    private Boolean sortByPoNo;
-    private Boolean sortByVarNo;
-    private Boolean sortBySupplier;
-    private Boolean sortByDeliveryDate;
-    private Boolean sortMrNo;
+    private boolean sortByPoNo;
+    private boolean sortByVarNo;
+    private boolean sortBySupplier;
+    private boolean sortByDeliveryDate;
+    private boolean sortMrNo;
+    private boolean sortRtfNo;
+    private boolean sortOriginator;
+    private boolean sortCurrency;
 
     private String reportName;
 
@@ -91,6 +94,9 @@ public class ReportProcurementBean implements Serializable {
         sortMap.put("supplier", sortBySupplier);
         sortMap.put("deliveryDate", sortByDeliveryDate);
         sortMap.put("mrNo",sortMrNo);
+        sortMap.put("rtfNo",sortRtfNo);
+        sortMap.put("originator",sortOriginator);
+        sortMap.put("currency",sortCurrency);
         if (selectedProject != null) {
             switch (reportName) {
                 case "ppr":
@@ -171,6 +177,13 @@ public class ReportProcurementBean implements Serializable {
     public boolean isMaterialRequisitionReport(){
         return reportTitle.equals(materialRequisitionReport);
     }
+    public boolean canshowFilterDeliveryDate(){
+        return reportTitle.equals(materialRequisitionReport) || reportTitle.equals(committedCurrenciesReport);
+    }
+
+    public boolean canShowFilterCurrency(){
+        return reportTitle.equals(committedCurrenciesReport);
+    }
 
     public String backToReports() {
         log.info("back to reports");
@@ -179,25 +192,62 @@ public class ReportProcurementBean implements Serializable {
 
     public void resetOptionPrint(Integer option){
         switch (option){
-            case 1:
+            case 1://sortPO
                 sortBySupplier = false;
                 sortByDeliveryDate = false;
                 sortMrNo = false;
+                sortRtfNo = false;
+                sortOriginator = false;
+                sortCurrency = false;
                 break;
-            case 2:
+            case 2://sortSupplier
                 sortByPoNo = false;
                 sortByDeliveryDate = false;
                 sortMrNo = false;
+                sortRtfNo = false;
+                sortOriginator = false;
+                sortCurrency = false;
                 break;
-            case 3:
+            case 3://sortDeliveryDate
                 sortByPoNo = false;
                 sortBySupplier = false;
                 sortMrNo = false;
+                sortRtfNo = false;
+                sortOriginator = false;
+                sortCurrency = false;
                 break;
-            case 4:
+            case 4://sortMrNo;
                 sortByDeliveryDate = false;
                 sortByPoNo = false;
                 sortBySupplier = false;
+                sortRtfNo = false;
+                sortOriginator = false;
+                sortCurrency = false;
+                break;
+            case 5://sortRtfNo
+                sortByDeliveryDate = false;
+                sortByPoNo = false;
+                sortBySupplier = false;
+                sortMrNo = false;
+                sortOriginator = false;
+                sortCurrency = false;
+                break;
+            case 6://sortOriginator
+                sortByDeliveryDate = false;
+                sortByPoNo = false;
+                sortBySupplier = false;
+                sortMrNo = false;
+                sortRtfNo = false;
+                sortCurrency = false;
+                break;
+            case 7://sortCurrency
+                sortOriginator = false;
+                sortByDeliveryDate = false;
+                sortByPoNo = false;
+                sortBySupplier = false;
+                sortMrNo = false;
+                sortRtfNo = false;
+
         }
     }
 
@@ -267,5 +317,29 @@ public class ReportProcurementBean implements Serializable {
 
     public void setSortMrNo(Boolean sortMrNo) {
         this.sortMrNo = sortMrNo;
+    }
+
+    public Boolean getSortRtfNo() {
+        return sortRtfNo;
+    }
+
+    public void setSortRtfNo(Boolean sortRtfNo) {
+        this.sortRtfNo = sortRtfNo;
+    }
+
+    public Boolean getSortOriginator() {
+        return sortOriginator;
+    }
+
+    public void setSortOriginator(Boolean sortOriginator) {
+        this.sortOriginator = sortOriginator;
+    }
+
+    public boolean isSortCurrency() {
+        return sortCurrency;
+    }
+
+    public void setSortCurrency(boolean sortCurrency) {
+        this.sortCurrency = sortCurrency;
     }
 }

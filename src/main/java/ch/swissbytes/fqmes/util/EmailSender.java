@@ -23,6 +23,7 @@ public class EmailSender implements Serializable{
 
     private Session mailSession;
     private String to;
+    private String toCC;
     private String from;
     private String subject;
     private String body;
@@ -34,6 +35,29 @@ public class EmailSender implements Serializable{
             message.setFrom(new InternetAddress(from));
             Address toAddress = new InternetAddress(to);
             message.addRecipient(Message.RecipientType.TO, toAddress);
+            message.setSubject(subject);
+            message.setContent(content);
+            Transport.send(message);
+            log.info(String.format("Your e-mail has been sent"));
+
+        } catch (MailConnectException ce) {
+            ce.printStackTrace();
+            throw new MessagingException(ce.toString());
+        } catch (MessagingException ce) {
+            ce.printStackTrace();
+            throw new MessagingException(ce.toString());
+        }catch(Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+    }
+    public void sendMultipleRecipients() throws MailConnectException, ConnectException, MessagingException, SocketConnectException,Exception {
+        try {
+            Message message = new MimeMessage(mailSession);
+            message.setFrom(new InternetAddress(from));
+            Address toAddress = new InternetAddress(to);
+            message.addRecipient(Message.RecipientType.TO, toAddress);
+            InternetAddress[] iAdressArray = InternetAddress.parse(toCC);
+            message.addRecipients(Message.RecipientType.CC,iAdressArray);
             message.setSubject(subject);
             message.setContent(content);
             Transport.send(message);
@@ -88,5 +112,13 @@ public class EmailSender implements Serializable{
 
     public void setContent(Multipart content) {
         this.content = content;
+    }
+
+    public String getToCC() {
+        return toCC;
+    }
+
+    public void setToCC(String toCC) {
+        this.toCC = toCC;
     }
 }

@@ -5,29 +5,41 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="projectIdFilter" class="java.lang.Long"/>
+	<parameter name="poNoFilter" class="java.lang.String"/>
+	<parameter name="variationFilter" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select cu.code,sum(cd.project_amt) as project_amt
-from cashflow_detail cd  left outer join cashflow c on cd.cashflow_id=c.id left outer join p_order p on c.po_id=p.id left outer join purchase_order po on po.po_id = p.id
-              left outer join project_currency pc on pc.id = cd.project_currency_id left outer join  currency cu on cu.id = pc.currency_id
-where po.id = $P{PO_ID} and cd.status = 0
-group by code]]>
+		<![CDATA[select cu.code,sum(cd.project_amt)as project_amt, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
+from cashflow_detail cd
+     left outer join cashflow c on cd.cashflow_id=c.id
+     left outer join p_order p on c.po_id=p.id
+     left outer join purchase_order po on po.po_id = p.id
+     left outer join project_currency pc on pc.id = cd.project_currency_id
+     left outer join project pj on pj.id = po.project_id
+     left outer join project_currency pc2 on pc2.project_id=pj.id
+     left outer join  currency cu on cu.id = pc2.currency_id
+where po.project_id = $P{projectIdFilter} and po.po=$P{poNoFilter} and po.variation=$P{variationFilter} and cd.project_amt is not null and pc2.project_default = true
+and po.status_id=1 and cd.status=0 and pc.status=0 and pc2.status=0
+group by cu.code,pc.exchange_rate,pc2.exchange_rate
+order by cu.code
+]]>
 	</queryString>
 	<field name="code" class="java.lang.String"/>
 	<field name="project_amt" class="java.math.BigDecimal"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
-	<detail>
+	<field name="exchange_rate_ini" class="java.math.BigDecimal"/>
+	<field name="exchange_rate_default" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[ch.swissbytes.fqmes.util.Util.currencyToCurrency($F{project_amt},$F{exchange_rate_ini},$F{exchange_rate_default})]]></variableExpression>
+	</variable>
+	<columnFooter>
 		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement uuid="50bc6091-774b-48fe-be90-c36b8cacebce" x="20" y="0" width="50" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($V{variable1})]]></textFieldExpression>
+			</textField>
 			<textField>
 				<reportElement uuid="264e4ee1-0b8c-4252-9edb-552bd5ae6592" x="0" y="0" width="20" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -35,22 +47,6 @@ group by code]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="50bc6091-774b-48fe-be90-c36b8cacebce" x="20" y="0" width="50" height="12"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="6"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{project_amt})]]></textFieldExpression>
-			</textField>
 		</band>
-	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>

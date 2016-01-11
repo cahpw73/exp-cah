@@ -30,7 +30,9 @@ public class CreateEmailSender implements Serializable {
 
     private static final String sendMailInfo  = System.getProperty("fqmes.send.mail.info");
 
-    private static final String sendToSmacneall  = "smacneall@colleagues-info.com";
+    private static final String sendToSmacneall  = System.getProperty("fqmes.send.mail.to.smacneall");
+
+    private static final String sendToDevs = System.getProperty("fqmes.send.mail.to.others.recipients");
 
 
     @Inject
@@ -67,10 +69,10 @@ public class CreateEmailSender implements Serializable {
         }
     }
 
-    public void createEmailToInfoErrorExportCmsOrJde(String error){
+    public void createEmailToInfoErrorExportCmsOrJde(final String error, final String messageError){
         try {
-            MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error);
-            sendMailExprtCmsOrJde(sendToSmacneall, multipart);
+            MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error,messageError);
+            sendMailExprtCmsOrJde(sendToSmacneall, multipart,sendToDevs);
             Messages.addFlashGlobalInfo("Email was sent successfully ");
             log.info("Token was generated and sent to email");
         } catch (MessagingException e) {
@@ -92,16 +94,17 @@ public class CreateEmailSender implements Serializable {
         }
     }
 
-    private void sendMailExprtCmsOrJde(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
+    private void sendMailExprtCmsOrJde(String mail, MimeMultipart multipart,String recipients) throws MessagingException, SocketConnectException, ConnectException,Exception {
         if(email == null){
             email = new EmailSender();
         }
         email.setFrom(sendMailInfo);
         email.setTo(mail);
+        email.setToCC(recipients);
         email.setSubject("Error exporting CMS or JDE");
         //email.setBody(message);
         email.setContent(multipart);
-        email.send();
+        email.sendMultipleRecipients();
     }
 
     private void sendMail(String mail, MimeMultipart multipart) throws MessagingException, SocketConnectException, ConnectException,Exception {
@@ -141,14 +144,14 @@ public class CreateEmailSender implements Serializable {
         return null;
     }
 
-    private MimeMultipart createMimeMultipartErrorExportCmsOrJde(final String error) {
+    private MimeMultipart createMimeMultipartErrorExportCmsOrJde(final String error,final String messageError) {
         try {
             //Create the html body
             MimeMultipart multipart = new MimeMultipart("related");
             // first part  (the html)
             BodyPart messageBodyPart = new MimeBodyPart();
             StringBuilder sbHtmlText = new StringBuilder();
-            sbHtmlText.append("<p> " + "Something happened trying to export POs ?" + " </p>\n");
+            sbHtmlText.append("<p> " + messageError + " </p>\n");
             sbHtmlText.append("<br/>\n");
             sbHtmlText.append("<p> " + "Here you are the stack trace:" + " </p>\n");
             sbHtmlText.append("<p> " +  error +  " </p>\n");

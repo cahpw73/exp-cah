@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bidderList" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8ff8c66-de8e-404b-af1b-5d1ecc90ee9d">
-	<property name="ireport.zoom" value="1.8181818181818181"/>
-	<property name="ireport.x" value="131"/>
-	<property name="ireport.y" value="80"/>
+	<property name="ireport.zoom" value="1.5026296018031553"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="ColumnHeader" isDefault="true" fill="Solid" fontSize="16"/>
 	<subDataset name="dataset1" uuid="6d7d3fba-e737-462e-b1ce-b85589b839ec"/>
 	<parameter name="supplier" class="java.util.List"/>
@@ -13,8 +13,11 @@
 	<parameter name="projectCode" class="java.lang.String"/>
 	<parameter name="sortBy" class="java.lang.String"/>
 	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select company,suburb,street,phone,fax,post_code,state,country
+		<![CDATA[select company,suburb,street,phone,fax,post_code,state,country,id
 from supplier_proc
 WHERE $X{IN,id,supplier}
 ORDER BY $P{sortBy}]]>
@@ -27,10 +30,8 @@ ORDER BY $P{sortBy}]]>
 	<field name="post_code" class="java.lang.String"/>
 	<field name="state" class="java.lang.String"/>
 	<field name="country" class="java.lang.String"/>
+	<field name="id" class="java.lang.Long"/>
 	<sortField name="company"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<title>
 		<band height="122" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle" evaluationTime="Report">
@@ -98,28 +99,28 @@ ORDER BY $P{sortBy}]]>
 				<textFieldExpression><![CDATA[$P{description}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="56fdce41-607e-42db-bcc5-1297fe443349" x="462" y="2" width="28" height="13" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="56fdce41-607e-42db-bcc5-1297fe443349" x="465" y="2" width="28" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Page:]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement uuid="24b86ef5-9759-489b-ae1d-1575f5312e29" x="520" y="2" width="30" height="13" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="24b86ef5-9759-489b-ae1d-1575f5312e29" x="523" y="2" width="30" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ca064e1a-8625-4c05-9334-cec2ebc63341" x="510" y="2" width="9" height="13" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="ca064e1a-8625-4c05-9334-cec2ebc63341" x="513" y="2" width="9" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="dbe8b1e0-46ba-4d8e-8dfc-2ea409a02243" x="493" y="2" width="16" height="13" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="dbe8b1e0-46ba-4d8e-8dfc-2ea409a02243" x="496" y="2" width="16" height="13" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -130,7 +131,7 @@ ORDER BY $P{sortBy}]]>
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="25e9f1e9-c700-4875-a83d-cef549d0db54" x="320" y="0" width="100" height="16"/>
+				<reportElement uuid="25e9f1e9-c700-4875-a83d-cef549d0db54" x="295" y="0" width="90" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -144,7 +145,7 @@ ORDER BY $P{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Name and Address</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="206" y="0" width="100" height="16"/>
+				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="204" y="0" width="90" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -156,19 +157,26 @@ ORDER BY $P{sortBy}]]>
 			<line>
 				<reportElement uuid="a59206d9-0b62-4c53-8726-b9303211ea0b" x="22" y="15" width="515" height="1"/>
 			</line>
+			<staticText>
+				<reportElement uuid="a1fa0f57-d163-4741-ab31-1d457cd1ba9c" x="387" y="0" width="165" height="16"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="47" splitType="Stretch">
+		<band height="58" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="206" y="1" width="100" height="10"/>
+				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="204" y="1" width="90" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="db1fd75b-70e0-4e71-a5cc-62d6011cfbf9" x="320" y="1" width="100" height="10"/>
+				<reportElement uuid="db1fd75b-70e0-4e71-a5cc-62d6011cfbf9" x="295" y="1" width="90" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -202,15 +210,22 @@ ORDER BY $P{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{country}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement uuid="c7742d30-a670-4efc-9360-70b13e3ce8e2" x="22" y="41" width="180" height="12"/>
+				<subreportParameter name="SUPPLIER_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bidderContactName.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="c6e47c91-da44-4987-98e7-7be94fcdb8de" x="387" y="0" width="165" height="11"/>
+				<subreportParameter name="SUPPLIER_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bidderEmailContact.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>

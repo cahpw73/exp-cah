@@ -25,6 +25,8 @@ public class SpreadsheetProcessor implements Serializable {
 
     private String passwordSheet = System.getProperty("fqmes.excel.sheet.password");
 
+    private boolean createdDirectories;
+
     public void createWorkbook() {
         workbook = new XSSFWorkbook();
     }
@@ -35,7 +37,7 @@ public class SpreadsheetProcessor implements Serializable {
     }
 
     public void configureWithColumn(int indexColumn, int numberOfCharacters) {
-        spreadsheet.setColumnWidth(indexColumn,numberOfCharacters);
+        spreadsheet.setColumnWidth(indexColumn, numberOfCharacters);
     }
 
     public void createRow(int rowNo) {
@@ -46,9 +48,9 @@ public class SpreadsheetProcessor implements Serializable {
         row.createCell(colNo).setCellValue(value);
     }
 
-    public void writeStringBoldValue(int colNo, String value){
-        XSSFCellStyle style= workbook.createCellStyle();
-        XSSFFont font= workbook.createFont();
+    public void writeStringBoldValue(int colNo, String value) {
+        XSSFCellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
         font.setBold(true);
         style.setFont(font);
         Cell cell0 = row.createCell(colNo);
@@ -63,13 +65,26 @@ public class SpreadsheetProcessor implements Serializable {
     public void doSaveWorkBook(final String path, final String fileName) throws Exception {
         FileOutputStream out = null;
         File file = createDirectoryFiles(path);
-        File newFile = new File(file.getAbsolutePath()+File.separator+fileName);
-        if(newFile.createNewFile()){
-            System.out.println("created file");
+        File newFile = new File(file.getAbsolutePath() + File.separator + fileName);
+        try {
+            if (newFile.createNewFile()) {
+                System.out.println("created file");
+            }
+            out = new FileOutputStream(newFile);
+            workbook.write(out);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("It is not able to either the directory ["+file.getAbsolutePath()+"] ");
+        } finally {
+            try {
+                log.info("closing fileOutputStream out");
+                if (out != null) {
+                    out.close();
+                    log.info("closed out");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        out = new FileOutputStream(newFile);
-        workbook.write(out);
-        out.close();
     }
 
     private File createDirectoryFiles(String path) {

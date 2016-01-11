@@ -10,6 +10,7 @@ import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.report.dtos.ClausesReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
+import ch.swissbytes.procurement.util.ImageUtil;
 import ch.swissbytes.procurement.util.ResourceUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,7 @@ import org.xml.sax.SAXParseException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -187,9 +189,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private void loadParamLogos() {
+        ImageUtil imageUtil = new ImageUtil();
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null) {
-            InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
-            addParameters("headerLogo", logo);
+            if(imageUtil.hasDimensionHeaderLogoCorrect(po.getProjectEntity().getClient().getHeaderLogo().getFile())){
+                InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
+                addParameters("headerLogo", logo);
+            }else{
+                BufferedImage newHeaderLogo = imageUtil.getNewImageResized(po.getProjectEntity().getClient().getHeaderLogo().getFile());
+                InputStream logo = imageUtil.convertBufferedImageToInputStream(newHeaderLogo);
+                addParameters("headerLogo", logo);
+            }
+
         }
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getClientLogo() != null) {
             InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getClientLogo().getFile());
@@ -548,7 +558,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dtos.add(dto);
     }
 
-    private void loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
+    private void  loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("Original Order Value");
 
@@ -589,10 +599,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private List<Object> getSummaryItemsPO() {
         Query query = entityManager.createNativeQuery("select cu.id,cu.code,cu.symbol,po.orderedvariation,sum (total_cost),po.variation\n" +
-                "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
-                "left join project_currency pc on pc.id= sp.project_currency_id\n" +
-                "inner join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
+                "from item sp left outer join purchase_order po  on sp.purchase_order_id= po.id\n" +
+                "left outer join project_currency pc on pc.id= sp.project_currency_id\n" +
+                "left outer join currency cu on pc.currency_id=cu.id\n" +
+                "where sp.status_id = 1 and po.status_id = 1 and (cu.id is not null or cu.code is not null or cu.symbol is not null) " +
+                "and po.po = '" + po.getPo() + "' and po.project_id=" + po.getProjectEntity().getId() + "\n" +
                 "group by cu.id,cu.code,cu.symbol,po.orderedvariation,po.variation\n" +
                 "order by po.orderedvariation");
         return query.getResultList();
@@ -603,7 +614,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                 "from item sp inner join purchase_order po  on sp.purchase_order_id= po.id\n" +
                 "left join project_currency pc on pc.id= sp.project_currency_id\n" +
                 "inner join currency cu on pc.currency_id=cu.id\n" +
-                "where sp.status_id=1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + 1 + " and " + po.getOrderedVariation() + "\n" +
+                "where sp.status_id=1 and po.status_id = 1 and po.po = '" + po.getPo() + "' and po.project_id= " + po.getProjectEntity().getId() + " and orderedvariation between " + 1 + " and " + po.getOrderedVariation() + "\n" +
                 "group by orderedvariation,cu.id\n" +
                 "order by orderedvariation,cu.id");
         List<BigInteger> list = query.getResultList();

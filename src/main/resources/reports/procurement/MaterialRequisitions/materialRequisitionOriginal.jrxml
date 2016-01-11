@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="materialRequisitionOriginal" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8fa622af-3de1-4ddb-91f8-094dd1300261">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="PROJECT_ID" class="java.lang.Long"/>
+	<parameter name="sortBy" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="patternDecimal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select po,po.variation,order_date,po_delivery_date,po.po_title,sp.company,ct.email,po_status,por.id
+from purchase_order po left outer join p_order por on por.id=po.po_id
+left outer join supplier_proc sp on sp.id=por.supplier_id
+left outer join contact ct on ct.supplier_id = sp.id
+where po.status_id=1 and po.project_id=$P{PROJECT_ID}
+order by $P!{sortBy}]]>
+	</queryString>
+	<field name="po" class="java.lang.String"/>
+	<field name="variation" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Timestamp"/>
+	<field name="po_delivery_date" class="java.sql.Timestamp"/>
+	<field name="po_title" class="java.lang.String"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="po_status" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Long"/>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="8216e720-5784-4e81-be2b-45ae1d0c54b1" positionType="Float" x="196" y="0" width="120" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4f035e00-c54b-4e66-9dbf-c94aa5f97ace" positionType="Float" x="321" y="0" width="45" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_delivery_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{po_delivery_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f90fe53f-6ad1-47aa-a13b-2285e3ab61b4" positionType="Float" x="0" y="0" width="30" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="a65a2cd1-171b-4124-87d7-831f9ff93aa5" positionType="Float" x="373" y="0" width="140" height="12" isPrintWhenDetailOverflows="true"/>
+				<subreportParameter name="PO_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Requisition.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4b2042c6-bcbd-456a-bf80-a091239cfb05" positionType="Float" x="31" y="0" width="30" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d0ba61d6-5d33-4a5a-a97f-3884a839480b" positionType="Float" x="62" y="0" width="50" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{order_date}.getTime())):null]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="920d2588-837d-430c-851a-361fe0a07c2a" positionType="Float" x="114" y="0" width="80" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{po_title}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="abbba8a1-9362-4976-8eab-a33e6171c30c" positionType="Float" x="0" y="13" width="555" height="1" isRemoveLineWhenBlank="true"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

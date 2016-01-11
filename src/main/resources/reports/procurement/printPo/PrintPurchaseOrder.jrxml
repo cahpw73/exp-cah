@@ -227,7 +227,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{mrNo}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame" hAlign="Left">
+			<image scaleImage="RetainShape" hAlign="Left">
 				<reportElement uuid="f7b24403-f5f3-4043-b402-5e87c9b53b39" x="0" y="0" width="519" height="150"/>
 				<imageExpression><![CDATA[$P{headerLogo}]]></imageExpression>
 			</image>

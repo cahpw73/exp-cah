@@ -50,7 +50,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="232" y="1" width="140" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="cabdceb2-8638-4ba6-bb86-d515c399cf92" x="247" y="1" width="180" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -58,7 +58,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}!=null?$F{description}:""))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="374" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="a70d4eee-3ac3-4c2d-a1f4-08fed0950419" x="431" y="1" width="35" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -66,7 +66,7 @@ order by po.orderedvariation]]>
 				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="410" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="27390cb9-e183-4187-8643-d38e656f7813" x="471" y="1" width="70" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 					<paragraph rightIndent="3"/>
@@ -80,7 +80,7 @@ order by po.orderedvariation]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="907e72e5-bee4-4a1d-9991-7000228d1553" x="74" y="1" width="155" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="907e72e5-bee4-4a1d-9991-7000228d1553" x="74" y="1" width="170" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
