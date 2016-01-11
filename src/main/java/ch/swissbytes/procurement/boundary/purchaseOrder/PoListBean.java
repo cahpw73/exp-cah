@@ -812,5 +812,8 @@ public class PoListBean implements Serializable {
         managerTable.setSortBy(event.getSortColumn().getValueExpression("sortBy").getExpressionString());
         managerTable.setDirection(event.isAscending() ? "ascending" : "descending");
         managerTable.setSortInitialized(true);
+        for (PurchaseOrderEntity po : purchaseOrders){
+
+        }
     }
 }
