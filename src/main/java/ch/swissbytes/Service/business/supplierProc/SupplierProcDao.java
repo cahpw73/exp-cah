@@ -154,8 +154,8 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         sb.append(" LEFT JOIN po.purchaseOrderProcurementEntity p ");
         sb.append(" LEFT JOIN p.supplier sp ");
         sb.append(" WHERE ");
-        sb.append(" po.projectEntity.id = :PROJECT_ID ");
-        sb.append(" AND po.status.id=:ENABLE_ID ");
+      //  sb.append(" po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" po.status.id=:ENABLE_ID ");
         sb.append(" AND sp.status=:ENABLE ");
         sb.append(" AND sp.id IN( ");
         sb.append(" SELECT sc.supplier.id ");
@@ -167,7 +167,7 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         params.put("ENABLE_ID",StatusEnum.ENABLE.getId());
-        params.put("PROJECT_ID", projectId);
+       // params.put("PROJECT_ID", projectId);
         params.put("CATEGORY_ID", categoryId != null ? categoryId : 0);
         return super.findBy(sb.toString(), params);
     }

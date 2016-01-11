@@ -118,7 +118,7 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         return countries==null||countries.isEmpty()?new ArrayList<SupplierProcEntity>():dao.findSupplierByCountriesAndCategory(id, countries);
     }
     public List<SupplierProcEntity> findSupplierByProjectAndCategory(final Long categoryId, final Long projectId){
-        if(categoryId!=null && projectId!=null){
+        if(categoryId!=null){
             return dao.findSupplierByProjectsAndCategory(categoryId,projectId);
         }else{
             return new ArrayList<>();

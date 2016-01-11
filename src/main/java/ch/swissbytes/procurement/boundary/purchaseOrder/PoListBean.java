@@ -762,11 +762,31 @@ public class PoListBean implements Serializable {
 
 
     public void findPOs() {
+        log.info("PoListBean  findPOs");
         purchaseOrders.clear();
-        purchaseOrders.add(new PurchaseOrderEntity());
+
+        PurchaseOrderEntity po1 = new PurchaseOrderEntity();
+        PurchaseOrderProcurementEntity p1 = new PurchaseOrderProcurementEntity();
+        SupplierProcEntity spe1 = new SupplierProcEntity();
+        spe1.setCompany("-");
+        p1.setSupplier(spe1);
+        po1.setPo("-");
+        po1.setPurchaseOrderProcurementEntity(p1);
+        purchaseOrders.add(po1);
+
         List<PurchaseOrderEntity> list = service.findPosBy(getFilter());
         purchaseOrders.addAll(list);
         allPurchaseOrders.addAll(purchaseOrders);
+
+        PurchaseOrderEntity po = new PurchaseOrderEntity();
+        PurchaseOrderProcurementEntity p = new PurchaseOrderProcurementEntity();
+        SupplierProcEntity spe = new SupplierProcEntity();
+        spe.setCompany("¯");
+        p.setSupplier(spe);
+        po.setPo("¯");
+        po.setPurchaseOrderProcurementEntity(p);
+        purchaseOrders.add(po);
+
     }
 
     public List<PurchaseOrderEntity> getPurchaseOrders() {
@@ -812,5 +832,8 @@ public class PoListBean implements Serializable {
         managerTable.setSortBy(event.getSortColumn().getValueExpression("sortBy").getExpressionString());
         managerTable.setDirection(event.isAscending() ? "ascending" : "descending");
         managerTable.setSortInitialized(true);
+        for (PurchaseOrderEntity po : purchaseOrders){
+
+        }
     }
 }
