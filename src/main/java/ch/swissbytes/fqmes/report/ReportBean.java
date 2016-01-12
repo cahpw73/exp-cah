@@ -4,6 +4,7 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
+import ch.swissbytes.fqmes.report.util.DocTypeEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 
@@ -104,7 +105,16 @@ public class ReportBean implements Serializable {
         log.info("public void printReportReceivableManifest()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration);
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printReportReceivableManifestToXls() {
+        log.info("public void printReportReceivableManifest()");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.XLS);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -113,7 +123,16 @@ public class ReportBean implements Serializable {
         log.info("public void printReportJobSummary()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration);
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration,DocTypeEnum.PDF);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printReportJobSummaryToXls() {
+        log.info("public void printReportJobSummary()");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration,DocTypeEnum.XLS);
         reportView.printDocument(null);
         openReport = true;
     }

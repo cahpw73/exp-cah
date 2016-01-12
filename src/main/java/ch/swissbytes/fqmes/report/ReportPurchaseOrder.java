@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.report;
 
 
 
+import ch.swissbytes.fqmes.report.util.DocTypeEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
@@ -35,8 +36,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale, EntityManager entityManager, final List<Long> ids,Configuration configuration) {
+    public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
+                               EntityManager entityManager, final List<Long> ids,Configuration configuration, DocTypeEnum docTypeEnum) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
+        setReportType(docTypeEnum);
         this.configuration = configuration;
         this.entityManager=entityManager;
         if(ids!=null&&ids.size()>0){
