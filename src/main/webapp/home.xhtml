@@ -57,11 +57,11 @@
                         <br/>
                         <h:panelGroup id="dashboardPnl">
                             <div class="row">
-                                <div class="col-xs-4" style="padding-right: 0px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #800080;">
+                                <div class="col-xs-4" style="padding-right: 5px; padding-bottom: 5px; padding-left: 5px; height: 200px">
+                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #952F95;">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="total-pos.png"
-                                                            width="100" height="100"
+                                                            width="80" height="80"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -77,16 +77,16 @@
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
                                                 <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('totalPOsDlg').show();"
-                                                               style="color: #000000" update=":totalPOsGrId"/>
+                                                               style="color: #ffffff" update=":totalPOsGrId"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4" style="padding-right: 0px; padding-left: 0px; height: 200px">
+                                <div class="col-xs-4" style="padding-right: 5px; padding-left: 5px; padding-bottom:5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffd700">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="completed-pos.png"
-                                                            width="100" height="100"
+                                                            width="80" height="80"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -100,16 +100,16 @@
                                                 <h:outputText value="#{msgs['dashboard.label.completed.pos']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('completedPOsDlg').show();" style="color: #000000"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('completedPOsDlg').show();" style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4" style=" padding-left: 0px; height: 200px">
+                                <div class="col-xs-4" style=" padding-left: 5px; padding-bottom: 5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #add8e6;">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="open-pos.png"
-                                                            width="100" height="100"
+                                                            width="80" height="80"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -123,18 +123,18 @@
                                                 <h:outputText value="#{msgs['dashboard.label.open.pos']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('openPOsDlg').show();" style="color: #000000"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('openPOsDlg').show();" style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-4" style="padding-right: 0px; height: 200px;">
+                                <div class="col-xs-4" style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px;">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #32cd32 ">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="delivery-next-moth.png"
-                                                            width="100" height="100"
+                                                            width="80" height="80"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -148,16 +148,16 @@
                                                 <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNextMothDlg').show();" style="color: #000000"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNextMothDlg').show();" style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4" style="padding-right: 0px; padding-left: 0px; height: 200px">
+                                <div class="col-xs-4" style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffa500">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="delivery-next-3-moth.png"
-                                                            width="100" height="100"
+                                                            width="80" height="80"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -171,16 +171,16 @@
                                                 <h:outputText value="#{msgs['dashboard.label.deliveries.3.next.moth']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNext3MothDlg').show();" style="color: #000000"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNext3MothDlg').show();" style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4" style="padding-left: 0px; height: 200px">
+                                <div class="col-xs-4" style="padding-left: 5px; padding-top: 5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffc0cb">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="mrr-outstanding.png"
-                                                            width="100" height="100"
+                                                            width="80" height="80"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -194,7 +194,7 @@
                                                 <h:outputText value="#{msgs['dashboard.label.mrrs.outstanding']}" style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('mrrOutstandingDlg').show();" style="color: #000000"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('mrrOutstandingDlg').show();" style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
