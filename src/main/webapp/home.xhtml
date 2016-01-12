@@ -13,12 +13,13 @@
     <ui:define name="body">
         First Quantum Minerals
         <div style="width: 100%; text-align: center; margin-top: 20px!important;">
-            <div style="display: inline-block; width: 1300px">
+            <div style="display: inline-block; width: 1350px">
                 <h:form id="dashboardForm">
                     <div class="col-xs-2" style="text-align: left">
                         <div>
                             <h:outputLabel value="#{msgs['dashboard.label.select.project']}"/>
                             <br/>
+
                             <div style="width:200px; margin:0px 15px 0px 0px;">
                                 <h:selectOneMenu id="projectSOne"
                                                  value="#{dashboardBean.projectSelected}"
@@ -38,7 +39,8 @@
                                 <p:commandLink id="updateListBtn"
                                                value="#{msgs['dashboard.btn.update.dashboard']}"
                                                styleClass="btn btn-primary btn-commandLink-primeFaces"
-                                               action="#{dashboardBean.refreshDataOfDashboard}" update="dashboardTitle dashboardPnl"/>
+                                               action="#{dashboardBean.refreshDataOfDashboard}"
+                                               update="dashboardTitle dashboardPnl"/>
                             </div>
                             <div>
                                 <h:commandLink value="#{msgs['dashboard.btn.download.pdf']}"
@@ -57,7 +59,8 @@
                         <br/>
                         <h:panelGroup id="dashboardPnl">
                             <div class="row">
-                                <div class="col-xs-4" style="padding-right: 5px; padding-bottom: 5px; padding-left: 5px; height: 200px">
+                                <div class="col-xs-4"
+                                     style="padding-right: 5px; padding-bottom: 5px; padding-left: 5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #952F95;">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="total-pos.png"
@@ -70,19 +73,23 @@
 
                                         <div class="box-data-metric">
                                             <div>
-                                                <h:outputText value="#{dashboardBean.totalOfPOs}" styleClass="label-metric-dashboard"/>
+                                                <h:outputText value="#{dashboardBean.totalOfPOs}"
+                                                              styleClass="label-metric-dashboard"/>
                                             </div>
-                                            <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.total.of.pos']}" style="font-weight: bold;"/>
-                                            </div>
-                                            <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('totalPOsDlg').show();"
-                                                               style="color: #ffffff" update=":totalPOsGrId"/>
-                                            </div>
+                                                <div style="margin-top: 15px;">
+                                                    <h:outputText value="#{msgs['dashboard.label.total.of.pos']}"
+                                                                  style="font-weight: bold;"/>
+                                                </div>
+                                                <div style="margin-top: 15px; text-align: right;">
+                                                    <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                                   onclick="PF('totalPOsDlg').show();"
+                                                                   style="color: #ffffff" update=":totalPOsGrId"/>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4" style="padding-right: 5px; padding-left: 5px; padding-bottom:5px; height: 200px">
+                                <div class="col-xs-4"
+                                     style="padding-right: 5px; padding-left: 5px; padding-bottom:5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffd700">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="completed-pos.png"
@@ -94,13 +101,17 @@
                                         </div>
                                         <div class="box-data-metric">
                                             <div>
-                                                <h:outputText value="#{dashboardBean.completedPOs}" styleClass="label-metric-dashboard"/>
+                                                <h:outputText value="#{dashboardBean.completedPOs}"
+                                                              styleClass="label-metric-dashboard"/>
                                             </div>
                                             <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.completed.pos']}" style="font-weight: bold;"/>
+                                                <h:outputText value="#{msgs['dashboard.label.completed.pos']}"
+                                                              style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('completedPOsDlg').show();" style="color: #ffffff"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                               onclick="PF('completedPOsDlg').show();"
+                                                               style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
@@ -117,20 +128,25 @@
                                         </div>
                                         <div class="box-data-metric">
                                             <div>
-                                                <h:outputText value="#{dashboardBean.openPOs}" styleClass="label-metric-dashboard"/>
+                                                <h:outputText value="#{dashboardBean.openPOs}"
+                                                              styleClass="label-metric-dashboard"/>
                                             </div>
                                             <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.open.pos']}" style="font-weight: bold;"/>
+                                                <h:outputText value="#{msgs['dashboard.label.open.pos']}"
+                                                              style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('openPOsDlg').show();" style="color: #ffffff"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                               onclick="PF('openPOsDlg').show();"
+                                                               style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-4" style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px;">
+                                <div class="col-xs-4"
+                                     style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px;">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #32cd32 ">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="delivery-next-moth.png"
@@ -142,18 +158,23 @@
                                         </div>
                                         <div class="box-data-metric">
                                             <div>
-                                                <h:outputText value="#{dashboardBean.deliveryNextMoth}" styleClass="label-metric-dashboard"/>
+                                                <h:outputText value="#{dashboardBean.deliveryNextMoth}"
+                                                              styleClass="label-metric-dashboard"/>
                                             </div>
                                             <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}" style="font-weight: bold;"/>
+                                                <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}"
+                                                              style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNextMothDlg').show();" style="color: #ffffff"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                               onclick="PF('deliveryNextMothDlg').show();"
+                                                               style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4" style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px">
+                                <div class="col-xs-4"
+                                     style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px">
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffa500">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="delivery-next-3-moth.png"
@@ -165,13 +186,17 @@
                                         </div>
                                         <div class="box-data-metric">
                                             <div>
-                                                <h:outputText value="#{dashboardBean.deliveryNext3Moth}" styleClass="label-metric-dashboard"/>
+                                                <h:outputText value="#{dashboardBean.deliveryNext3Moth}"
+                                                              styleClass="label-metric-dashboard"/>
                                             </div>
                                             <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.deliveries.3.next.moth']}" style="font-weight: bold;"/>
+                                                <h:outputText value="#{msgs['dashboard.label.deliveries.3.next.moth']}"
+                                                              style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('deliveryNext3MothDlg').show();" style="color: #ffffff"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                               onclick="PF('deliveryNext3MothDlg').show();"
+                                                               style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
@@ -188,13 +213,17 @@
                                         </div>
                                         <div class="box-data-metric">
                                             <div>
-                                                <h:outputText value="#{dashboardBean.mrrOutstanding}" styleClass="label-metric-dashboard"/>
+                                                <h:outputText value="#{dashboardBean.mrrOutstanding}"
+                                                              styleClass="label-metric-dashboard"/>
                                             </div>
                                             <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.mrrs.outstanding']}" style="font-weight: bold;"/>
+                                                <h:outputText value="#{msgs['dashboard.label.mrrs.outstanding']}"
+                                                              style="font-weight: bold;"/>
                                             </div>
                                             <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}" onclick="PF('mrrOutstandingDlg').show();" style="color: #ffffff"/>
+                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                               onclick="PF('mrrOutstandingDlg').show();"
+                                                               style="color: #ffffff"/>
                                             </div>
                                         </div>
                                     </div>
@@ -215,10 +244,12 @@
                     <div class="col-md-11">
                         <strong>#{msgs['dashboard.label.total.of.pos']}</strong>
                         <br/>
-                        The total numbers of existing POs in the project
+                        Count of all POs in the FQM Expediting Database for the Project selected,
+                        <br/> excludes POs with a Status of "Cancelled" or "Deleted".
                     </div>
                     <div class="clearfix"></div>
                     <br/>
+
                     <div class="col-md-11">
                         <div class="pull-right">
                             <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
@@ -230,7 +261,7 @@
                 </div>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog id="completedPOsId" widgetVar="completedPOsDlg" height="100" resizable="false">
+        <p:dialog id="completedPOsId" widgetVar="completedPOsDlg" height="120" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -238,10 +269,15 @@
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.completed.pos']}</strong>
                     <br/>
-                    Lorem ipsum ad his scripta blandit partiendo
+                        Value comes from POs with a Status of "Completed" in FQM Expediting Database.
+                    <br/>
+                    Note that the Status of "Completed" has to be manually set so there could be POs
+                    <br/>
+                    that are complete but do not have a Status of "Completed".
                 </div>
                 <div class="clearfix"></div>
                 <br/>
+
                 <div class="col-md-11">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
@@ -252,7 +288,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="openPOsId" widgetVar="openPOsDlg" height="100" resizable="false">
+        <p:dialog id="openPOsId" widgetVar="openPOsDlg" height="145" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -260,10 +296,19 @@
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.open.pos']}</strong>
                     <br/>
-                    Lorem ipsum ad his scripta blandit partiendo
+                        Value comes from POs "Committed" in Procurement system, and have a Status
+                    <br/>
+                    other than "Cancelled", "Completed" or "Deleted" in FQM Expediting Database.
+                    <br/>
+                    Note that the Status of "Cancelled", "Completed" and "Deleted" has to be manually
+                    <br/>
+                    set so there could be POs that are cancelled, completed or deleted but do not have
+                    <br/>
+                    a Status of "Cancelled", "Completed" or "Deleted".
                 </div>
                 <div class="clearfix"></div>
                 <br/>
+
                 <div class="col-md-11">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
@@ -274,18 +319,28 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg" height="100" resizable="false">
+        <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg" height="220" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-11" style="text-align: justify">
                     <strong>#{msgs['dashboard.label.delivery.next.moth']}</strong>
                     <br/>
-                    Lorem ipsum ad his scripta blandit partiendo
+                    Value comes from POs with a "Forecast Site Date" due in the following month. This value<br/>
+                    excludes POs with Status of "Cancelled", "Completed", "Deleted", "MRR Required", "On Hold"<br/>
+                    and "Storage". The Status of "Cancelled", "Completed", "Deleted", "MRR Required", "On Hold" <br/>
+                    and  "Storage" has to be manually set. If a number of Scope of Supply line items but all with  <br/>
+                    the  same "Forecast Site date", then captured as 1 delivery. If a number of Scope of Supply  <br/>
+                    line items but more than 1 "Forecast Site date", then captured more than 1 delivery for this PO.
+                    <br/><br/>
+                    If today is 23rd Dec then
+                    <br/>
+                    · Deliveries next month would be in the date range 24th Dec – 23rd Jan
                 </div>
                 <div class="clearfix"></div>
                 <br/>
+
                 <div class="col-md-11">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
@@ -296,7 +351,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="deliveryNext3MothId" widgetVar="deliveryNext3MothDlg" height="100" resizable="false">
+        <p:dialog id="deliveryNext3MothId" widgetVar="deliveryNext3MothDlg" height="240" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -304,10 +359,21 @@
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.deliveries.3.next.moth']}</strong>
                     <br/>
-                    Lorem ipsum ad his scripta blandit partiendo
+                    Value comes from POs with a "Forecast Site Date" due in the following 3 months.<br/>
+                    This value excludes POs with Status of "Cancelled", "Completed"’, "Deleted", "MRR Required",<br/>
+                    "On Hold" and "Storage". The Status of "Cancelled", "Completed", "Deleted", "MRR Required", <br/>
+                    "On Hold" and "Storage" has to be manually set. If a number of Scope of Supply line items <br/>
+                    but all with the same "Forecast Site date", then captured as 1 delivery. If a number of <br/>
+                    Scope of Supply line items but more than 1 "Forecast Site date", then captured more than <br/>
+                    1 delivery for this PO.
+                    <br/><br/>
+                    If today is 24th Dec then
+                    <br/>
+                    · Deliveries next 3 months would be in the date range 25th Dec – 24th Mar
                 </div>
                 <div class="clearfix"></div>
                 <br/>
+
                 <div class="col-md-11">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
@@ -318,7 +384,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="mrrOutstandingId" widgetVar="mrrOutstandingDlg" height="100" resizable="false">
+        <p:dialog id="mrrOutstandingId" widgetVar="mrrOutstandingDlg" height="130" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -326,10 +392,13 @@
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.mrrs.outstanding']}</strong>
                     <br/>
-                    Lorem ipsum ad his scripta blandit partiendo
+                    value comes from POs with a Status of "MRR Required" in FQM Expediting Database. <br/>
+                    Note that the Status of "MRR Required" has to be manually set so there could be <br/>
+                    POs that require a MRR but do not have a Status of "MRR Required". <br/>
                 </div>
                 <div class="clearfix"></div>
                 <br/>
+
                 <div class="col-md-11">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
