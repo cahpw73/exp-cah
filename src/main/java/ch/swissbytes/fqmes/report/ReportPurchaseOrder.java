@@ -57,7 +57,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("itemLbl", "Item No");
         addParameters("qtyLbl", "Qty");
         addParameters("uomLbl", "Unit");
-        addParameters("titleLbl", "Title");
+        addParameters("titleLbl", "Item Description");
         addParameters("equipmentLbl", "Equipment Tag");
         addParameters("incoTermLbl", "INCO term");
         addParameters("deliveryDateLbl", "Delivery Date");
