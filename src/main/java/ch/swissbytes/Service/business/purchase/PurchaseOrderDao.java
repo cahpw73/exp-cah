@@ -416,17 +416,19 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     public int getNumberDeliveryNextMoth(Long projectId,Date nextMothIni,Date nextMothEnd) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT COUNT(po.id) ");
-        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" SELECT COUNT(sp.id) ");
+        sb.append(" FROM ScopeSupplyEntity sp INNER JOIN sp.purchaseOrder po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND sp.status.id = :ENABLED ");
         sb.append(" AND NOT (po.purchaseOrderStatus = :COMPLETED ");
         sb.append(" OR po.purchaseOrderStatus = :DELETED ");
         sb.append(" OR po.purchaseOrderStatus = :CANCELLED ");
         sb.append(" OR po.purchaseOrderStatus = :MMR_REQUIRED) ");
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
-        sb.append(" AND po.poExpeditingDeliveryDate <= :NEXT_MOTH_END ");
-        sb.append(" AND po.poExpeditingDeliveryDate >= :NEXT_MOTH_INI ");
+        sb.append(" AND sp.forecastSiteDate <= :NEXT_MOTH_END ");
+        sb.append(" AND sp.forecastSiteDate >= :NEXT_MOTH_INI ");
+        sb.append(" GROUP BY sp.forecastSiteDate ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
@@ -437,10 +439,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("PROJECT_ID", projectId);
         parameters.put("NEXT_MOTH_INI", nextMothIni);
         parameters.put("NEXT_MOTH_END", nextMothEnd);
+        parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
-        Object object = list.get(0);
-        Long result = (Long)object;
-        return result.intValue();
+        if(list.size()>0) {
+            return list.size();
+        }else{
+            return 0;
+        }
     }
 
     public int getNumberMrrOutstanding(Long projectId) {
