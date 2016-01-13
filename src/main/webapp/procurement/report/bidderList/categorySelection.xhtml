@@ -135,8 +135,8 @@
                                             </p:column>
                                             <p:column headerText="Print">
                                                 <h:selectBooleanCheckbox value="#{bidListBean.canPrintSupplier}">
-                                                    <p:ajax async="true" event="blur"
-                                                            listener="#{bidListBean.selectSupplier(_supplier.id)}"/>
+                                                    <p:ajax async="true" event="blur" update=":bidderForm:supCommentsId"
+                                                            listener="#{bidListBean.selectSupplier(_supplier)}"/>
                                                 </h:selectBooleanCheckbox>
                                             </p:column>
                                         </p:dataTable>
@@ -147,8 +147,8 @@
                                     <div>
                                         <div class="col-md-12">
                                             <label class="">Supplier Comments</label>
-                                            <h:inputTextarea styleClass="form-control procurement-text-lbl-ltr"
-                                                             value="#{bidListBean.comments}"/>
+                                            <h:inputTextarea id="supCommentsId" styleClass="form-control procurement-text-lbl-ltr"
+                                                             value="#{bidListBean.supplierComments}"/>
                                         </div>
                                     </div>
                                 </div>

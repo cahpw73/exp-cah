@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.procurement.report.ReportProcBean;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -39,7 +40,8 @@ public class BidListBean implements Serializable {
     private boolean categorySelection = true;
     private String packageNo;
     private String description;
-    private String comments;
+    private StringBuilder comments = new StringBuilder();
+    private String supplierComments;
     private List<Long> supplierSelected;
     private boolean canPrintSupplier = false;
 
@@ -75,14 +77,16 @@ public class BidListBean implements Serializable {
     public void generateReport() {
         packageNo = packageNo.toUpperCase();
         description = description.toUpperCase();
-        reportProcBean.printBidderList(supplierSelected, packageNo, description, comments, project);
+        reportProcBean.printBidderList(supplierSelected, packageNo, description, comments.toString(), project);
     }
 
-    public void selectSupplier(Long idSupplier) {
-        if (supplierSelected.contains(idSupplier)) {
-            supplierSelected.remove(idSupplier);
+    public void selectSupplier(SupplierProcEntity sp) {
+        log.info("selectSupplier: " + sp.getCompany());
+        if (supplierSelected.contains(sp.getId())) {
+            supplierSelected.remove(sp.getId());
         } else {
-            supplierSelected.add(idSupplier);
+            supplierSelected.add(sp.getId());
+            comments.append(sp.getComments()!=null?sp.getComments():"");
         }
     }
 
@@ -130,11 +134,24 @@ public class BidListBean implements Serializable {
         this.description = description;
     }
 
-    public String getComments() {
+    /*public String getSupplierComments() {
+        return comments != null ? comments.toString() : "";
+    }*/
+
+    public String getSupplierComments() {
+        supplierComments = comments.toString();
+        return supplierComments;
+    }
+
+    public void setSupplierComments(String supplierComments) {
+        this.supplierComments = supplierComments;
+    }
+
+    public StringBuilder getComments() {
         return comments;
     }
 
-    public void setComments(String comments) {
+    public void setComments(StringBuilder comments) {
         this.comments = comments;
     }
 
