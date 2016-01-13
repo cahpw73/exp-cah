@@ -88,6 +88,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private PurchaseOrderEntity poEdit;
 
+    private ScopeSupplyEntity bulkScopeSupply;
+
     private List<CommentEntity> comments;
 
     private List<ScopeSupplyEntity> scopeSupplies;
@@ -146,6 +148,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private Long temporaryId = -1L;
 
+    private String titleBulkUpdateModal;
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -198,6 +202,7 @@ public class PurchaseOrderEdit implements Serializable {
     @PostConstruct
     public void create() {
         log.info("creating Purchase Order Edit...");
+        bulkScopeSupply = new ScopeSupplyEntity();
         comments = new ArrayList<>();
         commentEdit = new CommentEntity();
         log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
@@ -489,6 +494,23 @@ public class PurchaseOrderEdit implements Serializable {
             commentIndexSelected = index;
             editingComment = commentService.clone(comments.get(index));
             editingComment.getAttachments().addAll(comments.get(index).getAttachments());
+        }
+    }
+
+    public void resetBulkUpdateModal(){
+        bulkScopeSupply = new ScopeSupplyEntity();
+        titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getProjectEntity().getProjectNumber();
+    }
+
+    public void doBulkUpdateForPO(){
+        log.info("size list scopeActives: " + scopeActives.size());
+        for (ScopeSupplyEntity sp : scopeActives){
+            sp.setResponsibleExpediting(bulkScopeSupply.getResponsibleExpediting());
+            sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate());
+            sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate());
+            sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate());
+            sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate());
+            sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate());
         }
     }
 
@@ -987,5 +1009,21 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setCurrentScopeSupply(ScopeSupplyEntity currentScopeSupply) {
         this.currentScopeSupply = currentScopeSupply;
+    }
+
+    public ScopeSupplyEntity getBulkScopeSupply() {
+        return bulkScopeSupply;
+    }
+
+    public void setBulkScopeSupply(ScopeSupplyEntity bulkScopeSupply) {
+        this.bulkScopeSupply = bulkScopeSupply;
+    }
+
+    public String getTitleBulkUpdateModal() {
+        return titleBulkUpdateModal;
+    }
+
+    public void setTitleBulkUpdateModal(String titleBulkUpdateModal) {
+        this.titleBulkUpdateModal = titleBulkUpdateModal;
     }
 }

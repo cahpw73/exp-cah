@@ -474,6 +474,12 @@
                     <br/>
 
                     <div style="width: 940px;">
+                        <div class="pull-left">
+                            <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
+                                           styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                           action="#{purchaseOrderEdit.resetBulkUpdateModal}"
+                                           oncomplete="PF('bulkUpdateSp').show();" update=":bulkUpdateScopeSupplyFormId"/>
+                        </div>
                         <div class="pull-right">
                             <h:commandButton id="save0" value="#{msgs['lbl.update']}"
                                              styleClass="btn btn-primary btn-sm"
@@ -549,6 +555,10 @@
             <!-- /.col-lg-12 -->
         </div>
 
+        <p:dialog id="bulkUpdateSpId" header="#{msgs['modal.bulk.scope.supply.update']}" widgetVar="bulkUpdateSp"
+                  resizable="false" width="630">
+            <ui:include src="modal/BulkScopeSupplyEdit.xhtml"/>
+        </p:dialog>
         <p:dialog id="commentModalId" header="#{msgs['modal.comment.title']}" widgetVar="commentEditModal"
                   resizable="false" height="400" width="500">
             <ui:include src="modal/EditModalComment.xhtml"/>

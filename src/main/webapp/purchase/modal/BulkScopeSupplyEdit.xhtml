@@ -1,0 +1,136 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <h:form id="bulkUpdateScopeSupplyFormId" role="form" prependId="false"
+            styleClass="form-horizontal">
+        <div class="col-lg-12" style="text-align: center; margin-bottom: 15px">
+            <div style="display: inline-block">
+                <h:outputText value="#{purchaseOrderEdit.titleBulkUpdateModal}" style="font-weight: bold; font-size: 16pt;"/>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.responsible.for.expediting']}"/>
+
+                <div class="col-sm-7">
+                    <h:inputText type="text" maxlength="50"
+                                 jsf:placeholder="#{msgs['po.ph.responsible']}"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.bulkScopeSupply.responsibleExpediting}"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.required.on.site.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.requiredSiteDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.forecast.ex.works.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.forecastExWorkDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.actual.ex.works.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.actualExWorkDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.forecast.site.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.forecastSiteDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.actual.site.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.actualSiteDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-bottom: 20px;">
+            <div class="pull-right">
+                <h:commandButton value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm">
+                    <p:ajax onsuccess="PF('bulkUpdateSp').hide();" update=":empForm"
+                            listener="#{purchaseOrderEdit.doBulkUpdateForPO}"
+                            async="false"
+                            process="bulkUpdateScopeSupplyFormId"/>
+                </h:commandButton>
+                <button type="button" onclick="PF('bulkUpdateSp').hide();" class="btn btn-primary btn-sm">
+                    #{msgs['lbl.cancel']}
+                </button>
+            </div>
+        </div>
+
+    </h:form>
+</ui:composition>
