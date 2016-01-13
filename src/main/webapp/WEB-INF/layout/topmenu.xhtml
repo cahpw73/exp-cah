@@ -35,13 +35,11 @@
                  style="text-align: center;align-content: center; vertical-align: middle; margin-top: 19px; position: relative">
                 <div class="navbar-header "
                      style="text-align: center!important; align-content: center!important; vertical-align: middle!important; position: absolute">
-                    <ui:remove>
                         <span class="link-navigation-label">
                             <h:link id="dashboardId" styleClass="lbl-color-df"
                                     outcome="/home">#{msgs['top.menu.lbl.dashboard']}
                             </h:link>
                         </span>
-                    </ui:remove>
                         <span class="link-navigation-label" style="margin-right: -4px;!important;">
                             <h:link id="purchaseOrderId" rendered="#{permissionBean.hasPermission(100)}" styleClass="lbl-color-df"
                                     outcome="/purchase/list">#{msgs['top.menu.lbl.purchase.order']}
