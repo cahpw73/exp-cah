@@ -17,6 +17,7 @@ import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
+import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -499,18 +500,26 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void resetBulkUpdateModal(){
         bulkScopeSupply = new ScopeSupplyEntity();
-        titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getProjectEntity().getProjectNumber();
+        titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getPo();
     }
 
     public void doBulkUpdateForPO(){
         log.info("size list scopeActives: " + scopeActives.size());
-        for (ScopeSupplyEntity sp : scopeActives){
-            sp.setResponsibleExpediting(bulkScopeSupply.getResponsibleExpediting());
-            sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate());
-            sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate());
-            sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate());
-            sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate());
-            sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate());
+        for (ScopeSupplyEntity sp : scopeActives) {
+            if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
+                if (StringUtils.isNotEmpty(sp.getResponsibleExpediting()))
+                    sp.setResponsibleExpediting(bulkScopeSupply.getResponsibleExpediting());
+                if (sp.getRequiredSiteDate()!=null)
+                    sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate());
+                if(sp.getForecastExWorkDate()!=null)
+                    sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate());
+                if(sp.getActualExWorkDate()!=null)
+                    sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate());
+                if(sp.getForecastSiteDate()!=null)
+                    sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate());
+                if(sp.getActualSiteDate()!=null)
+                    sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate());
+            }
         }
     }
 
