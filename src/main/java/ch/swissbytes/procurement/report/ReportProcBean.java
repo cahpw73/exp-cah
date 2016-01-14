@@ -124,10 +124,10 @@ public class ReportProcBean implements Serializable {
     }
 
 
-    public void printBidderList(List<Long> suppliers, String packageNumber, String description, String comments, ProjectEntity project) {
+    public void printBidderList(List<Long> suppliers, String packageNumber, String description, ProjectEntity project) {
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportBidderList("/procurement/bidderList/bidderList", "Procurement.bidder list", messages, locale, configuration, suppliers, packageNumber, description, comments,  project);
+        ReportView reportView = new ReportBidderList("/procurement/bidderList/bidderList", "Procurement.bidder list", messages, locale, configuration, suppliers, packageNumber, description, project);
         reportView.printDocument(null);
         openReport = true;
     }
