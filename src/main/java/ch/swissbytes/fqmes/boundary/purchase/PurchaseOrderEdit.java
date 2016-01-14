@@ -498,27 +498,35 @@ public class PurchaseOrderEdit implements Serializable {
         }
     }
 
-    public void resetBulkUpdateModal(){
+    public void resetBulkUpdateModal() {
         bulkScopeSupply = new ScopeSupplyEntity();
         titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getPo();
     }
 
-    public void doBulkUpdateForPO(){
+    public void doBulkUpdateForPO() {
         log.info("size list scopeActives: " + scopeActives.size());
         for (ScopeSupplyEntity sp : scopeActives) {
             if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
                 if (StringUtils.isNotEmpty(sp.getResponsibleExpediting()))
-                    sp.setResponsibleExpediting(bulkScopeSupply.getResponsibleExpediting());
-                if (sp.getRequiredSiteDate()!=null)
-                    sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate());
-                if(sp.getForecastExWorkDate()!=null)
-                    sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate());
-                if(sp.getActualExWorkDate()!=null)
-                    sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate());
-                if(sp.getForecastSiteDate()!=null)
-                    sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate());
-                if(sp.getActualSiteDate()!=null)
-                    sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate());
+                    sp.setResponsibleExpediting(StringUtils.isNotEmpty(bulkScopeSupply.getResponsibleExpediting()) ? bulkScopeSupply.getResponsibleExpediting() : sp.getResponsibleExpediting());
+                if (sp.getRequiredSiteDate() != null)
+                    sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate() != null ? bulkScopeSupply.getRequiredSiteDate() : sp.getRequiredSiteDate());
+                if (sp.getForecastExWorkDate() != null)
+                    sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate() != null ? bulkScopeSupply.getForecastExWorkDate() : sp.getForecastExWorkDate());
+                if (sp.getActualExWorkDate() != null)
+                    sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate() != null ? bulkScopeSupply.getActualExWorkDate() : sp.getActualExWorkDate());
+                if (sp.getForecastSiteDate() != null)
+                    sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate() != null ? bulkScopeSupply.getForecastSiteDate() : sp.getForecastSiteDate());
+                if (sp.getActualSiteDate() != null)
+                    sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate() != null ? bulkScopeSupply.getActualSiteDate() : sp.getActualSiteDate());
+                if (StringUtils.isNotEmpty(sp.getSpIncoTerm()))
+                    sp.setSpIncoTerm(StringUtils.isNotEmpty(bulkScopeSupply.getSpIncoTerm()) ? bulkScopeSupply.getSpIncoTerm() : sp.getSpIncoTerm());
+                if (sp.getPoDeliveryDate() != null)
+                    sp.setPoDeliveryDate(bulkScopeSupply.getPoDeliveryDate() != null ? bulkScopeSupply.getPoDeliveryDate() : sp.getPoDeliveryDate());
+                if (sp.getDeliveryLeadTimeQt() != null)
+                    sp.setDeliveryLeadTimeQt(bulkScopeSupply.getDeliveryLeadTimeQt() != null ? bulkScopeSupply.getDeliveryLeadTimeQt() : sp.getDeliveryLeadTimeQt());
+                if (sp.getDeliveryLeadTimeMs() != null)
+                    sp.setDeliveryLeadTimeMs(bulkScopeSupply.getDeliveryLeadTimeMs() != null ? bulkScopeSupply.getDeliveryLeadTimeMs() : sp.getDeliveryLeadTimeMs());
             }
         }
     }

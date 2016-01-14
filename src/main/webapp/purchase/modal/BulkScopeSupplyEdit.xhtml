@@ -126,10 +126,10 @@
 
                 <div class="col-sm-4">
                     <div style="width: 169px;">
-                        <p:selectOneMenu value="#{purchaseOrderEdit.bulkScopeSupply.unit}" effect="fold"
-                                         editable="true" maxlength="50" style="width: 100%" styleClass="menu-ddp">
-                            <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"/>
-                            <f:selectItems value="#{unitOfMeasurement}"/>
+                        <p:selectOneMenu value="#{purchaseOrderEdit.bulkScopeSupply.spIncoTerm}"
+                                         effect="fold" editable="true" styleClass="menu-ddp"
+                                         maxlength="50" style="width: 100%">
+                            <f:selectItems value="#{incoTerms}"/>
                         </p:selectOneMenu>
                     </div>
                 </div>
