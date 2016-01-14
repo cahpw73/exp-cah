@@ -478,6 +478,7 @@
                             <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
                                            styleClass="btn btn-primary btn-commandLink-primeFaces"
                                            action="#{purchaseOrderEdit.resetBulkUpdateModal}"
+                                           rendered="#{permissionBean.hasPermission(1410)}"
                                            oncomplete="PF('bulkUpdateSp').show();" update=":bulkUpdateScopeSupplyFormId"/>
                         </div>
                         <div class="pull-right">
