@@ -129,25 +129,41 @@ public class DashboardBean implements Serializable {
     private void loadNumberOpenPOs() {
         numberOpenPOs = String.valueOf(poService.getNumberOfOpenPOs(projectSelected != null ? projectSelected.getId() : -1));
         Double percentage = (Double.parseDouble(numberOpenPOs) / Double.parseDouble(totalOfPOs)) * 100;
+        String percentageN;
+        DecimalFormat formatter = new DecimalFormat("###");
         if (!percentage.isNaN()){
             percentage = Math.round(percentage*100.0)/100.0;
-            percentageOpenPOs = String.valueOf(percentage) + "%";
+            /*percentageN = String.valueOf(percentage.doubleValue());
+            String[] split = percentageN.split(".");*/
+            percentageOpenPOs = formatter.format(percentage) + "%";
             openPOs = numberOpenPOs + " / " + percentageOpenPOs;
         }else{
-            openPOs = "0 / 0.0%";
+            openPOs = "0%";
         }
     }
 
     private void loadNumberCompletedPOs(){
         numberCompletedPOs = String.valueOf(poService.getNumberOfCompletedPOs(projectSelected != null ? projectSelected.getId() : -1));
         Double percentage = (Double.parseDouble(numberCompletedPOs) / Double.parseDouble(totalOfPOs)) * 100;
+        String percentageN;
+        DecimalFormat formatter = new DecimalFormat("###");
         if (!percentage.isNaN()){
             percentage = Math.round(percentage*100.0)/100.0;
-            percentageCompletedPOs = String.valueOf(percentage) + "%";
+            /*percentageN = String.valueOf(percentage.doubleValue());
+            String[] split = percentageN.split("/.");*/
+            percentageCompletedPOs = formatter.format(percentage) + "%";
             completedPOs = numberCompletedPOs + " / " + percentageCompletedPOs;
         }else{
-            completedPOs = "0 / 0.0%";
+            completedPOs = "0%";
         }
+    }
+
+    public double getDecimal(int numeroDecimales,double decimal){
+        decimal = decimal*(java.lang.Math.pow(10, numeroDecimales));
+        decimal = java.lang.Math.round(decimal);
+        decimal = decimal/java.lang.Math.pow(10, numeroDecimales);
+
+        return decimal;
     }
 
     public ProjectEntity getProjectSelected() {
