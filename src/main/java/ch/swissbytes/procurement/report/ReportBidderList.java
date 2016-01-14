@@ -23,8 +23,6 @@ public class ReportBidderList extends ReportView implements Serializable {
     private List<Long>suppliers;
     private String packageNumber;
     private String description;
-    private String comments;
-   // private String codeProject;
     private ProjectEntity project;
 
 
@@ -36,13 +34,12 @@ public class ReportBidderList extends ReportView implements Serializable {
      * @param locale           {@link Locale}
      */
     public ReportBidderList(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,String comments,ProjectEntity project) {
+                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,ProjectEntity project) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.suppliers=suppliers;
         this.packageNumber=packageNumber;
         this.description=description;
-        this.comments=comments;
        // this.codeProject=codeProject;
         this.project=project;
         addParameters("FORMAT_DATE", configuration.getFormatDate());
@@ -63,7 +60,6 @@ public class ReportBidderList extends ReportView implements Serializable {
         addParameters("supplier",suppliers);
         addParameters("packageNumber", packageNumber);
         addParameters("description",description);
-        addParameters("comments", comments);
         addParameters("projectCode", project.getProjectNumber());
         addParameters("project", project.getTitle());
         Date now = new Date();

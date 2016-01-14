@@ -66,6 +66,13 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
         return supplier;
     }
 
+    @Transactional
+    public void doUpdateSupplierOnly(SupplierProcEntity supplier){
+        supplier.setLastUpdate(new Date());
+        supplier.setSupplierId(supplier.getSupplierId().toUpperCase());
+        super.update(supplier);
+    }
+
     public boolean isAlreadyBeingUsed(final String supplierId, Long id) {
         SupplierProcEntity supplier = dao.findSupplierBySupplierIdAndDistinct(supplierId, id);
         return supplier != null;

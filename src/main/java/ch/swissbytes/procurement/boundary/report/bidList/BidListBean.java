@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.CategoryEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 import ch.swissbytes.procurement.report.ReportProcBean;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -30,23 +31,24 @@ public class BidListBean implements Serializable {
 
     @Inject
     private SupplierProcService supplierService;
+
     @Inject
     private ReportProcBean reportProcBean;
 
     private ProjectEntity project;
-    private List<String> countries;
     private List<String> countriesSelected;
     private boolean categorySelection = true;
     private String packageNo;
     private String description;
-    private String comments;
+    private String supplierComments;
     private List<Long> supplierSelected;
     private boolean canPrintSupplier = false;
+    private List<SupplierProcEntity> supplierProcList;
 
     @PostConstruct
     public void create() {
         log.log(Level.FINE, "creating bidListBean");
-        countries = new ArrayList<>();
+        supplierProcList = new ArrayList<>();
         countriesSelected = new ArrayList<>();
         supplierSelected = new ArrayList<>();
     }
@@ -56,33 +58,43 @@ public class BidListBean implements Serializable {
         log.log(Level.FINE, "destroying bidListBean");
     }
 
-    public List<String> findCountriesByCategory(CategoryEntity categoryEntity) {
-        if (categoryEntity != null) {
-            countries = supplierService.findCountriesByCategory(categoryEntity.getId());
-        }
-        Collections.sort(countriesSelected);
-        return countries;
-    }
-
-    public void selectCountry(String country) {
-        if (!countriesSelected.contains(country)) {
-            countriesSelected.add(country);
-        } else {
-            countriesSelected.remove(country);
-        }
-    }
-
     public void generateReport() {
+        doUpdateCommentsForEachSupplier();
         packageNo = packageNo.toUpperCase();
         description = description.toUpperCase();
-        reportProcBean.printBidderList(supplierSelected, packageNo, description, comments, project);
+        reportProcBean.printBidderList(supplierSelected, packageNo, description, project);
     }
 
-    public void selectSupplier(Long idSupplier) {
-        if (supplierSelected.contains(idSupplier)) {
-            supplierSelected.remove(idSupplier);
+    private void doUpdateCommentsForEachSupplier(){
+        log.info("doUpdateCommentsForEachSupplier");
+        List<SupplierProcEntity> list = new ArrayList<>();
+        for (Long supId : supplierSelected){
+            for(SupplierProcEntity sp : supplierProcList){
+                if(sp.getId().longValue()==supId){
+                    list.add(sp);
+                }
+            }
+        }
+        supplierProcList.clear();
+        supplierProcList.addAll(list);
+        for (SupplierProcEntity sp : supplierProcList){
+            StringBuilder comments = new StringBuilder();
+            if(StringUtils.isNotEmpty(sp.getComments())) {
+                comments.append(sp.getComments());
+                comments.append("\n");
+            }
+            comments.append(supplierComments);
+            sp.setComments(comments.toString());
+            supplierService.doUpdateSupplierOnly(sp);
+        }
+    }
+
+    public void selectSupplier(SupplierProcEntity sp) {
+        log.info("selectSupplier: " + sp.getCompany());
+        if (supplierSelected.contains(sp.getId())) {
+            supplierSelected.remove(sp.getId());
         } else {
-            supplierSelected.add(idSupplier);
+            supplierSelected.add(sp.getId());
         }
     }
 
@@ -130,12 +142,12 @@ public class BidListBean implements Serializable {
         this.description = description;
     }
 
-    public String getComments() {
-        return comments;
+    public String getSupplierComments() {
+        return supplierComments;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setSupplierComments(String supplierComments) {
+        this.supplierComments = supplierComments;
     }
 
     public List<SupplierProcEntity> suppliers(CategoryEntity categoryEntity) {
@@ -144,6 +156,8 @@ public class BidListBean implements Serializable {
 
     public List<SupplierProcEntity> supplieres1(CategoryEntity category) {
         List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category != null ? category.getId() : null, project != null ? project.getId() : null);
+        supplierProcList.clear();
+        supplierProcList.addAll(list);
         return list;
     }
 
