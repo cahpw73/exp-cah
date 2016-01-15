@@ -112,8 +112,9 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <h:outputText value="#{util.toLocal(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.orderDate)}"
-                                          class="form-control view-po"/>
+                            <h:outputText
+                                    value="#{util.toLocal(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.orderDate)}"
+                                    class="form-control view-po"/>
                         </div>
                     </div>
                     <div class="row">
@@ -149,7 +150,7 @@
                                              class="form-control po-view"/>
                             </div>
                             <div class="col-md-6">
-                                <p:selectOneMenu styleClass="menu-po-status"
+                                <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
                                     <f:selectItems value="#{poStatuses}"/>
                                 </p:selectOneMenu>
@@ -165,8 +166,8 @@
 
                                 <div class="inputText-general-po">
                                     <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
-                                                  jsf:placeholder="#{msgs['po.ph.po.title']}"
-                                                  class="form-control" readonly="true"/>
+                                                 jsf:placeholder="#{msgs['po.ph.po.title']}"
+                                                 class="form-control" readonly="true"/>
                                 </div>
                             </div>
                         </div>
@@ -177,6 +178,7 @@
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.supplier']}"/>
+
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
@@ -197,7 +199,7 @@
                                                      btnViewContact btnAddContact
                                                     supplierPostCode supplierCountry contactId"/>
                                         </p:selectOneMenu>
-                                        <p:message for="supplierNameId" />
+                                        <p:message for="supplierNameId"/>
                                     </ui:remove>
                                 </div>
                             </div>
@@ -304,17 +306,7 @@
                         <div class="section-text-area-po">
                         </div>
                     </div>
-                    <ui:remove>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
 
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.email.address.comment']}
-                        </div>
-                    </div>
-                    </ui:remove>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -329,7 +321,7 @@
                                                      style="min-width:345px;max-width: 345px;"
                                                      filterMatchMode="startsWith"
                                                      value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactExpediting}"
-                                                     converter="contactConverter">
+                                                     converter="contactConverter" onchange="doChange();">
                                         <f:selectItem itemLabel="Select One" itemValue=""/>
                                         <f:selectItems var="_contact"
                                                        value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.contacts}"
@@ -341,16 +333,17 @@
                         </div>
                         <div class="section-text-area-po">
                             <ui:remove>
-                            <div class="col-sm-5" style="padding-left: 0px;">
-                                <p:inputTextarea style="max-height: 29px;"
-                                                 id="contactEmailExp"
-                                                 readonly="true"
-                                                 maxlength="950"
-                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactEntity.email}"
-                                                 jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
-                                                 class="form-control"/>
-                            </div>
+                                <div class="col-sm-5" style="padding-left: 0px;">
+                                    <p:inputTextarea style="max-height: 29px;"
+                                                     id="contactEmailExp"
+                                                     readonly="true"
+                                                     maxlength="950"
+                                                     value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactEntity.email}"
+                                                     jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
+                                                     class="form-control"/>
+                                </div>
                             </ui:remove>
+
                             <div class="col-sm-7 pull-left">
                                 <h:commandButton
                                         id="btnAddContact"
@@ -392,7 +385,8 @@
                                                 navigator="true" jsf:placeholder="#{configuration.formatDate}"
                                                 pattern="#{configuration.formatDate}"
                                                 converter="#{dateConverter}"
-                                                timeZone="#{configuration.timeZone2}">
+                                                timeZone="#{configuration.timeZone2}"
+                                                onselect="calendarChanges();" onclick="calendarChanges();">
                                     </p:calendar>
                                 </div>
                             </div>
@@ -423,7 +417,7 @@
                                 <div class="calendar-general-po">
                                     <p:selectOneMenu id="incoTermSelectOne" value="#{purchaseOrderEdit.poEdit.incoTerm}"
                                                      effect="fold" editable="true" styleClass="menu-ddp"
-                                                     maxlength="50" style="width: 100%">
+                                                     maxlength="50" style="width: 100%" onchange="doChange();">
                                         <f:selectItems value="#{incoTerms}"/>
                                     </p:selectOneMenu>
                                 </div>
@@ -474,13 +468,15 @@
                     <br/>
 
                     <div style="width: 940px;">
-                        <div class="pull-left">
-                            <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
-                                           styleClass="btn btn-primary btn-commandLink-primeFaces"
-                                           action="#{purchaseOrderEdit.resetBulkUpdateModal}"
-                                           rendered="#{permissionBean.hasPermission(1410)}"
-                                           oncomplete="PF('bulkUpdateSp').show();" update=":bulkUpdateScopeSupplyFormId"/>
-                        </div>
+                            <div class="pull-left">
+                                <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
+                                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                               action="#{purchaseOrderEdit.resetBulkUpdateModal}"
+                                               rendered="#{permissionBean.hasPermission(1410)}"
+                                               oncomplete="PF('bulkUpdateSp').show();"
+                                               update=":bulkUpdateScopeSupplyFormId"/>
+                            </div>
+
                         <div class="pull-right">
                             <h:commandButton id="save0" value="#{msgs['lbl.update']}"
                                              styleClass="btn btn-primary btn-sm"
@@ -583,7 +579,8 @@
             <ui:include src="../procurement/admin/supplier/components/contactView.xhtml">
                 <ui:param name="ID" value="contactViewId"/>
                 <ui:param name="MODAL" value="contactViewModal"/>
-                <ui:param name="contact" value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactExpediting}"/>
+                <ui:param name="contact"
+                          value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactExpediting}"/>
             </ui:include>
         </p:dialog>
         <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
