@@ -146,7 +146,6 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             subQuery.append(" ) ");
         }
-        System.out.println("final query "+subQuery.toString());
         return subQuery.toString();
     }
 
