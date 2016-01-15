@@ -61,10 +61,10 @@
                             <div class="row">
                                 <div class="col-xs-4"
                                      style="padding-right: 5px; padding-bottom: 5px; padding-left: 5px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #952F95;">
+                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #AF3CAF;">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="total-pos.png"
-                                                            width="80" height="80"
+                                                            width="70" height="70"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -93,7 +93,7 @@
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffd700">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="completed-pos.png"
-                                                            width="80" height="80"
+                                                            width="70" height="70"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -120,7 +120,7 @@
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #add8e6;">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="open-pos.png"
-                                                            width="80" height="80"
+                                                            width="70" height="70"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -150,7 +150,7 @@
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #32cd32 ">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="delivery-next-moth.png"
-                                                            width="80" height="80"
+                                                            width="70" height="70"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -178,7 +178,7 @@
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffa500">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="delivery-next-3-moth.png"
-                                                            width="80" height="80"
+                                                            width="70" height="70"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -205,7 +205,7 @@
                                     <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #ffc0cb">
                                         <div class="box-image-metric-dashboard">
                                             <h:graphicImage library="img" name="mrr-outstanding.png"
-                                                            width="80" height="80"
+                                                            width="70" height="70"
                                                             styleClass="logo-procurement-preview"/>
                                         </div>
                                         <div class="container-box-line-separator-dashboard">
@@ -235,7 +235,7 @@
             </div>
         </div>
 
-        <p:dialog id="totalPOsId" widgetVar="totalPOsDlg" height="100" resizable="false">
+        <p:dialog id="totalPOsId" widgetVar="totalPOsDlg" resizable="false">
             <h:panelGroup id="totalPOsGrId">
                 <div>
                     <div class="col-md-1" style="padding-left: 1px">
@@ -250,7 +250,7 @@
                     <div class="clearfix"></div>
                     <br/>
 
-                    <div class="col-md-11">
+                    <div class="col-md-11" style="margin-bottom: 10px;">
                         <div class="pull-right">
                             <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                                     onclick="PF('totalPOsDlg').hide();">
@@ -261,7 +261,7 @@
                 </div>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog id="completedPOsId" widgetVar="completedPOsDlg" height="120" resizable="false">
+        <p:dialog id="completedPOsId" widgetVar="completedPOsDlg" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -278,7 +278,7 @@
                 <div class="clearfix"></div>
                 <br/>
 
-                <div class="col-md-11">
+                <div class="col-md-11" style="margin-bottom: 10px;">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                                 onclick="PF('completedPOsDlg').hide();">
@@ -288,7 +288,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="openPOsId" widgetVar="openPOsDlg" height="145" resizable="false">
+        <p:dialog id="openPOsId" widgetVar="openPOsDlg" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -309,7 +309,7 @@
                 <div class="clearfix"></div>
                 <br/>
 
-                <div class="col-md-11">
+                <div class="col-md-11" style="margin-bottom: 10px;">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                                 onclick="PF('openPOsDlg').hide();">
@@ -319,7 +319,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg" height="220" resizable="false">
+        <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg"  resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -341,7 +341,7 @@
                 <div class="clearfix"></div>
                 <br/>
 
-                <div class="col-md-11">
+                <div class="col-md-11" style="margin-bottom: 10px;">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                                 onclick="PF('deliveryNextMothDlg').hide();">
@@ -351,7 +351,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="deliveryNext3MothId" widgetVar="deliveryNext3MothDlg" height="240" resizable="false">
+        <p:dialog id="deliveryNext3MothId" widgetVar="deliveryNext3MothDlg" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -374,7 +374,7 @@
                 <div class="clearfix"></div>
                 <br/>
 
-                <div class="col-md-11">
+                <div class="col-md-11" style="margin-bottom: 10px;">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                                 onclick="PF('deliveryNext3MothDlg').hide();">
@@ -384,7 +384,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="mrrOutstandingId" widgetVar="mrrOutstandingDlg" height="130" resizable="false">
+        <p:dialog id="mrrOutstandingId" widgetVar="mrrOutstandingDlg" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -399,7 +399,7 @@
                 <div class="clearfix"></div>
                 <br/>
 
-                <div class="col-md-11">
+                <div class="col-md-11" style="margin-bottom: 10px;">
                     <div class="pull-right">
                         <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
                                 onclick="PF('mrrOutstandingDlg').hide();">

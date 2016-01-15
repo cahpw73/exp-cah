@@ -598,8 +598,8 @@ label.checkbox {
 }
 .box-image-metric-dashboard{
     float: left;
-    margin-left: 15px;
-    margin-top: 45px;
+    margin-left: 36px;
+    margin-top: 60px;
 }
 .label-metric-dashboard{
     font-size: 22pt;
@@ -608,6 +608,6 @@ label.checkbox {
 .box-data-metric{
     float: left;
     margin-top: 40px;
-    width: 215px;
+    width: 190px;
     color: #ffffff;
 }
