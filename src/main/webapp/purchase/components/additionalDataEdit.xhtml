@@ -28,7 +28,7 @@
                                 converter="#{dateConverter}"
                                 timeZone="#{configuration.timeZone}"
                                 value="#{purchaseOrderEdit.poEdit.introEmail}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                                onselect="calendarChanges();" onclick="calendarChanges();"/>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                                 converter="#{dateConverter}"
                                 value="#{purchaseOrderEdit.poEdit.requiredDate}"
                                 mask="#{configuration.mask}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                                onselect="calendarChanges();" onclick="calendarChanges();"/>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
                                 timeZone="#{configuration.timeZone}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{purchaseOrderEdit.poEdit.actualDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                                onselect="calendarChanges();" onclick="calendarChanges();"/>
                 </div>
             </div>
         </div>

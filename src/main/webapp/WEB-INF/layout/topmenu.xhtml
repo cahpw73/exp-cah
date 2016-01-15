@@ -90,6 +90,31 @@
 
     <script language="JavaScript" type="text/javascript">
 
+        $("#dashboardId").click(function(e){
+            console.log("click dashboard....")
+            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
+                console.log("is create or edit..");
+                leavePageToDashboard(e);
+            }else{
+                if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupply.jsf") != -1){
+                    console.log("is create scope supply");
+                    toLeavePageFromModalToDashboard(e)
+                }else if(window.location.href.indexOf("purchase/modal/CreateModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is create scope supply editing");
+                    toLeavePageFromModalToDashboard(e)
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupply.jsf") != -1){
+                    console.log("is edit scope supply")
+                    toLeavePageFromModalToDashboard(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalScopeSupplyEditing.jsf") != -1){
+                    console.log("is edit scope supply editing")
+                    toLeavePageFromModalToDashboard(e);
+                }else if(window.location.href.indexOf("purchase/modal/EditModalSplitScopeSupply.jsf") != -1){
+                    console.log("is edit split scope supply")
+                    toLeavePageFromModalToDashboard(e);
+                }
+            }
+        })
+
         $("#purchaseOrderId").click(function(e){
             console.log("click purchase order....")
             if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
@@ -164,6 +189,17 @@
                 }
             }
         })
+        function toLeavePageFromModalToDashboard(e){
+            e.preventDefault();
+            var sw;
+            console.log("toLeavePageFromModal");
+            if(hasChanges){
+                console.log("hasChanges true");
+                PF('confCancelDashboard').show();
+            }else{
+                window.location = "../../home.jsf"
+            }
+        }
         function toLeavePageFromModalToPurchaseList(e){
             e.preventDefault();
             var sw;
@@ -174,7 +210,6 @@
             }else{
                 window.location = "../../purchase/list.jsf"
             }
-
         }
         function toLeavePageFromModalToReportList(e){
             e.preventDefault();
@@ -199,6 +234,15 @@
                 window.location = "../home.jsf"
             }
 
+        }
+        function leavePageToDashboard(e){
+            e.preventDefault();
+            var sw;
+            if(hasChanges){
+                PF('confCancelDashboard').show();
+            }else{
+                window.location = "/home.jsf"
+            }
         }
         function leavePageToPurchaseList(e){
             e.preventDefault();
@@ -228,6 +272,29 @@
             }
         }
     </script>
+
+    <p:confirmDialog widgetVar="confCancelDashboard" severity="alert" global="true" id="confDashboard" header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                    <br/>(including changes to Scopes of Supply).
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:link outcome="/home" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
+            &#160;
+            <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
+                    onclick="PF('confCancelDashboard').hide();">
+                #{msgs['lbl.no']}
+            </button>
+        </div>
+    </p:confirmDialog>
 
     <p:confirmDialog widgetVar="confCancelPurchaseList" severity="alert" global="true" id="confrDialogLinkId" header="Cancel">
         <f:facet name="message">
