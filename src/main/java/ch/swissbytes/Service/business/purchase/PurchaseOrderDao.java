@@ -77,6 +77,18 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         return super.findBy(sb.toString(), map);
     }
 
+    public List<PurchaseOrderEntity> findPOByIdOnly(Long poId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.status.id=:ENABLED ");
+        sb.append(" AND po.id=:PO_ID ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE.getId());
+        map.put("PO_ID", poId);
+        return super.findBy(sb.toString(), map);
+    }
+
     public List<PurchaseOrderEntity> findPOMaxVariations(Long projectId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT po.po,MAX(po.orderedVariation) ");

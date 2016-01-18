@@ -6,6 +6,7 @@
                 template="../../WEB-INF/layout/template-prmt.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{mainMenuBean.select(1)}"/>
     </f:metadata>
     <ui:define name="body">
@@ -20,11 +21,12 @@
                                 <div style="width: 340px!important; float: left!important;">
                                     <div class="form-group">
                                         <h:outputLabel styleClass=" control-label"
-                                                      style="text-align: left !important;direction: ltr !important;"
-                                                      value="#{msgs['project.list.lbl.msg.select.po']}"/>
+                                                       style="text-align: left !important;direction: ltr !important;"
+                                                       value="#{msgs['project.list.lbl.msg.select.po']}"/>
                                     </div>
                                     <div class="clearfix"></div>
                                     <br/>
+
                                     <div class="row">
                                         <div class="form-group">
                                             <h:outputLabel styleClass="col-sm-3 control-label "
@@ -42,13 +44,15 @@
                                                                    var="_p"
                                                                    itemValue="#{_p}"
                                                                    itemLabel="#{_p.title}"/>
-                                                    <p:ajax event="change" process="@this" listener="#{spreadSheetTestBean.loadPOS}"/>
+                                                    <p:ajax event="change" process="@this"
+                                                            listener="#{spreadSheetTestBean.loadPOS}"/>
                                                 </h:selectOneMenu>
 
                                             </div>
                                         </div>
                                     </div>
                                     <br/>
+
                                     <div class="row">
                                         <div class="form-group">
                                             <h:outputLabel styleClass="col-sm-3 control-label "
@@ -56,13 +60,15 @@
                                                            value="Nombre del archivo"/>
 
                                             <div class="col-md-7" style="margin-left: -20px!important;">
-                                                <h:inputText styleClass="form-control" value="#{spreadSheetTestBean.nameFile}"/>
+                                                <h:inputText styleClass="form-control"
+                                                             value="#{spreadSheetTestBean.nameFile}"/>
 
                                             </div>
                                         </div>
                                     </div>
 
                                     <br/>
+
                                     <div class="form-group">
                                         <div class="pull-right">
 
