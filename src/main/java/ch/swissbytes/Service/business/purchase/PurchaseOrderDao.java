@@ -353,15 +353,19 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
 
     public int getTotalNumberOfPOs(final Long projectId) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT COUNT(po.id) ");
+        sb.append(" SELECT COUNT(po.id) ");
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" AND NOT(po.purchaseOrderStatus = :DELETED ");
+        sb.append(" OR po.purchaseOrderStatus = :CANCELLED) ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("PROJECT_ID", projectId);
         parameters.put("COMMITTED",ProcurementStatus.COMMITTED);
+        parameters.put("DELETED", ExpeditingStatusEnum.DELETED);
+        parameters.put("CANCELLED", ExpeditingStatusEnum.CANCELLED);
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
