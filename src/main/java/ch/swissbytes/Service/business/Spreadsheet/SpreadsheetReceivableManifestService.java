@@ -71,7 +71,7 @@ public class SpreadsheetReceivableManifestService implements Serializable {
     public void processWorkbook(final List<PurchaseOrderEntity> list) {
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
-        processor.createSpreadsheet("PkgHdr");
+        processor.createSpreadsheetWithoutPassword("PkgHdr");
         prepareWithColumns();
         createHeaderJS();
         createHeaderPO();

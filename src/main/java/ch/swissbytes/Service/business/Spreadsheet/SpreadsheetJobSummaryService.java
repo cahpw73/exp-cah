@@ -71,7 +71,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
     public void processWorkbook(final List<PurchaseOrderEntity> list) {
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
-        processor.createSpreadsheet("PkgHdr");
+        processor.createSpreadsheetWithoutPassword("PkgHdr");
         prepareWithColumns();
         createHeaderJS();
         createHeaderPO();
@@ -98,9 +98,9 @@ public class SpreadsheetJobSummaryService implements Serializable {
             List<ScopeSupplyEntity> scopeSupplyListList = scopeSupplyService.scopeSupplyListByPOId(entity.getId());
             if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
                 processor.createRow(rowNo);
-                String poH =  entity.getProject() + " " + entity.getPo() + " v   " + entity.getVariation() + " ";
+                String poH =  entity.getProject() + " " + entity.getPo() + " v" + entity.getVariation() + " ";
                 String titleH =  entity.getPoTitle() + " ";
-                String deliveryDateH = "PO Del. Date: " + entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy")+" ":" ";
+                String deliveryDateH =  entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy")+" ":" ";
                 String incoTermH =  entity.getIncoTerm() + " " + entity.getFullIncoTerms() + " ";
                 String supplierH =  entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() + " ";
                 String statusH = "[" + entity.getPurchaseOrderStatus().getLabel().toUpperCase() + "] ";
