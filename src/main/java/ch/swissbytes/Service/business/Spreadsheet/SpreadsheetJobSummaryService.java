@@ -95,28 +95,40 @@ public class SpreadsheetJobSummaryService implements Serializable {
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
         for (PurchaseOrderEntity entity : list) {
-            processor.createRow(rowNo);
-            String poH =  entity.getProject() + " " + entity.getPo() + " v   " + entity.getVariation() + " ";
-            String titleH =  entity.getPoTitle() + " ";
-            String deliveryDateH = "PO Del. Date: " + entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy")+" ":" ";
-            String incoTermH =  entity.getIncoTerm() + " " + entity.getFullIncoTerms() + " ";
-            String supplierH =  entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() + " ";
-            String statusH = "[" + entity.getPurchaseOrderStatus().getLabel().toUpperCase() + "] ";
-            String ref = entity.getResponsibleExpediting();
-            String poTitleReport = poH + titleH + deliveryDateH + incoTermH + supplierH + statusH + ref;
-            processor.writeStringBoldValue(0, poTitleReport);
-            rowNo++;
             List<ScopeSupplyEntity> scopeSupplyListList = scopeSupplyService.scopeSupplyListByPOId(entity.getId());
-            if (!scopeSupplyListList.isEmpty()) {
-                for (ScopeSupplyEntity ss : scopeSupplyListList) {
-                    if(ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting()) {
-                        processor.createRow(rowNo);
-                        prepareDetailContent(ss);
-                        rowNo++;
+            if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
+                processor.createRow(rowNo);
+                String poH =  entity.getProject() + " " + entity.getPo() + " v   " + entity.getVariation() + " ";
+                String titleH =  entity.getPoTitle() + " ";
+                String deliveryDateH = "PO Del. Date: " + entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy")+" ":" ";
+                String incoTermH =  entity.getIncoTerm() + " " + entity.getFullIncoTerms() + " ";
+                String supplierH =  entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() + " ";
+                String statusH = "[" + entity.getPurchaseOrderStatus().getLabel().toUpperCase() + "] ";
+                String ref = entity.getResponsibleExpediting();
+                String poTitleReport = poH + titleH + deliveryDateH + incoTermH + supplierH + statusH + ref;
+                processor.writeStringBoldValue(0, poTitleReport);
+                rowNo++;
+
+                if (!scopeSupplyListList.isEmpty()) {
+                    for (ScopeSupplyEntity ss : scopeSupplyListList) {
+                        if(ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting()) {
+                            processor.createRow(rowNo);
+                            prepareDetailContent(ss);
+                            rowNo++;
+                        }
                     }
                 }
             }
         }
+    }
+
+    private boolean hasScopeSupplyExcludeFromExpediting(List<ScopeSupplyEntity> list) {
+        for(ScopeSupplyEntity ss : list){
+            if(ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting().booleanValue()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void prepareDetailContent(ScopeSupplyEntity ss) {

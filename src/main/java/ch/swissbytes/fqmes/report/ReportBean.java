@@ -2,6 +2,7 @@ package ch.swissbytes.fqmes.report;
 
 
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJobSummaryService;
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetReceivableManifestService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
@@ -46,6 +47,9 @@ public class ReportBean implements Serializable {
 
     @Inject
     private SpreadsheetJobSummaryService spreadsheetJobSummaryService;
+
+    @Inject
+    private SpreadsheetReceivableManifestService spreadsheetReceivableManifestService;
 
     private Locale locale;
 
@@ -139,23 +143,15 @@ public class ReportBean implements Serializable {
         openReport = true;
     }
 
-    public void printReportJobSummaryToXls() {
-        log.info("public void printReportJobSummary()");
-        openReport = false;
-        initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration,DocTypeEnum.XLS);
-        reportView.printDocument(null);
-        openReport = true;
-    }
-
-    public void generateReportJobSummarySpreadSheet(){
-        InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
-        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "testjobsummary.xls");
-    }
-
     public StreamedContent downloadJobSummaryFileExport(){
         InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
-        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "testjobsummary.xls");
+        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xlsx");
+        return file;
+    }
+
+    public StreamedContent downloadReceivableManifestFileExport(){
+        InputStream stream = spreadsheetReceivableManifestService.generateWorkbook(purchaseOrderList());
+        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Receivable.Manifest.xlsx");
         return file;
     }
 
