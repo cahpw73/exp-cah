@@ -19,7 +19,8 @@
     <ui:define name="body">
         <div class="row">
             <o:highlight/>
-
+            <h:outputScript name="js/multipleSelection.js"/>
+            <h:outputScript name="js/submitSearch.js"/>
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
                         acceptcharset="UTF-8">
@@ -150,11 +151,23 @@
                                              class="form-control po-view"/>
                             </div>
                             <div class="col-md-6">
-                                <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
-                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
-                                    <f:selectItems value="#{poStatuses}"/>
-                                </p:selectOneMenu>
+                                <div class='form-group card'>
+                                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
+                                    <select id="poStatuses" multiple="multiple" class="algo">
+                                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                                        </ui:repeat>
+                                    </select>
+                                </div>
                             </div>
+                            <ui:remove>
+                                <div class="col-md-6">
+                                    <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
+                                                     value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
+                                        <f:selectItems value="#{poStatuses}"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </ui:remove>
                         </div>
                     </div>
                     <div class="row">

@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.comment.CommentDao;
 import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.expeditingStatus.ExpeditingStatusDao;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
@@ -78,8 +79,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ContactService contactService;
+
     @Inject
     private Configuration configuration;
+
+    @Inject
+    private ExpeditingStatusDao expeditingStatusDao;
 
     private final String PREFIX = "v";
 
@@ -112,13 +117,40 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     @Transactional
-    public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities) {
+    public PurchaseOrderEntity doUpdate(PurchaseOrderEntity por, List<CommentEntity> commentEntities, List<ScopeSupplyEntity> scopeSupplyEntities, String expeditingStatuses) {
         PurchaseOrderEntity entity = dao.update(por);
         removePrefixIfAny(entity);
         dao.updatePOEntity(por.getPurchaseOrderProcurementEntity());
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
+        saveExpeditingStatuses(expeditingStatuses,entity);
         return por;
+    }
+
+    private void saveExpeditingStatuses(String expeditingStatuses, PurchaseOrderEntity poEntity){
+        removedIfExistsExpeditingStatus(poEntity.getId());
+        String[] exIds = expeditingStatuses.split(",");
+        List<ExpeditingStatusEnum> list = new ArrayList<>();
+        for (String status : exIds) {
+            try {
+                list.add(ExpeditingStatusEnum.getEnum(Integer.parseInt(status)));
+            } catch (NumberFormatException nfe) {
+
+            }
+        }
+        for(ExpeditingStatusEnum status : list){
+            ExpeditingStatusEntity entity = new ExpeditingStatusEntity();
+            entity.setPurchaseOrderEntity(poEntity);
+            entity.setPurchaseOrderStatus(status);
+            expeditingStatusDao.doSave(entity);
+        }
+    }
+
+    private void removedIfExistsExpeditingStatus(final Long poId){
+        List<ExpeditingStatusEntity> list = expeditingStatusDao.findByPOIds(poId);
+        for(ExpeditingStatusEntity e : list){
+            expeditingStatusDao.doRemove(e);
+        }
     }
 
     /**

@@ -151,6 +151,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String titleBulkUpdateModal;
 
+    private String expeditingStatuses;
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -245,13 +247,14 @@ public class PurchaseOrderEdit implements Serializable {
 
     public String doUpdate() {
         log.info("upgrading...");
+        log.info("Expediting Statuses: " + expeditingStatuses);
         Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
         log.info(String.format("hashCode [%s]", hashCode));
         String url="";
         if(validateFields()) {
             if (hashCode.intValue() == currentHashCode.intValue()) {
                 updateStatusesAndLastUpdate();
-                service.doUpdate(poEdit, comments, scopeSupplies);
+                service.doUpdate(poEdit, comments, scopeSupplies,expeditingStatuses);
                 url = "view?faces-redirect=true&poId=" + poEdit.getId();
             } else {
                 url = "edit?faces-redirect=true&poId=" + poEdit.getId();
@@ -1052,5 +1055,13 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setTitleBulkUpdateModal(String titleBulkUpdateModal) {
         this.titleBulkUpdateModal = titleBulkUpdateModal;
+    }
+
+    public String getExpeditingStatuses() {
+        return expeditingStatuses;
+    }
+
+    public void setExpeditingStatuses(String expeditingStatuses) {
+        this.expeditingStatuses = expeditingStatuses;
     }
 }
