@@ -314,9 +314,10 @@
                                                value="#{msgs['po.lbl.expediting.title']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
+                                    <h:inputText id="expeditingTitleId" maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
                                                  jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
-                                                 class="form-control"/>
+                                                 class="form-control" required="true" requiredMessage="Enter a valid Expediting Title"/>
+                                    <p:message for="expeditingTitleId"/>
                                 </div>
                             </div>
                         </div>

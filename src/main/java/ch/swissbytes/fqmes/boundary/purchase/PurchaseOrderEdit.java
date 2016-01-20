@@ -247,19 +247,29 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("upgrading...");
         Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
         log.info(String.format("hashCode [%s]", hashCode));
-        String url = "";
-        if (hashCode.intValue() == currentHashCode.intValue()) {
-            updateStatusesAndLastUpdate();
-            service.doUpdate(poEdit, comments, scopeSupplies);
-            url = "view?faces-redirect=true&poId=" + poEdit.getId();
-        } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId();
-            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
-        }
-        if (!conversation.isTransient()) {
-            conversation.end();
+        String url="";
+        if(validateFields()) {
+            if (hashCode.intValue() == currentHashCode.intValue()) {
+                updateStatusesAndLastUpdate();
+                service.doUpdate(poEdit, comments, scopeSupplies);
+                url = "view?faces-redirect=true&poId=" + poEdit.getId();
+            } else {
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId();
+                Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+            }
+            if (!conversation.isTransient()) {
+                conversation.end();
+            }
         }
         return url;
+    }
+
+    public boolean validateFields(){
+        if(StringUtils.isEmpty(poEdit.getExpeditingTitle()) || StringUtils.isBlank(poEdit.getExpeditingTitle())){
+            Messages.addFlashError("expeditingTitleId","Enter a valid Expediting Title");
+            return false;
+        }
+        return  true;
     }
 
     private void updateStatusesAndLastUpdate() {
