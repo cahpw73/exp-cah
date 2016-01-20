@@ -36,6 +36,10 @@ public class SpreadsheetProcessor implements Serializable {
         spreadsheet.protectSheet(passwordSheet);
     }
 
+    public void createSpreadsheetWithoutPassword(String name){
+        spreadsheet = workbook.createSheet(name);
+    }
+
     public void configureWithColumn(int indexColumn, int numberOfCharacters) {
         spreadsheet.setColumnWidth(indexColumn, numberOfCharacters);
     }

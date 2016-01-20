@@ -1,20 +1,28 @@
 package ch.swissbytes.fqmes.report;
 
 
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJobSummaryService;
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetReceivableManifestService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.report.util.DocTypeEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.ServletContext;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -31,6 +39,17 @@ public class ReportBean implements Serializable {
     @PersistenceContext(unitName = "fqmPU")
     private EntityManager entityManager;
 
+    @Inject
+    private PurchaseOrderService service;
+
+    @Inject
+    private Configuration configuration;
+
+    @Inject
+    private SpreadsheetJobSummaryService spreadsheetJobSummaryService;
+
+    @Inject
+    private SpreadsheetReceivableManifestService spreadsheetReceivableManifestService;
 
     private Locale locale;
 
@@ -46,11 +65,7 @@ public class ReportBean implements Serializable {
 
     private boolean isAllProviders;
 
-    @Inject
-    private PurchaseOrderService service;
-
-    @Inject
-    private Configuration configuration;
+    private StreamedContent file;
 
     public Boolean getOpenReport() {
         return openReport;
@@ -128,13 +143,16 @@ public class ReportBean implements Serializable {
         openReport = true;
     }
 
-    public void printReportJobSummaryToXls() {
-        log.info("public void printReportJobSummary()");
-        openReport = false;
-        initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration,DocTypeEnum.XLS);
-        reportView.printDocument(null);
-        openReport = true;
+    public StreamedContent downloadJobSummaryFileExport(){
+        InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
+        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xlsx");
+        return file;
+    }
+
+    public StreamedContent downloadReceivableManifestFileExport(){
+        InputStream stream = spreadsheetReceivableManifestService.generateWorkbook(purchaseOrderList());
+        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Receivable.Manifest.xlsx");
+        return file;
     }
 
     public void printReportDashboard(Map<String,String> parameterDashboard){
@@ -152,6 +170,14 @@ public class ReportBean implements Serializable {
             ids.add(vpo.getPoId());
         }
         return ids;
+    }
+    public List<PurchaseOrderEntity> purchaseOrderList(){
+        List<PurchaseOrderEntity> list = new ArrayList<>();
+        for (VPurchaseOrder vpo : selected) {
+            PurchaseOrderEntity po = service.findByIdOnly(vpo.getPoId());
+            list.add(po);
+        }
+        return list;
     }
 
 
@@ -193,5 +219,9 @@ public class ReportBean implements Serializable {
 
     public void setAllProviders(boolean isAllProviders) {
         this.isAllProviders = isAllProviders;
+    }
+
+    public StreamedContent getFile() {
+        return file;
     }
 }
