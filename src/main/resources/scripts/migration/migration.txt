@@ -1828,3 +1828,8 @@ update purchase_order set po_expediting_delivery_date = po_delivery_date;
 #New permission to bulk update scope supply
 insert into options  (id,name,module_id,url) values (1410,'BULK_UPDATE_SCOPE_SUPPLY',1,'');
 insert into role_option (id,option_id,role_id) values (706,1410,10);
+
+#20/01/2016 NEW FIELDS IN PURCHASE_ORDER
+ALTER TABLE PURCHASE_ORDER ADD COLUMN NEXT_KEY_DATE TIMESTAMP ;
+ALTER TABLE PURCHASE_ORDER ADD COLUMN NEXT_KEY_DATE_COMMENT VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ADD COLUMN EXPEDITING_TITLE VARCHAR(250);

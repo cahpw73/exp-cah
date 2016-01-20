@@ -70,5 +70,21 @@
                              value="#{purchaseOrderView.purchaseOrder.actualSiteDateComment}"/>
         </div>
     </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.next.key.date']}"/>
+
+                <div class="calendar-general-po">
+                    <h:inputText styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.nextKeyDate)}"/>
+                </div>
+            </div>
+        </div>
+        <div class="section-text-area-po">
+            <h:inputTextarea readonly="true" styleClass="form-control"
+                             value="#{purchaseOrderView.purchaseOrder.nextKeyDateComment}"/>
+        </div>
+    </div>
 
 </ui:composition>

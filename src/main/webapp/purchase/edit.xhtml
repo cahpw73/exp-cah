@@ -306,7 +306,21 @@
                         <div class="section-text-area-po">
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- Text input-->
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.expediting.title']}"/>
 
+                                <div class="inputText-general-po">
+                                    <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
+                                                 jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">

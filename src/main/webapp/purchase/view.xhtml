@@ -252,6 +252,20 @@
                         </div>
                     </div>
                     <div class="row">
+                        <!-- Text input-->
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.expediting.title']}"/>
+
+                                <div class="inputText-general-po">
+                                    <h:inputText maxlength="50" value="#{purchaseOrderView.purchaseOrder.expeditingTitle}"
+                                                 class="form-control" readonly="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label"
