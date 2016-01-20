@@ -25,6 +25,7 @@ public class SearchPurchase extends Filter {
     private Integer dueIn;
     private Integer forecastDueDate;
     private String statuses;
+    private String expeditingTitle;
 
     public String getProject() {
         return project;
@@ -146,6 +147,14 @@ public class SearchPurchase extends Filter {
         return statuses==null?false:statuses.contains(statusId);
     }
 
+    public String getExpeditingTitle() {
+        return expeditingTitle;
+    }
+
+    public void setExpeditingTitle(String expeditingTitle) {
+        this.expeditingTitle = expeditingTitle;
+    }
+
     @Override
     public void clean(){
         po=null;
@@ -162,5 +171,6 @@ public class SearchPurchase extends Filter {
         dueIn=null;
         forecastDueDate=null;
         statuses=null;
+        expeditingTitle=null;
     }
 }

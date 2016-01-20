@@ -28,6 +28,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private String poTitle;
 
+    private String expeditingTitle;
+
     private String supplier;
 
     private String responsibleExpediting;
@@ -92,6 +94,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setPoTitle(String poTitle) {
         this.poTitle = poTitle;
+    }
+
+    @Column(name="expediting_title",updatable = false, insertable = false)
+    public String getExpeditingTitle() {
+        return expeditingTitle;
+    }
+
+    public void setExpeditingTitle(String expeditingTitle) {
+        this.expeditingTitle = expeditingTitle;
     }
 
     @Column(name="company",updatable = false, insertable = false, nullable = true)

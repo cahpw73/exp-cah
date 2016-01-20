@@ -46,6 +46,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
                 query.setParameter("PO_TITLE", "%" + filter.getPoTitle().trim() + "%");
             }
+            if (StringUtils.isNotBlank(filter.getExpeditingTitle()) && StringUtils.isNotEmpty(filter.getExpeditingTitle())) {
+                query.setParameter("EXPEDITING_TITLE", "%" + filter.getExpeditingTitle().trim() + "%");
+            }
             if (StringUtils.isNotBlank(filter.getSupplier()) && StringUtils.isNotEmpty(filter.getSupplier())) {
                 query.setParameter("SUPPLIER", "%" + filter.getSupplier().trim() + "%");
             }
@@ -92,6 +95,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
                 sb.append(" AND lower(x.poTitle) like lower(:PO_TITLE)");
+            }
+            if (StringUtils.isNotBlank(filter.getExpeditingTitle()) && StringUtils.isNotEmpty(filter.getExpeditingTitle())) {
+                sb.append(" AND lower(x.expeditingTitle) like lower(:EXPEDITING_TITLE)");
             }
             if (StringUtils.isNotBlank(filter.getVariation()) && StringUtils.isNotEmpty(filter.getVariation())) {
                 sb.append(" AND lower(x.variation) like lower(:VARIATION)");
