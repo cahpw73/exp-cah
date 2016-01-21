@@ -15,114 +15,6 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['bulk.update.sp.responsible.for.expediting']}"/>
-
-                <div class="col-sm-7">
-                    <h:inputText type="text" maxlength="50"
-                                 jsf:placeholder="#{msgs['po.ph.responsible']}"
-                                 class="form-control"
-                                 value="#{purchaseOrderEdit.bulkScopeSupply.responsibleExpediting}"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['bulk.update.sp.required.on.site.date']}"/>
-
-                <div class="col-sm-4">
-                    <p:calendar type="text"
-                                navigator="true"
-                                mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                value="#{purchaseOrderEdit.bulkScopeSupply.requiredSiteDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['bulk.update.sp.forecast.ex.works.date']}"/>
-
-                <div class="col-sm-4">
-                    <p:calendar type="text"
-                                navigator="true"
-                                mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                value="#{purchaseOrderEdit.bulkScopeSupply.forecastExWorkDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['bulk.update.sp.actual.ex.works.date']}"/>
-
-                <div class="col-sm-4">
-                    <p:calendar type="text"
-                                navigator="true"
-                                mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                value="#{purchaseOrderEdit.bulkScopeSupply.actualExWorkDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['bulk.update.sp.forecast.site.date']}"/>
-
-                <div class="col-sm-4">
-                    <p:calendar id="bulkForecastDateId"
-                                type="text" navigator="true"
-                                mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                value="#{purchaseOrderEdit.bulkScopeSupply.forecastSiteDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
-                               value="#{msgs['bulk.update.sp.actual.site.date']}"/>
-
-                <div class="col-sm-4">
-                    <p:calendar type="text"
-                                navigator="true"
-                                mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                value="#{purchaseOrderEdit.bulkScopeSupply.actualSiteDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="form-group">
-                <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['bulk.update.sp.inco.terms']}"/>
 
                 <div class="col-sm-4">
@@ -168,6 +60,44 @@
         <div class="col-lg-12">
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.forecast.ex.works.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.forecastExWorkDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.actual.ex.works.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.actualExWorkDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['bulk.update.sp.lead.time']}"/>
 
                 <div class="col-sm-8">
@@ -180,7 +110,8 @@
                                          requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
-                                <p:ajax process="@this" event="change" update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
+                                <p:ajax process="@this" event="change"
+                                        update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
                                         async="false"
                                         delay="500"
                                         listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
@@ -190,12 +121,83 @@
                                          styleClass="form-control"
                                          value="#{purchaseOrderEdit.bulkScopeSupply.deliveryLeadTimeMs}">
                             <f:selectItems value="#{allTimeMeasurement}"/>
-                            <p:ajax process="@this" event="change" update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
+                            <p:ajax process="@this" event="change"
+                                    update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
                                     async="false"
                                     delay="500"
                                     listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
                         </h:selectOneMenu>
                     </h:panelGroup>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.forecast.site.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar id="bulkForecastDateId"
+                                type="text" navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.forecastSiteDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.actual.site.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.actualSiteDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.required.on.site.date']}"/>
+
+                <div class="col-sm-4">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.bulkScopeSupply.requiredSiteDate}"
+                                onselect="calendarChanges();" onchange="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <h:outputLabel class="col-sm-4 control-label"
+                               value="#{msgs['bulk.update.sp.responsible.for.expediting']}"/>
+
+                <div class="col-sm-7">
+                    <h:inputText type="text" maxlength="50"
+                                 jsf:placeholder="#{msgs['po.ph.responsible']}"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.bulkScopeSupply.responsibleExpediting}"/>
                 </div>
             </div>
         </div>
