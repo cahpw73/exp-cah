@@ -786,8 +786,12 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     private void updateTdpActives() {
+        log.info("updateTdpActives");
         if (scopeSupplyEditing != null) {
+            log.info("scopeSupplyEditing is not null");
+            log.info("tdpActives size 1 " + tdpActives.size());
             tdpActives = tdpService.getActives(scopeSupplyEditing.getTdpList());
+            log.info("tdpActives size 2 " + tdpActives.size());
         }
     }
 
@@ -905,6 +909,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void deleteTdpOnEdition(Long id) {
+        log.info("deleting TDP on Edition...");
         Integer index = tdpService.getIndexById(id, scopeSupplyEditing.getTdpList());
         if (index >= 0) {
             TransitDeliveryPointEntity tde = scopeSupplyEditing.getTdpList().get(index);
@@ -914,6 +919,7 @@ public class PurchaseOrderEdit implements Serializable {
             } else {
                 scopeSupplyEditing.getTdpList().remove(index.intValue());
             }
+            updateTdpActives();
             calculateDate();
         }
     }
