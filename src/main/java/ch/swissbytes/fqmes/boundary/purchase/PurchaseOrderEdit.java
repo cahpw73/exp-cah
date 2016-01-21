@@ -836,6 +836,11 @@ public class PurchaseOrderEdit implements Serializable {
         return date;
     }
 
+    public boolean hasLeadTimeData() {
+        boolean res = bulkScopeSupply.getDeliveryLeadTimeQt() != null ? true : false;
+        return res;
+    }
+
     public void switchModeForecastSiteDate() {
         log.info("public void switchModeForecastSiteDate()");
         switch (currentOperation) {

@@ -38,7 +38,7 @@
 	ss.code,ss.ordered,po.variation,po.po_title,ss.tag_no,ss.sp_inco_term_description as fullIncoTerm,
 	ss.sp_inco_term as incoTerm, ss.sp_inco_term,DATE_PART('day',ss.required_site_date-ss.site_date) AS Variance,
 	DATE_PART('day',$P{CURRENT_DATE}-ss.required_site_date) AS overdueDays,po.purchase_order_status as po_status,
-	po.po_delivery_date,sp.company,po.responsible_expediting,po.full_inco_term
+	po.po_delivery_date,sp.company,po.responsible_expediting,po.full_inco_term,po.expediting_title
 from scope_supply ss inner join purchase_order po on ss.purchase_order_id=po.id left outer join  p_order p on po.po_id=p.id
      left outer join supplier_proc sp on sp.id = p.supplier_id
 where ss.purchase_order_id=$P{PURCHASE_ORDER_ID} and  ss.status_id=1 and
@@ -75,6 +75,7 @@ order by ss.ordered]]>
 	<field name="company" class="java.lang.String"/>
 	<field name="responsible_expediting" class="java.lang.String"/>
 	<field name="full_inco_term" class="java.lang.String"/>
+	<field name="expediting_title" class="java.lang.String"/>
 	<group name="purchase_order_id">
 		<groupExpression><![CDATA[$F{purchase_order_id}]]></groupExpression>
 	</group>
@@ -94,7 +95,7 @@ order by ss.ordered]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+"PO: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{project})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po})+" v"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{variation})+", Title: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po_title})+", PO Del. Date: "+ch.swissbytes.fqmes.util.Util.toLocal($F{po_delivery_date},$P{TIME_ZONE},$P{FORMAT_DATE})+", INCO Term: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po_inco_term})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{full_inco_term})+", Supplier: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+", Status: ["+$P{STATUS_EXPEDITING}.get($F{po_status}).toString().toUpperCase()+"]"+", RfE: "+($F{responsible_expediting}!=null?ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{responsible_expediting}):"")+"</style>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style size='8' isBold='true' pdfFontName='Helvetica-Bold'>"+"PO: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{project})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po})+" v"+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{variation})+", Title: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{expediting_title})+", PO Del. Date: "+ch.swissbytes.fqmes.util.Util.toLocal($F{po_delivery_date},$P{TIME_ZONE},$P{FORMAT_DATE})+", INCO Term: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po_inco_term})+" "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{full_inco_term})+", Supplier: "+ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{company})+", Status: ["+$P{STATUS_EXPEDITING}.get($F{po_status}).toString().toUpperCase()+"]"+", RfE: "+($F{responsible_expediting}!=null?ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{responsible_expediting}):"")+"</style>"]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="1c1f0691-5fed-4608-9ea8-747a635689dc" positionType="Float" x="0" y="3" width="801" height="1"/>

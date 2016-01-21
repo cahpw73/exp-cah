@@ -43,6 +43,7 @@
                                 converter="#{dateConverter}"
                                 value="#{purchaseOrderEdit.bulkScopeSupply.poDeliveryDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
+                        <ui:remove>
                         <p:ajax event="dateSelect"
                                 update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
                                 async="false"
@@ -53,6 +54,7 @@
                                 delay="500"
                                 update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
                                 listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
+                        </ui:remove>
                     </p:calendar>
                 </div>
             </div>
@@ -137,8 +139,8 @@
                                value="#{msgs['bulk.update.sp.forecast.site.date']}"/>
 
                 <div class="col-sm-4">
-                    <p:calendar id="bulkForecastDateId"
-                                type="text" navigator="true"
+                    <p:calendar id="bulkForecastDateId" type="text" navigator="true"
+
                                 mask="#{configuration.mask}"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
