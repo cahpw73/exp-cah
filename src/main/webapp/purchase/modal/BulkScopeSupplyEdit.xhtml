@@ -8,7 +8,8 @@
             styleClass="form-horizontal">
         <div class="col-lg-12" style="text-align: center; margin-bottom: 15px">
             <div style="display: inline-block">
-                <h:outputText value="#{purchaseOrderEdit.titleBulkUpdateModal}" style="font-weight: bold; font-size: 16pt;"/>
+                <h:outputText value="#{purchaseOrderEdit.titleBulkUpdateModal}"
+                              style="font-weight: bold; font-size: 16pt;"/>
             </div>
         </div>
         <div class="col-lg-12">
@@ -87,8 +88,8 @@
                                value="#{msgs['bulk.update.sp.forecast.site.date']}"/>
 
                 <div class="col-sm-4">
-                    <p:calendar type="text"
-                                navigator="true"
+                    <p:calendar id="bulkForecastDateId"
+                                type="text" navigator="true"
                                 mask="#{configuration.mask}"
                                 pattern="#{configuration.formatDate}"
                                 converterMessage="#{msgs['validator.date.invalid']}"
@@ -139,6 +140,7 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['bulk.update.sp.po.delivery.date']}"/>
+
                 <div class="col-sm-4">
                     <p:calendar mask="#{configuration.mask}"
                                 navigator="true"
@@ -149,6 +151,16 @@
                                 converter="#{dateConverter}"
                                 value="#{purchaseOrderEdit.bulkScopeSupply.poDeliveryDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();">
+                        <p:ajax event="dateSelect"
+                                update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
+                                async="false"
+                                delay="500"
+                                listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
+                        <p:ajax event="change"
+                                async="false"
+                                delay="500"
+                                update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
+                                listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
                     </p:calendar>
                 </div>
             </div>
@@ -157,6 +169,7 @@
             <div class="form-group">
                 <h:outputLabel class="col-sm-4 control-label"
                                value="#{msgs['bulk.update.sp.lead.time']}"/>
+
                 <div class="col-sm-8">
                     <h:panelGroup style="display: block;  width: 100%; float: left;">
                         <h:panelGroup style="float: left;  margin-right: 5px;">
@@ -167,11 +180,20 @@
                                          requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
+                                <p:ajax process="@this" event="change" update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
+                                        async="false"
+                                        delay="500"
+                                        listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
                             </h:inputText>
                         </h:panelGroup>
-                        <h:selectOneMenu style="float: left; width: 130px;margin-bottom: 10px;!important" styleClass="form-control"
+                        <h:selectOneMenu style="float: left; width: 130px;margin-bottom: 10px;!important"
+                                         styleClass="form-control"
                                          value="#{purchaseOrderEdit.bulkScopeSupply.deliveryLeadTimeMs}">
                             <f:selectItems value="#{allTimeMeasurement}"/>
+                            <p:ajax process="@this" event="change" update=":bulkUpdateScopeSupplyFormId:bulkForecastDateId"
+                                    async="false"
+                                    delay="500"
+                                    listener="#{purchaseOrderEdit.calculateDateForecastDateForBulkUpdate}"/>
                         </h:selectOneMenu>
                     </h:panelGroup>
                 </div>

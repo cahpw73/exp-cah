@@ -150,6 +150,7 @@
                                              value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
                             </div>
+                            <ui:remove>
                             <div class="col-md-6">
                                 <div class='form-group card'>
                                     <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
@@ -160,14 +161,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <ui:remove>
-                                <div class="col-md-6">
-                                    <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
-                                                     value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
-                                        <f:selectItems value="#{poStatuses}"/>
-                                    </p:selectOneMenu>
-                                </div>
                             </ui:remove>
+                            <div class="col-md-6">
+                                <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
+                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
+                                    <f:selectItems value="#{poStatuses}"/>
+                                </p:selectOneMenu>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -329,8 +329,7 @@
                                 <div class="inputText-general-po">
                                     <h:inputText id="expeditingTitleId" maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
                                                  jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
-                                                 class="form-control" required="true" requiredMessage="Enter a valid Expediting Title"/>
-                                    <p:message for="expeditingTitleId"/>
+                                                 class="form-control"/>
                                 </div>
                             </div>
                         </div>

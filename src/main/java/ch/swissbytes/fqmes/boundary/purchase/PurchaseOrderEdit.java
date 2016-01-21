@@ -2,10 +2,10 @@ package ch.swissbytes.fqmes.boundary.purchase;
 
 
 import ch.swissbytes.Service.business.AttachmentComment.AttachmentCommentService;
+import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.comment.CommentService;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.domain.model.entities.*;
@@ -31,7 +31,6 @@ import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -250,29 +249,27 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("Expediting Statuses: " + expeditingStatuses);
         Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
         log.info(String.format("hashCode [%s]", hashCode));
-        String url="";
-        if(validateFields()) {
-            if (hashCode.intValue() == currentHashCode.intValue()) {
-                updateStatusesAndLastUpdate();
-                service.doUpdate(poEdit, comments, scopeSupplies,expeditingStatuses);
-                url = "view?faces-redirect=true&poId=" + poEdit.getId();
-            } else {
-                url = "edit?faces-redirect=true&poId=" + poEdit.getId();
-                Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
-            }
-            if (!conversation.isTransient()) {
-                conversation.end();
-            }
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "view?faces-redirect=true&poId=" + poEdit.getId();
+        } else {
+            url = "edit?faces-redirect=true&poId=" + poEdit.getId();
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
         }
         return url;
     }
 
-    public boolean validateFields(){
-        if(StringUtils.isEmpty(poEdit.getExpeditingTitle()) || StringUtils.isBlank(poEdit.getExpeditingTitle())){
-            Messages.addFlashError("expeditingTitleId","Enter a valid Expediting Title");
+    public boolean validateFields() {
+        if (StringUtils.isEmpty(poEdit.getExpeditingTitle()) || StringUtils.isBlank(poEdit.getExpeditingTitle())) {
+            Messages.addFlashError("expeditingTitleId", "Enter a valid Expediting Title");
             return false;
         }
-        return  true;
+        return true;
     }
 
     private void updateStatusesAndLastUpdate() {
@@ -540,6 +537,8 @@ public class PurchaseOrderEdit implements Serializable {
                 sp.setDeliveryLeadTimeQt(bulkScopeSupply.getDeliveryLeadTimeQt() != null ? bulkScopeSupply.getDeliveryLeadTimeQt() : sp.getDeliveryLeadTimeQt());
 
                 sp.setDeliveryLeadTimeMs(bulkScopeSupply.getDeliveryLeadTimeMs() != null ? bulkScopeSupply.getDeliveryLeadTimeMs() : sp.getDeliveryLeadTimeMs());
+
+                sp.setIsForecastSiteDateManual(bulkScopeSupply.getIsForecastSiteDateManual() != null ? bulkScopeSupply.getIsForecastSiteDateManual() : false);
             }
         }
     }
@@ -823,6 +822,13 @@ public class PurchaseOrderEdit implements Serializable {
                 break;
         }
         log.info("date calculated " + date);
+        return date;
+    }
+
+    public Date calculateDateForecastDateForBulkUpdate() {
+        Date date = scopeSupplyService.calculateForecastSiteDate(bulkScopeSupply);
+        bulkScopeSupply.setForecastSiteDate(date);
+        bulkScopeSupply.setIsForecastSiteDateManual(false);
         return date;
     }
 

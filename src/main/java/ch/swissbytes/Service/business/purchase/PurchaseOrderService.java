@@ -123,7 +123,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         dao.updatePOEntity(por.getPurchaseOrderProcurementEntity());
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
-        saveExpeditingStatuses(expeditingStatuses,entity);
+        //saveExpeditingStatuses(expeditingStatuses,entity);
         return por;
     }
 
