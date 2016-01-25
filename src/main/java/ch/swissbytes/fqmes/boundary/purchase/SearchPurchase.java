@@ -20,6 +20,8 @@ public class SearchPurchase extends Filter {
     private String incoTerm;
     private Date deliveryDateStart;
     private Date deliveryDateEnd;
+    private Date nextKeyDateStart;
+    private Date nextKeyDateEnd;
     private String variance="all";
     private Integer leadTime;
     private Integer dueIn;
@@ -99,6 +101,22 @@ public class SearchPurchase extends Filter {
         this.deliveryDateEnd = deliveryDateEnd;
     }
 
+    public Date getNextKeyDateStart() {
+        return nextKeyDateStart;
+    }
+
+    public void setNextKeyDateStart(Date nextKeyDateStart) {
+        this.nextKeyDateStart = nextKeyDateStart;
+    }
+
+    public Date getNextKeyDateEnd() {
+        return nextKeyDateEnd;
+    }
+
+    public void setNextKeyDateEnd(Date nextKeyDateEnd) {
+        this.nextKeyDateEnd = nextKeyDateEnd;
+    }
+
     public Integer getForecastDueDate() {
         return forecastDueDate;
     }
@@ -166,6 +184,8 @@ public class SearchPurchase extends Filter {
         incoTerm=null;
         deliveryDateEnd=null;
         deliveryDateStart=null;
+        nextKeyDateStart=null;
+        nextKeyDateEnd=null;
         variance="all";
         leadTime=null;
         dueIn=null;

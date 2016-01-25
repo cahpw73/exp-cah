@@ -58,7 +58,12 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 query.setParameter("INCO_TERM", "%" + filter.getIncoTerm().trim() + "%");
             }
-
+            if (filter.getNextKeyDateStart() != null) {
+                query.setParameter("START_NEXT_KEY_DATE", filter.getNextKeyDateStart());
+            }
+            if (filter.getNextKeyDateEnd() != null) {
+                query.setParameter("END_NEXT_KEY_DATE", filter.getNextKeyDateEnd());
+            }
 
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 String[] statuses = filter.getStatuses().split(",");
@@ -113,6 +118,12 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 sb.append(" AND  x.purchaseOrderStatus IN(:PURCHASE_ORDER_STATUS_LIST)");
+            }
+            if (filter.getNextKeyDateStart() != null) {
+                sb.append(" AND x.nextKeyDate>=:START_NEXT_KEY_DATE ");
+            }
+            if (filter.getNextKeyDateEnd() != null) {
+                sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
             }
             sb.append(prepareSubquery(filter));
         } else {

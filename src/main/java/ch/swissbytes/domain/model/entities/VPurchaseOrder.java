@@ -42,6 +42,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private ExpeditingStatusEnum purchaseOrderStatus;
 
+    private Date nextKeyDate;
+
     @Id
     public Long getId() {
         return id;
@@ -149,6 +151,16 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
+    }
+
+    @Column(name="NEXT_KEY_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getNextKeyDate() {
+        return nextKeyDate;
+    }
+
+    public void setNextKeyDate(Date nextKeyDate) {
+        this.nextKeyDate = nextKeyDate;
     }
 
     @Enumerated(EnumType.ORDINAL)

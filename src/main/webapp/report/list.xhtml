@@ -71,6 +71,16 @@
                                  size='4' type='text'/>
                 </div>
             </div>
+            <div class="row" style="padding-left: 15px!important;">
+                <div class="col-md-4">
+                    <div class='form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                     value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                                     type='text'/>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.inco.term']}</label>
@@ -176,7 +186,38 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class='form-group card'>
+                    <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
+                    <div>
+                        <div class="col-md-6" style="padding-left: 0px;">
+                            <div>
+                                <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
 
+                                <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateStart}"
+                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                            styleClass="calendar-filter"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            timeZone="#{configuration.timeZone2}">
+                                </p:calendar>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                                <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateEnd}"
+                                            styleClass="calendar-filter"
+                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            timeZone="#{configuration.timeZone2}">
+                                </p:calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="clearfix"/>
             <div class="pull-right">
                 <h:commandButton value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean}"
@@ -211,8 +252,11 @@
                 <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
                     #{purchaseOrderListBean.addPrefixToVariation(_purchase)}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.poTitle}">
+                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
                     #{_purchase.expeditingTitle}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
+                    #{_purchase.poTitle}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}

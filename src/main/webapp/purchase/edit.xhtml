@@ -320,21 +320,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- Text input-->
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.expediting.title']}"/>
-
-                                <div class="inputText-general-po">
-                                    <h:inputText id="expeditingTitleId" maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
-                                                 jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
-                                                 class="form-control"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
@@ -487,6 +472,21 @@
                                              value="#{purchaseOrderEdit.poEdit.rfeComment}"
                                              jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
                             <p:message for="rfeComment"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Text input-->
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.expediting.title']}"/>
+
+                                <div class="inputText-general-po">
+                                    <h:inputText id="expeditingTitleId" maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
+                                                 jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <ui:include src="components/additionalDataEdit.xhtml"/>

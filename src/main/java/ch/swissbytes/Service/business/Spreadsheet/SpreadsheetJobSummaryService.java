@@ -99,7 +99,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
             if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
                 processor.createRow(rowNo);
                 String poH =  entity.getProject() + " " + entity.getPo() + " v" + entity.getVariation() + " ";
-                String titleH =  entity.getPoTitle() + " ";
+                String titleH =  StringUtils.isNotEmpty(entity.getExpeditingTitle())? entity.getExpeditingTitle() + " ":" ";
                 String deliveryDateH =  entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy")+" ":" ";
                 String incoTermH =  entity.getIncoTerm() + " " + entity.getFullIncoTerms() + " ";
                 String supplierH =  entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() + " ";

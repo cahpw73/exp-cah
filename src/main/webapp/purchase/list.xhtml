@@ -69,6 +69,15 @@
                                  type="text"/>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.poTitle}"
+                                 class="form-control"
+                                 type="text"/>
+                </div>
+            </div>
             <div class="pull-right ">
                 <h:commandButton id="clear" value="#{msgs['lbl.clean']}" action="#{purchaseOrderListBean.doClean()}"
                                  type="submit" styleClass="btn btn-primary btn-sm" style="margin-top: 25px; "/>
@@ -100,8 +109,11 @@
                 <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
                     #{purchaseOrderListBean.addPrefixToVariation(_purchase)}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.poTitle}">
+                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
                     #{_purchase.expeditingTitle}
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
+                    #{_purchase.poTitle}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
