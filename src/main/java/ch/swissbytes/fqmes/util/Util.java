@@ -127,7 +127,7 @@ public class Util {
             to.set(Calendar.YEAR, with.get(Calendar.YEAR));
             int withDAY = with.get(Calendar.DAY_OF_YEAR);
             int toDAY = to.get(Calendar.DAY_OF_YEAR);
-            int diffDay = toDAY - withDAY;
+            int diffDay = withDAY - toDAY;
             return Integer.toString(diffDay);
         }
         return "";

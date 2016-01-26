@@ -465,6 +465,7 @@
                                              style="float: left; width: 130px;margin-bottom: 10px;!important"
                                              styleClass="form-control"
                                              value="#{purchaseOrderEdit.scopeSupplyEditing.deliveryLeadTimeMs}">
+                                <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                                 <f:selectItems value="#{allTimeMeasurement}"/>
                                 <p:ajax event="change" process="@this" update="forescastSiteDateEditing"
                                         delay="500" async="false"

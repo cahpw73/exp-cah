@@ -152,6 +152,10 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String expeditingStatuses;
 
+    private boolean hasValueLeadTime;
+
+    private boolean hasValueForecastSiteDate;
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -511,34 +515,32 @@ public class PurchaseOrderEdit implements Serializable {
     public void resetBulkUpdateModal() {
         bulkScopeSupply = new ScopeSupplyEntity();
         titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getPo();
+        hasValueForecastSiteDate = false;
+        hasValueLeadTime = false;
     }
 
     public void doBulkUpdateForPO() {
         log.info("size list scopeActives: " + scopeActives.size());
         for (ScopeSupplyEntity sp : scopeActives) {
             if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
-
                 sp.setResponsibleExpediting(StringUtils.isNotEmpty(bulkScopeSupply.getResponsibleExpediting()) ? bulkScopeSupply.getResponsibleExpediting() : sp.getResponsibleExpediting());
-
                 sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate() != null ? bulkScopeSupply.getRequiredSiteDate() : sp.getRequiredSiteDate());
-
                 sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate() != null ? bulkScopeSupply.getForecastExWorkDate() : sp.getForecastExWorkDate());
-
                 sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate() != null ? bulkScopeSupply.getActualExWorkDate() : sp.getActualExWorkDate());
-
-                sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate() != null ? bulkScopeSupply.getForecastSiteDate() : sp.getForecastSiteDate());
-
                 sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate() != null ? bulkScopeSupply.getActualSiteDate() : sp.getActualSiteDate());
-
                 sp.setSpIncoTerm(StringUtils.isNotEmpty(bulkScopeSupply.getSpIncoTerm()) ? bulkScopeSupply.getSpIncoTerm() : sp.getSpIncoTerm());
-
                 sp.setPoDeliveryDate(bulkScopeSupply.getPoDeliveryDate() != null ? bulkScopeSupply.getPoDeliveryDate() : sp.getPoDeliveryDate());
-
                 sp.setDeliveryLeadTimeQt(bulkScopeSupply.getDeliveryLeadTimeQt() != null ? bulkScopeSupply.getDeliveryLeadTimeQt() : sp.getDeliveryLeadTimeQt());
-
                 sp.setDeliveryLeadTimeMs(bulkScopeSupply.getDeliveryLeadTimeMs() != null ? bulkScopeSupply.getDeliveryLeadTimeMs() : sp.getDeliveryLeadTimeMs());
-
+                sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate() != null ? bulkScopeSupply.getForecastSiteDate() : sp.getForecastSiteDate());
                 sp.setIsForecastSiteDateManual(bulkScopeSupply.getIsForecastSiteDateManual() != null ? bulkScopeSupply.getIsForecastSiteDateManual() : false);
+                if(bulkScopeSupply.getDeliveryLeadTimeMs()!=null && bulkScopeSupply.getDeliveryLeadTimeQt()!=null){
+                    calculateDateForecastDateForBulkUpdate(sp);
+                }else if(bulkScopeSupply.getForecastSiteDate()!=null){
+                    sp.setIsForecastSiteDateManual(true);
+                }
+
+                log.info("algo");
             }
         }
     }
@@ -829,11 +831,10 @@ public class PurchaseOrderEdit implements Serializable {
         return date;
     }
 
-    public Date calculateDateForecastDateForBulkUpdate() {
-        Date date = scopeSupplyService.calculateForecastSiteDate(bulkScopeSupply);
-        bulkScopeSupply.setForecastSiteDate(date);
-        bulkScopeSupply.setIsForecastSiteDateManual(false);
-        return date;
+    public void calculateDateForecastDateForBulkUpdate(ScopeSupplyEntity scopeSupply) {
+        Date date = scopeSupplyService.calculateForecastSiteDate(scopeSupply);
+        scopeSupply.setForecastSiteDate(date);
+        scopeSupply.setIsForecastSiteDateManual(false);
     }
 
     public boolean hasLeadTimeData() {
@@ -1036,6 +1037,15 @@ public class PurchaseOrderEdit implements Serializable {
         }
     }
 
+    public void disabledForecastSiteDate() {
+        hasValueLeadTime = bulkScopeSupply.getDeliveryLeadTimeQt() != null || bulkScopeSupply.getDeliveryLeadTimeMs() != null;
+    }
+
+    public void disabledLeadTime() {
+        log.info("disabledLeadTime");
+        hasValueForecastSiteDate = bulkScopeSupply.getForecastSiteDate() != null;
+    }
+
     public void updateScopeSupplyExcludeFromExpedite() {
         currentScopeSupply.setExcludeFromExpediting(true);
     }
@@ -1080,5 +1090,21 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setExpeditingStatuses(String expeditingStatuses) {
         this.expeditingStatuses = expeditingStatuses;
+    }
+
+    public boolean isHasValueLeadTime() {
+        return hasValueLeadTime;
+    }
+
+    public void setHasValueLeadTime(boolean hasValueLeadTime) {
+        this.hasValueLeadTime = hasValueLeadTime;
+    }
+
+    public boolean isHasValueForecastSiteDate() {
+        return hasValueForecastSiteDate;
+    }
+
+    public void setHasValueForecastSiteDate(boolean hasValueForecastSiteDate) {
+        this.hasValueForecastSiteDate = hasValueForecastSiteDate;
     }
 }
