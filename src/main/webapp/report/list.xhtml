@@ -301,6 +301,9 @@
                 <p:column headerText="#{msgs['po.lbl.po']}">
                     #{_po.po}
                 </p:column>
+                <p:column headerText="#{msgs['po.lbl.variation']}">
+                    #{_po.variation}
+                </p:column>
             </p:dataTable>
             <br/>
 
@@ -308,7 +311,7 @@
                 <h:commandLink styleClass="btn btn-primary btn-sm"
                                value="#{msgs['report.purchase.order.btn.clear.selection.for.report']}">
                     <p:ajax async="false" update=":purchaseList:listSelected"
-                            listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
+                            listener="#{reportBean.cleanPurchaseSelected}"/>
                 </h:commandLink>
             </div>
             <div class="pull-right">

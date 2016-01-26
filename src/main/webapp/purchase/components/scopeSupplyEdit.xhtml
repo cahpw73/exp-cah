@@ -18,8 +18,8 @@
             <p:column headerText="#{msgs['po.supply.scope.column.quantity']}" sortBy="#{_scopeSupply.quantity}"
                       width="50">
                 <h:outputText value="#{_scopeSupply.quantity}">
-                    <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
-                                      locale="#{configuration.langLocalDecimal}"/>
+                    <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                     locale="#{configuration.langLocalDecimal}"/>
                 </h:outputText>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.unit']}" sortBy="#{_scopeSupply.unit}" width="55"
@@ -31,7 +31,7 @@
                       sortFunction="#{sortBean.sortStrings}">
                 <h:outputText escape="false" value="#{_scopeSupply.description}"/>
                 <ui:remove>
-                    <p:editor value="#{_scopeSupply.description}" disabled="true" controls="" height="200" />
+                    <p:editor value="#{_scopeSupply.description}" disabled="true" controls="" height="200"/>
                 </ui:remove>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}"

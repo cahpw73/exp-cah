@@ -43,7 +43,11 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.configuration = configuration;
         this.entityManager=entityManager;
         if(ids!=null&&ids.size()>0){
-            addParameters("purchaseID",ids);
+            log.info("List Ids scopeSupplies: " + ids.size());
+            addParameters("purchaseID", ids);
+            for(Long id : ids){
+                log.info("Id : "+ id);
+            }
         }
         addParameters("SUBREPORT_DIR","reports/jobSummary/");
         LookupValueFactory lookupValueFactory=new LookupValueFactory();
