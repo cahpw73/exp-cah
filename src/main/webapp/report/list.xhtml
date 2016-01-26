@@ -301,9 +301,11 @@
                 <p:column headerText="#{msgs['po.lbl.po']}">
                     #{_po.po}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.variation']}">
-                    #{_po.variation}
-                </p:column>
+                <ui:remove>
+                    <p:column headerText="#{msgs['po.lbl.variation']}">
+                        #{_po.variation}
+                    </p:column>
+                </ui:remove>
             </p:dataTable>
             <br/>
 

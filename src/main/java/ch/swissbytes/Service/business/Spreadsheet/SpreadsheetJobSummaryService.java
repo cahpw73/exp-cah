@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LanguagePreference;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.util.HssfSpreadsheetProcessor;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 import org.apache.commons.lang.StringUtils;
 
@@ -16,9 +17,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -35,7 +34,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
     @Inject
     private ScopeSupplyService scopeSupplyService;
     @Inject
-    public SpreadsheetProcessor processor;
+    public HssfSpreadsheetProcessor processor;
     @Inject
     public LanguagePreference languagePreference;
 
@@ -64,12 +63,12 @@ public class SpreadsheetJobSummaryService implements Serializable {
     private String generateFileName() {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
         String dateStr = format.format(new Date());
-        String fileName = dateStr.toUpperCase() + " - " + "Commitments.xlsx";
+        String fileName = dateStr.toUpperCase() + " - " + "Commitments.xls";
         return fileName;
     }
 
     public void processWorkbook(final List<PurchaseOrderEntity> list) {
-        processor = new SpreadsheetProcessor();
+        processor = new HssfSpreadsheetProcessor();
         processor.createWorkbook();
         processor.createSpreadsheetWithoutPassword("PkgHdr");
         prepareWithColumns();
@@ -80,38 +79,73 @@ public class SpreadsheetJobSummaryService implements Serializable {
 
     private void prepareWithColumns() {
         processor.configureWithColumn(0, 15000);
-        processor.configureWithColumn(1,3000);
-        processor.configureWithColumn(3,11000);
-        processor.configureWithColumn(4,4000);
-        processor.configureWithColumn(5,4000);
-        processor.configureWithColumn(6,5000);
-        processor.configureWithColumn(7,5000);
-        processor.configureWithColumn(8,5000);
-        processor.configureWithColumn(9,3000);
-        processor.configureWithColumn(10,5000);
-        processor.configureWithColumn(11,5800);
-        processor.configureWithColumn(12,5000);
+        processor.configureWithColumn(1, 3000);
+        processor.configureWithColumn(3, 11000);
+        processor.configureWithColumn(4, 4000);
+        processor.configureWithColumn(5, 4000);
+        processor.configureWithColumn(6, 5000);
+        processor.configureWithColumn(7, 5000);
+        processor.configureWithColumn(8, 5000);
+        processor.configureWithColumn(9, 3000);
+        processor.configureWithColumn(10, 5000);
+        processor.configureWithColumn(11, 5800);
+        processor.configureWithColumn(12, 5000);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
+        int nexIndex = 0;
         for (PurchaseOrderEntity entity : list) {
             List<ScopeSupplyEntity> scopeSupplyListList = scopeSupplyService.scopeSupplyListByPOId(entity.getId());
-            if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
+            if (hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)) {
+                Map<String, Integer> indexRichString = new HashMap<>();
                 processor.createRow(rowNo);
-                String poH =  entity.getProject() + " " + entity.getPo() + " v" + entity.getVariation() + " ";
-                String titleH =  StringUtils.isNotEmpty(entity.getExpeditingTitle())? entity.getExpeditingTitle() + " ":" ";
-                String deliveryDateH =  entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy")+" ":" ";
-                String incoTermH =  entity.getIncoTerm() + " " + entity.getFullIncoTerms() + " ";
-                String supplierH =  entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() + " ";
-                String statusH = "[" + entity.getPurchaseOrderStatus().getLabel().toUpperCase() + "] ";
-                String ref = entity.getResponsibleExpediting();
+                String poH = "PO: " + entity.getProject() + " " + entity.getPo() + " v" + entity.getVariation() + ", ";
+                indexRichString.put("poIni", 0);
+                indexRichString.put("poEnd", 4);
+                nexIndex = poH.length();
+
+                String titleH = "Title: " + (StringUtils.isNotEmpty(entity.getExpeditingTitle()) ? entity.getExpeditingTitle() + ", " : (StringUtils.isNotEmpty(entity.getPoTitle()) ? entity.getPoTitle() + ", " : ", "));
+                indexRichString.put("titleIni", nexIndex);
+                indexRichString.put("titleEnd", nexIndex + 7);
+                String aux = poH + titleH;
+                nexIndex = aux.length();
+
+                String deliveryDateH = "PO Del. Date: " + (entity.getPoDeliveryDate() != null ? Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), "MMM, dd yyyy") + ", " : ", ");
+                indexRichString.put("dateIni", nexIndex);
+                indexRichString.put("dateEnd", nexIndex + 14);
+                aux = aux + deliveryDateH;
+                nexIndex = aux.length();
+
+                String incoTermH = "INCO Term: " + entity.getIncoTerm() + " " + entity.getFullIncoTerms() + ", ";
+                indexRichString.put("incoIni", nexIndex);
+                indexRichString.put("incoEnd", nexIndex + 11);
+                aux = aux + incoTermH;
+                nexIndex = aux.length();
+
+                String supplierH = "Supplier: " + entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() + ", ";
+                indexRichString.put("supIni", nexIndex);
+                indexRichString.put("supEnd", nexIndex + 10);
+                aux = aux + supplierH;
+                nexIndex = aux.length();
+
+                String statusH = "Status: " + "[" + entity.getPurchaseOrderStatus().getLabel().toUpperCase() + "], ";
+                indexRichString.put("statusIni", nexIndex);
+                indexRichString.put("statusEnd", nexIndex + 8);
+                aux = aux + statusH;
+                nexIndex = aux.length();
+
+                String ref = "RfE: " + entity.getResponsibleExpediting();
+                indexRichString.put("rfeIni", nexIndex);
+                indexRichString.put("rfeEnd", nexIndex + 5);
+
                 String poTitleReport = poH + titleH + deliveryDateH + incoTermH + supplierH + statusH + ref;
-                processor.writeStringBoldValue(0, poTitleReport);
+                processor.writeRichStringValue(0, poTitleReport,indexRichString);
+                //processor.writeStringValue(0, poTitleReport);
                 rowNo++;
 
                 if (!scopeSupplyListList.isEmpty()) {
                     for (ScopeSupplyEntity ss : scopeSupplyListList) {
-                        if(ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting()) {
+                        if (ss.getExcludeFromExpediting() == null || !ss.getExcludeFromExpediting()) {
                             processor.createRow(rowNo);
                             prepareDetailContent(ss);
                             rowNo++;
@@ -123,8 +157,8 @@ public class SpreadsheetJobSummaryService implements Serializable {
     }
 
     private boolean hasScopeSupplyExcludeFromExpediting(List<ScopeSupplyEntity> list) {
-        for(ScopeSupplyEntity ss : list){
-            if(ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting().booleanValue()){
+        for (ScopeSupplyEntity ss : list) {
+            if (ss.getExcludeFromExpediting() == null || !ss.getExcludeFromExpediting().booleanValue()) {
                 return true;
             }
         }
@@ -139,17 +173,17 @@ public class SpreadsheetJobSummaryService implements Serializable {
         processor.writeStringValue(3, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
         processor.writeStringValue(4, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
         processor.writeStringValue(5, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
-        processor.writeStringValue(6, ss.getPoDeliveryDate()!=null?Util.toLocal(ss.getPoDeliveryDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
-        processor.writeStringValue(7, ss.getForecastExWorkDate()!=null?Util.toLocal(ss.getForecastExWorkDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
-        processor.writeStringValue(8, ss.getActualExWorkDate()!=null?Util.toLocal(ss.getActualExWorkDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
+        processor.writeStringValue(6, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), languagePreference.getTimeZone(), configuration.getFormatDate()) : "");
+        processor.writeStringValue(7, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), languagePreference.getTimeZone(), configuration.getFormatDate()) : "");
+        processor.writeStringValue(8, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), languagePreference.getTimeZone(), configuration.getFormatDate()) : "");
         String deliveryQt = ss.getDeliveryLeadTimeQt() != null ? String.valueOf(ss.getDeliveryLeadTimeQt().intValue()) : "";
         String deliveryMt = ss.getDeliveryLeadTimeMs() != null ? bundle.getString("measurement.time." + ss.getDeliveryLeadTimeMs().name().toLowerCase()) : "";
         processor.writeStringValue(9, deliveryQt + " " + deliveryMt);
-        processor.writeStringValue(10, ss.getForecastSiteDate()!=null?Util.toLocal(ss.getForecastSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
-        processor.writeStringValue(11, ss.getActualSiteDate()!=null?Util.toLocal(ss.getActualSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
-        processor.writeStringValue(12, ss.getRequiredSiteDate()!=null?Util.toLocal(ss.getRequiredSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
-        Integer dateDiff = datePart(ss.getRequiredSiteDate(),ss.getForecastSiteDate());
-        processor.writeStringValue(13, dateDiff!=null?String.valueOf(dateDiff.intValue()):"");
+        processor.writeStringValue(10, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()) : "");
+        processor.writeStringValue(11, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()) : "");
+        processor.writeStringValue(12, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()) : "");
+        Integer dateDiff = datePart(ss.getRequiredSiteDate(), ss.getForecastSiteDate());
+        processor.writeStringValue(13, dateDiff != null ? String.valueOf(dateDiff.intValue()) : "");
     }
 
     private void createHeaderJS() {
@@ -178,11 +212,11 @@ public class SpreadsheetJobSummaryService implements Serializable {
     }
 
     public Integer datePart(Date date1, Date date2) {
-        if(date1!=null&&date2!=null) {
+        if (date1 != null && date2 != null) {
             long diferenciaEn_ms = date1.getTime() - date2.getTime();
             long dias = diferenciaEn_ms / (1000 * 60 * 60 * 24);
             return (int) dias;
-        }else{
+        } else {
             return null;
         }
     }
