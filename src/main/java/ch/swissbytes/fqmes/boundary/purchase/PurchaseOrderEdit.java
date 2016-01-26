@@ -381,22 +381,22 @@ public class PurchaseOrderEdit implements Serializable {
     private boolean isValidDataUpdate() {
         log.info("boolean isValidDataUpdate()");
         boolean isValid = false;
-        int inc = 0;
+        //int inc = 0;
         BigDecimal quantity = scopeSupplyEditing.getQuantity() != null ? scopeSupplyEditing.getQuantity() : new BigDecimal("0");
-        Double cost = scopeSupplyEditing.getCost() != null ? scopeSupplyEditing.getCost().doubleValue() : 0D;
+        //Double cost = scopeSupplyEditing.getCost() != null ? scopeSupplyEditing.getCost().doubleValue() : 0D;
         if (quantity.doubleValue() >= 0) {
-            inc++;
+            isValid = true;
         } else {
             Messages.addGlobalError("Quantity has a invalid data");
         }
-        if (cost >= 0) {
+        /*if (cost >= 0) {
             inc++;
         } else {
             Messages.addGlobalError("Unit Price has a invalid data");
-        }
-        if (inc == 2) {
+        }*/
+        /*if (inc == 2) {
             isValid = true;
-        }
+        }*/
         return isValid;
     }
 

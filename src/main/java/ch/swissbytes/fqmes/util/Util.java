@@ -120,15 +120,21 @@ public class Util {
 
     public String calculateVariance(ScopeSupplyEntity scopeSupply) {
         if (scopeSupply != null && scopeSupply.getRequiredSiteDate() != null && scopeSupply.getForecastSiteDate() != null) {
-            Calendar with = Calendar.getInstance();
+           /* Calendar with = Calendar.getInstance();
             with.setTime(scopeSupply.getForecastSiteDate());
             Calendar to = Calendar.getInstance();
             to.setTime(scopeSupply.getRequiredSiteDate());
             to.set(Calendar.YEAR, with.get(Calendar.YEAR));
             int withDAY = with.get(Calendar.DAY_OF_YEAR);
+            System.out.println("withDay   "+withDAY);
             int toDAY = to.get(Calendar.DAY_OF_YEAR);
-            int diffDay = withDAY - toDAY;
-            return Integer.toString(diffDay);
+            System.out.println("toDay   "+toDAY);
+            int diffDay = withDAY - toDAY;*/
+            long diff =scopeSupply.getRequiredSiteDate().getTime()- scopeSupply.getForecastSiteDate().getTime() ;
+
+         //   System.out.println ("Days: " + diff / 1000 / 60 / 60 / 24);
+            //return Integer.toString(diffDay);
+            return Long.toString(diff / 1000 / 60 / 60 / 24);
         }
         return "";
     }

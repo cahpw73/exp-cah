@@ -14,7 +14,7 @@ function calculateTotalPrice(){
     console.log("unitPrice: " + unitPrice);
     var unitPriceCalc = unitPrice.replace(",", "");
     try{
-    if(isNumeric(quantity) && parseInt(quantity) >= 0 && parseFloat(unitPriceCalc) >= 0){
+    if(isNumeric(quantity) && parseInt(quantity) >= 0 && isNumeric(unitPriceCalc)){
         console.log("calculating....")
         totalPrice = parseFloat(quantity) * parseFloat(unitPriceCalc);
         var totalPriceFixed = parseFloat(totalPrice.toFixed(2));
@@ -45,9 +45,9 @@ function verifyQuantityValid(){
 
 function verifyUnitPriceValid(){
     var priceUnit = document.getElementsByClassName('scopeSupplyCost')[0].value;
-    if(parseInt(priceUnit)<0){
+    /*if(parseInt(priceUnit)<0){
         document.getElementsByClassName('scopeSupplyCost')[0].value = 0;
-    }else if(priceUnit == ""){
+    } else*/ if(priceUnit == ""){
         document.getElementsByClassName('totalPriceTxt')[0].value = "";
     }
 }
