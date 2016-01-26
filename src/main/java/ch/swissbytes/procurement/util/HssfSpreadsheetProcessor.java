@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.util;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.io.*;
 import java.util.Map;

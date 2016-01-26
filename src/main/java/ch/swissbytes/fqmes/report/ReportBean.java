@@ -145,7 +145,7 @@ public class ReportBean implements Serializable {
 
     public StreamedContent downloadJobSummaryFileExport(){
         InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
-        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xls");
+        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xlsx");
         return file;
     }
 

@@ -1,12 +1,6 @@
 package ch.swissbytes.procurement.util;
 
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
@@ -67,6 +61,22 @@ public class SpreadsheetProcessor implements Serializable {
         Cell cell0 = row.createCell(colNo);
         cell0.setCellValue(value);
         cell0.setCellStyle(style);
+    }
+
+    public void writeRichStringValue(int colNo, String value, Map<String,Integer> indexRichString) {
+        Cell cell0 = row.createCell(colNo);
+        XSSFFont font = workbook.createFont();
+        font.setBold(true);
+
+        XSSFRichTextString richString = new XSSFRichTextString(value);
+        richString.applyFont(indexRichString.get("poIni").intValue(), indexRichString.get("poEnd").intValue(), font);
+        richString.applyFont(indexRichString.get("titleIni").intValue(), indexRichString.get("titleEnd").intValue(), font);
+        richString.applyFont(indexRichString.get("dateIni").intValue(), indexRichString.get("dateEnd").intValue(), font);
+        richString.applyFont(indexRichString.get("incoIni").intValue(), indexRichString.get("incoEnd").intValue(), font);
+        richString.applyFont(indexRichString.get("supIni").intValue(), indexRichString.get("supEnd").intValue(), font);
+        richString.applyFont(indexRichString.get("statusIni").intValue(), indexRichString.get("statusEnd").intValue(), font);
+        richString.applyFont(indexRichString.get("rfeIni").intValue(), indexRichString.get("rfeEnd").intValue(), font);
+        cell0.setCellValue(richString);
     }
 
     public void writeDoubleValue(int colNo, Double value) {

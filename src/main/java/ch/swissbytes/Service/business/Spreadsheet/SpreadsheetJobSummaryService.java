@@ -34,7 +34,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
     @Inject
     private ScopeSupplyService scopeSupplyService;
     @Inject
-    public HssfSpreadsheetProcessor processor;
+    public SpreadsheetProcessor processor;
     @Inject
     public LanguagePreference languagePreference;
 
@@ -68,7 +68,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
     }
 
     public void processWorkbook(final List<PurchaseOrderEntity> list) {
-        processor = new HssfSpreadsheetProcessor();
+        processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         processor.createSpreadsheetWithoutPassword("PkgHdr");
         prepareWithColumns();
@@ -140,7 +140,6 @@ public class SpreadsheetJobSummaryService implements Serializable {
 
                 String poTitleReport = poH + titleH + deliveryDateH + incoTermH + supplierH + statusH + ref;
                 processor.writeRichStringValue(0, poTitleReport,indexRichString);
-                //processor.writeStringValue(0, poTitleReport);
                 rowNo++;
 
                 if (!scopeSupplyListList.isEmpty()) {
