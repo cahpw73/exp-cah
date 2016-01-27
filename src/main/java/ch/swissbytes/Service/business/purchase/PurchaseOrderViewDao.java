@@ -46,6 +46,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
                 query.setParameter("PO_TITLE", "%" + filter.getPoTitle().trim() + "%");
             }
+            if (StringUtils.isNotBlank(filter.getExpeditingTitle()) && StringUtils.isNotEmpty(filter.getExpeditingTitle())) {
+                query.setParameter("EXPEDITING_TITLE", "%" + filter.getExpeditingTitle().trim() + "%");
+            }
             if (StringUtils.isNotBlank(filter.getSupplier()) && StringUtils.isNotEmpty(filter.getSupplier())) {
                 query.setParameter("SUPPLIER", "%" + filter.getSupplier().trim() + "%");
             }
@@ -55,7 +58,12 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 query.setParameter("INCO_TERM", "%" + filter.getIncoTerm().trim() + "%");
             }
-
+            if (filter.getNextKeyDateStart() != null) {
+                query.setParameter("START_NEXT_KEY_DATE", filter.getNextKeyDateStart());
+            }
+            if (filter.getNextKeyDateEnd() != null) {
+                query.setParameter("END_NEXT_KEY_DATE", filter.getNextKeyDateEnd());
+            }
 
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 String[] statuses = filter.getStatuses().split(",");
@@ -93,6 +101,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotBlank(filter.getPoTitle()) && StringUtils.isNotEmpty(filter.getPoTitle())) {
                 sb.append(" AND lower(x.poTitle) like lower(:PO_TITLE)");
             }
+            if (StringUtils.isNotBlank(filter.getExpeditingTitle()) && StringUtils.isNotEmpty(filter.getExpeditingTitle())) {
+                sb.append(" AND lower(x.expeditingTitle) like lower(:EXPEDITING_TITLE)");
+            }
             if (StringUtils.isNotBlank(filter.getVariation()) && StringUtils.isNotEmpty(filter.getVariation())) {
                 sb.append(" AND lower(x.variation) like lower(:VARIATION)");
             }
@@ -107,6 +118,12 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 sb.append(" AND  x.purchaseOrderStatus IN(:PURCHASE_ORDER_STATUS_LIST)");
+            }
+            if (filter.getNextKeyDateStart() != null) {
+                sb.append(" AND x.nextKeyDate>=:START_NEXT_KEY_DATE ");
+            }
+            if (filter.getNextKeyDateEnd() != null) {
+                sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
             }
             sb.append(prepareSubquery(filter));
         } else {

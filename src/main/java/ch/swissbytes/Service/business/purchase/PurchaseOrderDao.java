@@ -390,15 +390,15 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
-        sb.append(" AND ( po.purchaseOrderStatus = :COMPLETED");
-        sb.append(" OR po.purchaseOrderStatus = :DELETED ");
-        sb.append(" OR po.purchaseOrderStatus = :CANCELLED ) ");
+        sb.append(" AND po.purchaseOrderStatus = :COMPLETED");
+        /*sb.append(" OR po.purchaseOrderStatus = :DELETED ");
+        sb.append(" OR po.purchaseOrderStatus = :CANCELLED ) ");*/
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
-        parameters.put("DELETED", ExpeditingStatusEnum.DELETED);
-        parameters.put("CANCELLED", ExpeditingStatusEnum.CANCELLED);
+        /*parameters.put("DELETED", ExpeditingStatusEnum.DELETED);
+        parameters.put("CANCELLED", ExpeditingStatusEnum.CANCELLED);*/
         parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
         parameters.put("PROJECT_ID", projectId);
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);

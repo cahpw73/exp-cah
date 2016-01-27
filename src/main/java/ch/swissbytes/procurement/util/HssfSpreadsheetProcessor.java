@@ -1,7 +1,8 @@
 package ch.swissbytes.procurement.util;
 
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 
 import java.io.*;
 import java.util.Map;
@@ -11,64 +12,65 @@ import java.util.logging.Logger;
  * Created by Christian on 20/07/2015.
  */
 
-public class SpreadsheetProcessor implements Serializable {
+public class HssfSpreadsheetProcessor implements Serializable {
 
-    private static final Logger log = Logger.getLogger(SpreadsheetProcessor.class.getName());
+    private static final Logger log = Logger.getLogger(HssfSpreadsheetProcessor.class.getName());
 
     //Create blank workbook
-    private XSSFWorkbook workbook;
+
+    private HSSFWorkbook workbookHss;
 
     //Create a blank sheet
-    private XSSFSheet spreadsheet;
+
+    private HSSFSheet spreadsheetHss;
 
     //Create row object
-    private XSSFRow row;
+    private HSSFRow rowHss;
 
     private String passwordSheet = System.getProperty("fqmes.excel.sheet.password");
 
     private boolean createdDirectories;
 
     public void createWorkbook() {
-        workbook = new XSSFWorkbook();
+        workbookHss = new HSSFWorkbook();
     }
 
-    public void createSpreadsheet(String name) {
-        spreadsheet = workbook.createSheet(name);
-        spreadsheet.protectSheet(passwordSheet);
+    public void createSpreadsheetHssf(String name) {
+        spreadsheetHss = workbookHss.createSheet(name);
+        spreadsheetHss.protectSheet(passwordSheet);
     }
 
     public void createSpreadsheetWithoutPassword(String name){
-        spreadsheet = workbook.createSheet(name);
+        spreadsheetHss = workbookHss.createSheet(name);
     }
 
     public void configureWithColumn(int indexColumn, int numberOfCharacters) {
-        spreadsheet.setColumnWidth(indexColumn, numberOfCharacters);
+        spreadsheetHss.setColumnWidth(indexColumn, numberOfCharacters);
     }
 
     public void createRow(int rowNo) {
-        row = spreadsheet.createRow((short) rowNo);
+        rowHss = spreadsheetHss.createRow((short) rowNo);
     }
 
     public void writeStringValue(int colNo, String value) {
-        row.createCell(colNo).setCellValue(value);
+        rowHss.createCell(colNo).setCellValue(value);
     }
 
     public void writeStringBoldValue(int colNo, String value) {
-        XSSFCellStyle style = workbook.createCellStyle();
-        XSSFFont font = workbook.createFont();
+        HSSFCellStyle style = workbookHss.createCellStyle();
+        HSSFFont font = workbookHss.createFont();
         font.setBold(true);
         style.setFont(font);
-        Cell cell0 = row.createCell(colNo);
+        Cell cell0 = rowHss.createCell(colNo);
         cell0.setCellValue(value);
         cell0.setCellStyle(style);
     }
-
     public void writeRichStringValue(int colNo, String value, Map<String,Integer> indexRichString) {
-        Cell cell0 = row.createCell(colNo);
-        XSSFFont font = workbook.createFont();
+        Cell cell0 = rowHss.createCell(colNo);
+        HSSFFont font = workbookHss.createFont();
         font.setBold(true);
 
-        XSSFRichTextString richString = new XSSFRichTextString(value);
+        HSSFRichTextString richString = new HSSFRichTextString(value);
         richString.applyFont(indexRichString.get("poIni").intValue(), indexRichString.get("poEnd").intValue(), font);
         richString.applyFont(indexRichString.get("titleIni").intValue(), indexRichString.get("titleEnd").intValue(), font);
         richString.applyFont(indexRichString.get("dateIni").intValue(), indexRichString.get("dateEnd").intValue(), font);
@@ -80,7 +82,7 @@ public class SpreadsheetProcessor implements Serializable {
     }
 
     public void writeDoubleValue(int colNo, Double value) {
-        row.createCell(colNo).setCellValue(value == null ? "" : value.toString());
+        rowHss.createCell(colNo).setCellValue(value == null ? "" : value.toString());
     }
 
     public void doSaveWorkBook(final String path, final String fileName) throws Exception {
@@ -92,7 +94,7 @@ public class SpreadsheetProcessor implements Serializable {
                 System.out.println("created file");
             }
             out = new FileOutputStream(newFile);
-            workbook.write(out);
+            workbookHss.write(out);
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("It is not able to either the directory ["+file.getAbsolutePath()+"] ");
         } finally {
@@ -123,7 +125,7 @@ public class SpreadsheetProcessor implements Serializable {
     public ByteArrayOutputStream saveWorkBook() {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            workbook.write(outputStream);
+            workbookHss.write(outputStream);
             return outputStream;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

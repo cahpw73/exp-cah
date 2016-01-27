@@ -28,6 +28,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private String poTitle;
 
+    private String expeditingTitle;
+
     private String supplier;
 
     private String responsibleExpediting;
@@ -39,6 +41,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
     private Date requiredDate;
 
     private ExpeditingStatusEnum purchaseOrderStatus;
+
+    private Date nextKeyDate;
 
     @Id
     public Long getId() {
@@ -94,6 +98,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
         this.poTitle = poTitle;
     }
 
+    @Column(name="expediting_title",updatable = false, insertable = false)
+    public String getExpeditingTitle() {
+        return expeditingTitle;
+    }
+
+    public void setExpeditingTitle(String expeditingTitle) {
+        this.expeditingTitle = expeditingTitle;
+    }
+
     @Column(name="company",updatable = false, insertable = false, nullable = true)
     public String getSupplier() {
         return supplier;
@@ -138,6 +151,16 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setRequiredDate(Date requiredDate) {
         this.requiredDate = requiredDate;
+    }
+
+    @Column(name="NEXT_KEY_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getNextKeyDate() {
+        return nextKeyDate;
+    }
+
+    public void setNextKeyDate(Date nextKeyDate) {
+        this.nextKeyDate = nextKeyDate;
     }
 
     @Enumerated(EnumType.ORDINAL)

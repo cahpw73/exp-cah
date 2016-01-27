@@ -436,6 +436,7 @@
                         </h:panelGroup>
                         <h:selectOneMenu id="measurementUnitEdit" style="float: left; width: 130px; margin-bottom: 10px;!important" styleClass="form-control"
                                          value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryLeadTimeMs}">
+                            <f:selectItem itemLabel="#{msgs['lbl.select']}" noSelectionOption="true"/>
                             <f:selectItems value="#{allTimeMeasurement}"/>
                             <p:ajax event="change" process="@this"
                                     async="false" delay="500"

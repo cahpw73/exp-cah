@@ -20,11 +20,14 @@ public class SearchPurchase extends Filter {
     private String incoTerm;
     private Date deliveryDateStart;
     private Date deliveryDateEnd;
+    private Date nextKeyDateStart;
+    private Date nextKeyDateEnd;
     private String variance="all";
     private Integer leadTime;
     private Integer dueIn;
     private Integer forecastDueDate;
     private String statuses;
+    private String expeditingTitle;
 
     public String getProject() {
         return project;
@@ -98,6 +101,22 @@ public class SearchPurchase extends Filter {
         this.deliveryDateEnd = deliveryDateEnd;
     }
 
+    public Date getNextKeyDateStart() {
+        return nextKeyDateStart;
+    }
+
+    public void setNextKeyDateStart(Date nextKeyDateStart) {
+        this.nextKeyDateStart = nextKeyDateStart;
+    }
+
+    public Date getNextKeyDateEnd() {
+        return nextKeyDateEnd;
+    }
+
+    public void setNextKeyDateEnd(Date nextKeyDateEnd) {
+        this.nextKeyDateEnd = nextKeyDateEnd;
+    }
+
     public Integer getForecastDueDate() {
         return forecastDueDate;
     }
@@ -146,6 +165,14 @@ public class SearchPurchase extends Filter {
         return statuses==null?false:statuses.contains(statusId);
     }
 
+    public String getExpeditingTitle() {
+        return expeditingTitle;
+    }
+
+    public void setExpeditingTitle(String expeditingTitle) {
+        this.expeditingTitle = expeditingTitle;
+    }
+
     @Override
     public void clean(){
         po=null;
@@ -157,10 +184,13 @@ public class SearchPurchase extends Filter {
         incoTerm=null;
         deliveryDateEnd=null;
         deliveryDateStart=null;
+        nextKeyDateStart=null;
+        nextKeyDateEnd=null;
         variance="all";
         leadTime=null;
         dueIn=null;
         forecastDueDate=null;
         statuses=null;
+        expeditingTitle=null;
     }
 }

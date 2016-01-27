@@ -47,6 +47,9 @@ public class PurchaseOrderEntity implements Serializable{
     private Boolean locked;
     private UserEntity lockedBy;
     private Date lastActivityUpdate;
+    private String expeditingTitle;
+    private Date nextKeyDate;
+    private String nextKeyDateComment;
 
 
     private String poReference;
@@ -228,6 +231,36 @@ public class PurchaseOrderEntity implements Serializable{
     public void setActualSiteDateComment(String actualSiteDateComment) {
         this.actualSiteDateComment = actualSiteDateComment;
     }
+
+    @Column(name="EXPEDITING_TITLE",  nullable = false)
+    public String getExpeditingTitle() {
+        return expeditingTitle;
+    }
+
+    public void setExpeditingTitle(String expeditingTitle) {
+        this.expeditingTitle = expeditingTitle;
+    }
+
+    @Column(name="NEXT_KEY_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getNextKeyDate() {
+        return nextKeyDate;
+    }
+
+    public void setNextKeyDate(Date nextKeyDate) {
+        this.nextKeyDate = nextKeyDate;
+    }
+
+    @Size(max = 1000)
+    @Column(name="NEXT_KEY_DATE_COMMENT",  length=1000)
+    public String getNextKeyDateComment() {
+        return nextKeyDateComment;
+    }
+
+    public void setNextKeyDateComment(String nextKeyDateComment) {
+        this.nextKeyDateComment = nextKeyDateComment;
+    }
+
     @Column(name="LAST_UPDATE", nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastUpdate() {

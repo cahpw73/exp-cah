@@ -2,10 +2,10 @@ package ch.swissbytes.fqmes.boundary.purchase;
 
 
 import ch.swissbytes.Service.business.AttachmentComment.AttachmentCommentService;
+import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.comment.CommentService;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
-import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.domain.model.entities.*;
@@ -31,7 +31,6 @@ import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -151,6 +150,12 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String titleBulkUpdateModal;
 
+    private String expeditingStatuses;
+
+    private boolean hasValueLeadTime;
+
+    private boolean hasValueForecastSiteDate;
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -245,12 +250,13 @@ public class PurchaseOrderEdit implements Serializable {
 
     public String doUpdate() {
         log.info("upgrading...");
+        log.info("Expediting Statuses: " + expeditingStatuses);
         Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
         log.info(String.format("hashCode [%s]", hashCode));
-        String url = "";
+        String url;
         if (hashCode.intValue() == currentHashCode.intValue()) {
             updateStatusesAndLastUpdate();
-            service.doUpdate(poEdit, comments, scopeSupplies);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
             url = "view?faces-redirect=true&poId=" + poEdit.getId();
         } else {
             url = "edit?faces-redirect=true&poId=" + poEdit.getId();
@@ -260,6 +266,14 @@ public class PurchaseOrderEdit implements Serializable {
             conversation.end();
         }
         return url;
+    }
+
+    public boolean validateFields() {
+        if (StringUtils.isEmpty(poEdit.getExpeditingTitle()) || StringUtils.isBlank(poEdit.getExpeditingTitle())) {
+            Messages.addFlashError("expeditingTitleId", "Enter a valid Expediting Title");
+            return false;
+        }
+        return true;
     }
 
     private void updateStatusesAndLastUpdate() {
@@ -367,22 +381,22 @@ public class PurchaseOrderEdit implements Serializable {
     private boolean isValidDataUpdate() {
         log.info("boolean isValidDataUpdate()");
         boolean isValid = false;
-        int inc = 0;
+        //int inc = 0;
         BigDecimal quantity = scopeSupplyEditing.getQuantity() != null ? scopeSupplyEditing.getQuantity() : new BigDecimal("0");
-        Double cost = scopeSupplyEditing.getCost() != null ? scopeSupplyEditing.getCost().doubleValue() : 0D;
+        //Double cost = scopeSupplyEditing.getCost() != null ? scopeSupplyEditing.getCost().doubleValue() : 0D;
         if (quantity.doubleValue() >= 0) {
-            inc++;
+            isValid = true;
         } else {
             Messages.addGlobalError("Quantity has a invalid data");
         }
-        if (cost >= 0) {
+        /*if (cost >= 0) {
             inc++;
         } else {
             Messages.addGlobalError("Unit Price has a invalid data");
-        }
-        if (inc == 2) {
+        }*/
+        /*if (inc == 2) {
             isValid = true;
-        }
+        }*/
         return isValid;
     }
 
@@ -501,32 +515,34 @@ public class PurchaseOrderEdit implements Serializable {
     public void resetBulkUpdateModal() {
         bulkScopeSupply = new ScopeSupplyEntity();
         titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getPo();
+        hasValueForecastSiteDate = false;
+        hasValueLeadTime = false;
     }
 
     public void doBulkUpdateForPO() {
         log.info("size list scopeActives: " + scopeActives.size());
         for (ScopeSupplyEntity sp : scopeActives) {
             if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
-
                 sp.setResponsibleExpediting(StringUtils.isNotEmpty(bulkScopeSupply.getResponsibleExpediting()) ? bulkScopeSupply.getResponsibleExpediting() : sp.getResponsibleExpediting());
-
                 sp.setRequiredSiteDate(bulkScopeSupply.getRequiredSiteDate() != null ? bulkScopeSupply.getRequiredSiteDate() : sp.getRequiredSiteDate());
-
                 sp.setForecastExWorkDate(bulkScopeSupply.getForecastExWorkDate() != null ? bulkScopeSupply.getForecastExWorkDate() : sp.getForecastExWorkDate());
-
                 sp.setActualExWorkDate(bulkScopeSupply.getActualExWorkDate() != null ? bulkScopeSupply.getActualExWorkDate() : sp.getActualExWorkDate());
-
-                sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate() != null ? bulkScopeSupply.getForecastSiteDate() : sp.getForecastSiteDate());
-
                 sp.setActualSiteDate(bulkScopeSupply.getActualSiteDate() != null ? bulkScopeSupply.getActualSiteDate() : sp.getActualSiteDate());
-
                 sp.setSpIncoTerm(StringUtils.isNotEmpty(bulkScopeSupply.getSpIncoTerm()) ? bulkScopeSupply.getSpIncoTerm() : sp.getSpIncoTerm());
-
                 sp.setPoDeliveryDate(bulkScopeSupply.getPoDeliveryDate() != null ? bulkScopeSupply.getPoDeliveryDate() : sp.getPoDeliveryDate());
-
                 sp.setDeliveryLeadTimeQt(bulkScopeSupply.getDeliveryLeadTimeQt() != null ? bulkScopeSupply.getDeliveryLeadTimeQt() : sp.getDeliveryLeadTimeQt());
-
                 sp.setDeliveryLeadTimeMs(bulkScopeSupply.getDeliveryLeadTimeMs() != null ? bulkScopeSupply.getDeliveryLeadTimeMs() : sp.getDeliveryLeadTimeMs());
+                sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate() != null ? bulkScopeSupply.getForecastSiteDate() : sp.getForecastSiteDate());
+                sp.setIsForecastSiteDateManual(bulkScopeSupply.getIsForecastSiteDateManual() != null ? bulkScopeSupply.getIsForecastSiteDateManual() : false);
+                if(bulkScopeSupply.getDeliveryLeadTimeMs()!=null && bulkScopeSupply.getDeliveryLeadTimeQt()!=null){
+                    calculateDateForecastDateForBulkUpdate(sp);
+                }else if(bulkScopeSupply.getForecastSiteDate()!=null){
+                    sp.setIsForecastSiteDateManual(true);
+                    sp.setDeliveryLeadTimeMs(null);
+                    sp.setDeliveryLeadTimeQt(null);
+                }
+
+                log.info("algo");
             }
         }
     }
@@ -774,8 +790,12 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     private void updateTdpActives() {
+        log.info("updateTdpActives");
         if (scopeSupplyEditing != null) {
+            log.info("scopeSupplyEditing is not null");
+            log.info("tdpActives size 1 " + tdpActives.size());
             tdpActives = tdpService.getActives(scopeSupplyEditing.getTdpList());
+            log.info("tdpActives size 2 " + tdpActives.size());
         }
     }
 
@@ -811,6 +831,17 @@ public class PurchaseOrderEdit implements Serializable {
         }
         log.info("date calculated " + date);
         return date;
+    }
+
+    public void calculateDateForecastDateForBulkUpdate(ScopeSupplyEntity scopeSupply) {
+        Date date = scopeSupplyService.calculateForecastSiteDate(scopeSupply);
+        scopeSupply.setForecastSiteDate(date);
+        scopeSupply.setIsForecastSiteDateManual(false);
+    }
+
+    public boolean hasLeadTimeData() {
+        boolean res = bulkScopeSupply.getDeliveryLeadTimeQt() != null ? true : false;
+        return res;
     }
 
     public void switchModeForecastSiteDate() {
@@ -886,6 +917,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void deleteTdpOnEdition(Long id) {
+        log.info("deleting TDP on Edition...");
         Integer index = tdpService.getIndexById(id, scopeSupplyEditing.getTdpList());
         if (index >= 0) {
             TransitDeliveryPointEntity tde = scopeSupplyEditing.getTdpList().get(index);
@@ -895,6 +927,7 @@ public class PurchaseOrderEdit implements Serializable {
             } else {
                 scopeSupplyEditing.getTdpList().remove(index.intValue());
             }
+            updateTdpActives();
             calculateDate();
         }
     }
@@ -1006,6 +1039,15 @@ public class PurchaseOrderEdit implements Serializable {
         }
     }
 
+    public void disabledForecastSiteDate() {
+        hasValueLeadTime = bulkScopeSupply.getDeliveryLeadTimeQt() != null || bulkScopeSupply.getDeliveryLeadTimeMs() != null;
+    }
+
+    public void disabledLeadTime() {
+        log.info("disabledLeadTime");
+        hasValueForecastSiteDate = bulkScopeSupply.getForecastSiteDate() != null;
+    }
+
     public void updateScopeSupplyExcludeFromExpedite() {
         currentScopeSupply.setExcludeFromExpediting(true);
     }
@@ -1042,5 +1084,29 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setTitleBulkUpdateModal(String titleBulkUpdateModal) {
         this.titleBulkUpdateModal = titleBulkUpdateModal;
+    }
+
+    public String getExpeditingStatuses() {
+        return expeditingStatuses;
+    }
+
+    public void setExpeditingStatuses(String expeditingStatuses) {
+        this.expeditingStatuses = expeditingStatuses;
+    }
+
+    public boolean isHasValueLeadTime() {
+        return hasValueLeadTime;
+    }
+
+    public void setHasValueLeadTime(boolean hasValueLeadTime) {
+        this.hasValueLeadTime = hasValueLeadTime;
+    }
+
+    public boolean isHasValueForecastSiteDate() {
+        return hasValueForecastSiteDate;
+    }
+
+    public void setHasValueForecastSiteDate(boolean hasValueForecastSiteDate) {
+        this.hasValueForecastSiteDate = hasValueForecastSiteDate;
     }
 }

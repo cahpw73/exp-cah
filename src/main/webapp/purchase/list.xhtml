@@ -45,9 +45,9 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="control-label">#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                 value="#{purchaseOrderListBean.searchPurchase.poTitle}" class="form-control"
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.expediting.title']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.expediting.title']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.expeditingTitle}" class="form-control"
                                  type='text'/>
                 </div>
             </div>
@@ -65,6 +65,15 @@
                     <label class="control-label">#{msgs['po.supply.scope.column.r.expediting']}</label>
                     <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
                                  value="#{purchaseOrderListBean.searchPurchase.responsibleExpediting}"
+                                 class="form-control"
+                                 type="text"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                 value="#{purchaseOrderListBean.searchPurchase.poTitle}"
                                  class="form-control"
                                  type="text"/>
                 </div>
@@ -118,6 +127,9 @@
                     <div class="column-list-po">
                         #{_purchase.responsibleExpediting}
                     </div>
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
+                    #{_purchase.expeditingTitle}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="211">
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table"

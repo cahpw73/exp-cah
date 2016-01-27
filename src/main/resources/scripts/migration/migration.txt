@@ -1828,3 +1828,38 @@ update purchase_order set po_expediting_delivery_date = po_delivery_date;
 #New permission to bulk update scope supply
 insert into options  (id,name,module_id,url) values (1410,'BULK_UPDATE_SCOPE_SUPPLY',1,'');
 insert into role_option (id,option_id,role_id) values (706,1410,10);
+
+#20/01/2016 NEW FIELDS IN PURCHASE_ORDER
+ALTER TABLE PURCHASE_ORDER ADD COLUMN NEXT_KEY_DATE TIMESTAMP ;
+ALTER TABLE PURCHASE_ORDER ADD COLUMN NEXT_KEY_DATE_COMMENT VARCHAR(1000);
+ALTER TABLE PURCHASE_ORDER ADD COLUMN EXPEDITING_TITLE VARCHAR(250);
+ALTER TABLE PURCHASE_ORDER ALTER COLUMN NEXT_KEY_DATE TYPE TIMESTAMP USING NEXT_KEY_DATE::timestamp;
+
+drop  view v_purchase_order;
+CREATE OR REPLACE VIEW v_purchase_order AS
+ SELECT row_number() OVER () AS id,
+    po.id AS po_id,
+    po.project,
+    po.po,
+    po.variation,
+    po.po_title,
+    po.expediting_title,
+    s.company,
+    po.responsible_expediting,
+    po.po_inco_term,
+    po.po_delivery_date,
+    po.required_date,
+    po.purchase_order_status,
+    po.next_key_date
+   FROM purchase_order po
+   JOIN p_order por ON por.id = po.po_id
+   LEFT JOIN supplier_proc s ON por.supplier_id = s.id
+  WHERE po.status_id <> 3 AND (por.po_status = 0 OR por.po_status = 4)
+  ORDER BY
+CASE
+    WHEN isnumeric(po.po::text) THEN lpad(po.po::text, 50, '0'::text)::character varying
+    ELSE po.po
+END;
+
+ALTER TABLE v_purchase_order
+  OWNER TO postgres;

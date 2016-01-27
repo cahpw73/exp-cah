@@ -49,9 +49,9 @@
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                 value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.expediting.title']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.expediting.title']}"
+                                 value="#{reportListBean.searchPurchase.expeditingTitle}" class='form-control'
                                  type='text'/>
                 </div>
             </div>
@@ -69,6 +69,16 @@
                     <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
                                  value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
                                  size='4' type='text'/>
+                </div>
+            </div>
+            <div class="row" style="padding-left: 15px!important;">
+                <div class="col-md-4">
+                    <div class='form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                     value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                                     type='text'/>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -176,7 +186,38 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class='form-group card'>
+                    <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
+                    <div>
+                        <div class="col-md-6" style="padding-left: 0px;">
+                            <div>
+                                <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
 
+                                <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateStart}"
+                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                            styleClass="calendar-filter"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            timeZone="#{configuration.timeZone2}">
+                                </p:calendar>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>
+                                <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                                <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateEnd}"
+                                            styleClass="calendar-filter"
+                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                            pattern="#{configuration.formatDate}"
+                                            converter="#{dateConverter}"
+                                            timeZone="#{configuration.timeZone2}">
+                                </p:calendar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="clearfix"/>
             <div class="pull-right">
                 <h:commandButton value="#{msgs['lbl.clean']}" action="#{reportListBean.doClean}"
@@ -230,6 +271,9 @@
                         #{_purchase.responsibleExpediting}
                     </div>
                 </p:column>
+                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
+                    #{_purchase.expeditingTitle}
+                </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="100" styleClass="column-list-po">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                                    action="#{reportBean.addPurchaseOrder(_purchase.poId)}"
@@ -257,6 +301,11 @@
                 <p:column headerText="#{msgs['po.lbl.po']}">
                     #{_po.po}
                 </p:column>
+                <ui:remove>
+                    <p:column headerText="#{msgs['po.lbl.variation']}">
+                        #{_po.variation}
+                    </p:column>
+                </ui:remove>
             </p:dataTable>
             <br/>
 
@@ -264,7 +313,7 @@
                 <h:commandLink styleClass="btn btn-primary btn-sm"
                                value="#{msgs['report.purchase.order.btn.clear.selection.for.report']}">
                     <p:ajax async="false" update=":purchaseList:listSelected"
-                            listener="#{reportBean.cleanPurchaseSelected}"></p:ajax>
+                            listener="#{reportBean.cleanPurchaseSelected}"/>
                 </h:commandLink>
             </div>
             <div class="pull-right">

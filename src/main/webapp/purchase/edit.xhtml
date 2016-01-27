@@ -19,7 +19,8 @@
     <ui:define name="body">
         <div class="row">
             <o:highlight/>
-
+            <h:outputScript name="js/multipleSelection.js"/>
+            <h:outputScript name="js/submitSearch.js"/>
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
                         acceptcharset="UTF-8">
@@ -149,6 +150,18 @@
                                              value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
                             </div>
+                            <ui:remove>
+                            <div class="col-md-6">
+                                <div class='form-group card'>
+                                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
+                                    <select id="poStatuses" multiple="multiple" class="algo">
+                                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                                        </ui:repeat>
+                                    </select>
+                                </div>
+                            </div>
+                            </ui:remove>
                             <div class="col-md-6">
                                 <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
@@ -306,7 +319,6 @@
                         <div class="section-text-area-po">
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -460,6 +472,21 @@
                                              value="#{purchaseOrderEdit.poEdit.rfeComment}"
                                              jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
                             <p:message for="rfeComment"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Text input-->
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.expediting.title']}"/>
+
+                                <div class="inputText-general-po">
+                                    <h:inputText id="expeditingTitleId" maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
+                                                 jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
+                                                 class="form-control"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <ui:include src="components/additionalDataEdit.xhtml"/>
