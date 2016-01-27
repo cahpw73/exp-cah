@@ -538,6 +538,8 @@ public class PurchaseOrderEdit implements Serializable {
                     calculateDateForecastDateForBulkUpdate(sp);
                 }else if(bulkScopeSupply.getForecastSiteDate()!=null){
                     sp.setIsForecastSiteDateManual(true);
+                    sp.setDeliveryLeadTimeMs(null);
+                    sp.setDeliveryLeadTimeQt(null);
                 }
 
                 log.info("algo");

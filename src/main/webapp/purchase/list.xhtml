@@ -109,9 +109,6 @@
                 <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
                     #{purchaseOrderListBean.addPrefixToVariation(_purchase)}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
-                    #{_purchase.expeditingTitle}
-                </p:column>
                 <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
                     #{_purchase.poTitle}
                 </p:column>
@@ -130,6 +127,9 @@
                     <div class="column-list-po">
                         #{_purchase.responsibleExpediting}
                     </div>
+                </p:column>
+                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
+                    #{_purchase.expeditingTitle}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="211">
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table"
