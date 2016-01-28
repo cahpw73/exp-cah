@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.mainDocument;
 
 
 import ch.swissbytes.Service.business.Service;
+import ch.swissbytes.domain.model.entities.MainDocumentEntity;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * Created by christian  on 27/01/16.
  */
-public class MainDocumentService extends Service<TextSnippetEntity> implements Serializable {
+public class MainDocumentService extends Service<MainDocumentEntity> implements Serializable {
 
     private static final Logger log = Logger.getLogger(MainDocumentService.class.getName());
 
@@ -29,36 +30,35 @@ public class MainDocumentService extends Service<TextSnippetEntity> implements S
     }
 
     @Transactional
-    public void delete(TextSnippetEntity currency) {
-        currency.setStatus(StatusEnum.DELETED);
-        currency.setLastUpdate(new Date());
-        dao.update(currency);
+    public void delete(MainDocumentEntity entity) {
+        entity.setStatus(StatusEnum.DELETED);
+        entity.setLastUpdate(new Date());
+        dao.update(entity);
     }
     @Transactional
-    public void doSave(TextSnippetEntity textSnippet){
-        textSnippet.setLastUpdate(new Date());
-        textSnippet.setStatus(StatusEnum.ENABLE);
-        textSnippet.setCode(textSnippet.getCode().toUpperCase());
-        super.doSave(textSnippet);
+    public void doSave(MainDocumentEntity entity){
+        entity.setLastUpdate(new Date());
+        entity.setStatus(StatusEnum.ENABLE);
+        entity.setCode(entity.getCode().toUpperCase());
+        super.doSave(entity);
     }
 
     @Override
-    public TextSnippetEntity save(TextSnippetEntity textSnippetEntity){
-        textSnippetEntity.setLastUpdate(new Date());
-        textSnippetEntity.setStatus(StatusEnum.ENABLE);
-        return super.save(textSnippetEntity);
+    public MainDocumentEntity save(MainDocumentEntity entity){
+        entity.setLastUpdate(new Date());
+        entity.setStatus(StatusEnum.ENABLE);
+        return super.save(entity);
     }
 
     @Transactional
-    public TextSnippetEntity findById(Long id) {
-        List<TextSnippetEntity> list = dao.findById(TextSnippetEntity.class, id);
+    public MainDocumentEntity findById(Long id) {
+        List<MainDocumentEntity> list = dao.findById(MainDocumentEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;
     }
 
     @Transactional
-    public List<TextSnippetEntity> getTextSnippetList() {
-        log.info("getTextSnippetList");
-        return dao.getTextSnippetList();
+    public List<MainDocumentEntity> getMainDocumentList() {
+        return dao.getMainDocumentList();
     }
 
     @Transactional
@@ -67,8 +67,8 @@ public class MainDocumentService extends Service<TextSnippetEntity> implements S
     }
 
     @Transactional
-    public List<TextSnippetEntity>findByText(final String text){
-        return dao.findByText(text);
+    public List<MainDocumentEntity>findByText(final String code){
+        return dao.findByCode(code);
     }
 
     @Transactional

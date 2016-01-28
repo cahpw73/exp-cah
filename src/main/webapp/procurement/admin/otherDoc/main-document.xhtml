@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
+                template="../../../WEB-INF/layout/template-prmt.xhtml">
+    <ui:define name="title">Inicio</ui:define>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewAction action="#{mainMenuBean.select(2)}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <script type="text/javascript" src="../../../ckeditor/ckeditor.js" />
+        <div class="col-md-12">
+            <p:messages id="textSnippetGlbMsgs" globalOnly="true" errorClass="alert alert-error"
+                        warnClass="alert" closable="true"
+                        infoClass="alert alert-info" />
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-default panel-tab">
+                <div class="procurement-panel-header">#{msgs['lbl.other.doc.template.title']}</div>
+                <!-- Default panel contents -->
+                <div class="panel-body">
+                    <div>
+                        <div class="col-md-4">
+                            <div class="left-inner-addon">
+                                <i class="fa fa-search fa-lg"></i>
+                                <h:form prependId="false">
+                                    <h:inputText styleClass="form-control input-search"
+                                                 value="#{mainDocumentBean.criteria}"
+                                                 jsf:placeholder="#{msgs['lbl.search']}">
+                                        <p:ajax event="keyup" process="@this" update=":formSnippetList"
+                                                listener="#{mainDocumentBean.search()}" async="false"/>
+                                    </h:inputText>
+                                </h:form>
+                            </div>
+                            <br/>
+
+                            <div>
+                                <h:form id="formSnippetList" prependId="false">
+                                    <h:selectOneListbox id="textSnippetList" value="#{mainDocumentBean.selected}"
+                                                        converter="mainDocumentConverter"
+                                                        styleClass="form-control"
+                                                        style="min-height: 481px;"
+                                                        size="2">
+                                        <f:selectItems value="#{mainDocumentBean.list}" var="_tsb"
+                                                       itemLabel="#{_tsb.code}" itemValue="#{_tsb}"/>
+                                        <f:ajax render="standardTextForm" execute="@this"/>
+                                    </h:selectOneListbox>
+
+                                    <p:message for="textSnippetList"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div>
+                                <h:form id="editForm" prependId="false">
+                                    <h:inputText id="codeTS" value="#{mainDocumentBean.mainDocument.code}"
+                                                 jsf:placeholder="Enter code"
+                                                 required="true" style="text-transform: uppercase;"
+                                                 requiredMessage="Enter valid code"
+                                                 styleClass="form-control" maxlength="50"/>
+                                    <p:message for="codeTS"/>
+                                    <br/>
+                                    <h:inputText value="#{mainDocumentBean.mainDocument.description}" id="editorValue"  styleClass="textCKEditor"
+                                                 style="position: absolute; top:-200px"/>
+                                    <textarea cols="140" rows="40" id="editor1" name="editor1">
+                                    </textarea>
+                                    <br/>
+                                    <h:commandButton value="#{msgs['lbl.add']}"
+                                                   id="saveButton"
+                                                   onclick="document.getElementsByClassName('textCKEditor')[0].value = CKEDITOR.instances.editor1.getData();"
+                                                   action="#{mainDocumentBean.doSave}"
+                                                   styleClass="btn btn-primary btn-sm">
+                                    </h:commandButton>
+                                </h:form>
+                                <script type="text/javascript">
+                                    CKEDITOR.replace('editor1');
+                                </script>
+
+                            </div>
+                            <br/>
+                            <div>
+                                <h:form id="standardTextForm">
+
+                                    <p:inputText id="codeTS2" value="#{mainDocumentBean.selected.code}"
+                                                 jsf:placeholder="Enter text snippet"
+                                                 onchange="doChangeProc();" style="text-transform: uppercase;"
+                                                 disabled="#{mainDocumentBean.selected eq null}"
+                                                 styleClass="form-control" maxlength="50"/>
+                                    <p:message for="codeTS2"/>
+                                    <br/>
+                                    <h:inputText value="#{mainDocumentBean.selected.description}" id="editorValue2"  styleClass="textCKEditor2"
+                                                 style="position: absolute; top:-200px"/>
+                                    <textarea cols="140" rows="40" id="editor2" name="editor2">
+                                        <h:outputText value="#{mainDocumentBean.selected.description}"/>
+                                    </textarea>
+                                    <ui:remove>
+                                    <h:inputTextarea id="textTS2" value="#{mainDocumentBean.selected.description}"
+                                                     disabled="#{mainDocumentBean.selected eq null}"
+                                                     onblur="doChangeProc();"
+                                                     jsf:placeholder="Enter text snippet"
+                                                     style="height: 200px;"
+                                                     styleClass="form-control" maxlength="20000"/>
+                                    <p:message for="textTS2"/>
+                                    </ui:remove>
+                                    <br/>
+                                    <h:commandButton value="#{msgs['lbl.update']}" action="#{mainDocumentBean.doUpdate}"
+                                                     disabled="#{mainDocumentBean.selected eq null}"
+                                                     styleClass="btn btn-primary btn-sm"
+                                                     onclick="document.getElementsByClassName('textCKEditor2')[0].value = CKEDITOR.instances.editor2.getData();"/>
+                                    &#160;
+                                    <p:commandLink value="#{msgs['lbl.delete']}" action="#{mainDocumentBean.doDelete}"
+                                                   disabled="#{mainDocumentBean.selected eq null}"
+                                                   styleClass="btn btn-primary btn-commandLink-primeFaces">
+                                        <p:confirm header="Delete Standard Text"
+                                                   message="Are you sure delete this Standard Text?"/>
+                                    </p:commandLink>
+                                    &#160;
+                                    <h:link value="#{msgs['lbl.cancel']}"
+                                            disabled="#{mainDocumentBean.selected eq null}"
+                                            styleClass="btn btn-primary btn-sm #{mainDocumentBean.selected eq null?'disabled':''}"
+                                            outcome="main-document"/>
+                                    <script type="text/javascript">
+                                        CKEDITOR.replace('editor2');
+                                    </script>
+                                </h:form>
+
+                            </div>
+
+                        </div>
+                        <div class="clearfix"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+            <div class="pull-right">
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                &#160;
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </div>
+        </p:confirmDialog>
+    </ui:define>
+</ui:composition>
