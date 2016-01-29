@@ -2,7 +2,7 @@ package ch.swissbytes.Service.business.projectDocument;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
-import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -13,51 +13,48 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by alvaro on 9/10/14.
+ * Created by christian on 27/01/16.
  */
 
-public class ProjectDocumentDao extends GenericDao<ProjectTextSnippetEntity> implements Serializable {
+public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implements Serializable {
 
     private static final Logger log = Logger.getLogger(ProjectDocumentDao.class.getName());
 
 
-    public void doSave(ProjectTextSnippetEntity entity){
+    public void doSave(ProjectDocumentEntity entity) {
         super.save(entity);
     }
 
-    public void doUpdate(ProjectTextSnippetEntity detachedEntity){
-        ProjectTextSnippetEntity entity = super.merge(detachedEntity);
+    public void doUpdate(ProjectDocumentEntity detachedEntity) {
+        ProjectDocumentEntity entity = super.merge(detachedEntity);
         super.saveAndFlush(entity);
     }
 
-    public List<ProjectTextSnippetEntity> findByProjectId(final Long projectId){
+    public List<ProjectDocumentEntity> findByProjectId(final Long projectId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
-        sb.append(" FROM ProjectTextSnippetEntity p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" AND p.project.id = :PROJECT_ID ");
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
-        params.put("PROJECT_ID",projectId);
-        return super.findBy(sb.toString(),params);
+        params.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), params);
     }
 
-    public ProjectTextSnippetEntity findByTextSnippetId(Long id, final Long projectId) {
+    public ProjectDocumentEntity findByMainDocumentId(Long id, final Long projectId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
-        sb.append(" FROM ProjectTextSnippetEntity p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
-        sb.append(" AND p.textSnippet.id = :TEXT_SNIPPET_ID ");
+        sb.append(" AND p.mainDocumentEntity.id = :MAIN_DOCUMENT_ID ");
         sb.append(" AND p.project.id = :PROJECT_ID ");
-        /*Query query = super.entityManager.createQuery(sb.toString());
-        query.setParameter("ENABLE",StatusEnum.ENABLE);
-        query.setParameter("TEXT_SNIPPET_ID",id);*/
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
-        params.put("TEXT_SNIPPET_ID",id);
-        params.put("PROJECT_ID",projectId);
-        List<ProjectTextSnippetEntity> list = super.findBy(sb.toString(),params);
-        return list.get(0);
+        params.put("MAIN_DOCUMENT_ID", id);
+        params.put("PROJECT_ID", projectId);
+        List<ProjectDocumentEntity> list = super.findBy(sb.toString(), params);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Override

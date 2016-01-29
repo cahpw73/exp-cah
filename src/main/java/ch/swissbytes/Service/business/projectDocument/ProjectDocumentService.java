@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.business.projectDocument;
 
 import ch.swissbytes.domain.model.entities.ClausesEntity;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -22,46 +23,29 @@ public class ProjectDocumentService implements Serializable {
     @Inject
     private ProjectDocumentDao dao;
 
-    public void doSave(ProjectTextSnippetEntity entity){
-        if(entity != null){
+    public void doSave(ProjectDocumentEntity entity) {
+        if (entity != null) {
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             dao.doSave(entity);
         }
     }
 
-    public void doUpdate(ProjectTextSnippetEntity entity){
-        if(entity != null){
+    public void doUpdate(ProjectDocumentEntity entity) {
+        if (entity != null) {
             entity.setLastUpdate(new Date());
             dao.doUpdate(entity);
         }
     }
 
     @Transactional
-    public List<ProjectTextSnippetEntity> findByProjectId(final Long id) {
+    public List<ProjectDocumentEntity> findByProjectId(final Long id) {
         return dao.findByProjectId(id);
     }
 
-
-    public List<ProjectTextSnippetEntity> findTextSnippetByClausesId(List<ClausesEntity> clausesEntities,Long projectId) {
-        log.info("findTextSnippetByClausesId");
-        List<ProjectTextSnippetEntity> list = new ArrayList<>();
-        /*for(ClausesEntity entity : clausesEntities){
-            log.info("TextSnippetID "+entity.getTextSnippet().getId());
-            ProjectTextSnippetEntity ps;
-            ps= dao.findByTextSnippetId(entity.getTextSnippet().getId(),projectId);
-            list.add(ps);
-        }*/
-        return list;
-    }
-
     @Transactional
-    public ProjectTextSnippetEntity findById(Long id) {
-        List<ProjectTextSnippetEntity> list = dao.findById(ProjectTextSnippetEntity.class,id);
-        ProjectTextSnippetEntity entity = null;
-        if(!list.isEmpty()){
-            entity = list.get(0);
-        }
-        return entity;
+    public ProjectDocumentEntity findById(Long id) {
+        List<ProjectDocumentEntity> list = dao.findById(ProjectDocumentEntity.class, id);
+        return list.isEmpty() ? null : list.get(0);
     }
 }

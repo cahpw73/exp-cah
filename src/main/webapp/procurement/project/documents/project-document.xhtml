@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="left-inner-addon">
+                <i class="fa fa-search fa-lg"></i>
+                <h:inputText id="searchTermDocId" styleClass="form-control input-search"
+                             value="#{projectBean.searchTerm}"
+                             jsf:placeholder="#{msgs['project.docs.lbl.search.global.text']}"
+                             type="search" maxlength="250">
+                    <p:ajax event="keyup" process="@this" listener="#{projectBean.doSearchGlobalText}" update="mainDocumentDt" async="false"/>
+                </h:inputText>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
+                <p:ajax process="@this searchTermId" update="mainDocumentDt" async="false"
+                        listener="#{projectBean.doSearchGlobalText}"/>
+            </h:commandButton>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div style="width: 1500px!important;">
+
+            <div style="width: 500px!important; float: left!important; margin-left: 15px!important;">
+                <h:outputText value="#{msgs['project.docs.lbl.global.text']}"/>
+                <br/>
+                <p:dataTable id="mainDocumentDt" var="_gt"
+                             value="#{projectBean.globalStandardTextList}"
+                             selectionMode="multiple" scrollable="true" scrollHeight="300"
+                             selection="#{projectBean.selectedGlobalTexts}"
+                             rowKey="#{_gt.id}">
+                    <p:column headerText="#{msgs['project.docs.column.code']}"
+                              style="width: 100px!important;">
+                        #{_gt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.docs.column.description']}">
+                        <h:outputText value="#{_gt.textSnippet}" styleClass="content-big-text"></h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
+                <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
+                                 action="#{projectBean.addToProjectText}"
+                                 styleClass="btn btn-primary btn-sm"
+                                 style="margin-bottom: 20px!important;">
+                    <p:ajax update="mainDocumentDt,projectDocDt"
+                            process="@this,mainDocumentDt" async="false"/>
+                </h:commandButton>
+                <br/>
+                <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
+                                 action="#{projectBean.removeFromProjectText}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax update="mainDocumentDt projectDocDt"
+                            process="@this,projectDocDt" async="false"/>
+                </h:commandButton>
+            </div>
+            <div style="width: 790px!important; float: left!important;">
+                <h:outputText value="#{msgs['project.docs.lbl.project.text']}"/>
+                <br/>
+                <h:panelGroup id="projectDocGroup">
+                    <p:dataTable id="projectDocDt" var="_pt"
+                                 value="#{projectBean.filteredList()}"
+                                 selectionMode="multiple" scrollable="true" scrollHeight="300"
+                                 selection="#{projectBean.selectedProjectTexts}"
+                                 rowKey="#{_pt.id}">
+                        <p:column headerText="#{msgs['project.docs.column.description']}"
+                                  style="width: 80%!important;">
+                            <h:panelGroup id="viPjDocDescription" rendered="#{!_pt.isEditable}">
+                                #{_pt.description}
+                            </h:panelGroup>
+                            <h:panelGroup id="edPjDocDescription" rendered="#{_pt.isEditable}">
+                                <p:inputTextarea id="PjDocdescription" value="#{_pt.description}" styleClass="form-control"
+                                                 required="true" requiredMessage="Enter a description in Docs for Project"
+                                                 style="height: 180px!important;">
+                                </p:inputTextarea>
+                            </h:panelGroup>
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
+
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
+                                           action="#{projectBean.editItem(_pt)}" update="projectDocDt :editForm:projectGlbMsgs"
+                                           async="false"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
+                                           process=":editForm:projectDocGroup"
+                                           action="#{projectBean.confirmItem(_pt)}"
+                                           update="projectDocDt :editForm:projectGlbMsgs" async="false"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
+                                           action="#{projectBean.cancelEditionItem(_pt)}" update="projectDocDt"
+                                           async="false"/>
+
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+                <br/>
+
+                <p:commandLink
+                        value="#{msgs['project.docs.lbl.btn.add.custom.text']}"
+                        onclick="PF('textSnippetModal').show();"
+                        action="#{textSnippetBean.clear}"
+                        styleClass="btn btn-primary btn-sm">
+                    <p:ajax onsuccess="doChange();" async="false" update=":textSnippetModalId" process="@this"/>
+                </p:commandLink>
+            </div>
+        </div>
+    </div>
+</ui:composition>

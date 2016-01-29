@@ -37,6 +37,9 @@
                         </li>
                         <li><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
                         </li>
+                        <li><a href="#documents" role="tab"
+                               data-toggle="tab">#{msgs['project.docs.title.tab']}</a>
+                        </li>
                     </ul>
 
                     <!-- Tab Projects -->
@@ -56,6 +59,11 @@
                         <div class="tab-pane " id="currency">
                             <br/>
                             <ui:include src="currency/currencies.xhtml"/>
+                        </div>
+                        <!-- Tab Documents-->
+                        <div class="tab-pane " id="documents">
+                            <br/>
+                            <ui:include src="documents/project-document.xhtml"/>
                         </div>
                     </div>
                 </div>
