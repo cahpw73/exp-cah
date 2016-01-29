@@ -9,17 +9,17 @@
             <div class="left-inner-addon">
                 <i class="fa fa-search fa-lg"></i>
                 <h:inputText id="searchTermDocId" styleClass="form-control input-search"
-                             value="#{projectBean.searchTerm}"
+                             value="#{documentBean.searchTerm}"
                              jsf:placeholder="#{msgs['project.docs.lbl.search.global.text']}"
                              type="search" maxlength="250">
-                    <p:ajax event="keyup" process="@this" listener="#{projectBean.doSearchGlobalText}" update="mainDocumentDt" async="false"/>
+                    <p:ajax event="keyup" process="@this" listener="#{documentBean.doSearchGlobalText}" update="mainDocumentDt" async="false"/>
                 </h:inputText>
             </div>
         </div>
         <div class="col-sm-3">
             <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
                 <p:ajax process="@this searchTermId" update="mainDocumentDt" async="false"
-                        listener="#{projectBean.doSearchGlobalText}"/>
+                        listener="#{documentBean.doSearchGlobalText}"/>
             </h:commandButton>
         </div>
     </div>
@@ -31,23 +31,23 @@
             <div style="width: 500px!important; float: left!important; margin-left: 15px!important;">
                 <h:outputText value="#{msgs['project.docs.lbl.global.text']}"/>
                 <br/>
-                <p:dataTable id="mainDocumentDt" var="_gt"
-                             value="#{projectBean.globalStandardTextList}"
+                <p:dataTable id="mainDocumentDt" var="_md"
+                             value="#{documentBean.mainDocumentList}"
                              selectionMode="multiple" scrollable="true" scrollHeight="300"
-                             selection="#{projectBean.selectedGlobalTexts}"
-                             rowKey="#{_gt.id}">
+                             selection="#{documentBean.selectedMainDocList}"
+                             rowKey="#{_md.id}">
                     <p:column headerText="#{msgs['project.docs.column.code']}"
                               style="width: 100px!important;">
-                        #{_gt.code}
+                        #{_md.code}
                     </p:column>
                     <p:column headerText="#{msgs['project.docs.column.description']}">
-                        <h:outputText value="#{_gt.textSnippet}" styleClass="content-big-text"></h:outputText>
+                        <h:outputText value="#{_md.description}" styleClass="content-big-text" escape="true"></h:outputText>
                     </p:column>
                 </p:dataTable>
             </div>
             <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
                 <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
-                                 action="#{projectBean.addToProjectText}"
+                                 action="#{documentBean.addToProjectText}"
                                  styleClass="btn btn-primary btn-sm"
                                  style="margin-bottom: 20px!important;">
                     <p:ajax update="mainDocumentDt,projectDocDt"
@@ -55,7 +55,7 @@
                 </h:commandButton>
                 <br/>
                 <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
-                                 action="#{projectBean.removeFromProjectText}"
+                                 action="#{documentBean.removeFromProjectText}"
                                  styleClass="btn btn-primary btn-sm">
                     <p:ajax update="mainDocumentDt projectDocDt"
                             process="@this,projectDocDt" async="false"/>
@@ -66,9 +66,9 @@
                 <br/>
                 <h:panelGroup id="projectDocGroup">
                     <p:dataTable id="projectDocDt" var="_pt"
-                                 value="#{projectBean.filteredList()}"
+                                 value="#{documentBean.filteredList()}"
                                  selectionMode="multiple" scrollable="true" scrollHeight="300"
-                                 selection="#{projectBean.selectedProjectTexts}"
+                                 selection="#{documentBean.selectedProjectDocList}"
                                  rowKey="#{_pt.id}">
                         <p:column headerText="#{msgs['project.docs.column.description']}"
                                   style="width: 80%!important;">
@@ -85,15 +85,15 @@
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
 
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
-                                           action="#{projectBean.editItem(_pt)}" update="projectDocDt :editForm:projectGlbMsgs"
+                                           action="#{documentBean.editItem(_pt)}" update="projectDocDt :editForm:projectGlbMsgs"
                                            async="false"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
                                            process=":editForm:projectDocGroup"
-                                           action="#{projectBean.confirmItem(_pt)}"
+                                           action="#{documentBean.confirmItem(_pt)}"
                                            update="projectDocDt :editForm:projectGlbMsgs" async="false"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
-                                           action="#{projectBean.cancelEditionItem(_pt)}" update="projectDocDt"
+                                           action="#{documentBean.cancelEditionItem(_pt)}" update="projectDocDt"
                                            async="false"/>
 
                         </p:column>

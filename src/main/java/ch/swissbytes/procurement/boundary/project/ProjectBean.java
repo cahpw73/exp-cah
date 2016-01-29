@@ -54,6 +54,9 @@ public class ProjectBean extends Bean implements Serializable {
     @Inject
     private TextSnippetService textSnippetService;
 
+    @Inject
+    private DocumentBean documentBean;
+
     private List<SupplierProcEntity> supplierProcList;
 
     private List<ProjectCurrencyEntity> projectCurrencyList;
@@ -122,12 +125,14 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("load action crud");
         if (isCreateProject) {
             loadGlobalStandardTextList();
+            documentBean.loadMainDocumentsCreate(projectId);
         } else {
             projectEntity = projectService.findProjectById(projectId);
             projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
             projectTextSnippetList = projectService.findProjectTextSnippetByProjectId(projectId);
             loadGlobalStandardTextList();
             loadAllStandardText();
+            documentBean.loadMainDocumentsEdit(projectId);
         }
     }
 

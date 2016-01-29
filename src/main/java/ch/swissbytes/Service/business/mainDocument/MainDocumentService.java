@@ -72,7 +72,7 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     }
 
     @Transactional
-    public List findGlobalAndByProject(Long id) {
-        return dao.findGlobalAndByProject(id);
+    public List findByProjectId() {
+        return dao.findByProject();
     }
 }

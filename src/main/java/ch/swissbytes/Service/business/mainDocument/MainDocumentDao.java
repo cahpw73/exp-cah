@@ -87,17 +87,13 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
         return null;
     }
 
-    public List<TextSnippetEntity> findGlobalAndByProject(Long id) {
+    public List<MainDocumentEntity> findByProject() {
         StringBuilder sb=new StringBuilder();
         sb.append("SELECT x ");
-        sb.append("FROM TextSnippetEntity x ");
+        sb.append("FROM MainDocumentEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
-        sb.append(" AND ( x.project IS NULL ");
-        sb.append(" OR x.project.id=:PROJECT_ID ");
-        sb.append(" ) ");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
-        map.put("PROJECT_ID", id==null?0L:id);
         return super.findBy(sb.toString(),map);
     }
 }
