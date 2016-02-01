@@ -126,6 +126,7 @@ public class ProjectBean extends Bean implements Serializable {
         if (isCreateProject) {
             loadGlobalStandardTextList();
             documentBean.loadMainDocumentsCreate(projectId);
+            documentBean.setProjectEntityId(projectId);
         } else {
             projectEntity = projectService.findProjectById(projectId);
             projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectId);
@@ -133,6 +134,8 @@ public class ProjectBean extends Bean implements Serializable {
             loadGlobalStandardTextList();
             loadAllStandardText();
             documentBean.loadMainDocumentsEdit(projectId);
+            documentBean.setProjectEntity(projectEntity);
+            documentBean.setProjectEntityId(projectId);
         }
     }
 

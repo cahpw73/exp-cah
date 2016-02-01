@@ -23,6 +23,7 @@ public class ProjectDocumentService implements Serializable {
     @Inject
     private ProjectDocumentDao dao;
 
+    @Transactional
     public void doSave(ProjectDocumentEntity entity) {
         if (entity != null) {
             entity.setStatus(StatusEnum.ENABLE);

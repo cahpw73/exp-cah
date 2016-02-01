@@ -49,9 +49,17 @@ public class DocumentBean extends Bean implements Serializable {
 
     private List<ProjectDocumentEntity> selectedProjectDocList;
 
+    private ProjectDocumentEntity selectedProjectDoc;
+
+    private ProjectDocumentEntity projectDocument;
+
     private Long temporaryProjectDocId = -1L;
 
     private String searchTerm;
+
+    private ProjectEntity projectEntity;
+
+    private Long projectEntityId;
 
 
     @PostConstruct
@@ -61,6 +69,7 @@ public class DocumentBean extends Bean implements Serializable {
         projectDocumentList = new ArrayList<>();
         selectedMainDocList = new ArrayList<>();
         selectedProjectDocList = new ArrayList<>();
+        selectedProjectDoc = new ProjectDocumentEntity();
     }
 
     @PreDestroy
@@ -74,7 +83,7 @@ public class DocumentBean extends Bean implements Serializable {
         List<MainDocumentEntity> mainDocumentAuxList = new ArrayList<>();
         for (ProjectDocumentEntity pd : projectDocumentList) {
             for (MainDocumentEntity md : mainDocumentList) {
-                if (pd.getMainDocumentEntity().getId().intValue() == md.getId().intValue()) {
+                if (pd.getMainDocumentEntity() != null && pd.getMainDocumentEntity().getId().intValue() == md.getId().intValue()) {
                     mainDocumentAuxList.add(md);
                 }
             }
@@ -193,6 +202,33 @@ public class DocumentBean extends Bean implements Serializable {
         return list;
     }
 
+    public void loadSeletedProjectDoc(ProjectDocumentEntity entity){
+        selectedProjectDoc = entity;
+    }
+
+    public void updateProjectDocumentDt(){
+        for (ProjectDocumentEntity r : projectDocumentList) {
+            if (r.getId().intValue() == selectedProjectDoc.getId().intValue()) {
+                r.setDescription(selectedProjectDoc.getDescription());
+            }
+        }
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('projectDocModal').hide();");
+    }
+
+    public void saveNewProjectDocument(){
+        projectDocument.setProject(projectEntity);
+        projectDocument.setMainDocumentEntity(null);
+        projectDocumentService.doSave(projectDocument);
+        projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('addProjectDocModal').hide();");
+    }
+
+    public void resetProjectDocument(){
+        projectDocument = new ProjectDocumentEntity();
+    }
+
     /*public void doSearchGlobalText() {
         log.info("before search globalStext: " + globalStandardTextList.size());
         globalStandardTextList.clear();
@@ -230,6 +266,38 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void setSelectedProjectDocList(List<ProjectDocumentEntity> selectedProjectDocList) {
         this.selectedProjectDocList = selectedProjectDocList;
+    }
+
+    public ProjectDocumentEntity getSelectedProjectDoc() {
+        return selectedProjectDoc;
+    }
+
+    public void setSelectedProjectDoc(ProjectDocumentEntity selectedProjectDoc) {
+        this.selectedProjectDoc = selectedProjectDoc;
+    }
+
+    public ProjectDocumentEntity getProjectDocument() {
+        return projectDocument;
+    }
+
+    public void setProjectDocument(ProjectDocumentEntity projectDocument) {
+        this.projectDocument = projectDocument;
+    }
+
+    public ProjectEntity getProjectEntity() {
+        return projectEntity;
+    }
+
+    public void setProjectEntity(ProjectEntity projectEntity) {
+        this.projectEntity = projectEntity;
+    }
+
+    public Long getProjectEntityId() {
+        return projectEntityId;
+    }
+
+    public void setProjectEntityId(Long projectEntityId) {
+        this.projectEntityId = projectEntityId;
     }
 
     @Inject

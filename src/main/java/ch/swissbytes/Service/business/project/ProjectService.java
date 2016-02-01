@@ -105,35 +105,6 @@ public class ProjectService implements Serializable {
             doUpdateProjectCurrency(entity);
             doUpdateProjectTextSnippet(entity);
             doUpdateProjectDocument(entity);
-            /*for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
-                if (pc.getId() < 0) {
-                    pc.setId(null);
-                    pc.setProject(entity);
-                }
-                projectCurrencyService.doUpdate(pc);
-            }
-            for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
-                if (pt.getId() == null) {
-                    pt.setProject(entity);
-                }
-                if (pt.getTextSnippet().getId() == null||pt.getTextSnippet().getId()<0) {
-                    pt.getTextSnippet().setId(null);
-                    pt.getTextSnippet().setProject(entity);
-                    pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
-                    pt.getTextSnippet().setLastUpdate(new Date());
-                    TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
-                    pt.setTextSnippet(textSnippetEntity);
-                }
-                pt.setLastUpdate(new Date());
-                projectTextSnippetService.doUpdate(pt);
-            }
-            for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
-                if (ts.getId() < 0) {
-                    ts.setId(null);
-                    ts.setProject(entity);
-                    textSnippetService.save(ts);
-                }
-            }*/
         }
         return entity;
     }

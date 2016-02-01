@@ -83,10 +83,14 @@
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
-
+                            <ui:remove>
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
                                            action="#{documentBean.editItem(_pt)}" update="projectDocDt :editForm:projectGlbMsgs"
                                            async="false"/>
+                            </ui:remove>
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
+                                           update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
+                                           async="false" action="#{documentBean.loadSeletedProjectDoc(_pt)}"/>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
                                            process=":editForm:projectDocGroup"
                                            action="#{documentBean.confirmItem(_pt)}"
@@ -103,10 +107,10 @@
 
                 <p:commandLink
                         value="#{msgs['project.docs.lbl.btn.add.custom.text']}"
-                        onclick="PF('textSnippetModal').show();"
-                        action="#{textSnippetBean.clear}"
-                        styleClass="btn btn-primary btn-sm">
-                    <p:ajax onsuccess="doChange();" async="false" update=":textSnippetModalId" process="@this"/>
+                        oncomplete="PF('addProjectDocModal').show();"
+                        action="#{documentBean.resetProjectDocument}"
+                        styleClass="btn btn-primary btn-sm"
+                        async="false" update=":addProjectDocModalId" process="@this">
                 </p:commandLink>
             </div>
         </div>
