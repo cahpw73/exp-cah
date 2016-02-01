@@ -55,6 +55,8 @@ public class DocumentBean extends Bean implements Serializable {
 
     private Long temporaryProjectDocId = -1L;
 
+    private Long tempMainDocId= -1L;
+
     private String searchTerm;
 
     private ProjectEntity projectEntity;
@@ -114,18 +116,30 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void removeFromProjectText() {
         log.info("remove projectDocument from project");
+        List<ProjectDocumentEntity> auxProjectList = new ArrayList<>();
         for(ProjectDocumentEntity pd : selectedProjectDocList){
-            mainDocumentList.add(mainDocumentService.findById(pd.getMainDocumentEntity().getId()));
-            if(pd.getId()>0){
-                for (ProjectDocumentEntity pe : projectDocumentList){
-                    if(pd.getId().intValue() == pe.getId().intValue()){
-                        pe.setStatus(StatusEnum.DELETED);
+            if(pd.getMainDocumentEntity() != null) {
+                mainDocumentList.add(mainDocumentService.findById(pd.getMainDocumentEntity().getId()));
+                if(pd.getId()>0){
+                    for (ProjectDocumentEntity pe : projectDocumentList){
+                        if(pd.getId().intValue() == pe.getId().intValue()){
+                            pe.setStatus(StatusEnum.DELETED);
+                        }
                     }
+                }else{
+                    auxProjectList.add(pd);
                 }
             }else{
-                projectDocumentList.removeAll(selectedProjectDocList);
+                MainDocumentEntity mainDocument = new MainDocumentEntity();
+                mainDocument.setId(tempMainDocId);
+                mainDocument.setDescription(pd.getDescription());
+                mainDocument.setCode(pd.getCode());
+                mainDocumentList.add(mainDocument);
+                tempMainDocId--;
+                //if(pd.getCode()>)
             }
         }
+        projectDocumentList.removeAll(auxProjectList);
         selectedProjectDocList.clear();
     }
 
@@ -134,27 +148,6 @@ public class DocumentBean extends Bean implements Serializable {
             p.setId(null);
         }
     }
-
-    /*public void addNewCustomText() {
-        log.info("addNewCustomText");
-        if (standartText.addProject(true)) {
-            TextSnippetEntity ts = standartText.getTextSnippet();
-            ts.setId(temporaryTextId);
-            temporaryTextId--;
-            ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
-            entity.setId(tempProjectTextId);
-            entity.setTextSnippet(ts);
-            entity.setCode(ts.getCode());
-            entity.setDescription(ts.getTextSnippet());
-            entity.setLastUpdate(new Date());
-            entity.setStatus(StatusEnum.ENABLE);
-            projectTextSnippetList.add(entity);
-            tempProjectTextId++;
-            RequestContext context = RequestContext.getCurrentInstance();
-            context.execute("PF('textSnippetModal').hide();");
-        }
-        log.info("end..");
-    }*/
 
     public void editItem(ProjectDocumentEntity entity) {
         log.info("edit item");
@@ -229,12 +222,19 @@ public class DocumentBean extends Bean implements Serializable {
         projectDocument = new ProjectDocumentEntity();
     }
 
-    /*public void doSearchGlobalText() {
-        log.info("before search globalStext: " + globalStandardTextList.size());
-        globalStandardTextList.clear();
-        globalStandardTextList = textSnippetService.findByText(searchTerm);
-        log.info("after search globalStext: " + globalStandardTextList.size());
-    }*/
+    public void doSearchGlobalText() {
+        mainDocumentList.clear();
+        mainDocumentList = mainDocumentService.findByText(searchTerm);
+        List<MainDocumentEntity> auxMainDoc = new ArrayList<>();
+        for(ProjectDocumentEntity pd : projectDocumentList){
+            for(MainDocumentEntity md : mainDocumentList){
+                if(pd.getCode().equals(md.getCode())){
+                    auxMainDoc.add(md);
+                }
+            }
+        }
+        mainDocumentList.removeAll(auxMainDoc);
+    }
 
     public String getSearchTerm() {
         return searchTerm;
