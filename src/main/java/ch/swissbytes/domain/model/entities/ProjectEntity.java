@@ -36,6 +36,7 @@ public class ProjectEntity implements Serializable {
     private List<ProjectCurrencyEntity> currencies = new ArrayList<>();
     private List<ProjectTextSnippetEntity> projectTextSnippetList = new ArrayList<>();
     private List<TextSnippetEntity> globalStandardTextList = new ArrayList<>();
+    private List<ProjectDocumentEntity> projectDocumentList = new ArrayList<>();
 
 
     @Id
@@ -185,6 +186,15 @@ public class ProjectEntity implements Serializable {
 
     public void setProjectTextSnippetList(List<ProjectTextSnippetEntity> projectTextSnippetList) {
         this.projectTextSnippetList = projectTextSnippetList;
+    }
+
+    @Transient
+    public List<ProjectDocumentEntity> getProjectDocumentList() {
+        return projectDocumentList;
+    }
+
+    public void setProjectDocumentList(List<ProjectDocumentEntity> projectDocumentList) {
+        this.projectDocumentList = projectDocumentList;
     }
 
     @Transient

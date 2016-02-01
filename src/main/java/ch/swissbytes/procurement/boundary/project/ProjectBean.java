@@ -151,7 +151,8 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("do save");
         mainMenuBean.select(0);
         if (dataValidate()) {
-            prepareToSaveProjectTextSnippet();
+            prepareProjectTextAndProjectDocumentToSave();
+            //prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
             Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
@@ -204,6 +205,7 @@ public class ProjectBean extends Bean implements Serializable {
         projectEntity.getCurrencies().addAll(projectCurrencyList);
         projectEntity.getProjectTextSnippetList().addAll(projectTextSnippetList);
         projectEntity.getGlobalStandardTextList().addAll(globalStandardTextList);
+        projectEntity.getProjectDocumentList().addAll(documentBean.getProjectDocumentList());
     }
 
     public void addCurrency() {
@@ -373,6 +375,10 @@ public class ProjectBean extends Bean implements Serializable {
         return projectEntity != null && projectEntity.getId() != null ? true : false;
     }
 
+    private void prepareProjectTextAndProjectDocumentToSave(){
+        documentBean.prepareProjectDocListToSave();
+        prepareToSaveProjectTextSnippet();
+    }
     private void prepareToSaveProjectTextSnippet() {
         for (ProjectTextSnippetEntity p : projectTextSnippetList) {
             p.setId(null);

@@ -120,6 +120,12 @@ public class DocumentBean extends Bean implements Serializable {
         selectedProjectDocList.clear();
     }
 
+    public void prepareProjectDocListToSave(){
+        for (ProjectDocumentEntity p : projectDocumentList) {
+            p.setId(null);
+        }
+    }
+
     /*public void addNewCustomText() {
         log.info("addNewCustomText");
         if (standartText.addProject(true)) {
