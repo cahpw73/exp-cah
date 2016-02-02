@@ -87,7 +87,7 @@ public class ProjectBean extends Bean implements Serializable {
 
     private Long temporaryTextId = -1L;
 
-    private Long tempProjectTextId = 1000L;
+    private Long tempProjectTextId = -1L;
 
     private Long tempClausesId = -1L;
 
@@ -142,7 +142,7 @@ public class ProjectBean extends Bean implements Serializable {
     private void loadAllStandardText() {
         for (ProjectTextSnippetEntity pt : projectTextSnippetList) {
             for (TextSnippetEntity ts : globalStandardTextList) {
-                if (pt.getTextSnippet().getId().intValue() == ts.getId().intValue()) {
+                if (pt.getTextSnippet()!=null && pt.getTextSnippet().getId().intValue() == ts.getId().intValue()) {
                     projectStandardTextList.add(ts);
                 }
             }
@@ -168,7 +168,7 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("do update");
         mainMenuBean.select(0);
         if (dataValidateToUpdate()) {
-            prepareToUpdateProjectTextSnippet();
+            //prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doUpdate(projectEntity);
             Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
@@ -353,7 +353,7 @@ public class ProjectBean extends Bean implements Serializable {
             entity.setLastUpdate(new Date());
             entity.setStatus(StatusEnum.ENABLE);
             projectTextSnippetList.add(entity);
-            tempProjectTextId++;
+            tempProjectTextId--;
         }
         globalStandardTextList.removeAll(selectedGlobalTexts);
         selectedGlobalTexts.clear();
@@ -361,18 +361,39 @@ public class ProjectBean extends Bean implements Serializable {
 
     public void removeFromProjectText() {
         log.info("remove standard text from project text");
+        List<ProjectTextSnippetEntity> auxProjectTextSnippet = new ArrayList<>();
         for (ProjectTextSnippetEntity ts : selectedProjectTexts) {
-            globalStandardTextList.add(textSnippetService.findById(ts.getTextSnippet().getId()));
-            if (ts.getId() > 0 && ts.getId() < 1000) {
-                for (ProjectTextSnippetEntity pl : projectTextSnippetList) {
-                    if (ts.getId().intValue() == pl.getId().intValue()) {
-                        pl.setStatus(StatusEnum.DELETED);
+            if(ts.getTextSnippet()!=null && ts.getTextSnippet().getId().longValue()>0L){
+                globalStandardTextList.add(textSnippetService.findById(ts.getTextSnippet().getId()));
+                if (ts.getId() > 0L) {
+                    for (ProjectTextSnippetEntity pl : projectTextSnippetList) {
+                        if (ts.getId().intValue() == pl.getId().intValue()) {
+                            pl.setStatus(StatusEnum.DELETED);
+                        }
                     }
+                } else {
+                    auxProjectTextSnippet.add(ts);
                 }
-            } else {
-                projectTextSnippetList.removeAll(selectedProjectTexts);
+            }else{
+                TextSnippetEntity textSnippet = new TextSnippetEntity();
+                textSnippet.setId(temporaryTextId);
+                textSnippet.setCode(ts.getCode());
+                textSnippet.setTextSnippet(ts.getDescription());
+                globalStandardTextList.add(textSnippet);
+                temporaryTextId--;
+                if(ts.getId()>0){
+                    for (ProjectTextSnippetEntity pe : projectTextSnippetList){
+                        if(ts.getId().intValue() == pe.getId().intValue()){
+                            pe.setStatus(StatusEnum.DELETED);
+                        }
+                    }
+                }else {
+                    auxProjectTextSnippet.add(ts);
+                }
             }
+
         }
+        projectTextSnippetList.removeAll(auxProjectTextSnippet);
         selectedProjectTexts.clear();
     }
 
@@ -516,9 +537,10 @@ public class ProjectBean extends Bean implements Serializable {
             entity.setLastUpdate(new Date());
             entity.setStatus(StatusEnum.ENABLE);
             projectTextSnippetList.add(entity);
-            tempProjectTextId++;
+            tempProjectTextId--;
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal').hide();");
+            standartText.clear();
         }
         log.info("end..");
     }

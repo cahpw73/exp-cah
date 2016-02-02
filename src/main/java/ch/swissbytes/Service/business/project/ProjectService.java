@@ -67,22 +67,22 @@ public class ProjectService implements Serializable {
     private void doSaveProjectTextSnippet(ProjectEntity entity){
         for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
             pt.setProject(entity);
-            if (pt.getTextSnippet().getId() < 0) {
+            /*if (pt.getTextSnippet().getId() < 0) {
                 pt.getTextSnippet().setId(null);
                 pt.getTextSnippet().setProject(entity);
                 pt.getTextSnippet().setLastUpdate(new Date());
                 pt.getTextSnippet().setStatus(StatusEnum.ENABLE);
                 TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
                 pt.setTextSnippet(textSnippetEntity);
-            }
+            }*/
             projectTextSnippetService.doSave(pt);
-            for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
+            /*for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
                 if (ts.getId() < 0) {
                     ts.setId(null);
                     ts.setProject(entity);
                     textSnippetService.save(ts);
                 }
-            }
+            }*/
         }
     }
 
@@ -121,27 +121,32 @@ public class ProjectService implements Serializable {
 
     private void doUpdateProjectTextSnippet(ProjectEntity entity){
         for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
-            if (pt.getId() == null) {
+            if (pt.getId() < 0L) {
+                pt.setId(null);
                 pt.setProject(entity);
             }
-            if (pt.getTextSnippet().getId() == null||pt.getTextSnippet().getId()<0) {
+            if(pt.getTextSnippet() != null && pt.getTextSnippet().getId() != null && pt.getTextSnippet().getId().longValue() < 0L){
+                pt.setTextSnippet(null);
+            }
+            pt.setLastUpdate(new Date());
+            projectTextSnippetService.doUpdate(pt);
+            /*if (pt.getTextSnippet().getId() == null||pt.getTextSnippet().getId()<0) {
                 pt.getTextSnippet().setId(null);
                 pt.getTextSnippet().setProject(entity);
                 pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
                 pt.getTextSnippet().setLastUpdate(new Date());
                 TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
                 pt.setTextSnippet(textSnippetEntity);
-            }
-            pt.setLastUpdate(new Date());
-            projectTextSnippetService.doUpdate(pt);
+            }*/
+
         }
-        for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
+        /*for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
             if (ts.getId() < 0) {
                 ts.setId(null);
                 ts.setProject(entity);
                 textSnippetService.save(ts);
             }
-        }
+        }*/
     }
 
     private void doUpdateProjectDocument(ProjectEntity entity){
@@ -156,13 +161,13 @@ public class ProjectService implements Serializable {
                 }
             }
             projectDocumentService.doUpdate(pt);
-            for (MainDocumentEntity md : entity.getMainDocumentList()) {
+            /*for (MainDocumentEntity md : entity.getMainDocumentList()) {
                 if (md.getId() < 0) {
                     md.setId(null);
                     md.setLastUpdate(new Date());
                     md.setStatus(StatusEnum.ENABLE);
                 }
-            }
+            }*/
         }
     }
 

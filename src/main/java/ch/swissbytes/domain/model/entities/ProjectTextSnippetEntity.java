@@ -89,7 +89,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="text_snippet_id", nullable = false)
+    @JoinColumn(name="text_snippet_id", nullable = true)
     public TextSnippetEntity getTextSnippet() {
         return textSnippet;
     }
