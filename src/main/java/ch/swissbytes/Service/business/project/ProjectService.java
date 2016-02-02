@@ -148,7 +148,21 @@ public class ProjectService implements Serializable {
         for (ProjectDocumentEntity pt : entity.getProjectDocumentList()) {
             pt.setProject(entity);
             pt.setLastUpdate(new Date());
+            if(pt.getId()<0){
+                pt.setId(null);
+                pt.setProject(entity);
+                if(pt.getMainDocumentEntity().getId()<0){
+                    pt.setMainDocumentEntity(null);
+                }
+            }
             projectDocumentService.doUpdate(pt);
+            for (MainDocumentEntity md : entity.getMainDocumentList()) {
+                if (md.getId() < 0) {
+                    md.setId(null);
+                    md.setLastUpdate(new Date());
+                    md.setStatus(StatusEnum.ENABLE);
+                }
+            }
         }
     }
 

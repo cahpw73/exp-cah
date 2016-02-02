@@ -209,6 +209,8 @@ public class ProjectBean extends Bean implements Serializable {
         projectEntity.getProjectTextSnippetList().addAll(projectTextSnippetList);
         projectEntity.getGlobalStandardTextList().addAll(globalStandardTextList);
         projectEntity.getProjectDocumentList().addAll(documentBean.getProjectDocumentList());
+        projectEntity.getMainDocumentList().addAll(documentBean.getMainDocumentList());
+
     }
 
     public void addCurrency() {

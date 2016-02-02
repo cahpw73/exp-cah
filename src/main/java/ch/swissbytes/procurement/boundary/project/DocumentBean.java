@@ -136,7 +136,15 @@ public class DocumentBean extends Bean implements Serializable {
                 mainDocument.setCode(pd.getCode());
                 mainDocumentList.add(mainDocument);
                 tempMainDocId--;
-                //if(pd.getCode()>)
+                if(pd.getId()>0){
+                    for (ProjectDocumentEntity pe : projectDocumentList){
+                        if(pd.getId().intValue() == pe.getId().intValue()){
+                            pe.setStatus(StatusEnum.DELETED);
+                        }
+                    }
+                }else {
+                    auxProjectList.add(pd);
+                }
             }
         }
         projectDocumentList.removeAll(auxProjectList);

@@ -7,7 +7,7 @@
         <h:form id="projectDocFormDlg">
             <h:inputText value="#{documentBean.selectedProjectDoc.description}" id="editorValue2"  styleClass="textCKEditor"
                          style="position: absolute; top:-200px"/>
-                        <textarea id="editor2" name="editor2">
+                        <textarea id="editor2" name="editor2" style="width: 730px!important; height: 275px!important;">
                             <h:outputText value="#{documentBean.selectedProjectDoc.description}"/>
                         </textarea>
             <br/>
@@ -16,6 +16,12 @@
                            onclick="document.getElementsByClassName('textCKEditor')[0].value = CKEDITOR.instances.editor2.getData();">
                 <p:ajax process="projectDocFormDlg" update=":editForm:projectDocDt" async="false"/>
             </p:commandLink>
+            &#160;
+            <button class="btn btn-primary btn-sm"
+                    onclick="PF('projectDocModal').hide();"
+                    type="button">
+                #{msgs['lbl.cancel']}
+            </button>
             <script type="text/javascript">
                 CKEDITOR.replace('editor2');
             </script>
