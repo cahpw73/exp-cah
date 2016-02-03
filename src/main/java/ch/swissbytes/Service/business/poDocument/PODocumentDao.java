@@ -21,6 +21,10 @@ public class PODocumentDao extends GenericDao<PODocumentEntity> implements Seria
 
     private static final Logger log = Logger.getLogger(PODocumentDao.class.getName());
 
+    public void doUpdate(PODocumentEntity detachedEntity){
+        super.update(detachedEntity);
+    }
+
     public List<PODocumentEntity> findByPOId(final Long poEntityId) {
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");

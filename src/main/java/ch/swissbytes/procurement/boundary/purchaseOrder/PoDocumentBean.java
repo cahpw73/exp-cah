@@ -134,7 +134,8 @@ public class PoDocumentBean implements Serializable {
     }
 
     public void loadTextNewPO(final Long projectId) {
-        textSnippetList = projectTextSnippetService.findByProjectId(projectId);
+        //textSnippetList = projectTextSnippetService.findByProjectId(projectId);
+        projectDocumentList = projectDocumentService.findByProjectId(projectId);
     }
 
     /*public void onStandardTextDrop(DragDropEvent ddEvent) {

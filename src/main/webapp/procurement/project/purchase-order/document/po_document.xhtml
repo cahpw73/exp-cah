@@ -25,7 +25,7 @@
                         </p:column>
                         <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;"
                                   rendered="#{!poBean.modeView}">
-                            <h:commandLink value="Clauses"
+                            <h:commandLink value="PO Docs"
                                            action="#{poTextBean.copyToClauses(_t)}">
                                 <p:ajax async="false" process="@this"
                                         update=":editPoForm:projectDocDt :editPoForm:clausesAuxDt :editPoForm:poDocBbtnt"/>
@@ -46,7 +46,7 @@
                                      selectionMode="multiple" selection="#{poDocumentBean.selectedPODocumentList}"
                                      rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
                             <p:ajax event="rowReorder" listener="#{poDocumentBean.onRowReorder}" update="poDocDt :editPoForm:poDocBbtnt"/>
-                            <p:column id="poDocClId" headerText="#{msgs['po.doc.lbl.pod.column.code']}"
+                            <p:column id="poDocClId" headerText="#{msgs['po.doc.lbl.pod.column.no']}"
                                       rendered="#{poDocumentBean.hasStatusEnable(_dt)}">
                                 <h:outputText value="#{_dt.numberPODoc}"/>
                             </p:column>

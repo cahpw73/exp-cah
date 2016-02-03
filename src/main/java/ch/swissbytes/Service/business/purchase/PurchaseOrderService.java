@@ -7,6 +7,7 @@ import ch.swissbytes.Service.business.contact.ContactService;
 import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
+import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.requisition.RequisitionDao;
@@ -78,8 +79,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ContactService contactService;
+
     @Inject
     private Configuration configuration;
+
+    @Inject
+    private PODocumentService poDocumentService;
 
     private final String PREFIX = "v";
 
@@ -371,6 +376,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         cashflowService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow(), po);
         //Text
         textService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getTextEntity(), po);
+        //PO Document
+        poDocumentService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoDocumentList(), po);
         return purchaseOrderEntity;
     }
 

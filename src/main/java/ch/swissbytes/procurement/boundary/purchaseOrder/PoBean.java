@@ -131,6 +131,7 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(orderDate);
         purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         poTextBean.loadTextNewPO(projectEntity.getId());
+        poDocumentBean.loadTextNewPO(projectEntity.getId());
         putModeCreation();
     }
 
@@ -607,6 +608,7 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
         purchaseOrder.getPurchaseOrderProcurementEntity().setTextEntity(poTextBean.getTextEntity());
         purchaseOrder.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getPoDocumentList().addAll(poDocumentBean.getDroppedPODocumentList());
     }
 
     public String phoneContact() {
