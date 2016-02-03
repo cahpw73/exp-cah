@@ -148,6 +148,10 @@
                                     <a href="#cashflowPo" role="tab"
                                        data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.cashflow']}</a>
                                 </li>
+                                <li id="documentTab">
+                                    <a href="#documentPo" role="tab"
+                                       data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.documents']}</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -189,6 +193,10 @@
                         <div class="tab-pane " id="cashflowPo">
                             <br/>
                             <ui:include src="cashflow/cashflow.xhtml"/>
+                        </div>
+                        <div class="tab-pane " id="documentPo">
+                            <br/>
+                            <ui:include src="document/po_document.xhtml"/>
                         </div>
 
                     </div>

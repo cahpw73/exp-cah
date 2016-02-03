@@ -1,17 +1,12 @@
 package ch.swissbytes.procurement.boundary.project;
 
-import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
-import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
-import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
-import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.model.entities.MainDocumentEntity;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
-import ch.swissbytes.procurement.boundary.currency.CurrencyBean;
-import ch.swissbytes.procurement.boundary.menu.MainMenuBean;
-import ch.swissbytes.procurement.boundary.purchaseOrder.PoTextBean;
-import ch.swissbytes.procurement.boundary.textSnippet.TextSnippetBean;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.context.RequestContext;
 
@@ -55,7 +50,7 @@ public class DocumentBean extends Bean implements Serializable {
 
     private Long temporaryProjectDocId = -1L;
 
-    private Long tempMainDocId= -1L;
+    private Long tempMainDocId = -1L;
 
     private String searchTerm;
 
@@ -79,7 +74,7 @@ public class DocumentBean extends Bean implements Serializable {
         log.info("DocumentBean destroying");
     }
 
-    public void loadMainDocumentsEdit(final Long projectId){
+    public void loadMainDocumentsEdit(final Long projectId) {
         projectDocumentList = projectDocumentService.findByProjectId(projectId);
         mainDocumentList = mainDocumentService.findByProjectId();
         List<MainDocumentEntity> mainDocumentAuxList = new ArrayList<>();
@@ -93,13 +88,13 @@ public class DocumentBean extends Bean implements Serializable {
         mainDocumentList.removeAll(mainDocumentAuxList);
     }
 
-    public void loadMainDocumentsCreate(final Long projectId){
+    public void loadMainDocumentsCreate(final Long projectId) {
         mainDocumentList = mainDocumentService.findByProjectId();
     }
 
     public void addToProjectText() {
         log.info("add main doc template to project");
-        for(MainDocumentEntity md : selectedMainDocList){
+        for (MainDocumentEntity md : selectedMainDocList) {
             ProjectDocumentEntity entity = new ProjectDocumentEntity();
             entity.setId(temporaryProjectDocId);
             entity.setCode(md.getCode());
@@ -117,32 +112,32 @@ public class DocumentBean extends Bean implements Serializable {
     public void removeFromProjectText() {
         log.info("remove projectDocument from project");
         List<ProjectDocumentEntity> auxProjectList = new ArrayList<>();
-        for(ProjectDocumentEntity pd : selectedProjectDocList){
-            if(pd.getMainDocumentEntity() != null) {
+        for (ProjectDocumentEntity pd : selectedProjectDocList) {
+            if (pd.getMainDocumentEntity() != null) {
                 mainDocumentList.add(mainDocumentService.findById(pd.getMainDocumentEntity().getId()));
-                if(pd.getId()>0){
-                    for (ProjectDocumentEntity pe : projectDocumentList){
-                        if(pd.getId().intValue() == pe.getId().intValue()){
+                if (pd.getId() > 0) {
+                    for (ProjectDocumentEntity pe : projectDocumentList) {
+                        if (pd.getId().intValue() == pe.getId().intValue()) {
                             pe.setStatus(StatusEnum.DELETED);
                         }
                     }
-                }else{
+                } else {
                     auxProjectList.add(pd);
                 }
-            }else{
+            } else {
                 MainDocumentEntity mainDocument = new MainDocumentEntity();
                 mainDocument.setId(tempMainDocId);
                 mainDocument.setDescription(pd.getDescription());
                 mainDocument.setCode(pd.getCode());
                 mainDocumentList.add(mainDocument);
                 tempMainDocId--;
-                if(pd.getId()>0){
-                    for (ProjectDocumentEntity pe : projectDocumentList){
-                        if(pd.getId().intValue() == pe.getId().intValue()){
+                if (pd.getId() > 0) {
+                    for (ProjectDocumentEntity pe : projectDocumentList) {
+                        if (pd.getId().intValue() == pe.getId().intValue()) {
                             pe.setStatus(StatusEnum.DELETED);
                         }
                     }
-                }else {
+                } else {
                     auxProjectList.add(pd);
                 }
             }
@@ -151,7 +146,7 @@ public class DocumentBean extends Bean implements Serializable {
         selectedProjectDocList.clear();
     }
 
-    public void prepareProjectDocListToSave(){
+    public void prepareProjectDocListToSave() {
         for (ProjectDocumentEntity p : projectDocumentList) {
             p.setId(null);
         }
@@ -203,11 +198,11 @@ public class DocumentBean extends Bean implements Serializable {
         return list;
     }
 
-    public void loadSeletedProjectDoc(ProjectDocumentEntity entity){
+    public void loadSeletedProjectDoc(ProjectDocumentEntity entity) {
         selectedProjectDoc = entity;
     }
 
-    public void updateProjectDocumentDt(){
+    public void updateProjectDocumentDt() {
         for (ProjectDocumentEntity r : projectDocumentList) {
             if (r.getId().intValue() == selectedProjectDoc.getId().intValue()) {
                 r.setDescription(selectedProjectDoc.getDescription());
@@ -217,7 +212,7 @@ public class DocumentBean extends Bean implements Serializable {
         context.execute("PF('projectDocModal').hide();");
     }
 
-    public void saveNewProjectDocument(){
+    public void saveNewProjectDocument() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
         projectDocumentService.doSave(projectDocument);
@@ -226,7 +221,7 @@ public class DocumentBean extends Bean implements Serializable {
         context.execute("PF('addProjectDocModal').hide();");
     }
 
-    public void resetProjectDocument(){
+    public void resetProjectDocument() {
         projectDocument = new ProjectDocumentEntity();
     }
 
@@ -234,9 +229,9 @@ public class DocumentBean extends Bean implements Serializable {
         mainDocumentList.clear();
         mainDocumentList = mainDocumentService.findByText(searchTerm);
         List<MainDocumentEntity> auxMainDoc = new ArrayList<>();
-        for(ProjectDocumentEntity pd : projectDocumentList){
-            for(MainDocumentEntity md : mainDocumentList){
-                if(pd.getCode().equals(md.getCode())){
+        for (ProjectDocumentEntity pd : projectDocumentList) {
+            for (MainDocumentEntity md : mainDocumentList) {
+                if (pd.getCode().equals(md.getCode())) {
                     auxMainDoc.add(md);
                 }
             }
@@ -307,17 +302,5 @@ public class DocumentBean extends Bean implements Serializable {
     public void setProjectEntityId(Long projectEntityId) {
         this.projectEntityId = projectEntityId;
     }
-
-    @Inject
-    private TextSnippetService textSnippetService;
-
-    @Inject
-    private CurrencyBean currencyBean;
-
-    @Inject
-    private TextSnippetBean standartText;
-
-    @Inject
-    private PoTextBean poTextBean;
 
 }

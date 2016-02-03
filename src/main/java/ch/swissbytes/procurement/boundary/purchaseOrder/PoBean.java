@@ -76,6 +76,9 @@ public class PoBean extends Bean {
     private PoTextBean poTextBean;
 
     @Inject
+    private PoDocumentBean poDocumentBean;
+
+    @Inject
     private CashflowBean cashflowBean;
 
     @Inject
@@ -136,6 +139,7 @@ public class PoBean extends Bean {
         itemBean.loadItemList(purchaseOrder.getId());
         cashflowBean.loadCashflow(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
         poTextBean.loadText(purchaseOrder.getPurchaseOrderProcurementEntity(), purchaseOrder.getProjectEntity().getId());
+        poDocumentBean.loadProjectDocuments(purchaseOrder.getPurchaseOrderProcurementEntity().getId(),purchaseOrder.getProjectEntity().getId());
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
         }

@@ -23,6 +23,7 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
     private StatusEnum status;
     private Date lastUpdate;
     private Integer ordered;
+    private String numberPODoc;
     private PurchaseOrderProcurementEntity poProcurementEntity;
     private ProjectDocumentEntity projectDocumentEntity;
 
@@ -86,6 +87,15 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
 
     public void setOrdered(Integer ordered) {
         this.ordered = ordered;
+    }
+
+    @Column(name = "number_po_doc")
+    public String getNumberPODoc() {
+        return numberPODoc;
+    }
+
+    public void setNumberPODoc(String numberPODoc) {
+        this.numberPODoc = numberPODoc;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
