@@ -54,7 +54,7 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
-    private void doSaveProjectCurrency(ProjectEntity entity){
+    private void doSaveProjectCurrency(ProjectEntity entity) {
         for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
             if (pc.getId() < 0) {
                 pc.setId(null);
@@ -64,7 +64,7 @@ public class ProjectService implements Serializable {
         }
     }
 
-    private void doSaveProjectTextSnippet(ProjectEntity entity){
+    private void doSaveProjectTextSnippet(ProjectEntity entity) {
         for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
             pt.setProject(entity);
             /*if (pt.getTextSnippet().getId() < 0) {
@@ -86,7 +86,7 @@ public class ProjectService implements Serializable {
         }
     }
 
-    private void doSaveProjectDocument(ProjectEntity entity){
+    private void doSaveProjectDocument(ProjectEntity entity) {
         for (ProjectDocumentEntity pt : entity.getProjectDocumentList()) {
             pt.setProject(entity);
             pt.setLastUpdate(new Date());
@@ -109,7 +109,7 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
-    private void doUpdateProjectCurrency(ProjectEntity entity){
+    private void doUpdateProjectCurrency(ProjectEntity entity) {
         for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
             if (pc.getId() < 0) {
                 pc.setId(null);
@@ -119,13 +119,13 @@ public class ProjectService implements Serializable {
         }
     }
 
-    private void doUpdateProjectTextSnippet(ProjectEntity entity){
+    private void doUpdateProjectTextSnippet(ProjectEntity entity) {
         for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
             if (pt.getId() < 0L) {
                 pt.setId(null);
                 pt.setProject(entity);
             }
-            if(pt.getTextSnippet() != null && pt.getTextSnippet().getId() != null && pt.getTextSnippet().getId().longValue() < 0L){
+            if (pt.getTextSnippet() != null && pt.getTextSnippet().getId() != null && pt.getTextSnippet().getId().longValue() < 0L) {
                 pt.setTextSnippet(null);
             }
             pt.setLastUpdate(new Date());
@@ -149,14 +149,14 @@ public class ProjectService implements Serializable {
         }*/
     }
 
-    private void doUpdateProjectDocument(ProjectEntity entity){
+    private void doUpdateProjectDocument(ProjectEntity entity) {
         for (ProjectDocumentEntity pt : entity.getProjectDocumentList()) {
             pt.setProject(entity);
             pt.setLastUpdate(new Date());
-            if(pt.getId()<0){
+            if (pt.getId() < 0) {
                 pt.setId(null);
                 pt.setProject(entity);
-                if(pt.getMainDocumentEntity().getId()<0){
+                if (pt.getMainDocumentEntity().getId() < 0) {
                     pt.setMainDocumentEntity(null);
                 }
             }
@@ -189,7 +189,7 @@ public class ProjectService implements Serializable {
     }
 
     @Transactional
-    public ClausesEntity addNewClausesSnippet(ProjectTextSnippetEntity projectTextSnippetEntity){
+    public ClausesEntity addNewClausesSnippet(ProjectTextSnippetEntity projectTextSnippetEntity) {
         ClausesEntity entity = new ClausesEntity();
         entity.setId(null);
         entity.setLastUpdate(new Date());
@@ -210,6 +210,11 @@ public class ProjectService implements Serializable {
         }
 
         return entity;
+    }
+
+    public ProjectEntity findById(final Long projectId) {
+        ProjectEntity entity = projectDao.findById(ProjectEntity.class, projectId).get(0);
+        return entity != null ? entity : null;
     }
 
     public List<ProjectEntity> findAllProjects() {
@@ -256,7 +261,7 @@ public class ProjectService implements Serializable {
         return projectDao.findByLogoId(logoId);
     }
 
-    public boolean isClientBeingUsed(final Long clientId){
+    public boolean isClientBeingUsed(final Long clientId) {
 
         return !projectDao.findByClient(clientId).isEmpty();
     }

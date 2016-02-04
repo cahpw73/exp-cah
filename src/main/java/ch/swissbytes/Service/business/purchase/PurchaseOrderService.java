@@ -379,7 +379,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         //Text
         textService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getTextEntity(), po);
         //PO Document
-        poDocumentService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoDocumentList(), po);
+        List<PODocumentEntity> poDocList = purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoDocumentList();
+        List<ProjectDocumentEntity> projectDocList = purchaseOrderEntity.getPurchaseOrderProcurementEntity().getProjectDocList();
+        poDocumentService.doUpdate(poDocList, po);
         return purchaseOrderEntity;
     }
 
@@ -468,6 +470,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.setCashflow(poe.getPurchaseOrderProcurementEntity().getCashflow());
         po.setTextEntity(poe.getPurchaseOrderProcurementEntity().getTextEntity());
         po.getPoDocumentList().addAll(poe.getPurchaseOrderProcurementEntity().getPoDocumentList());
+        //po.getProjectDocList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectDocList());
     }
 
     public PurchaseOrderEntity findById(Long id) {
@@ -743,6 +746,10 @@ public class PurchaseOrderService extends Service implements Serializable {
            return list.get(0);
         }
         return null;
+    }
+
+    public PurchaseOrderProcurementEntity findPOEById(final Long poeId){
+        return dao.findPOEntityById(poeId);
     }
 
 

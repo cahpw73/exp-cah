@@ -20,7 +20,7 @@
         <f:viewAction action="#{poBean.canEditPo}"/>
     </f:metadata>
     <ui:define name="body">
-
+        <script type="text/javascript" src="../../../ckeditor/ckeditor.js" />
 
         <o:form id="editPoForm" includeViewParams="true">
             <h:commandLink id="cancelPOCreateBtn1" value="#{msgs['lbl.close']}"
@@ -238,6 +238,17 @@
             <h:form id="brandModalFormId" prependId="false">
                 <ui:include src="../../admin/supplier/components/addBrand.xhtml"/>
             </h:form>
+        </p:dialog>
+
+        <p:dialog header="Edit PO Doc" widgetVar="poDocModal" resizable="false">
+            <h:panelGroup id="poDocModalId">
+                <ui:include src="component/editPODocument.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Add New PO Doc" widgetVar="addPODocModal" resizable="false">
+            <h:panelGroup id="addPODocModalId">
+                <ui:include src="component/newPODocument.xhtml"/>
+            </h:panelGroup>
         </p:dialog>
     </ui:define>
 </ui:composition>

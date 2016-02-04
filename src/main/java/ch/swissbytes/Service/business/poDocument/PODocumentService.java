@@ -1,7 +1,9 @@
 package ch.swissbytes.Service.business.poDocument;
 
 
+import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.domain.model.entities.PODocumentEntity;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 
 import javax.inject.Inject;
@@ -21,6 +23,9 @@ public class PODocumentService implements Serializable {
     @Inject
     private PODocumentDao dao;
 
+    @Inject
+    private ProjectDocumentService projectDocumentService;
+
     public List<PODocumentEntity> findByPOId(final Long poId){
         return dao.findByPOId(poId);
     }
@@ -39,17 +44,28 @@ public class PODocumentService implements Serializable {
         }
     }
 
+    @Transactional
+    public void doSaveNewPODocumentDlg(PODocumentEntity entity){
+        dao.doSave(entity);
+    }
+
     public void doUpdate(List<PODocumentEntity> poDocumentList, PurchaseOrderProcurementEntity po) {
         int order=0;
         for(PODocumentEntity ps: poDocumentList){
             if(ps.getId() < 0){
                 ps.setId(null);
-                ps.setPoProcurementEntity(po);
             }
+            ps.setPoProcurementEntity(po);
             ps.setOrdered(order);
             order++;
             ps.setLastUpdate(new Date());
             dao.doUpdate(ps);
         }
+        /*for(ProjectDocumentEntity pr: projectDocList){
+            if(pr.getId()<0){
+                pr.setId(null);
+                projectDocumentService.doSave(pr);
+            }
+        }*/
     }
 }

@@ -83,11 +83,6 @@
                             </h:panelGroup>
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
-                            <ui:remove>
-                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
-                                           action="#{documentBean.editItem(_pt)}" update="projectDocDt :editForm:projectGlbMsgs"
-                                           async="false"/>
-                            </ui:remove>
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
                                            update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
                                            async="false" action="#{documentBean.loadSeletedProjectDoc(_pt)}"/>

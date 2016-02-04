@@ -70,10 +70,15 @@
                             </p:column>
                             <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
                                       style="padding-left: 8px!important;">
+                                <ui:remove>
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
                                                action="#{poDocumentBean.editItem(_dt)}"
                                                update="poDocDt  :editPoForm:poDocBbtnt"
                                                async="false"/>
+                                </ui:remove>
+                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
+                                               update=":poDocModalId" oncomplete="PF('poDocModal').show()"
+                                               async="false" action="#{poDocumentBean.loadSeletedPODocument(_dt)}"/>
                                 <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_dt.isEditable}"
                                                process="poDocDt"
                                                action="#{poDocumentBean.confirmItem(_dt)}"
@@ -101,12 +106,21 @@
             </div>
             <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
                 <h:panelGroup rendered="#{poBean.beingEdited}">
-                    <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('textSnippetModal1').show(); doChangeProc();"
-                                   process="@this" update=":textSnippetModalId"
+                    <ui:remove>
+                    <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('addPODocModal').show();"
+                                   process="@this"
                                    action="#{textSnippetBean.clear}"
                                    styleClass="btn btn-primary btn-sm">
-                        <p:ajax process="@this" update=":textSnippetDlg"/>
+                        <p:ajax process="@this" update=":addPODocModalId"/>
                     </h:commandLink>
+                    </ui:remove>
+                    <p:commandLink
+                            value="#{msgs['lbl.add']}"
+                            oncomplete="PF('addPODocModal').show();"
+                            action="#{poDocumentBean.resetPODocument}"
+                            styleClass="btn btn-primary btn-sm"
+                            async="false" update=":addPODocModalId" process="@this">
+                    </p:commandLink>
                     <br/>
                     <p:commandLink value="#{msgs['lbl.remove']}"
                                    action="#{poDocumentBean.removePODocuments}"
