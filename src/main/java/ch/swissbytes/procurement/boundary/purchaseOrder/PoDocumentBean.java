@@ -114,15 +114,6 @@ public class PoDocumentBean implements Serializable {
         projectDocumentList.removeAll(auxProjectDocList);
     }
 
-    /*public List<ClausesEntity> filteredList1() {
-        List<ClausesEntity> list = new ArrayList<>();
-        for (ClausesEntity r : this.droppedTextSnippetList) {
-            if (r.getStatus() != null && r.getStatus().getId().intValue() == StatusEnum.ENABLE.getId().intValue()) {
-                list.add(r);
-            }
-        }
-        return list;
-    }*/
     public List<PODocumentEntity> filteredList(){
         List<PODocumentEntity> auxList = new ArrayList<>();
         for(PODocumentEntity p : droppedPODocumentList){
@@ -134,18 +125,8 @@ public class PoDocumentBean implements Serializable {
     }
 
     public void loadTextNewPO(final Long projectId) {
-        //textSnippetList = projectTextSnippetService.findByProjectId(projectId);
         projectDocumentList = projectDocumentService.findByProjectId(projectId);
     }
-
-    /*public void onStandardTextDrop(DragDropEvent ddEvent) {
-        log.info("on standard text drop");
-        ProjectTextSnippetEntity poText = ((ProjectTextSnippetEntity) ddEvent.getData());
-        ClausesEntity clausesEntity = createClausesEntity(poText);
-        droppedTextSnippetList.add(clausesEntity);
-        reorderDroppedTextSnippetList();
-        textSnippetList.remove(poText);
-    }*/
 
     public void onStandardTextDrop(DragDropEvent ddEvent){
         ProjectDocumentEntity projDoc = ((ProjectDocumentEntity) ddEvent.getData());
@@ -166,18 +147,6 @@ public class PoDocumentBean implements Serializable {
         tempPODocumentId--;
         return entity;
     }
-
-    /*private ClausesEntity createClausesEntity(ProjectTextSnippetEntity poText) {
-        ClausesEntity entity = new ClausesEntity();
-        entity.setId(tempClausesId);
-        tempClausesId++;
-        entity.setLastUpdate(new Date());
-        entity.setClauses(poText.getDescription());
-        entity.setCode(poText.getCode());
-        entity.setStatus(StatusEnum.ENABLE);
-        entity.setProjectTextSnippet(poText);
-        return entity;
-    }*/
 
     public void onRowReorder(ReorderEvent event) {
         log.info("on row reorder");

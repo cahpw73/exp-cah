@@ -25,14 +25,26 @@ public class PODocumentService implements Serializable {
         return dao.findByPOId(poId);
     }
 
-    @Transactional
-    public void doUpdate(List<PODocumentEntity> poDocumentList, PurchaseOrderProcurementEntity po) {
-        Integer order=0;
+    public void doSave(List<PODocumentEntity> poDocumentList, PurchaseOrderProcurementEntity po){
+        int order = 0;
         for(PODocumentEntity ps: poDocumentList){
             if(ps.getId() < 0){
                 ps.setId(null);
                 ps.setPoProcurementEntity(po);
-                //ps.setText(entity);
+            }
+            ps.setOrdered(order);
+            order++;
+            ps.setLastUpdate(new Date());
+            dao.doSave(ps);
+        }
+    }
+
+    public void doUpdate(List<PODocumentEntity> poDocumentList, PurchaseOrderProcurementEntity po) {
+        int order=0;
+        for(PODocumentEntity ps: poDocumentList){
+            if(ps.getId() < 0){
+                ps.setId(null);
+                ps.setPoProcurementEntity(po);
             }
             ps.setOrdered(order);
             order++;

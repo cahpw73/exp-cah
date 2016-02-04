@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -22,16 +23,22 @@ public class PODocumentDao extends GenericDao<PODocumentEntity> implements Seria
     private static final Logger log = Logger.getLogger(PODocumentDao.class.getName());
 
     public void doUpdate(PODocumentEntity detachedEntity){
-        super.update(detachedEntity);
+        PODocumentEntity entity = super.merge(detachedEntity);
+        super.update(entity);
     }
 
+    public void doSave(PODocumentEntity entity) {
+        super.saveAndFlush(entity);
+    }
+
+    @Transactional
     public List<PODocumentEntity> findByPOId(final Long poEntityId) {
         StringBuilder sb=new StringBuilder();
         sb.append(" SELECT x ");
         sb.append(" FROM PODocumentEntity x ");
         sb.append(" WHERE x.status = :ENABLED ");
         sb.append(" AND x.poProcurementEntity.id = :PO_ID ");
-        sb.append(" ORDER BY x.id ");
+        sb.append(" ORDER BY x.ordered ");
         Map<String,Object> map=new HashMap<>();
         map.put("ENABLED", StatusEnum.ENABLE);
         map.put("PO_ID", poEntityId);

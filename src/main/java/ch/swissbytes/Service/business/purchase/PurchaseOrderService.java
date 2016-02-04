@@ -288,6 +288,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         cashflowService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow(), po);
         //Text
         textService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getTextEntity(), po);
+        //PO Document
+        poDocumentService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoDocumentList(),po);
 
         return purchaseOrderEntity;
     }
@@ -465,6 +467,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.getRequisitions().addAll(poe.getPurchaseOrderProcurementEntity().getRequisitions());
         po.setCashflow(poe.getPurchaseOrderProcurementEntity().getCashflow());
         po.setTextEntity(poe.getPurchaseOrderProcurementEntity().getTextEntity());
+        po.getPoDocumentList().addAll(poe.getPurchaseOrderProcurementEntity().getPoDocumentList());
     }
 
     public PurchaseOrderEntity findById(Long id) {
