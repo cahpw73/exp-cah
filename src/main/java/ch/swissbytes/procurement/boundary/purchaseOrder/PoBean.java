@@ -609,7 +609,7 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setTextEntity(poTextBean.getTextEntity());
         purchaseOrder.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
         purchaseOrder.getPurchaseOrderProcurementEntity().getPoDocumentList().addAll(poDocumentBean.getDroppedPODocumentList());
-        //purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocList().addAll(poDocumentBean.getProjectDocumentList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocList().addAll(poDocumentBean.getProjectDocumentList());
     }
 
     public String phoneContact() {

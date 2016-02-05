@@ -49,7 +49,7 @@ public class PODocumentService implements Serializable {
         dao.doSave(entity);
     }
 
-    public void doUpdate(List<PODocumentEntity> poDocumentList, PurchaseOrderProcurementEntity po) {
+    public void doUpdate(List<PODocumentEntity> poDocumentList,List<ProjectDocumentEntity> projDocList, PurchaseOrderProcurementEntity po) {
         int order=0;
         for(PODocumentEntity ps: poDocumentList){
             if(ps.getId() < 0){
@@ -61,11 +61,11 @@ public class PODocumentService implements Serializable {
             ps.setLastUpdate(new Date());
             dao.doUpdate(ps);
         }
-        /*for(ProjectDocumentEntity pr: projectDocList){
+        for(ProjectDocumentEntity pr: projDocList){
             if(pr.getId()<0){
                 pr.setId(null);
                 projectDocumentService.doSave(pr);
             }
-        }*/
+        }
     }
 }

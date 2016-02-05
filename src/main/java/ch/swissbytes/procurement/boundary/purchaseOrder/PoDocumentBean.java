@@ -140,8 +140,17 @@ public class PoDocumentBean implements Serializable {
 
     public void onStandardTextDrop(DragDropEvent ddEvent){
         ProjectDocumentEntity projDoc = ((ProjectDocumentEntity) ddEvent.getData());
-        PODocumentEntity poDocumentEntity = createPODocumentEntity(projDoc);
-        droppedPODocumentList.add(poDocumentEntity);
+        boolean isNewDoc = true;
+        for(PODocumentEntity pd : droppedPODocumentList){
+            if(projDoc.getCode().equals(pd.getCode()) && pd.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+                pd.setStatus(StatusEnum.ENABLE);
+                isNewDoc = false;
+            }
+        }
+        if(isNewDoc) {
+            PODocumentEntity poDoc= createPODocumentEntity(projDoc);
+            droppedPODocumentList.add(poDoc);
+        }
         reorderDroppedPODocumentList();
         projectDocumentList.remove(projDoc);
     }
@@ -178,27 +187,23 @@ public class PoDocumentBean implements Serializable {
                    auxPODocList.add(p);
                 }
             }else{
-                boolean existsCode = false;
-                for(ProjectDocumentEntity pde : projectDocumentList){
-                    if(pde.getCode().equals(p.getCode())){
-                        existsCode = true;
+                ProjectDocumentEntity pjDocument = createProjectDoc(p);
+                if(p.getId() > 0){
+                    for(PODocumentEntity pe : droppedPODocumentList){
+                        if(p.getId().intValue() == pe.getId().intValue()){
+                            pe.setStatus(StatusEnum.DELETED);
+                        }
                     }
+                }else{
+                    auxPODocList.add(p);
                 }
-                if(!existsCode) {
-                    ProjectDocumentEntity projectDocumentEntity = createProjectDoc(p);
-                    projectDocumentList.add(projectDocumentEntity);
-                }
-                for(PODocumentEntity pe : droppedPODocumentList){
-                    if(p.getId().intValue() == pe.getId().intValue()){
-                        pe.setStatus(StatusEnum.DELETED);
-                    }
-                }
+                projectDocumentList.add(pjDocument);
             }
         }
         droppedPODocumentList.removeAll(auxPODocList);
         selectedPODocumentList.clear();
         reorderDroppedPODocumentList();
-        filteredProjectDocumentList();
+        //filteredProjectDocumentList();
     }
 
     private ProjectDocumentEntity createProjectDoc(PODocumentEntity p){
