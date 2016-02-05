@@ -52,30 +52,10 @@
                             </p:column>
                             <p:column id="poDocCl" headerText="#{msgs['po.doc.lbl.pod.column.doc']}"
                                       rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
-                                <h:panelGroup id="poDocViDescription" rendered="#{!_dt.isEditable}">
-                                    #{_dt.description}
-                                    <ui:remove>
-                                        <p:inputTextarea value="#{_dt.description}" styleClass="form-control"
-                                                         style="height: 180px!important;" onclick="PF.rowSelectMode()">
-                                        </p:inputTextarea>
-                                    </ui:remove>
-                                </h:panelGroup>
-                                <h:panelGroup id="poDocEditDescription" rendered="#{_dt.isEditable}">
-                                    <p:inputTextarea value="#{_dt.description}" styleClass="form-control"
-                                                     required="true"
-                                                     requiredMessage="Enter a description in Project Text"
-                                                     style="height: 180px!important;">
-                                    </p:inputTextarea>
-                                </h:panelGroup>
+                                <h:outputText value="#{_dt.description}" styleClass="content-big-text"/>
                             </p:column>
                             <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
                                       style="padding-left: 8px!important;">
-                                <ui:remove>
-                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
-                                               action="#{poDocumentBean.editItem(_dt)}"
-                                               update="poDocDt  :editPoForm:poDocBbtnt"
-                                               async="false"/>
-                                </ui:remove>
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
                                                update=":poDocModalId" oncomplete="PF('poDocModal').show()"
                                                async="false" action="#{poDocumentBean.loadSeletedPODocument(_dt)}"/>
@@ -106,14 +86,6 @@
             </div>
             <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
                 <h:panelGroup rendered="#{poBean.beingEdited}">
-                    <ui:remove>
-                    <h:commandLink value="#{msgs['lbl.add']}" onclick="PF('addPODocModal').show();"
-                                   process="@this"
-                                   action="#{textSnippetBean.clear}"
-                                   styleClass="btn btn-primary btn-sm">
-                        <p:ajax process="@this" update=":addPODocModalId"/>
-                    </h:commandLink>
-                    </ui:remove>
                     <p:commandLink
                             value="#{msgs['lbl.add']}"
                             oncomplete="PF('addPODocModal').show();"
