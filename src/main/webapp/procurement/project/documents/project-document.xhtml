@@ -100,7 +100,7 @@
                 </h:panelGroup>
                 <br/>
 
-                <p:commandLink
+                <p:commandLink disabled="#{projectBean.createProject}"
                         value="#{msgs['project.docs.lbl.btn.add.custom.text']}"
                         oncomplete="PF('addProjectDocModal').show();"
                         action="#{documentBean.resetProjectDocument}"

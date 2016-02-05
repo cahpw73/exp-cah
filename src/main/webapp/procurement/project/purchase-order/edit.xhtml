@@ -63,7 +63,7 @@
                                                      rendered="#{poBean.beingCreated}"
                                                      value="#{msgs['lbl.save']}">
                                         <p:ajax async="false"
-                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update=":editPoForm:addPODocBtnId buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
@@ -91,7 +91,7 @@
                                             rendered="#{poBean.beingCreated}"
                                             value="#{msgs['lbl.print']}">
                                         <p:ajax async="false"
-                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update=":editPoForm:addPODocBtnId buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
@@ -101,7 +101,7 @@
                                             rendered="#{poBean.beingUpdated}"
                                             value="#{msgs['lbl.print']}">
                                         <p:ajax async="false"
-                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update=" :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>

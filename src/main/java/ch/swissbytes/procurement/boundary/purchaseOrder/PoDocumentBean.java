@@ -155,6 +155,22 @@ public class PoDocumentBean implements Serializable {
         projectDocumentList.remove(projDoc);
     }
 
+    public void copyToPODocument(ProjectDocumentEntity projDoc){
+        boolean isNewDoc = true;
+        for(PODocumentEntity pd : droppedPODocumentList){
+            if(projDoc.getCode().equals(pd.getCode()) && pd.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+                pd.setStatus(StatusEnum.ENABLE);
+                isNewDoc = false;
+            }
+        }
+        if(isNewDoc) {
+            PODocumentEntity poDoc= createPODocumentEntity(projDoc);
+            droppedPODocumentList.add(poDoc);
+        }
+        reorderDroppedPODocumentList();
+        projectDocumentList.remove(projDoc);
+    }
+
     private PODocumentEntity createPODocumentEntity(ProjectDocumentEntity projDoc){
         PODocumentEntity entity = new PODocumentEntity();
         entity.setId(tempPODocumentId);

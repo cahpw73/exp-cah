@@ -26,9 +26,9 @@
                         <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;"
                                   rendered="#{!poBean.modeView}">
                             <h:commandLink value="PO Docs"
-                                           action="#{poTextBean.copyToClauses(_t)}">
+                                           action="#{poDocumentBean.copyToPODocument(_t)}">
                                 <p:ajax async="false" process="@this"
-                                        update=":editPoForm:projectDocDt :editPoForm:clausesAuxDt :editPoForm:poDocBbtnt"/>
+                                        update=":editPoForm:projectDocDt :editPoForm:poDocDt :editPoForm:poDocBbtnt"/>
                             </h:commandLink>
                         </p:column>
                     </p:dataTable>
@@ -86,11 +86,12 @@
             </div>
             <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
                 <h:panelGroup rendered="#{poBean.beingEdited}">
-                    <p:commandLink
+                    <p:commandLink id="addPODocBtnId"
+                            disabled="#{poBean.createPO}"
                             value="#{msgs['lbl.add']}"
                             oncomplete="PF('addPODocModal').show();"
                             action="#{poDocumentBean.resetPODocument}"
-                            styleClass="btn btn-primary btn-sm"
+                            styleClass="btn btn-primary btn-commandLink-primeFaces"
                             async="false" update=":addPODocModalId" process="@this">
                     </p:commandLink>
                     <br/>
