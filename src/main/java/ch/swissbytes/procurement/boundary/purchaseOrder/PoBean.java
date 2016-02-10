@@ -31,6 +31,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -525,7 +526,8 @@ public class PoBean extends Bean {
                 if (!cashflowBean.getCashflowDetailList().isEmpty()) {
                     Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(itemBean.getScopeSupplyList(), cashflowBean.getCashflowDetailList());
                     for (ProjectCurrencyEntity currency : balances.keySet()) {
-                        if (balances.get(currency).doubleValue() != 0d) {
+                        double roundOff = (double) Math.round(balances.get(currency).doubleValue() * 100) / 100;
+                        if (roundOff != 0d) {
                             return false;
                         }
                     }

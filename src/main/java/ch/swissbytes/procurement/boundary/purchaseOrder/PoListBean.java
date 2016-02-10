@@ -687,7 +687,8 @@ public class PoListBean implements Serializable {
                 if (!currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().isEmpty()) {
                     Map<ProjectCurrencyEntity, BigDecimal> balances = service.getBalanceByCurrency(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList(), currentPurchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList());
                     for (ProjectCurrencyEntity currency : balances.keySet()) {
-                        if (balances.get(currency).doubleValue() != 0d) {
+                        double roundOff = (double) Math.round(balances.get(currency).doubleValue() * 100) / 100;
+                        if (roundOff != 0d) {
                             return false;
                         }
                     }
