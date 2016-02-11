@@ -11,6 +11,7 @@
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewParam name="poId" value="#{purchaseOrderEdit.purchaseOrderId}"/>
+        <f:viewParam name="anchor" value="#{purchaseOrderEdit.anchor}"/>
         <f:viewParam name="fase" value="#{purchaseOrderEdit.fase}"/>
         <f:viewAction action="#{permissionBean.canAccess(102)}"/>
         <f:viewAction action="#{purchaseOrderEdit.load}"/>
@@ -510,12 +511,15 @@
                                              action="#{purchaseOrderEdit.doUpdate}"
                                              type='submit'/>
                             &#160;
-                            <h:commandButton id="cancelCreateBtn0"
-                                             value="#{msgs['lbl.cancel']}"
-                                             styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this"
-                                        oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
-                            </h:commandButton>
+                            <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.cancel']}"
+                                    styleClass="btn btn-primary btn-sm"
+                                    outcome="list" onclick="this.preventDefault;
+                                                            if(hasChanges){
+                                                            PF('confCancelDlg').show();
+                                                            return false;
+                                                            }else window.location='../purchase/list.jsf'">
+                                <f:param name="anchor" value="#{purchaseOrderEdit.anchor}"></f:param>
+                            </h:link>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -539,12 +543,16 @@
                                              action="#{purchaseOrderEdit.doUpdate}"
                                              type='submit'/>
                             &#160;
-                            <h:commandButton id="cancelCreateBtn"
-                                             value="#{msgs['lbl.cancel']}"
-                                             styleClass="btn btn-primary btn-sm">
-                                <p:ajax process="@this"
-                                        oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
-                            </h:commandButton>
+
+                            <h:link id="cancelCreateBtn" value="#{msgs['lbl.close']}"
+                                    styleClass="btn btn-primary btn-sm" onclick="this.preventDefault;
+                                                                     if(hasChanges){
+                                                                     PF('confCancelDlg').show();
+                                                                     return false;
+                                                                     }else window.location='../purchase/list.jsf'"
+                                    outcome="list">
+                                <f:param name="anchor" value="#{purchaseOrderEdit.anchor}"></f:param>
+                            </h:link>
                         </div>
                     </div>
                     <div class="clearfix"></div>

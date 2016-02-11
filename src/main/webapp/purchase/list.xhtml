@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/layout/template.xhtml">
     <ui:define name="title">Inicio</ui:define>
@@ -13,7 +14,7 @@
 
     <ui:define name="body">
         <h:outputScript name="js/submitSearch.js"/>
-        <h:form id="searchForm" prependId="false">
+        <o:form id="searchForm" includeViewParams="true" prependId="false">
             <div class="title-page">
                 <h4 class="page-header">#{msgs['purchase.order.filter.title.page']}</h4>
             </div>
@@ -89,12 +90,14 @@
             <div class="clearfix"/>
             <br/>
             <br/>
-        </h:form>
+        </o:form>
         <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
-        <h:form id="purchaseListForm" styleClass="fq-form-table">
+        <o:form id="purchaseListForm" includeViewParams="true" prependId="false" styleClass="fq-form-table">
+        <!--<h:form id="purchaseListForm" styleClass="fq-form-table">-->
             <p:remoteCommand name="start" autoRun="true" action="#{poListBean.startTable}"/>
             <p:remoteCommand name="end" autoRun="true" action="#{poListBean.endTable}"/>
+            <h:inputHidden id="scrollTopId" value="#{purchaseOrderListBean.scrollTop}"/>
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
                          styleClass="data-table-po-sc"
                          paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
@@ -132,12 +135,15 @@
                     #{_purchase.expeditingTitle}
                 </p:column>
                 <p:column headerText="#{msgs['lbl.action']}" width="211">
-                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table"
-                                style="margin-bottom: 5px;"
-                                rendered="#{permissionBean.hasPermission(102)}"
-                                value="#{msgs['lbl.edit']}" outcome="/purchase/edit">
-                            <f:param name="poId" value="#{_purchase.poId}"/>
-                        </h:link>
+                    <h:commandLink value="#{msgs['lbl.edit']}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                   rendered="#{permissionBean.hasPermission(102)}"
+                                   style="float: left!important; color: #428BCA; margin-bottom: 5px;"
+                                   action="#{purchaseOrderListBean.redirectToEdit}">
+                        <f:setPropertyActionListener target="#{purchaseOrderListBean.poId}"
+                                                     value="#{_purchase.poId}"/>
+                    </h:commandLink>
+
                         &#160;
                         <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.view']}"
                                 style="margin-bottom: 5px;"
@@ -199,7 +205,7 @@
                         #{msgs['lbl.cancel']}</button>
                 </div>
             </p:confirmDialog>
-        </h:form>
-
+        </o:form>
+        <h:outputScript name="js/scrollSneakExpediting.js"/>
     </ui:define>
 </ui:composition>

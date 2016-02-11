@@ -189,12 +189,15 @@
                                  action="#{purchaseOrderEdit.doUpdate}"
                                  type='submit'/>
                 &#160;
-                <h:commandButton id="cancelCreateBtn001"
-                                 value="#{msgs['lbl.cancel']}"
-                                 styleClass="btn btn-primary btn-sm">
-                    <p:ajax process="@this"
-                            oncomplete="if(hasChanges)PF('confCancelDlg').show();else window.location='../purchase/list.jsf'"/>
-                </h:commandButton>
+                <h:link id="cancelCreateBtn001" value="#{msgs['lbl.cancel']}"
+                        styleClass="btn btn-primary btn-sm" onclick="this.preventDefault;
+                                                                     if(hasChanges){
+                                                                     PF('confCancelDlg').show();
+                                                                     return false;
+                                                                     }else window.location='../purchase/list.jsf'"
+                        outcome="list">
+                    <f:param name="anchor" value="#{purchaseOrderEdit.anchor}"></f:param>
+                </h:link>
             </div>
         </div>
 

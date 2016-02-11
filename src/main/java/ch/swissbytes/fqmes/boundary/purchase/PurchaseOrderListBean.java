@@ -47,6 +47,10 @@ public class PurchaseOrderListBean implements Serializable {
 
     private String PREFIX="v";
 
+    private String scrollTop = "0";
+
+    private Long poId;
+
 
     @PostConstruct
     public void create(){
@@ -133,5 +137,25 @@ public class PurchaseOrderListBean implements Serializable {
 
     public String redirectCreatePurchaseOrder(){
         return "/purchase/create?faces-redirect=true";
+    }
+
+    public String redirectToEdit(){
+        return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
+    }
+
+    public String getScrollTop() {
+        return scrollTop;
+    }
+
+    public void setScrollTop(String scrollTop) {
+        this.scrollTop = scrollTop;
+    }
+
+    public Long getPoId() {
+        return poId;
+    }
+
+    public void setPoId(Long poId) {
+        this.poId = poId;
     }
 }

@@ -156,6 +156,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private boolean hasValueForecastSiteDate;
 
+    private String anchor;
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -981,7 +983,7 @@ public class PurchaseOrderEdit implements Serializable {
             log.info("Finish conversation...");
             conversation.end();
         }
-        return "/purchase/list?faces-redirect=true";
+        return "/purchase/list?faces-redirect=true&anchor="+anchor;
     }
 
     public String getFase() {
@@ -1108,5 +1110,13 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setHasValueForecastSiteDate(boolean hasValueForecastSiteDate) {
         this.hasValueForecastSiteDate = hasValueForecastSiteDate;
+    }
+
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public void setAnchor(String anchor) {
+        this.anchor = anchor;
     }
 }
