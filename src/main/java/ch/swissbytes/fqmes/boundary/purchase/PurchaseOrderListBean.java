@@ -143,6 +143,10 @@ public class PurchaseOrderListBean implements Serializable {
         return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
+    public String redirectToView(){
+        return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
+    }
+
     public String getScrollTop() {
         return scrollTop;
     }

@@ -72,6 +72,14 @@
     </div>
     <div class="row">
         <div class="section-lbl-input-po">
+            &#160;
+        </div>
+        <div class="section-text-area-po" style="height: 12px!important;">
+            #{msgs['po.lbl.next.key.date.comment']}
+        </div>
+    </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
             <div class="form-group input-general-po">
                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                value="#{msgs['po.lbl.next.key.date']}"/>
@@ -84,6 +92,20 @@
         <div class="section-text-area-po">
             <h:inputTextarea readonly="true" styleClass="form-control"
                              value="#{purchaseOrderView.purchaseOrder.nextKeyDateComment}"/>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px!important;">
+        <div style="width: 1005px;float: left;padding-left: 15px;">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.general.comment']}"/>
+
+                <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
+                    <h:inputTextarea readonly="true"
+                            value="#{purchaseOrderView.purchaseOrder.generalComment}"
+                            class="form-control" rows="3"/>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -55,6 +55,8 @@ public class PurchaseOrderView implements Serializable{
 
     private Long currentSelected=-1L;
 
+    private String anchor;
+
     private static final Logger log = Logger.getLogger(PurchaseOrderView.class.getName());
 
     @PostConstruct
@@ -139,5 +141,13 @@ public class PurchaseOrderView implements Serializable{
 
     public void setCurrentSelected(Long currentSelected) {
         this.currentSelected = currentSelected;
+    }
+
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public void setAnchor(String anchor) {
+        this.anchor = anchor;
     }
 }

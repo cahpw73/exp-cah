@@ -138,27 +138,28 @@
                     <h:commandLink value="#{msgs['lbl.edit']}"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table"
                                    rendered="#{permissionBean.hasPermission(102)}"
-                                   style="float: left!important; color: #428BCA; margin-bottom: 5px;"
+                                   style="color: #428BCA; margin-bottom: 5px;"
                                    action="#{purchaseOrderListBean.redirectToEdit}">
                         <f:setPropertyActionListener target="#{purchaseOrderListBean.poId}"
                                                      value="#{_purchase.poId}"/>
                     </h:commandLink>
-
-                        &#160;
-                        <h:link styleClass="btn btn-primary btn-sm color-btn-data-table" value="#{msgs['lbl.view']}"
-                                style="margin-bottom: 5px;"
-                                rendered="#{permissionBean.hasPermission(103)}" outcome="/purchase/view">
-                            <f:param name="poId" value="#{_purchase.poId}"/>
-                        </h:link>
-                        &#160;
-                        <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
-                                       style="margin-bottom: 5px;"
-                                       value="#{msgs['lbl.delete']}">
-                            <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
-                                    oncomplete="PF('deleteDlg').show();"
-                                    update=":purchaseListForm:deleteDlgId"/>
-                        </h:commandLink>
-
+                    &#160;
+                    <h:commandLink value="#{msgs['lbl.view']}"
+                                   styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                   rendered="#{permissionBean.hasPermission(103)}"
+                                   style="color: #428BCA; margin-bottom: 5px;"
+                                   action="#{purchaseOrderListBean.redirectToView}">
+                        <f:setPropertyActionListener target="#{purchaseOrderListBean.poId}"
+                                                     value="#{_purchase.poId}"/>
+                    </h:commandLink>
+                    &#160;
+                    <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
+                                   style="margin-bottom: 5px;"
+                                   value="#{msgs['lbl.delete']}">
+                        <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
+                                oncomplete="PF('deleteDlg').show();"
+                                update=":purchaseListForm:deleteDlgId"/>
+                    </h:commandLink>
                 </p:column>
             </p:dataTable>
 

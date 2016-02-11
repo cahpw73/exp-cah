@@ -33,10 +33,10 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 29px;"
+            <p:inputTextarea
                              maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
-                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control"/>
+                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control" rows="3"/>
         </div>
     </div>
     <div class="row">
@@ -68,10 +68,10 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 29px;"
+            <p:inputTextarea
                              maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.requiredSiteDateComment}"
-                             jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control"/>
+                             jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control" rows="3"/>
         </div>
     </div>
     <div class="row">
@@ -103,10 +103,10 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea style="max-height: 29px;"
+            <p:inputTextarea
                              maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.actualSiteDateComment}"
-                             jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control"/>
+                             jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control" rows="3"/>
         </div>
     </div>
     <div class="row">
@@ -138,10 +138,25 @@
             </div>
         </div>
         <div class="section-text-area-po">
-            <p:inputTextarea id="nextKeyDateCommentId" style="max-height: 29px;"
+            <p:inputTextarea id="nextKeyDateCommentId"
                              maxlength="950" type="text"
                              value="#{purchaseOrderEdit.poEdit.nextKeyDateComment}"
-                             jsf:placeholder="#{msgs['po.lbl.next.key.date.comment']}" class="form-control"/>
+                             jsf:placeholder="#{msgs['po.lbl.next.key.date.comment']}" class="form-control" rows="3"/>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px!important;">
+        <div style="width: 1005px;float: left;padding-left: 15px;">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.general.comment']}"/>
+
+                <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
+                    <p:inputTextarea
+                                     maxlength="950" type="text"
+                                     value="#{purchaseOrderEdit.poEdit.generalComment}"
+                                     jsf:placeholder="#{msgs['po.ph.general.comment']}" class="form-control" rows="3"/>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -405,10 +405,10 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputTextarea style="max-height: 29px;"
+                            <p:inputTextarea
                                              maxlength="950" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
                                              value="#{purchaseOrderEdit.poEdit.deliveryDateComment}"
-                                             class="form-control"/>
+                                             class="form-control" rows="3"/>
                         </div>
                     </div>
                     <div class="row">
@@ -437,10 +437,10 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputTextarea style="max-height: 29px;"
+                            <p:inputTextarea
                                              maxlength="950" value="#{purchaseOrderEdit.poEdit.fullIncoTerms}"
                                              jsf:placeholder="#{msgs['po.ph.inco.term.description']}"
-                                             class="form-control"/>
+                                             class="form-control" rows="3"/>
                         </div>
                     </div>
 
@@ -467,11 +467,12 @@
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <p:inputTextarea style="max-height: 29px;"
+                            <p:inputTextarea
                                              id="rfeComment"
                                              maxlength="950" type="text"
                                              value="#{purchaseOrderEdit.poEdit.rfeComment}"
-                                             jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"/>
+                                             jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"
+                                             rows="3"/>
                             <p:message for="rfeComment"/>
                         </div>
                     </div>

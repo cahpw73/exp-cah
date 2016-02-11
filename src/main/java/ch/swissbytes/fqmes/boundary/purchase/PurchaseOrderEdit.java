@@ -259,9 +259,9 @@ public class PurchaseOrderEdit implements Serializable {
         if (hashCode.intValue() == currentHashCode.intValue()) {
             updateStatusesAndLastUpdate();
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
-            url = "view?faces-redirect=true&poId=" + poEdit.getId();
+            url = "view?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
         } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId();
+            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -536,9 +536,9 @@ public class PurchaseOrderEdit implements Serializable {
                 sp.setDeliveryLeadTimeMs(bulkScopeSupply.getDeliveryLeadTimeMs() != null ? bulkScopeSupply.getDeliveryLeadTimeMs() : sp.getDeliveryLeadTimeMs());
                 sp.setForecastSiteDate(bulkScopeSupply.getForecastSiteDate() != null ? bulkScopeSupply.getForecastSiteDate() : sp.getForecastSiteDate());
                 sp.setIsForecastSiteDateManual(bulkScopeSupply.getIsForecastSiteDateManual() != null ? bulkScopeSupply.getIsForecastSiteDateManual() : false);
-                if(bulkScopeSupply.getDeliveryLeadTimeMs()!=null && bulkScopeSupply.getDeliveryLeadTimeQt()!=null){
+                if (bulkScopeSupply.getDeliveryLeadTimeMs() != null && bulkScopeSupply.getDeliveryLeadTimeQt() != null) {
                     calculateDateForecastDateForBulkUpdate(sp);
-                }else if(bulkScopeSupply.getForecastSiteDate()!=null){
+                } else if (bulkScopeSupply.getForecastSiteDate() != null) {
                     sp.setIsForecastSiteDateManual(true);
                     sp.setDeliveryLeadTimeMs(null);
                     sp.setDeliveryLeadTimeQt(null);
@@ -983,7 +983,7 @@ public class PurchaseOrderEdit implements Serializable {
             log.info("Finish conversation...");
             conversation.end();
         }
-        return "/purchase/list?faces-redirect=true&anchor="+anchor;
+        return "/purchase/list?faces-redirect=true&anchor=" + anchor;
     }
 
     public String getFase() {

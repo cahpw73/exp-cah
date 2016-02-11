@@ -50,6 +50,7 @@ public class PurchaseOrderEntity implements Serializable{
     private String expeditingTitle;
     private Date nextKeyDate;
     private String nextKeyDateComment;
+    private String generalComment;
 
 
     private String poReference;
@@ -259,6 +260,16 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setNextKeyDateComment(String nextKeyDateComment) {
         this.nextKeyDateComment = nextKeyDateComment;
+    }
+
+    @Size(max = 1000)
+    @Column(name="GENERAL_COMMENT",  length=1000)
+    public String getGeneralComment() {
+        return generalComment;
+    }
+
+    public void setGeneralComment(String generalComment) {
+        this.generalComment = generalComment;
     }
 
     @Column(name="LAST_UPDATE", nullable=false)
