@@ -240,9 +240,10 @@
         <h:form id="purchaseList" prependId="false" styleClass="fq-form-table">
             <p:dataTable id="resultList" value="#{reportListBean.list}" var="_purchase"
                          styleClass="data-table-po-sc"
-                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                         paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                          rowsPerPageTemplate="#{configuration.getPagesSize(reportListBean.list.total)}"
                          paginatorPosition="bottom">
+                <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                 <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
                     #{_purchase.project}
                 </p:column>

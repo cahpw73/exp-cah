@@ -100,9 +100,10 @@
             <h:inputHidden id="scrollTopId" value="#{purchaseOrderListBean.scrollTop}"/>
             <p:dataTable value="#{purchaseOrderListBean.listView}" var="_purchase"
                          styleClass="data-table-po-sc"
-                         paginator="true" rows="#{configuration.defaultPageSize}" lazy="true"
+                         paginator="true" lazy="true" rows="#{tableCommonFeature.defaultPageSize}"
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">
+                <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
                 <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
                     #{_purchase.project}
                 </p:column>
