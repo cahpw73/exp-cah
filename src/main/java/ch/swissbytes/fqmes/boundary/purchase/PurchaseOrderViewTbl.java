@@ -20,7 +20,6 @@ public class PurchaseOrderViewTbl extends LazyDataModel<VPurchaseOrder> {
     private static final Logger log = Logger.getLogger(PurchaseOrderViewTbl.class.getName());
     private PurchaseOrderViewDao dao;
     private Filter filter;
-
     private Long total;
 
     public PurchaseOrderViewTbl(PurchaseOrderViewDao dao, Filter filter) {

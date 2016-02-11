@@ -44,6 +44,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private Date nextKeyDate;
 
+    private Integer orderedVariation;
+
     @Id
     public Long getId() {
         return id;
@@ -171,6 +173,14 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setPurchaseOrderStatus(ExpeditingStatusEnum purchaseOrderStatus) {
         this.purchaseOrderStatus = purchaseOrderStatus;
+    }
+
+    public Integer getOrderedVariation() {
+        return orderedVariation;
+    }
+
+    public void setOrderedVariation(Integer orderedVariation) {
+        this.orderedVariation = orderedVariation;
     }
 
     @Override

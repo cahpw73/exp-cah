@@ -1863,3 +1863,35 @@ END;
 
 ALTER TABLE v_purchase_order
   OWNER TO postgres;
+
+#11/02/2016
+DROP VIEW v_purchase_order;
+
+CREATE OR REPLACE VIEW v_purchase_order AS
+ SELECT row_number() OVER () AS id,
+    po.id AS po_id,
+    po.project,
+    po.po,
+    po.variation,
+    po.po_title,
+    po.expediting_title,
+    s.company,
+    po.responsible_expediting,
+    po.po_inco_term,
+    po.po_delivery_date,
+    po.required_date,
+    po.purchase_order_status,
+    po.next_key_date,
+    po.orderedvariation
+   FROM purchase_order po
+   JOIN p_order por ON por.id = po.po_id
+   LEFT JOIN supplier_proc s ON por.supplier_id = s.id
+  WHERE po.status_id <> 3 AND (por.po_status = 0 OR por.po_status = 4)
+  ORDER BY
+CASE
+    WHEN isnumeric(po.po::text) THEN lpad(po.po::text, 50, '0'::text)::character varying
+    ELSE po.po
+END;
+
+ALTER TABLE v_purchase_order
+  OWNER TO postgres;

@@ -190,11 +190,13 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
 
     @Override
     public String orderBy() {
-        return "";
+        log.info("orderBy empty");
+        return "ORDER BY x.po,x.orderedVariation";
     }
 
     @Override
     public String orderBy(String field, boolean ascending) {
+        log.info("orderBy with sorting");
         String myCustomField=field;
         if (field.equalsIgnoreCase("purchaseOrderStatus")) {
             myCustomField= generateClauseOrderByForPurchaseOrderStatus();
