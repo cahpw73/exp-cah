@@ -51,6 +51,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private int nivel = 1;
     private boolean draft;
     private BigInteger[] currenciesIdsPo = new BigInteger[3];
+    private List<PODocumentEntity> poDocumentList;
     //private
 
 
@@ -62,7 +63,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                                Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
-                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft) {
+                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -72,6 +73,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         this.cashflowEntity = cashflowEntity;
         this.entityManager = entityManager;
         this.draft = draft;
+        this.poDocumentList = poDocumentList;
         addParameters("patternDecimal", configuration.getPatternDecimal());
         addParameters("FORMAT_DATE", configuration.getFormatDate());
         addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
@@ -174,6 +176,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
+        String doc  = poDocumentList.get(0).getDescription();
+        addParameters("docs",doc);
     }
 
     private String convertDeliveryDate() {
