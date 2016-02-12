@@ -47,6 +47,17 @@
                                  type='text'/>
                 </div>
             </div>
+
+                <div class="col-md-4">
+                    <div class='form-group card'>
+                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                     value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                                     type='text'/>
+                    </div>
+                </div>
+
+            <ui:remove>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.expediting.title']}</label>
@@ -55,6 +66,7 @@
                                  type='text'/>
                 </div>
             </div>
+            </ui:remove>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
@@ -69,16 +81,6 @@
                     <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
                                  value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
                                  size='4' type='text'/>
-                </div>
-            </div>
-            <div class="row" style="padding-left: 15px!important;">
-                <div class="col-md-4">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                     value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
-                                     type='text'/>
-                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -272,9 +274,11 @@
                         #{_purchase.responsibleExpediting}
                     </div>
                 </p:column>
+                <ui:remove>
                 <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
                     #{_purchase.expeditingTitle}
                 </p:column>
+                </ui:remove>
                 <p:column headerText="#{msgs['lbl.action']}" width="100" styleClass="column-list-po">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                                    action="#{reportBean.addPurchaseOrder(_purchase.poId)}"

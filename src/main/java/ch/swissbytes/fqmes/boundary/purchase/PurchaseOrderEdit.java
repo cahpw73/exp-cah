@@ -182,6 +182,9 @@ public class PurchaseOrderEdit implements Serializable {
         if (!fase.equals("1")) {
             originalQuantity = new BigDecimal("0");
             poEdit = service.load(Long.parseLong(purchaseOrderId));
+           /* if(StringUtils.isEmpty(poEdit.getExpeditingTitle())){
+                poEdit.setExpeditingTitle(poEdit.getPoTitle());
+            }*/
             service.removePrefixIfAny(poEdit);
             currentHashCode = service.getAbsoluteHashcode(poEdit.getId());
             log.info(String.format("hashcode starting [%s]", currentHashCode));

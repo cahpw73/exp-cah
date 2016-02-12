@@ -476,8 +476,10 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
+        purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+        dao.update(purchaseOrderEntity);
         return purchaseOrderEntity;
     }
 
