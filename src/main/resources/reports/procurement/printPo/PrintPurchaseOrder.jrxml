@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="576"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -130,6 +130,7 @@
 	<parameter name="clauseList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="titleReport" class="java.lang.String"/>
 	<parameter name="titleVariation" class="java.lang.String"/>
+	<parameter name="docs" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -931,6 +932,9 @@
 		<band splitType="Immediate">
 			<subreport>
 				<reportElement uuid="18c1248d-153f-425c-83ef-47f065fe514f" x="0" y="0" width="519" height="0" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="docs">
+					<subreportParameterExpression><![CDATA[$P{docs}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="exchangeRate">
 					<subreportParameterExpression><![CDATA[$P{exchangeRate}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -961,14 +965,14 @@
 				<subreportParameter name="currencyId1">
 					<subreportParameterExpression><![CDATA[$P{currencyId1}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="currencyId2">
-					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="poNo">
 					<subreportParameterExpression><![CDATA[$P{poNo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="currencyLbl1">
 					<subreportParameterExpression><![CDATA[$P{currencyLbl1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="currencyId2">
+					<subreportParameterExpression><![CDATA[$P{currencyId2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="currencyId3">
 					<subreportParameterExpression><![CDATA[$P{currencyId3}]]></subreportParameterExpression>

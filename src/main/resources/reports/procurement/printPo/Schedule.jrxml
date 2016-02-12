@@ -6,6 +6,7 @@
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial-Bold-Italic" pdfFontName="C:\fonts\arialbi.ttf"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE2" class="java.lang.String"/>
@@ -26,6 +27,7 @@
 	<parameter name="currenciesNumber" class="java.lang.Integer"/>
 	<parameter name="variation" class="java.lang.String"/>
 	<parameter name="titleReport" class="java.lang.String"/>
+	<parameter name="docs" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 1]]>
 	</queryString>

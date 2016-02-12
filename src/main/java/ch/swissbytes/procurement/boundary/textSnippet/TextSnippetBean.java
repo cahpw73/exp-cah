@@ -57,9 +57,14 @@ public class TextSnippetBean implements Serializable {
     }
 
     public void clear(){
-        textSnippet=new TextSnippetEntity();
+        textSnippet = new TextSnippetEntity();
     }
 
+    public void openTextSnippetDialogToAddNew(){
+        clear();
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('textSnippetModal').show();");
+    }
 
     private boolean validate(TextSnippetEntity textSnippet) {
         boolean valid = true;
