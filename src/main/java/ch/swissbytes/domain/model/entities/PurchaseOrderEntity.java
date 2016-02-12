@@ -262,8 +262,8 @@ public class PurchaseOrderEntity implements Serializable{
         this.nextKeyDateComment = nextKeyDateComment;
     }
 
-    @Size(max = 1000)
-    @Column(name="GENERAL_COMMENT",  length=1000)
+    @Size(max = 20000)
+    @Column(name="GENERAL_COMMENT",  length=20000)
     public String getGeneralComment() {
         return generalComment;
     }
