@@ -431,6 +431,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     }
 
     public int getNumberDeliveryNextMoth(Long projectId,Date nextMothIni,Date nextMothEnd) {
+        log.info("parameters: id["+projectId+"], ini["+nextMothIni+"],end["+nextMothEnd+"]");
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(sp.id) ");
         sb.append(" FROM ScopeSupplyEntity sp INNER JOIN sp.purchaseOrder po ");
@@ -444,7 +445,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
         sb.append(" AND sp.forecastSiteDate <= :NEXT_MOTH_END ");
         sb.append(" AND sp.forecastSiteDate >= :NEXT_MOTH_INI ");
-        sb.append(" GROUP BY sp.forecastSiteDate ");
+        sb.append(" GROUP BY po.id,sp.forecastSiteDate");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
@@ -458,6 +459,10 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         if(list.size()>0) {
+            /*Object object = list.get(0);
+            Long result = (Long)object;
+            log.info("Number found: " + result);
+            return result.intValue();*/
             return list.size();
         }else{
             return 0;

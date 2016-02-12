@@ -113,6 +113,7 @@ public class DashboardBean implements Serializable {
     }
 
     private void loadNumberDeliveryNext3Moth() {
+        log.info("number delivery next 3 moth");
         Date deliveryDateIni = DateUtil.getDateMinHour(DateUtil.getNextNDay(1));
         Date deliveryDateEnd = DateUtil.getDateMaxHour(DateUtil.getLastDayOfTheFollowingMoth(DateUtil.getNextNDay(1), 90));
         Long projectId = projectSelected != null ? projectSelected.getId() : -1;
@@ -120,6 +121,7 @@ public class DashboardBean implements Serializable {
     }
 
     private void loadNumberDeliveryNextMoth() {
+        log.info("number delivery next moth");
         Date deliveryDateIni = DateUtil.getDateMinHour(DateUtil.getNextNDay(1));
         Date deliveryDateEnd = DateUtil.getDateMaxHour(DateUtil.getLastDayOfTheFollowingMoth(DateUtil.getNextNDay(1),30));
         Long projectId = projectSelected != null ? projectSelected.getId() : -1;
