@@ -46,7 +46,7 @@ public class XmlWorker {
     }
 
     public ByteArrayOutputStream convertHtml(String content,String titleHeader) throws FileNotFoundException, IOException, DocumentException {
-        Document document = new Document(PageSize.A4,75.590551181f, 26.456692913f, 89f, 26.456692913f);
+        Document document = new Document(PageSize.A4,55F, 27f, 89f, 27f);
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         HeaderFooterPageEvent event = new HeaderFooterPageEvent(titleHeader);
