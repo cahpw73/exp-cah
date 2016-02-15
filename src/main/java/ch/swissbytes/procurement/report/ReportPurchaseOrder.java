@@ -698,10 +698,18 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
 
+    private String getHtmlContent(){
+        StringBuilder sb = new StringBuilder();
+        for(PODocumentEntity pd : poDocumentList){
+            sb.append(pd.getDescription());
+        }
+        return sb.toString();
+    }
+
     @Override
     public void printDocument(Long documentId) {
         try {
-            runReport(null);
+            runReport(null,getHtmlContent());
         } catch (Exception ex) {
             if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
                 log.info("ex message contains SAXParseException;");
