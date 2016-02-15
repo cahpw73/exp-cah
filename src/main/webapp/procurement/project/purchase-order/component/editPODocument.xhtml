@@ -12,6 +12,7 @@
                         </textarea>
             <br/>
             <p:commandLink value="#{msgs['lbl.save']}" action="#{poDocumentBean.updatePODocumentDt}"
+                           rendered="#{poBean.beingEdited}"
                            styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
                            onclick="document.getElementsByClassName('editPODocCKEditor')[0].value = CKEDITOR.instances.editPODoceditor.getData();">
                 <p:ajax process="poDocFormDlg" update=":editPoForm:poDocDt" async="false"/>

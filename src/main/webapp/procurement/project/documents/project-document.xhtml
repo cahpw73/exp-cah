@@ -49,14 +49,14 @@
                 <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
                                  action="#{documentBean.addToProjectText}"
                                  styleClass="btn btn-primary btn-sm"
-                                 style="margin-bottom: 20px!important;">
+                                 style="margin-bottom: 20px!important;" onclick="doChangeProc();">
                     <p:ajax update="mainDocumentDt,projectDocDt"
                             process="@this,mainDocumentDt" async="false"/>
                 </h:commandButton>
                 <br/>
                 <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
                                  action="#{documentBean.removeFromProjectText}"
-                                 styleClass="btn btn-primary btn-sm">
+                                 styleClass="btn btn-primary btn-sm" onclick="doChangeProc();">
                     <p:ajax update="mainDocumentDt projectDocDt"
                             process="@this,projectDocDt" async="false"/>
                 </h:commandButton>
@@ -73,7 +73,7 @@
                         <p:column headerText="#{msgs['project.docs.column.description']}"
                                   style="width: 80%!important;">
                             <h:panelGroup id="viPjDocDescription" rendered="#{!_pt.isEditable}">
-                                #{_pt.description}
+                                <h:outputText value="#{_pt.description}" styleClass="content-big-text"/>
                             </h:panelGroup>
                             <h:panelGroup id="edPjDocDescription" rendered="#{_pt.isEditable}">
                                 <p:inputTextarea id="PjDocdescription" value="#{_pt.description}" styleClass="form-control"
@@ -104,8 +104,8 @@
                         value="#{msgs['project.docs.lbl.btn.add.custom.text']}"
                         oncomplete="PF('addProjectDocModal').show();"
                         action="#{documentBean.resetProjectDocument}"
-                        styleClass="btn btn-primary btn-sm"
-                        async="false" update=":addProjectDocModalId" process="@this">
+                        styleClass="btn btn-primary btn-commandLink-primeFaces"
+                        async="false" update=":addProjectDocModalId" process="@this" onclick="doChangeProc()">
                 </p:commandLink>
             </div>
         </div>

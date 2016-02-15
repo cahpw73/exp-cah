@@ -36,9 +36,6 @@ public abstract class ReportView implements Serializable {
 
     private final String DATA_SOURCE = "java:/fqm/procurementDS";
 
-    public static final String SRC = "D:\\doc-html\\file1-1.pdf";
-    public static final String DEST = "D:\\doc-html\\cover_with_pages.pdf";
-
     /**
      * @param filenameJasper   - fileName the reports to use
      * @param reportNameMsgKey - Message key for name the file to save
@@ -118,18 +115,15 @@ public abstract class ReportView implements Serializable {
         fcontext.responseComplete();
     }
 
-    protected void runReport(final List<?> beanCollection,String htmlContent) {
-
+    protected void runReport(final List<?> beanCollection,byte[] outputStreamDoc) {
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         XmlWorker xmlWorker = new XmlWorker();
-
         try {
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
             exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
-            xmlWorker.manipulatePdf(outputStream.toByteArray(), xmlWorker.convertHtml(htmlContent).toByteArray()).writeTo(response.getOutputStream());
-            //outputStream.writeTo(response.getOutputStream());
+            xmlWorker.manipulatePdf(outputStream.toByteArray(), outputStreamDoc).writeTo(response.getOutputStream());
             response.setContentLength(outputStream.size());
         } catch (JRException ex) {
             ex.printStackTrace();
@@ -142,7 +136,6 @@ public abstract class ReportView implements Serializable {
         } finally {
             IOUtils.closeQuietly(outputStream);
         }
-
         fcontext.responseComplete();
     }
 

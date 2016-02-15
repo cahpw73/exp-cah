@@ -92,7 +92,8 @@
                             oncomplete="PF('addPODocModal').show();"
                             action="#{poDocumentBean.resetPODocument}"
                             styleClass="btn btn-primary btn-commandLink-primeFaces"
-                            async="false" update=":addPODocModalId" process="@this">
+                            async="false" update=":addPODocModalId" process="@this"
+                            onclick="doChangeProc();">
                     </p:commandLink>
                     <br/>
                     <p:commandLink value="#{msgs['lbl.remove']}"
