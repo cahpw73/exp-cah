@@ -1,5 +1,7 @@
 package ch.swissbytes.fqmes.report.util;
 
+import ch.swissbytes.procurement.util.XmlWorker;
+import com.itextpdf.text.DocumentException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.io.IOUtils;
@@ -54,6 +56,9 @@ public abstract class ReportView implements Serializable {
         printDocument(documentId);
     }
 
+    protected Connection getConnection()throws SQLClientInfoException,JRException, Exception{
+        return getDataSource().getConnection();
+    }
 
     protected void runReport(final List<?> beanCollection) {
 
@@ -79,10 +84,6 @@ public abstract class ReportView implements Serializable {
         }
 
         fcontext.responseComplete();
-    }
-
-    protected Connection getConnection()throws SQLClientInfoException,JRException, Exception{
-        return getDataSource().getConnection();
     }
 
     protected void runReport() throws Exception {
@@ -111,6 +112,30 @@ public abstract class ReportView implements Serializable {
             }
         }
 
+        fcontext.responseComplete();
+    }
+
+    protected void runReport(final List<?> beanCollection,byte[] outputStreamDoc) {
+        FacesContext fcontext = FacesContext.getCurrentInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        XmlWorker xmlWorker = new XmlWorker();
+        try {
+            HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
+            final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
+            exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
+            xmlWorker.manipulatePdf(outputStream.toByteArray(), outputStreamDoc).writeTo(response.getOutputStream());
+            response.setContentLength(outputStream.size());
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }  catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(outputStream);
+        }
         fcontext.responseComplete();
     }
 

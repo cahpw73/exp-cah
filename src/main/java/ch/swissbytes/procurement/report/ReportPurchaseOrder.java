@@ -12,6 +12,8 @@ import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
 import ch.swissbytes.procurement.util.ImageUtil;
 import ch.swissbytes.procurement.util.ResourceUtils;
+import ch.swissbytes.procurement.util.XmlWorker;
+import com.itextpdf.text.DocumentException;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
@@ -20,10 +22,7 @@ import org.xml.sax.SAXParseException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -126,13 +125,13 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         } else if (po.getOrderedVariation().intValue() > 1) {
             addParameters("poSummaryList", createDataSource(getPOSummary()));
         }
-        if(po.getPurchaseOrderProcurementEntity().getClazz()!=null) {
+        if (po.getPurchaseOrderProcurementEntity().getClazz() != null) {
             if (po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal() || po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.MINING_FLEET.ordinal()) {
                 addParameters("titleReport", "Purchase Order");
             } else {
                 addParameters("titleReport", "Contract");
             }
-        }else{
+        } else {
             addParameters("titleReport", "Purchase Order");
         }
 
@@ -176,8 +175,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
-        String doc  = poDocumentList.get(0).getDescription();
-        addParameters("docs",doc);
+        String doc = poDocumentList.get(0).getDescription();
+        addParameters("docs", doc);
     }
 
     private String convertDeliveryDate() {
@@ -195,10 +194,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private void loadParamLogos() {
         ImageUtil imageUtil = new ImageUtil();
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null) {
-            if(imageUtil.hasDimensionHeaderLogoCorrect(po.getProjectEntity().getClient().getHeaderLogo().getFile())){
+            if (imageUtil.hasDimensionHeaderLogoCorrect(po.getProjectEntity().getClient().getHeaderLogo().getFile())) {
                 InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
                 addParameters("headerLogo", logo);
-            }else{
+            } else {
                 BufferedImage newHeaderLogo = imageUtil.getNewImageResized(po.getProjectEntity().getClient().getHeaderLogo().getFile());
                 InputStream logo = imageUtil.convertBufferedImageToInputStream(newHeaderLogo);
                 addParameters("headerLogo", logo);
@@ -562,7 +561,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dtos.add(dto);
     }
 
-    private void  loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
+    private void loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("Original Order Value");
 
@@ -698,10 +697,27 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
 
+    private String getHtmlContent() {
+        StringBuilder sb = new StringBuilder();
+        for (PODocumentEntity pd : poDocumentList) {
+            pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
+            pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
+            sb.append(pd.getDescription());
+        }
+        return sb.toString();
+    }
+
+    private ByteArrayOutputStream getReportFromHtml() throws IOException, DocumentException {
+        log.info("converting html to pdf");
+        String titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+        XmlWorker xmlWorker = new XmlWorker();
+        return xmlWorker.convertHtml(getHtmlContent(), titleHeader);
+    }
+
     @Override
     public void printDocument(Long documentId) {
         try {
-            runReport(null);
+            runReport(null, getReportFromHtml().toByteArray());
         } catch (Exception ex) {
             if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
                 log.info("ex message contains SAXParseException;");
