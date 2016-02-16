@@ -115,7 +115,7 @@ public abstract class ReportView implements Serializable {
         fcontext.responseComplete();
     }
 
-    protected void runReport(final List<?> beanCollection,byte[] outputStreamDoc) {
+    protected void runReport(final List<?> beanCollection,final List<ByteArrayOutputStream> otherDocList) {
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         XmlWorker xmlWorker = new XmlWorker();
@@ -123,7 +123,7 @@ public abstract class ReportView implements Serializable {
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
             exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
-            xmlWorker.manipulatePdf(outputStream.toByteArray(), outputStreamDoc).writeTo(response.getOutputStream());
+            xmlWorker.manipulatePdf(outputStream.toByteArray(), otherDocList).writeTo(response.getOutputStream());
             response.setContentLength(outputStream.size());
         } catch (JRException ex) {
             ex.printStackTrace();

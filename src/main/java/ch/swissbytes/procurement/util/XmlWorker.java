@@ -1,6 +1,8 @@
 package ch.swissbytes.procurement.util;
 
 import java.io.*;
+import java.util.*;
+import java.util.List;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -42,6 +44,29 @@ public class XmlWorker {
 
         cover.close();
         reader.close();
+        return outputStream;
+    }
+
+    public ByteArrayOutputStream manipulatePdf(byte[] poReportBt, java.util.List<ByteArrayOutputStream> otherDocList)
+            throws IOException, DocumentException {
+        PdfReader poReport = new PdfReader(poReportBt);
+        List<PdfReader> pdfDocs = new ArrayList<>();
+        for(ByteArrayOutputStream baos : otherDocList){
+            PdfReader pdfDoc = new PdfReader(baos.toByteArray());
+            pdfDocs.add(pdfDoc);
+        }
+        Document document = new Document();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfCopy copy = new PdfCopy(document, outputStream);
+
+        document.open();
+        copy.addDocument(poReport);
+        for(PdfReader pdf : pdfDocs){
+            copy.addDocument(pdf);
+        }
+
+        document.close();
+        poReport.close();
         return outputStream;
     }
 
