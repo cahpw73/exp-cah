@@ -51,6 +51,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private boolean draft;
     private BigInteger[] currenciesIdsPo = new BigInteger[3];
     private List<PODocumentEntity> poDocumentList;
+    private List<ByteArrayOutputStream> otherDocumentList = new ArrayList<>();
     //private
 
 
@@ -62,7 +63,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                                Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
-                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) {
+                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -91,6 +92,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
         addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
         addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
+        loadOtherDocumentList();
     }
 
     private void loadParamPurchaseOrder() {
@@ -697,27 +699,25 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
 
-    private String getHtmlContent() {
-        StringBuilder sb = new StringBuilder();
+    private void loadOtherDocumentList() throws IOException, DocumentException {
         for (PODocumentEntity pd : poDocumentList) {
             pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
             pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
-            sb.append(pd.getDescription());
+            otherDocumentList.add(getReportFromHtml(pd.getDescription()));
         }
-        return sb.toString();
     }
 
-    private ByteArrayOutputStream getReportFromHtml() throws IOException, DocumentException {
+    private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {
         log.info("converting html to pdf");
         String titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
         XmlWorker xmlWorker = new XmlWorker();
-        return xmlWorker.convertHtml(getHtmlContent(), titleHeader);
+        return xmlWorker.convertHtml(contentPdf, titleHeader);
     }
 
     @Override
     public void printDocument(Long documentId) {
         try {
-            runReport(null, getReportFromHtml().toByteArray());
+            runReport(null, otherDocumentList);
         } catch (Exception ex) {
             if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
                 log.info("ex message contains SAXParseException;");

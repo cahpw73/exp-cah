@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
+import com.itextpdf.text.DocumentException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -91,8 +93,15 @@ public class ReportProcBean implements Serializable {
                 cashflowEntity.getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(cashflowEntity.getId()));
             }
             String fileName = service.generateName(po);
-            ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
-                                                messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager,draft,poDocumentList);
+            ReportView reportView = null;
+            try {
+                reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
+                                                    messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager,draft,poDocumentList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
             reportView.printDocument(null);
         }
         openReport = true;
