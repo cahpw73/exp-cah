@@ -114,6 +114,14 @@ public class ReportProcBean implements Serializable {
         reportView.printDocument(null);
         openReport = true;
     }
+    public void printPosRegister(final ProjectEntity project, final Map<String, Boolean> sortMap,final Map<String, Boolean> filterMap) {
+        log.info("printPosRegister");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPosRegister("/procurement/posRegisterReport/posRegisterReport", "Procurement.pos.register", messages, locale, configuration, project, sortMap,entityManager,filterMap);
+        reportView.printDocument(null);
+        openReport = true;
+    }
 
     public void printDetailedProcurementReport(final ProjectEntity project,final Map<String, Boolean> sortMap) {
         log.info("printDetailedProcurementReport");
@@ -158,6 +166,7 @@ public class ReportProcBean implements Serializable {
         reportView.printDocument(null);
         openReport = true;
     }
+
 
     public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
         log.info("printSummaryPurchaseOrder");
