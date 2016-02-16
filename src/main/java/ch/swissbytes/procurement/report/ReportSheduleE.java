@@ -17,7 +17,6 @@ import com.itextpdf.text.DocumentException;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
-import org.xml.sax.SAXParseException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -34,10 +33,9 @@ import java.util.logging.Logger;
 /**
  * Created by christian on 11/06/14.
  */
-public class ReportPurchaseOrder extends ReportView implements Serializable {
+public class ReportSheduleE extends ReportView implements Serializable {
 
-    private final Logger log = Logger.getLogger(ReportPurchaseOrder.class.getName());
-    // private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
+    private final Logger log = Logger.getLogger(ReportSheduleE.class.getName());
     private Configuration configuration;
     private ResourceUtils resourceUtils;
     private PurchaseOrderEntity po;
@@ -61,9 +59,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
-                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
+    public ReportSheduleE(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
+                          Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
+                          String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
         super(filenameJasper, reportNameMsgKey, messages, locale);
         this.configuration = configuration;
         this.po = po;
@@ -184,7 +182,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private String convertDeliveryDate() {
         String converted = "";
         if (po.getPoDeliveryDate() != null) {
-            DateTimeZone dtz = org.joda.time.DateTimeZone.forID(configuration.getTimeZone());
+            DateTimeZone dtz = DateTimeZone.forID(configuration.getTimeZone());
             long utc = dtz.convertUTCToLocal(po.getPoDeliveryDate().getTime());
             Date date = new Date();
             date.setTime(utc);
@@ -712,16 +710,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         String titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
         XmlWorker xmlWorker = new XmlWorker();
         return xmlWorker.convertHtml(contentPdf, titleHeader);
-    }
-
-    public ByteArrayOutputStream getReportSchedule(final ProjectEntity project, final Map<String, Boolean> sortMap) throws IOException, DocumentException {
-        log.info("printProjectPurchaseOrder");
-        Locale locale = new Locale(Locale.ENGLISH.getLanguage());
-        Map<String, String> messages = new HashMap<>();
-        ReportView reportView = new ReportSheduleE("/procurement/printPo/PrintPurchaseOrder", "Procurement.project.purchase.order",
-                messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager,draft,poDocumentList);
-        reportView.printDocument(null);
-        return null;
     }
 
     @Override

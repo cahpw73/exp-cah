@@ -1,2 +1,8 @@
 #02/02/2016
 ALTER TABLE PROJECT_TEXT_SNIPPET ALTER COLUMN TEXT_SNIPPET_ID DROP  NOT NULL;
+
+#16/02/2016
+insert into options (id,name,module_id,url)values(1214,'REPORT_PO_REGISTER',1,'procurement/report/pos-register.jsf');
+insert into role_option (id,option_id,role_id)values(708,1214,16);
+insert into role_option (id,option_id,role_id)values(709,1214,15);
+insert into role_option (id,option_id,role_id)values(710,1214,14);
