@@ -54,7 +54,7 @@
                                       rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
                                 <h:outputText value="#{_dt.description}" styleClass="box-document-list" escape="false"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
+                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt) and !poDocumentBean.verifyScheduleValue(_dt)}"
                                       style="padding-left: 8px!important;">
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
                                                update=":poDocModalId" oncomplete="PF('poDocModal').show()"

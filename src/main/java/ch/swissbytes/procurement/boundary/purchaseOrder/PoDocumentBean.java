@@ -84,38 +84,53 @@ public class PoDocumentBean implements Serializable {
         log.info("destroy poTextBean");
     }
 
-    public void copyToClauses(ProjectTextSnippetEntity text) {
-        /*ClausesEntity clauses = createClausesEntity(text);
-        droppedTextSnippetList.add(clauses);
-        reorderDroppedTextSnippetList();
-        textSnippetList.remove(text);*/
-    }
-
-    public void loadProjectDocuments(final Long poId, final Long projectId){
+    public void loadProjectDocuments(final Long poId, final Long projectId) {
         log.info("load project documents to main list");
         this.poId = poId;
         this.projectId = projectId;
         projectDocumentList = projectDocumentService.findByProjectId(projectId);
         poDocumentList = poDocumentService.findByPOId(poId);
         droppedPODocumentList = poDocumentList;
+        verifyExistScheduleToPOEdit();
         filteredProjectDocumentList();
-        /*List<ProjectDocumentEntity> auxProjectDocList = new ArrayList<>();
-        for(PODocumentEntity pd : droppedPODocumentList){
-            if(pd.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
-                if(pd.getProjectDocumentEntity()!=null) {
-                    ProjectDocumentEntity pe = projectDocumentService.findById(pd.getProjectDocumentEntity().getId());
-                    auxProjectDocList.add(pe);
-                }
-            }
-        }
-        projectDocumentList.removeAll(auxProjectDocList);*/
     }
 
-    private void filteredProjectDocumentList(){
+    private void verifyExistScheduleToPOEdit(){
+        boolean existSchedule = false;
+        for (PODocumentEntity pd : droppedPODocumentList){
+            if(pd.getScheduleE()!=null && pd.getScheduleE()==true){
+                existSchedule = true;
+                break;
+            }
+        }
+        if(!existSchedule){
+            droppedPODocumentList.add(createEntity());
+        }
+        reorderDroppedPODocumentList();
+    }
+
+    public void loadTextNewPO(final Long projectId) {
+        projectDocumentList = projectDocumentService.findByProjectId(projectId);
+        droppedPODocumentList.add(createEntity());
+    }
+
+    private PODocumentEntity createEntity() {
+        PODocumentEntity entity = new PODocumentEntity();
+        entity.setId(tempPODocumentId);
+        entity.setDescription("<h3>Schedule E</h3>");
+        entity.setCode("scheduleE");
+        entity.setStatus(StatusEnum.ENABLE);
+        entity.setLastUpdate(new Date());
+        entity.setScheduleE(true);
+        tempPODocumentId--;
+        return entity;
+    }
+
+    private void filteredProjectDocumentList() {
         List<ProjectDocumentEntity> auxProjectDocList = new ArrayList<>();
-        for(PODocumentEntity pd : droppedPODocumentList){
-            if(pd.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
-                if(pd.getProjectDocumentEntity()!=null) {
+        for (PODocumentEntity pd : droppedPODocumentList) {
+            if (pd.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                if (pd.getProjectDocumentEntity() != null) {
                     ProjectDocumentEntity pe = projectDocumentService.findById(pd.getProjectDocumentEntity().getId());
                     auxProjectDocList.add(pe);
                 }
@@ -124,54 +139,51 @@ public class PoDocumentBean implements Serializable {
         projectDocumentList.removeAll(auxProjectDocList);
     }
 
-    public List<PODocumentEntity> filteredList(){
+    public List<PODocumentEntity> filteredList() {
         List<PODocumentEntity> auxList = new ArrayList<>();
-        for(PODocumentEntity p : droppedPODocumentList){
-          if(p.getStatus() != null && p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
-              auxList.add(p);
-          }
+        for (PODocumentEntity p : droppedPODocumentList) {
+            if (p.getStatus() != null && p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                auxList.add(p);
+            }
         }
-        return  auxList;
+        return auxList;
     }
 
-    public void loadTextNewPO(final Long projectId) {
-        projectDocumentList = projectDocumentService.findByProjectId(projectId);
-    }
 
-    public void onStandardTextDrop(DragDropEvent ddEvent){
+    public void onStandardTextDrop(DragDropEvent ddEvent) {
         ProjectDocumentEntity projDoc = ((ProjectDocumentEntity) ddEvent.getData());
         boolean isNewDoc = true;
-        for(PODocumentEntity pd : droppedPODocumentList){
-            if(projDoc.getCode().equals(pd.getCode()) && pd.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+        for (PODocumentEntity pd : droppedPODocumentList) {
+            if (projDoc.getCode().equals(pd.getCode()) && pd.getStatus().ordinal() == StatusEnum.DELETED.ordinal()) {
                 pd.setStatus(StatusEnum.ENABLE);
                 isNewDoc = false;
             }
         }
-        if(isNewDoc) {
-            PODocumentEntity poDoc= createPODocumentEntity(projDoc);
+        if (isNewDoc) {
+            PODocumentEntity poDoc = createPODocumentEntity(projDoc);
             droppedPODocumentList.add(poDoc);
         }
         reorderDroppedPODocumentList();
         projectDocumentList.remove(projDoc);
     }
 
-    public void copyToPODocument(ProjectDocumentEntity projDoc){
+    public void copyToPODocument(ProjectDocumentEntity projDoc) {
         boolean isNewDoc = true;
-        for(PODocumentEntity pd : droppedPODocumentList){
-            if(projDoc.getCode().equals(pd.getCode()) && pd.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+        for (PODocumentEntity pd : droppedPODocumentList) {
+            if (projDoc.getCode().equals(pd.getCode()) && pd.getStatus().ordinal() == StatusEnum.DELETED.ordinal()) {
                 pd.setStatus(StatusEnum.ENABLE);
                 isNewDoc = false;
             }
         }
-        if(isNewDoc) {
-            PODocumentEntity poDoc= createPODocumentEntity(projDoc);
+        if (isNewDoc) {
+            PODocumentEntity poDoc = createPODocumentEntity(projDoc);
             droppedPODocumentList.add(poDoc);
         }
         reorderDroppedPODocumentList();
         projectDocumentList.remove(projDoc);
     }
 
-    private PODocumentEntity createPODocumentEntity(ProjectDocumentEntity projDoc){
+    private PODocumentEntity createPODocumentEntity(ProjectDocumentEntity projDoc) {
         PODocumentEntity entity = new PODocumentEntity();
         entity.setId(tempPODocumentId);
         entity.setDescription(projDoc.getDescription());
@@ -188,41 +200,42 @@ public class PoDocumentBean implements Serializable {
         reorderDroppedPODocumentList();
     }
 
-    public void removePODocuments(){
+    public void removePODocuments() {
         List<PODocumentEntity> auxPODocList = new ArrayList<>();
-        for(PODocumentEntity p : selectedPODocumentList){
-            if(p.getProjectDocumentEntity()!=null){
-                projectDocumentList.add(projectDocumentService.findById(p.getProjectDocumentEntity().getId()));
-                if(p.getId() > 0){
-                    for(PODocumentEntity pe : droppedPODocumentList){
-                        if(p.getId().intValue() == pe.getId().intValue()){
-                            pe.setStatus(StatusEnum.DELETED);
+        for (PODocumentEntity p : selectedPODocumentList) {
+            if (p.getScheduleE() == null) {
+                if (p.getProjectDocumentEntity() != null) {
+                    projectDocumentList.add(projectDocumentService.findById(p.getProjectDocumentEntity().getId()));
+                    if (p.getId() > 0) {
+                        for (PODocumentEntity pe : droppedPODocumentList) {
+                            if (p.getId().intValue() == pe.getId().intValue()) {
+                                pe.setStatus(StatusEnum.DELETED);
+                            }
                         }
+                    } else {
+                        auxPODocList.add(p);
                     }
-                }else{
-                   auxPODocList.add(p);
-                }
-            }else{
-                ProjectDocumentEntity pjDocument = createProjectDoc(p);
-                if(p.getId() > 0){
-                    for(PODocumentEntity pe : droppedPODocumentList){
-                        if(p.getId().intValue() == pe.getId().intValue()){
-                            pe.setStatus(StatusEnum.DELETED);
+                } else {
+                    ProjectDocumentEntity pjDocument = createProjectDoc(p);
+                    if (p.getId() > 0) {
+                        for (PODocumentEntity pe : droppedPODocumentList) {
+                            if (p.getId().intValue() == pe.getId().intValue()) {
+                                pe.setStatus(StatusEnum.DELETED);
+                            }
                         }
+                    } else {
+                        auxPODocList.add(p);
                     }
-                }else{
-                    auxPODocList.add(p);
+                    projectDocumentList.add(pjDocument);
                 }
-                projectDocumentList.add(pjDocument);
             }
         }
         droppedPODocumentList.removeAll(auxPODocList);
         selectedPODocumentList.clear();
         reorderDroppedPODocumentList();
-        //filteredProjectDocumentList();
     }
 
-    private ProjectDocumentEntity createProjectDoc(PODocumentEntity p){
+    private ProjectDocumentEntity createProjectDoc(PODocumentEntity p) {
         ProjectDocumentEntity projectDocumentEntity = new ProjectDocumentEntity();
         projectDocumentEntity.setId(tempProjectDocumentId);
         projectDocumentEntity.setCode(p.getCode());
@@ -235,41 +248,35 @@ public class PoDocumentBean implements Serializable {
         return projectDocumentEntity;
     }
 
-    private void reorderDroppedPODocumentList(){
+    private void reorderDroppedPODocumentList() {
         int index = 1;
-        for(PODocumentEntity p : droppedPODocumentList){
-            if(p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
-                p.setNumberPODoc(index+".0");
+        for (PODocumentEntity p : droppedPODocumentList) {
+            if (p.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                p.setNumberPODoc(index + ".0");
                 index++;
             }
         }
     }
 
-    public void editItem(ClausesEntity entity) {
-        log.info("edit item");
-        entity.startEditing();
-        entity.storeOldValue(entity);
-    }
-
     public void confirmItem(ClausesEntity entity) {
-        log.info("confirm text");
+        /*log.info("confirm text");
         int index = droppedTextSnippetList.indexOf(entity);
         droppedTextSnippetList.set(index, entity);
-        entity.stopEditing();
+        entity.stopEditing();*/
     }
 
     public void cancelEditionItem(ClausesEntity entity) {
-        log.info("cancel item");
+        /*log.info("cancel item");
         if (!itemNoIsNotEmpty(entity)) {
             droppedTextSnippetList.remove(entity);
         } else {
             entity.stopEditing();
             entity = entity.getValueCloned();
-        }
+        }*/
     }
 
     public boolean hasStatusEnable(PODocumentEntity entity) {
-        if(entity != null && entity.getStatus() != null){
+        if (entity != null && entity.getStatus() != null) {
             return StatusEnum.ENABLE.ordinal() == entity.getStatus().ordinal();
         }
         return true;
@@ -279,7 +286,7 @@ public class PoDocumentBean implements Serializable {
         return StringUtils.isNotEmpty(entity.getClauses()) && StringUtils.isNotBlank(entity.getClauses());
     }
 
-    public void loadSeletedPODocument(PODocumentEntity entity){
+    public void loadSeletedPODocument(PODocumentEntity entity) {
         selectedPODocument = entity;
     }
 
@@ -306,22 +313,18 @@ public class PoDocumentBean implements Serializable {
         droppedPODocumentList.add(poDocumentEntity);
         reorderDroppedPODocumentList();
         int order = 0;
-        for(PODocumentEntity ps: droppedPODocumentList){
+        for (PODocumentEntity ps : droppedPODocumentList) {
             ps.setOrdered(order);
             order++;
         }
         poDocumentService.doSaveNewPODocumentDlg(poDocumentEntity);
 
-       /* ProjectDocumentEntity projectDocumentEntity = createProjectDoc(poDocumentEntity);
-        projectDocumentEntity.setId(null);
-        projectDocumentService.doSave(projectDocumentEntity);
-        projectDocumentList.add(projectDocumentEntity);*/
-
-        //loadProjectDocuments(this.poId,this.projectId);
-        //filteredProjectDocumentList();
-
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('addPODocModal').hide();");
+    }
+
+    public boolean verifyScheduleValue(PODocumentEntity entity) {
+        return (entity != null && entity.getScheduleE() != null) ? true : false;
     }
 
     public List<ProjectDocumentEntity> getProjectDocumentList() {
@@ -348,33 +351,7 @@ public class PoDocumentBean implements Serializable {
         this.poId = poId;
     }
 
-
-
     //************************************************************************
-
-    public List<ProjectTextSnippetEntity> getTextSnippetList() {
-        return textSnippetList;
-    }
-
-    public List<ClausesEntity> getDroppedTextSnippetList() {
-        return droppedTextSnippetList;
-    }
-
-    public List<ClausesEntity> getSelectedClausesTextList() {
-        return selectedClausesTextList;
-    }
-
-    public void setSelectedClausesTextList(List<ClausesEntity> selectedClausesTextList) {
-        this.selectedClausesTextList = selectedClausesTextList;
-    }
-
-    public TextEntity getTextEntity() {
-        return textEntity;
-    }
-
-    public void setTextEntity(TextEntity textEntity) {
-        this.textEntity = textEntity;
-    }
 
     public PODocumentEntity getSelectedPODocument() {
         return selectedPODocument;
@@ -397,17 +374,5 @@ public class PoDocumentBean implements Serializable {
 
     @Inject
     private TextService textService;
-
-    private List<ProjectTextSnippetEntity> textSnippetList;
-
-    private List<ClausesEntity> droppedTextSnippetList;
-
-    private List<ClausesEntity> selectedClausesTextList;
-
-    private List<ClausesEntity> clausesEntities;
-
-    private TextEntity textEntity;
-
-    private Long tempClausesId = 1000L;
 
 }
