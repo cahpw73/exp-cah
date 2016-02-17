@@ -52,7 +52,7 @@
                             </p:column>
                             <p:column id="poDocCl" headerText="#{msgs['po.doc.lbl.pod.column.doc']}"
                                       rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
-                                <h:outputText value="#{_dt.description}" styleClass="content-big-text"/>
+                                <h:outputText value="#{_dt.description}" styleClass="box-document-list" escape="false"/>
                             </p:column>
                             <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
                                       style="padding-left: 8px!important;">

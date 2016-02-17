@@ -611,3 +611,7 @@ label.checkbox {
     width: 200px;
     color: #000000;
 }
+.box-document-list{
+    display: block!important;
+    height: 90px!important;
+}
