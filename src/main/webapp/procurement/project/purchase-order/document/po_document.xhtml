@@ -5,25 +5,27 @@
 
     <h:panelGroup id="docSectionId">
         <div style="width: 1550px!important;">
-            <div style="width: 650px!important; float: left!important; ">
+            <div style="width: 350px!important; float: left!important; ">
                 <div class="form-group">
                     <h:outputLabel value="#{msgs['po.doc.lbl.pd']}" for="projectDocDt"/>
                     <p:dataTable id="projectDocDt" var="_t" value="#{poDocumentBean.projectDocumentList}" scrollable="true"
                                  scrollHeight="405">
-                        <p:column style="width:20px" rendered="#{poBean.beingEdited}">
+                        <p:column style="width:10%!important" rendered="#{poBean.beingEdited}">
                             <h:outputText id="dragDocIcon" styleClass="ui-icon ui-icon-arrow-4"/>
                             <p:draggable id="draggableDoc" for="dragDocIcon"
                                          scope="poDocScope"
                                          revert="true" helper="clone"/>
                         </p:column>
                         <p:column headerText="#{msgs['po.doc.lbl.pd.column.text.code']}"
-                                  style="width: 70px!important;">
+                                  style="width: 60%!important;">
                             <h:outputText value="#{_t.code}" styleClass="content-big-text"/>
                         </p:column>
-                        <p:column headerText="#{msgs['po.doc.lbl.pd.column.doc']}">
-                            <h:outputText value="#{_t.description}" styleClass="content-big-text"/>
-                        </p:column>
-                        <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;"
+                        <ui:remove>
+                            <p:column headerText="#{msgs['po.doc.lbl.pd.column.doc']}">
+                                <h:outputText value="#{_t.description}" styleClass="content-big-text"/>
+                            </p:column>
+                        </ui:remove>
+                        <p:column headerText="action" style="width: 30%!important; padding-left: 15px!important;"
                                   rendered="#{!poBean.modeView}">
                             <h:commandLink value="PO Docs"
                                            action="#{poDocumentBean.copyToPODocument(_t)}">
@@ -35,7 +37,7 @@
                 </div>
             </div>
 
-            <div style="width: 650px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
+            <div style="width: 900px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
                 <div class="form-group">
                     <h:outputLabel value="#{msgs['po.doc.lbl.pod']}" for="poDocDt"/>
 
