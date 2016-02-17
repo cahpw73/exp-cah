@@ -28,7 +28,7 @@
     <div class="row">
         <div style="width: 1500px!important;">
 
-            <div style="width: 500px!important; float: left!important; margin-left: 15px!important;">
+            <div style="width: 300px!important; float: left!important; margin-left: 15px!important;">
                 <h:outputText value="#{msgs['project.docs.lbl.global.text']}"/>
                 <br/>
                 <p:dataTable id="mainDocumentDt" var="_md"
@@ -40,9 +40,11 @@
                               style="width: 100px!important;">
                         #{_md.code}
                     </p:column>
+                    <ui:remove>
                     <p:column headerText="#{msgs['project.docs.column.description']}">
                         <h:outputText value="#{_md.description}" styleClass="content-big-text" escape="true"></h:outputText>
                     </p:column>
+                    </ui:remove>
                 </p:dataTable>
             </div>
             <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
@@ -61,7 +63,7 @@
                             process="@this,projectDocDt" async="false"/>
                 </h:commandButton>
             </div>
-            <div style="width: 790px!important; float: left!important;">
+            <div style="width: 950px!important; float: left!important;">
                 <h:outputText value="#{msgs['project.docs.lbl.project.text']}"/>
                 <br/>
                 <h:panelGroup id="projectDocGroup">
@@ -71,7 +73,7 @@
                                  selection="#{documentBean.selectedProjectDocList}"
                                  rowKey="#{_pt.id}">
                         <p:column headerText="#{msgs['project.docs.column.description']}"
-                                  style="width: 80%!important;">
+                                  style="width: 90%!important;">
                             <h:panelGroup id="viPjDocDescription" rendered="#{!_pt.isEditable}">
                                 <h:outputText value="#{_pt.description}" styleClass="box-document-list" escape="false"/>
                             </h:panelGroup>
