@@ -86,6 +86,30 @@ public abstract class ReportView implements Serializable {
         fcontext.responseComplete();
     }
 
+    public ByteArrayOutputStream getByteArrayOutputStreamReport(final List<?> beanCollection) {
+        //FacesContext fcontext = FacesContext.getCurrentInstance();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            //HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
+            final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
+            exportScheduleReport(jasperPrint, outputStream, getOnlyReportNameFormat(reportName.toString()));
+
+            /*outputStream.writeTo(response.getOutputStream());*/
+            //response.setContentLength(outputStream.size());
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        } /*catch (IOException e) {
+            e.printStackTrace();
+        }*/ catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(outputStream);
+        }
+
+        //fcontext.responseComplete();
+        return outputStream;
+    }
+
     protected void runReport() throws Exception {
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -195,6 +219,11 @@ public abstract class ReportView implements Serializable {
 
     private void exportReport(final JasperPrint jasperPrint, final OutputStream outputStream, final HttpServletResponse response, final String reportName) throws JRException {
         JRAbstractExporter exporter = ExporterReportUtils.crateExporterReportAction(reportType, jasperPrint, outputStream, response, reportName);
+        exporter.exportReport();
+    }
+
+    private void exportScheduleReport(final JasperPrint jasperPrint, final OutputStream outputStream, final String reportName) throws JRException {
+        JRAbstractExporter exporter = ExporterReportUtils.crateExporterScheduleReport(reportType, jasperPrint, outputStream, reportName);
         exporter.exportReport();
     }
 

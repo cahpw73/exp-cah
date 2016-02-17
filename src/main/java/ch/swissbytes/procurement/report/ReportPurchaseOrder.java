@@ -52,7 +52,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private BigInteger[] currenciesIdsPo = new BigInteger[3];
     private List<PODocumentEntity> poDocumentList;
     private List<ByteArrayOutputStream> otherDocumentList = new ArrayList<>();
-    //private
 
 
     /**
@@ -177,7 +176,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
-        String doc = poDocumentList.get(0).getDescription();
+        String doc = poDocumentList.isEmpty()?"":poDocumentList.get(0).getDescription();
         addParameters("docs", doc);
     }
 
@@ -700,28 +699,44 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
 
     private void loadOtherDocumentList() throws IOException, DocumentException {
-        for (PODocumentEntity pd : poDocumentList) {
-            pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
-            pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
-            otherDocumentList.add(getReportFromHtml(pd.getDescription()));
+        if(!poDocumentList.isEmpty()) {
+            for (PODocumentEntity pd : poDocumentList) {
+                if (pd.getScheduleE() == null) {
+                    pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
+                    pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
+                    otherDocumentList.add(getReportFromHtml(pd.getDescription()));
+                } else {
+                    otherDocumentList.add(getReportSchedule());
+                }
+            }
+        }else{
+            otherDocumentList.add(getReportSchedule());
         }
     }
 
     private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {
         log.info("converting html to pdf");
-        String titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+        String titleHeader;
+        if (po.getPurchaseOrderProcurementEntity().getClazz() != null) {
+            if (po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal() || po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.MINING_FLEET.ordinal()) {
+                titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+            } else {
+                titleHeader = "CONTRACT" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+            }
+        } else {
+            titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+        }
         XmlWorker xmlWorker = new XmlWorker();
         return xmlWorker.convertHtml(contentPdf, titleHeader);
     }
 
-    public ByteArrayOutputStream getReportSchedule(final ProjectEntity project, final Map<String, Boolean> sortMap) throws IOException, DocumentException {
-        log.info("printProjectPurchaseOrder");
+    public ByteArrayOutputStream getReportSchedule() throws IOException, DocumentException {
+        log.info("getReportSchedule");
         Locale locale = new Locale(Locale.ENGLISH.getLanguage());
         Map<String, String> messages = new HashMap<>();
-        ReportView reportView = new ReportSheduleE("/procurement/printPo/PrintPurchaseOrder", "Procurement.project.purchase.order",
+        ReportView reportView = new ReportSheduleE("/procurement/printPo/Schedule", "procurement.schedule",
                 messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager,draft,poDocumentList);
-        reportView.printDocument(null);
-        return null;
+        return reportView.getByteArrayOutputStreamReport(null);
     }
 
     @Override

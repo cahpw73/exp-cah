@@ -26,6 +26,7 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
     private String numberPODoc;
     private PurchaseOrderProcurementEntity poProcurementEntity;
     private ProjectDocumentEntity projectDocumentEntity;
+    private Boolean scheduleE;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -116,6 +117,15 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
 
     public void setProjectDocumentEntity(ProjectDocumentEntity projectDocumentEntity) {
         this.projectDocumentEntity = projectDocumentEntity  ;
+    }
+
+    @Column(name = "is_schedule")
+    public Boolean getScheduleE() {
+        return scheduleE;
+    }
+
+    public void setScheduleE(Boolean scheduleE) {
+        this.scheduleE = scheduleE;
     }
 
     @Override

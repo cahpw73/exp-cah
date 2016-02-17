@@ -25,7 +25,10 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper{
 
     public void onStartPage(PdfWriter writer, Document document) {
         Font font = new Font(Font.getFamily("ARIAL"), 10, Font.BOLDITALIC);
-        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase(titleHeader,font), 136, 770, 0);
-        //ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Top Right"), 550, 800, 0);
+        if(titleHeader.toLowerCase().contains("purchase order")){
+            ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase(titleHeader,font), 136, 770, 0);
+        }else{
+            ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase(titleHeader,font), 116, 770, 0);
+        }
     }
 }

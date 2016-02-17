@@ -51,6 +51,7 @@ public class XmlWorker {
             throws IOException, DocumentException {
         PdfReader poReport = new PdfReader(poReportBt);
         List<PdfReader> pdfDocs = new ArrayList<>();
+
         for(ByteArrayOutputStream baos : otherDocList){
             PdfReader pdfDoc = new PdfReader(baos.toByteArray());
             pdfDocs.add(pdfDoc);
@@ -64,7 +65,6 @@ public class XmlWorker {
         for(PdfReader pdf : pdfDocs){
             copy.addDocument(pdf);
         }
-
         document.close();
         poReport.close();
         return outputStream;

@@ -73,7 +73,7 @@
                         <p:column headerText="#{msgs['project.docs.column.description']}"
                                   style="width: 80%!important;">
                             <h:panelGroup id="viPjDocDescription" rendered="#{!_pt.isEditable}">
-                                <h:outputText value="#{_pt.description}" styleClass="content-big-text"/>
+                                <h:outputText value="#{_pt.description}" styleClass="box-document-list" escape="false"/>
                             </h:panelGroup>
                             <h:panelGroup id="edPjDocDescription" rendered="#{_pt.isEditable}">
                                 <p:inputTextarea id="PjDocdescription" value="#{_pt.description}" styleClass="form-control"
