@@ -129,7 +129,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     private void saveExpeditingStatuses(String expeditingStatuses, PurchaseOrderEntity poEntity){
         removedIfExistsExpeditingStatus(poEntity.getId());
-        String[] exIds = expeditingStatuses.split(",");
+        String[] exIds = expeditingStatuses.trim().split(",");
         List<ExpeditingStatusEnum> list = new ArrayList<>();
         for (String status : exIds) {
             try {
@@ -151,6 +151,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         for(ExpeditingStatusEntity e : list){
             expeditingStatusDao.doRemove(e);
         }
+    }
+
+    public List<ExpeditingStatusEntity> findExpeditingStatusByPOid(final Long poId){
+        return expeditingStatusDao.findByPOIds(poId);
     }
 
     /**

@@ -150,7 +150,9 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String titleBulkUpdateModal;
 
-    private String expeditingStatuses;
+    private String expeditingStatuses = "";
+
+    private String expeditingStatusesOld = "";
 
     private boolean hasValueLeadTime;
 
@@ -198,6 +200,7 @@ public class PurchaseOrderEdit implements Serializable {
                 }
             }
             commentIndexSelected = -1;
+            loadPurchaseOrderStatuses();
         }
 
         if (scopeSupplies != null && !scopeSupplies.isEmpty()) {
@@ -208,6 +211,18 @@ public class PurchaseOrderEdit implements Serializable {
             sortScopeSupply.sortScopeSupplyEntity(scopeActives);
         }
         commentActives = commentService.getActives(comments);
+    }
+
+    private void loadPurchaseOrderStatuses() {
+        List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(Long.parseLong(purchaseOrderId));
+        for (ExpeditingStatusEntity ex : expeditingStatusList) {
+            expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
+        }
+        if (expeditingStatuses.length() > 0) {
+            expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
+        }
+        expeditingStatusesOld = expeditingStatuses;
+        log.info("Expediting statuses : " + expeditingStatuses);
     }
 
     @PostConstruct
@@ -271,6 +286,9 @@ public class PurchaseOrderEdit implements Serializable {
             conversation.end();
         }
         return url;
+    }
+    private void verifyExpeditingStatusesRepeats(){
+
     }
 
     public boolean validateFields() {

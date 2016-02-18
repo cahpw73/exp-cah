@@ -155,13 +155,16 @@
                             <div class="col-md-6">
                                 <div class='form-group card'>
                                     <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
-                                    <select id="poStatuses" multiple="multiple" class="algo">
+                                    <select id="poStatuses" multiple="multiple">
                                         <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
                                             <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
                                         </ui:repeat>
                                     </select>
                                 </div>
                             </div>
+                            <p:remoteCommand name="onload"
+                                             oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses} ');"
+                                             autoRun="true"></p:remoteCommand>
                             </ui:remove>
                             <div class="col-md-6">
                                 <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
