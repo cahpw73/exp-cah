@@ -333,6 +333,7 @@ public class PurchaseOrderEdit implements Serializable {
         commentEntity.setStatus(enumService.getStatusEnumEnable());
         comments.add(commentEntity);
         commentActives = commentService.getActives(comments);
+        log.info("");
     }
 
     private void registerScopeSupply() {
@@ -369,6 +370,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void cleanComment() {
         commentEdit = new CommentEntity();
+        commentEdit.setCommentDate(new Date());
         commentIndexSelected = -1;
     }
 

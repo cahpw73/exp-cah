@@ -115,7 +115,7 @@
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                         <p:message id="msgSiteDate" for="exWorkDateSplit"/>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.deliveryDateObs}"
                                          id="deliveryDateObs"
                                          jsf:placeholder="#{msgs['supply.scope.ph.delivery.date.observations']}"
@@ -143,7 +143,7 @@
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                         </div>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="exWorkDateDescription"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDateDescription}"
                                          jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
@@ -171,7 +171,7 @@
                                     async="false"
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDateObs}"
                                          id="actualExWorkDateObs"
                                          jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
@@ -201,7 +201,7 @@
                         </p:calendar>
                         <p:message id="msgSisteDate" for="siteId"/>
                         <p:inputTextarea maxlength="950" type="text"
-                                         style="margin-top: 10px; height: 29px;"
+                                         style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="requiredSiteDateObs"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDateObs}"
                                          jsf:placeholder="#{msgs['supply.scope.ph.required.site.date.observations']}"
@@ -264,7 +264,7 @@
                                 <h:outputText value="#{msgs['lbl.manual']}"/>
                             </div>
                         </h:panelGroup>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px; width:220px;"
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; width:220px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.siteDateDescription}"
                                          id="siteDateDescription"
                                          jsf:placeholder="#{msgs['supply.scope.ph.forecast.site.date.observations']}"
@@ -285,7 +285,7 @@
                                     value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
                         </p:calendar>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDateObs}"
                                          id="actualSiteDateObs"
                                          jsf:placeholder="#{msgs['supply.scope.ph.actual.site.date.observations']}"

@@ -134,7 +134,7 @@ public class ProjectBean extends Bean implements Serializable {
     private void loadAllStandardText() {
         for (ProjectTextSnippetEntity pt : projectTextSnippetList) {
             for (TextSnippetEntity ts : globalStandardTextList) {
-                if (pt.getTextSnippet().getId().intValue() == ts.getId().intValue()) {
+                if (pt.getTextSnippet()!=null && pt.getTextSnippet().getId().intValue() == ts.getId().intValue()) {
                     projectStandardTextList.add(ts);
                 }
             }

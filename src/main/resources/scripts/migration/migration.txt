@@ -1897,3 +1897,8 @@ ALTER TABLE v_purchase_order
   OWNER TO postgres;
 
 ALTER TABLE PURCHASE_ORDER ALTER COLUMN GENERAL_COMMENT type VARCHAR(20000);
+
+#18/02/2016
+ALTER TABLE comments ALTER COLUMN description type VARCHAR(20000);
+ALTER TABLE comments ALTER COLUMN reason type VARCHAR(20000);
+UPDATE comments SET comment_date = last_update;
