@@ -52,7 +52,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
     }
 
     public List<CommentEntity> findByPurchaseOrder(final Long purchaseOrderId){
-        String hql = "SELECT cs.id,cs.name,cs.subject,cs.description,cs.lastUpdate,cs.purchaseOrder,cs.status, cs.to " +
+        String hql = "SELECT cs.id,cs.name,cs.subject,cs.description,cs.lastUpdate,cs.purchaseOrder,cs.status, cs.to,cs.commentDate " +
                 "FROM CommentEntity cs " +
                 "where cs.purchaseOrder.id=:purchase_id AND cs.status.id<>:DELETED ORDER BY cs.id" ;
         Query query = this.entityManager.createQuery( hql);
@@ -71,6 +71,7 @@ public class CommentDao  extends GenericDao<CommentEntity> implements Serializab
             entity.setPurchaseOrder((PurchaseOrderEntity) values[5]);
             entity.setStatus((StatusEntity) values[6]);
             entity.setTo((String) values[7]);
+            entity.setCommentDate((Date) values[8]);
             entity.setPreviousHascode(entity.hashCode());
             comments.add(entity);
         }

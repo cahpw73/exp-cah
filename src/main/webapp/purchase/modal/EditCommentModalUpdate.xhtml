@@ -39,11 +39,11 @@
                            value="#{msgs['po.attach.tbl.column.reason']}"/>
 
             <div class="col-sm-9">
-                <h:inputText type="text" maxlength="50"
-                             id="reasonEditComment"
-                             jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
-                             class="form-control"
-                             value="#{purchaseOrderEdit.editingComment.subject}"/>
+                <p:inputTextarea type="text" maxlength="19800"
+                                 id="reasonEditComment" style="max-height: 62px;" rows="3"
+                                 jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.editingComment.subject}"/>
             </div>
         </div>
     </div>
@@ -52,11 +52,27 @@
             <h:outputLabel class="col-sm-3 control-label"
                            value="#{msgs['po.attach.tbl.column.observations']}"/>
             <div class="col-sm-9">
-                <p:inputTextarea type="text" maxlength="950"
-                             id="descriptionEditComment" style="height: 29px;"
+                <p:inputTextarea type="text" maxlength="19800"
+                             id="descriptionEditComment" style="max-height: 62px;" rows="3"
                              jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
                              class="form-control"
                              value="#{purchaseOrderEdit.editingComment.description}"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-3 control-label"
+                           value="#{msgs['po.attach.tbl.date']}"/>
+            <div class="col-sm-5">
+                <p:calendar id="commentDateEditId"
+                            value="#{purchaseOrderEdit.editingComment.commentDate}"
+                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                            pattern="#{configuration.formatDate}"
+                            converter="#{dateConverter}"
+                            timeZone="#{configuration.timeZone2}"
+                            onselect="calendarChanges();" onclick="calendarChanges();">
+                </p:calendar>
             </div>
         </div>
     </div>
@@ -96,7 +112,7 @@
                 <p:ajax onsuccess="PF('commentUpdateModal').hide();" update=":empForm:commentList"
                         listener="#{purchaseOrderEdit.doUpdateComment()}"
                         async="false"
-                        process="nameEditComment, descriptionEditComment, reasonEditComment, addEditComment, fieldTo"/>
+                        process="nameEditComment, descriptionEditComment, reasonEditComment, addEditComment, fieldTo, commentDateEditId"/>
             </h:commandButton>
             <button type="button" onclick="PF('commentUpdateModal').hide();" class="btn btn-primary btn-sm">
                #{msgs['lbl.cancel']}

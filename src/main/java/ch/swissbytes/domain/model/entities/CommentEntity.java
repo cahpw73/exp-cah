@@ -24,6 +24,7 @@ public class CommentEntity implements Serializable, EntityTbl {
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
+    private Date commentDate;
     private List<AttachmentComment> attachments=new ArrayList<>();
 
     private int previousHascode=0;
@@ -60,7 +61,7 @@ public class CommentEntity implements Serializable, EntityTbl {
         this.to = to;
     }
 
-    @Size(max = 50)
+    @Size(max = 20000)
     @Column(name = "reason", nullable = false, length = 50)
     public String getSubject() {
         return subject;
@@ -70,7 +71,7 @@ public class CommentEntity implements Serializable, EntityTbl {
         this.subject = subject;
     }
 
-    @Size(max = 1000)
+    @Size(max = 20000)
     @Column(name = "description", length = 1000)
     public String getDescription() {
         return description;
@@ -100,6 +101,16 @@ public class CommentEntity implements Serializable, EntityTbl {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    @Column(name = "comment_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
