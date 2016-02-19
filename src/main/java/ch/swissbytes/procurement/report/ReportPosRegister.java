@@ -70,7 +70,7 @@ public class ReportPosRegister extends ReportProject implements Serializable {
         Boolean title = sortMap.get("title");
         String strSort = "";
         if (!poNo && !supplier && title) {
-            strSort = "po.po_delivery_date,po.orderedvariation, ";
+            strSort = "po.po_title,po.orderedvariation, ";
             sortByName = "Title, Variation, ";
         } else if (poNo && !supplier && !title) {
             strSort = "po.po,po.orderedvariation, ";
