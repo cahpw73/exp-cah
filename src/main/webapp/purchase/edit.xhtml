@@ -164,13 +164,14 @@
                             <p:remoteCommand name="onload"
                                              oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
                                              autoRun="true"></p:remoteCommand>
-
+                            <ui:remove>
                             <div class="col-md-6">
                                 <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
                                     <f:selectItems value="#{poStatuses}"/>
                                 </p:selectOneMenu>
                             </div>
+                            </ui:remove>
                         </div>
                     </div>
                     <div class="row">

@@ -219,7 +219,6 @@ public class PurchaseOrderEdit implements Serializable {
         if (expeditingStatuses.length() > 0) {
             expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
         }
-        log.info("Expediting statuses : " + expeditingStatuses);
     }
 
     @PostConstruct

@@ -110,10 +110,8 @@ public class PurchaseOrderView implements Serializable {
             String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
             expStatuses=expStatuses + exStatus+", ";
         }
-        log.info("Expediting statuses 1 : " + expeditingStatuses);
         expeditingStatuses = expStatuses;
         expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
-        log.info("Expediting statuses 2 : " + expeditingStatuses);
     }
 
     public ScopeSupplyEntity currentScopeSupplyForAttachment() {
