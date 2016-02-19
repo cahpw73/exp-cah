@@ -287,9 +287,6 @@ public class PurchaseOrderEdit implements Serializable {
         }
         return url;
     }
-    private void verifyExpeditingStatusesRepeats(){
-
-    }
 
     public boolean validateFields() {
         if (StringUtils.isEmpty(poEdit.getExpeditingTitle()) || StringUtils.isBlank(poEdit.getExpeditingTitle())) {

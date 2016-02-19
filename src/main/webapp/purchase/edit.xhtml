@@ -20,7 +20,7 @@
     <ui:define name="body">
         <div class="row">
             <o:highlight/>
-            <h:outputScript name="js/multipleSelection.js"/>
+            <h:outputScript name="js/multipleSelectionPoEdit.js"/>
             <h:outputScript name="js/submitSearch.js"/>
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
@@ -151,7 +151,6 @@
                                              value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
                             </div>
-                            <ui:remove>
                             <div class="col-md-6">
                                 <div class='form-group card'>
                                     <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
@@ -165,7 +164,7 @@
                             <p:remoteCommand name="onload"
                                              oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses} ');"
                                              autoRun="true"></p:remoteCommand>
-                            </ui:remove>
+
                             <div class="col-md-6">
                                 <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
