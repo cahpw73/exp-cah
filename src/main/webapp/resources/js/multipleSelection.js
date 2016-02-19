@@ -6,14 +6,10 @@ $(document).ready(function () {
     initializeMultiselection();
 });
 
-function initializeMultiselection(idsSelected) {
-    var array = [];
-    console.log('selected first print ' + idsSelected);
+function initializeMultiselection(idsSelected){
+    var array=[];
+    console.log('selected first print '+idsSelected);
     selectedValues = [];
-    if(idsSelected){
-        selectedValues=idsSelected.split(',')
-    }
-    console.log('selected values '+selectedValues);
     $('#poStatuses').multiselect(
         {
             onChange: function (option, checked, select) {
@@ -24,11 +20,9 @@ function initializeMultiselection(idsSelected) {
                     index=selectedValues.indexOf(option.val());
                     selectedValues.splice(index,1);
                 }
-                console.log("val before  "+selectedValues);
                 $('#poStatusesHidenId').val(selectedValues.toString());
-                //console.log("val before  "+$('#poStatusesHidenId').val());
             },
-            numberDisplayed:3,
+            numberDisplayed:2,
             buttonClass:'form-control multiselect-button-po'
         }
     );
@@ -38,5 +32,3 @@ function initializeMultiselection(idsSelected) {
         $('#poStatuses').multiselect('select',array);
     }
 }
-
-

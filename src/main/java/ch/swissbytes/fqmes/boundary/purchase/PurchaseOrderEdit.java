@@ -152,8 +152,6 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String expeditingStatuses = "";
 
-    private String expeditingStatusesOld = "";
-
     private boolean hasValueLeadTime;
 
     private boolean hasValueForecastSiteDate;
@@ -221,8 +219,6 @@ public class PurchaseOrderEdit implements Serializable {
         if (expeditingStatuses.length() > 0) {
             expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
         }
-        expeditingStatusesOld = expeditingStatuses;
-        log.info("Expediting statuses : " + expeditingStatuses);
     }
 
     @PostConstruct
@@ -286,9 +282,6 @@ public class PurchaseOrderEdit implements Serializable {
             conversation.end();
         }
         return url;
-    }
-    private void verifyExpeditingStatusesRepeats(){
-
     }
 
     public boolean validateFields() {

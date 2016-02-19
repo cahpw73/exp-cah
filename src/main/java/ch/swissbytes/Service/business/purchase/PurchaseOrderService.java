@@ -128,17 +128,18 @@ public class PurchaseOrderService extends Service implements Serializable {
         dao.updatePOEntity(por.getPurchaseOrderProcurementEntity());
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
-        //saveExpeditingStatuses(expeditingStatuses,entity);
+        saveExpeditingStatuses(expeditingStatuses,entity);
         return por;
     }
 
     private void saveExpeditingStatuses(String expeditingStatuses, PurchaseOrderEntity poEntity){
         removedIfExistsExpeditingStatus(poEntity.getId());
-        String[] exIds = expeditingStatuses.trim().split(",");
+        expeditingStatuses = expeditingStatuses.trim();
+        String[] exIds = expeditingStatuses.split(",");
         List<ExpeditingStatusEnum> list = new ArrayList<>();
         for (String status : exIds) {
             try {
-                list.add(ExpeditingStatusEnum.getEnum(Integer.parseInt(status)));
+                list.add(ExpeditingStatusEnum.getEnum(Integer.parseInt(status.trim())));
             } catch (NumberFormatException nfe) {
 
             }
