@@ -70,6 +70,8 @@ public class PoDocumentBean implements Serializable {
 
     private Long projectId;
 
+    private boolean docPreview = false;
+
     @PostConstruct
     public void create() {
         log.info("create poTextBean");
@@ -288,6 +290,12 @@ public class PoDocumentBean implements Serializable {
 
     public void loadSeletedPODocument(PODocumentEntity entity) {
         selectedPODocument = entity;
+        docPreview = false;
+    }
+
+    public void loadSeletedPODocumentToPreview(PODocumentEntity entity) {
+        selectedPODocument = entity;
+        docPreview = true;
     }
 
     public void updatePODocumentDt() {
@@ -351,6 +359,14 @@ public class PoDocumentBean implements Serializable {
         this.poId = poId;
     }
 
+    public boolean isDocPreview() {
+        return docPreview;
+    }
+
+    public void setDocPreview(boolean docPreview) {
+        this.docPreview = docPreview;
+    }
+
     //************************************************************************
 
     public PODocumentEntity getSelectedPODocument() {
@@ -374,5 +390,7 @@ public class PoDocumentBean implements Serializable {
 
     @Inject
     private TextService textService;
+
+
 
 }

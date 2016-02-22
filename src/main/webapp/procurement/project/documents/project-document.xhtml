@@ -28,7 +28,7 @@
     <div class="row">
         <div style="width: 1500px!important;">
 
-            <div style="width: 300px!important; float: left!important; margin-left: 15px!important;">
+            <div style="width: 400px!important; float: left!important; margin-left: 15px!important;">
                 <h:outputText value="#{msgs['project.docs.lbl.global.text']}"/>
                 <br/>
                 <p:dataTable id="mainDocumentDt" var="_md"
@@ -63,7 +63,7 @@
                             process="@this,projectDocDt" async="false"/>
                 </h:commandButton>
             </div>
-            <div style="width: 950px!important; float: left!important;">
+            <div style="width: 600px!important; float: left!important;">
                 <h:outputText value="#{msgs['project.docs.lbl.project.text']}"/>
                 <br/>
                 <h:panelGroup id="projectDocGroup">
@@ -72,6 +72,11 @@
                                  selectionMode="multiple" scrollable="true" scrollHeight="300"
                                  selection="#{documentBean.selectedProjectDocList}"
                                  rowKey="#{_pt.id}">
+                        <p:column headerText="#{msgs['project.docs.column.code']}"
+                                  style="width: 80%!important;">
+                            #{_pt.code}
+                        </p:column>
+                        <ui:remove>
                         <p:column headerText="#{msgs['project.docs.column.description']}"
                                   style="width: 90%!important;">
                             <h:panelGroup id="viPjDocDescription" rendered="#{!_pt.isEditable}">
@@ -84,10 +89,16 @@
                                 </p:inputTextarea>
                             </h:panelGroup>
                         </p:column>
+                        </ui:remove>
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
                                            update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
                                            async="false" action="#{documentBean.loadSeletedProjectDoc(_pt)}"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{!_pt.isEditable}" process="@this"
+                                           update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
+                                           async="false" action="#{documentBean.loadSeletedProjectDocPreview(_pt)}"/>
+                            <ui:remove>
                             <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
                                            process=":editForm:projectDocGroup"
                                            action="#{documentBean.confirmItem(_pt)}"
@@ -96,7 +107,7 @@
                             <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
                                            action="#{documentBean.cancelEditionItem(_pt)}" update="projectDocDt"
                                            async="false"/>
-
+                            </ui:remove>
                         </p:column>
                     </p:dataTable>
                 </h:panelGroup>

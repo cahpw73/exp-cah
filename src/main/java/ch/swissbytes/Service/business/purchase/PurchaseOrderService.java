@@ -302,7 +302,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPoExpeditingDeliveryDate(purchaseOrderEntity.getPoDeliveryDate());
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
-        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
+        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().trim().toUpperCase());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
         String incoTerms = getStrToIncoTerm(po.getPoint());
         String fullIncoTerms = po.getPoint();
@@ -393,7 +393,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setPoExpeditingDeliveryDate(purchaseOrderEntity.getPoDeliveryDate());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
-        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
+        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().trim().toUpperCase());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
         String incoTerms = getStrToIncoTerm(po.getPoint());
         if (exitsDeliveryPointInIncoTerms(incoTerms)) {
@@ -484,14 +484,6 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
         removePrefixIfAny(purchaseOrderEntity);
-        String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
-        if (exitsDeliveryPointInIncoTerms(incoTerms)) {
-            purchaseOrderEntity.setIncoTerm(incoTerms);
-            purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
-        } else {
-            purchaseOrderEntity.setIncoTerm(null);
-            purchaseOrderEntity.setFullIncoTerms(null);
-        }
         purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
