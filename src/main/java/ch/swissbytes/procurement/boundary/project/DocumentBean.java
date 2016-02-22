@@ -58,6 +58,8 @@ public class DocumentBean extends Bean implements Serializable {
 
     private Long projectEntityId;
 
+    private boolean docPreview = false;
+
 
     @PostConstruct
     public void init() {
@@ -200,6 +202,12 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void loadSeletedProjectDoc(ProjectDocumentEntity entity) {
         selectedProjectDoc = entity;
+        docPreview = false;
+    }
+
+    public void loadSeletedProjectDocPreview(ProjectDocumentEntity entity) {
+        selectedProjectDoc = entity;
+        docPreview = true;
     }
 
     public void updateProjectDocumentDt() {
@@ -303,4 +311,11 @@ public class DocumentBean extends Bean implements Serializable {
         this.projectEntityId = projectEntityId;
     }
 
+    public boolean isDocPreview() {
+        return docPreview;
+    }
+
+    public void setDocPreview(boolean docPreview) {
+        this.docPreview = docPreview;
+    }
 }
