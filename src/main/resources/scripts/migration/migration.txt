@@ -1902,3 +1902,9 @@ ALTER TABLE PURCHASE_ORDER ALTER COLUMN GENERAL_COMMENT type VARCHAR(20000);
 ALTER TABLE comments ALTER COLUMN description type VARCHAR(20000);
 ALTER TABLE comments ALTER COLUMN reason type VARCHAR(20000);
 UPDATE comments SET comment_date = last_update;
+
+#22/02/2016
+INSERT INTO expediting_status (id,purchase_order_status,po_id)
+SELECT id,purchase_order_status,id FROM purchase_order WHERE status_id=1;
+
+SELECT SETVAL('expediting_status_id_seq', (SELECT MAX(ID)+1 FROM EXPEDITING_STATUS));

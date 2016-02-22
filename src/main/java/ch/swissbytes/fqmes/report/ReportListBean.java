@@ -40,7 +40,17 @@ public class ReportListBean implements Serializable {
     }
 
     private void search() {
-        log.info("search..." + searchPurchase);
+        log.info("search...");
+        searchPurchase.setStatuses(searchPurchase.getStatuses().replaceAll("\\s",""));
+        log.info("statuses : " + searchPurchase.getStatuses());
+        String status1 = searchPurchase.getStatuses().substring(0,1);
+        try {
+            Integer i = Integer.parseInt(status1);
+            log.info("statuses : " + searchPurchase.getStatuses());
+        }catch (NumberFormatException nfe){
+            searchPurchase.setStatuses(searchPurchase.getStatuses().substring(1,searchPurchase.getStatuses().length()));
+            log.info("statuses : " + searchPurchase.getStatuses());
+        }
         tbl = new PurchaseOrderViewTbl(dao, searchPurchase);
     }
 

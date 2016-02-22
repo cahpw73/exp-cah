@@ -101,7 +101,7 @@
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
                         <h:inputHidden id="poStatusesHidenId" value="#{reportListBean.searchPurchase.statuses}"/>
-                        <select id="poStatuses" multiple="multiple" class="algo">
+                        <select id="poStatuses" multiple="multiple">
                             <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
                                 <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
                             </ui:repeat>

@@ -67,7 +67,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
 
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 String[] statuses = filter.getStatuses().split(",");
-                List<ExpeditingStatusEnum> list = new ArrayList<ExpeditingStatusEnum>();
+                List<ExpeditingStatusEnum> list = new ArrayList<>();
                 for (String status : statuses) {
                     try {
                         list.add(ExpeditingStatusEnum.getEnum(Integer.parseInt(status)));
@@ -116,9 +116,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 sb.append(" AND lower(x.incoTerm) like lower(:INCO_TERM)");
             }
-            if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
+            /*if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 sb.append(" AND  x.purchaseOrderStatus IN(:PURCHASE_ORDER_STATUS_LIST)");
-            }
+            }*/
             if (filter.getNextKeyDateStart() != null) {
                 sb.append(" AND x.nextKeyDate>=:START_NEXT_KEY_DATE ");
             }
@@ -126,8 +126,21 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
                 sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
             }
             sb.append(prepareSubquery(filter));
+            sb.append(prepareSubQueryExpeditingStatuses(filter));
         } else {
             log.info("filter is null");
+        }
+        return sb.toString();
+    }
+
+    private String prepareSubQueryExpeditingStatuses(SearchPurchase filter){
+        StringBuilder sb = new StringBuilder();
+        if(StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())){
+            sb.append(" AND x.poId IN ( ");
+            sb.append(" SELECT es.purchaseOrderEntity.id ");
+            sb.append(" FROM  ExpeditingStatusEntity es ");
+            sb.append(" WHERE es.purchaseOrderStatus IN (:PURCHASE_ORDER_STATUS_LIST) ");
+            sb.append(" )");
         }
         return sb.toString();
     }
