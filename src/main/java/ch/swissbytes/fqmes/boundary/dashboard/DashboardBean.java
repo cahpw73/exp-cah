@@ -131,12 +131,9 @@ public class DashboardBean implements Serializable {
     private void loadNumberOpenPOs() {
         numberOpenPOs = String.valueOf(poService.getNumberOfOpenPOs(projectSelected != null ? projectSelected.getId() : -1));
         Double percentage = (Double.parseDouble(numberOpenPOs) / Double.parseDouble(totalOfPOs)) * 100;
-        String percentageN;
         DecimalFormat formatter = new DecimalFormat("###");
         if (!percentage.isNaN()){
             percentage = Math.round(percentage*100.0)/100.0;
-            /*percentageN = String.valueOf(percentage.doubleValue());
-            String[] split = percentageN.split(".");*/
             percentageOpenPOs = formatter.format(percentage) + "%";
             openPOs = numberOpenPOs + " / " + percentageOpenPOs;
         }else{
