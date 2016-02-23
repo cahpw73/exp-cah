@@ -8,6 +8,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -32,10 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -80,6 +78,7 @@ public class PoListBean implements Serializable {
     @Inject
     private PoListManagerTable managerTable;
 
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
     private String projectId;
 
@@ -788,6 +787,28 @@ public class PoListBean implements Serializable {
         po.setPurchaseOrderProcurementEntity(p);
         purchaseOrders.add(po);
 
+    }
+
+    public String loadPurchaseOrderStatuses(final Long purchaseOrderId) {
+        String expeditingStatuses = "";
+        if (purchaseOrderId != null) {
+            List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(purchaseOrderId);
+            for (ExpeditingStatusEntity ex : expeditingStatusList) {
+                expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
+            }
+            if (expeditingStatuses.length() > 0) {
+                expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
+            }
+            String[] ids = expeditingStatuses.split(",");
+            String expStatuses = "";
+            for (int i = 0; i < ids.length; i++) {
+                String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
+                expStatuses = expStatuses + exStatus + ", ";
+            }
+            expeditingStatuses = expStatuses;
+            expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
+        }
+        return expeditingStatuses;
     }
 
     public List<PurchaseOrderEntity> getPurchaseOrders() {
