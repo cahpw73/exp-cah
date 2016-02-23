@@ -108,6 +108,9 @@
                         </select>
                     </div>
                 </div>
+                <p:remoteCommand name="onload"
+                                 oncomplete="initializeMultiselection('#{reportListBean.searchPurchase.statuses}');"
+                                 autoRun="true"></p:remoteCommand>
                 <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.due']}</label>
@@ -233,9 +236,6 @@
             <div class="clearfix"></div>
             <br/>
             <br/>
-            <p:remoteCommand name="onload"
-                             oncomplete="initializeMultiselection('#{reportListBean.searchPurchase.statuses} ');"
-                             autoRun="true"></p:remoteCommand>
         </h:form>
         <h4 class="sub-header fq-sub-header">#{msgs['purchase.order.list.title']}</h4>
         <br/>
@@ -264,9 +264,9 @@
                 <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po"
                           width="100">
-                    <div class="column-list-po">
-                        #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
-                    </div>
+                    <h:inputTextarea value="#{reportBean.loadPurchaseOrderStatuses(_purchase.poId)}"
+                                     rows="3" styleClass="form-control"
+                                     style="max-height: 62px; height: 62px " readonly="true"/>
                 </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
                           sortBy="#{_purchase.responsibleExpediting}" styleClass="column-list-header-po" width="150">

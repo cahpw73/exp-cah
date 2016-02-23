@@ -1,32 +1,32 @@
 /**
  * Created by Alvaro on 24/4/15.
  */
-selectedValues = [];
 $(document).ready(function () {
-    initializeMultiselection();
+    initializeMultiselection("");
 });
 
 function initializeMultiselection(idsSelected) {
+    console.log("initialize MultiSelection")
+    console.log("selected first print= " + idsSelected);
     var array = [];
-    console.log('selected first print ' + idsSelected);
     selectedValues = [];
     if (idsSelected) {
         selectedValues = idsSelected.split(',')
         $('#poStatusesHidenId').val(selectedValues.toString());
+        console.log("selected values 1 = " + selectedValues.toString());
     }
-    console.log('selected values ' + selectedValues);
     $('#poStatuses').multiselect(
         {
             onChange: function (option, checked, select) {
                 console.log("value affected " + option.val());
                 if (checked) {
-                    console.log("selectedValues Length= " + selectedValues.length);
                     selectedValues[selectedValues.length] = option.val();
                 } else {
                     index = selectedValues.indexOf(option.val());
                     selectedValues.splice(index, 1);
                 }
                 $('#poStatusesHidenId').val(selectedValues.toString());
+                console.log("selected values 2 onChange = " + selectedValues.toString());
             },
             numberDisplayed: 2,
             buttonClass: 'form-control multiselect-button-po'
