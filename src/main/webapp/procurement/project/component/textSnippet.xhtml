@@ -30,7 +30,7 @@
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.saveNewCustomText(poBean.purchaseOrder.projectEntity.id)}"
                                      rendered="#{MODE eq 'PO'}"
                                      styleClass="btn btn-primary btn-sm">
-                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editPoForm:clausesAuxDt :editPoForm:standardTextDt :editPoForm:bbtnt" />
+                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editPoForm:clausesAuxDt :editPoForm:standardTextDt :editPoForm:bbtnt"/>
                     </h:commandButton>
                 </h:form>
             </div>
