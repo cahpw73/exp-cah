@@ -32,8 +32,9 @@ public class ProjectDocumentService implements Serializable {
         }
     }
 
-    public void doUpdate(ProjectDocumentEntity entity) {
-        if (entity != null) {
+    public void doUpdate(ProjectDocumentEntity detachedEntity) {
+        if (detachedEntity != null) {
+            ProjectDocumentEntity entity = dao.merge(detachedEntity);
             entity.setLastUpdate(new Date());
             dao.doUpdate(entity);
         }
@@ -42,6 +43,16 @@ public class ProjectDocumentService implements Serializable {
     @Transactional
     public List<ProjectDocumentEntity> findByProjectId(final Long id) {
         return dao.findByProjectId(id);
+    }
+
+    @Transactional
+    public List<ProjectDocumentEntity> findByProjectIdToEdit(final Long id, final Long poId) {
+        return dao.findByProjectIdToEdit(id, poId);
+    }
+
+    @Transactional
+    public List<ProjectDocumentEntity> findByProjectIdToCreate(final Long id) {
+        return dao.findByProjectIdToCreate(id);
     }
 
     @Transactional

@@ -145,7 +145,7 @@ public class PoBean extends Bean {
         itemBean.loadItemList(purchaseOrder.getId());
         cashflowBean.loadCashflow(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
         poTextBean.loadText(purchaseOrder, purchaseOrder.getProjectEntity().getId());
-        poDocumentBean.loadProjectDocuments(purchaseOrder.getPurchaseOrderProcurementEntity().getId(),purchaseOrder.getProjectEntity().getId());
+        poDocumentBean.loadProjectDocuments(purchaseOrder,purchaseOrder.getProjectEntity().getId());
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
         }
@@ -613,6 +613,7 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocList().addAll(poDocumentBean.getProjectDocumentList());
         log.info("projectBean.getProjectTextSnippetListFromPO() size: " + projectBean.getProjectTextSnippetListFromPO().size());
         purchaseOrder.getPurchaseOrderProcurementEntity().getProjectTextSnippetList().addAll(projectBean.getProjectTextSnippetListFromPO());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocumentList().addAll(poDocumentBean.getProjectDocumentListToPO());
     }
 
     public String phoneContact() {

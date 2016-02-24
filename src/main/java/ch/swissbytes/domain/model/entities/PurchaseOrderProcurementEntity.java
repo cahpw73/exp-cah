@@ -37,6 +37,7 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private List<PODocumentEntity> poDocumentList = new ArrayList<>();
     private List<ProjectDocumentEntity> projectDocList = new ArrayList<>();
     private List<ProjectTextSnippetEntity> projectTextSnippetList = new ArrayList<>();
+    private List<ProjectDocumentEntity> projectDocumentList = new ArrayList<>();
     private CashflowEntity cashflow;
     private TextEntity textEntity;
     private String RTFNo;
@@ -236,6 +237,11 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     @Transient
     public List<ProjectTextSnippetEntity> getProjectTextSnippetList() {
         return projectTextSnippetList;
+    }
+
+    @Transient
+    public List<ProjectDocumentEntity> getProjectDocumentList() {
+        return projectDocumentList;
     }
 
     @Transient

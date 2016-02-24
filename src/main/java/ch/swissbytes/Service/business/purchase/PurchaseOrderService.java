@@ -9,6 +9,7 @@ import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.item.ItemService;
 import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
@@ -85,6 +86,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private PODocumentService poDocumentService;
+
+    @Inject
+    private ProjectDocumentService projectDocumentService;
 
     private final String PREFIX = "v";
 
@@ -279,6 +283,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.save(purchaseOrderEntity);
         doUpdateProjectTextEntity(purchaseOrderEntity);
+        doUpdateProjectDocument(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
         //items
@@ -301,6 +306,14 @@ public class PurchaseOrderService extends Service implements Serializable {
         for (ProjectTextSnippetEntity pr : projectTextSnippetEntities){
             pr.setPurchaseOrder(po);
             projectTextSnippetService.doUpdate(pr);
+        }
+    }
+
+    private void doUpdateProjectDocument(PurchaseOrderEntity po){
+        List<ProjectDocumentEntity> projectDocumentEntities = po.getPurchaseOrderProcurementEntity().getProjectDocumentList();
+        for(ProjectDocumentEntity pd : projectDocumentEntities){
+            pd.setPurchaseOrder(po);
+            projectDocumentService.doUpdate(pd);
         }
     }
 
@@ -379,6 +392,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.update(purchaseOrderEntity);
         doUpdateProjectTextEntity(purchaseOrderEntity);
+        doUpdateProjectDocument(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
         //items
@@ -475,6 +489,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.getPoDocumentList().addAll(poe.getPurchaseOrderProcurementEntity().getPoDocumentList());
         po.getProjectDocList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectDocList());
         po.getProjectTextSnippetList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectTextSnippetList());
+        po.getProjectDocumentList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectDocumentList());
     }
 
     public PurchaseOrderEntity findById(Long id) {
