@@ -30,6 +30,34 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
         super.saveAndFlush(entity);
     }
 
+    public List<ProjectDocumentEntity> findByProjectIdToEdit(final Long projectId, final Long poId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND p.project.id = :PROJECT_ID ");
+        sb.append(" AND (p.purchaseOrder.id = :PO_ID ");
+        sb.append(" OR p.purchaseOrder is null) ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("PROJECT_ID", projectId);
+        params.put("PO_ID",poId);
+        return super.findBy(sb.toString(), params);
+    }
+
+    public List<ProjectDocumentEntity> findByProjectIdToCreate(final Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND p.project.id = :PROJECT_ID ");
+        sb.append(" AND p.purchaseOrder is null ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), params);
+    }
+
     public List<ProjectDocumentEntity> findByProjectId(final Long projectId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");

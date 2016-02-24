@@ -36,11 +36,18 @@ public class PODocumentService implements Serializable {
             if(ps.getId() < 0){
                 ps.setId(null);
                 ps.setPoProcurementEntity(po);
+                ps.setOrdered(order);
+                order++;
+                ps.setLastUpdate(new Date());
+                dao.doSave(ps);
+            }else{
+                PODocumentEntity entity =  dao.merge(ps);
+                entity.setOrdered(order);
+                entity.setPoProcurementEntity(po);
+                order++;
+                entity.setLastUpdate(new Date());
+                dao.doSave(entity);
             }
-            ps.setOrdered(order);
-            order++;
-            ps.setLastUpdate(new Date());
-            dao.doSave(ps);
         }
     }
 

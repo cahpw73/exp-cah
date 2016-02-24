@@ -86,7 +86,7 @@
             <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
                 <h:panelGroup rendered="#{poBean.beingEdited}">
                     <p:commandLink id="addPODocBtnId"
-                            disabled="#{poBean.createPO}"
+
                             value="#{msgs['lbl.add']}"
                             oncomplete="PF('addPODocModal').show();"
                             action="#{poDocumentBean.resetPODocument}"

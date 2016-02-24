@@ -173,12 +173,12 @@ public class ProjectService implements Serializable {
 
     @Transactional
     public ProjectTextSnippetEntity addNewTextSnippet(ProjectEntity projectEntity, TextSnippetEntity textSnippetEntity) {
-        textSnippetEntity.setId(null);
+        /*textSnippetEntity.setId(null);
         textSnippetEntity.setProject(projectEntity);
-        textSnippetEntity = textSnippetService.save(textSnippetEntity);
+        textSnippetEntity = textSnippetService.save(textSnippetEntity);*/
         ProjectTextSnippetEntity projectTextSnippetEntity = new ProjectTextSnippetEntity();
         projectTextSnippetEntity.setLastUpdate(new Date());
-        projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
+        //projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
         projectTextSnippetEntity.setProject(projectEntity);
         projectTextSnippetEntity.setStatus(StatusEnum.ENABLE);
         projectTextSnippetEntity.setCode(textSnippetEntity.getCode());
@@ -255,6 +255,11 @@ public class ProjectService implements Serializable {
     @Transactional
     public List<ProjectTextSnippetEntity> findProjectTextSnippetByProjectId(Long projectId) {
         return projectTextSnippetService.findByProjectId(projectId);
+    }
+
+    @Transactional
+    public List<ProjectTextSnippetEntity> findProjectTextSnippetByProjectIdOnlyProject(Long projectId) {
+        return projectTextSnippetService.findByProjectIdCreatePO(projectId);
     }
 
     public List<ProjectEntity> findByLogoId(final Long logoId) {

@@ -32,8 +32,9 @@ public class ProjectTextSnippetService implements Serializable {
         }
     }
 
-    public void doUpdate(ProjectTextSnippetEntity entity){
-        if(entity != null){
+    public void doUpdate(ProjectTextSnippetEntity detachedEntity){
+        if(detachedEntity != null){
+            ProjectTextSnippetEntity entity = dao.merge(detachedEntity);
             entity.setLastUpdate(new Date());
             dao.doUpdate(entity);
         }
@@ -44,6 +45,15 @@ public class ProjectTextSnippetService implements Serializable {
         return dao.findByProjectId(id);
     }
 
+    @Transactional
+    public List<ProjectTextSnippetEntity> findByProjectIdToEditPo(final Long id,final Long poId) {
+        return dao.findByProjectIdToEditPO(id, poId);
+    }
+
+    @Transactional
+    public List<ProjectTextSnippetEntity> findByProjectIdCreatePO(final Long id) {
+        return dao.findByProjectIdToCreatePO(id);
+    }
 
     public List<ProjectTextSnippetEntity> findTextSnippetByClausesId(List<ClausesEntity> clausesEntities,Long projectId) {
         log.info("findTextSnippetByClausesId");

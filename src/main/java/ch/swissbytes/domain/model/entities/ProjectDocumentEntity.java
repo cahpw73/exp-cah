@@ -24,6 +24,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
     private Date lastUpdate;
     private ProjectEntity project;
     private MainDocumentEntity mainDocumentEntity;
+    private PurchaseOrderEntity purchaseOrder;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -96,6 +97,16 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
 
     public void setMainDocumentEntity(MainDocumentEntity mainDocumentEntity) {
         this.mainDocumentEntity = mainDocumentEntity;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="po_id")
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
 
     @Override
