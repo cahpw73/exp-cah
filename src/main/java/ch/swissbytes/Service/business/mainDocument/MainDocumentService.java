@@ -37,11 +37,16 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     public void delete(MainDocumentEntity entity) {
         entity.setStatus(StatusEnum.DELETED);
         entity.setLastUpdate(new Date());
+        if (entity.getAttachmentMainDocument() != null) {
+            AttachmentMainDocumentEntity toDelete = entity.getAttachmentMainDocument();
+            entity.setAttachmentMainDocument(null);
+            attachmentService.delete(toDelete);
+        }
         dao.update(entity);
     }
 
     @Transactional
-    public void doSave(MainDocumentEntity entity){
+    public void doSave(MainDocumentEntity entity) {
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
         entity.setCode(entity.getCode().toUpperCase());
@@ -49,7 +54,7 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     }
 
     @Transactional
-    public void doSaveWithPdf(MainDocumentEntity entity,AttachmentMainDocumentEntity attachmentMainDocumentEntity){
+    public void doSaveWithPdf(MainDocumentEntity entity, AttachmentMainDocumentEntity attachmentMainDocumentEntity) {
         attachmentService.doSave(attachmentMainDocumentEntity);
         entity.setAttachmentMainDocument(attachmentMainDocumentEntity);
         entity.setLastUpdate(new Date());
@@ -60,7 +65,7 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
 
 
     @Override
-    public MainDocumentEntity save(MainDocumentEntity entity){
+    public MainDocumentEntity save(MainDocumentEntity entity) {
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
         return super.save(entity);
@@ -83,7 +88,7 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     }
 
     @Transactional
-    public List<MainDocumentEntity>findByText(final String code){
+    public List<MainDocumentEntity> findByText(final String code) {
         return dao.findByCode(code);
     }
 

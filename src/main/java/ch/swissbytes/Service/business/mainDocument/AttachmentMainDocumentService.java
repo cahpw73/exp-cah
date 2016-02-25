@@ -19,15 +19,8 @@ import java.util.logging.Logger;
  */
 public class AttachmentMainDocumentService extends Service<AttachmentMainDocumentEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(AttachmentMainDocumentService.class.getName());
-
     @Inject
-    private MainDocumentDao dao;
-
-    @PostConstruct
-    public void create() {
-        super.initialize(dao);
-    }
+    private AttachmentMainDocumentDao dao;
 
     @Transactional
     public void delete(AttachmentMainDocumentEntity entity) {
@@ -44,23 +37,4 @@ public class AttachmentMainDocumentService extends Service<AttachmentMainDocumen
         return !list.isEmpty() ? list.get(0) : null;
     }
 
-    @Transactional
-    public List<MainDocumentEntity> getMainDocumentList() {
-        return dao.getMainDocumentList();
-    }
-
-    @Transactional
-    public boolean isCodeDuplicated(Long id, String code) {
-        return !dao.findByCodeButWithNoId(code, id).isEmpty();
-    }
-
-    @Transactional
-    public List<MainDocumentEntity>findByText(final String code){
-        return dao.findByCode(code);
-    }
-
-    @Transactional
-    public List findByProjectId() {
-        return dao.findByProject();
-    }
 }
