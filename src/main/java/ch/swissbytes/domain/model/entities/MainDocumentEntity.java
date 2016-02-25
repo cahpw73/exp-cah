@@ -22,6 +22,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
     private String code;
     private StatusEnum status;
     private Date lastUpdate;
+    private AttachmentMainDocumentEntity attachmentMainDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -58,7 +59,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
 
     @Lob
     @Size(max = 20000)
-    @Column(name = "description", nullable = false, length = 20000)
+    @Column(name = "description", nullable = true, length = 20000)
     public String getDescription() {
         return description;
     }
@@ -74,6 +75,16 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="attachment_main_document_id")
+    public AttachmentMainDocumentEntity getAttachmentMainDocument() {
+        return attachmentMainDocument;
+    }
+
+    public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
+        this.attachmentMainDocument = attachmentMainDocument;
     }
 
     @Override

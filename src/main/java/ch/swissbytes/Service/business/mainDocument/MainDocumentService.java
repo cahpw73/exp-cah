@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.mainDocument;
 
 
 import ch.swissbytes.Service.business.Service;
+import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.MainDocumentEntity;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -24,6 +25,9 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     @Inject
     private MainDocumentDao dao;
 
+    @Inject
+    private AttachmentMainDocumentService attachmentService;
+
     @PostConstruct
     public void create() {
         super.initialize(dao);
@@ -35,6 +39,7 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
         entity.setLastUpdate(new Date());
         dao.update(entity);
     }
+
     @Transactional
     public void doSave(MainDocumentEntity entity){
         entity.setLastUpdate(new Date());
@@ -42,6 +47,17 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
         entity.setCode(entity.getCode().toUpperCase());
         super.doSave(entity);
     }
+
+    @Transactional
+    public void doSaveWithPdf(MainDocumentEntity entity,AttachmentMainDocumentEntity attachmentMainDocumentEntity){
+        attachmentService.doSave(attachmentMainDocumentEntity);
+        entity.setAttachmentMainDocument(attachmentMainDocumentEntity);
+        entity.setLastUpdate(new Date());
+        entity.setStatus(StatusEnum.ENABLE);
+        entity.setCode(entity.getCode().toUpperCase());
+        super.doSave(entity);
+    }
+
 
     @Override
     public MainDocumentEntity save(MainDocumentEntity entity){
@@ -74,5 +90,9 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     @Transactional
     public List findByProjectId() {
         return dao.findByProject();
+    }
+
+    public AttachmentMainDocumentEntity findAttachmentMainDocument(Long attachmentMainDocumentId) {
+        return attachmentService.findById(attachmentMainDocumentId);
     }
 }

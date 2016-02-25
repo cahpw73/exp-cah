@@ -74,6 +74,14 @@
                                                    action="#{mainDocumentBean.doSave}"
                                                    styleClass="btn btn-primary btn-sm">
                                     </h:commandButton>
+                                    &#160;
+                                    <p:commandLink id="addPODocBtnId"
+                                                   value="#{msgs['attachment.btn.add.pdf']}"
+                                                   oncomplete="PF('addPdfModal').show();"
+                                                   styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                                   async="false" update=":addPdfGrpId" process="@this"
+                                                   onclick="doChangeProc();">
+                                    </p:commandLink>
                                 </h:form>
                                 <script type="text/javascript">
                                     CKEDITOR.replace('editor1');
@@ -82,7 +90,7 @@
                             </div>
                             <br/>
                             <div>
-                                <h:form id="standardTextForm">
+                                <h:form id="standardTextForm" enctype="application/octet-stream">
 
                                     <p:inputText id="codeTS2" value="#{mainDocumentBean.selected.code}"
                                                  jsf:placeholder="Enter text snippet"
@@ -92,11 +100,19 @@
                                     <p:message for="codeTS2"/>
                                     <br/>
                                     <h:panelGroup id="selectedMainDocId" rendered="#{mainDocumentBean.selected != null}">
-                                        <h:inputText value="#{mainDocumentBean.selected.description}" id="editorValue2"  styleClass="textCKEditor2"
-                                                     style="position: absolute; top:-200px"/>
-                                        <textarea id="editor2" name="editor2">
-                                            <h:outputText value="#{mainDocumentBean.selected.description}"/>
-                                        </textarea>
+                                        <h:panelGroup rendered="#{mainDocumentBean.selected.attachmentMainDocument != null}">
+                                            <p:media value="/document/pdf?pdfId=#{mainDocumentBean.pdfId}" height="300px" width="100%" player="pdf"/>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{mainDocumentBean.selected.attachmentMainDocument eq null}">
+                                            <h:inputText value="#{mainDocumentBean.selected.description}" id="editorValue2"  styleClass="textCKEditor2"
+                                                         style="position: absolute; top:-200px"/>
+                                            <textarea id="editor2" name="editor2">
+                                                <h:outputText value="#{mainDocumentBean.selected.description}"/>
+                                            </textarea>
+                                            <script type="text/javascript">
+                                                CKEDITOR.replace('editor2');
+                                            </script>
+                                        </h:panelGroup>
                                     </h:panelGroup>
                                     <h:panelGroup id="unselectedMainDocId" rendered="#{mainDocumentBean.selected eq null}">
                                         <h:inputText value="#{mainDocumentBean.selected.description}" id="editorValue3"  styleClass="textCKEditor2"
@@ -122,9 +138,7 @@
                                             disabled="#{mainDocumentBean.selected eq null}"
                                             styleClass="btn btn-primary btn-sm #{mainDocumentBean.selected eq null?'disabled':''}"
                                             outcome="main-document"/>
-                                    <script type="text/javascript">
-                                        CKEDITOR.replace('editor2');
-                                    </script>
+
                                 </h:form>
 
                             </div>
@@ -142,5 +156,10 @@
                 <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
             </div>
         </p:confirmDialog>
+        <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
+            <h:panelGroup id="addPdfGrpId">
+                <ui:include src="component/previewPdf.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
     </ui:define>
 </ui:composition>
