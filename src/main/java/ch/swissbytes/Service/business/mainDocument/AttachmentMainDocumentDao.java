@@ -24,7 +24,7 @@ public class AttachmentMainDocumentDao extends GenericDao<AttachmentMainDocument
 
 
     public void doSave(AttachmentMainDocumentEntity entity){
-        super.save(entity);
+        super.saveAndFlush(entity);
     }
 
     public void doUpdate(AttachmentMainDocumentEntity detachedEntity){

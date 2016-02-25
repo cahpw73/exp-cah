@@ -28,7 +28,7 @@ public class AttachmentMainDocumentService extends Service<AttachmentMainDocumen
     }
     @Transactional
     public void doSave(AttachmentMainDocumentEntity entity){
-        super.doSave(entity);
+        dao.doSave(entity);
     }
 
     @Transactional
