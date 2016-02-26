@@ -64,6 +64,7 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
         sb.append(" FROM ProjectDocumentEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" AND p.project.id = :PROJECT_ID ");
+        sb.append(" AND p.purchaseOrder is null ");
         Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
         params.put("PROJECT_ID", projectId);

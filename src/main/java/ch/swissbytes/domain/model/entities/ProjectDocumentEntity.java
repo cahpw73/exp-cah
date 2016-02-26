@@ -25,6 +25,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
     private ProjectEntity project;
     private MainDocumentEntity mainDocumentEntity;
     private PurchaseOrderEntity purchaseOrder;
+    private AttachmentMainDocumentEntity attachmentProjectDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -61,7 +62,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
 
     @Lob
     @Size(max = 20000)
-    @Column(name = "description", nullable = false, length = 20000)
+    @Column(name = "description", nullable = true, length = 20000)
     public String getDescription() {
         return description;
     }
@@ -107,6 +108,16 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
 
     public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
         this.purchaseOrder = purchaseOrder;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="attachment_project_document_id")
+    public AttachmentMainDocumentEntity getAttachmentProjectDocument() {
+        return attachmentProjectDocument;
+    }
+
+    public void setAttachmentProjectDocument(AttachmentMainDocumentEntity attachmentProjectDocument) {
+        this.attachmentProjectDocument = attachmentProjectDocument;
     }
 
     @Override

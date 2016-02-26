@@ -76,38 +76,17 @@
                                   style="width: 80%!important;">
                             #{_pt.code}
                         </p:column>
-                        <ui:remove>
-                        <p:column headerText="#{msgs['project.docs.column.description']}"
-                                  style="width: 90%!important;">
-                            <h:panelGroup id="viPjDocDescription" rendered="#{!_pt.isEditable}">
-                                <h:outputText value="#{_pt.description}" styleClass="box-document-list" escape="false"/>
-                            </h:panelGroup>
-                            <h:panelGroup id="edPjDocDescription" rendered="#{_pt.isEditable}">
-                                <p:inputTextarea id="PjDocdescription" value="#{_pt.description}" styleClass="form-control"
-                                                 required="true" requiredMessage="Enter a description in Docs for Project"
-                                                 style="height: 180px!important;">
-                                </p:inputTextarea>
-                            </h:panelGroup>
-                        </p:column>
-                        </ui:remove>
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
-                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable and _pt.attachmentProjectDocument == null}" process="@this"
                                            update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
                                            async="false" action="#{documentBean.loadSeletedProjectDoc(_pt)}"/>
                             &#160;
-                            <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{!_pt.isEditable}" process="@this"
+                            <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_pt.attachmentProjectDocument == null}" process="@this"
                                            update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
-                                           async="false" action="#{documentBean.loadSeletedProjectDocPreview(_pt)}"/>
-                            <ui:remove>
-                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
-                                           process=":editForm:projectDocGroup"
-                                           action="#{documentBean.confirmItem(_pt)}"
-                                           update="projectDocDt :editForm:projectGlbMsgs" async="false"/>
-                            &#160;
-                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
-                                           action="#{documentBean.cancelEditionItem(_pt)}" update="projectDocDt"
-                                           async="false"/>
-                            </ui:remove>
+                                           async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
+                            <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_pt.attachmentProjectDocument != null}" process="@this"
+                                           update=":previewProjectDocModalId" oncomplete="PF('previewProjectDocModal').show()"
+                                           async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGroup>
@@ -119,6 +98,14 @@
                         action="#{documentBean.resetProjectDocument}"
                         styleClass="btn btn-primary btn-commandLink-primeFaces"
                         async="false" update=":addProjectDocModalId" process="@this" onclick="doChangeProc()">
+                </p:commandLink>
+                &#160;
+                <p:commandLink id="addPODocBtnId"
+                               value="#{msgs['attachment.btn.add.pdf']}"
+                               oncomplete="PF('addPdfModal').show();"
+                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                               async="false" update=":addPdfGrpId" process="@this"
+                               onclick="doChangeProc();">
                 </p:commandLink>
             </div>
         </div>

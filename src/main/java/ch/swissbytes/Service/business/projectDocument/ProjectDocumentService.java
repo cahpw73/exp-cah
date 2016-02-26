@@ -1,14 +1,13 @@
 package ch.swissbytes.Service.business.projectDocument;
 
-import ch.swissbytes.domain.model.entities.ClausesEntity;
+import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
+import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
-import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,9 +22,23 @@ public class ProjectDocumentService implements Serializable {
     @Inject
     private ProjectDocumentDao dao;
 
+    @Inject
+    private AttachmentMainDocumentService attachmentService;
+
     @Transactional
     public void doSave(ProjectDocumentEntity entity) {
         if (entity != null) {
+            entity.setStatus(StatusEnum.ENABLE);
+            entity.setLastUpdate(new Date());
+            dao.doSave(entity);
+        }
+    }
+
+    @Transactional
+    public void doSaveWithPdf(ProjectDocumentEntity entity, AttachmentMainDocumentEntity attachmentMainDocumentEntity) {
+        if (entity != null) {
+            attachmentService.doSave(attachmentMainDocumentEntity);
+            entity.setAttachmentProjectDocument(attachmentMainDocumentEntity);
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             dao.doSave(entity);
@@ -60,4 +73,5 @@ public class ProjectDocumentService implements Serializable {
         List<ProjectDocumentEntity> list = dao.findById(ProjectDocumentEntity.class, id);
         return list.isEmpty() ? null : list.get(0);
     }
+
 }

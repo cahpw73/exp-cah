@@ -9,3 +9,9 @@ insert into role_option (id,option_id,role_id)values(710,1214,14);
 
 #22/02/2016
 update purchase_order set po_title=ltrim(rtrim((po_title)));
+
+#25/02/2016
+ALTER TABLE main_document ALTER COLUMN description DROP  NOT NULL;
+
+#26/02/2016
+ALTER TABLE project_document ALTER COLUMN description DROP  NOT NULL;

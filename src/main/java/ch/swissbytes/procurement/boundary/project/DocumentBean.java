@@ -2,23 +2,28 @@ package ch.swissbytes.procurement.boundary.project;
 
 import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
-import ch.swissbytes.domain.model.entities.MainDocumentEntity;
-import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
-import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -43,6 +48,8 @@ public class DocumentBean extends Bean implements Serializable {
     private List<ProjectDocumentEntity> projectDocumentList;
 
     private List<ProjectDocumentEntity> selectedProjectDocList;
+
+    private AttachmentMainDocumentEntity attachmentMainDocument;
 
     private ProjectDocumentEntity selectedProjectDoc;
 
@@ -69,6 +76,8 @@ public class DocumentBean extends Bean implements Serializable {
         selectedMainDocList = new ArrayList<>();
         selectedProjectDocList = new ArrayList<>();
         selectedProjectDoc = new ProjectDocumentEntity();
+        attachmentMainDocument = new AttachmentMainDocumentEntity();
+        projectDocument = new ProjectDocumentEntity();
     }
 
     @PreDestroy
@@ -90,7 +99,7 @@ public class DocumentBean extends Bean implements Serializable {
         mainDocumentList.removeAll(mainDocumentAuxList);
     }
 
-    public void loadMainDocumentsCreate(final Long projectId) {
+    public void loadMainDocumentsCreate() {
         mainDocumentList = mainDocumentService.findByProjectId();
     }
 
@@ -104,6 +113,9 @@ public class DocumentBean extends Bean implements Serializable {
             entity.setLastUpdate(new Date());
             entity.setMainDocumentEntity(md);
             entity.setStatus(StatusEnum.ENABLE);
+            if(md.getAttachmentMainDocument()!=null){
+                entity.setAttachmentProjectDocument(md.getAttachmentMainDocument());
+            }
             projectDocumentList.add(entity);
             temporaryProjectDocId--;
         }
@@ -131,6 +143,9 @@ public class DocumentBean extends Bean implements Serializable {
                 mainDocument.setId(tempMainDocId);
                 mainDocument.setDescription(pd.getDescription());
                 mainDocument.setCode(pd.getCode());
+                if(pd.getAttachmentProjectDocument() != null){
+                    mainDocument.setAttachmentMainDocument(pd.getAttachmentProjectDocument());
+                }
                 mainDocumentList.add(mainDocument);
                 tempMainDocId--;
                 if (pd.getId() > 0) {
@@ -205,7 +220,7 @@ public class DocumentBean extends Bean implements Serializable {
         docPreview = false;
     }
 
-    public void loadSeletedProjectDocPreview(ProjectDocumentEntity entity) {
+    public void loadSelectedProjectDocPreview(ProjectDocumentEntity entity){
         selectedProjectDoc = entity;
         docPreview = true;
     }
@@ -229,6 +244,15 @@ public class DocumentBean extends Bean implements Serializable {
         context.execute("PF('addProjectDocModal').hide();");
     }
 
+    public void saveNewProjectDocumentWithPdf(){
+        projectDocument.setProject(projectEntity);
+        projectDocument.setMainDocumentEntity(null);
+        projectDocumentService.doSaveWithPdf(projectDocument, attachmentMainDocument);
+        projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('addPdfModal').hide();");
+    }
+
     public void resetProjectDocument() {
         projectDocument = new ProjectDocumentEntity();
     }
@@ -245,6 +269,27 @@ public class DocumentBean extends Bean implements Serializable {
             }
         }
         mainDocumentList.removeAll(auxMainDoc);
+    }
+
+    public void handleUpload(FileUploadEvent event) {
+        UploadedFile uf = event.getFile();
+        enterFile(uf);
+    }
+
+    public void enterFile(UploadedFile uf) {
+        try {
+            InputStream is = uf.getInputstream();
+            attachmentMainDocument.setFile(IOUtils.toByteArray(is));
+            attachmentMainDocument.setMimeType(uf.getContentType());
+            attachmentMainDocument.setFileName(uf.getFileName());
+            is.close();
+        } catch (IOException ioe) {
+            log.log(Level.SEVERE, String.format("problems with file [" + uf.getFileName() + "]"));
+            log.log(Level.SEVERE, ioe.getMessage());
+        } catch (Exception ex) {
+            log.log(Level.SEVERE, String.format("problems with file [" + uf.getFileName() + "]"));
+            log.log(Level.SEVERE, ex.getMessage());
+        }
     }
 
     public String getSearchTerm() {
@@ -317,5 +362,13 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void setDocPreview(boolean docPreview) {
         this.docPreview = docPreview;
+    }
+
+    public AttachmentMainDocumentEntity getAttachmentMainDocument() {
+        return attachmentMainDocument;
+    }
+
+    public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
+        this.attachmentMainDocument = attachmentMainDocument;
     }
 }

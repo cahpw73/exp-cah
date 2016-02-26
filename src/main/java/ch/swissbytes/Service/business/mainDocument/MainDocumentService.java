@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.mainDocument;
 
 
 import ch.swissbytes.Service.business.Service;
+import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.MainDocumentEntity;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
@@ -24,6 +25,9 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     @Inject
     private MainDocumentDao dao;
 
+    @Inject
+    private AttachmentMainDocumentService attachmentService;
+
     @PostConstruct
     public void create() {
         super.initialize(dao);
@@ -33,18 +37,35 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     public void delete(MainDocumentEntity entity) {
         entity.setStatus(StatusEnum.DELETED);
         entity.setLastUpdate(new Date());
+        if (entity.getAttachmentMainDocument() != null) {
+            AttachmentMainDocumentEntity toDelete = entity.getAttachmentMainDocument();
+            entity.setAttachmentMainDocument(null);
+            attachmentService.delete(toDelete);
+        }
         dao.update(entity);
     }
+
     @Transactional
-    public void doSave(MainDocumentEntity entity){
+    public void doSave(MainDocumentEntity entity) {
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
         entity.setCode(entity.getCode().toUpperCase());
         super.doSave(entity);
     }
 
+    @Transactional
+    public void doSaveWithPdf(MainDocumentEntity entity, AttachmentMainDocumentEntity attachmentMainDocumentEntity) {
+        attachmentService.doSave(attachmentMainDocumentEntity);
+        entity.setAttachmentMainDocument(attachmentMainDocumentEntity);
+        entity.setLastUpdate(new Date());
+        entity.setStatus(StatusEnum.ENABLE);
+        entity.setCode(entity.getCode().toUpperCase());
+        super.doSave(entity);
+    }
+
+
     @Override
-    public MainDocumentEntity save(MainDocumentEntity entity){
+    public MainDocumentEntity save(MainDocumentEntity entity) {
         entity.setLastUpdate(new Date());
         entity.setStatus(StatusEnum.ENABLE);
         return super.save(entity);
@@ -67,12 +88,16 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     }
 
     @Transactional
-    public List<MainDocumentEntity>findByText(final String code){
+    public List<MainDocumentEntity> findByText(final String code) {
         return dao.findByCode(code);
     }
 
     @Transactional
     public List findByProjectId() {
         return dao.findByProject();
+    }
+
+    public AttachmentMainDocumentEntity findAttachmentMainDocument(Long attachmentMainDocumentId) {
+        return attachmentService.findById(attachmentMainDocumentId);
     }
 }

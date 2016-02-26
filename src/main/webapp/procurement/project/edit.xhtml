@@ -123,9 +123,19 @@
                 <ui:include src="component/editProjectDocument.xhtml"/>
             </h:panelGroup>
         </p:dialog>
+        <p:dialog header="Preview Project Doc" widgetVar="previewProjectDocModal" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewProjectDocModalId">
+                <ui:include src="component/previewProjectDocument.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
         <p:dialog header="Add New Project Doc" widgetVar="addProjectDocModal" resizable="false">
             <h:panelGroup id="addProjectDocModalId">
                 <ui:include src="component/newProjectDocument.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
+            <h:panelGroup id="addPdfGrpId">
+                <ui:include src="component/previewPdf.xhtml"/>
             </h:panelGroup>
         </p:dialog>
 
