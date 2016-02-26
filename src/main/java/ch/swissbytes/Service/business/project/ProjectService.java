@@ -1,6 +1,7 @@
 package ch.swissbytes.Service.business.project;
 
 import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
+import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
 import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
@@ -39,6 +40,9 @@ public class ProjectService implements Serializable {
 
     @Inject
     private AttachmentMainDocumentService attachmentMainDocumentService;
+
+    @Inject
+    private MainDocumentService mainDocumentService;
 
 
     @Transactional
@@ -93,6 +97,7 @@ public class ProjectService implements Serializable {
             doUpdateProjectCurrency(entity);
             doUpdateProjectTextSnippet(entity);
             doUpdateProjectDocument(entity);
+            doUpdateMainDocument(entity);
         }
         return entity;
     }
@@ -133,6 +138,17 @@ public class ProjectService implements Serializable {
                 }
             }
             projectDocumentService.doUpdate(pt);
+        }
+    }
+
+    private void doUpdateMainDocument(ProjectEntity entity){
+        for(MainDocumentEntity md : entity.getMainDocumentList()){
+            if(md.getId()<0){
+                md.setId(null);
+                md.setLastUpdate(new Date());
+                md.setStatus(StatusEnum.ENABLE);
+                mainDocumentService.doSave(md);
+            }
         }
     }
 

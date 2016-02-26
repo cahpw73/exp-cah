@@ -133,6 +133,11 @@
                 <ui:include src="component/newProjectDocument.xhtml"/>
             </h:panelGroup>
         </p:dialog>
+        <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
+            <h:panelGroup id="addPdfGrpId">
+                <ui:include src="component/previewPdf.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
 
     </ui:define>
 </ui:composition>

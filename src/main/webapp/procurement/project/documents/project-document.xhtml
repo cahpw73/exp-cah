@@ -99,6 +99,14 @@
                         styleClass="btn btn-primary btn-commandLink-primeFaces"
                         async="false" update=":addProjectDocModalId" process="@this" onclick="doChangeProc()">
                 </p:commandLink>
+                &#160;
+                <p:commandLink id="addPODocBtnId"
+                               value="#{msgs['attachment.btn.add.pdf']}"
+                               oncomplete="PF('addPdfModal').show();"
+                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                               async="false" update=":addPdfGrpId" process="@this"
+                               onclick="doChangeProc();">
+                </p:commandLink>
             </div>
         </div>
     </div>
