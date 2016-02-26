@@ -12,3 +12,6 @@ update purchase_order set po_title=ltrim(rtrim((po_title)));
 
 #25/02/2016
 ALTER TABLE main_document ALTER COLUMN description DROP  NOT NULL;
+
+#26/02/2016
+ALTER TABLE project_document ALTER COLUMN description DROP  NOT NULL;

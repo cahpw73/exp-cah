@@ -1,5 +1,6 @@
 package ch.swissbytes.Service.business.projectDocument;
 
+import ch.swissbytes.domain.model.entities.AttachmentProjectDocumentEntity;
 import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
@@ -60,4 +61,5 @@ public class ProjectDocumentService implements Serializable {
         List<ProjectDocumentEntity> list = dao.findById(ProjectDocumentEntity.class, id);
         return list.isEmpty() ? null : list.get(0);
     }
+
 }

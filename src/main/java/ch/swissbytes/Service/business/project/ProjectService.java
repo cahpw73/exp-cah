@@ -1,12 +1,12 @@
 package ch.swissbytes.Service.business.project;
 
+import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
 import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
-import jdk.nashorn.internal.ir.EmptyNode;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -36,6 +36,9 @@ public class ProjectService implements Serializable {
 
     @Inject
     private ProjectDocumentService projectDocumentService;
+
+    @Inject
+    private AttachmentMainDocumentService attachmentMainDocumentService;
 
 
     @Transactional
@@ -67,22 +70,7 @@ public class ProjectService implements Serializable {
     private void doSaveProjectTextSnippet(ProjectEntity entity) {
         for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
             pt.setProject(entity);
-            /*if (pt.getTextSnippet().getId() < 0) {
-                pt.getTextSnippet().setId(null);
-                pt.getTextSnippet().setProject(entity);
-                pt.getTextSnippet().setLastUpdate(new Date());
-                pt.getTextSnippet().setStatus(StatusEnum.ENABLE);
-                TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
-                pt.setTextSnippet(textSnippetEntity);
-            }*/
             projectTextSnippetService.doSave(pt);
-            /*for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
-                if (ts.getId() < 0) {
-                    ts.setId(null);
-                    ts.setProject(entity);
-                    textSnippetService.save(ts);
-                }
-            }*/
         }
     }
 
@@ -130,23 +118,7 @@ public class ProjectService implements Serializable {
             }
             pt.setLastUpdate(new Date());
             projectTextSnippetService.doUpdate(pt);
-            /*if (pt.getTextSnippet().getId() == null||pt.getTextSnippet().getId()<0) {
-                pt.getTextSnippet().setId(null);
-                pt.getTextSnippet().setProject(entity);
-                pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
-                pt.getTextSnippet().setLastUpdate(new Date());
-                TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
-                pt.setTextSnippet(textSnippetEntity);
-            }*/
-
         }
-        /*for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
-            if (ts.getId() < 0) {
-                ts.setId(null);
-                ts.setProject(entity);
-                textSnippetService.save(ts);
-            }
-        }*/
     }
 
     private void doUpdateProjectDocument(ProjectEntity entity) {
@@ -161,24 +133,13 @@ public class ProjectService implements Serializable {
                 }
             }
             projectDocumentService.doUpdate(pt);
-            /*for (MainDocumentEntity md : entity.getMainDocumentList()) {
-                if (md.getId() < 0) {
-                    md.setId(null);
-                    md.setLastUpdate(new Date());
-                    md.setStatus(StatusEnum.ENABLE);
-                }
-            }*/
         }
     }
 
     @Transactional
     public ProjectTextSnippetEntity addNewTextSnippet(ProjectEntity projectEntity, TextSnippetEntity textSnippetEntity) {
-        /*textSnippetEntity.setId(null);
-        textSnippetEntity.setProject(projectEntity);
-        textSnippetEntity = textSnippetService.save(textSnippetEntity);*/
         ProjectTextSnippetEntity projectTextSnippetEntity = new ProjectTextSnippetEntity();
         projectTextSnippetEntity.setLastUpdate(new Date());
-        //projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
         projectTextSnippetEntity.setProject(projectEntity);
         projectTextSnippetEntity.setStatus(StatusEnum.ENABLE);
         projectTextSnippetEntity.setCode(textSnippetEntity.getCode());

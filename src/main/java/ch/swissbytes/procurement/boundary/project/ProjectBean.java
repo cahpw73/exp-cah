@@ -128,7 +128,7 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("load action crud");
         if (isCreateProject) {
             loadGlobalStandardTextList();
-            documentBean.loadMainDocumentsCreate(projectId);
+            documentBean.loadMainDocumentsCreate();
             documentBean.setProjectEntityId(projectId);
         } else {
             projectEntity = projectService.findProjectById(projectId);
@@ -171,7 +171,6 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("do update");
         mainMenuBean.select(0);
         if (dataValidateToUpdate()) {
-            //prepareToUpdateProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doUpdate(projectEntity);
             Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");

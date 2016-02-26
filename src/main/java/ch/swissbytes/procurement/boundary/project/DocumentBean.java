@@ -2,9 +2,7 @@ package ch.swissbytes.procurement.boundary.project;
 
 import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
-import ch.swissbytes.domain.model.entities.MainDocumentEntity;
-import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
-import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.procurement.boundary.Bean;
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +13,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,6 +42,7 @@ public class DocumentBean extends Bean implements Serializable {
     private List<ProjectDocumentEntity> projectDocumentList;
 
     private List<ProjectDocumentEntity> selectedProjectDocList;
+
 
     private ProjectDocumentEntity selectedProjectDoc;
 
@@ -90,7 +90,7 @@ public class DocumentBean extends Bean implements Serializable {
         mainDocumentList.removeAll(mainDocumentAuxList);
     }
 
-    public void loadMainDocumentsCreate(final Long projectId) {
+    public void loadMainDocumentsCreate() {
         mainDocumentList = mainDocumentService.findByProjectId();
     }
 
@@ -104,6 +104,9 @@ public class DocumentBean extends Bean implements Serializable {
             entity.setLastUpdate(new Date());
             entity.setMainDocumentEntity(md);
             entity.setStatus(StatusEnum.ENABLE);
+            if(md.getAttachmentMainDocument()!=null){
+                entity.setAttachmentProjectDocument(md.getAttachmentMainDocument());
+            }
             projectDocumentList.add(entity);
             temporaryProjectDocId--;
         }
@@ -205,7 +208,7 @@ public class DocumentBean extends Bean implements Serializable {
         docPreview = false;
     }
 
-    public void loadSeletedProjectDocPreview(ProjectDocumentEntity entity) {
+    public void loadSelectedProjectDocPreview(ProjectDocumentEntity entity){
         selectedProjectDoc = entity;
         docPreview = true;
     }
