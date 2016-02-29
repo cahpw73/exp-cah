@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
 import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
@@ -8,20 +9,26 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.ReorderEvent;
+import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -50,6 +57,9 @@ public class PoDocumentBean implements Serializable {
     @Inject
     private ProjectService projectService;
 
+    @Inject
+    private AttachmentMainDocumentService attachmentDocumentService;
+
     private List<ProjectDocumentEntity> projectDocumentList;
 
     private List<PODocumentEntity> droppedPODocumentList;
@@ -63,6 +73,8 @@ public class PoDocumentBean implements Serializable {
     private PODocumentEntity selectedPODocument;
 
     private PODocumentEntity poDocumentEntity;
+
+    private AttachmentMainDocumentEntity attachmentMainDocument;
 
     private Long tempPODocumentId = -1L;
 
@@ -82,6 +94,7 @@ public class PoDocumentBean implements Serializable {
         selectedPODocumentList = new ArrayList<>();
         poDocumentList = new ArrayList<>();
         projectDocumentListToPO = new ArrayList<>();
+        attachmentMainDocument = new AttachmentMainDocumentEntity();
     }
 
     @PreDestroy
@@ -179,6 +192,9 @@ public class PoDocumentBean implements Serializable {
         entity.setStatus(StatusEnum.ENABLE);
         entity.setLastUpdate(new Date());
         entity.setProjectDocumentEntity(projDoc);
+        if(projDoc.getAttachmentProjectDocument()!=null){
+            entity.setAttachmentProjectDocument(projDoc.getAttachmentProjectDocument());
+        }
         tempPODocumentId--;
         return entity;
     }
@@ -298,6 +314,28 @@ public class PoDocumentBean implements Serializable {
         context.execute("PF('addPODocModal').hide();");
     }
 
+    public void saveNewPODocumentWithPdf() {
+        PurchaseOrderProcurementEntity poe = poeService.findPOEById(poId);
+        poDocumentEntity.setId(null);
+        poDocumentEntity.setStatus(StatusEnum.ENABLE);
+        poDocumentEntity.setLastUpdate(new Date());
+        poDocumentEntity.setPoProcurementEntity(poe);
+        droppedPODocumentList.add(poDocumentEntity);
+        reorderDroppedPODocumentList();
+        int order = 0;
+        for (PODocumentEntity ps : droppedPODocumentList) {
+            ps.setOrdered(order);
+            order++;
+        }
+        attachmentDocumentService.doSave(attachmentMainDocument);
+        poDocumentEntity.setAttachmentProjectDocument(attachmentMainDocument);
+        ProjectDocumentEntity projDocEntity =  doSaveNewProjectDocument(poDocumentEntity);
+        poDocumentEntity.setProjectDocumentEntity(projDocEntity);
+        poDocumentService.doSaveNewPODocumentWithPdf(poDocumentEntity);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('addPdfModal').hide();");
+    }
+
     private ProjectDocumentEntity doSaveNewProjectDocument(PODocumentEntity poDocumentEntity){
         ProjectEntity projectEntity = projectService.findProjectById(projectId);
         ProjectDocumentEntity projDocEntity = new ProjectDocumentEntity();
@@ -306,9 +344,33 @@ public class PoDocumentBean implements Serializable {
         projDocEntity.setStatus(StatusEnum.ENABLE);
         projDocEntity.setLastUpdate(new Date());
         projDocEntity.setProject(projectEntity);
+        if(poDocumentEntity.getAttachmentProjectDocument()!=null){
+            projDocEntity.setAttachmentProjectDocument(poDocumentEntity.getAttachmentProjectDocument());
+        }
         projectDocumentService.doSave(projDocEntity);
         projectDocumentListToPO.add(projDocEntity);
         return projDocEntity;
+    }
+
+    public void handleUpload(FileUploadEvent event) {
+        UploadedFile uf = event.getFile();
+        enterFile(uf);
+    }
+
+    public void enterFile(UploadedFile uf) {
+        try {
+            InputStream is = uf.getInputstream();
+            attachmentMainDocument.setFile(IOUtils.toByteArray(is));
+            attachmentMainDocument.setMimeType(uf.getContentType());
+            attachmentMainDocument.setFileName(uf.getFileName());
+            is.close();
+        } catch (IOException ioe) {
+            log.log(Level.SEVERE, String.format("problems with file [" + uf.getFileName() + "]"));
+            log.log(Level.SEVERE, ioe.getMessage());
+        } catch (Exception ex) {
+            log.log(Level.SEVERE, String.format("problems with file [" + uf.getFileName() + "]"));
+            log.log(Level.SEVERE, ex.getMessage());
+        }
     }
 
     public boolean verifyScheduleValue(PODocumentEntity entity) {
@@ -349,6 +411,14 @@ public class PoDocumentBean implements Serializable {
 
     public List<ProjectDocumentEntity> getProjectDocumentListToPO() {
         return projectDocumentListToPO;
+    }
+
+    public AttachmentMainDocumentEntity getAttachmentMainDocument() {
+        return attachmentMainDocument;
+    }
+
+    public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
+        this.attachmentMainDocument = attachmentMainDocument;
     }
 
     //************************************************************************

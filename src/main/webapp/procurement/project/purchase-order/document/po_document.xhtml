@@ -60,14 +60,17 @@
                             <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
                                       style="padding-left: 8px!important;">
                                 <h:panelGroup rendered="#{!poDocumentBean.verifyScheduleValue(_dt)}">
-                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
+                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
                                                update=":poDocModalId" oncomplete="PF('poDocModal').show()"
                                                async="false" action="#{poDocumentBean.loadSeletedPODocument(_dt)}"/>
                                 &#160;
-                                <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{!_dt.isEditable}" process="@this"
+                                <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
                                                update=":poDocModalId" oncomplete="PF('poDocModal').show()"
                                                async="false" action="#{poDocumentBean.loadSeletedPODocumentToPreview(_dt)}"/>
                                 </h:panelGroup>
+                                <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument != null}" process="@this"
+                                               update=":previewPODocModalId" oncomplete="PF('previewPODocModal').show()"
+                                               async="false" action="#{poDocumentBean.loadSeletedPODocumentToPreview(_dt)}"/>
                             </p:column>
                         </p:dataTable>
                     </div>
@@ -86,13 +89,22 @@
             <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
                 <h:panelGroup rendered="#{poBean.beingEdited}">
                     <p:commandLink id="addPODocBtnId"
-
                             value="#{msgs['lbl.add']}"
                             oncomplete="PF('addPODocModal').show();"
                             action="#{poDocumentBean.resetPODocument}"
                             styleClass="btn btn-primary btn-commandLink-primeFaces"
                             async="false" update=":addPODocModalId" process="@this"
                             onclick="doChangeProc();">
+                    </p:commandLink>
+                    <br/>
+                    <p:commandLink id="addPODocPdfBtnId"
+                                   value="#{msgs['attachment.btn.add.pdf']}"
+                                   oncomplete="PF('addPdfModal').show();"
+                                   action="#{poDocumentBean.resetPODocument}"
+                                   styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                   async="false" update=":addPdfGrpId" process="@this"
+                                   onclick="doChangeProc();"
+                                   style="margin-top: 20px!important;">
                     </p:commandLink>
                     <br/>
                     <p:commandLink value="#{msgs['lbl.remove']}"

@@ -4,6 +4,7 @@ package ch.swissbytes.procurement.report;
 import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ClassEnum;
+import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
@@ -702,9 +703,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if(!poDocumentList.isEmpty()) {
             for (PODocumentEntity pd : poDocumentList) {
                 if (pd.getScheduleE() == null) {
-                    pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
-                    pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
-                    otherDocumentList.add(getReportFromHtml(pd.getDescription()));
+                    if(StringUtils.isNotEmpty(pd.getDescription())) {
+                        pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
+                        pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
+                        otherDocumentList.add(getReportFromHtml(pd.getDescription()));
+                    }else {
+                        log.info("attachmentPoDocId = " + pd.getAttachmentProjectDocument().getId());
+                        AttachmentMainDocumentEntity attachmentMainDocument = getAttachmentDocument(pd.getAttachmentProjectDocument().getId());
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream(attachmentMainDocument.getFile().length);
+                        baos.write(attachmentMainDocument.getFile(), 0, attachmentMainDocument.getFile().length);
+                        otherDocumentList.add(baos);
+                    }
                 } else {
                     otherDocumentList.add(getReportSchedule());
                 }
@@ -712,6 +721,17 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         }else{
             otherDocumentList.add(getReportSchedule());
         }
+    }
+
+    public AttachmentMainDocumentEntity getAttachmentDocument(final Long id){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM AttachmentMainDocumentEntity x ");
+        sb.append("WHERE x.id=:MAIN_DOC_ID ");
+        Query query = entityManager.createQuery(sb.toString());
+        query.setParameter("MAIN_DOC_ID", id);
+        List<AttachmentMainDocumentEntity> list = query.getResultList();
+        return list.isEmpty()?null:list.get(0);
     }
 
     private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {

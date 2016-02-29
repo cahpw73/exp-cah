@@ -27,6 +27,7 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
     private PurchaseOrderProcurementEntity poProcurementEntity;
     private ProjectDocumentEntity projectDocumentEntity;
     private Boolean scheduleE;
+    private AttachmentMainDocumentEntity attachmentProjectDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -63,7 +64,7 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
 
     @Lob
     @Size(max = 20000)
-    @Column(name = "description", nullable = false, length = 20000)
+    @Column(name = "description", nullable = true, length = 20000)
     public String getDescription() {
         return description;
     }
@@ -126,6 +127,16 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
 
     public void setScheduleE(Boolean scheduleE) {
         this.scheduleE = scheduleE;
+    }
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="attachment_project_document_id")
+    public AttachmentMainDocumentEntity getAttachmentProjectDocument() {
+        return attachmentProjectDocument;
+    }
+
+    public void setAttachmentProjectDocument(AttachmentMainDocumentEntity attachmentProjectDocument) {
+        this.attachmentProjectDocument = attachmentProjectDocument;
     }
 
     @Override

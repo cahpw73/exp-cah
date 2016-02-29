@@ -110,7 +110,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
         this.purchaseOrder = purchaseOrder;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="attachment_project_document_id")
     public AttachmentMainDocumentEntity getAttachmentProjectDocument() {
         return attachmentProjectDocument;

@@ -15,3 +15,6 @@ ALTER TABLE main_document ALTER COLUMN description DROP  NOT NULL;
 
 #26/02/2016
 ALTER TABLE project_document ALTER COLUMN description DROP  NOT NULL;
+
+#29/02/2016
+ALTER TABLE po_document ALTER COLUMN description DROP  NOT NULL;
