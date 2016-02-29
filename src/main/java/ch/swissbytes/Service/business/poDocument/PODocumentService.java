@@ -1,7 +1,9 @@
 package ch.swissbytes.Service.business.poDocument;
 
 
+import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
 import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
+import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.PODocumentEntity;
 import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
@@ -25,6 +27,7 @@ public class PODocumentService implements Serializable {
 
     @Inject
     private ProjectDocumentService projectDocumentService;
+
 
     public List<PODocumentEntity> findByPOId(final Long poId){
         return dao.findByPOId(poId);
@@ -53,6 +56,11 @@ public class PODocumentService implements Serializable {
 
     @Transactional
     public void doSaveNewPODocumentDlg(PODocumentEntity entity){
+        dao.doSave(entity);
+    }
+
+    @Transactional
+    public void doSaveNewPODocumentWithPdf(PODocumentEntity entity){
         dao.doSave(entity);
     }
 

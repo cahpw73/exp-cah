@@ -23,53 +23,54 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
     private static final Logger log = Logger.getLogger(MainDocumentDao.class.getName());
 
 
-    public void doSave(MainDocumentEntity entity){
+    public void doSave(MainDocumentEntity entity) {
         super.save(entity);
     }
 
-    public void doUpdate(MainDocumentEntity detachedEntity){
+    public void doUpdate(MainDocumentEntity detachedEntity) {
         MainDocumentEntity entity = super.merge(detachedEntity);
-       super.update(entity);
+        super.update(entity);
     }
 
-    public List<MainDocumentEntity> getMainDocumentList(){
-        StringBuilder sb=new StringBuilder();
+    public List<MainDocumentEntity> getMainDocumentList() {
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM MainDocumentEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
+        sb.append("AND x.project is null ");
         sb.append("ORDER BY x.description ");
-        Map<String,Object> map=new HashMap<String,Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
     }
 
 
-    public List<MainDocumentEntity> findByCodeButWithNoId(String code, Long id){
-        StringBuilder sb=new StringBuilder();
+    public List<MainDocumentEntity> findByCodeButWithNoId(String code, Long id) {
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM MainDocumentEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
         sb.append("AND trim(lower(x.code))=:CODE ");
         sb.append("AND NOT x.id=:MAIN_DOC_ID ");
-        Map<String,Object> map=new HashMap<String,Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
         map.put("CODE", code.toLowerCase().trim());
-        map.put("MAIN_DOC_ID", id!=null?id:0L);
-        return super.findBy(sb.toString(),map);
+        map.put("MAIN_DOC_ID", id != null ? id : 0L);
+        return super.findBy(sb.toString(), map);
     }
 
-    public List<MainDocumentEntity> findByCode(final String code){
-        StringBuilder sb=new StringBuilder();
+    public List<MainDocumentEntity> findByCode(final String code) {
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM MainDocumentEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
-        Map<String,Object> map=new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("ENABLED", StatusEnum.ENABLE);
-        if(StringUtils.isNotEmpty(code)){
+        if (StringUtils.isNotEmpty(code)) {
             sb.append("AND lower(x.code) LIKE :CODE ");
-            map.put("CODE", "%"+code.toLowerCase().trim()+"%");
+            map.put("CODE", "%" + code.toLowerCase().trim() + "%");
         }
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
     }
 
     @Override
@@ -88,12 +89,53 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
     }
 
     public List<MainDocumentEntity> findByProject() {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM MainDocumentEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
-        Map<String,Object> map=new HashMap<String,Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),map);
+        return super.findBy(sb.toString(), map);
+    }
+
+    public List<MainDocumentEntity> findMainDocumentToCrate() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM MainDocumentEntity x ");
+        sb.append(" WHERE x.status=:ENABLED ");
+        sb.append(" AND x.project is null ");
+        sb.append(" ORDER BY x.code ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(), map);
+    }
+
+    public List<MainDocumentEntity> findMainDocumentToEdit(final Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM MainDocumentEntity x ");
+        sb.append(" WHERE x.status=:ENABLED ");
+        sb.append(" AND (x.project is null ");
+        sb.append(" OR x.project.id = :PROJECT_ID) ");
+        sb.append("ORDER BY x.code ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("PROJECT_ID", projectId);
+        return super.findBy(sb.toString(), map);
+    }
+
+    public List<MainDocumentEntity> findByProjectIdAndCode(Long projectId, String code) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM MainDocumentEntity x ");
+        sb.append(" WHERE x.status=:ENABLED ");
+        sb.append(" AND x.project.id = :PROJECT_ID ");
+        sb.append(" AND x.code = :CODE ");
+        sb.append("ORDER BY x.code ");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("PROJECT_ID", projectId);
+        map.put("CODE", code);
+        return super.findBy(sb.toString(), map);
     }
 }

@@ -103,7 +103,7 @@
                 </h:panelGroup>
                 <br/>
 
-                <p:commandLink id="addStandarTextBtnId"
+                <p:commandLink id="addStandarTextBtnId" disabled="#{projectBean.createProject}"
                         value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
                         action="#{textSnippetBean.openTextSnippetDialogToAddNew}"
                         styleClass="btn btn-primary btn-commandLink-primeFaces" onclick="doChangeProc()">

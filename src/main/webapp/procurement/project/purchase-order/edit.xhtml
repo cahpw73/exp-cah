@@ -250,5 +250,15 @@
                 <ui:include src="component/newPODocument.xhtml"/>
             </h:panelGroup>
         </p:dialog>
+        <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
+            <h:panelGroup id="addPdfGrpId">
+                <ui:include src="component/previewPdf.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Project Doc" widgetVar="previewPODocModal" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPODocModalId">
+                <ui:include src="component/previewProjectDocument.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
     </ui:define>
 </ui:composition>

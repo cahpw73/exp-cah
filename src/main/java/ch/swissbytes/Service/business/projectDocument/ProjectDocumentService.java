@@ -1,7 +1,9 @@
 package ch.swissbytes.Service.business.projectDocument;
 
 import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
+import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
 import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
+import ch.swissbytes.domain.model.entities.MainDocumentEntity;
 import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
@@ -25,12 +27,29 @@ public class ProjectDocumentService implements Serializable {
     @Inject
     private AttachmentMainDocumentService attachmentService;
 
+    @Inject
+    private MainDocumentService mainDocumentService;
+
     @Transactional
     public void doSave(ProjectDocumentEntity entity) {
         if (entity != null) {
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             dao.doSave(entity);
+        }
+    }
+
+    @Transactional
+    public void doSaveNewProjectDocWithProject(ProjectDocumentEntity entity) {
+        if (entity != null) {
+            entity.setStatus(StatusEnum.ENABLE);
+            entity.setLastUpdate(new Date());
+            dao.doSave(entity);
+            MainDocumentEntity mainDocument = new MainDocumentEntity();
+            mainDocument.setCode(entity.getCode());
+            mainDocument.setDescription(entity.getDescription());
+            mainDocument.setProject(entity.getProject());
+            mainDocumentService.doSave(mainDocument);
         }
     }
 
@@ -42,6 +61,11 @@ public class ProjectDocumentService implements Serializable {
             entity.setStatus(StatusEnum.ENABLE);
             entity.setLastUpdate(new Date());
             dao.doSave(entity);
+            MainDocumentEntity mainDocument = new MainDocumentEntity();
+            mainDocument.setCode(entity.getCode());
+            mainDocument.setAttachmentMainDocument(attachmentMainDocumentEntity);
+            mainDocument.setProject(entity.getProject());
+            mainDocumentService.doSave(mainDocument);
         }
     }
 
