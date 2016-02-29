@@ -80,7 +80,9 @@ public class ProjectService implements Serializable {
 
     private void doSaveProjectDocument(ProjectEntity entity) {
         for (ProjectDocumentEntity pt : entity.getProjectDocumentList()) {
-            pt.setProject(entity);
+            if(pt.getProject()==null) {
+                pt.setProject(entity);
+            }
             pt.setLastUpdate(new Date());
             projectDocumentService.doSave(pt);
         }

@@ -23,6 +23,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
     private StatusEnum status;
     private Date lastUpdate;
     private AttachmentMainDocumentEntity attachmentMainDocument;
+    private ProjectEntity project;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -85,6 +86,16 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
 
     public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
         this.attachmentMainDocument = attachmentMainDocument;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="project_id")
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
     }
 
     @Override

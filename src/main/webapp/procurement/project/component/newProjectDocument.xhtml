@@ -19,7 +19,7 @@
                 <h:outputText value="#{documentBean.projectDocument.description}"/>
             </textarea>
             <br/>
-            <p:commandLink value="#{msgs['lbl.save']}" action="#{documentBean.saveNewProjectDocument}"
+            <p:commandLink value="#{msgs['lbl.save']}" action="#{documentBean.saveNewProjectDocumentWithProject}"
                            styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
                            onclick="document.getElementsByClassName('textCKEditor3')[0].value = CKEDITOR.instances.editor3.getData();"
                            update=":editForm:projectDocDt" async="false" process="newProjectDocumentForm"/>

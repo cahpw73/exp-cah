@@ -97,7 +97,23 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
         return dao.findByProject();
     }
 
+    @Transactional
+    public List<MainDocumentEntity> findMainDocumentsToCreate() {
+        return dao.findMainDocumentToCrate();
+    }
+
+    @Transactional
+    public List<MainDocumentEntity> findMainDocumentsToEdit(final Long projectId) {
+        return dao.findMainDocumentToEdit(projectId);
+    }
+
     public AttachmentMainDocumentEntity findAttachmentMainDocument(Long attachmentMainDocumentId) {
         return attachmentService.findById(attachmentMainDocumentId);
+    }
+
+    @Transactional
+    public MainDocumentEntity findByProjectIdAndCode(Long projectId, String code) {
+        List<MainDocumentEntity> list = dao.findByProjectIdAndCode(projectId, code);
+        return list.isEmpty() ? null : list.get(0);
     }
 }

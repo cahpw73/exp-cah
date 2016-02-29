@@ -87,11 +87,13 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void loadMainDocumentsEdit(final Long projectId) {
         projectDocumentList = projectDocumentService.findByProjectId(projectId);
-        mainDocumentList = mainDocumentService.findByProjectId();
+        mainDocumentList = mainDocumentService.findMainDocumentsToEdit(projectId);
         List<MainDocumentEntity> mainDocumentAuxList = new ArrayList<>();
         for (ProjectDocumentEntity pd : projectDocumentList) {
             for (MainDocumentEntity md : mainDocumentList) {
-                if (pd.getMainDocumentEntity() != null && pd.getMainDocumentEntity().getId().intValue() == md.getId().intValue()) {
+                boolean inProject = pd.getProject() != null && md.getProject()!=null ? pd.getProject().getId().intValue() == md.getProject().getId().intValue() : false;
+                boolean inMainDoc = pd.getMainDocumentEntity() != null ? pd.getMainDocumentEntity().getId().intValue() == md.getId().intValue() : false;
+                if (inProject || inMainDoc) {
                     mainDocumentAuxList.add(md);
                 }
             }
@@ -100,7 +102,7 @@ public class DocumentBean extends Bean implements Serializable {
     }
 
     public void loadMainDocumentsCreate() {
-        mainDocumentList = mainDocumentService.findByProjectId();
+        mainDocumentList = mainDocumentService.findMainDocumentsToCreate();
     }
 
     public void addToProjectText() {
@@ -113,7 +115,7 @@ public class DocumentBean extends Bean implements Serializable {
             entity.setLastUpdate(new Date());
             entity.setMainDocumentEntity(md);
             entity.setStatus(StatusEnum.ENABLE);
-            if(md.getAttachmentMainDocument()!=null){
+            if (md.getAttachmentMainDocument() != null) {
                 entity.setAttachmentProjectDocument(md.getAttachmentMainDocument());
             }
             projectDocumentList.add(entity);
@@ -139,15 +141,21 @@ public class DocumentBean extends Bean implements Serializable {
                     auxProjectList.add(pd);
                 }
             } else {
-                MainDocumentEntity mainDocument = new MainDocumentEntity();
-                mainDocument.setId(tempMainDocId);
-                mainDocument.setDescription(pd.getDescription());
-                mainDocument.setCode(pd.getCode());
-                if(pd.getAttachmentProjectDocument() != null){
-                    mainDocument.setAttachmentMainDocument(pd.getAttachmentProjectDocument());
+                MainDocumentEntity mainDocument = mainDocumentService.findByProjectIdAndCode(pd.getProject().getId(), pd.getCode());
+                if(mainDocument==null) {
+                    mainDocument = new MainDocumentEntity();
+                    mainDocument.setId(tempMainDocId);
+                    tempMainDocId--;
+                    mainDocument.setDescription(pd.getDescription());
+                    mainDocument.setCode(pd.getCode());
+                    if (pd.getAttachmentProjectDocument() != null) {
+                        mainDocument.setAttachmentMainDocument(pd.getAttachmentProjectDocument());
+                    }
+                    mainDocumentList.add(mainDocument);
+                }else{
+                    mainDocumentList.add(mainDocument);
                 }
-                mainDocumentList.add(mainDocument);
-                tempMainDocId--;
+
                 if (pd.getId() > 0) {
                     for (ProjectDocumentEntity pe : projectDocumentList) {
                         if (pd.getId().intValue() == pe.getId().intValue()) {
@@ -169,42 +177,6 @@ public class DocumentBean extends Bean implements Serializable {
         }
     }
 
-    public void editItem(ProjectDocumentEntity entity) {
-        log.info("edit item");
-        entity.startEditing();
-        entity.storeOldValue(entity);
-    }
-
-    public void confirmItem(ProjectDocumentEntity entity) {
-        log.info("confirm text");
-        int index = projectDocumentList.indexOf(entity);
-        projectDocumentList.set(index, entity);
-        entity.stopEditing();
-    }
-
-    public void deleteItem(ProjectDocumentEntity entity) {
-        log.info("delete item");
-        if (entity.getId() < 0L) {
-            projectDocumentList.remove(entity);
-        } else {
-            entity.setStatus(StatusEnum.DELETED);
-        }
-    }
-
-    public void cancelEditionItem(ProjectDocumentEntity entity) {
-        log.info("cancel item");
-        if (!itemNoIsNotEmpty(entity)) {
-            projectDocumentList.remove(entity);
-        } else {
-            entity.stopEditing();
-            entity = entity.getValueCloned();
-        }
-    }
-
-    private boolean itemNoIsNotEmpty(ProjectDocumentEntity entity) {
-        return StringUtils.isNotEmpty(entity.getDescription()) && StringUtils.isNotBlank(entity.getDescription());
-    }
-
     public List<ProjectDocumentEntity> filteredList() {
         List<ProjectDocumentEntity> list = new ArrayList<>();
         for (ProjectDocumentEntity r : projectDocumentList) {
@@ -220,7 +192,7 @@ public class DocumentBean extends Bean implements Serializable {
         docPreview = false;
     }
 
-    public void loadSelectedProjectDocPreview(ProjectDocumentEntity entity){
+    public void loadSelectedProjectDocPreview(ProjectDocumentEntity entity) {
         selectedProjectDoc = entity;
         docPreview = true;
     }
@@ -235,16 +207,16 @@ public class DocumentBean extends Bean implements Serializable {
         context.execute("PF('projectDocModal').hide();");
     }
 
-    public void saveNewProjectDocument() {
+    public void saveNewProjectDocumentWithProject() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
-        projectDocumentService.doSave(projectDocument);
+        projectDocumentService.doSaveNewProjectDocWithProject(projectDocument);
         projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('addProjectDocModal').hide();");
     }
 
-    public void saveNewProjectDocumentWithPdf(){
+    public void saveNewProjectDocumentWithPdf() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
         projectDocumentService.doSaveWithPdf(projectDocument, attachmentMainDocument);

@@ -100,8 +100,9 @@
                         async="false" update=":addProjectDocModalId" process="@this" onclick="doChangeProc()">
                 </p:commandLink>
                 &#160;
-                <p:commandLink id="addPODocBtnId"
+                <p:commandLink id="addPODocBtnId" disabled="#{projectBean.createProject}"
                                value="#{msgs['attachment.btn.add.pdf']}"
+                               action="#{documentBean.resetProjectDocument}"
                                oncomplete="PF('addPdfModal').show();"
                                styleClass="btn btn-primary btn-commandLink-primeFaces"
                                async="false" update=":addPdfGrpId" process="@this"

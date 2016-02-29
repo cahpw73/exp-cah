@@ -158,7 +158,6 @@ public class ProjectBean extends Bean implements Serializable {
         mainMenuBean.select(0);
         if (dataValidate()) {
             prepareProjectTextAndProjectDocumentToSave();
-            //prepareToSaveProjectTextSnippet();
             collectionAllData();
             projectEntity = projectService.doSave(projectEntity);
             Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
