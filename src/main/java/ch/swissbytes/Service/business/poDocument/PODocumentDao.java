@@ -58,4 +58,16 @@ public class PODocumentDao extends GenericDao<PODocumentEntity> implements Seria
     protected String addCriteria(Filter filter) {
         return null;
     }
+
+    public List<PODocumentEntity> findByProjectDocumentId(final Long projectDocId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM PODocumentEntity x ");
+        sb.append(" WHERE x.status = :ENABLED ");
+        sb.append(" AND x.projectDocumentEntity.id = :PROJECT_DOC_ID ");
+        Map<String,Object> map=new HashMap<>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("PROJECT_DOC_ID", projectDocId);
+        return super.findBy(sb.toString(),map);
+    }
 }
