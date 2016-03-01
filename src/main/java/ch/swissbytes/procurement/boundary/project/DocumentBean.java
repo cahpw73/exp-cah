@@ -67,6 +67,8 @@ public class DocumentBean extends Bean implements Serializable {
 
     private boolean docPreview = false;
 
+    private boolean documentEditing = false;
+
 
     @PostConstruct
     public void init() {
@@ -210,6 +212,7 @@ public class DocumentBean extends Bean implements Serializable {
     public void saveNewProjectDocumentWithProject() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
+        projectDocument.setCode(projectDocument.getCode().toUpperCase());
         projectDocumentService.doSaveNewProjectDocWithProject(projectDocument);
         projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
         RequestContext context = RequestContext.getCurrentInstance();
@@ -219,14 +222,17 @@ public class DocumentBean extends Bean implements Serializable {
     public void saveNewProjectDocumentWithPdf() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
+        projectDocument.setCode(projectDocument.getCode().toUpperCase());
         projectDocumentService.doSaveWithPdf(projectDocument, attachmentMainDocument);
         projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('addPdfModal').hide();");
+        documentEditing = true;
     }
 
     public void resetProjectDocument() {
         projectDocument = new ProjectDocumentEntity();
+        attachmentMainDocument = new AttachmentMainDocumentEntity();
     }
 
     public void doSearchGlobalText() {
@@ -262,6 +268,10 @@ public class DocumentBean extends Bean implements Serializable {
             log.log(Level.SEVERE, String.format("problems with file [" + uf.getFileName() + "]"));
             log.log(Level.SEVERE, ex.getMessage());
         }
+    }
+
+    public void changeValueDocumentEditing(){
+        documentEditing = false;
     }
 
     public String getSearchTerm() {
@@ -342,5 +352,13 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
         this.attachmentMainDocument = attachmentMainDocument;
+    }
+
+    public boolean isDocumentEditing() {
+        return documentEditing;
+    }
+
+    public void setDocumentEditing(boolean documentEditing) {
+        this.documentEditing = documentEditing;
     }
 }

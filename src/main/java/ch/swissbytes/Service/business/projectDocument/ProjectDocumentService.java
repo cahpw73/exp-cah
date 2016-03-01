@@ -19,16 +19,11 @@ import java.util.logging.Logger;
  */
 public class ProjectDocumentService implements Serializable {
 
-    private static final Logger log = Logger.getLogger(ProjectDocumentService.class.getName());
-
     @Inject
     private ProjectDocumentDao dao;
 
     @Inject
     private AttachmentMainDocumentService attachmentService;
-
-    @Inject
-    private MainDocumentService mainDocumentService;
 
     @Transactional
     public void doSave(ProjectDocumentEntity entity) {
@@ -46,10 +41,12 @@ public class ProjectDocumentService implements Serializable {
             entity.setLastUpdate(new Date());
             dao.doSave(entity);
             MainDocumentEntity mainDocument = new MainDocumentEntity();
-            mainDocument.setCode(entity.getCode());
+            mainDocument.setCode(entity.getCode().toUpperCase());
+            mainDocument.setLastUpdate(new Date());
+            mainDocument.setStatus(StatusEnum.ENABLE);
             mainDocument.setDescription(entity.getDescription());
             mainDocument.setProject(entity.getProject());
-            mainDocumentService.doSave(mainDocument);
+            dao.saveAndFlush(mainDocument);
         }
     }
 
@@ -62,10 +59,12 @@ public class ProjectDocumentService implements Serializable {
             entity.setLastUpdate(new Date());
             dao.doSave(entity);
             MainDocumentEntity mainDocument = new MainDocumentEntity();
-            mainDocument.setCode(entity.getCode());
+            mainDocument.setCode(entity.getCode().toUpperCase());
+            mainDocument.setLastUpdate(new Date());
+            mainDocument.setStatus(StatusEnum.ENABLE);
             mainDocument.setAttachmentMainDocument(attachmentMainDocumentEntity);
             mainDocument.setProject(entity.getProject());
-            mainDocumentService.doSave(mainDocument);
+            dao.saveAndFlush(mainDocument);
         }
     }
 
@@ -96,6 +95,16 @@ public class ProjectDocumentService implements Serializable {
     public ProjectDocumentEntity findById(Long id) {
         List<ProjectDocumentEntity> list = dao.findById(ProjectDocumentEntity.class, id);
         return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Transactional
+    public List<ProjectDocumentEntity> doBulkUpdateCode(MainDocumentEntity mainDocument){
+        List<ProjectDocumentEntity> list = dao.findByMainDocumentIdOnly(mainDocument.getId());
+        for(ProjectDocumentEntity p : list){
+            p.setCode(mainDocument.getCode().toUpperCase());
+            dao.doUpdate(p);
+        }
+        return list;
     }
 
 }

@@ -83,4 +83,15 @@ public class PODocumentService implements Serializable {
             }
         }
     }
+
+    @Transactional
+    public void doBulkUpdateCode(List<ProjectDocumentEntity> projectDocumentList){
+        for(ProjectDocumentEntity p : projectDocumentList){
+            List<PODocumentEntity> list = dao.findByProjectDocumentId(p.getId());
+            for(PODocumentEntity pd : list){
+                pd.setCode(p.getCode().toUpperCase());
+                dao.doUpdate(pd);
+            }
+        }
+    }
 }

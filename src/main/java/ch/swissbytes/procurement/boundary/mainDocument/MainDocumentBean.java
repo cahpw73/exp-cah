@@ -2,6 +2,8 @@ package ch.swissbytes.procurement.boundary.mainDocument;
 
 
 import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
+import ch.swissbytes.Service.business.poDocument.PODocumentService;
+import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.MainDocumentEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
@@ -39,6 +41,12 @@ public class MainDocumentBean implements Serializable {
 
     @Inject
     private MainDocumentService service;
+
+    @Inject
+    private ProjectDocumentService projectDocumentService;
+
+    @Inject
+    private PODocumentService poDocumentService;
 
     private List<MainDocumentEntity> list;
 
@@ -129,10 +137,12 @@ public class MainDocumentBean implements Serializable {
         selected.setLastUpdate(new Date());
         selected.setCode(selected.getCode().toUpperCase());
         service.doUpdate(selected);
+        poDocumentService.doBulkUpdateCode(projectDocumentService.doBulkUpdateCode(selected));
         return "main-document?faces-redirect=true";
     }
 
     public String doDelete() {
+
         service.delete(selected);
         return "main-document?faces-redirect=true";
     }

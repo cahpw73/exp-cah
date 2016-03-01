@@ -86,6 +86,18 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
         return list.isEmpty() ? null : list.get(0);
     }
 
+    public List<ProjectDocumentEntity> findByMainDocumentIdOnly(Long id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND p.mainDocumentEntity.id = :MAIN_DOCUMENT_ID ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("MAIN_DOCUMENT_ID", id);
+        return super.findBy(sb.toString(), params);
+    }
+
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
     }
@@ -99,6 +111,5 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
     protected String addCriteria(Filter filter) {
         return null;
     }
-
 
 }
