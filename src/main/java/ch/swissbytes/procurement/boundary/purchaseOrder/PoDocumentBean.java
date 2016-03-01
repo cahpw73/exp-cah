@@ -86,6 +86,8 @@ public class PoDocumentBean implements Serializable {
 
     private boolean docPreview = false;
 
+    private boolean documentEditing = false;
+
     @PostConstruct
     public void create() {
         log.info("create poTextBean");
@@ -291,6 +293,7 @@ public class PoDocumentBean implements Serializable {
 
     public void resetPODocument() {
         poDocumentEntity = new PODocumentEntity();
+        attachmentMainDocument = new AttachmentMainDocumentEntity();
     }
 
     public void saveNewPODocument() {
@@ -335,6 +338,7 @@ public class PoDocumentBean implements Serializable {
         poDocumentService.doSaveNewPODocumentWithPdf(poDocumentEntity);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('addPdfModal').hide();");
+        documentEditing = true;
     }
 
     private ProjectDocumentEntity doSaveNewProjectDocument(PODocumentEntity poDocumentEntity){
@@ -376,6 +380,10 @@ public class PoDocumentBean implements Serializable {
 
     public boolean verifyScheduleValue(PODocumentEntity entity) {
         return (entity != null && entity.getScheduleE() != null) ? true : false;
+    }
+
+    public void changeValueDocumentEditing(){
+        documentEditing = false;
     }
 
     public List<ProjectDocumentEntity> getProjectDocumentList() {
@@ -440,5 +448,11 @@ public class PoDocumentBean implements Serializable {
         this.poDocumentEntity = poDocumentEntity;
     }
 
+    public boolean isDocumentEditing() {
+        return documentEditing;
+    }
 
+    public void setDocumentEditing(boolean documentEditing) {
+        this.documentEditing = documentEditing;
+    }
 }

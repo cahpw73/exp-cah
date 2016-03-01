@@ -260,5 +260,11 @@
                 <ui:include src="component/previewProjectDocument.xhtml"/>
             </h:panelGroup>
         </p:dialog>
+        <h:panelGroup rendered="#{poDocumentBean.documentEditing}">
+            <h:outputScript name="js/poTabActive.js"/>
+            <h:form>
+                <p:remoteCommand actionListener="#{poDocumentBean.changeValueDocumentEditing}" />
+            </h:form>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

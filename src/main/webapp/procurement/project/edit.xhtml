@@ -31,14 +31,14 @@
                 <div class="col-md-8 panel-tab-users">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#projectDetail" role="tab"
+                        <li id="tabProject" class="active"><a href="#projectDetail" role="tab"
                                               data-toggle="tab">#{msgs['project.detail.title.tab']}</a></li>
-                        <li><a href="#standardText" role="tab"
+                        <li id="tabStandarText"><a href="#standardText" role="tab"
                                data-toggle="tab">#{msgs['project.standard.text.title.tab']}</a>
                         </li>
-                        <li><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
+                        <li id="tabCurrency"><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
                         </li>
-                        <li><a href="#documents" role="tab"
+                        <li id="tabDocument"><a href="#documents" role="tab"
                                data-toggle="tab">#{msgs['project.docs.title.tab']}</a>
                         </li>
                     </ul>
@@ -138,6 +138,11 @@
                 <ui:include src="component/previewPdf.xhtml"/>
             </h:panelGroup>
         </p:dialog>
-
+        <h:panelGroup rendered="#{documentBean.documentEditing}">
+            <h:outputScript name="js/projectTabActive.js"/>
+            <h:form>
+                <p:remoteCommand actionListener="#{documentBean.changeValueDocumentEditing}" />
+            </h:form>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>
