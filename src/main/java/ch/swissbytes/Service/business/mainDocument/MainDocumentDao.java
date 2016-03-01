@@ -3,7 +3,7 @@ package ch.swissbytes.Service.business.mainDocument;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.MainDocumentEntity;
-import ch.swissbytes.domain.model.entities.TextSnippetEntity;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang3.StringUtils;
 
@@ -137,5 +137,19 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
         map.put("PROJECT_ID", projectId);
         map.put("CODE", code);
         return super.findBy(sb.toString(), map);
+    }
+
+    public List<ProjectDocumentEntity> findProjectDocumentByAttachmentIdOrMainDocumentId(final Long attachId,final Long mainId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND (p.attachmentProjectDocument.id = :ATTACH_ID ");
+        sb.append(" OR p.mainDocumentEntity.id =:MAIN_ID) ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("ATTACH_ID", attachId);
+        params.put("MAIN_ID",mainId);
+        return super.findBy(sb.toString(), params);
     }
 }
