@@ -38,7 +38,7 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
         sb.append("FROM MainDocumentEntity x ");
         sb.append("WHERE x.status=:ENABLED ");
         sb.append("AND x.project is null ");
-        sb.append("ORDER BY x.description ");
+        sb.append("ORDER BY x.code ");
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("ENABLED", StatusEnum.ENABLE);
         return super.findBy(sb.toString(), map);

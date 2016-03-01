@@ -210,6 +210,7 @@ public class DocumentBean extends Bean implements Serializable {
     public void saveNewProjectDocumentWithProject() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
+        projectDocument.setCode(projectDocument.getCode().toUpperCase());
         projectDocumentService.doSaveNewProjectDocWithProject(projectDocument);
         projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
         RequestContext context = RequestContext.getCurrentInstance();
@@ -219,6 +220,7 @@ public class DocumentBean extends Bean implements Serializable {
     public void saveNewProjectDocumentWithPdf() {
         projectDocument.setProject(projectEntity);
         projectDocument.setMainDocumentEntity(null);
+        projectDocument.setCode(projectDocument.getCode().toUpperCase());
         projectDocumentService.doSaveWithPdf(projectDocument, attachmentMainDocument);
         projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
         RequestContext context = RequestContext.getCurrentInstance();

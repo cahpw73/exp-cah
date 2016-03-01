@@ -299,7 +299,7 @@ public class PoDocumentBean implements Serializable {
         poDocumentEntity.setStatus(StatusEnum.ENABLE);
         poDocumentEntity.setLastUpdate(new Date());
         poDocumentEntity.setPoProcurementEntity(poe);
-
+        poDocumentEntity.setCode(poDocumentEntity.getCode().toUpperCase());
         droppedPODocumentList.add(poDocumentEntity);
         reorderDroppedPODocumentList();
         int order = 0;
@@ -320,6 +320,7 @@ public class PoDocumentBean implements Serializable {
         poDocumentEntity.setStatus(StatusEnum.ENABLE);
         poDocumentEntity.setLastUpdate(new Date());
         poDocumentEntity.setPoProcurementEntity(poe);
+        poDocumentEntity.setCode(poDocumentEntity.getCode().toUpperCase());
         droppedPODocumentList.add(poDocumentEntity);
         reorderDroppedPODocumentList();
         int order = 0;
