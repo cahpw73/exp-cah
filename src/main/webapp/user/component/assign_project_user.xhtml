@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="left-inner-addon">
+                <i class="fa fa-search fa-lg"></i>
+                <h:inputText id="searchTermId" styleClass="form-control input-search"
+                             value="#{projectBean.searchTerm}"
+                             jsf:placeholder="#{msgs['project.standard.text.lbl.search.global.text']}"
+                             type="search" maxlength="250">
+                    <p:ajax event="keyup" process="@this" listener="#{projectBean.doSearchGlobalText}" update="globalTextDt" async="false"/>
+                </h:inputText>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
+                <p:ajax process="@this searchTermId" update="globalTextDt" async="false"
+                        listener="#{projectBean.doSearchGlobalText}"/>
+            </h:commandButton>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div style="width: 1500px!important;">
+
+            <div style="width: 500px!important; float: left!important; margin-left: 15px!important;">
+                <h:outputText value="#{msgs['project.standard.text.lbl.global.text']}"/>
+                <br/>
+                <p:dataTable id="globalTextDt" var="_gt"
+                             value="#{projectBean.globalStandardTextList}"
+                             selectionMode="multiple" scrollable="true" scrollHeight="300"
+                             selection="#{projectBean.selectedGlobalTexts}"
+                             rowKey="#{_gt.id}">
+                    <p:column headerText="#{msgs['project.standard.text.column.code']}"
+                              style="width: 100px!important;">
+                        #{_gt.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['project.standard.text.column.description']}">
+                        <h:outputText value="#{_gt.textSnippet}" styleClass="content-big-text"></h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
+                <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
+                                 action="#{projectBean.addToProjectText}"
+                                 styleClass="btn btn-primary btn-sm"
+                                 style="margin-bottom: 20px!important;">
+                    <p:ajax update="globalTextDt,projectTextDt"
+                            process="@this,globalTextDt" async="false"/>
+                </h:commandButton>
+                <br/>
+                <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
+                                 action="#{projectBean.removeFromProjectText}"
+                                 styleClass="btn btn-primary btn-sm">
+                    <p:ajax update="globalTextDt projectTextDt"
+                            process="@this,projectTextDt" async="false"/>
+                </h:commandButton>
+            </div>
+            <div style="width: 790px!important; float: left!important;">
+                <h:outputText value="#{msgs['project.standard.text.lbl.project.text']}"/>
+                <br/>
+                <h:panelGroup id="itemsGroup">
+                    <p:dataTable id="projectTextDt" var="_pt"
+                                 value="#{projectBean.filteredList()}"
+                                 selectionMode="multiple" scrollable="true" scrollHeight="300"
+                                 selection="#{projectBean.selectedProjectTexts}"
+                                 rowKey="#{_pt.id}">
+                        <p:column headerText="#{msgs['project.standard.text.column.description']}"
+                                  style="width: 80%!important;">
+                            <h:panelGroup id="viDescription" rendered="#{!_pt.isEditable}">
+
+                                #{_pt.description}
+
+                            </h:panelGroup>
+                            <h:panelGroup id="edDescription" rendered="#{_pt.isEditable}">
+                                <p:inputTextarea id="description" value="#{_pt.description}" styleClass="form-control"
+                                                 required="true" requiredMessage="Enter a description in Project Text"
+                                                 style="height: 180px!important;">
+                                </p:inputTextarea>
+                            </h:panelGroup>
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
+
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable}" process="@this"
+                                           action="#{projectBean.editItem(_pt)}" update="projectTextDt :editForm:projectGlbMsgs"
+                                           async="false"/>
+                            <p:commandLink value="#{msgs['lbl.save']}" rendered="#{_pt.isEditable}"
+                                           process=":editForm:itemsGroup"
+                                           action="#{projectBean.confirmItem(_pt)}"
+                                           update="projectTextDt :editForm:projectGlbMsgs" async="false"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_pt.isEditable}" process="@this"
+                                           action="#{projectBean.cancelEditionItem(_pt)}" update="projectTextDt"
+                                           async="false"/>
+
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </div>
+        </div>
+    </div>
+</ui:composition>

@@ -20,9 +20,6 @@ import java.util.logging.Logger;
 
 public class ProjectUserDao extends GenericDao<ProjectUserEntity> implements Serializable {
 
-    private static final Logger log = Logger.getLogger(ProjectUserDao.class.getName());
-
-
     public void doSave(ProjectUserEntity projectEntity){
         super.save(projectEntity);
     }
