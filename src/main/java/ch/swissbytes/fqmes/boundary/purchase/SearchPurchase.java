@@ -22,7 +22,9 @@ public class SearchPurchase extends Filter {
     private Date deliveryDateEnd;
     private Date nextKeyDateStart;
     private Date nextKeyDateEnd;
-    private String variance="all";
+    private Date forecastExWorkDateStart;
+    private Date forecastExWorkDateEnd;
+    private String variance = "all";
     private Integer leadTime;
     private Integer dueIn;
     private Integer forecastDueDate;
@@ -157,12 +159,12 @@ public class SearchPurchase extends Filter {
         this.statuses = statuses;
     }
 
-    public boolean hasAnyValueForScopeSupplyActive(){
-        return (variance!=null&&!variance.equalsIgnoreCase("all"))||leadTime!=null||forecastDueDate!=null||dueIn!=null||deliveryDateStart!=null||deliveryDateEnd!=null;
+    public boolean hasAnyValueForScopeSupplyActive() {
+        return (variance != null && !variance.equalsIgnoreCase("all")) || leadTime != null || forecastDueDate != null || dueIn != null || deliveryDateStart != null || deliveryDateEnd != null;
     }
 
-    public boolean isStatusSelected(String statusId){
-        return statuses==null?false:statuses.contains(statusId);
+    public boolean isStatusSelected(String statusId) {
+        return statuses == null ? false : statuses.contains(statusId);
     }
 
     public String getExpeditingTitle() {
@@ -173,24 +175,42 @@ public class SearchPurchase extends Filter {
         this.expeditingTitle = expeditingTitle;
     }
 
+    public Date getForecastExWorkDateStart() {
+        return forecastExWorkDateStart;
+    }
+
+    public void setForecastExWorkDateStart(Date forecastExWorkDateStart) {
+        this.forecastExWorkDateStart = forecastExWorkDateStart;
+    }
+
+    public Date getForecastExWorkDateEnd() {
+        return forecastExWorkDateEnd;
+    }
+
+    public void setForecastExWorkDateEnd(Date forecastExWorkDateEnd) {
+        this.forecastExWorkDateEnd = forecastExWorkDateEnd;
+    }
+
     @Override
-    public void clean(){
-        po=null;
-        project=null;
-        variation=null;
-        supplier=null;
-        poTitle=null;
-        responsibleExpediting=null;
-        incoTerm=null;
-        deliveryDateEnd=null;
-        deliveryDateStart=null;
-        nextKeyDateStart=null;
-        nextKeyDateEnd=null;
-        variance="all";
-        leadTime=null;
-        dueIn=null;
-        forecastDueDate=null;
-        statuses=null;
-        expeditingTitle=null;
+    public void clean() {
+        po = null;
+        project = null;
+        variation = null;
+        supplier = null;
+        poTitle = null;
+        responsibleExpediting = null;
+        incoTerm = null;
+        deliveryDateEnd = null;
+        deliveryDateStart = null;
+        nextKeyDateStart = null;
+        nextKeyDateEnd = null;
+        variance = "all";
+        leadTime = null;
+        dueIn = null;
+        forecastDueDate = null;
+        statuses = null;
+        expeditingTitle = null;
+        forecastExWorkDateStart = null;
+        forecastExWorkDateEnd = null;
     }
 }

@@ -47,26 +47,14 @@
                                  type='text'/>
                 </div>
             </div>
-
-                <div class="col-md-4">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                        <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                     value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
-                                     type='text'/>
-                    </div>
-                </div>
-
-            <ui:remove>
             <div class="col-md-4">
                 <div class='form-group card'>
-                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.expediting.title']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.expediting.title']}"
-                                 value="#{reportListBean.searchPurchase.expeditingTitle}" class='form-control'
+                    <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
+                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
+                                 value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
                                  type='text'/>
                 </div>
             </div>
-            </ui:remove>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
@@ -84,20 +72,15 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class='form-group card'>
+                <div class="col-md-6" style="padding-left: 0px;">
                     <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.inco.term']}</label>
-                    <!--<h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.inco.term']}"
-                                 value="# {reportListBean.searchPurchase.incoTerm}" class='form-control' type='text'/>-->
                     <p:selectOneMenu id="incoTermSelectOne" value="#{reportListBean.searchPurchase.incoTerm}"
                                      effect="fold" editable="true" styleClass="menu-ddp"
-                                     maxlength="50" style="width: 40%">
+                                     maxlength="50" style="width: 100%">
                         <f:selectItems value="#{incoTerms}"/>
                     </p:selectOneMenu>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="col-md-6" style="padding-left: 0px;">
+                <div class="col-md-6" >
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
                         <h:inputHidden id="poStatusesHidenId" value="#{reportListBean.searchPurchase.statuses}"/>
@@ -111,52 +94,6 @@
                 <p:remoteCommand name="onload"
                                  oncomplete="initializeMultiselection('#{reportListBean.searchPurchase.statuses}');"
                                  autoRun="true"></p:remoteCommand>
-                <div class="col-md-6">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.due']}</label>
-                        <p:selectOneMenu style="width: 85%" value="#{reportListBean.searchPurchase.dueIn}"
-                                         effect="fold" styleClass="menu-ddp">
-                            <f:selectItem itemLabel="" itemValue=""/>
-                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-md-6" style="padding-left: 0px;">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.supply.lead.time']}</label>
-                        <p:selectOneMenu style="width: 80%"
-                                         effect="fold" styleClass="menu-ddp"
-                                         value="#{reportListBean.searchPurchase.leadTime}">
-                            <f:selectItem itemLabel="" itemValue=""/>
-                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class='form-group card'>
-                        <label class='control-label'>#{msgs['po.supply.scope.column.forecast.due.date']}</label>
-                        <p:selectOneMenu style="width: 80%"
-                                         effect="fold" styleClass="menu-ddp"
-                                         value="#{reportListBean.searchPurchase.forecastDueDate}">
-                            <f:selectItem itemLabel="" itemValue=""/>
-                            <f:selectItems value="#{configuration.getAvailableWeeks()}"/>
-                        </p:selectOneMenu>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.column.variance']}</label>
-                    <p:selectOneMenu style="width: 40%"
-                                     effect="fold" styleClass="menu-ddp"
-                                     value="#{reportListBean.searchPurchase.variance}">
-                        <f:selectItems value="#{configuration.getVarianceOptions()}"/>
-                    </p:selectOneMenu>
-                </div>
-
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
