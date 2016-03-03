@@ -20,13 +20,20 @@
                                   style="width: 70%!important;">
                             #{_t.code}
                         </p:column>
-                        <p:column headerText="action" style="width: 20%!important; padding-left: 15px!important;"
+                        <p:column headerText="action" style="width: 30%!important; padding-left: 15px!important;"
                                   rendered="#{!poBean.modeView}">
                             <h:commandLink value="PO Docs"
                                            action="#{poDocumentBean.copyToPODocument(_t)}">
                                 <p:ajax async="false" process="@this"
                                         update=":editPoForm:projectDocDt :editPoForm:poDocDt :editPoForm:poDocBbtnt"/>
                             </h:commandLink>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_t.attachmentProjectDocument == null}" process="@this"
+                                           update=":poDocModalId2" oncomplete="PF('poDocModal2').show()"
+                                           async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
+                            <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_t.attachmentProjectDocument != null}" process="@this"
+                                           update=":previewPODocModalId2" oncomplete="PF('previewPODocModal2').show()"
+                                           async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -61,16 +68,17 @@
                                       style="padding-left: 8px!important;">
                                 <h:panelGroup rendered="#{!poDocumentBean.verifyScheduleValue(_dt)}">
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
-                                               update=":poDocModalId" oncomplete="PF('poDocModal').show()"
-                                               async="false" action="#{poDocumentBean.loadSeletedPODocument(_dt)}"/>
+                                               update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                               async="false" action="#{poDocumentBean.loadSelectedPODocument(_dt)}"/>
                                 &#160;
                                 <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
-                                               update=":poDocModalId" oncomplete="PF('poDocModal').show()"
-                                               async="false" action="#{poDocumentBean.loadSeletedPODocumentToPreview(_dt)}"/>
-                                </h:panelGroup>
+                                               update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                               async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
                                 <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument != null}" process="@this"
-                                               update=":previewPODocModalId" oncomplete="PF('previewPODocModal').show()"
-                                               async="false" action="#{poDocumentBean.loadSeletedPODocumentToPreview(_dt)}"/>
+                                               update=":previewPODocModalId1" oncomplete="PF('previewPODocModal1').show()"
+                                               async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
+                                </h:panelGroup>
+
                             </p:column>
                         </p:dataTable>
                     </div>

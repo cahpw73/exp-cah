@@ -72,6 +72,8 @@ public class PoDocumentBean implements Serializable {
 
     private PODocumentEntity selectedPODocument;
 
+    private ProjectDocumentEntity selectedProjectDocument;
+
     private PODocumentEntity poDocumentEntity;
 
     private AttachmentMainDocumentEntity attachmentMainDocument;
@@ -271,13 +273,18 @@ public class PoDocumentBean implements Serializable {
         return true;
     }
 
-    public void loadSeletedPODocument(PODocumentEntity entity) {
+    public void loadSelectedPODocument(PODocumentEntity entity) {
         selectedPODocument = entity;
         docPreview = false;
     }
 
-    public void loadSeletedPODocumentToPreview(PODocumentEntity entity) {
+    public void loadSelectedPODocumentToPreview(PODocumentEntity entity) {
         selectedPODocument = entity;
+        docPreview = true;
+    }
+
+    public void loadSelectedProjectDocumentToPreview(ProjectDocumentEntity entity) {
+        selectedProjectDocument = entity;
         docPreview = true;
     }
 
@@ -428,6 +435,14 @@ public class PoDocumentBean implements Serializable {
 
     public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
         this.attachmentMainDocument = attachmentMainDocument;
+    }
+
+    public ProjectDocumentEntity getSelectedProjectDocument() {
+        return selectedProjectDocument;
+    }
+
+    public void setSelectedProjectDocument(ProjectDocumentEntity selectedProjectDocument) {
+        this.selectedProjectDocument = selectedProjectDocument;
     }
 
     //************************************************************************

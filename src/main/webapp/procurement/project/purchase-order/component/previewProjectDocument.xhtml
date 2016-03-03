@@ -4,13 +4,13 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <div class="col-md-12">
-        <h:form id="previewProjectDocFormDlg">
-            <h:panelGroup rendered="#{poDocumentBean.selectedPODocument != null}">
-                <p:media value="/document/pdf?pdfId=#{poDocumentBean.selectedPODocument.attachmentProjectDocument.id}" height="310px" width="100%" player="pdf"/>
+        <h:form>
+            <h:panelGroup rendered="#{entitySelected != null}">
+                <p:media value="/document/pdf?pdfId=#{attachId}" height="310px" width="100%" player="pdf"/>
             </h:panelGroup>
             <br/>
             <button class="btn btn-primary btn-sm"
-                    onclick="PF('previewPODocModal').hide();"
+                    onclick="PF('previewPODocModal#{id}').hide();"
                     type="button">
                 #{msgs['lbl.cancel']}
             </button>

@@ -239,12 +239,6 @@
                 <ui:include src="../../admin/supplier/components/addBrand.xhtml"/>
             </h:form>
         </p:dialog>
-
-        <p:dialog header="Edit PO Doc" widgetVar="poDocModal" resizable="false">
-            <h:panelGroup id="poDocModalId">
-                <ui:include src="component/editPODocument.xhtml"/>
-            </h:panelGroup>
-        </p:dialog>
         <p:dialog header="Add New PO Doc" widgetVar="addPODocModal" resizable="false">
             <h:panelGroup id="addPODocModalId">
                 <ui:include src="component/newPODocument.xhtml"/>
@@ -255,11 +249,43 @@
                 <ui:include src="component/previewPdf.xhtml"/>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog header="Preview Project Doc" widgetVar="previewPODocModal" width="850" height="350" resizable="false">
-            <h:panelGroup id="previewPODocModalId">
-                <ui:include src="component/previewProjectDocument.xhtml"/>
+
+        <p:dialog header="Edit PO Doc" widgetVar="poDocModal1" resizable="false">
+            <h:panelGroup id="poDocModalId1">
+                <ui:include src="component/editPODocument.xhtml">
+                    <ui:param name="bean" value="#{poDocumentBean.selectedPODocument}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
             </h:panelGroup>
         </p:dialog>
+        <p:dialog header="Preview PO Doc" widgetVar="previewPODocModal1" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPODocModalId1">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="entitySelected" value="#{poDocumentBean.selectedPODocument}"/>
+                    <ui:param name="attachId" value="#{poDocumentBean.selectedPODocument.attachmentProjectDocument.id}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
+        <p:dialog header="View Project Doc" widgetVar="poDocModal2" resizable="false">
+            <h:panelGroup id="poDocModalId2">
+                <ui:include src="component/editPODocument.xhtml">
+                    <ui:param name="bean" value="#{poDocumentBean.selectedProjectDocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Project Doc" widgetVar="previewPODocModal2" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPODocModalId2">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="entitySelected" value="#{poDocumentBean.selectedProjectDocument}"/>
+                    <ui:param name="attachId" value="#{poDocumentBean.selectedProjectDocument.attachmentProjectDocument.id}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
         <h:panelGroup rendered="#{poDocumentBean.documentEditing}">
             <h:outputScript name="js/poTabActive.js"/>
             <h:form>
