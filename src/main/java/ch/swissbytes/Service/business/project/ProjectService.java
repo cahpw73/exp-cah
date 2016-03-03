@@ -204,4 +204,8 @@ public class ProjectService implements Serializable {
         return !projectDao.findByClient(clientId).isEmpty();
     }
 
+    public List<ProjectEntity> getAllProjects(){
+        return projectDao.getAllProjectList();
+    }
+
 }
