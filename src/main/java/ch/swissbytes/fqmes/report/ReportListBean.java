@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -10,6 +11,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +32,8 @@ public class ReportListBean implements Serializable {
     private SearchPurchase searchPurchase = new SearchPurchase();
 
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
+
+    private String typeDate = "Forecast Ex Works Date";
 
 
     @PostConstruct
@@ -57,6 +62,30 @@ public class ReportListBean implements Serializable {
         }
     }
 
+    public List<String> getTypesDate(){
+        List<String> list = new ArrayList<>();
+        list.add("Forecast Ex Works Date");
+        list.add("Next Key Date");
+        return list;
+    }
+
+    public boolean isSelectForecastExWork(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Forecast Ex Works Date");
+        return result;
+    }
+
+    public boolean isSelectNextKeyDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Next Key Date");
+        return result;
+    }
+
+    public void resetNextKeyAndForecast(){
+        searchPurchase.setDeliveryDateStart(null);
+        searchPurchase.setDeliveryDateEnd(null);
+        searchPurchase.setNextKeyDateStart(null);
+        searchPurchase.setNextKeyDateEnd(null);
+    }
+
     @PreDestroy
     public void destroy() {
         log.info("destroying bean");
@@ -80,4 +109,11 @@ public class ReportListBean implements Serializable {
         return searchPurchase;
     }
 
+    public String getTypeDate() {
+        return typeDate;
+    }
+
+    public void setTypeDate(String typeDate) {
+        this.typeDate = typeDate;
+    }
 }

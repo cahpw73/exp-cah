@@ -803,15 +803,20 @@ public class PoListBean implements Serializable {
             }
             if (expeditingStatuses.length() > 0) {
                 expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
+                String[] ids = expeditingStatuses.split(",");
+                String expStatuses = "";
+                for (int i = 0; i < ids.length; i++) {
+                    try {
+                        String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
+                        expStatuses = expStatuses + exStatus + ", ";
+                    }catch (NumberFormatException nfe){
+                        log.info("");
+                    }
+
+                }
+                expeditingStatuses = expStatuses;
+                expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
             }
-            String[] ids = expeditingStatuses.split(",");
-            String expStatuses = "";
-            for (int i = 0; i < ids.length; i++) {
-                String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
-                expStatuses = expStatuses + exStatus + ", ";
-            }
-            expeditingStatuses = expStatuses;
-            expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
         }
         return expeditingStatuses;
     }

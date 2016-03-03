@@ -80,7 +80,7 @@
                         <f:selectItems value="#{incoTerms}"/>
                     </p:selectOneMenu>
                 </div>
-                <div class="col-md-6" >
+                <div class="col-md-6">
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.supply.scope.column.po.status']}</label>
                         <h:inputHidden id="poStatusesHidenId" value="#{reportListBean.searchPurchase.statuses}"/>
@@ -97,68 +97,119 @@
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
-                    <label class='control-label'>#{msgs['po.supply.scope.column.forecast.delivery.date']}</label>
+                    <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.lbl.dates']}</label>
+                    <p:selectOneMenu style="width: 60%"
+                                     styleClass="menu-ddp"
+                                     value="#{reportListBean.typeDate}">
+                        <f:selectItems value="#{reportListBean.typesDate}"/>
+                        <p:ajax async="false" process="@this forecastWorkGrp nextKeyGrp"
+                                update="nextKeyGrp forecastWorkGrp" event="change"
+                                listener="#{reportListBean.resetNextKeyAndForecast()}"/>
+                    </p:selectOneMenu>
+                </div>
+                <h:panelGroup id="forecastWorkGrp" >
+                    <h:panelGroup rendered="#{reportListBean.selectForecastExWork}">
+                    <div class='form-group card' style="margin-top: -10px;">
+                        <label class='control-label'>#{msgs['po.supply.scope.column.forecast.delivery.date']}</label>
+                        <div>
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                <div>
+                                    <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
 
-                    <div>
-                        <div class="col-md-6" style="padding-left: 0px;">
-                            <div>
-                                <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
-
-                                <p:calendar value="#{reportListBean.searchPurchase.deliveryDateStart}"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            styleClass="calendar-filter"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
+                                    <p:calendar value="#{reportListBean.searchPurchase.deliveryDateStart}"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                styleClass="calendar-filter"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
-                                <p:calendar value="#{reportListBean.searchPurchase.deliveryDateEnd}"
-                                            styleClass="calendar-filter"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
+                            <div class="col-md-6">
+                                <div>
+                                    <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                                    <p:calendar value="#{reportListBean.searchPurchase.deliveryDateEnd}"
+                                                styleClass="calendar-filter"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup id="nextKeyGrp" >
+                    <h:panelGroup rendered="#{reportListBean.selectNextKeyDate}">
+                    <div class='form-group card' style="margin-top: -10px;">
+                        <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
+                        <div>
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                <div>
+                                    <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
+
+                                    <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateStart}"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                styleClass="calendar-filter"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                                    <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateEnd}"
+                                                styleClass="calendar-filter"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </h:panelGroup>
+                </h:panelGroup>
             </div>
             <div class="col-md-4">
-                <div class='form-group card'>
-                    <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
-                    <div>
-                        <div class="col-md-6" style="padding-left: 0px;">
-                            <div>
-                                <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
+                <ui:remove>
+                    <div class='form-group card'>
+                        <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
 
-                                <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateStart}"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            styleClass="calendar-filter"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
+                        <div>
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                <div>
+                                    <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
+
+                                    <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateStart}"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                styleClass="calendar-filter"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div>
-                                <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
-                                <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateEnd}"
-                                            styleClass="calendar-filter"
-                                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                            pattern="#{configuration.formatDate}"
-                                            converter="#{dateConverter}"
-                                            timeZone="#{configuration.timeZone2}">
-                                </p:calendar>
+                            <div class="col-md-6">
+                                <div>
+                                    <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                                    <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateEnd}"
+                                                styleClass="calendar-filter"
+                                                navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                                pattern="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone2}">
+                                    </p:calendar>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ui:remove>
             </div>
             <div class="clearfix"/>
             <div class="pull-right">
@@ -212,9 +263,9 @@
                     </div>
                 </p:column>
                 <ui:remove>
-                <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
-                    #{_purchase.expeditingTitle}
-                </p:column>
+                    <p:column headerText="#{msgs['po.lbl.col.expediting.title']}" sortBy="#{_purchase.expeditingTitle}">
+                        #{_purchase.expeditingTitle}
+                    </p:column>
                 </ui:remove>
                 <p:column headerText="#{msgs['lbl.action']}" width="100" styleClass="column-list-po">
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
@@ -273,6 +324,7 @@
                     </h:commandButton>
                 </div>
                 <br/>
+
                 <div>
                     <h:outputLabel value="#{msgs['report.purchase.order.btn.get.job.summary.report.label']}"/>
                     &#160;
@@ -282,7 +334,7 @@
                                    target="_blank" style="margin-left: 40px;"/>
                     &#160;
                     <h:commandButton styleClass="btn btn-primary btn-sm"
-                                   value="#{msgs['report.purchase.order.btn.get.job.summary.report.xls']}">
+                                     value="#{msgs['report.purchase.order.btn.get.job.summary.report.xls']}">
                         <p:fileDownload value="#{reportBean.downloadJobSummaryFileExport()}"/>
                     </h:commandButton>
 
