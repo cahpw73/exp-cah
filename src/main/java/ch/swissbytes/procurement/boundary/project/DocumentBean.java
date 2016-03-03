@@ -53,6 +53,8 @@ public class DocumentBean extends Bean implements Serializable {
 
     private ProjectDocumentEntity selectedProjectDoc;
 
+    private MainDocumentEntity selectedMainDocument;
+
     private ProjectDocumentEntity projectDocument;
 
     private Long temporaryProjectDocId = -1L;
@@ -199,14 +201,19 @@ public class DocumentBean extends Bean implements Serializable {
         docPreview = true;
     }
 
-    public void updateProjectDocumentDt() {
+    public void loadSelectedMainDocumentPreview(MainDocumentEntity  entity) {
+        selectedMainDocument = entity;
+        docPreview = true;
+    }
+
+    public void updateProjectDocumentDt(String id) {
         for (ProjectDocumentEntity r : projectDocumentList) {
             if (r.getId().intValue() == selectedProjectDoc.getId().intValue()) {
                 r.setDescription(selectedProjectDoc.getDescription());
             }
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('projectDocModal').hide();");
+        context.execute("PF('projectDocModal"+id+"').hide();");
     }
 
     public void saveNewProjectDocumentWithProject() {
@@ -360,5 +367,13 @@ public class DocumentBean extends Bean implements Serializable {
 
     public void setDocumentEditing(boolean documentEditing) {
         this.documentEditing = documentEditing;
+    }
+
+    public MainDocumentEntity getSelectedMainDocument() {
+        return selectedMainDocument;
+    }
+
+    public void setSelectedMainDocument(MainDocumentEntity selectedMainDocument) {
+        this.selectedMainDocument = selectedMainDocument;
     }
 }

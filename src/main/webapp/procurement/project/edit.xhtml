@@ -118,16 +118,43 @@
                 </div>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog header="Edit Project Doc" widgetVar="projectDocModal" resizable="false">
-            <h:panelGroup id="projectDocModalId">
-                <ui:include src="component/editProjectDocument.xhtml"/>
+
+        <p:dialog header="Edit Project Doc" widgetVar="projectDocModal1" resizable="false">
+            <h:panelGroup id="projectDocModalId1">
+                <ui:include src="component/editProjectDocument.xhtml">
+                    <ui:param name="bean" value="#{documentBean.selectedProjectDoc}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
             </h:panelGroup>
         </p:dialog>
-        <p:dialog header="Preview Project Doc" widgetVar="previewProjectDocModal" width="850" height="350" resizable="false">
-            <h:panelGroup id="previewProjectDocModalId">
-                <ui:include src="component/previewProjectDocument.xhtml"/>
+        <p:dialog header="Preview Project Doc" widgetVar="previewProjectDocModal1" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewProjectDocModalId1">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="entitySelected" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="attachId" value="#{documentBean.selectedProjectDoc.attachmentProjectDocument.id}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
             </h:panelGroup>
         </p:dialog>
+
+        <p:dialog header="View Doc Template" widgetVar="projectDocModal2" resizable="false">
+            <h:panelGroup id="projectDocModalId2">
+                <ui:include src="component/editProjectDocument.xhtml">
+                    <ui:param name="bean" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Doc Template" widgetVar="previewProjectDocModal2" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewProjectDocModalId2">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="attachId" value="#{documentBean.selectedMainDocument.attachmentMainDocument.id}"/>
+                    <ui:param name="entitySelected" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
         <p:dialog header="Add New Project Doc" widgetVar="addProjectDocModal" resizable="false">
             <h:panelGroup id="addProjectDocModalId">
                 <ui:include src="component/newProjectDocument.xhtml"/>

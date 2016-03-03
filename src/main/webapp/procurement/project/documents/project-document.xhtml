@@ -28,7 +28,7 @@
     <div class="row">
         <div style="width: 1500px!important;">
 
-            <div style="width: 400px!important; float: left!important; margin-left: 15px!important;">
+            <div style="width: 600px!important; float: left!important; margin-left: 15px!important;">
                 <h:outputText value="#{msgs['project.docs.lbl.global.text']}"/>
                 <br/>
                 <p:dataTable id="mainDocumentDt" var="_md"
@@ -37,14 +37,17 @@
                              selection="#{documentBean.selectedMainDocList}"
                              rowKey="#{_md.id}">
                     <p:column headerText="#{msgs['project.docs.column.code']}"
-                              style="width: 100px!important;">
+                              style="width: 80%!important;">
                         #{_md.code}
                     </p:column>
-                    <ui:remove>
-                    <p:column headerText="#{msgs['project.docs.column.description']}">
-                        <h:outputText value="#{_md.description}" styleClass="content-big-text" escape="true"></h:outputText>
+                    <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
+                        <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_md.attachmentMainDocument == null}" process="@this"
+                                       update=":projectDocModalId2" oncomplete="PF('projectDocModal2').show()"
+                                       async="false" action="#{documentBean.loadSelectedMainDocumentPreview(_md)}"/>
+                        <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_md.attachmentMainDocument != null}" process="@this"
+                                       update=":previewProjectDocModalId2" oncomplete="PF('previewProjectDocModal2').show()"
+                                       async="false" action="#{documentBean.loadSelectedMainDocumentPreview(_md)}"/>
                     </p:column>
-                    </ui:remove>
                 </p:dataTable>
             </div>
             <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
@@ -78,14 +81,14 @@
                         </p:column>
                         <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
                             <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable and _pt.attachmentProjectDocument == null}" process="@this"
-                                           update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
+                                           update=":projectDocModalId1" oncomplete="PF('projectDocModal1').show()"
                                            async="false" action="#{documentBean.loadSeletedProjectDoc(_pt)}"/>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_pt.attachmentProjectDocument == null}" process="@this"
-                                           update=":projectDocModalId" oncomplete="PF('projectDocModal').show()"
+                                           update=":projectDocModalId1" oncomplete="PF('projectDocModal1').show()"
                                            async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
                             <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_pt.attachmentProjectDocument != null}" process="@this"
-                                           update=":previewProjectDocModalId" oncomplete="PF('previewProjectDocModal').show()"
+                                           update=":previewProjectDocModalId1" oncomplete="PF('previewProjectDocModal1').show()"
                                            async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
                         </p:column>
                     </p:dataTable>
