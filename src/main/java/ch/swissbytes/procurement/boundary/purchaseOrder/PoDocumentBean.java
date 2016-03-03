@@ -288,14 +288,14 @@ public class PoDocumentBean implements Serializable {
         docPreview = true;
     }
 
-    public void updatePODocumentDt() {
+    public void updatePODocumentDt(String id) {
         for (PODocumentEntity r : poDocumentList) {
             if (r.getId().intValue() == selectedPODocument.getId().intValue()) {
                 r.setDescription(selectedPODocument.getDescription());
             }
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('poDocModal').hide();");
+        context.execute("PF('poDocModal"+id+"').hide();");
     }
 
     public void resetPODocument() {

@@ -26,7 +26,7 @@
                 </script>
             </h:panelGroup>
             <br/>
-            <p:commandLink value="#{msgs['lbl.save']}" action="#{poDocumentBean.updatePODocumentDt}"
+            <p:commandLink value="#{msgs['lbl.save']}" action="#{poDocumentBean.updatePODocumentDt(id)}"
                            rendered="#{poBean.beingEdited and !poDocumentBean.docPreview}"
                            styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
                            onclick="document.getElementsByClassName('editPODocCKEditor#{id}')[0].value = CKEDITOR.instances.editPODoceditor.getData();">
