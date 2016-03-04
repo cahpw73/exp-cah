@@ -61,9 +61,10 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
 
     public List<MainDocumentEntity> findByCode(final String code) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT x ");
-        sb.append("FROM MainDocumentEntity x ");
-        sb.append("WHERE x.status=:ENABLED ");
+        sb.append(" SELECT x ");
+        sb.append(" FROM MainDocumentEntity x ");
+        sb.append(" WHERE x.status=:ENABLED ");
+        sb.append(" AND x.project is null ");
         Map<String, Object> map = new HashMap<>();
         map.put("ENABLED", StatusEnum.ENABLE);
         if (StringUtils.isNotEmpty(code)) {
