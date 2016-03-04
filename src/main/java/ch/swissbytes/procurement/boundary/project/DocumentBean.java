@@ -90,12 +90,14 @@ public class DocumentBean extends Bean implements Serializable {
     }
 
     public void loadMainDocumentsEdit(final Long projectId) {
-        projectDocumentList = projectDocumentService.findByProjectId(projectId);
+        if(projectDocumentList.isEmpty()) {
+            projectDocumentList = projectDocumentService.findByProjectId(projectId);
+        }
         mainDocumentList = mainDocumentService.findMainDocumentsToEdit(projectId);
         List<MainDocumentEntity> mainDocumentAuxList = new ArrayList<>();
         for (ProjectDocumentEntity pd : projectDocumentList) {
             for (MainDocumentEntity md : mainDocumentList) {
-                boolean inProject = pd.getProject() != null && md.getProject()!=null ? pd.getProject().getId().intValue() == md.getProject().getId().intValue() : false;
+                boolean inProject = pd.getProject() != null && md.getProject() != null ? pd.getProject().getId().intValue() == md.getProject().getId().intValue() : false;
                 boolean inMainDoc = pd.getMainDocumentEntity() != null ? pd.getMainDocumentEntity().getId().intValue() == md.getId().intValue() : false;
                 if (inProject || inMainDoc) {
                     mainDocumentAuxList.add(md);
@@ -221,7 +223,8 @@ public class DocumentBean extends Bean implements Serializable {
         projectDocument.setMainDocumentEntity(null);
         projectDocument.setCode(projectDocument.getCode().toUpperCase());
         projectDocumentService.doSaveNewProjectDocWithProject(projectDocument);
-        projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
+        //projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
+        projectDocumentList.add(projectDocument);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('addProjectDocModal').hide();");
     }
@@ -231,7 +234,8 @@ public class DocumentBean extends Bean implements Serializable {
         projectDocument.setMainDocumentEntity(null);
         projectDocument.setCode(projectDocument.getCode().toUpperCase());
         projectDocumentService.doSaveWithPdf(projectDocument, attachmentMainDocument);
-        projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
+        //projectDocumentList = projectDocumentService.findByProjectId(projectEntityId);
+        projectDocumentList.add(projectDocument);
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('addPdfModal').hide();");
         documentEditing = true;
