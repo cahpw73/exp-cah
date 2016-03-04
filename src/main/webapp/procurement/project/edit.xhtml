@@ -130,7 +130,7 @@
         <p:dialog header="Preview Project Doc" widgetVar="previewProjectDocModal1" width="850" height="350" resizable="false">
             <h:panelGroup id="previewProjectDocModalId1">
                 <ui:include src="component/previewProjectDocument.xhtml">
-                    <ui:param name="entitySelected" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="entitySelected" value="#{documentBean.selectedProjectDoc}"/>
                     <ui:param name="attachId" value="#{documentBean.selectedProjectDoc.attachmentProjectDocument.id}"/>
                     <ui:param name="id" value="1"/>
                 </ui:include>

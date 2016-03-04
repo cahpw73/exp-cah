@@ -18,3 +18,8 @@ ALTER TABLE project_document ALTER COLUMN description DROP  NOT NULL;
 
 #29/02/2016
 ALTER TABLE po_document ALTER COLUMN description DROP  NOT NULL;
+
+#04/03/2016
+insert into options (id,name,module_id,url)values(1104,'OTHER_DOCUMENT_TEMPLATE',1,'procurement/admin/otherDoc/main-document.jsf');
+insert into role_option (id,option_id,role_id)values(711,1104,15);
+insert into role_option (id,option_id,role_id)values(712,1104,14);
