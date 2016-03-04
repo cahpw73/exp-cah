@@ -103,15 +103,15 @@ public class PurchaseOrderView implements Serializable {
         }
         if (expeditingStatuses.length() > 0) {
             expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
+            String[] ids = expeditingStatuses.split(",");
+            String expStatuses="";
+            for (int i = 0; i < ids.length; i++) {
+                String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
+                expStatuses=expStatuses + exStatus+", ";
+            }
+            expeditingStatuses = expStatuses;
+            expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
         }
-        String[] ids = expeditingStatuses.split(",");
-        String expStatuses="";
-        for (int i = 0; i < ids.length; i++) {
-            String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
-            expStatuses=expStatuses + exStatus+", ";
-        }
-        expeditingStatuses = expStatuses;
-        expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
     }
 
     public ScopeSupplyEntity currentScopeSupplyForAttachment() {
