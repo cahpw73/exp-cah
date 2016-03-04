@@ -25,13 +25,12 @@
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.addNewCustomText}"
                                      rendered="#{MODE eq 'PROJECT'}"
                                      styleClass="btn btn-primary btn-sm">
-
-                        <f:ajax execute="textSnippetDlg" render="textSnippetDlg :editForm:projectTextDt"/>
+                        <f:ajax execute="textSnippetDlg" render=":editForm:projectTextDt"/>
                     </h:commandButton>
                     <h:commandButton value="#{msgs['lbl.add']}" action="#{projectBean.saveNewCustomText(poBean.purchaseOrder.projectEntity.id)}"
                                      rendered="#{MODE eq 'PO'}"
                                      styleClass="btn btn-primary btn-sm">
-                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editPoForm:clausesAuxDt :editPoForm:standardTextDt :editPoForm:bbtnt" />
+                        <p:ajax async="false" process="textSnippetDlg" update="textSnippetDlg :editPoForm:clausesAuxDt :editPoForm:standardTextDt :editPoForm:bbtnt"/>
                     </h:commandButton>
                 </h:form>
             </div>

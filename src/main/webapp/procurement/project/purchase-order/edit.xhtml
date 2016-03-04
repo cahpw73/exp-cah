@@ -20,7 +20,7 @@
         <f:viewAction action="#{poBean.canEditPo}"/>
     </f:metadata>
     <ui:define name="body">
-
+        <script type="text/javascript" src="../../../ckeditor/ckeditor.js" />
 
         <o:form id="editPoForm" includeViewParams="true">
             <h:commandLink id="cancelPOCreateBtn1" value="#{msgs['lbl.close']}"
@@ -63,7 +63,7 @@
                                                      rendered="#{poBean.beingCreated}"
                                                      value="#{msgs['lbl.save']}">
                                         <p:ajax async="false"
-                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update=":editPoForm:addPODocBtnId buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
@@ -91,7 +91,7 @@
                                             rendered="#{poBean.beingCreated}"
                                             value="#{msgs['lbl.print']}">
                                         <p:ajax async="false"
-                                                update="buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update=":editPoForm:addPODocBtnId buttonGroup :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
@@ -101,7 +101,7 @@
                                             rendered="#{poBean.beingUpdated}"
                                             value="#{msgs['lbl.print']}">
                                         <p:ajax async="false"
-                                                update=":editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
+                                                update=" :editPoForm:poEditGlbMsgs poMainSectionId headerSectionId supplierSectionId itemsSectionId textSectionId deliverablesSectionId cashflowSectionId"
                                                 process="@form"
                                                 oncomplete="restartSwitches();"/>
                                     </h:commandButton>
@@ -148,6 +148,10 @@
                                     <a href="#cashflowPo" role="tab"
                                        data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.cashflow']}</a>
                                 </li>
+                                <li id="documentTab">
+                                    <a href="#documentPo" role="tab"
+                                       data-toggle="tab" onclick="updateMessages();">#{msgs['purchase.order.tab.documents']}</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -190,6 +194,10 @@
                             <br/>
                             <ui:include src="cashflow/cashflow.xhtml"/>
                         </div>
+                        <div class="tab-pane " id="documentPo">
+                            <br/>
+                            <ui:include src="document/po_document.xhtml"/>
+                        </div>
 
                     </div>
                 </div>
@@ -231,5 +239,58 @@
                 <ui:include src="../../admin/supplier/components/addBrand.xhtml"/>
             </h:form>
         </p:dialog>
+        <p:dialog header="Add New PO Doc" widgetVar="addPODocModal" resizable="false">
+            <h:panelGroup id="addPODocModalId">
+                <ui:include src="component/newPODocument.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
+            <h:panelGroup id="addPdfGrpId">
+                <ui:include src="component/previewPdf.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+
+        <p:dialog header="Edit PO Doc" widgetVar="poDocModal1" resizable="false">
+            <h:panelGroup id="poDocModalId1">
+                <ui:include src="component/editPODocument.xhtml">
+                    <ui:param name="bean" value="#{poDocumentBean.selectedPODocument}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview PO Doc" widgetVar="previewPODocModal1" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPODocModalId1">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="entitySelected" value="#{poDocumentBean.selectedPODocument}"/>
+                    <ui:param name="attachId" value="#{poDocumentBean.selectedPODocument.attachmentProjectDocument.id}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
+        <p:dialog header="View Project Doc" widgetVar="poDocModal2" resizable="false">
+            <h:panelGroup id="poDocModalId2">
+                <ui:include src="component/editPODocument.xhtml">
+                    <ui:param name="bean" value="#{poDocumentBean.selectedProjectDocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Project Doc" widgetVar="previewPODocModal2" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPODocModalId2">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="entitySelected" value="#{poDocumentBean.selectedProjectDocument}"/>
+                    <ui:param name="attachId" value="#{poDocumentBean.selectedProjectDocument.attachmentProjectDocument.id}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
+        <h:panelGroup rendered="#{poDocumentBean.documentEditing}">
+            <h:outputScript name="js/poTabActive.js"/>
+            <h:form>
+                <p:remoteCommand actionListener="#{poDocumentBean.changeValueDocumentEditing}" />
+            </h:form>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

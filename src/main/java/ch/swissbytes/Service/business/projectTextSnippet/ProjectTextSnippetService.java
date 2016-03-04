@@ -1,15 +1,12 @@
 package ch.swissbytes.Service.business.projectTextSnippet;
 
-import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyDao;
-import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
+import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,8 +15,6 @@ import java.util.logging.Logger;
  * Created by christian on 12/09/14.
  */
 public class ProjectTextSnippetService implements Serializable {
-
-    private static final Logger log = Logger.getLogger(ProjectTextSnippetService.class.getName());
 
     @Inject
     private ProjectTextSnippetDao dao;
@@ -32,8 +27,9 @@ public class ProjectTextSnippetService implements Serializable {
         }
     }
 
-    public void doUpdate(ProjectTextSnippetEntity entity){
-        if(entity != null){
+    public void doUpdate(ProjectTextSnippetEntity detachedEntity){
+        if(detachedEntity != null){
+            ProjectTextSnippetEntity entity = dao.merge(detachedEntity);
             entity.setLastUpdate(new Date());
             dao.doUpdate(entity);
         }
@@ -44,17 +40,14 @@ public class ProjectTextSnippetService implements Serializable {
         return dao.findByProjectId(id);
     }
 
+    @Transactional
+    public List<ProjectTextSnippetEntity> findByProjectIdToEditPo(final Long id,final Long poId) {
+        return dao.findByProjectIdToEditPO(id, poId);
+    }
 
-    public List<ProjectTextSnippetEntity> findTextSnippetByClausesId(List<ClausesEntity> clausesEntities,Long projectId) {
-        log.info("findTextSnippetByClausesId");
-        List<ProjectTextSnippetEntity> list = new ArrayList<>();
-        /*for(ClausesEntity entity : clausesEntities){
-            log.info("TextSnippetID "+entity.getTextSnippet().getId());
-            ProjectTextSnippetEntity ps;
-            ps= dao.findByTextSnippetId(entity.getTextSnippet().getId(),projectId);
-            list.add(ps);
-        }*/
-        return list;
+    @Transactional
+    public List<ProjectTextSnippetEntity> findByProjectIdCreatePO(final Long id) {
+        return dao.findByProjectIdToCreatePO(id);
     }
 
     @Transactional
@@ -65,5 +58,15 @@ public class ProjectTextSnippetService implements Serializable {
             entity = list.get(0);
         }
         return entity;
+    }
+
+    @Transactional
+    public List<ProjectTextSnippetEntity> doBulkUpdateCode(TextSnippetEntity textSnippet){
+        List<ProjectTextSnippetEntity> list = dao.findByTextSnippetIdOnly(textSnippet.getId());
+        for(ProjectTextSnippetEntity p : list){
+            p.setCode(textSnippet.getCode().toUpperCase());
+            dao.doUpdate(p);
+        }
+        return list;
     }
 }

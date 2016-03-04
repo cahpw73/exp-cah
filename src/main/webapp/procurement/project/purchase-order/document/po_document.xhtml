@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:panelGroup id="docSectionId">
+        <div style="width: 1550px!important;">
+            <div style="width: 600px!important; float: left!important; ">
+                <div class="form-group">
+                    <h:outputLabel value="#{msgs['po.doc.lbl.pd']}" for="projectDocDt"/>
+                    <p:dataTable id="projectDocDt" var="_t" value="#{poDocumentBean.projectDocumentList}" scrollable="true"
+                                 scrollHeight="300">
+                        <p:column style="width:10%!important" rendered="#{poBean.beingEdited}">
+                            <h:outputText id="dragDocIcon" styleClass="ui-icon ui-icon-arrow-4"/>
+                            <p:draggable id="draggableDoc" for="dragDocIcon"
+                                         scope="poDocScope"
+                                         revert="true" helper="clone"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['po.doc.lbl.pd.column.text.code']}"
+                                  style="width: 70%!important;">
+                            #{_t.code}
+                        </p:column>
+                        <p:column headerText="action" style="width: 30%!important; padding-left: 15px!important;"
+                                  rendered="#{!poBean.modeView}">
+                            <h:commandLink value="PO Docs"
+                                           action="#{poDocumentBean.copyToPODocument(_t)}">
+                                <p:ajax async="false" process="@this"
+                                        update=":editPoForm:projectDocDt :editPoForm:poDocDt :editPoForm:poDocBbtnt"/>
+                            </h:commandLink>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_t.attachmentProjectDocument == null}" process="@this"
+                                           update=":poDocModalId2" oncomplete="PF('poDocModal2').show()"
+                                           async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
+                            <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_t.attachmentProjectDocument != null}" process="@this"
+                                           update=":previewPODocModalId2" oncomplete="PF('previewPODocModal2').show()"
+                                           async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+
+            <div style="width: 600px!important; float: left!important; margin-left: 80px!important; margin-right: 40px!important;">
+                <div class="form-group">
+                    <h:outputLabel value="#{msgs['po.doc.lbl.pod']}" for="poDocDt"/>
+
+                    <div style="margin-top: 0px;">
+
+                        <p:dataTable id="poDocDt" var="_dt" draggableRows="true"
+                                     value="#{poDocumentBean.droppedPODocumentList}"
+                                     selectionMode="multiple" selection="#{poDocumentBean.selectedPODocumentList}"
+                                     rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
+                            <p:ajax event="rowReorder" listener="#{poDocumentBean.onRowReorder}" update="poDocDt :editPoForm:poDocBbtnt"/>
+                            <p:column id="poDocClId" headerText="#{msgs['po.doc.lbl.pod.column.no']}"
+                                      rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 10%!important;">
+                                <h:outputText value="#{_dt.numberPODoc}"/>
+                            </p:column>
+                            <p:column id="poDocCode" headerText="#{msgs['po.doc.lbl.pod.column.code']}"
+                                      rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 70%!important;">
+                                #{_dt.code}
+                            </p:column>
+                            <ui:remove>
+                                <p:column id="poDocCl" headerText="#{msgs['po.doc.lbl.pod.column.doc']}"
+                                          rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
+                                    <h:outputText value="#{_dt.description}" styleClass="box-document-list" escape="false"/>
+                                </p:column>
+                            </ui:remove>
+                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
+                                      style="padding-left: 8px!important;">
+                                <h:panelGroup rendered="#{!poDocumentBean.verifyScheduleValue(_dt)}">
+                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
+                                               update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                               async="false" action="#{poDocumentBean.loadSelectedPODocument(_dt)}"/>
+                                &#160;
+                                <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
+                                               update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                               async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
+                                <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument != null}" process="@this"
+                                               update=":previewPODocModalId1" oncomplete="PF('previewPODocModal1').show()"
+                                               async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
+                                </h:panelGroup>
+
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+
+                </div>
+                <h:panelGroup rendered="#{poBean.beingEdited}">
+                    <div class="form-group">
+                        <h:outputText value="#{msgs['po.doc.lbl.pod.box.information.1']}"
+                                      styleClass="text-danger"/>
+                        <br/>
+                        <h:outputText value="#{msgs['po.doc.lbl.pod.box.information.2']}"
+                                      styleClass="text-danger"/>
+                    </div>
+                </h:panelGroup>
+            </div>
+            <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
+                <h:panelGroup rendered="#{poBean.beingEdited}">
+                    <p:commandLink id="addPODocBtnId"
+                            value="#{msgs['lbl.add']}"
+                            oncomplete="PF('addPODocModal').show();"
+                            action="#{poDocumentBean.resetPODocument}"
+                            styleClass="btn btn-primary btn-commandLink-primeFaces"
+                            async="false" update=":addPODocModalId" process="@this"
+                            onclick="doChangeProc();">
+                    </p:commandLink>
+                    <br/>
+                    <p:commandLink id="addPODocPdfBtnId"
+                                   value="#{msgs['attachment.btn.add.pdf']}"
+                                   oncomplete="PF('addPdfModal').show();"
+                                   action="#{poDocumentBean.resetPODocument}"
+                                   styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                   async="false" update=":addPdfGrpId" process="@this"
+                                   onclick="doChangeProc();"
+                                   style="margin-top: 20px!important;">
+                    </p:commandLink>
+                    <br/>
+                    <p:commandLink value="#{msgs['lbl.remove']}"
+                                   action="#{poDocumentBean.removePODocuments}"
+                                   onclick="doChangeProc();"
+                                   update="poDocDt projectDocDt poDocBbtnt" process="@this,poDocDt"
+                                   styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                   style="margin-top: 20px!important;">
+                        <p:confirm header="#{msgs['lbl.confirmation']}"
+                                   message="#{msgs['po.doc.lbl.message.remove']}"
+                                   icon="ui-icon-alert">
+                        </p:confirm>
+                    </p:commandLink>
+                </h:panelGroup>
+            </div>
+            <h:panelGroup id="poDocBbtnt" rendered="#{poBean.beingEdited}">
+                <p:droppable id="poDocDroppDt" for="poDocDt" activeStyleClass="ui-state-highlight"
+                             datasource="projectDocDt" tolerance="touch"
+                             scope="poDocScope"
+                             onDrop="handleDrop">
+                    <p:ajax listener="#{poDocumentBean.onStandardTextDrop}" process="@this" async="true"
+                            update="poDocBbtnt projectDocDt poDocDt"/>
+                </p:droppable>
+            </h:panelGroup>
+
+
+        </div>
+        <p:confirmDialog closable="true" global="true" showEffect="fade" hideEffect="explode" severity="alert">
+            <div class="pull-right">
+                <p:commandButton value="#{msgs['lbl.yes']}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                &#160;
+                <p:commandButton value="#{msgs['lbl.no']}" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </div>
+        </p:confirmDialog>
+    </h:panelGroup>
+</ui:composition>

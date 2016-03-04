@@ -1,6 +1,8 @@
 package ch.swissbytes.procurement.boundary.textSnippet;
 
 
+import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
+import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
@@ -29,6 +31,13 @@ public class TextSnippetBean implements Serializable {
 
     @Inject
     private TextSnippetService service;
+
+    @Inject
+    private ProjectTextSnippetService projectTextSnippetService;
+
+    @Inject
+    private TextService textService;
+
     private List<TextSnippetEntity> list;
     private TextSnippetEntity textSnippet;
     private TextSnippetEntity selected;
@@ -57,9 +66,14 @@ public class TextSnippetBean implements Serializable {
     }
 
     public void clear(){
-        textSnippet=new TextSnippetEntity();
+        textSnippet = new TextSnippetEntity();
     }
 
+    public void openTextSnippetDialogToAddNew(){
+        clear();
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('textSnippetModal').show();");
+    }
 
     private boolean validate(TextSnippetEntity textSnippet) {
         boolean valid = true;
@@ -89,6 +103,7 @@ public class TextSnippetBean implements Serializable {
         selected.setLastUpdate(new Date());
         selected.setCode(selected.getCode().toUpperCase());
         service.doUpdate(selected);
+        textService.doBulkUpdateCode(projectTextSnippetService.doBulkUpdateCode(selected));
         return "textSnippet?faces-redirect=true";
     }
 

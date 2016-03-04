@@ -2,10 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.text.TextService;
-import ch.swissbytes.domain.model.entities.ClausesEntity;
-import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
-import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
-import ch.swissbytes.domain.model.entities.TextEntity;
+import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.event.DragDropEvent;
@@ -84,11 +81,10 @@ public class PoTextBean implements Serializable {
         textSnippetList = projectTextSnippetService.findByProjectId(projectId);
     }
 
-    public void loadText(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity, final Long projectId) {
-        //check this if we can improve. it takes about 1 second.
+    public void loadText(PurchaseOrderEntity po, final Long projectId) {
         log.info("loadText");
-        textEntity = textService.findByPoId(purchaseOrderProcurementEntity.getId());
-        textSnippetList = projectTextSnippetService.findByProjectId(projectId);
+        textEntity = textService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
+        textSnippetList = projectTextSnippetService.findByProjectIdToEditPo(projectId,po.getId());
         if (textEntity != null) {
             clausesEntities = textService.findClausesByTextId(textEntity.getId());
 
@@ -105,7 +101,7 @@ public class PoTextBean implements Serializable {
     }
 
     public void loadTextNewPO(final Long projectId) {
-        textSnippetList = projectTextSnippetService.findByProjectId(projectId);
+        textSnippetList = projectTextSnippetService.findByProjectIdCreatePO(projectId);
     }
 
     public void onStandardTextDrop(DragDropEvent ddEvent) {
@@ -151,7 +147,7 @@ public class PoTextBean implements Serializable {
         reorderDroppedTextSnippetList();
     }
 
-    private void reorderDroppedTextSnippetList(){
+    public void reorderDroppedTextSnippetList(){
         int index = 1;
         for(ClausesEntity c : droppedTextSnippetList){
             if(c.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){

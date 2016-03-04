@@ -13,6 +13,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.boundary.Bean;
+import ch.swissbytes.procurement.boundary.project.ProjectBean;
 import ch.swissbytes.procurement.boundary.supplierProc.ContactBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcBean;
 import ch.swissbytes.procurement.boundary.supplierProc.SupplierProcList;
@@ -77,6 +78,9 @@ public class PoBean extends Bean {
     private PoTextBean poTextBean;
 
     @Inject
+    private PoDocumentBean poDocumentBean;
+
+    @Inject
     private CashflowBean cashflowBean;
 
     @Inject
@@ -109,6 +113,9 @@ public class PoBean extends Bean {
     @Inject
     private UserSession userSession;
 
+    @Inject
+    private ProjectBean projectBean;
+
 
     private String anchor;
 
@@ -116,6 +123,7 @@ public class PoBean extends Bean {
     private boolean supplierHeaderMode = false;
     private boolean supplierMode = false;
     private boolean loaded = false;
+    private boolean isCreatePO = false;
 
 
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
@@ -129,6 +137,7 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(orderDate);
         purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         poTextBean.loadTextNewPO(projectEntity.getId());
+        poDocumentBean.loadTextNewPO(projectEntity.getId());
         putModeCreation();
     }
 
@@ -136,7 +145,8 @@ public class PoBean extends Bean {
         purchaseOrder = service.findById(Long.valueOf(poId));
         itemBean.loadItemList(purchaseOrder.getId());
         cashflowBean.loadCashflow(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
-        poTextBean.loadText(purchaseOrder.getPurchaseOrderProcurementEntity(), purchaseOrder.getProjectEntity().getId());
+        poTextBean.loadText(purchaseOrder, purchaseOrder.getProjectEntity().getId());
+        poDocumentBean.loadProjectDocuments(purchaseOrder,purchaseOrder.getProjectEntity().getId());
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
         }
@@ -179,6 +189,7 @@ public class PoBean extends Bean {
                     ProjectEntity projectEntity = projectService.findProjectById(Long.parseLong(projectId));
                     if (projectEntity != null) {
                         initializeNewPurchaseOrder(projectEntity);
+                        isCreatePO = true;
                     } else {
                         throw new IllegalArgumentException("It is not a project valid");
                     }
@@ -188,6 +199,7 @@ public class PoBean extends Bean {
             } else if (poId != null) {
                 try {
                     loadPurchaseOrder();
+                    isCreatePO = false;
                 } catch (NumberFormatException nfe) {
                     throw new IllegalArgumentException("It is not a purchase Order valid");
                 }
@@ -269,6 +281,7 @@ public class PoBean extends Bean {
             projectId = null;
             loaded = false;
             loadPurchaseOrder();
+            isCreatePO = false;
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
         }
@@ -308,16 +321,13 @@ public class PoBean extends Bean {
         if (validate()) {
             collectData();
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
-            log.info("purchase order created [" + purchaseOrder.getId() + "]");
             doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             poId = purchaseOrder.getId().toString();
             loadPurchaseOrder();
-            log.info("saved po " + poId);
+            isCreatePO = false;
             RequestContext context = RequestContext.getCurrentInstance();
-            log.info("restarting changes!");
             context.execute("restartChanges();");
-            log.info("printing draft!");
             context.execute("printDraft();");
         }
         return null;
@@ -328,15 +338,11 @@ public class PoBean extends Bean {
         if (validate()) {
             collectData();
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
-            log.info("purchase order created [" + purchaseOrder.getId() + "]");
             doLastOperationsOverPO(true);
             listBean.setCurrentPurchaseOrder(purchaseOrder);
             loadPurchaseOrder();
-            log.info("saved po " + poId);
             RequestContext context = RequestContext.getCurrentInstance();
-            log.info("restarting changes!");
             context.execute("restartChanges();");
-            log.info("printing draft!");
             context.execute("printDraft();");
         }
         return null;
@@ -605,6 +611,11 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowBean.getCashflowDetailList());
         purchaseOrder.getPurchaseOrderProcurementEntity().setTextEntity(poTextBean.getTextEntity());
         purchaseOrder.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getPoDocumentList().addAll(poDocumentBean.getDroppedPODocumentList());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocList().addAll(poDocumentBean.getProjectDocumentList());
+        log.info("projectBean.getProjectTextSnippetListFromPO() size: " + projectBean.getProjectTextSnippetListFromPO().size());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getProjectTextSnippetList().addAll(projectBean.getProjectTextSnippetListFromPO());
+        purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocumentList().addAll(poDocumentBean.getProjectDocumentListToPO());
     }
 
     public String phoneContact() {
@@ -860,5 +871,13 @@ public class PoBean extends Bean {
 
     public void setAnchor(String anchor) {
         this.anchor = anchor;
+    }
+
+    public boolean isCreatePO() {
+        return isCreatePO;
+    }
+
+    public void setCreatePO(boolean isCreatePO) {
+        this.isCreatePO = isCreatePO;
     }
 }

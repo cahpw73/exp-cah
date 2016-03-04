@@ -13,6 +13,7 @@
         <f:viewAction action="#{projectBean.loadActionCrud}"/>
     </f:metadata>
     <ui:define name="body">
+        <script type="text/javascript" src="../../ckeditor/ckeditor.js" />
         <h:form id="editForm" prependId="false" class="form-horizontal">
             <div class="col-md-12">
                 <p:messages id="projectGlbMsgs" globalOnly="true" errorClass="alert alert-error"
@@ -30,12 +31,15 @@
                 <div class="col-md-8 panel-tab-users">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#projectDetail" role="tab"
+                        <li id="tabProject" class="active"><a href="#projectDetail" role="tab"
                                               data-toggle="tab">#{msgs['project.detail.title.tab']}</a></li>
-                        <li><a href="#standardText" role="tab"
+                        <li id="tabStandarText"><a href="#standardText" role="tab"
                                data-toggle="tab">#{msgs['project.standard.text.title.tab']}</a>
                         </li>
-                        <li><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
+                        <li id="tabCurrency"><a href="#currency" role="tab" data-toggle="tab">#{msgs['project.currencies.title.tab']}</a>
+                        </li>
+                        <li id="tabDocument"><a href="#documents" role="tab"
+                               data-toggle="tab">#{msgs['project.docs.title.tab']}</a>
                         </li>
                     </ul>
 
@@ -56,6 +60,11 @@
                         <div class="tab-pane " id="currency">
                             <br/>
                             <ui:include src="currency/currencies.xhtml"/>
+                        </div>
+                        <!-- Tab Documents-->
+                        <div class="tab-pane " id="documents">
+                            <br/>
+                            <ui:include src="documents/project-document.xhtml"/>
                         </div>
                     </div>
                 </div>
@@ -110,5 +119,57 @@
             </h:panelGroup>
         </p:dialog>
 
+        <p:dialog header="Edit Project Doc" widgetVar="projectDocModal1" resizable="false">
+            <h:panelGroup id="projectDocModalId1">
+                <ui:include src="component/editProjectDocument.xhtml">
+                    <ui:param name="bean" value="#{documentBean.selectedProjectDoc}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Project Doc" widgetVar="previewProjectDocModal1" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewProjectDocModalId1">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="entitySelected" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="attachId" value="#{documentBean.selectedProjectDoc.attachmentProjectDocument.id}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
+        <p:dialog header="View Doc Template" widgetVar="projectDocModal2" resizable="false">
+            <h:panelGroup id="projectDocModalId2">
+                <ui:include src="component/editProjectDocument.xhtml">
+                    <ui:param name="bean" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Doc Template" widgetVar="previewProjectDocModal2" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewProjectDocModalId2">
+                <ui:include src="component/previewProjectDocument.xhtml">
+                    <ui:param name="attachId" value="#{documentBean.selectedMainDocument.attachmentMainDocument.id}"/>
+                    <ui:param name="entitySelected" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+
+        <p:dialog header="Add New Project Doc" widgetVar="addProjectDocModal" resizable="false">
+            <h:panelGroup id="addProjectDocModalId">
+                <ui:include src="component/newProjectDocument.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
+            <h:panelGroup id="addPdfGrpId">
+                <ui:include src="component/previewPdf.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <h:panelGroup rendered="#{documentBean.documentEditing}">
+            <h:outputScript name="js/projectTabActive.js"/>
+            <h:form>
+                <p:remoteCommand actionListener="#{documentBean.changeValueDocumentEditing}" />
+            </h:form>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>

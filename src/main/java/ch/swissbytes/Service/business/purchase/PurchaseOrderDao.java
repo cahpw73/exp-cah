@@ -220,7 +220,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         map.put("PO_ID", poId);
         List<PurchaseOrderProcurementEntity> list = super.findBy(sb.toString(), map);
         PurchaseOrderProcurementEntity entity = null;
-        if (list.isEmpty()) {
+        if (!list.isEmpty()) {
             entity = list.get(0);
         }
         return entity;

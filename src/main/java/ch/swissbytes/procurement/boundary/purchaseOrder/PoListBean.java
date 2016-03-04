@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDEService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
+import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
@@ -79,6 +80,9 @@ public class PoListBean implements Serializable {
 
     @Inject
     private PoListManagerTable managerTable;
+
+    @Inject
+    private PODocumentService poDocumentService;
 
 
     private String projectId;
@@ -519,7 +523,8 @@ public class PoListBean implements Serializable {
         TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
         String preamble = textEntity != null ? textEntity.getPreamble() : "";
         List<ClausesEntity> clausesEntityList = getClausesEntitiesByPOid(textEntity);
-        reportProcBean.printPurchaseOrder(currentPurchaseOrder, itemEntities, preamble, clausesEntityList, draft);
+        List<PODocumentEntity> poDocumentList = poDocumentService.findByPOId(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder, itemEntities, preamble, clausesEntityList, draft,poDocumentList);
     }
 
     private List<ClausesEntity> getClausesEntitiesByPOid(TextEntity textEntity) {

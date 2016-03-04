@@ -107,3 +107,7 @@
 .ui-selectlistbox-listcontainer{
     height:360px!important;
 }
+
+.ui-fileupload.ui-widget.modal-pdf{
+     padding-top: 0px !important;
+}

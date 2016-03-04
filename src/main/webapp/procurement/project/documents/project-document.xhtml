@@ -1,0 +1,117 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="left-inner-addon">
+                <i class="fa fa-search fa-lg"></i>
+                <h:inputText id="searchTermDocId" styleClass="form-control input-search"
+                             value="#{documentBean.searchTerm}"
+                             jsf:placeholder="#{msgs['project.docs.lbl.search.global.text']}"
+                             type="search" maxlength="250">
+                    <p:ajax event="keyup" process="@this" listener="#{documentBean.doSearchGlobalText}" update="mainDocumentDt" async="false"/>
+                </h:inputText>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <h:commandButton value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
+                <p:ajax process="@this searchTermId" update="mainDocumentDt" async="false"
+                        listener="#{documentBean.doSearchGlobalText}"/>
+            </h:commandButton>
+        </div>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div style="width: 1500px!important;">
+
+            <div style="width: 600px!important; float: left!important; margin-left: 15px!important;">
+                <h:outputText value="#{msgs['project.docs.lbl.global.text']}"/>
+                <br/>
+                <p:dataTable id="mainDocumentDt" var="_md"
+                             value="#{documentBean.mainDocumentList}"
+                             selectionMode="multiple" scrollable="true" scrollHeight="300"
+                             selection="#{documentBean.selectedMainDocList}"
+                             rowKey="#{_md.id}">
+                    <p:column headerText="#{msgs['project.docs.column.code']}"
+                              style="width: 80%!important;">
+                        #{_md.code}
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
+                        <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_md.attachmentMainDocument == null}" process="@this"
+                                       update=":projectDocModalId2" oncomplete="PF('projectDocModal2').show()"
+                                       async="false" action="#{documentBean.loadSelectedMainDocumentPreview(_md)}"/>
+                        <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_md.attachmentMainDocument != null}" process="@this"
+                                       update=":previewProjectDocModalId2" oncomplete="PF('previewProjectDocModal2').show()"
+                                       async="false" action="#{documentBean.loadSelectedMainDocumentPreview(_md)}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">
+                <h:commandButton value="#{msgs['lbl.add']} &#62;&#62;"
+                                 action="#{documentBean.addToProjectText}"
+                                 styleClass="btn btn-primary btn-sm"
+                                 style="margin-bottom: 20px!important;" onclick="doChangeProc();">
+                    <p:ajax update="mainDocumentDt,projectDocDt"
+                            process="@this,mainDocumentDt" async="false"/>
+                </h:commandButton>
+                <br/>
+                <h:commandButton value="#{msgs['lbl.remove']} &#60;&#60;"
+                                 action="#{documentBean.removeFromProjectText}"
+                                 styleClass="btn btn-primary btn-sm" onclick="doChangeProc();">
+                    <p:ajax update="mainDocumentDt projectDocDt"
+                            process="@this,projectDocDt" async="false"/>
+                </h:commandButton>
+            </div>
+            <div style="width: 600px!important; float: left!important;">
+                <h:outputText value="#{msgs['project.docs.lbl.project.text']}"/>
+                <br/>
+                <h:panelGroup id="projectDocGroup">
+                    <p:dataTable id="projectDocDt" var="_pt"
+                                 value="#{documentBean.filteredList()}"
+                                 selectionMode="multiple" scrollable="true" scrollHeight="300"
+                                 selection="#{documentBean.selectedProjectDocList}"
+                                 rowKey="#{_pt.id}">
+                        <p:column headerText="#{msgs['project.docs.column.code']}"
+                                  style="width: 80%!important;">
+                            #{_pt.code}
+                        </p:column>
+                        <p:column headerText="#{msgs['lbl.actions']}" style="padding-left: 8px!important;">
+                            <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_pt.isEditable and _pt.attachmentProjectDocument == null}" process="@this"
+                                           update=":projectDocModalId1" oncomplete="PF('projectDocModal1').show()"
+                                           async="false" action="#{documentBean.loadSeletedProjectDoc(_pt)}"/>
+                            &#160;
+                            <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_pt.attachmentProjectDocument == null}" process="@this"
+                                           update=":projectDocModalId1" oncomplete="PF('projectDocModal1').show()"
+                                           async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
+                            <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_pt.attachmentProjectDocument != null}" process="@this"
+                                           update=":previewProjectDocModalId1" oncomplete="PF('previewProjectDocModal1').show()"
+                                           async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+                <br/>
+
+                <p:commandLink disabled="#{projectBean.createProject}"
+                        value="#{msgs['project.docs.lbl.btn.add.custom.text']}"
+                        oncomplete="PF('addProjectDocModal').show();"
+                        action="#{documentBean.resetProjectDocument}"
+                        styleClass="btn btn-primary btn-commandLink-primeFaces"
+                        async="false" update=":addProjectDocModalId" process="@this" onclick="doChangeProc()">
+                </p:commandLink>
+                &#160;
+                <p:commandLink id="addPODocBtnId" disabled="#{projectBean.createProject}"
+                               value="#{msgs['attachment.btn.add.pdf']}"
+                               action="#{documentBean.resetProjectDocument}"
+                               oncomplete="PF('addPdfModal').show();"
+                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                               async="false" update=":addPdfGrpId" process="@this"
+                               onclick="doChangeProc();">
+                </p:commandLink>
+            </div>
+        </div>
+    </div>
+</ui:composition>

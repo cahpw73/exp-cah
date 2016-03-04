@@ -32,9 +32,12 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private ClassEnum clazz;
     private ProcurementStatus poProcStatus;
     private List<ItemEntity> scopeSupplyList = new ArrayList<>();
-    //private List<ItemEntity> itemList = new ArrayList<>();
     private List<RequisitionEntity> requisitions = new ArrayList<>();
     private List<DeliverableEntity> deliverables = new ArrayList<>();
+    private List<PODocumentEntity> poDocumentList = new ArrayList<>();
+    private List<ProjectDocumentEntity> projectDocList = new ArrayList<>();
+    private List<ProjectTextSnippetEntity> projectTextSnippetList = new ArrayList<>();
+    private List<ProjectDocumentEntity> projectDocumentList = new ArrayList<>();
     private CashflowEntity cashflow;
     private TextEntity textEntity;
     private String RTFNo;
@@ -219,6 +222,26 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     @Transient
     public List<DeliverableEntity> getDeliverables() {
         return deliverables;
+    }
+
+    @Transient
+    public List<PODocumentEntity> getPoDocumentList() {
+        return poDocumentList;
+    }
+
+    @Transient
+    public List<ProjectDocumentEntity> getProjectDocList() {
+        return projectDocList;
+    }
+
+    @Transient
+    public List<ProjectTextSnippetEntity> getProjectTextSnippetList() {
+        return projectTextSnippetList;
+    }
+
+    @Transient
+    public List<ProjectDocumentEntity> getProjectDocumentList() {
+        return projectDocumentList;
     }
 
     @Transient

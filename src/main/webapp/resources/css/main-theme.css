@@ -610,4 +610,10 @@ label.checkbox {
     margin-top: 40px;
     width: 190px;
     color: #ffffff;
+    /*width: 200px;
+    color: #000000;*/
+}
+.box-document-list{
+    display: block!important;
+    height: 50px!important;
 }

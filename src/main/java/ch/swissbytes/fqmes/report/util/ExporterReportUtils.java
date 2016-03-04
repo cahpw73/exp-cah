@@ -46,6 +46,17 @@ public class ExporterReportUtils {
         return exporter;
     }
 
+    public static JRAbstractExporter crateExporterScheduleReport(final DocTypeEnum docType, final JasperPrint jasperPrint, final OutputStream out,
+                                                               final String reportName) throws JRException {
+        //JRAbstractExporter exporter = crateExporterReport(docType, jasperPrint, request.getContextPath(), response, reportName);
+        JRAbstractExporter exporter = new JRPdfExporter();
+        exporter.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF-8");
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRCsvExporterParameter.OUTPUT_STREAM, out);
+
+        return exporter;
+    }
+
     public static JRAbstractExporter crateExporterReportJobs(final DocTypeEnum docType, final JasperPrint jasperPrint, final String contextPath, final String reportName) throws JRException {
         return crateExporterReport(docType, jasperPrint, contextPath, null, reportName);
     }
