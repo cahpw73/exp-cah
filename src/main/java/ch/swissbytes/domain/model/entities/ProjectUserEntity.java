@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -23,9 +24,10 @@ public class ProjectUserEntity implements Serializable {
     private UserEntity user;
     private Date created;
     private Date lastUpdate;
-    private Date userCreated;
-    private Date userLastUpdate;
+    private UserEntity userCreated;
+    private UserEntity userLastUpdate;
     private StatusEnum status;
+    private ModuleSystemEnum moduleSystem;
 
 
     @Id
@@ -80,23 +82,23 @@ public class ProjectUserEntity implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
-    @Column(name = "user_created", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getUserCreated() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_created_id", nullable = false)
+    public UserEntity getUserCreated() {
         return userCreated;
     }
 
-    public void setUserCreated(Date userCreated) {
+    public void setUserCreated(UserEntity userCreated) {
         this.userCreated = userCreated;
     }
 
-    @Column(name = "user_last_update", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getUserLastUpdate() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_last_update_id", nullable = false)
+    public UserEntity getUserLastUpdate() {
         return userLastUpdate;
     }
 
-    public void setUserLastUpdate(Date userLastUpdate) {
+    public void setUserLastUpdate(UserEntity userLastUpdate) {
         this.userLastUpdate = userLastUpdate;
     }
 
@@ -108,5 +110,15 @@ public class ProjectUserEntity implements Serializable {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    @Column(name = "module_system")
+    @Enumerated(EnumType.ORDINAL)
+    public ModuleSystemEnum getModuleSystem() {
+        return moduleSystem;
+    }
+
+    public void setModuleSystem(ModuleSystemEnum moduleSystem) {
+        this.moduleSystem = moduleSystem;
     }
 }

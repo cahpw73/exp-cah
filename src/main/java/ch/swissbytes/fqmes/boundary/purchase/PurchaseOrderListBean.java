@@ -1,10 +1,13 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
+import ch.swissbytes.fqm.boundary.UserSession;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +18,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +38,12 @@ public class PurchaseOrderListBean implements Serializable {
 
     @Inject
     private PurchaseOrderService purchaseOrderService;
+
+    @Inject
+    private UserSession userSession;
+
+    @Inject
+    private ProjectService projectService;
 
 
     private PurchaseOrderViewTbl vTbl;
@@ -56,8 +67,14 @@ public class PurchaseOrderListBean implements Serializable {
     public void create(){
         log.info("creating bean purchase list");
         log.log(Level.FINER, "FINER log");
-        vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
         searchPurchase=new SearchPurchase();
+        List<Long> projectsAssignIds = new ArrayList<>();
+        List<ProjectEntity> projects = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());
+        for (ProjectEntity p : projects){
+            projectsAssignIds.add(p.getId());
+        }
+        searchPurchase.getProjectsAssignedId().addAll(projectsAssignIds);
+        vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
     }
 
     private void  search(){

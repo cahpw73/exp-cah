@@ -64,6 +64,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (filter.getNextKeyDateEnd() != null) {
                 query.setParameter("END_NEXT_KEY_DATE", filter.getNextKeyDateEnd());
             }
+            if(!filter.getProjectsAssignedId().isEmpty()){
+                query.setParameter("PROJECT_ASSIGN_IDS",filter.getProjectsAssignedId());
+            }
 
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
                 String[] statuses = filter.getStatuses().split(",");
@@ -124,6 +127,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if (filter.getNextKeyDateEnd() != null) {
                 sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
+            }
+            if(!filter.getProjectsAssignedId().isEmpty()){
+                sb.append(" AND x.projectId IN(:PROJECT_ASSIGN_IDS)");
             }
             sb.append(prepareSubquery(filter));
             sb.append(prepareSubQueryExpeditingStatuses(filter));

@@ -178,32 +178,6 @@ public class ProjectBean extends Bean implements Serializable {
         return "";
     }
 
-    public String doSaveAndClose() {
-        log.info("do save and close");
-        if (dataValidate()) {
-            prepareToSaveProjectTextSnippet();
-            collectionAllData();
-            projectEntity = projectService.doSave(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
-            return "list?faces-redirect=true";
-        }
-        mainMenuBean.select(0);
-        return "";
-    }
-
-    public String doUpdateAndClose() {
-        log.info("do update and close");
-        if (dataValidateToUpdate()) {
-            prepareToUpdateProjectTextSnippet();
-            collectionAllData();
-            projectEntity = projectService.doUpdate(projectEntity);
-            Messages.addFlashGlobalInfo("The project " + projectEntity.getTitle() + " has been saved.");
-            return "list?faces-redirect=true";
-        }
-        mainMenuBean.select(0);
-        return "";
-    }
-
     private void collectionAllData() {
         log.info("collecting data");
         projectEntity.getCurrencies().addAll(projectCurrencyList);
@@ -498,10 +472,6 @@ public class ProjectBean extends Bean implements Serializable {
         return globalStandardTextList;
     }
 
-   /* public List<TextSnippetEntity> getProjectStandardTextList() {
-        return projectStandardTextList;
-    }*/
-
     public List<TextSnippetEntity> getSelectedGlobalTexts() {
         return selectedGlobalTexts;
     }
@@ -578,13 +548,6 @@ public class ProjectBean extends Bean implements Serializable {
         }
     }
 
-    public boolean hasNotStatusDeleted(TextSnippetEntity entity) {
-        if (entity != null && entity.getStatus() != null)
-            return entity.getStatus().getId().intValue() != StatusEnum.DELETED.getId().intValue();
-        else
-            return true;
-    }
-
     public void editItem(ProjectTextSnippetEntity entity) {
         log.info("edit item");
         entity.startEditing();
@@ -596,15 +559,6 @@ public class ProjectBean extends Bean implements Serializable {
         int index = projectTextSnippetList.indexOf(entity);
         projectTextSnippetList.set(index, entity);
         entity.stopEditing();
-    }
-
-    public void deleteItem(ProjectTextSnippetEntity entity) {
-        log.info("delete item");
-        if (entity.getId() < 0L) {
-            projectTextSnippetList.remove(entity);
-        } else {
-            entity.setStatus(StatusEnum.DELETED);
-        }
     }
 
     public void cancelEditionItem(ProjectTextSnippetEntity entity) {
@@ -652,10 +606,8 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public void doSearchGlobalText() {
-        log.info("before search globalStext: " + globalStandardTextList.size());
         globalStandardTextList.clear();
         globalStandardTextList = textSnippetService.findByText(searchTerm);
-        log.info("after search globalStext: " + globalStandardTextList.size());
     }
 
     public List<ProjectTextSnippetEntity> getProjectTextSnippetListFromPO() {

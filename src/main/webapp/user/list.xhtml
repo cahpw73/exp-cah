@@ -45,6 +45,12 @@
                                        styleClass="btn btn-primary btn-sm color-btn-data-table">
                             <p:ajax update=":deleteUserDlgId" oncomplete="PF('deleteUserDlg').show();"/>
                         </h:commandLink>
+                        &#160;
+                        <h:commandLink value="#{msgs['lbl.assign.project']}"
+                                       action="#{projectUserBean.load(_user.id)}"
+                                       styleClass="btn btn-primary btn-sm color-btn-data-table">
+                            <p:ajax update=":projectUserGrId" oncomplete="PF('projectUserModal').show();"/>
+                        </h:commandLink>
                     </div>
                 </p:column>
             </p:dataTable>
@@ -65,6 +71,11 @@
                     <ui:param name="modeExpediting" value="true"/>
                 </ui:include>
             </div>
+        </p:dialog>
+        <p:dialog header="Assign Project" widgetVar="projectUserModal" width="853" height="450" resizable="false">
+            <h:panelGroup id="projectUserGrId">
+                <ui:include src="component/assign_project_user.xhtml"/>
+            </h:panelGroup>
         </p:dialog>
     </ui:define>
 </ui:composition>

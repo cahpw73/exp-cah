@@ -59,14 +59,14 @@
                         <p:message for="inputEmail" id="msgInputEmail"/>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <p:outputLabel class="col-sm-3 control-label text-lbl-ltr" for="pwd1" value="#{msgs['user.create.lbl.pwd.hash']}" />
+                    <p:outputLabel class="col-sm-3 control-label text-lbl-ltr" for="password" value="#{msgs['user.create.lbl.pwd.hash']}" />
                     <div class="col-sm-9">
-                        <p:password id="pwd1" value="#{userCreateBean.userEntity.password}" match="pwd2" required="true"
+                        <p:password id="password" type="password" name="password"
+                                    value="#{userCreateBean.userEntity.password}" match="pwd2" required="true"
                                     jsf:placeholder="#{msgs['user.create.lbl.pwd.hash']}" autocomplete="off"
                                     requiredMessage="#{msgs['user.lbl.password.required']}"/>
-                        <p:message id="msgPwd1" for="pwd1"/>
+                        <p:message id="msgPwd1" for="password"/>
                     </div>
                 </div>
                 <div class="form-group">

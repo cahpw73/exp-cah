@@ -1,6 +1,9 @@
 package ch.swissbytes.fqmes.report;
 
+import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
+import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
 import org.apache.commons.lang.StringUtils;
@@ -26,6 +29,11 @@ public class ReportListBean implements Serializable {
     @Inject
     private PurchaseOrderViewDao dao;
 
+    @Inject
+    private UserSession userSession;
+
+    @Inject
+    private ProjectService projectService;
 
     private PurchaseOrderViewTbl tbl;
 
@@ -40,6 +48,13 @@ public class ReportListBean implements Serializable {
     public void create() {
         log.info("creating bean purchase list");
         log.log(Level.FINER, "FINER log");
+        searchPurchase=new SearchPurchase();
+        List<Long> projectsAssignIds = new ArrayList<>();
+        List<ProjectEntity> projects = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());
+        for (ProjectEntity p : projects){
+            projectsAssignIds.add(p.getId());
+        }
+        searchPurchase.getProjectsAssignedId().addAll(projectsAssignIds);
         tbl = new PurchaseOrderViewTbl(dao, searchPurchase);
 
     }

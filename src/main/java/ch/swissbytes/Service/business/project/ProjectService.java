@@ -200,6 +200,10 @@ public class ProjectService implements Serializable {
         return projectDao.getProjectList();
     }
 
+    public List<ProjectEntity> findByPermissionForUser(final Long userId){
+        return projectDao.findByPermissionForUser(userId);
+    }
+
     public List<ProjectEntity> doSearch(final String searchTerm) {
         return projectDao.findBySearchTerm(searchTerm);
     }
@@ -211,6 +215,10 @@ public class ProjectService implements Serializable {
             entity = list.get(0);
         }
         return entity;
+    }
+
+    public List<ProjectEntity> findListByProjectNumber(String projectNumber, List<Long> ids) {
+        return projectDao.findByLikeProjectNumber(projectNumber, ids);
     }
 
     public boolean existsProjectNumber(String projectNumber) {
@@ -248,6 +256,14 @@ public class ProjectService implements Serializable {
     public boolean isClientBeingUsed(final Long clientId) {
 
         return !projectDao.findByClient(clientId).isEmpty();
+    }
+
+    public List<ProjectEntity> getAllProjects(){
+        return projectDao.getAllProjectList();
+    }
+
+    public List<ProjectEntity> getProjectsAssignables(){
+        return projectDao.getProjectsAssignables();
     }
 
 }
