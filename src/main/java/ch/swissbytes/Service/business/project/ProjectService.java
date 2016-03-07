@@ -172,6 +172,10 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
+    public List<ProjectEntity> findListByProjectNumber(String projectNumber, List<Long> ids) {
+        return projectDao.findByLikeProjectNumber(projectNumber, ids);
+    }
+
     public boolean existsProjectNumber(String projectNumber) {
         ProjectEntity project = findByProjectNumber(projectNumber);
         return project != null ? true : false;

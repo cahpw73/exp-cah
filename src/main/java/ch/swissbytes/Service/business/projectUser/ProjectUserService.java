@@ -7,6 +7,7 @@ import ch.swissbytes.fqmes.util.Encode;
 import org.picketlink.credential.DefaultLoginCredentials;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,21 +26,15 @@ public class ProjectUserService implements Serializable {
     @Inject
     private UserService userService;
 
+    @Transactional
     public ProjectUserEntity doSave(ProjectUserEntity entity) {
-        final String passwordHashed = Encode.encode(credentials.getPassword());
-        UserEntity userEntity = userService.getUserEntity(credentials.getUserId(), passwordHashed);
-        entity.setCreated(new Date());
-        entity.setLastUpdate(new Date());
-        entity.setUserCreated(userEntity);
-        entity.setUserLastUpdate(userEntity);
+        dao.doSave(entity);
         return entity;
     }
 
+    @Transactional
     public ProjectUserEntity doUpdate(ProjectUserEntity entity) {
-        final String passwordHashed = Encode.encode(credentials.getPassword());
-        UserEntity userEntity = userService.getUserEntity(credentials.getUserId(), passwordHashed);
-        entity.setLastUpdate(new Date());
-        entity.setUserLastUpdate(userEntity);
+        dao.doUpdate(entity);
         return entity;
     }
 

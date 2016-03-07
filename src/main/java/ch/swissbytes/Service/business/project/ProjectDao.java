@@ -23,68 +23,66 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
     private static final Logger log = Logger.getLogger(ProjectDao.class.getName());
 
 
-    public void doSave(ProjectEntity projectEntity){
+    public void doSave(ProjectEntity projectEntity) {
         super.save(projectEntity);
     }
 
-    public void doUpdate(ProjectEntity detachedEntity){
+    public void doUpdate(ProjectEntity detachedEntity) {
         ProjectEntity entity = super.merge(detachedEntity);
         super.saveAndFlush(entity);
     }
 
-    //TODO Review this function
-    public List<ProjectEntity> getProjectList(){
+    public List<ProjectEntity> getProjectList() {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p ");
         sb.append(" LEFT JOIN p.client c ");
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" ORDER BY p.projectNumber");
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
 
-    public List<ProjectEntity> getAllProjectList(){
+    public List<ProjectEntity> getAllProjectList() {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" ORDER BY p.projectNumber");
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
 
 
-    public List<ProjectEntity> findByProjectNumber(final String name){
-        log.info("findByName: " + name);
+    public List<ProjectEntity> findByProjectNumber(final String name) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p ");
         sb.append(" WHERE LOWER(p.projectNumber) = :PROJECT_NAME ");
         sb.append(" AND p.status = :ENABLE ");
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("PROJECT_NAME", name.toLowerCase().trim());
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
 
-    public List<ProjectEntity> findByLikeProjectNumber(final String name){
-        log.info("findByLikeName: " + name);
+    public List<ProjectEntity> findByLikeProjectNumber(final String name, final List<Long> ids) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p ");
-        sb.append(" WHERE LOWER(p.projectNumber) = :PROJECT_NAME ");
-        sb.append(" AND b.status = :ENABLE ");
-        Map<String,Object> params = new HashMap<>();
+        sb.append(" WHERE LOWER(p.projectNumber) like :PROJECT_NAME ");
+        sb.append(" AND p.status = :ENABLE ");
+        sb.append(" AND NOT p.id IN(:IDS) ");
+        Map<String, Object> params = new HashMap<>();
         params.put("PROJECT_NAME", "%" + name.toLowerCase().trim() + "%");
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        params.put("IDS", ids);
+        return super.findBy(sb.toString(), params);
     }
 
     public List<ProjectEntity> findBySearchTerm(final String searchTerm) {
-        log.info("Search Term: " + searchTerm);
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p  ");
@@ -92,10 +90,10 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" LEFT JOIN p.client.clientLogo cl ");
         sb.append(" WHERE NOT p.status = :DELETED ");
 
-        Map<String,Object> parameters = new HashMap<>();
-        parameters.put("DELETED",StatusEnum.DELETED);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("DELETED", StatusEnum.DELETED);
 
-        if(StringUtils.isNotEmpty(searchTerm) && StringUtils.isNotBlank(searchTerm)) {
+        if (StringUtils.isNotEmpty(searchTerm) && StringUtils.isNotBlank(searchTerm)) {
             sb.append(" AND (  ");
             sb.append(" LOWER(p.projectNumber) like :PROJECT_NUMBER ");
             sb.append(" OR LOWER(p.title) like :TITLE ");
@@ -108,7 +106,7 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
             parameters.put("DESCRIPTION", "%" + searchTerm.toLowerCase().trim() + "%");
         }
         sb.append(" ORDER BY p.projectNumber ");
-        return super.findBy(sb.toString(),parameters);
+        return super.findBy(sb.toString(), parameters);
     }
 
     @Override
@@ -133,11 +131,11 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" WHERE LOWER(p.projectNumber) = :PROJECT_NUMBER ");
         sb.append(" AND p.status = :ENABLE ");
         sb.append(" AND p.id <> :ID ");
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("PROJECT_NUMBER", projectNumber.toLowerCase().trim());
-        params.put("ID",id);
+        params.put("ID", id);
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
 
     public List<ProjectEntity> findByLogoId(Long logoId) {
@@ -147,20 +145,21 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" AND (p.client.headerLogo.id = :LOGO_ID  ");
         sb.append(" OR p.client.clientLogo.id = :LOGO_ID )");
-        Map<String,Object> params = new HashMap<>();
-        params.put("LOGO_ID",logoId);
+        Map<String, Object> params = new HashMap<>();
+        params.put("LOGO_ID", logoId);
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
+
     public List<ProjectEntity> findByClient(Long clientId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectEntity p ");
         sb.append(" WHERE p.status = :ENABLE ");
         sb.append(" AND p.client.id = :ID  ");
-        Map<String,Object> params = new HashMap<>();
-        params.put("ID",clientId);
+        Map<String, Object> params = new HashMap<>();
+        params.put("ID", clientId);
         params.put("ENABLE", StatusEnum.ENABLE);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
 }
