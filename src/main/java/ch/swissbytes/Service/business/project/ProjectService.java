@@ -159,6 +159,10 @@ public class ProjectService implements Serializable {
         return projectDao.getProjectList();
     }
 
+    public List<ProjectEntity> findByPermissionForUser(final Long userId){
+        return projectDao.findByPermissionForUser(userId);
+    }
+
     public List<ProjectEntity> doSearch(final String searchTerm) {
         return projectDao.findBySearchTerm(searchTerm);
     }

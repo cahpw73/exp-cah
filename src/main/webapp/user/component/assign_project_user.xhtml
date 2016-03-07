@@ -7,14 +7,8 @@
     <h:form id="projectUserFormId" prependId="false">
         <div class="row">
             <div class="form-group">
-                <h:outputLabel styleClass="col-sm-1 control-label procurement-text-lbl-ltr"
-                               for="usernameId"
-                               value="Username:"/>
-
-                <div class="col-sm-5">
-                    <h:outputText id="usernameId" styleClass="form-control"
-                                  value="#{projectUserBean.userSelected.username}"/>
-                </div>
+                <h:outputLabel styleClass="col-sm-5 control-label procurement-text-lbl-ltr"
+                               value="Username: #{projectUserBean.userSelected.username}"/>
             </div>
         </div>
         <br/>

@@ -209,6 +209,7 @@ public class PurchaseOrderEdit implements Serializable {
             sortScopeSupply.sortScopeSupplyEntity(scopeActives);
         }
         commentActives = commentService.getActives(comments);
+        log.info("");
     }
 
     private void loadPurchaseOrderStatuses() {

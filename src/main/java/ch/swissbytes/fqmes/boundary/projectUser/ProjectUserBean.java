@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.model.entities.ProjectUserEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.util.Encode;
@@ -115,6 +116,7 @@ public class ProjectUserBean implements Serializable {
             entity.setUserLastUpdate(userSession.getCurrentUser());
             entity.setProject(p);
             entity.setUser(userSelected);
+            entity.setModuleSystem(ModuleSystemEnum.EXPEDITING);
             projectAssignList.add(entity);
         }
         projectList.removeAll(selectedProjectList);

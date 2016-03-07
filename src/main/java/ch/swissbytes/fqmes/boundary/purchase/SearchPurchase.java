@@ -2,7 +2,9 @@ package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alvaro on 9/25/14.
@@ -30,6 +32,7 @@ public class SearchPurchase extends Filter {
     private Integer forecastDueDate;
     private String statuses;
     private String expeditingTitle;
+    private List<Long> projectsAssignedId = new ArrayList<>();
 
     public String getProject() {
         return project;
@@ -189,6 +192,14 @@ public class SearchPurchase extends Filter {
 
     public void setForecastExWorkDateEnd(Date forecastExWorkDateEnd) {
         this.forecastExWorkDateEnd = forecastExWorkDateEnd;
+    }
+
+    public List<Long> getProjectsAssignedId() {
+        return projectsAssignedId;
+    }
+
+    public void setProjectsAssignedId(List<Long> projectsAssignedId) {
+        this.projectsAssignedId = projectsAssignedId;
     }
 
     @Override

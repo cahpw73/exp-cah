@@ -44,6 +44,21 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         return super.findBy(sb.toString(), params);
     }
 
+    public List<ProjectEntity> findByPermissionForUser(final Long userId){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT pr ");
+        sb.append(" FROM ProjectUserEntity p ");
+        sb.append(" LEFT JOIN p.project pr ");
+        sb.append(" WHERE pr.status = :ENABLE ");
+        sb.append(" AND p.status = :ENABLE ");
+        sb.append(" AND p.user.id = :USER_ID ");
+        sb.append(" ORDER BY pr.projectNumber");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("USER_ID", userId);
+        return super.findBy(sb.toString(), params);
+    }
+
     public List<ProjectEntity> getAllProjectList() {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");

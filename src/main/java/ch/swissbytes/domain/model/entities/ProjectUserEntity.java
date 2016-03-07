@@ -5,6 +5,7 @@ package ch.swissbytes.domain.model.entities;
  */
 
 
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class ProjectUserEntity implements Serializable {
     private UserEntity userCreated;
     private UserEntity userLastUpdate;
     private StatusEnum status;
+    private ModuleSystemEnum moduleSystem;
 
 
     @Id
@@ -108,5 +110,15 @@ public class ProjectUserEntity implements Serializable {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    @Column(name = "module_system")
+    @Enumerated(EnumType.ORDINAL)
+    public ModuleSystemEnum getModuleSystem() {
+        return moduleSystem;
+    }
+
+    public void setModuleSystem(ModuleSystemEnum moduleSystem) {
+        this.moduleSystem = moduleSystem;
     }
 }

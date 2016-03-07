@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.report.ReportBean;
 import ch.swissbytes.procurement.util.DateUtil;
 
@@ -35,6 +36,9 @@ public class DashboardBean implements Serializable {
     @Inject
     private ReportBean reportBean;
 
+    @Inject
+    private UserSession userSession;
+
     private ProjectEntity projectSelected;
 
     private List<ProjectEntity> projectList;
@@ -61,7 +65,7 @@ public class DashboardBean implements Serializable {
     @PostConstruct
     public void init() {
         log.info("Created DashboardBean");
-        projectList = projectService.findAllProjects();
+        projectList = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());
         loadDataOfDashboard();
     }
 

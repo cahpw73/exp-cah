@@ -46,6 +46,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private Integer orderedVariation;
 
+    private Long projectId;
+
     @Id
     public Long getId() {
         return id;
@@ -181,6 +183,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setOrderedVariation(Integer orderedVariation) {
         this.orderedVariation = orderedVariation;
+    }
+
+    @Column(name="project_id",updatable = false, insertable = false, nullable = true)
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     @Override
