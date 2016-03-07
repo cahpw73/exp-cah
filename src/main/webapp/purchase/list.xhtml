@@ -156,6 +156,7 @@
                     &#160;
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                                    style="margin-bottom: 5px;"
+                                   rendered="#{permissionBean.hasPermission(102)}"
                                    value="#{msgs['lbl.delete']}">
                         <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
                                 oncomplete="PF('deleteDlg').show();"

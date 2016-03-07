@@ -216,4 +216,8 @@ public class ProjectService implements Serializable {
         return projectDao.getAllProjectList();
     }
 
+    public List<ProjectEntity> getProjectsAssignables(){
+        return projectDao.getProjectsAssignables();
+    }
+
 }

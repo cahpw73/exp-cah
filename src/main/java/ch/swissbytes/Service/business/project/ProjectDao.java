@@ -4,6 +4,7 @@ import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.BrandEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang.StringUtils;
 
@@ -67,6 +68,23 @@ public class ProjectDao extends GenericDao<ProjectEntity> implements Serializabl
         sb.append(" ORDER BY p.projectNumber");
         Map<String, Object> params = new HashMap<>();
         params.put("ENABLE", StatusEnum.ENABLE);
+        return super.findBy(sb.toString(), params);
+    }
+
+    public List<ProjectEntity> getProjectsAssignables() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT DISTINCT pr ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" INNER JOIN po.projectEntity pr ");
+        sb.append(" INNER JOIN po.purchaseOrderProcurementEntity p ");
+        sb.append(" WHERE pr.status = :ENABLE ");
+        sb.append(" AND po.status.id = :ENABLE_ID ");
+        sb.append(" AND p.poProcStatus = :COMMITTED ");
+        sb.append(" ORDER BY pr.projectNumber");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("ENABLE_ID", StatusEnum.ENABLE.getId());
+        params.put("COMMITTED", ProcurementStatus.COMMITTED);
         return super.findBy(sb.toString(), params);
     }
 

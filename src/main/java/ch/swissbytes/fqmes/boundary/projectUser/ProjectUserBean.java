@@ -90,7 +90,7 @@ public class ProjectUserBean implements Serializable {
 
     public void load(final Long userId) {
         initLists();
-        projectList.addAll(projectService.getAllProjects());
+        projectList.addAll(projectService.getProjectsAssignables());
         projectAssignList.addAll(service.findByUserId(userId));
         List<ProjectEntity> auxList = new ArrayList<>();
         userSelected = userService.findUserById(userId);
