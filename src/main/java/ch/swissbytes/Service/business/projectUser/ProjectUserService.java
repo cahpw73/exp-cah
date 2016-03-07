@@ -38,12 +38,17 @@ public class ProjectUserService implements Serializable {
         return entity;
     }
 
-    public List<ProjectUserEntity> findByProjectId(final Long id){
+    public List<ProjectUserEntity> findByProjectId(final Long id) {
         return dao.findByProjectId(id);
     }
 
-    public List<ProjectUserEntity> findByUserId(final Long id){
+    public List<ProjectUserEntity> findByUserId(final Long id) {
         return dao.findByUserId(id);
+    }
+
+    public boolean existsProjectAndUser(final Long userId, final Long projectId) {
+        List<ProjectUserEntity> list = dao.findByUserIdAndProjectId(userId, projectId);
+        return list.isEmpty() ? false : true;
     }
 
 }
