@@ -403,7 +403,7 @@ public class PurchaseOrderEdit implements Serializable {
     public String cleanScopeSupply() {
         currentOperation = CREATE;//CREATING...
         scopeSupplyEdit = new ScopeSupplyEntity();
-        scopeSupplyEdit.setPoDeliveryDate(poEdit.getPoDeliveryDate());
+        scopeSupplyEdit.setPoDeliveryDate(poEdit.getPoExpeditingDeliveryDate());
         scopeSupplyEdit.setResponsibleExpediting(poEdit.getResponsibleExpediting());
         scopeSupplyEdit.setRequiredSiteDate(poEdit.getRequiredDate());
         scopeSupplyEdit.setIsForecastSiteDateManual(false);
