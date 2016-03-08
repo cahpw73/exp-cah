@@ -123,11 +123,11 @@ public class PurchaseOrderService extends Service implements Serializable {
         dao.updatePOEntity(por.getPurchaseOrderProcurementEntity());
         commentDao.update(commentEntities, entity);
         scopeSupplyDao.update(scopeSupplyEntities, entity);
-        saveExpeditingStatuses(expeditingStatuses,entity);
+        saveExpeditingStatuses(expeditingStatuses, entity);
         return por;
     }
 
-    private void saveExpeditingStatuses(String expeditingStatuses, PurchaseOrderEntity poEntity){
+    private void saveExpeditingStatuses(String expeditingStatuses, PurchaseOrderEntity poEntity) {
         removedIfExistsExpeditingStatus(poEntity.getId());
         expeditingStatuses = expeditingStatuses.trim();
         String[] exIds = expeditingStatuses.split(",");
@@ -139,7 +139,7 @@ public class PurchaseOrderService extends Service implements Serializable {
 
             }
         }
-        for(ExpeditingStatusEnum status : list){
+        for (ExpeditingStatusEnum status : list) {
             ExpeditingStatusEntity entity = new ExpeditingStatusEntity();
             entity.setPurchaseOrderEntity(poEntity);
             entity.setPurchaseOrderStatus(status);
@@ -147,14 +147,14 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
     }
 
-    private void removedIfExistsExpeditingStatus(final Long poId){
+    private void removedIfExistsExpeditingStatus(final Long poId) {
         List<ExpeditingStatusEntity> list = expeditingStatusDao.findByPOIds(poId);
-        for(ExpeditingStatusEntity e : list){
+        for (ExpeditingStatusEntity e : list) {
             expeditingStatusDao.doRemove(e);
         }
     }
 
-    public List<ExpeditingStatusEntity> findExpeditingStatusByPOid(final Long poId){
+    public List<ExpeditingStatusEntity> findExpeditingStatusByPOid(final Long poId) {
         return expeditingStatusDao.findByPOIds(poId);
     }
 
@@ -416,26 +416,26 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setRequiredDate(null);
         } else if (requisitions.size() == 1 && requisitions.get(0).getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
             purchaseOrderEntity.setRequiredDate(requisitions.get(0).getRequiredOnSiteDate());
-        } else if (requisitions.size() == 1 && requisitions.get(0).getStatusEnum().ordinal() != StatusEnum.ENABLE.ordinal()){
+        } else if (requisitions.size() == 1 && requisitions.get(0).getStatusEnum().ordinal() != StatusEnum.ENABLE.ordinal()) {
             purchaseOrderEntity.setRequiredDate(null);
         } else if (requisitions.size() > 1) {
             RequisitionEntity hasLessDateReq = requisitions.get(0);
             for (RequisitionEntity r : requisitions) {
-                if(hasLessDateReq.getRequiredOnSiteDate() != null && hasLessDateReq.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()){
-                    if(r.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
-                        if(r.getRequiredOnSiteDate()!=null) {
+                if (hasLessDateReq.getRequiredOnSiteDate() != null && hasLessDateReq.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                    if (r.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
+                        if (r.getRequiredOnSiteDate() != null) {
                             if (r.getRequiredOnSiteDate().before(hasLessDateReq.getRequiredOnSiteDate())) {
                                 hasLessDateReq = r;
                             }
                         }
                     }
-                }else{
+                } else {
                     hasLessDateReq = r;
                 }
             }
-            if(hasLessDateReq.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()){
+            if (hasLessDateReq.getStatusEnum().ordinal() == StatusEnum.ENABLE.ordinal()) {
                 purchaseOrderEntity.setRequiredDate(hasLessDateReq.getRequiredOnSiteDate());
-            }else{
+            } else {
                 purchaseOrderEntity.setRequiredDate(null);
             }
         }
@@ -476,7 +476,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
         if (exitsDeliveryPointInIncoTerms(incoTerms)) {
             purchaseOrderEntity.setIncoTerm(incoTerms);
-            purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
+            purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
         } else {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
@@ -703,23 +703,23 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.findAllPOs(projectId);
     }
 
-    public int getTotalNumberOfPOs(final Long projectId){
+    public int getTotalNumberOfPOs(final Long projectId) {
         return dao.getTotalNumberOfPOs(projectId);
     }
 
-    public int getNumberOfCompletedPOs(final Long projectId){
-        return  dao.getNumberOfCompletedPOs(projectId);
+    public int getNumberOfCompletedPOs(final Long projectId) {
+        return dao.getNumberOfCompletedPOs(projectId);
     }
 
-    public int getNumberOfOpenPOs(final Long projectId){
+    public int getNumberOfOpenPOs(final Long projectId) {
         return dao.getNumberOfOpenPOs(projectId);
     }
 
-    public int getNumberDeliveryNextMoth(final Long projectId,final Date nextMothIni, final Date nextMothEnd) {
-        return dao.getNumberDeliveryNextMoth(projectId,nextMothIni,nextMothEnd);
+    public int getNumberDeliveryNextMoth(final Long projectId, final Date nextMothIni, final Date nextMothEnd) {
+        return dao.getNumberDeliveryNextMoth(projectId, nextMothIni, nextMothEnd);
     }
 
-    public int getNumberMrrOutstanding(final Long projectId){
+    public int getNumberMrrOutstanding(final Long projectId) {
         return dao.getNumberMrrOutstanding(projectId);
     }
 
@@ -768,19 +768,23 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     public PurchaseOrderEntity findFirstPO(final PurchaseOrderEntity purchaseOrder) {
         List<PurchaseOrderEntity> list = dao.findFirstPO(purchaseOrder);
-        if(!list.isEmpty()){
-           return list.get(0);
+        if (!list.isEmpty()) {
+            return list.get(0);
         }
         return null;
     }
 
-    public PurchaseOrderEntity findByIdOnly(final Long id){
+    public PurchaseOrderEntity findByIdOnly(final Long id) {
         List<PurchaseOrderEntity> list = dao.findPOByIdOnly(id);
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             return list.get(0);
         }
         return null;
     }
 
 
+    public PurchaseOrderEntity findPOPreviousRevision(Long projectId, String po, Integer previousOrderedVariation) {
+        List<PurchaseOrderEntity> list = dao.findPreviousRevisionPO(projectId, po, previousOrderedVariation);
+        return list.isEmpty() ? null : list.get(0);
+    }
 }
