@@ -130,6 +130,9 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             }
             if(!filter.getProjectsAssignedId().isEmpty()){
                 sb.append(" AND x.projectId IN(:PROJECT_ASSIGN_IDS)");
+            }else{
+                //something really fool but let's prove it
+                sb.append(" AND 3=2");
             }
             sb.append(prepareSubquery(filter));
             sb.append(prepareSubQueryExpeditingStatuses(filter));

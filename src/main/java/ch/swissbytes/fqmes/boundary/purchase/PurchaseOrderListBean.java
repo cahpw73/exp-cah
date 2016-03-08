@@ -66,7 +66,6 @@ public class PurchaseOrderListBean implements Serializable {
     @PostConstruct
     public void create(){
         log.info("creating bean purchase list");
-        log.log(Level.FINER, "FINER log");
         searchPurchase=new SearchPurchase();
         List<Long> projectsAssignIds = new ArrayList<>();
         List<ProjectEntity> projects = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());

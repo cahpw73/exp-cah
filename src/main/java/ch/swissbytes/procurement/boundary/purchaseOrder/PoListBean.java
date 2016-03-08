@@ -121,15 +121,12 @@ public class PoListBean implements Serializable {
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
-        Date start = new Date();
         currentPurchaseOrder = new PurchaseOrderEntity();
         purchaseOrderToVariation = new PurchaseOrderEntity();
         pOrderList = new ArrayList<>();
         allPurchaseOrders = new ArrayList<>();
         maxVariationsList = new ArrayList<>();
         purchaseOrders = new ArrayList<>();
-        Date end = new Date();
-        log.info("creating list Bean takes " + (end.getTime() - start.getTime()));
     }
 
     public void load() {
@@ -280,7 +277,6 @@ public class PoListBean implements Serializable {
         }
         findPOs();
         Date d2 = new Date();
-        log.info("end doCommitPo [" + (d2.getTime() - d1.getTime()) + "]ms");
     }
 
     public void doUncommit() {
@@ -303,7 +299,6 @@ public class PoListBean implements Serializable {
         }
         findPOs();
         Date d2 = new Date();
-        log.info("end doFinalise [" + (d2.getTime() - d1.getTime()) + "]ms");
     }
 
     public void doReleasePo() {
@@ -455,12 +450,10 @@ public class PoListBean implements Serializable {
 
     public void startTable() {
         start = new Date();
-        log.info("starting table " + start);
     }
 
     public void endTable() {
         end = new Date();
-        log.info("table completely loaded " + (end.getTime() - start.getTime()));
     }
 
     public boolean canDelete(PurchaseOrderEntity entity) {

@@ -130,11 +130,11 @@ public class ProjectUserBean implements Serializable {
             }else{
                 for(ProjectUserEntity pu : projectAssignList){
                     if(p.getId().longValue() == pu.getId().longValue()){
-                        projectList.add(projectService.findProjectById(pu.getProject().getId()));
                         pu.setStatus(StatusEnum.DELETED);
                     }
                 }
             }
+            projectList.add(projectService.findProjectById(p.getProject().getId()));
         }
         selectedProjectUserList.clear();
     }
@@ -166,14 +166,17 @@ public class ProjectUserBean implements Serializable {
     }
 
     public void searchProject(){
-        projectList.clear();
         List<Long> ids = new ArrayList<>();
         for(ProjectUserEntity pu : projectAssignList){
             if(hasProjectUserStatusEnable(pu)){
                 ids.add(pu.getProject().getId());
             }
         }
-        List<ProjectEntity> list = projectService.findListByProjectNumber(searchTerm,ids);
+        List<ProjectEntity> list = new ArrayList<>();
+        if(!ids.isEmpty()){
+            projectList.clear();
+            list = projectService.findListByProjectNumber(searchTerm,ids);
+        }
         projectList.addAll(list);
     }
 
