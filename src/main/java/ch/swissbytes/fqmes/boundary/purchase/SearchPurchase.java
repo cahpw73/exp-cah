@@ -20,12 +20,6 @@ public class SearchPurchase extends Filter {
     private String poTitle;
     private String responsibleExpediting;
     private String incoTerm;
-    private Date deliveryDateStart;
-    private Date deliveryDateEnd;
-    private Date nextKeyDateStart;
-    private Date nextKeyDateEnd;
-    private Date forecastExWorkDateStart;
-    private Date forecastExWorkDateEnd;
     private String variance = "all";
     private Integer leadTime;
     private Integer dueIn;
@@ -33,6 +27,18 @@ public class SearchPurchase extends Filter {
     private String statuses;
     private String expeditingTitle;
     private List<Long> projectsAssignedId = new ArrayList<>();
+
+    private Date deliveryDateStart;
+    private Date deliveryDateEnd;
+    private Date nextKeyDateStart;
+    private Date nextKeyDateEnd;
+    private Date forecastExWorkDateStart;
+    private Date forecastExWorkDateEnd;
+
+    private Date startDateReport;
+    private Date endDateReport;
+
+
 
     public String getProject() {
         return project;
@@ -201,6 +207,8 @@ public class SearchPurchase extends Filter {
     public void setProjectsAssignedId(List<Long> projectsAssignedId) {
         this.projectsAssignedId = projectsAssignedId;
     }
+
+
 
     @Override
     public void clean() {

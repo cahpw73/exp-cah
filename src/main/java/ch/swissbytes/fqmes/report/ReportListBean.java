@@ -79,13 +79,55 @@ public class ReportListBean implements Serializable {
 
     public List<String> getTypesDate(){
         List<String> list = new ArrayList<>();
+        //list.add("Delivery Date");
         list.add("Forecast Ex Works Date");
+        /*list.add("Actual Ex Works Date");
+        list.add("Forecast Site Date");
+        list.add("Actual Site Date");
+        list.add("Required Site Date");
+        list.add("Required On Site Date");
+        list.add("Actual On Site Date");*/
         list.add("Next Key Date");
         return list;
     }
 
+    public boolean isSelectDeliveryDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Delivery Date");
+        return result;
+    }
+
     public boolean isSelectForecastExWork(){
         boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Forecast Ex Works Date");
+        return result;
+    }
+
+    public boolean isSelectActualExWorkDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Actual Ex Works Date");
+        return result;
+    }
+
+    public boolean isSelectForecastSiteDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Forecast Site Date");
+        return result;
+    }
+
+    public boolean isSelectActualSiteDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Actual Site Date");
+        return result;
+    }
+
+    public boolean isSelectRequiredSiteDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Required Site Date");
+        return result;
+    }
+
+    public boolean isSelectRequiredOnSiteDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Required On Site Date");
+        return result;
+    }
+
+    public boolean isSelectActualOnSiteDate(){
+        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Actual On Site Date");
         return result;
     }
 
