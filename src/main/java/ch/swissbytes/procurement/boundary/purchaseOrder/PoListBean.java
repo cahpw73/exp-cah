@@ -125,15 +125,12 @@ public class PoListBean implements Serializable {
     @PostConstruct
     public void create() {
         log.info("Created POListBean");
-        Date start = new Date();
         currentPurchaseOrder = new PurchaseOrderEntity();
         purchaseOrderToVariation = new PurchaseOrderEntity();
         pOrderList = new ArrayList<>();
         allPurchaseOrders = new ArrayList<>();
         maxVariationsList = new ArrayList<>();
         purchaseOrders = new ArrayList<>();
-        Date end = new Date();
-        log.info("creating list Bean takes " + (end.getTime() - start.getTime()));
     }
 
     public void load() {
@@ -201,7 +198,7 @@ public class PoListBean implements Serializable {
     }
 
     public void createVarNumberToPO(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             currentPurchaseOrder = entity;
             pOrderList = service.findByProjectIdAndPo(project.getId(), entity.getPo());
             sortBean.sortPurchaseOrderEntity(pOrderList);
@@ -278,13 +275,27 @@ public class PoListBean implements Serializable {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
             if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
+                populateFromPreviousRevision(currentPurchaseOrder);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
                 maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
             }
         }
         findPOs();
         Date d2 = new Date();
-        log.info("end doCommitPo [" + (d2.getTime() - d1.getTime()) + "]ms");
+    }
+
+    private void populateFromPreviousRevision(PurchaseOrderEntity currentPurchaseOrder) {
+        if (currentPurchaseOrder.getOrderedVariation() > 0) {
+            Long projectId = currentPurchaseOrder.getProjectEntity().getId();
+            String po = currentPurchaseOrder.getPo();
+            Integer previousOrderedVariation = currentPurchaseOrder.getOrderedVariation() - 1;
+            PurchaseOrderEntity previousRevision = service.findPOPreviousRevision(projectId, po, previousOrderedVariation);
+            if (previousRevision != null) {
+                currentPurchaseOrder.setNextKeyDate(previousRevision.getNextKeyDate() != null ? previousRevision.getNextKeyDate() : null);
+                currentPurchaseOrder.setNextKeyDateComment(StringUtils.isNotEmpty(previousRevision.getNextKeyDateComment()) ? previousRevision.getNextKeyDateComment() : null);
+                currentPurchaseOrder.setGeneralComment(StringUtils.isNotEmpty(previousRevision.getGeneralComment()) ? previousRevision.getGeneralComment() : null);
+            }
+        }
     }
 
     public void doUncommit() {
@@ -307,7 +318,6 @@ public class PoListBean implements Serializable {
         }
         findPOs();
         Date d2 = new Date();
-        log.info("end doFinalise [" + (d2.getTime() - d1.getTime()) + "]ms");
     }
 
     public void doReleasePo() {
@@ -323,7 +333,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
                 return (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
                         || (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
@@ -336,7 +346,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canEdit(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
                 return
                         (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal())
@@ -350,7 +360,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean isPossibleCreateVariation(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             return canCreateVariation(entity);
         }
         return false;
@@ -430,7 +440,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canCommitt(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                     (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal() ||
                             entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.INCOMPLETE.ordinal());
@@ -439,7 +449,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canUncommit(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             boolean canUncommit = false;
             if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
                 if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()) {
@@ -459,16 +469,14 @@ public class PoListBean implements Serializable {
 
     public void startTable() {
         start = new Date();
-        log.info("starting table " + start);
     }
 
     public void endTable() {
         end = new Date();
-        log.info("table completely loaded " + (end.getTime() - start.getTime()));
     }
 
     public boolean canDelete(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
                     entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.COMMITTED.ordinal();
         }
@@ -477,14 +485,14 @@ public class PoListBean implements Serializable {
     }
 
     public boolean actionForReady(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal();
         }
         return false;
     }
 
     public boolean canRelease(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null && entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.FINAL.ordinal();
         }
         return false;
@@ -576,7 +584,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canExportCMS(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
                 boolean exported = entity.getPurchaseOrderProcurementEntity().getCmsExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getCmsExported();
                 return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
@@ -588,7 +596,7 @@ public class PoListBean implements Serializable {
     }
 
     public boolean canExportJDE(PurchaseOrderEntity entity) {
-        if(entity.getId()!=null) {
+        if (entity.getId() != null) {
             if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
                 boolean exported = entity.getPurchaseOrderProcurementEntity().getJdeExported() == null ? false : entity.getPurchaseOrderProcurementEntity().getJdeExported();
                 return entity.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.COMMITTED.ordinal()
@@ -809,7 +817,7 @@ public class PoListBean implements Serializable {
                     try {
                         String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
                         expStatuses = expStatuses + exStatus + ", ";
-                    }catch (NumberFormatException nfe){
+                    } catch (NumberFormatException nfe) {
                         log.info("");
                     }
 
@@ -864,7 +872,7 @@ public class PoListBean implements Serializable {
         managerTable.setSortBy(event.getSortColumn().getValueExpression("sortBy").getExpressionString());
         managerTable.setDirection(event.isAscending() ? "ascending" : "descending");
         managerTable.setSortInitialized(true);
-        for (PurchaseOrderEntity po : purchaseOrders){
+        for (PurchaseOrderEntity po : purchaseOrders) {
 
         }
     }
