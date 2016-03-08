@@ -199,8 +199,6 @@ public class UserDao extends GenericDao implements Serializable {
     }
 
     public List<UserEntity> findBySearchTerm(final String searchTerm, final StatusEnum userStatus) {
-        log.info("Search Term: " + searchTerm);
-        log.info("User status: " + (userStatus != null? userStatus.getLabel() : "null"));
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT u ");
         sb.append(" FROM UserEntity u ");
