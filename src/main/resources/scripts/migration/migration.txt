@@ -1942,3 +1942,10 @@ END;
 
 ALTER TABLE v_purchase_order
   OWNER TO postgres;
+
+#08/03/2016
+INSERT INTO project_user(id,created,last_update,status,project_id,user_id,user_created_id,user_last_update_id,module_system)
+    SELECT u.id as id,current_date as created,current_date as last_update,0 as status,p.id as project_id,u.id as user_id,144 as user_created_id,144 as user_last_update_id,0 as module_system
+    FROM users u, project p
+    WHERE u.status_id=1 and p.status=0
+          and p.id=1;
