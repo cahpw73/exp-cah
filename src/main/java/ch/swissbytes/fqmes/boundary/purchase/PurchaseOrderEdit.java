@@ -552,8 +552,17 @@ public class PurchaseOrderEdit implements Serializable {
         hasValueLeadTime = false;
     }
 
+    public void doBulkUpdateInScopeSupplyForActualSiteDate(){
+        for (ScopeSupplyEntity sp : scopeActives) {
+            if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
+                if(sp.getActualSiteDate() == null) {
+                    sp.setActualSiteDate(poEdit.getActualDate());
+                }
+            }
+        }
+    }
+
     public void doBulkUpdateForPO() {
-        log.info("size list scopeActives: " + scopeActives.size());
         for (ScopeSupplyEntity sp : scopeActives) {
             if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
                 sp.setResponsibleExpediting(StringUtils.isNotEmpty(bulkScopeSupply.getResponsibleExpediting()) ? bulkScopeSupply.getResponsibleExpediting() : sp.getResponsibleExpediting());

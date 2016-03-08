@@ -34,9 +34,9 @@
         </div>
         <div class="section-text-area-po">
             <p:inputTextarea
-                             maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
-                             jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control" rows="3"/>
+                    maxlength="950" type="text"
+                    value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
+                    jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control" rows="3"/>
         </div>
     </div>
     <div class="row">
@@ -69,9 +69,9 @@
         </div>
         <div class="section-text-area-po">
             <p:inputTextarea
-                             maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.requiredSiteDateComment}"
-                             jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control" rows="3"/>
+                    maxlength="950" type="text"
+                    value="#{purchaseOrderEdit.poEdit.requiredSiteDateComment}"
+                    jsf:placeholder="#{msgs['po.ph.req.site.date.description']}" class="form-control" rows="3"/>
         </div>
     </div>
     <div class="row">
@@ -98,15 +98,18 @@
                                 timeZone="#{configuration.timeZone}"
                                 jsf:placeholder="#{configuration.formatDate}"
                                 value="#{purchaseOrderEdit.poEdit.actualDate}"
-                                onselect="calendarChanges();" onclick="calendarChanges();"/>
+                                onselect="calendarChanges();" onclick="calendarChanges();">
+                        <p:ajax event="dateSelect" async="false" process="@this" update="scopeSupplyList"
+                                listener="#{purchaseOrderEdit.doBulkUpdateInScopeSupplyForActualSiteDate}"/>
+                    </p:calendar>
                 </div>
             </div>
         </div>
         <div class="section-text-area-po">
             <p:inputTextarea
-                             maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.actualSiteDateComment}"
-                             jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control" rows="3"/>
+                    maxlength="950" type="text"
+                    value="#{purchaseOrderEdit.poEdit.actualSiteDateComment}"
+                    jsf:placeholder="#{msgs['po.ph.actual.site.date.description']}" class="form-control" rows="3"/>
         </div>
     </div>
     <div class="row">
@@ -152,9 +155,9 @@
 
                 <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
                     <p:inputTextarea
-                                     maxlength="19800" type="text"
-                                     value="#{purchaseOrderEdit.poEdit.generalComment}"
-                                     jsf:placeholder="#{msgs['po.ph.general.comment']}" class="form-control" rows="3"/>
+                            maxlength="19800" type="text"
+                            value="#{purchaseOrderEdit.poEdit.generalComment}"
+                            jsf:placeholder="#{msgs['po.ph.general.comment']}" class="form-control" rows="3"/>
                 </div>
             </div>
         </div>
