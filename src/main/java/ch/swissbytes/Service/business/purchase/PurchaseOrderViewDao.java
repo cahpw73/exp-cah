@@ -58,12 +58,6 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 query.setParameter("INCO_TERM", "%" + filter.getIncoTerm().trim() + "%");
             }
-            /*if (filter.getNextKeyDateStart() != null) {
-                query.setParameter("START_NEXT_KEY_DATE", filter.getNextKeyDateStart());
-            }
-            if (filter.getNextKeyDateEnd() != null) {
-                query.setParameter("END_NEXT_KEY_DATE", filter.getNextKeyDateEnd());
-            }*/
             if(!filter.getProjectsAssignedId().isEmpty()){
                 query.setParameter("PROJECT_ASSIGN_IDS",filter.getProjectsAssignedId());
             }
@@ -149,13 +143,6 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 sb.append(" AND lower(x.incoTerm) like lower(:INCO_TERM)");
             }
-
-            /*if (filter.getNextKeyDateStart() != null) {
-                sb.append(" AND x.nextKeyDate>=:START_NEXT_KEY_DATE ");
-            }
-            if (filter.getNextKeyDateEnd() != null) {
-                sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
-            }*/
             if(!filter.getProjectsAssignedId().isEmpty()){
                 sb.append(" AND x.projectId IN(:PROJECT_ASSIGN_IDS)");
             }else{
@@ -234,12 +221,48 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (filter.getDueIn() != null) {
                 subQuery.append(" AND (ss.poDeliveryDate>=:START_DUE_DATE_IN AND ss.poDeliveryDate<=:END_DUE_DATE_IN)");
             }
-            if (filter.getDeliveryDateStart() != null) {
+            /*if (filter.getDeliveryDateStart() != null) {
                 subQuery.append(" AND ss.forecastExWorkDate>=:START_DELIVERY_DATE");
             }
             if (filter.getDeliveryDateEnd() != null) {
                 subQuery.append(" AND ss.forecastExWorkDate<=:END_DELIVERY_DATE ");
+            }*/
+
+            if(filter.getTypeDateReport()!=null){
+                if(filter.getStartDateReport()!=null){
+                    switch (filter.getTypeDateReport()){
+                        case FORECAST_EX_WORKS_DATE:subQuery.append(" AND ss.forecastExWorkDate>=:START_FORECAST_EX_WORKS_DATE ");
+                            break;
+                        case ACTUAL_EX_WORKS_DATE:subQuery.append(" AND ss.actualExWorkDate>=:START_ACTUAL_EX_WORKS_DATE ");
+                            break;
+                        case FORECAST_SITE_DATE:subQuery.append(" AND ss.forecastSiteDate>=:START_FORECAST_SITE_DATE ");
+                            break;
+                        case ACTUAL_SITE_DATE:subQuery.append(" AND ss.actualSiteDate>=:START_ACTUAL_SITE_DATE ");
+                            break;
+                        case REQUIRED_SITE_DATE:subQuery.append(" AND ss.requiredSiteDate>=:START_REQUIRED_SITE_DATE ");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if(filter.getEndDateReport()!=null){
+                    switch (filter.getTypeDateReport()){
+                        case FORECAST_EX_WORKS_DATE:subQuery.append(" AND ss.forecastExWorkDate<=:START_FORECAST_EX_WORKS_DATE ");
+                            break;
+                        case ACTUAL_EX_WORKS_DATE:subQuery.append(" AND ss.actualExWorkDate<=:START_ACTUAL_EX_WORKS_DATE ");
+                            break;
+                        case FORECAST_SITE_DATE:subQuery.append(" AND ss.forecastSiteDate<=:START_FORECAST_SITE_DATE ");
+                            break;
+                        case ACTUAL_SITE_DATE:subQuery.append(" AND ss.actualSiteDate<=:START_ACTUAL_SITE_DATE ");
+                            break;
+                        case REQUIRED_SITE_DATE:subQuery.append(" AND ss.requiredSiteDate<=:START_REQUIRED_SITE_DATE ");
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
+
             subQuery.append(" ) ");
         }
         return subQuery.toString();
@@ -259,12 +282,47 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             query.setParameter("START_DUE_DATE_IN", startDueInDate);
             query.setParameter("END_DUE_DATE_IN", new Util().addDays(startDueInDate, filter.getDueIn() * 7));
         }
-        if (filter.getDeliveryDateStart() != null) {
+        /*if (filter.getDeliveryDateStart() != null) {
             query.setParameter("START_DELIVERY_DATE", filter.getDeliveryDateStart());
         }
         if (filter.getDeliveryDateEnd() != null) {
             query.setParameter("END_DELIVERY_DATE", filter.getDeliveryDateEnd());
+        }*/
+        if(filter.getTypeDateReport()!=null){
+            if(filter.getStartDateReport()!=null){
+                switch (filter.getTypeDateReport()){
+                    case FORECAST_EX_WORKS_DATE:query.setParameter("START_FORECAST_EX_WORKS_DATE", filter.getStartDateReport());
+                        break;
+                    case ACTUAL_EX_WORKS_DATE:query.setParameter("START_ACTUAL_EX_WORKS_DATE", filter.getStartDateReport());
+                        break;
+                    case FORECAST_SITE_DATE:query.setParameter("START_FORECAST_SITE_DATE", filter.getStartDateReport());
+                        break;
+                    case ACTUAL_SITE_DATE:query.setParameter("START_ACTUAL_SITE_DATE", filter.getStartDateReport());
+                        break;
+                    case REQUIRED_SITE_DATE:query.setParameter("START_REQUIRED_SITE_DATE", filter.getStartDateReport());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if(filter.getEndDateReport()!=null){
+                switch (filter.getTypeDateReport()){
+                    case FORECAST_EX_WORKS_DATE:query.setParameter("START_FORECAST_EX_WORKS_DATE", filter.getEndDateReport());
+                        break;
+                    case ACTUAL_EX_WORKS_DATE:query.setParameter("START_ACTUAL_EX_WORKS_DATE", filter.getEndDateReport());
+                        break;
+                    case FORECAST_SITE_DATE:query.setParameter("START_FORECAST_SITE_DATE", filter.getEndDateReport());
+                        break;
+                    case ACTUAL_SITE_DATE:query.setParameter("START_ACTUAL_SITE_DATE", filter.getEndDateReport());
+                        break;
+                    case REQUIRED_SITE_DATE:query.setParameter("START_REQUIRED_SITE_DATE", filter.getEndDateReport());
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+
     }
 
     @Override
