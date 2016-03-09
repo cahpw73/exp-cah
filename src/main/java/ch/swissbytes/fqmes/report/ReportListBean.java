@@ -79,14 +79,14 @@ public class ReportListBean implements Serializable {
 
     public List<String> getTypesDate(){
         List<String> list = new ArrayList<>();
-        //list.add("Delivery Date");
+        list.add("Delivery Date");
         list.add("Forecast Ex Works Date");
-        /*list.add("Actual Ex Works Date");
+        list.add("Actual Ex Works Date");
         list.add("Forecast Site Date");
         list.add("Actual Site Date");
         list.add("Required Site Date");
         list.add("Required On Site Date");
-        list.add("Actual On Site Date");*/
+        list.add("Actual On Site Date");
         list.add("Next Key Date");
         return list;
     }
