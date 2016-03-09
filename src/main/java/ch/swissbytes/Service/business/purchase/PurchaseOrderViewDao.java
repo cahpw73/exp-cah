@@ -58,14 +58,44 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 query.setParameter("INCO_TERM", "%" + filter.getIncoTerm().trim() + "%");
             }
-            if (filter.getNextKeyDateStart() != null) {
+            /*if (filter.getNextKeyDateStart() != null) {
                 query.setParameter("START_NEXT_KEY_DATE", filter.getNextKeyDateStart());
             }
             if (filter.getNextKeyDateEnd() != null) {
                 query.setParameter("END_NEXT_KEY_DATE", filter.getNextKeyDateEnd());
-            }
+            }*/
             if(!filter.getProjectsAssignedId().isEmpty()){
                 query.setParameter("PROJECT_ASSIGN_IDS",filter.getProjectsAssignedId());
+            }
+            if(filter.getTypeDateReport()!=null){
+                if(filter.getStartDateReport()!=null){
+                    switch (filter.getTypeDateReport()){
+                        case PO_DELIVERY_DATE:query.setParameter("START_PO_DELIVERY_DATE", filter.getStartDateReport());
+                            break;
+                        case REQUIRED_ON_SITE_DATE:query.setParameter("START_REQUIRED_ON_SITE_DATE", filter.getStartDateReport());
+                            break;
+                        case ACTUAL_ON_SITE_DATE: query.setParameter("START_ACTUAL_ON_SITE_DATE", filter.getStartDateReport());
+                            break;
+                        case NEXT_KEY_DATE:query.setParameter("START_NEXT_KEY_DATE", filter.getStartDateReport());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if(filter.getEndDateReport()!=null){
+                    switch (filter.getTypeDateReport()){
+                        case PO_DELIVERY_DATE:query.setParameter("END_PO_DELIVERY_DATE", filter.getEndDateReport());
+                            break;
+                        case REQUIRED_ON_SITE_DATE:query.setParameter("END_REQUIRED_ON_SITE_DATE", filter.getEndDateReport());
+                            break;
+                        case ACTUAL_ON_SITE_DATE: query.setParameter("END_ACTUAL_ON_SITE_DATE", filter.getEndDateReport());
+                            break;
+                        case NEXT_KEY_DATE:query.setParameter("END_NEXT_KEY_DATE", filter.getEndDateReport());
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
 
             if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
@@ -119,20 +149,47 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
             if (StringUtils.isNotEmpty(filter.getIncoTerm()) && StringUtils.isNotBlank(filter.getIncoTerm())) {
                 sb.append(" AND lower(x.incoTerm) like lower(:INCO_TERM)");
             }
-            /*if (StringUtils.isNotEmpty(filter.getStatuses()) && StringUtils.isNotBlank(filter.getStatuses())) {
-                sb.append(" AND  x.purchaseOrderStatus IN(:PURCHASE_ORDER_STATUS_LIST)");
-            }*/
-            if (filter.getNextKeyDateStart() != null) {
+
+            /*if (filter.getNextKeyDateStart() != null) {
                 sb.append(" AND x.nextKeyDate>=:START_NEXT_KEY_DATE ");
             }
             if (filter.getNextKeyDateEnd() != null) {
                 sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
-            }
+            }*/
             if(!filter.getProjectsAssignedId().isEmpty()){
                 sb.append(" AND x.projectId IN(:PROJECT_ASSIGN_IDS)");
             }else{
-                //something really fool but let's prove it
                 sb.append(" AND 3=2");
+            }
+            if(filter.getTypeDateReport()!=null){
+                if(filter.getStartDateReport()!=null){
+                    switch (filter.getTypeDateReport()){
+                        case PO_DELIVERY_DATE:sb.append(" AND x.poDeliveryDate>=:START_PO_DELIVERY_DATE ");
+                            break;
+                        case REQUIRED_ON_SITE_DATE:sb.append(" AND x.requiredDate>=:START_REQUIRED_ON_SITE_DATE ");
+                            break;
+                        case ACTUAL_ON_SITE_DATE:sb.append(" AND x.actualOnSiteDate>=:START_ACTUAL_ON_SITE_DATE ");
+                            break;
+                        case NEXT_KEY_DATE:sb.append(" AND x.nextKeyDate>=:START_NEXT_KEY_DATE ");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if(filter.getEndDateReport()!=null){
+                    switch (filter.getTypeDateReport()){
+                        case PO_DELIVERY_DATE:sb.append(" AND x.poDeliveryDate<=:END_PO_DELIVERY_DATE ");
+                            break;
+                        case REQUIRED_ON_SITE_DATE:sb.append(" AND x.requiredDate<=:END_REQUIRED_ON_SITE_DATE ");
+                            break;
+                        case ACTUAL_ON_SITE_DATE:sb.append(" AND x.actualOnSiteDate<=:END_ACTUAL_ON_SITE_DATE ");
+                            break;
+                        case NEXT_KEY_DATE:sb.append(" AND x.nextKeyDate<=:END_NEXT_KEY_DATE ");
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             sb.append(prepareSubquery(filter));
             sb.append(prepareSubQueryExpeditingStatuses(filter));

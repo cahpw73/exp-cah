@@ -1949,3 +1949,5 @@ INSERT INTO project_user(id,created,last_update,status,project_id,user_id,user_c
     FROM users u, project p
     WHERE u.status_id=1 and p.status=0
           and p.id=1;
+
+#09/03/2016

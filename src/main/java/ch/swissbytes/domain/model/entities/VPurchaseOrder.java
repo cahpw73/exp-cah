@@ -36,17 +36,19 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private String incoTerm;
 
-    private Date poDeliveryDate;
-
-    private Date requiredDate;
-
     private ExpeditingStatusEnum purchaseOrderStatus;
-
-    private Date nextKeyDate;
 
     private Integer orderedVariation;
 
     private Long projectId;
+
+    private Date poDeliveryDate;
+
+    private Date nextKeyDate;
+
+    private Date actualOnSiteDate;
+
+    private Date requiredDate;
 
     @Id
     public Long getId() {
@@ -140,6 +142,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
 
     @Column(name="PO_DELIVERY_DATE",updatable = false, insertable = false, nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getPoDeliveryDate() {
         return poDeliveryDate;
     }
@@ -149,6 +152,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
     }
 
     @Column(name="REQUIRED_DATE",updatable = false, insertable = false, nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getRequiredDate() {
         return requiredDate;
     }
@@ -165,6 +169,17 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setNextKeyDate(Date nextKeyDate) {
         this.nextKeyDate = nextKeyDate;
+    }
+
+
+    @Column(name="ACTUAL_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getActualOnSiteDate() {
+        return actualOnSiteDate;
+    }
+
+    public void setActualOnSiteDate(Date actualOnSiteDate) {
+        this.actualOnSiteDate = actualOnSiteDate;
     }
 
     @Enumerated(EnumType.ORDINAL)
