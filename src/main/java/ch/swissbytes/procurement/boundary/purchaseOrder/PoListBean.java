@@ -467,14 +467,6 @@ public class PoListBean implements Serializable {
         return false;
     }
 
-    public void startTable() {
-        start = new Date();
-    }
-
-    public void endTable() {
-        end = new Date();
-    }
-
     public boolean canDelete(PurchaseOrderEntity entity) {
         if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
