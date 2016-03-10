@@ -63,37 +63,39 @@ public class ReportSheduleE extends ReportView implements Serializable {
                           Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
                           String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
         super(filenameJasper, reportNameMsgKey, messages, locale);
-        this.configuration = configuration;
-        this.po = po;
-        this.itemEntityList = itemEntityList;
-        this.preamble = preamble;
-        this.clausesList = clausesList;
-        this.cashflowEntity = cashflowEntity;
-        this.entityManager = entityManager;
-        this.draft = draft;
-        this.poDocumentList = poDocumentList;
-        //TODO Va al Schedule
-        addParameters("patternDecimal", configuration.getPatternDecimal());
-        addParameters("FORMAT_DATE", configuration.getFormatDate());
-        //TODO Va al Schedule
-        addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
-        //TODO Va al Schedule
-        addParameters("TIME_ZONE", configuration.getTimeZone());
-        //TODO Va al Schedule
-        addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
         try {
+            this.configuration = configuration;
+            this.po = po;
+            this.itemEntityList = itemEntityList;
+            this.preamble = preamble;
+            this.clausesList = clausesList;
+            this.cashflowEntity = cashflowEntity;
+            this.entityManager = entityManager;
+            this.draft = draft;
+            this.poDocumentList = poDocumentList;
+            //TODO Va al Schedule
+            addParameters("patternDecimal", configuration.getPatternDecimal());
+            addParameters("FORMAT_DATE", configuration.getFormatDate());
+            //TODO Va al Schedule
+            addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
+            //TODO Va al Schedule
+            addParameters("TIME_ZONE", configuration.getTimeZone());
+            //TODO Va al Schedule
+            addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
+
             connection = getConnection();
+
+
+            addParameters("REPORT_CONNECTION", connection);
+            loadParamPurchaseOrder();
+            addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
+            addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
+            addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
+            addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
+            addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        addParameters("REPORT_CONNECTION", connection);
-        loadParamPurchaseOrder();
-        addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
-        addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
-        addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
-        addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
-        addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
     }
 
     private void loadParamPurchaseOrder() {
@@ -139,7 +141,7 @@ public class ReportSheduleE extends ReportView implements Serializable {
         //TODO va a schedule
         addParameters("currenciesNumber", currencies.size());
         //TODO va a schedule
-        String doc = poDocumentList.isEmpty()?"":poDocumentList.get(0).getDescription();
+        String doc = poDocumentList.isEmpty() ? "" : poDocumentList.get(0).getDescription();
         addParameters("docs", doc);
     }
 

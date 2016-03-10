@@ -65,34 +65,36 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                                Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
                                String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
         super(filenameJasper, reportNameMsgKey, messages, locale);
-        this.configuration = configuration;
-        this.po = po;
-        this.itemEntityList = itemEntityList;
-        this.preamble = preamble;
-        this.clausesList = clausesList;
-        this.cashflowEntity = cashflowEntity;
-        this.entityManager = entityManager;
-        this.draft = draft;
-        this.poDocumentList = poDocumentList;
-        addParameters("patternDecimal", configuration.getPatternDecimal());
-        addParameters("FORMAT_DATE", configuration.getFormatDate());
-        addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
-        addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
         try {
+            this.configuration = configuration;
+            this.po = po;
+            this.itemEntityList = itemEntityList;
+            this.preamble = preamble;
+            this.clausesList = clausesList;
+            this.cashflowEntity = cashflowEntity;
+            this.entityManager = entityManager;
+            this.draft = draft;
+            this.poDocumentList = poDocumentList;
+            addParameters("patternDecimal", configuration.getPatternDecimal());
+            addParameters("FORMAT_DATE", configuration.getFormatDate());
+            addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
+            addParameters("TIME_ZONE", configuration.getTimeZone());
+            addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
+
             connection = getConnection();
+
+
+            addParameters("REPORT_CONNECTION", connection);
+            loadParamPurchaseOrder();
+            addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
+            addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
+            addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
+            addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
+            addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
+            loadOtherDocumentList();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        addParameters("REPORT_CONNECTION", connection);
-        loadParamPurchaseOrder();
-        addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
-        addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
-        addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
-        addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
-        addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
-        loadOtherDocumentList();
     }
 
     private void loadParamPurchaseOrder() {
@@ -177,7 +179,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
-        String doc = poDocumentList.isEmpty()?"":poDocumentList.get(0).getDescription();
+        String doc = poDocumentList.isEmpty() ? "" : poDocumentList.get(0).getDescription();
         addParameters("docs", doc);
     }
 
@@ -700,14 +702,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
 
     private void loadOtherDocumentList() throws IOException, DocumentException {
-        if(!poDocumentList.isEmpty()) {
+        if (!poDocumentList.isEmpty()) {
             for (PODocumentEntity pd : poDocumentList) {
                 if (pd.getScheduleE() == null) {
-                    if(StringUtils.isNotEmpty(pd.getDescription())) {
+                    if (StringUtils.isNotEmpty(pd.getDescription())) {
                         pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
                         pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
                         otherDocumentList.add(getReportFromHtml(pd.getDescription()));
-                    }else {
+                    } else {
                         log.info("attachmentPoDocId = " + pd.getAttachmentProjectDocument().getId());
                         AttachmentMainDocumentEntity attachmentMainDocument = getAttachmentDocument(pd.getAttachmentProjectDocument().getId());
                         ByteArrayOutputStream baos = new ByteArrayOutputStream(attachmentMainDocument.getFile().length);
@@ -718,20 +720,20 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                     otherDocumentList.add(getReportSchedule());
                 }
             }
-        }else{
+        } else {
             otherDocumentList.add(getReportSchedule());
         }
     }
 
-    public AttachmentMainDocumentEntity getAttachmentDocument(final Long id){
-        StringBuilder sb=new StringBuilder();
+    public AttachmentMainDocumentEntity getAttachmentDocument(final Long id) {
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT x ");
         sb.append("FROM AttachmentMainDocumentEntity x ");
         sb.append("WHERE x.id=:MAIN_DOC_ID ");
         Query query = entityManager.createQuery(sb.toString());
         query.setParameter("MAIN_DOC_ID", id);
         List<AttachmentMainDocumentEntity> list = query.getResultList();
-        return list.isEmpty()?null:list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {
@@ -755,33 +757,35 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         Locale locale = new Locale(Locale.ENGLISH.getLanguage());
         Map<String, String> messages = new HashMap<>();
         ReportView reportView = new ReportSheduleE("/procurement/printPo/Schedule", "procurement.schedule",
-                messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager,draft,poDocumentList);
+                messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager, draft, poDocumentList);
         return reportView.getByteArrayOutputStreamReport(null);
     }
 
     @Override
     public void printDocument(Long documentId) {
-        try {
-            runReport(null, otherDocumentList);
-        } catch (Exception ex) {
-            if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
-                log.info("ex message contains SAXParseException;");
-                ex.printStackTrace();
-            } else {
-                log.log(Level.WARNING, "A special character is being used [&]");
-            }
-        } finally {
+        if (connection != null) {
             try {
-                if (connection != null && !connection.isClosed()) ;
-                {
-                    try {
-                        connection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+                runReport(null, otherDocumentList);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
+                    log.info("ex message contains SAXParseException;");
+                    ex.printStackTrace();
+                } else {
+                    log.log(Level.WARNING, "A special character is being used [&]");
+                }
+            } finally {
+                try {
+                    if (connection != null && !connection.isClosed()) ;
+                    {
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
