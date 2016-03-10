@@ -102,7 +102,11 @@ public class ReportListBean implements Serializable {
     }
 
     public boolean verifyTypeDateReport(Integer typeDateId) {
-        return searchPurchase.getTypeDateReport().getId().intValue() == typeDateId.intValue();
+        if(searchPurchase.getTypeDateReport()!=null) {
+            return searchPurchase.getTypeDateReport().getId().intValue() == typeDateId.intValue();
+        }else{
+            return false;
+        }
     }
 
     public void resetNextKeyAndForecast() {

@@ -36,7 +36,7 @@ public class SearchPurchase extends Filter {
     private Date forecastExWorkDateStart;
     private Date forecastExWorkDateEnd;
 
-    private TypeDateReportEnum typeDateReport = TypeDateReportEnum.FORECAST_EX_WORKS_DATE;
+    private TypeDateReportEnum typeDateReport;
     private Date startDateReport;
     private Date endDateReport;
 

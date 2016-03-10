@@ -101,6 +101,7 @@
                     <p:selectOneMenu style="width: 60%"
                                      styleClass="menu-ddp"
                                      value="#{reportListBean.searchPurchase.typeDateReport}">
+                        <f:selectItem noSelectionOption="true" itemLabel="Select One"/>
                         <f:selectItems value="#{reportListBean.typesDateList}"
                                        var="_t"
                                        itemValue="#{_t}"

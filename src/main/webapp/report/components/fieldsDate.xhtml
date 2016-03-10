@@ -36,7 +36,8 @@
                                     styleClass="calendar-filter"
                                     pattern="#{configuration.formatDate}"
                                     converter="#{dateConverter}"
-                                    timeZone="#{configuration.timeZone2}">
+                                    timeZone="#{configuration.timeZone2}"
+                                    disabled="#{reportListBean.searchPurchase.typeDateReport==null}">
                         </p:calendar>
                     </div>
                 </div>
@@ -48,7 +49,8 @@
                                     navigator="true" jsf:placeholder="#{configuration.formatDate}"
                                     pattern="#{configuration.formatDate}"
                                     converter="#{dateConverter}"
-                                    timeZone="#{configuration.timeZone2}">
+                                    timeZone="#{configuration.timeZone2}"
+                                    disabled="#{reportListBean.searchPurchase.typeDateReport==null}">
                         </p:calendar>
                     </div>
                 </div>
