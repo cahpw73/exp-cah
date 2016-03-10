@@ -255,5 +255,8 @@ public class SearchPurchase extends Filter {
         expeditingTitle = null;
         forecastExWorkDateStart = null;
         forecastExWorkDateEnd = null;
+        startDateReport = null;
+        endDateReport = null;
+        typeDateReport = null;
     }
 }
