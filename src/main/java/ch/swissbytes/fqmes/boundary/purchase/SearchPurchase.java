@@ -1,6 +1,7 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.types.TypeDateReportEnum;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +36,7 @@ public class SearchPurchase extends Filter {
     private Date forecastExWorkDateStart;
     private Date forecastExWorkDateEnd;
 
+    private TypeDateReportEnum typeDateReport;
     private Date startDateReport;
     private Date endDateReport;
 
@@ -208,7 +210,29 @@ public class SearchPurchase extends Filter {
         this.projectsAssignedId = projectsAssignedId;
     }
 
+    public TypeDateReportEnum getTypeDateReport() {
+        return typeDateReport;
+    }
 
+    public void setTypeDateReport(TypeDateReportEnum typeDateReport) {
+        this.typeDateReport = typeDateReport;
+    }
+
+    public Date getStartDateReport() {
+        return startDateReport;
+    }
+
+    public void setStartDateReport(Date startDateReport) {
+        this.startDateReport = startDateReport;
+    }
+
+    public Date getEndDateReport() {
+        return endDateReport;
+    }
+
+    public void setEndDateReport(Date endDateReport) {
+        this.endDateReport = endDateReport;
+    }
 
     @Override
     public void clean() {
@@ -231,5 +255,8 @@ public class SearchPurchase extends Filter {
         expeditingTitle = null;
         forecastExWorkDateStart = null;
         forecastExWorkDateEnd = null;
+        startDateReport = null;
+        endDateReport = null;
+        typeDateReport = null;
     }
 }

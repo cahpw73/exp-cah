@@ -3,6 +3,9 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.model.entities.RoleEntity;
+import ch.swissbytes.domain.types.RoleEnum;
+import ch.swissbytes.domain.types.TypeDateReportEnum;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
@@ -15,6 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,17 +45,14 @@ public class ReportListBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
 
-    private String typeDate = "Forecast Ex Works Date";
-
-
     @PostConstruct
     public void create() {
         log.info("creating bean purchase list");
         log.log(Level.FINER, "FINER log");
-        searchPurchase=new SearchPurchase();
+        searchPurchase = new SearchPurchase();
         List<Long> projectsAssignIds = new ArrayList<>();
         List<ProjectEntity> projects = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());
-        for (ProjectEntity p : projects){
+        for (ProjectEntity p : projects) {
             projectsAssignIds.add(p.getId());
         }
         searchPurchase.getProjectsAssignedId().addAll(projectsAssignIds);
@@ -66,7 +67,7 @@ public class ReportListBean implements Serializable {
     }
 
     private void fixedStatusesTerms() {
-        if (searchPurchase.getStatuses()!=null && searchPurchase.getStatuses().length() > 1) {
+        if (searchPurchase.getStatuses() != null && searchPurchase.getStatuses().length() > 1) {
             searchPurchase.setStatuses(searchPurchase.getStatuses().replaceAll("\\s", ""));
             String status1 = searchPurchase.getStatuses().substring(0, 1);
             try {
@@ -77,70 +78,40 @@ public class ReportListBean implements Serializable {
         }
     }
 
-    public List<String> getTypesDate(){
+    public List<String> getTypesDate() {
         List<String> list = new ArrayList<>();
-        //list.add("Delivery Date");
+        list.add("Delivery Date");
         list.add("Forecast Ex Works Date");
-        /*list.add("Actual Ex Works Date");
+        list.add("Actual Ex Works Date");
         list.add("Forecast Site Date");
         list.add("Actual Site Date");
         list.add("Required Site Date");
         list.add("Required On Site Date");
-        list.add("Actual On Site Date");*/
+        list.add("Actual On Site Date");
         list.add("Next Key Date");
         return list;
     }
 
-    public boolean isSelectDeliveryDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Delivery Date");
-        return result;
+    public List<TypeDateReportEnum> getTypesDateList() {
+        List<TypeDateReportEnum> typesDateList = Arrays.asList(TypeDateReportEnum.values());
+        return typesDateList;
     }
 
-    public boolean isSelectForecastExWork(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Forecast Ex Works Date");
-        return result;
+    public String typeDateName(final Integer Id) {
+        return TypeDateReportEnum.valueOf(Id).getLabel();
     }
 
-    public boolean isSelectActualExWorkDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Actual Ex Works Date");
-        return result;
+    public boolean verifyTypeDateReport(Integer typeDateId) {
+        if(searchPurchase.getTypeDateReport()!=null) {
+            return searchPurchase.getTypeDateReport().getId().intValue() == typeDateId.intValue();
+        }else{
+            return false;
+        }
     }
 
-    public boolean isSelectForecastSiteDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Forecast Site Date");
-        return result;
-    }
-
-    public boolean isSelectActualSiteDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Actual Site Date");
-        return result;
-    }
-
-    public boolean isSelectRequiredSiteDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Required Site Date");
-        return result;
-    }
-
-    public boolean isSelectRequiredOnSiteDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Required On Site Date");
-        return result;
-    }
-
-    public boolean isSelectActualOnSiteDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Actual On Site Date");
-        return result;
-    }
-
-    public boolean isSelectNextKeyDate(){
-        boolean result = StringUtils.isNotEmpty(typeDate) && typeDate.equals("Next Key Date");
-        return result;
-    }
-
-    public void resetNextKeyAndForecast(){
-        searchPurchase.setDeliveryDateStart(null);
-        searchPurchase.setDeliveryDateEnd(null);
-        searchPurchase.setNextKeyDateStart(null);
-        searchPurchase.setNextKeyDateEnd(null);
+    public void resetNextKeyAndForecast() {
+        searchPurchase.setStartDateReport(null);
+        searchPurchase.setEndDateReport(null);
     }
 
     @PreDestroy
@@ -166,11 +137,4 @@ public class ReportListBean implements Serializable {
         return searchPurchase;
     }
 
-    public String getTypeDate() {
-        return typeDate;
-    }
-
-    public void setTypeDate(String typeDate) {
-        this.typeDate = typeDate;
-    }
 }

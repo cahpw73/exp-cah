@@ -100,10 +100,14 @@
                     <label class='control-label' style="width: 100%">#{msgs['po.supply.scope.lbl.dates']}</label>
                     <p:selectOneMenu style="width: 60%"
                                      styleClass="menu-ddp"
-                                     value="#{reportListBean.typeDate}">
-                        <f:selectItems value="#{reportListBean.typesDate}"/>
-                        <p:ajax async="false" process="@this forecastWorkGrp nextKeyGrp"
-                                update="nextKeyGrp forecastWorkGrp" event="change"
+                                     value="#{reportListBean.searchPurchase.typeDateReport}">
+                        <f:selectItem noSelectionOption="true" itemLabel="Select One"/>
+                        <f:selectItems value="#{reportListBean.typesDateList}"
+                                       var="_t"
+                                       itemValue="#{_t}"
+                                       itemLabel="#{reportListBean.typeDateName(_t.id)}"/>
+                        <p:ajax async="false" process="@this"
+                                update="lblTypeDateId fieldsTypeDateGrp" event="change"
                                 listener="#{reportListBean.resetNextKeyAndForecast()}"/>
                     </p:selectOneMenu>
                 </div>

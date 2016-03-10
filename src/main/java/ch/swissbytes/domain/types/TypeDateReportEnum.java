@@ -32,7 +32,21 @@ public enum TypeDateReportEnum implements Serializable {
         return null;
     }
 
+    public static TypeDateReportEnum valueOf(Integer id) {
+        if (id!=null) {
+            for (TypeDateReportEnum item : values()) {
+                if (item.id.equals(id)) {
+                    return item;
+                }
+            }
+        }
+        throw new IllegalArgumentException("User Role Id invalid : [" + id + "]");
+    }
+
     public String getLabel() {
         return label;
+    }
+    public Integer getId() {
+        return id;
     }
 }

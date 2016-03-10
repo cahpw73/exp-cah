@@ -4,72 +4,57 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 
-    <h:panelGroup id="forecastWorkGrp">
-        <h:panelGroup rendered="#{reportListBean.selectForecastExWork}">
-            <div class='form-group card' style="margin-top: -10px;">
-                <label class='control-label'>#{msgs['po.supply.scope.column.forecast.delivery.date']}</label>
-                <div>
-                    <div class="col-md-6" style="padding-left: 0px;">
-                        <div>
-                            <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
+    <div class='form-group card' style="margin-top: -10px;">
+        <h:panelGroup id="lblTypeDateId">
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(0)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.po.delivery.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(1)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.forecast.ex.works.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(2)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.actual.ex.works.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(3)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.forecast.site.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(4)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.actual.site.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(5)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.required.site.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(6)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.required.on.site.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(7)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.actual.on.site.date']}"/>
+            <h:outputLabel rendered="#{reportListBean.verifyTypeDateReport(8)}"
+                           styleClass="control-label" value="#{msgs['type.date.report.next.key.date']}"/>
+        </h:panelGroup>
+        <h:panelGroup id="fieldsTypeDateGrp">
+            <div>
+                <div class="col-md-6" style="padding-left: 0px;">
+                    <div>
+                        <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
 
-                            <p:calendar value="#{reportListBean.searchPurchase.deliveryDateStart}"
-                                        navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                        styleClass="calendar-filter"
-                                        pattern="#{configuration.formatDate}"
-                                        converter="#{dateConverter}"
-                                        timeZone="#{configuration.timeZone2}">
-                            </p:calendar>
-                        </div>
+                        <p:calendar value="#{reportListBean.searchPurchase.startDateReport}"
+                                    navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                    styleClass="calendar-filter"
+                                    pattern="#{configuration.formatDate}"
+                                    converter="#{dateConverter}"
+                                    timeZone="#{configuration.timeZone2}"
+                                    disabled="#{reportListBean.searchPurchase.typeDateReport==null}">
+                        </p:calendar>
                     </div>
-                    <div class="col-md-6">
-                        <div>
-                            <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
-                            <p:calendar value="#{reportListBean.searchPurchase.deliveryDateEnd}"
-                                        styleClass="calendar-filter"
-                                        navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                        pattern="#{configuration.formatDate}"
-                                        converter="#{dateConverter}"
-                                        timeZone="#{configuration.timeZone2}">
-                            </p:calendar>
-                        </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
+                        <p:calendar value="#{reportListBean.searchPurchase.endDateReport}"
+                                    styleClass="calendar-filter"
+                                    navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                                    pattern="#{configuration.formatDate}"
+                                    converter="#{dateConverter}"
+                                    timeZone="#{configuration.timeZone2}"
+                                    disabled="#{reportListBean.searchPurchase.typeDateReport==null}">
+                        </p:calendar>
                     </div>
                 </div>
             </div>
         </h:panelGroup>
-    </h:panelGroup>
-    <h:panelGroup id="nextKeyGrp" >
-        <h:panelGroup rendered="#{reportListBean.selectNextKeyDate}">
-            <div class='form-group card' style="margin-top: -10px;">
-                <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
-                <div>
-                    <div class="col-md-6" style="padding-left: 0px;">
-                        <div>
-                            <label class='control-label' style="padding-right: 5px;">#{msgs['lbl.from']}</label>
-
-                            <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateStart}"
-                                        navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                        styleClass="calendar-filter"
-                                        pattern="#{configuration.formatDate}"
-                                        converter="#{dateConverter}"
-                                        timeZone="#{configuration.timeZone2}">
-                            </p:calendar>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div>
-                            <label class='control-label' style="padding-right:5px;">#{msgs['lbl.to']}</label>
-                            <p:calendar value="#{reportListBean.searchPurchase.nextKeyDateEnd}"
-                                        styleClass="calendar-filter"
-                                        navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                        pattern="#{configuration.formatDate}"
-                                        converter="#{dateConverter}"
-                                        timeZone="#{configuration.timeZone2}">
-                            </p:calendar>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </h:panelGroup>
-    </h:panelGroup>
+    </div>
 </ui:composition>
