@@ -14,7 +14,6 @@ navigator.urls[6]={"url":"/brands/brands","level":"../../../"};
 navigator.urls[7]={"url":"/currency/currency","level":"../../../"};
 navigator.urls[8]={"url":"/user/edit","level":"../../../"};
 navigator.urls[9]={"url":"/supplier/edit","level":"../../../"};
-navigator.urls[10]={"url":"/profile/profile","level":"../../../"};
 
 /****Redirection to project*****/
 //Quitar el segundo boton porque ya no se lo necesita

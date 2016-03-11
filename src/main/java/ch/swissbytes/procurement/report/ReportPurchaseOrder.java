@@ -53,6 +53,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private BigInteger[] currenciesIdsPo = new BigInteger[3];
     private List<PODocumentEntity> poDocumentList;
     private List<ByteArrayOutputStream> otherDocumentList = new ArrayList<>();
+    private Date startDate;
+    private Date endDate;
 
 
     /**
@@ -65,6 +67,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
                                Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
                                String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
         super(filenameJasper, reportNameMsgKey, messages, locale);
+        startDate = new Date();
         try {
             this.configuration = configuration;
             this.po = po;
@@ -702,6 +705,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
 
     private void loadOtherDocumentList() throws IOException, DocumentException {
+        log.info("Loading others documents");
+        Date startOtherDocuments = new Date();
         if (!poDocumentList.isEmpty()) {
             for (PODocumentEntity pd : poDocumentList) {
                 if (pd.getScheduleE() == null) {
@@ -723,6 +728,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         } else {
             otherDocumentList.add(getReportSchedule());
         }
+        Date endOtherDocuments = new Date();
+        log.info("endOtherDocuments time - startOtherDocuments time = "+(endOtherDocuments.getTime()-startOtherDocuments.getTime())+"ms");
     }
 
     public AttachmentMainDocumentEntity getAttachmentDocument(final Long id) {
@@ -737,6 +744,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {
+
         log.info("converting html to pdf");
         String titleHeader;
         if (po.getPurchaseOrderProcurementEntity().getClazz() != null) {
@@ -753,11 +761,14 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     public ByteArrayOutputStream getReportSchedule() throws IOException, DocumentException {
-        log.info("getReportSchedule");
+        Date startReportSchedule = new Date();
+        log.info("getting schedule report");
         Locale locale = new Locale(Locale.ENGLISH.getLanguage());
         Map<String, String> messages = new HashMap<>();
         ReportView reportView = new ReportSheduleE("/procurement/printPo/Schedule", "procurement.schedule",
                 messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager, draft, poDocumentList);
+        Date endReportSchedule = new Date();
+        log.info("endReportSchedule time - startReportSchedule time = "+ (endReportSchedule.getTime()-startReportSchedule.getTime())+"ms");
         return reportView.getByteArrayOutputStreamReport(null);
     }
 
@@ -766,6 +777,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         if (connection != null) {
             try {
                 runReport(null, otherDocumentList);
+                endDate = new Date();
+                log.info("end time - start time = " + (endDate.getTime() - startDate.getTime()) + "ms");
             } catch (Exception ex) {
                 if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
                     log.info("ex message contains SAXParseException;");
