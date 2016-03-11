@@ -106,84 +106,84 @@ order by ss.ordered]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="74c839c4-46ea-412b-ab4e-5d98a82cec07" x="701" y="22" width="50" height="12"/>
+				<reportElement uuid="74c839c4-46ea-412b-ab4e-5d98a82cec07" positionType="Float" x="701" y="22" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{requiredOnSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="d2892c90-611a-47dd-affa-43b3414060cc" x="641" y="22" width="50" height="12"/>
+				<reportElement uuid="d2892c90-611a-47dd-affa-43b3414060cc" positionType="Float" x="641" y="22" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{actualSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="cac7118f-f78c-47f5-8e88-fa998677c2cc" x="585" y="22" width="50" height="12"/>
+				<reportElement uuid="cac7118f-f78c-47f5-8e88-fa998677c2cc" positionType="Float" x="585" y="22" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{forecastSiteDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="eeef4060-3490-489e-80c4-bda9534e3a72" x="530" y="22" width="46" height="12"/>
+				<reportElement uuid="eeef4060-3490-489e-80c4-bda9534e3a72" positionType="Float" x="530" y="22" width="46" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{leadTimeLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="8a871349-28b3-47c3-ab87-e1e8468015d7" x="485" y="22" width="40" height="12"/>
+				<reportElement uuid="8a871349-28b3-47c3-ab87-e1e8468015d7" positionType="Float" x="485" y="22" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{actualExWorksDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="53a8f1cf-c9d2-4f44-8e79-ace44c057f8b" x="428" y="22" width="50" height="12"/>
+				<reportElement uuid="53a8f1cf-c9d2-4f44-8e79-ace44c057f8b" positionType="Float" x="428" y="22" width="50" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{forecastExWorksDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e5bc3548-dd32-44d3-af8d-d07ce251a300" x="380" y="22" width="40" height="12"/>
+				<reportElement uuid="e5bc3548-dd32-44d3-af8d-d07ce251a300" positionType="Float" x="380" y="22" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e9077965-1a13-4a98-8b54-78376fdc6bb1" x="231" y="22" width="45" height="12"/>
+				<reportElement uuid="e9077965-1a13-4a98-8b54-78376fdc6bb1" positionType="Float" x="231" y="22" width="45" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{equipmentLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e0a671f8-5c85-4f96-af28-7713af834521" x="90" y="22" width="135" height="12"/>
+				<reportElement uuid="e0a671f8-5c85-4f96-af28-7713af834521" positionType="Float" x="90" y="22" width="135" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{titleLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7b19ac98-936a-4916-9995-080517369119" x="51" y="22" width="35" height="12"/>
+				<reportElement uuid="7b19ac98-936a-4916-9995-080517369119" positionType="Float" x="51" y="22" width="35" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{uomLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="648093fb-0161-425b-9171-5db80c553cc6" x="31" y="22" width="17" height="12"/>
+				<reportElement uuid="648093fb-0161-425b-9171-5db80c553cc6" positionType="Float" x="31" y="22" width="17" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{qtyLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ebdd62ac-1b21-44eb-a251-934df5630c20" x="0" y="22" width="30" height="12"/>
+				<reportElement uuid="ebdd62ac-1b21-44eb-a251-934df5630c20" positionType="Float" x="0" y="22" width="30" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -199,14 +199,14 @@ order by ss.ordered]]>
 				<reportElement uuid="6a7484fc-470a-4dd0-a6dd-b9bb07def002" positionType="Float" x="0" y="41" width="801" height="1"/>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="67cbdce6-117c-4c02-8220-fde8047d370d" x="283" y="22" width="96" height="12"/>
+				<reportElement uuid="67cbdce6-117c-4c02-8220-fde8047d370d" positionType="Float" x="283" y="22" width="96" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{fullIncoTermLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="56082f19-bbf0-420f-8695-0e4b3c32ccd4" x="767" y="22" width="22" height="12"/>
+				<reportElement uuid="56082f19-bbf0-420f-8695-0e4b3c32ccd4" positionType="Float" x="767" y="22" width="22" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>

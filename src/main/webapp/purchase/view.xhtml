@@ -337,7 +337,10 @@
                                              value="#{purchaseOrderView.purchaseOrder.fullIncoTerms}"/>
                         </div>
                     </div>
-
+                    <div style="border: 2px solid black; margin-left: -9px;  padding-left: 6px; margin-bottom: 5px; margin-top: 5px;
+                                padding-bottom: 5px; padding-top: 5px; width: 1060px; height: 210px;  z-index: -10; margin-bottom: -216px;"></div>
+                    <div style="margin-left: -9px; padding-left: 6px; margin-bottom: 5px;
+                                margin-top: 5px; padding-bottom: 5px; padding-top: 5px;">
                     <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
@@ -362,6 +365,43 @@
                             <h:inputTextarea readonly="true" styleClass="form-control"
                                              value="#{purchaseOrderView.purchaseOrder.rfeComment}"/>
                         </div>
+                    </div>
+                        <div class="row">
+                            <!-- Text input-->
+                            <div class="section-lbl-input-po">
+                                <div class="form-group input-general-po">
+                                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                   value="#{msgs['po.lbl.expediting.title']}"/>
+
+                                    <div class="inputText-general-po">
+                                        <h:inputText value="#{purchaseOrderView.purchaseOrder.expeditingTitle}" styleClass="form-control view-po"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.intro.email.sent.comment']}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="text-lbl-ltr label-general-po control-label"
+                                               value="#{msgs['po.lbl.intro.email.sent']}"/>
+                                <div class="calendar-general-po">
+                                    <h:inputText styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.introEmail)}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <h:inputTextarea readonly="true" styleClass="form-control"
+                                             value="#{purchaseOrderView.purchaseOrder.introEmailSentComment}"/>
+                        </div>
+                    </div>
                     </div>
                     <ui:include src="components/additionalDataView.xhtml"/>
 
