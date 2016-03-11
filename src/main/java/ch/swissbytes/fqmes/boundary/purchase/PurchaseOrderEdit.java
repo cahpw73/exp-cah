@@ -5,12 +5,14 @@ import ch.swissbytes.Service.business.AttachmentComment.AttachmentCommentService
 import ch.swissbytes.Service.business.AttachmentScopeSupply.AttachmentScopeSupplyService;
 import ch.swissbytes.Service.business.comment.CommentService;
 import ch.swissbytes.Service.business.enumService.EnumService;
+import ch.swissbytes.Service.business.projectUser.ProjectUserService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.tdp.TransitDeliveryPointService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.domain.types.TimeMeasurementEnum;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.fqmes.util.Util;
@@ -84,6 +86,12 @@ public class PurchaseOrderEdit implements Serializable {
     @Inject
     private SupplierProcList list;
 
+    @Inject
+    private UserSession userSession;
+
+    @Inject
+    private ProjectUserService projectUserService;
+
     private String purchaseOrderId;
 
     private PurchaseOrderEntity poEdit;
@@ -150,7 +158,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String titleBulkUpdateModal;
 
-    private String expeditingStatuses;
+    private String expeditingStatuses = "";
 
     private boolean hasValueLeadTime;
 
@@ -177,14 +185,14 @@ public class PurchaseOrderEdit implements Serializable {
         return new ArrayList<AttachmentComment>();
     }
 
-    public void load() {
+    public String load() {
         log.info("loading...");
         if (!fase.equals("1")) {
             originalQuantity = new BigDecimal("0");
             poEdit = service.load(Long.parseLong(purchaseOrderId));
-           /* if(StringUtils.isEmpty(poEdit.getExpeditingTitle())){
-                poEdit.setExpeditingTitle(poEdit.getPoTitle());
-            }*/
+            if (!hasPermissionToEditPO()){
+                return "/purchase/list?faces-redirect=true";
+            }
             service.removePrefixIfAny(poEdit);
             currentHashCode = service.getAbsoluteHashcode(poEdit.getId());
             log.info(String.format("hashcode starting [%s]", currentHashCode));
@@ -198,6 +206,7 @@ public class PurchaseOrderEdit implements Serializable {
                 }
             }
             commentIndexSelected = -1;
+            loadPurchaseOrderStatuses();
         }
 
         if (scopeSupplies != null && !scopeSupplies.isEmpty()) {
@@ -208,6 +217,23 @@ public class PurchaseOrderEdit implements Serializable {
             sortScopeSupply.sortScopeSupplyEntity(scopeActives);
         }
         commentActives = commentService.getActives(comments);
+        log.info("");
+        return "";
+    }
+
+    private boolean hasPermissionToEditPO(){
+        boolean result =  projectUserService.existsProjectAndUser(userSession.getCurrentUser().getId(),poEdit.getProjectEntity().getId());
+        return result;
+    }
+
+    private void loadPurchaseOrderStatuses() {
+        List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(Long.parseLong(purchaseOrderId));
+        for (ExpeditingStatusEntity ex : expeditingStatusList) {
+            expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
+        }
+        if (expeditingStatuses.length() > 0) {
+            expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
+        }
     }
 
     @PostConstruct
@@ -333,6 +359,7 @@ public class PurchaseOrderEdit implements Serializable {
         commentEntity.setStatus(enumService.getStatusEnumEnable());
         comments.add(commentEntity);
         commentActives = commentService.getActives(comments);
+        log.info("");
     }
 
     private void registerScopeSupply() {
@@ -369,13 +396,14 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void cleanComment() {
         commentEdit = new CommentEntity();
+        commentEdit.setCommentDate(new Date());
         commentIndexSelected = -1;
     }
 
     public String cleanScopeSupply() {
         currentOperation = CREATE;//CREATING...
         scopeSupplyEdit = new ScopeSupplyEntity();
-        scopeSupplyEdit.setPoDeliveryDate(poEdit.getPoDeliveryDate());
+        scopeSupplyEdit.setPoDeliveryDate(poEdit.getPoExpeditingDeliveryDate());
         scopeSupplyEdit.setResponsibleExpediting(poEdit.getResponsibleExpediting());
         scopeSupplyEdit.setRequiredSiteDate(poEdit.getRequiredDate());
         scopeSupplyEdit.setIsForecastSiteDateManual(false);
@@ -524,8 +552,17 @@ public class PurchaseOrderEdit implements Serializable {
         hasValueLeadTime = false;
     }
 
+    public void doBulkUpdateInScopeSupplyForActualSiteDate(){
+        for (ScopeSupplyEntity sp : scopeActives) {
+            if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
+                if(sp.getActualSiteDate() == null) {
+                    sp.setActualSiteDate(poEdit.getActualDate());
+                }
+            }
+        }
+    }
+
     public void doBulkUpdateForPO() {
-        log.info("size list scopeActives: " + scopeActives.size());
         for (ScopeSupplyEntity sp : scopeActives) {
             if (sp.getExcludeFromExpediting() == null || sp.getExcludeFromExpediting().booleanValue() == false) {
                 sp.setResponsibleExpediting(StringUtils.isNotEmpty(bulkScopeSupply.getResponsibleExpediting()) ? bulkScopeSupply.getResponsibleExpediting() : sp.getResponsibleExpediting());

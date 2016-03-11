@@ -9,9 +9,9 @@
         <p:dataTable id="commentList" value="#{purchaseOrderEdit.activeComments}"
                      styleClass="data-table-po-sc data-table-po-lists"
                      rowIndexVar="_index" var="_comment">
-            <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.lastUpdate}"
+            <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.commentDate}"
                       sortFunction="#{sortBean.sortDate}">
-                #{util.toLocalDateGMT(_comment.lastUpdate)}
+                #{util.toLocalDateGMT(_comment.commentDate)}
             </p:column>
             <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="200" sortBy="#{_comment.name}"
                       sortFunction="#{sortBean.sortStrings}">
@@ -73,5 +73,4 @@
             </div>
         </div>
     </div>
-
 </ui:composition>

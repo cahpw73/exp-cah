@@ -611,7 +611,41 @@ label.checkbox {
     width: 190px;
     color: #ffffff;
 }
-.box-document-list{
-    display: block!important;
-    height: 50px!important;
+
+.box-document-list {
+    display: block !important;
+    height: 50px !important;
+}
+
+/*Styles to input type search*/
+
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+/*Input text type search*/
+.input-search{
+    border-radius: 15px!important;
+>>>>>>> expeditingv3
 }

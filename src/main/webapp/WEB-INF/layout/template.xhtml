@@ -16,6 +16,7 @@
         <title>#{configuration.getTitle()}</title>
         <meta name="generator" content="Bootply"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
         <h:outputStylesheet name="css/bootstrap.css"/>
         <h:outputStylesheet name="css/top-menu.css"/>
         <h:outputStylesheet name="css/sub-top-menu.css"/>
@@ -37,7 +38,7 @@
                 <!-- Error messages-->
                 <div>
                     <p:messages id="glbMsgs" globalOnly="true" errorClass="alert alert-error"
-                                warnClass="alert"
+                                warnClass="alert" closable="true"
                                 infoClass="alert alert-info"/>
                 </div>
                 <ui:insert name="body">Contenido por defecto</ui:insert>

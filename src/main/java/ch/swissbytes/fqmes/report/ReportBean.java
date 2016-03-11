@@ -4,8 +4,10 @@ package ch.swissbytes.fqmes.report;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJobSummaryService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetReceivableManifestService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.domain.model.entities.ExpeditingStatusEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.report.util.DocTypeEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
@@ -51,6 +53,8 @@ public class ReportBean implements Serializable {
     @Inject
     private SpreadsheetReceivableManifestService spreadsheetReceivableManifestService;
 
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
+
     private Locale locale;
 
     private Map<String, String> messages;
@@ -66,6 +70,8 @@ public class ReportBean implements Serializable {
     private boolean isAllProviders;
 
     private StreamedContent file;
+
+    private String expeditingStatuses = "";
 
     public Boolean getOpenReport() {
         return openReport;
@@ -138,28 +144,28 @@ public class ReportBean implements Serializable {
         log.info("public void printReportJobSummary()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration,DocTypeEnum.PDF);
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF);
         reportView.printDocument(null);
         openReport = true;
     }
 
-    public StreamedContent downloadJobSummaryFileExport(){
+    public StreamedContent downloadJobSummaryFileExport() {
         InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xlsx");
         return file;
     }
 
-    public StreamedContent downloadReceivableManifestFileExport(){
+    public StreamedContent downloadReceivableManifestFileExport() {
         InputStream stream = spreadsheetReceivableManifestService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Receivable.Manifest.xlsx");
         return file;
     }
 
-    public void printReportDashboard(Map<String,String> parameterDashboard){
+    public void printReportDashboard(Map<String, String> parameterDashboard) {
         log.info("public void printReportDashboard()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDashboard("/Dashboard/dashboard", "Dashboard.Expediting", messages, locale, entityManager, configuration,parameterDashboard);
+        ReportView reportView = new ReportDashboard("/Dashboard/dashboard", "Dashboard.Expediting", messages, locale, entityManager, configuration, parameterDashboard);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -171,7 +177,8 @@ public class ReportBean implements Serializable {
         }
         return ids;
     }
-    public List<PurchaseOrderEntity> purchaseOrderList(){
+
+    public List<PurchaseOrderEntity> purchaseOrderList() {
         List<PurchaseOrderEntity> list = new ArrayList<>();
         for (VPurchaseOrder vpo : selected) {
             PurchaseOrderEntity po = service.findByIdOnly(vpo.getPoId());
@@ -184,6 +191,29 @@ public class ReportBean implements Serializable {
     private void initializeParametersToJasperReport() {
         locale = new Locale(Locale.ENGLISH.getLanguage());
         messages = new HashMap<String, String>();
+    }
+
+    public String loadPurchaseOrderStatuses(final Long purchaseOrderId) {
+        expeditingStatuses = "";
+        if (purchaseOrderId != null) {
+            List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(purchaseOrderId);
+            for (ExpeditingStatusEntity ex : expeditingStatusList) {
+                expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
+            }
+            if (expeditingStatuses.length() > 0) {
+                expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
+                String[] ids = expeditingStatuses.split(",");
+                String expStatuses = "";
+                for (int i = 0; i < ids.length; i++) {
+                    String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
+                    expStatuses = expStatuses + exStatus + ", ";
+                }
+                expeditingStatuses = expStatuses;
+                expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
+            }
+
+        }
+        return expeditingStatuses;
     }
 
 
@@ -223,5 +253,13 @@ public class ReportBean implements Serializable {
 
     public StreamedContent getFile() {
         return file;
+    }
+
+    public String getExpeditingStatuses() {
+        return expeditingStatuses;
+    }
+
+    public void setExpeditingStatuses(String expeditingStatuses) {
+        this.expeditingStatuses = expeditingStatuses;
     }
 }

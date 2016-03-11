@@ -370,8 +370,11 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" WHERE po.status.id = :ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
-        sb.append(" AND NOT(po.purchaseOrderStatus = :DELETED ");
-        sb.append(" OR po.purchaseOrderStatus = :CANCELLED) ");
+        sb.append(" AND NOT po.id IN ( ");
+        sb.append(" SELECT ex.purchaseOrderEntity.id ");
+        sb.append(" FROM ExpeditingStatusEntity ex ");
+        sb.append(" WHERE ex.purchaseOrderStatus = :CANCELLED ");
+        sb.append(" OR ex.purchaseOrderStatus = :DELETED) ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("PROJECT_ID", projectId);
@@ -390,15 +393,14 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
-        sb.append(" AND po.purchaseOrderStatus = :COMPLETED");
-        /*sb.append(" OR po.purchaseOrderStatus = :DELETED ");
-        sb.append(" OR po.purchaseOrderStatus = :CANCELLED ) ");*/
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" AND po.id IN ( ");
+        sb.append(" SELECT ex.purchaseOrderEntity.id ");
+        sb.append(" FROM ExpeditingStatusEntity ex ");
+        sb.append(" WHERE ex.purchaseOrderStatus = :COMPLETED) ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
-        /*parameters.put("DELETED", ExpeditingStatusEnum.DELETED);
-        parameters.put("CANCELLED", ExpeditingStatusEnum.CANCELLED);*/
         parameters.put("COMMITTED", ProcurementStatus.COMMITTED);
         parameters.put("PROJECT_ID", projectId);
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
@@ -413,10 +415,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
-        sb.append(" AND NOT (po.purchaseOrderStatus = :COMPLETED ");
+        sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" AND NOT po.id IN ( ");
+        sb.append(" SELECT ex.purchaseOrderEntity.id ");
+        sb.append(" FROM ExpeditingStatusEntity ex ");
+        sb.append(" WHERE ex.purchaseOrderStatus = :COMPLETED ");
         sb.append(" OR po.purchaseOrderStatus = :DELETED ");
         sb.append(" OR po.purchaseOrderStatus = :CANCELLED) ");
-        sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
@@ -438,13 +443,16 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
         sb.append(" AND sp.status.id = :ENABLED ");
-        sb.append(" AND NOT (po.purchaseOrderStatus = :COMPLETED ");
-        sb.append(" OR po.purchaseOrderStatus = :DELETED ");
-        sb.append(" OR po.purchaseOrderStatus = :CANCELLED ");
-        sb.append(" OR po.purchaseOrderStatus = :MMR_REQUIRED) ");
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
         sb.append(" AND sp.forecastSiteDate <= :NEXT_MOTH_END ");
         sb.append(" AND sp.forecastSiteDate >= :NEXT_MOTH_INI ");
+        sb.append(" AND NOT po.id IN ( ");
+        sb.append(" SELECT ex.purchaseOrderEntity.id ");
+        sb.append(" FROM ExpeditingStatusEntity ex ");
+        sb.append(" WHERE ex.purchaseOrderStatus = :COMPLETED ");
+        sb.append(" OR po.purchaseOrderStatus = :DELETED ");
+        sb.append(" OR po.purchaseOrderStatus = :CANCELLED ");
+        sb.append(" OR po.purchaseOrderStatus = :MMR_REQUIRED) ");
         sb.append(" GROUP BY po.id,sp.forecastSiteDate");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
@@ -459,10 +467,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         if(list.size()>0) {
-            /*Object object = list.get(0);
-            Long result = (Long)object;
-            log.info("Number found: " + result);
-            return result.intValue();*/
             return list.size();
         }else{
             return 0;
@@ -475,8 +479,11 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" FROM PurchaseOrderEntity po ");
         sb.append(" WHERE po.status.id=:ENABLED ");
         sb.append(" AND po.projectEntity.id = :PROJECT_ID ");
-        sb.append(" AND po.purchaseOrderStatus = :MMR_REQUIRED ");
         sb.append(" AND po.purchaseOrderProcurementEntity.poProcStatus = :COMMITTED ");
+        sb.append(" AND po.id IN ( ");
+        sb.append(" SELECT ex.purchaseOrderEntity.id ");
+        sb.append(" FROM ExpeditingStatusEntity ex ");
+        sb.append(" WHERE ex.purchaseOrderStatus = :MMR_REQUIRED) ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("MMR_REQUIRED", ExpeditingStatusEnum.MMR_REQUIRED);
@@ -532,6 +539,20 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("PO_NUMBER", purchaseOrder.getPo());
         parameters.put("PROJECT_ID", purchaseOrder.getProjectEntity().getId());
+        return super.findBy(sb.toString(), parameters);
+    }
+
+    public List<PurchaseOrderEntity> findPreviousRevisionPO(Long projectId, String po, Integer previousOrderedVariation) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE po.po= :PO_NUMBER ");
+        sb.append(" AND  po.projectEntity.id = :PROJECT_ID ");
+        sb.append(" AND po.orderedVariation = :ORDERED_VARIATION ");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("PO_NUMBER", po);
+        parameters.put("PROJECT_ID", projectId);
+        parameters.put("ORDERED_VARIATION",previousOrderedVariation);
         return super.findBy(sb.toString(), parameters);
     }
 }

@@ -224,7 +224,7 @@
                     <p:message for="deliveryDateId" id="msgDeliveryDate"/>
                     <p:inputTextarea maxlength="950" type="text"
                                      id="deliveryDateObs"
-                                 style="margin-top: 10px; height: 29px;"
+                                 style="margin-top: 10px; max-height: 62px;" rows="3"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.deliveryDateObs}"
                                  jsf:placeholder="#{msgs['supply.scope.ph.delivery.date.observations']}"
                                  class="form-control"/>
@@ -253,7 +253,7 @@
                         </p:calendar>
                         </div>
                     <p:inputTextarea maxlength="950" type="text"
-                                 style="margin-top: 10px; height: 29px; width: 220px;"
+                                 style="margin-top: 10px; width: 220px;max-height: 62px;" rows="3"
                                  id="exworkDateDescription"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.exWorkDateDescription}"
                                  jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
@@ -282,7 +282,7 @@
                                     async="false" delay="500"/>
                         </p:calendar>
                         <p:inputTextarea maxlength="950" type="text"
-                                         style="margin-top: 10px; height: 29px;"
+                                         style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="actualExWorkDateObs"
                                          value="#{purchaseOrderEdit.scopeSupplyEdit.actualExWorkDateObs}"
                                          jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
@@ -406,7 +406,7 @@
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                     <p:message id="msgSiteDate" for="siteDateId"/>
                     <p:inputTextarea maxlength="950" type="text"
-                                 style="margin-top: 10px; height: 29px;"
+                                 style="margin-top: 10px; max-height: 62px;" rows="3"
                                  id="requiredSiteDateObs"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.requiredSiteDateObs}"
                                  jsf:placeholder="#{msgs['supply.scope.ph.required.site.date.observations']}"
@@ -444,7 +444,7 @@
                                     update="deliveryLeadTimeGrpId, forescastSiteDateEdit"/>
                         </h:selectOneMenu>
                     </h:panelGroup>
-                    <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; height: 29px;"
+                    <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                      id="deliveryLeadTimeDescription"
                                      value="#{purchaseOrderEdit.scopeSupplyEdit.getDeliveryLeadTimeDescription}"
                                      jsf:placeholder="#{msgs['supply.scope.ph.lead.time.observations']}"
@@ -488,7 +488,7 @@
                     </h:panelGroup>
 
                     <p:inputTextarea maxlength="950" type="text"
-                                 style="width:220px; margin-top: 10px; height: 29px;"
+                                 style="width:220px; margin-top: 10px; max-height: 62px;" rows="3"
                                  id="siteDateDescription"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.siteDateDescription}"
                                  jsf:placeholder="#{msgs['supply.scope.ph.forecast.site.date.observations']}"
@@ -509,7 +509,7 @@
                                 value="#{purchaseOrderEdit.scopeSupplyEdit.actualSiteDate}"
                                 onselect="calendarChanges();" onchange="calendarChanges();"/>
                     <p:inputTextarea maxlength="950" type="text"
-                                 style="margin-top: 10px; height: 29px;"
+                                 style="margin-top: 10px; max-height: 62px;" rows="3"
                                  id="actualSiteDateObs"
                                  value="#{purchaseOrderEdit.scopeSupplyEdit.actualSiteDateObs}"
                                  jsf:placeholder="#{msgs['supply.scope.ph.actual.site.date.observations']}"

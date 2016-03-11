@@ -1897,3 +1897,91 @@ ALTER TABLE v_purchase_order
   OWNER TO postgres;
 
 ALTER TABLE PURCHASE_ORDER ALTER COLUMN GENERAL_COMMENT type VARCHAR(20000);
+
+#18/02/2016
+ALTER TABLE comments ALTER COLUMN description type VARCHAR(20000);
+ALTER TABLE comments ALTER COLUMN reason type VARCHAR(20000);
+UPDATE comments SET comment_date = last_update;
+
+#22/02/2016
+INSERT INTO expediting_status (id,purchase_order_status,po_id)
+SELECT id,purchase_order_status,id FROM purchase_order WHERE status_id=1;
+
+SELECT SETVAL('expediting_status_id_seq', (SELECT MAX(ID)+1 FROM EXPEDITING_STATUS));
+
+#07/03/2016
+DROP VIEW v_purchase_order;
+
+CREATE OR REPLACE VIEW v_purchase_order AS
+ SELECT row_number() OVER () AS id,
+    po.id AS po_id,
+    po.project,
+    po.po,
+    po.variation,
+    po.po_title,
+    po.expediting_title,
+    s.company,
+    po.responsible_expediting,
+    po.po_inco_term,
+    po.po_delivery_date,
+    po.required_date,
+    po.purchase_order_status,
+    po.next_key_date,
+    po.orderedvariation,
+    p.id AS project_id
+   FROM purchase_order po
+   JOIN p_order por ON por.id = po.po_id
+   LEFT JOIN supplier_proc s ON por.supplier_id = s.id
+   LEFT JOIN project p ON p.id = po.project_id
+  WHERE po.status_id <> 3 AND (por.po_status = 0 OR por.po_status = 4)
+  ORDER BY
+CASE
+    WHEN isnumeric(po.po::text) THEN lpad(po.po::text, 50, '0'::text)::character varying
+    ELSE po.po
+END;
+
+ALTER TABLE v_purchase_order
+  OWNER TO postgres;
+
+#08/03/2016
+INSERT INTO project_user(id,created,last_update,status,project_id,user_id,user_created_id,user_last_update_id,module_system)
+    SELECT u.id as id,current_date as created,current_date as last_update,0 as status,p.id as project_id,u.id as user_id,144 as user_created_id,144 as user_last_update_id,0 as module_system
+    FROM users u, project p
+    WHERE u.status_id=1 and p.status=0
+          and p.id=1;
+
+#09/03/2016
+DROP VIEW v_purchase_order;
+
+CREATE OR REPLACE VIEW v_purchase_order AS
+ SELECT row_number() OVER () AS id,
+    po.id AS po_id,
+    po.project,
+    po.po,
+    po.variation,
+    po.po_title,
+    po.expediting_title,
+    s.company,
+    po.responsible_expediting,
+    po.po_inco_term,
+    po.po_expediting_delivery_date as po_delivery_date,
+    po.required_date,
+    po.purchase_order_status,
+    po.next_key_date,
+    po.orderedvariation,
+    p.id AS project_id,
+    po.actual_date
+   FROM purchase_order po
+   JOIN p_order por ON por.id = po.po_id
+   LEFT JOIN supplier_proc s ON por.supplier_id = s.id
+   LEFT JOIN project p ON p.id = po.project_id
+  WHERE po.status_id <> 3 AND (por.po_status = 0 OR por.po_status = 4)
+  ORDER BY
+CASE
+    WHEN isnumeric(po.po::text) THEN lpad(po.po::text, 50, '0'::text)::character varying
+    ELSE po.po
+END;
+
+ALTER TABLE v_purchase_order
+  OWNER TO postgres;
+

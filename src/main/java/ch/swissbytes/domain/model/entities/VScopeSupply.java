@@ -26,20 +26,14 @@ public class VScopeSupply implements Serializable{
     private Integer quantity;
     private String unit;
     private String description;
-    private Date forecastExWorkDate;
     private String exWorkDateDescription;
     private Integer deliveryLeadTimeQt;
     private TimeMeasurementEnum deliveryLeadTimeMs;
     private String getDeliveryLeadTimeDescription;
-    private Date forecastSiteDate;
     private String siteDateDescription;
     private Date lastUpdate;
     private PurchaseOrderEntity purchaseOrder;
     private StatusEntity status;
-    private Date poDeliveryDate;
-    private Date actualExWorkDate;
-    private Date requiredSiteDate;
-    private Date actualSiteDate;
     private String deliveryDateObs;
     private String actualExWorkDateObs;
     private String requiredSiteDateObs;
@@ -52,6 +46,13 @@ public class VScopeSupply implements Serializable{
     private Integer ordered;
     private String tagNo;
     private Integer leadTimeDays;
+
+    private Date forecastExWorkDate;
+    private Date forecastSiteDate;
+    private Date poDeliveryDate;
+    private Date actualExWorkDate;
+    private Date requiredSiteDate;
+    private Date actualSiteDate;
 
 
     private Integer variance;

@@ -4,6 +4,7 @@ import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.report.ReportBean;
 import ch.swissbytes.procurement.util.DateUtil;
 
@@ -35,6 +36,9 @@ public class DashboardBean implements Serializable {
     @Inject
     private ReportBean reportBean;
 
+    @Inject
+    private UserSession userSession;
+
     private ProjectEntity projectSelected;
 
     private List<ProjectEntity> projectList;
@@ -61,7 +65,7 @@ public class DashboardBean implements Serializable {
     @PostConstruct
     public void init() {
         log.info("Created DashboardBean");
-        projectList = projectService.findAllProjects();
+        projectList = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());
         loadDataOfDashboard();
     }
 
@@ -131,12 +135,9 @@ public class DashboardBean implements Serializable {
     private void loadNumberOpenPOs() {
         numberOpenPOs = String.valueOf(poService.getNumberOfOpenPOs(projectSelected != null ? projectSelected.getId() : -1));
         Double percentage = (Double.parseDouble(numberOpenPOs) / Double.parseDouble(totalOfPOs)) * 100;
-        String percentageN;
         DecimalFormat formatter = new DecimalFormat("###");
         if (!percentage.isNaN()){
             percentage = Math.round(percentage*100.0)/100.0;
-            /*percentageN = String.valueOf(percentage.doubleValue());
-            String[] split = percentageN.split(".");*/
             percentageOpenPOs = formatter.format(percentage) + "%";
             openPOs = numberOpenPOs + " / " + percentageOpenPOs;
         }else{

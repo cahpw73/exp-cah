@@ -120,9 +120,9 @@
                 <p:column headerText="#{msgs['po.lbl.po.status']}" width="100"
                           sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po">
-                    <div class="column-list-po">
-                        #{configuration.getPOStatus(_purchase.purchaseOrderStatus)}
-                    </div>
+                    <h:inputTextarea value="#{poListBean.loadPurchaseOrderStatuses(_purchase.poId)}"
+                                     rows="1" styleClass="form-control"
+                                     style="max-height: 31px; height: 31px; cursor:pointer!important; " readonly="true"/>
                 </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
                           sortBy="#{_purchase.responsibleExpediting}" width="150" styleClass="column-list-header-po">
@@ -154,6 +154,7 @@
                     &#160;
                     <h:commandLink styleClass="btn btn-primary btn-sm color-btn-data-table"
                                    style="margin-bottom: 5px;"
+                                   rendered="#{permissionBean.hasPermission(102)}"
                                    value="#{msgs['lbl.delete']}">
                         <p:ajax listener="#{purchaseOrderListBean.selectPurchaseOrderId(_purchase.poId)}"
                                 oncomplete="PF('deleteDlg').show();"

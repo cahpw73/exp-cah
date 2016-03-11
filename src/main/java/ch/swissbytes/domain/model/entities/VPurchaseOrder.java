@@ -36,15 +36,19 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private String incoTerm;
 
-    private Date poDeliveryDate;
-
-    private Date requiredDate;
-
     private ExpeditingStatusEnum purchaseOrderStatus;
+
+    private Integer orderedVariation;
+
+    private Long projectId;
+
+    private Date poDeliveryDate;
 
     private Date nextKeyDate;
 
-    private Integer orderedVariation;
+    private Date actualOnSiteDate;
+
+    private Date requiredDate;
 
     @Id
     public Long getId() {
@@ -138,6 +142,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
 
     @Column(name="PO_DELIVERY_DATE",updatable = false, insertable = false, nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getPoDeliveryDate() {
         return poDeliveryDate;
     }
@@ -147,6 +152,7 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
     }
 
     @Column(name="REQUIRED_DATE",updatable = false, insertable = false, nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getRequiredDate() {
         return requiredDate;
     }
@@ -165,6 +171,17 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
         this.nextKeyDate = nextKeyDate;
     }
 
+
+    @Column(name="ACTUAL_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getActualOnSiteDate() {
+        return actualOnSiteDate;
+    }
+
+    public void setActualOnSiteDate(Date actualOnSiteDate) {
+        this.actualOnSiteDate = actualOnSiteDate;
+    }
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name="PURCHASE_ORDER_STATUS")
     public ExpeditingStatusEnum getPurchaseOrderStatus() {
@@ -181,6 +198,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setOrderedVariation(Integer orderedVariation) {
         this.orderedVariation = orderedVariation;
+    }
+
+    @Column(name="project_id",updatable = false, insertable = false, nullable = true)
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     @Override

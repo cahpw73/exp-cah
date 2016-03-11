@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/layout/template.xhtml">
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
@@ -11,8 +12,32 @@
     </f:metadata>
     <ui:define name="body">
         <h:form id="userListForm" prependId="false" role="form">
+            <h:outputScript name="js/submitSearch.js"/>
             <h2 class="sub-header">#{msgs['user.list.title']}</h2>
-            <p:dataTable value="#{usersBean.userList}" var="_user"
+            <div class="row" style="width: 700px">
+                <div class="col-sm-4">
+                    <div class="left-inner-addon">
+                        <i class="fa fa-search fa-lg"></i>
+                        <h:inputText id="searchTermsId" styleClass="form-control input-search"
+                                     value="#{usersBean.searchTerm}"
+                                     jsf:placeholder="#{msgs['assign.project-user.lbl.search']}"
+                                     type="search" maxlength="250">
+                        </h:inputText>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <h:commandButton value="#{msgs['lbl.clean']}" styleClass="btn btn-primary btn-sm">
+                        <p:ajax process="@this searchTermsId" update="userDtId searchTermsId" async="false"
+                                listener="#{usersBean.doClean}"/>
+                    </h:commandButton>
+                    &#160;
+                    <h:commandButton id="btnSearchUserId" value="#{msgs['lbl.search']}" styleClass="btn btn-primary btn-sm">
+                        <p:ajax process="@this searchTermsId" update="userDtId" async="false"
+                                listener="#{usersBean.doSearch}"/>
+                    </h:commandButton>
+                </div>
+            </div>
+            <p:dataTable id="userDtId" value="#{usersBean.userList}" var="_user"
                          paginator="true" rows="5" lazy="true"
                          styleClass="data-table-po-sc"
                          rowsPerPageTemplate="5 10 15" paginatorPosition="bottom">
@@ -30,7 +55,7 @@
                     #{_user.roleEntity.name}
                 </p:column>
                 </ui:remove>
-                <p:column headerText="#{msgs['user.list.column.action']}">
+                <p:column headerText="#{msgs['user.list.column.action']}" width="250">
                     <div class="pull-right">
                         <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit"
                                 styleClass="btn btn-primary btn-sm"
@@ -44,6 +69,12 @@
                                        rendered="#{permissionBean.hasPermission(5)}"
                                        styleClass="btn btn-primary btn-sm color-btn-data-table">
                             <p:ajax update=":deleteUserDlgId" oncomplete="PF('deleteUserDlg').show();"/>
+                        </h:commandLink>
+                        &#160;
+                        <h:commandLink value="#{msgs['lbl.assign.project']}"
+                                       action="#{projectUserBean.load(_user.id)}"
+                                       styleClass="btn btn-primary btn-sm color-btn-data-table">
+                            <p:ajax update=":projectUserGrId" oncomplete="PF('projectUserModal').show();"/>
                         </h:commandLink>
                     </div>
                 </p:column>
@@ -65,6 +96,11 @@
                     <ui:param name="modeExpediting" value="true"/>
                 </ui:include>
             </div>
+        </p:dialog>
+        <p:dialog header="Assign Project" widgetVar="projectUserModal" width="853" height="450" resizable="false" modal="true">
+            <h:panelGroup id="projectUserGrId">
+                <ui:include src="component/assign_project_user.xhtml"/>
+            </h:panelGroup>
         </p:dialog>
     </ui:define>
 </ui:composition>

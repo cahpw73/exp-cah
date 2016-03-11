@@ -1,8 +1,11 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.types.TypeDateReportEnum;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alvaro on 9/25/14.
@@ -18,16 +21,26 @@ public class SearchPurchase extends Filter {
     private String poTitle;
     private String responsibleExpediting;
     private String incoTerm;
-    private Date deliveryDateStart;
-    private Date deliveryDateEnd;
-    private Date nextKeyDateStart;
-    private Date nextKeyDateEnd;
-    private String variance="all";
+    private String variance = "all";
     private Integer leadTime;
     private Integer dueIn;
     private Integer forecastDueDate;
     private String statuses;
     private String expeditingTitle;
+    private List<Long> projectsAssignedId = new ArrayList<>();
+
+    private Date deliveryDateStart;
+    private Date deliveryDateEnd;
+    private Date nextKeyDateStart;
+    private Date nextKeyDateEnd;
+    private Date forecastExWorkDateStart;
+    private Date forecastExWorkDateEnd;
+
+    private TypeDateReportEnum typeDateReport;
+    private Date startDateReport;
+    private Date endDateReport;
+
+
 
     public String getProject() {
         return project;
@@ -157,12 +170,12 @@ public class SearchPurchase extends Filter {
         this.statuses = statuses;
     }
 
-    public boolean hasAnyValueForScopeSupplyActive(){
-        return (variance!=null&&!variance.equalsIgnoreCase("all"))||leadTime!=null||forecastDueDate!=null||dueIn!=null||deliveryDateStart!=null||deliveryDateEnd!=null;
+    public boolean hasAnyValueForScopeSupplyActive() {
+        return (variance != null && !variance.equalsIgnoreCase("all")) || leadTime != null || forecastDueDate != null || dueIn != null || deliveryDateStart != null || deliveryDateEnd != null;
     }
 
-    public boolean isStatusSelected(String statusId){
-        return statuses==null?false:statuses.contains(statusId);
+    public boolean isStatusSelected(String statusId) {
+        return statuses == null ? false : statuses.contains(statusId);
     }
 
     public String getExpeditingTitle() {
@@ -173,24 +186,77 @@ public class SearchPurchase extends Filter {
         this.expeditingTitle = expeditingTitle;
     }
 
+    public Date getForecastExWorkDateStart() {
+        return forecastExWorkDateStart;
+    }
+
+    public void setForecastExWorkDateStart(Date forecastExWorkDateStart) {
+        this.forecastExWorkDateStart = forecastExWorkDateStart;
+    }
+
+    public Date getForecastExWorkDateEnd() {
+        return forecastExWorkDateEnd;
+    }
+
+    public void setForecastExWorkDateEnd(Date forecastExWorkDateEnd) {
+        this.forecastExWorkDateEnd = forecastExWorkDateEnd;
+    }
+
+    public List<Long> getProjectsAssignedId() {
+        return projectsAssignedId;
+    }
+
+    public void setProjectsAssignedId(List<Long> projectsAssignedId) {
+        this.projectsAssignedId = projectsAssignedId;
+    }
+
+    public TypeDateReportEnum getTypeDateReport() {
+        return typeDateReport;
+    }
+
+    public void setTypeDateReport(TypeDateReportEnum typeDateReport) {
+        this.typeDateReport = typeDateReport;
+    }
+
+    public Date getStartDateReport() {
+        return startDateReport;
+    }
+
+    public void setStartDateReport(Date startDateReport) {
+        this.startDateReport = startDateReport;
+    }
+
+    public Date getEndDateReport() {
+        return endDateReport;
+    }
+
+    public void setEndDateReport(Date endDateReport) {
+        this.endDateReport = endDateReport;
+    }
+
     @Override
-    public void clean(){
-        po=null;
-        project=null;
-        variation=null;
-        supplier=null;
-        poTitle=null;
-        responsibleExpediting=null;
-        incoTerm=null;
-        deliveryDateEnd=null;
-        deliveryDateStart=null;
-        nextKeyDateStart=null;
-        nextKeyDateEnd=null;
-        variance="all";
-        leadTime=null;
-        dueIn=null;
-        forecastDueDate=null;
-        statuses=null;
-        expeditingTitle=null;
+    public void clean() {
+        po = null;
+        project = null;
+        variation = null;
+        supplier = null;
+        poTitle = null;
+        responsibleExpediting = null;
+        incoTerm = null;
+        deliveryDateEnd = null;
+        deliveryDateStart = null;
+        nextKeyDateStart = null;
+        nextKeyDateEnd = null;
+        variance = "all";
+        leadTime = null;
+        dueIn = null;
+        forecastDueDate = null;
+        statuses = null;
+        expeditingTitle = null;
+        forecastExWorkDateStart = null;
+        forecastExWorkDateEnd = null;
+        startDateReport = null;
+        endDateReport = null;
+        typeDateReport = null;
     }
 }
