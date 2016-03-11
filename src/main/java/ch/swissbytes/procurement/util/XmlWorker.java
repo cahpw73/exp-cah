@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.util;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -28,6 +29,7 @@ import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
  */
 public class XmlWorker {
 
+    private static final Logger log = Logger.getLogger(XmlWorker.class.getName());
 
     public ByteArrayOutputStream manipulatePdf(byte[] coverBt,byte[] src)
             throws IOException, DocumentException {
@@ -49,6 +51,7 @@ public class XmlWorker {
 
     public ByteArrayOutputStream manipulatePdf(byte[] poReportBt, java.util.List<ByteArrayOutputStream> otherDocList)
             throws IOException, DocumentException {
+        Date startManipulatePdf = new Date();
         PdfReader poReport = new PdfReader(poReportBt);
         List<PdfReader> pdfDocs = new ArrayList<>();
 
@@ -67,10 +70,13 @@ public class XmlWorker {
         }
         document.close();
         poReport.close();
+        Date endManipulatePdf = new Date();
+        log.info("endManipulatePdf time - startManipulatePdf time = " + (endManipulatePdf.getTime()-startManipulatePdf.getTime())+"ms");
         return outputStream;
     }
 
     public ByteArrayOutputStream convertHtml(String content,String titleHeader) throws FileNotFoundException, IOException, DocumentException {
+        log.info("convertHtml");
         Document document = new Document(PageSize.A4,55F, 27f, 89f, 27f);
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -80,7 +86,10 @@ public class XmlWorker {
         ByteArrayInputStream bis=new ByteArrayInputStream(content.getBytes());
 
         // convert the HTML with the built-in convenience method
+        Date startConvertHtml = new Date();
         XMLWorkerHelper.getInstance().parseXHtml(writer, document, bis);
+        Date endConvertHtml = new Date();
+        log.info("endConvertHtml time - startConvertHtml time = "+(endConvertHtml.getTime()-startConvertHtml.getTime())+"ms");
         document.close();
         return  baos;
     }
