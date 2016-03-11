@@ -29,7 +29,7 @@ function initializeMultiselection(idsSelected) {
                 $('#poStatusesHidenId').val(selectedValues.toString());
 
             },
-            numberDisplayed: 2,
+            numberDisplayed: 5,
             buttonClass: 'form-control multiselect-button-po'
         }
     );
