@@ -127,9 +127,6 @@
                             <div class="col-md-6" style="padding-left: 0px;">
                                 #{msgs['po.lbl.status']}
                             </div>
-                            <div class="col-md-6">
-                                #{msgs['po.lbl.expediting.status']}
-                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -151,27 +148,16 @@
                                              value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
                             </div>
-                            <div class="col-md-6">
-                                <div class='form-group card'>
-                                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
-                                    <select id="poStatuses" multiple="multiple">
-                                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
-                                        </ui:repeat>
-                                    </select>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                #{msgs['po.lbl.expediting.status']}
                             </div>
-                            <p:remoteCommand name="onload"
-                                             oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
-                                             autoRun="true"></p:remoteCommand>
-                            <ui:remove>
-                            <div class="col-md-6">
-                                <p:selectOneMenu styleClass="menu-po-status" onchange="doChange();"
-                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderStatus}">
-                                    <f:selectItems value="#{poStatuses}"/>
-                                </p:selectOneMenu>
-                            </div>
-                            </ui:remove>
                         </div>
                     </div>
                     <div class="row">
@@ -187,6 +173,21 @@
                                                  class="form-control" readonly="true"/>
                                 </div>
                             </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <div class="col-md-12">
+                                <div class='form-group card'>
+                                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
+                                    <select id="poStatuses" multiple="multiple">
+                                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                                        </ui:repeat>
+                                    </select>
+                                </div>
+                            </div>
+                            <p:remoteCommand name="onload"
+                                             oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
+                                             autoRun="true"></p:remoteCommand>
                         </div>
                     </div>
 
