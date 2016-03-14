@@ -158,13 +158,54 @@ public class DashboardBean implements Serializable {
         }
     }
 
-    public double getDecimal(int numeroDecimales,double decimal){
-        decimal = decimal*(java.lang.Math.pow(10, numeroDecimales));
-        decimal = java.lang.Math.round(decimal);
-        decimal = decimal/java.lang.Math.pow(10, numeroDecimales);
-
-        return decimal;
+    public String redirectWithTotal(){
+        if(projectSelected!=null){
+            return "report/list.jsf?faces-redirect=true&mode=total&projectId="+projectSelected.getId()+"";
+        }else{
+            return "report/list.jsf?faces-redirect=true&mode=total";
+        }
     }
+
+    public String redirectWithCompleted(){
+        if(projectSelected!=null){
+            return "report/list.jsf?faces-redirect=true&mode=completed&projectId="+projectSelected.getId()+"";
+        }else{
+            return "report/list.jsf?faces-redirect=true&mode=completed";
+        }
+    }
+    public String redirectWithOpen(){
+        if(projectSelected!=null){
+            return "report/list.jsf?faces-redirect=true&mode=open&projectId="+projectSelected.getId()+"";
+        }else{
+            return "report/list.jsf?faces-redirect=true&mode=open";
+        }
+    }
+    public String redirectWithNext1(){
+        Date deliveryDateIni = DateUtil.getDateMinHour(DateUtil.getNextNDay(1));
+        Date deliveryDateEnd = DateUtil.getDateMaxHour(DateUtil.getLastDayOfTheFollowingMoth(DateUtil.getNextNDay(1),30));
+        if(projectSelected!=null){
+            return "report/list.jsf?faces-redirect=true&mode=next1&projectId="+projectSelected.getId()+"&nextIni="+deliveryDateIni.getTime()+"&nextEnd="+deliveryDateEnd.getTime()+"&typeDateId=3";
+        }else{
+            return "report/list.jsf?faces-redirect=true&mode=next1&nextIni="+deliveryDateIni.getTime()+"&nextEnd="+deliveryDateEnd.getTime()+"&typeDateId=3";
+        }
+    }
+    public String redirectWithNext3(){
+        Date deliveryDateIni = DateUtil.getDateMinHour(DateUtil.getNextNDay(1));
+        Date deliveryDateEnd = DateUtil.getDateMaxHour(DateUtil.getLastDayOfTheFollowingMoth(DateUtil.getNextNDay(1),90));
+        if(projectSelected!=null){
+            return "report/list.jsf?faces-redirect=true&mode=next3&projectId="+projectSelected.getId()+"&nextIni="+deliveryDateIni.getTime()+"&nextEnd="+deliveryDateEnd.getTime()+"&typeDateId=3";
+        }else{
+            return "report/list.jsf?faces-redirect=true&mode=next3&nextIni="+deliveryDateIni.getTime()+"&nextEnd="+deliveryDateEnd.getTime()+"&typeDateId=3";
+        }
+    }
+    public String redirectWithMrr(){
+        if(projectSelected!=null){
+            return "report/list.jsf?faces-redirect=true&mode=mrrs&projectId="+projectSelected.getId()+"";
+        }else{
+            return "report/list.jsf?faces-redirect=true&mode=mrrs";
+        }
+    }
+
 
     public ProjectEntity getProjectSelected() {
         return projectSelected;

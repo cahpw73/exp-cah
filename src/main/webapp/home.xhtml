@@ -3,7 +3,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:o="http://omnifaces.org/ui"
                 template="WEB-INF/layout/template.xhtml">
 
     <ui:define name="title">Home</ui:define>
@@ -61,172 +60,186 @@
                             <div class="row">
                                 <div class="col-xs-4"
                                      style="padding-right: 5px; padding-bottom: 5px; padding-left: 5px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #80007f;">
-                                        <div class="box-image-metric-dashboard">
-                                            <h:graphicImage library="img" name="total-pos.png"
-                                                            width="70" height="70"
-                                                            styleClass="logo-procurement-preview"/>
-                                        </div>
-                                        <div class="container-box-line-separator-dashboard">
-                                            <div class="line-separator-dashboard"></div>
-                                        </div>
-
-                                        <div class="box-data-metric">
-                                            <div>
-                                                <h:outputText value="#{dashboardBean.totalOfPOs}"
-                                                              styleClass="label-metric-dashboard"/>
+                                    <h:commandLink target="_blank" action="#{dashboardBean.redirectWithTotal}" style="color: #ffffff">
+                                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #80007f;">
+                                            <div class="box-image-metric-dashboard">
+                                                <h:graphicImage library="img" name="total-pos.png"
+                                                                width="70" height="70"
+                                                                styleClass="logo-procurement-preview"/>
                                             </div>
+                                            <div class="container-box-line-separator-dashboard">
+                                                <div class="line-separator-dashboard"></div>
+                                            </div>
+
+                                            <div class="box-data-metric">
+                                                <div>
+                                                    <h:outputText value="#{dashboardBean.totalOfPOs}"
+                                                                  styleClass="label-metric-dashboard"
+                                                                  style="color:#ffffff"/>
+                                                </div>
                                                 <div style="margin-top: 15px;">
                                                     <h:outputText value="#{msgs['dashboard.label.total.of.pos']}"
-                                                                  style="font-weight: bold;"/>
+                                                                  style="font-weight: bold; color: #ffffff"/>
                                                 </div>
                                                 <div style="margin-top: 15px; text-align: right;">
                                                     <p:commandLink value="#{msgs['dashboard.label.more']}"
                                                                    onclick="PF('totalPOsDlg').show();"
                                                                    style="color: #ffffff" update=":totalPOsGrId"/>
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </h:commandLink>
                                 </div>
                                 <div class="col-xs-4"
                                      style="padding-right: 5px; padding-left: 5px; padding-bottom:5px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #006080">
-                                        <div class="box-image-metric-dashboard">
-                                            <h:graphicImage library="img" name="completed-pos.png"
-                                                            width="70" height="70"
-                                                            styleClass="logo-procurement-preview"/>
-                                        </div>
-                                        <div class="container-box-line-separator-dashboard">
-                                            <div class="line-separator-dashboard"></div>
-                                        </div>
-                                        <div class="box-data-metric">
-                                            <div>
-                                                <h:outputText value="#{dashboardBean.completedPOs}"
-                                                              styleClass="label-metric-dashboard"/>
+                                    <h:commandLink target="_blank" action="#{dashboardBean.redirectWithCompleted}" style="color: #ffffff">
+                                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #006080">
+                                            <div class="box-image-metric-dashboard">
+                                                <h:graphicImage library="img" name="completed-pos.png"
+                                                                width="70" height="70"
+                                                                styleClass="logo-procurement-preview"/>
                                             </div>
-                                            <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.completed.pos']}"
-                                                              style="font-weight: bold;"/>
+                                            <div class="container-box-line-separator-dashboard">
+                                                <div class="line-separator-dashboard"></div>
                                             </div>
-                                            <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
-                                                               onclick="PF('completedPOsDlg').show();"
-                                                               style="color: #ffffff"/>
+                                            <div class="box-data-metric">
+                                                <div>
+                                                    <h:outputText value="#{dashboardBean.completedPOs}" style="color:#ffffff"
+                                                                  styleClass="label-metric-dashboard"/>
+                                                </div>
+                                                <div style="margin-top: 15px;">
+                                                    <h:outputText value="#{msgs['dashboard.label.completed.pos']}"
+                                                                  style="font-weight: bold;  color: #ffffff"/>
+                                                </div>
+                                                <div style="margin-top: 15px; text-align: right;">
+                                                    <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                                   onclick="PF('completedPOsDlg').show();"
+                                                                   style="color: #ffffff"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </h:commandLink>
                                 </div>
                                 <div class="col-xs-4" style=" padding-left: 5px; padding-bottom: 5px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #003e80;">
-                                        <div class="box-image-metric-dashboard">
-                                            <h:graphicImage library="img" name="open-pos.png"
-                                                            width="70" height="70"
-                                                            styleClass="logo-procurement-preview"/>
-                                        </div>
-                                        <div class="container-box-line-separator-dashboard">
-                                            <div class="line-separator-dashboard"></div>
-                                        </div>
-                                        <div class="box-data-metric">
-                                            <div>
-                                                <h:outputText value="#{dashboardBean.openPOs}"
-                                                              styleClass="label-metric-dashboard"/>
+                                    <h:commandLink target="_blank" action="#{dashboardBean.redirectWithOpen}" style="color: #ffffff">
+                                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #003e80;">
+                                            <div class="box-image-metric-dashboard">
+                                                <h:graphicImage library="img" name="open-pos.png"
+                                                                width="70" height="70"
+                                                                styleClass="logo-procurement-preview"/>
                                             </div>
-                                            <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.open.pos']}"
-                                                              style="font-weight: bold;"/>
+                                            <div class="container-box-line-separator-dashboard">
+                                                <div class="line-separator-dashboard"></div>
                                             </div>
-                                            <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
-                                                               onclick="PF('openPOsDlg').show();"
-                                                               style="color: #ffffff"/>
+                                            <div class="box-data-metric">
+                                                <div>
+                                                    <h:outputText value="#{dashboardBean.openPOs}" style="color:#ffffff"
+                                                                  styleClass="label-metric-dashboard"/>
+                                                </div>
+                                                <div style="margin-top: 15px;">
+                                                    <h:outputText value="#{msgs['dashboard.label.open.pos']}"
+                                                                  style="font-weight: bold; color: #ffffff"/>
+                                                </div>
+                                                <div style="margin-top: 15px; text-align: right;">
+                                                    <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                                   onclick="PF('openPOsDlg').show();"
+                                                                   style="color: #ffffff"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </h:commandLink>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-4"
                                      style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px;">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #008000 ">
-                                        <div class="box-image-metric-dashboard">
-                                            <h:graphicImage library="img" name="delivery-next-moth.png"
-                                                            width="70" height="70"
-                                                            styleClass="logo-procurement-preview"/>
-                                        </div>
-                                        <div class="container-box-line-separator-dashboard">
-                                            <div class="line-separator-dashboard"></div>
-                                        </div>
-                                        <div class="box-data-metric">
-                                            <div>
-                                                <h:outputText value="#{dashboardBean.deliveryNextMoth}"
-                                                              styleClass="label-metric-dashboard"/>
+                                    <h:commandLink target="_blank" action="#{dashboardBean.redirectWithNext1}" style="color: #ffffff">
+                                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #008000 ">
+                                            <div class="box-image-metric-dashboard">
+                                                <h:graphicImage library="img" name="delivery-next-moth.png"
+                                                                width="70" height="70"
+                                                                styleClass="logo-procurement-preview"/>
                                             </div>
-                                            <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}"
-                                                              style="font-weight: bold;"/>
+                                            <div class="container-box-line-separator-dashboard">
+                                                <div class="line-separator-dashboard"></div>
                                             </div>
-                                            <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
-                                                               onclick="PF('deliveryNextMothDlg').show();"
-                                                               style="color: #ffffff"/>
+                                            <div class="box-data-metric">
+                                                <div>
+                                                    <h:outputText value="#{dashboardBean.deliveryNextMoth}" style="color:#ffffff"
+                                                                  styleClass="label-metric-dashboard"/>
+                                                </div>
+                                                <div style="margin-top: 15px;">
+                                                    <h:outputText value="#{msgs['dashboard.label.delivery.next.moth']}"
+                                                                  style="font-weight: bold; color: #ffffff"/>
+                                                </div>
+                                                <div style="margin-top: 15px; text-align: right;">
+                                                    <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                                   onclick="PF('deliveryNextMothDlg').show();"
+                                                                   style="color: #ffffff"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </h:commandLink>
                                 </div>
                                 <div class="col-xs-4"
                                      style="padding-right: 5px; padding-top: 5px; padding-left: 5px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #608000">
-                                        <div class="box-image-metric-dashboard">
-                                            <h:graphicImage library="img" name="delivery-next-3-moth.png"
-                                                            width="70" height="70"
-                                                            styleClass="logo-procurement-preview"/>
-                                        </div>
-                                        <div class="container-box-line-separator-dashboard">
-                                            <div class="line-separator-dashboard"></div>
-                                        </div>
-                                        <div class="box-data-metric">
-                                            <div>
-                                                <h:outputText value="#{dashboardBean.deliveryNext3Moth}"
-                                                              styleClass="label-metric-dashboard"/>
+                                    <h:commandLink target="_blank" action="#{dashboardBean.redirectWithNext3}" style="color: #ffffff">
+                                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #608000">
+                                            <div class="box-image-metric-dashboard">
+                                                <h:graphicImage library="img" name="delivery-next-3-moth.png"
+                                                                width="70" height="70"
+                                                                styleClass="logo-procurement-preview"/>
                                             </div>
-                                            <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.deliveries.3.next.moth']}"
-                                                              style="font-weight: bold;"/>
+                                            <div class="container-box-line-separator-dashboard">
+                                                <div class="line-separator-dashboard"></div>
                                             </div>
-                                            <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
-                                                               onclick="PF('deliveryNext3MothDlg').show();"
-                                                               style="color: #ffffff"/>
+                                            <div class="box-data-metric">
+                                                <div>
+                                                    <h:outputText value="#{dashboardBean.deliveryNext3Moth}" style="color:#ffffff"
+                                                                  styleClass="label-metric-dashboard"/>
+                                                </div>
+                                                <div style="margin-top: 15px;">
+                                                    <h:outputText
+                                                            value="#{msgs['dashboard.label.deliveries.3.next.moth']}"
+                                                            style="font-weight: bold; color: #ffffff"/>
+                                                </div>
+                                                <div style="margin-top: 15px; text-align: right;">
+                                                    <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                                   onclick="PF('deliveryNext3MothDlg').show();"
+                                                                   style="color: #ffffff"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </h:commandLink>
                                 </div>
                                 <div class="col-xs-4" style="padding-left: 5px; padding-top: 5px; height: 200px">
-                                    <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #804000">
-                                        <div class="box-image-metric-dashboard">
-                                            <h:graphicImage library="img" name="mrr-outstanding.png"
-                                                            width="70" height="70"
-                                                            styleClass="logo-procurement-preview"/>
-                                        </div>
-                                        <div class="container-box-line-separator-dashboard">
-                                            <div class="line-separator-dashboard"></div>
-                                        </div>
-                                        <div class="box-data-metric">
-                                            <div>
-                                                <h:outputText value="#{dashboardBean.mrrOutstanding}"
-                                                              styleClass="label-metric-dashboard"/>
+                                    <h:commandLink target="_blank" action="#{dashboardBean.redirectWithMrr}" style="color: #ffffff">
+                                        <div style="border-style:solid; border-width: 1px; float: left; width: 100%; height: 100%; background-color: #804000">
+                                            <div class="box-image-metric-dashboard">
+                                                <h:graphicImage library="img" name="mrr-outstanding.png"
+                                                                width="70" height="70"
+                                                                styleClass="logo-procurement-preview"/>
                                             </div>
-                                            <div style="margin-top: 15px;">
-                                                <h:outputText value="#{msgs['dashboard.label.mrrs.outstanding']}"
-                                                              style="font-weight: bold;"/>
+                                            <div class="container-box-line-separator-dashboard">
+                                                <div class="line-separator-dashboard"></div>
                                             </div>
-                                            <div style="margin-top: 15px; text-align: right;">
-                                                <p:commandLink value="#{msgs['dashboard.label.more']}"
-                                                               onclick="PF('mrrOutstandingDlg').show();"
-                                                               style="color: #ffffff"/>
+                                            <div class="box-data-metric">
+                                                <div>
+                                                    <h:outputText value="#{dashboardBean.mrrOutstanding}" style="color:#ffffff"
+                                                                  styleClass="label-metric-dashboard"/>
+                                                </div>
+                                                <div style="margin-top: 15px;">
+                                                    <h:outputText value="#{msgs['dashboard.label.mrrs.outstanding']}"
+                                                                  style="font-weight: bold; color: #ffffff"/>
+                                                </div>
+                                                <div style="margin-top: 15px; text-align: right;">
+                                                    <p:commandLink value="#{msgs['dashboard.label.more']}"
+                                                                   onclick="PF('mrrOutstandingDlg').show();"
+                                                                   style="color: #ffffff"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </h:commandLink>
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 15px;">
@@ -274,7 +287,7 @@
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.completed.pos']}</strong>
                     <br/>
-                        Value comes from POs with a Status of "Completed" in FQM Expediting Database.
+                    Value comes from POs with a Status of "Completed" in FQM Expediting Database.
                     <br/>
                     Note that the Status of "Completed" has to be manually set so there could be POs
                     <br/>
@@ -301,7 +314,7 @@
                 <div class="col-md-11">
                     <strong>#{msgs['dashboard.label.open.pos']}</strong>
                     <br/>
-                        Value comes from POs "Committed" in Procurement system, and have a Status
+                    Value comes from POs "Committed" in Procurement system, and have a Status
                     <br/>
                     other than "Cancelled", "Completed" or "Deleted" in FQM Expediting Database.
                     <br/>
@@ -324,7 +337,7 @@
                 </div>
             </div>
         </p:dialog>
-        <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg"  resizable="false">
+        <p:dialog id="deliveryNextMothId" widgetVar="deliveryNextMothDlg" resizable="false">
             <div>
                 <div class="col-md-1" style="padding-left: 1px">
                     <h:graphicImage name="img/icon-info.jpg"/>
@@ -335,8 +348,8 @@
                     Value comes from POs with a "Forecast Site Date" due in the following month. This value<br/>
                     excludes POs with Status of "Cancelled", "Completed", "Deleted", "MRR Required", "On Hold"<br/>
                     and "Storage". The Status of "Cancelled", "Completed", "Deleted", "MRR Required", "On Hold" <br/>
-                    and  "Storage" has to be manually set. If a number of Scope of Supply line items but all with  <br/>
-                    the  same "Forecast Site date", then captured as 1 delivery. If a number of Scope of Supply  <br/>
+                    and "Storage" has to be manually set. If a number of Scope of Supply line items but all with <br/>
+                    the same "Forecast Site date", then captured as 1 delivery. If a number of Scope of Supply <br/>
                     line items but more than 1 "Forecast Site date", then captured more than 1 delivery for this PO.
                     <br/><br/>
                     If today is 23rd Dec then
