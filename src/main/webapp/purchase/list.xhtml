@@ -122,9 +122,9 @@
                 <p:column headerText="#{msgs['po.lbl.po.status']}" width="100"
                           sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po">
-                    <h:inputTextarea value="#{poListBean.loadPurchaseOrderStatuses(_purchase.poId)}"
-                                     rows="1" styleClass="form-control"
-                                     style="max-height: 31px; height: 31px; cursor:pointer!important;" readonly="true"/>
+                    <p:inputTextarea value="#{poListBean.loadPurchaseOrderStatuses(_purchase.poId)}"
+                                     styleClass="form-control" readonly="true"
+                                     style="max-height: 29px; height: 29px; cursor:pointer!important;" />
                 </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
                           sortBy="#{_purchase.responsibleExpediting}" width="150" styleClass="column-list-header-po">

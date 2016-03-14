@@ -9,7 +9,12 @@
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewAction action="#{permissionBean.canAccess(200)}"/>
-
+        <f:viewParam name="mode" value="#{reportListBean.mode}"/>
+        <f:viewParam name="projectId" value="#{reportListBean.projectId}"/>
+        <f:viewParam name="typeDateId" value="#{reportListBean.typeDateId}"/>
+        <f:viewParam name="nextIni" value="#{reportListBean.startDate}"/>
+        <f:viewParam name="nextEnd" value="#{reportListBean.endDate}"/>
+        <f:viewAction action="#{reportListBean.loadMultipleStatuses}"/>
     </f:metadata>
 
 
@@ -189,9 +194,9 @@
                 <p:column headerText="#{msgs['po.lbl.po.status']}" sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po"
                           width="100">
-                    <h:inputTextarea value="#{reportBean.loadPurchaseOrderStatuses(_purchase.poId)}"
-                                     rows="3" styleClass="form-control"
-                                     style="max-height: 31px; height: 31px; cursor:pointer!important;" readonly="true"/>
+                    <p:inputTextarea value="#{reportBean.loadPurchaseOrderStatuses(_purchase.poId)}"
+                                     styleClass="form-control" readonly="true"
+                                     style="max-height: 29px; height: 29px; cursor:pointer!important;"/>
                 </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
                           sortBy="#{_purchase.responsibleExpediting}" styleClass="column-list-header-po" width="150">

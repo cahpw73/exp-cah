@@ -92,7 +92,7 @@ public class ProjectService implements Serializable {
                 if (pt.getId() == null) {
                     pt.setProject(entity);
                 }
-                if (pt.getTextSnippet().getId() == null||pt.getTextSnippet().getId()<0) {
+                if (pt.getTextSnippet().getId() == null || pt.getTextSnippet().getId() < 0) {
                     pt.getTextSnippet().setId(null);
                     pt.getTextSnippet().setProject(entity);
                     pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
@@ -132,7 +132,7 @@ public class ProjectService implements Serializable {
     }
 
     @Transactional
-    public ClausesEntity addNewClausesSnippet(ProjectTextSnippetEntity projectTextSnippetEntity){
+    public ClausesEntity addNewClausesSnippet(ProjectTextSnippetEntity projectTextSnippetEntity) {
         ClausesEntity entity = new ClausesEntity();
         entity.setId(null);
         entity.setLastUpdate(new Date());
@@ -155,11 +155,16 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
+    public ProjectEntity findById(Long id) {
+        List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, id);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
     public List<ProjectEntity> findAllProjects() {
         return projectDao.getProjectList();
     }
 
-    public List<ProjectEntity> findByPermissionForUser(final Long userId){
+    public List<ProjectEntity> findByPermissionForUser(final Long userId) {
         return projectDao.findByPermissionForUser(userId);
     }
 
@@ -207,16 +212,16 @@ public class ProjectService implements Serializable {
         return projectDao.findByLogoId(logoId);
     }
 
-    public boolean isClientBeingUsed(final Long clientId){
+    public boolean isClientBeingUsed(final Long clientId) {
 
         return !projectDao.findByClient(clientId).isEmpty();
     }
 
-    public List<ProjectEntity> getAllProjects(){
+    public List<ProjectEntity> getAllProjects() {
         return projectDao.getAllProjectList();
     }
 
-    public List<ProjectEntity> getProjectsAssignables(){
+    public List<ProjectEntity> getProjectsAssignables() {
         return projectDao.getProjectsAssignables();
     }
 

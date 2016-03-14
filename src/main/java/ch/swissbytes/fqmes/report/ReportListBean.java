@@ -9,7 +9,10 @@ import ch.swissbytes.domain.types.TypeDateReportEnum;
 import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.boundary.purchase.SearchPurchase;
+import ch.swissbytes.procurement.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -19,6 +22,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +48,12 @@ public class ReportListBean implements Serializable {
     private SearchPurchase searchPurchase = new SearchPurchase();
 
     private static final Logger log = Logger.getLogger(ReportListBean.class.getName());
+
+    private String mode;
+    private Long projectId;
+    private Integer typeDateId;
+    private Long startDate;
+    private Long endDate;
 
     @PostConstruct
     public void create() {
@@ -78,18 +88,43 @@ public class ReportListBean implements Serializable {
         }
     }
 
-    public List<String> getTypesDate() {
-        List<String> list = new ArrayList<>();
-        list.add("Delivery Date");
-        list.add("Forecast Ex Works Date");
-        list.add("Actual Ex Works Date");
-        list.add("Forecast Site Date");
-        list.add("Actual Site Date");
-        list.add("Required Site Date");
-        list.add("Required On Site Date");
-        list.add("Actual On Site Date");
-        list.add("Next Key Date");
-        return list;
+    public void loadMultipleStatuses(){
+        if(StringUtils.isNotEmpty(mode)) {
+            switch (mode) {
+                case "total":
+                    searchPurchase.setStatuses("0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17");
+                    break;
+                case "open":
+                    searchPurchase.setStatuses("0,2,3,4,6,7,8,9,10,11,13,14,15,16,17");
+                    break;
+                case "completed":
+                    searchPurchase.setStatuses("5");
+                    break;
+                case "next1":
+                    searchPurchase.setStatuses("0,2,3,4,6,7,8,9,11,13,14,15,16,17");
+                    searchPurchase.setTypeDateReport(TypeDateReportEnum.getEnum(typeDateId));
+                    DateTime startDateTime = new DateTime(startDate);
+                    DateTime endDateTime = new DateTime(endDate);
+                    searchPurchase.setStartDateReport(startDateTime.toDate());
+                    searchPurchase.setEndDateReport(endDateTime.toDate());
+                    break;
+                case "next3":
+                    searchPurchase.setStatuses("0,2,3,4,6,7,8,9,11,13,14,15,16,17");
+                    searchPurchase.setTypeDateReport(TypeDateReportEnum.getEnum(typeDateId));
+                    DateTime startDateTime2 = new DateTime(startDate);
+                    DateTime endDateTime2 = new DateTime(endDate);
+                    searchPurchase.setStartDateReport(startDateTime2.toDate());
+                    searchPurchase.setEndDateReport(endDateTime2.toDate());
+                    break;
+                case "mrrs":
+                    searchPurchase.setStatuses("10");
+                    break;
+                default:
+                    break;
+            }
+            ProjectEntity entity = projectService.findById(projectId);
+            searchPurchase.setProject(entity!=null?entity.getProjectNumber():"");
+        }
     }
 
     public List<TypeDateReportEnum> getTypesDateList() {
@@ -137,4 +172,43 @@ public class ReportListBean implements Serializable {
         return searchPurchase;
     }
 
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Integer getTypeDateId() {
+        return typeDateId;
+    }
+
+    public void setTypeDateId(Integer typeDateId) {
+        this.typeDateId = typeDateId;
+    }
+
+    public Long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Long startDate) {
+        this.startDate = startDate;
+    }
+
+    public Long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Long endDate) {
+        this.endDate = endDate;
+    }
 }
