@@ -518,9 +518,23 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
+        //TODO Remove if sure that not is necessary
+        purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+        if(!existExpeditingStatus(purchaseOrderEntity.getId(),ExpeditingStatusEnum.ISSUED)){
+            ExpeditingStatusEntity expeditingStatusEntity = new ExpeditingStatusEntity();
+            expeditingStatusEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+            expeditingStatusEntity.setPurchaseOrderEntity(purchaseOrderEntity);
+            expeditingStatusDao.doSave(expeditingStatusEntity);
+        }
+
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
         dao.update(purchaseOrderEntity);
         return purchaseOrderEntity;
+    }
+
+    public boolean existExpeditingStatus(final Long poId,final ExpeditingStatusEnum issued){
+        List<ExpeditingStatusEntity> list = expeditingStatusDao.findByPOIdAndStatusIssued(poId,issued);
+        return list.isEmpty()?false:true;
     }
 
     private void collectLists(PurchaseOrderProcurementEntity po, PurchaseOrderEntity poe) {
