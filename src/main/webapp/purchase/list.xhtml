@@ -104,13 +104,13 @@
                          rowsPerPageTemplate="#{configuration.getPagesSize(purchaseOrderListBean.listView.total)}"
                          paginatorPosition="bottom">
                 <p:ajax async="false" event="page" process="@this" listener="#{tableCommonFeature.onPaginate}"/>
-                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="100">
+                <p:column headerText="#{msgs['po.lbl.project']}" sortBy="#{_purchase.project}" width="85">
                     #{_purchase.project}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="120">
+                <p:column headerText="#{msgs['po.lbl.po']}" sortBy="#{_purchase.po}" width="90">
                     #{_purchase.po}
                 </p:column>
-                <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="120">
+                <p:column headerText="#{msgs['po.column.variation']}" sortBy="#{_purchase.variation}" width="85">
                     #{purchaseOrderListBean.addPrefixToVariation(_purchase)}
                 </p:column>
                 <p:column headerText="#{msgs['po.lbl.po.title']}" sortBy="#{_purchase.poTitle}">
@@ -119,11 +119,11 @@
                 <p:column headerText="#{msgs['po.lbl.po.supplier']}" sortBy="#{_purchase.supplier}">
                     #{_purchase.supplier}
                 </p:column>
-                <p:column headerText="#{msgs['po.lbl.po.status']}" width="100"
+                <p:column headerText="#{msgs['po.lbl.po.status']}" width="170"
                           sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po">
                     <p:inputTextarea value="#{poListBean.loadPurchaseOrderStatuses(_purchase.poId)}"
-                                     styleClass="form-control" readonly="true"
+                                     styleClass="form-control" readonly="true" title="#{poListBean.loadPurchaseOrderStatuses(_purchase.poId)}"
                                      style="max-height: 29px; height: 29px; cursor:pointer!important;" />
                 </p:column>
                 <p:column headerText="#{msgs['po.supply.scope.column.r.expediting']}"
