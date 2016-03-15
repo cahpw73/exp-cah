@@ -11,7 +11,7 @@
                      rowIndexVar="_index" var="_comment">
             <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.commentDate}"
                       sortFunction="#{sortBean.sortDate}">
-                #{util.toLocalDateGMT(_comment.commentDate)}
+                #{util.toLocal(_comment.commentDate)}
             </p:column>
             <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="200" sortBy="#{_comment.name}"
                       sortFunction="#{sortBean.sortStrings}">
@@ -27,7 +27,9 @@
             </p:column>
             <p:column headerText="#{msgs['po.attach.tbl.column.observations']}" sortBy="#{_comment.description}"
                       sortFunction="#{sortBean.sortStrings}">
-                #{_comment.description}
+                <div style="max-height: 90px; overflow-y: auto ">
+                    #{_comment.description}
+                </div>
             </p:column>
             <p:column headerText="#{msgs['lbl.attachment']}" width="95">
                 <div class="icon-container-attachment">

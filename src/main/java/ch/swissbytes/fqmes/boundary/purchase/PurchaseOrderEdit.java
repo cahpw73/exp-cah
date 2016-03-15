@@ -396,7 +396,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void cleanComment() {
         commentEdit = new CommentEntity();
-        commentEdit.setCommentDate(new Date());
+        commentEdit.setCommentDate(Util.convertUTC(new Date(),configuration.getTimeZone()));
+
         commentIndexSelected = -1;
     }
 

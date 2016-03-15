@@ -179,7 +179,6 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
-
     public ProjectEntity findProjectById(Long projectId) {
         List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, projectId);
         ProjectEntity entity = null;
@@ -190,17 +189,17 @@ public class ProjectService implements Serializable {
 
         return entity;
     }
-
-    public ProjectEntity findById(final Long projectId) {
-        ProjectEntity entity = projectDao.findById(ProjectEntity.class, projectId).get(0);
-        return entity != null ? entity : null;
+    
+    public ProjectEntity findById(Long id) {
+        List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, id);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     public List<ProjectEntity> findAllProjects() {
         return projectDao.getProjectList();
     }
 
-    public List<ProjectEntity> findByPermissionForUser(final Long userId){
+    public List<ProjectEntity> findByPermissionForUser(final Long userId) {
         return projectDao.findByPermissionForUser(userId);
     }
 
@@ -258,11 +257,11 @@ public class ProjectService implements Serializable {
         return !projectDao.findByClient(clientId).isEmpty();
     }
 
-    public List<ProjectEntity> getAllProjects(){
+    public List<ProjectEntity> getAllProjects() {
         return projectDao.getAllProjectList();
     }
 
-    public List<ProjectEntity> getProjectsAssignables(){
+    public List<ProjectEntity> getProjectsAssignables() {
         return projectDao.getProjectsAssignables();
     }
 

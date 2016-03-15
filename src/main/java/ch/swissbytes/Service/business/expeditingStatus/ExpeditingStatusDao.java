@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.expeditingStatus;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
 import ch.swissbytes.domain.model.entities.ExpeditingStatusEntity;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.persistence.Query;
@@ -29,19 +30,19 @@ public class ExpeditingStatusDao extends GenericDao<ExpeditingStatusEntity> impl
         super.saveAndFlush(entity);
     }
 
-    public void doRemove(ExpeditingStatusEntity detachedEntity){
+    public void doRemove(ExpeditingStatusEntity detachedEntity) {
         ExpeditingStatusEntity entity = super.merge(detachedEntity);
         super.delete(entity);
     }
 
-    public List<ExpeditingStatusEntity> findByPOIds(final Long poId){
+    public List<ExpeditingStatusEntity> findByPOIds(final Long poId) {
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT e ");
         sb.append(" FROM ExpeditingStatusEntity e ");
         sb.append(" WHERE e.purchaseOrderEntity.id = :PO_ID ");
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("PO_ID", poId);
-        return super.findBy(sb.toString(),params);
+        return super.findBy(sb.toString(), params);
     }
 
     @Override
@@ -57,5 +58,17 @@ public class ExpeditingStatusDao extends GenericDao<ExpeditingStatusEntity> impl
     @Override
     protected String addCriteria(Filter filter) {
         return null;
+    }
+
+    public List<ExpeditingStatusEntity> findByPOIdAndStatusIssued(Long poId, ExpeditingStatusEnum issued) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT e ");
+        sb.append(" FROM ExpeditingStatusEntity e ");
+        sb.append(" WHERE e.purchaseOrderEntity.id = :PO_ID ");
+        sb.append(" AND e.purchaseOrderStatus = :ISSUED ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("PO_ID", poId);
+        params.put("ISSUED", issued);
+        return super.findBy(sb.toString(), params);
     }
 }

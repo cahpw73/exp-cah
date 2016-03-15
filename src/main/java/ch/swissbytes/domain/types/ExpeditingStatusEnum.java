@@ -10,7 +10,8 @@ public enum ExpeditingStatusEnum implements Serializable {
 
     ISSUED(0,"issued"), CANCELLED(1,"cancelled"), DUE(2,"due"), OVERDUE(3,"overdue"), UNDER_SUPPLY(4,"under supply"), COMPLETED(5,"completed"),
     INCOMPLETE(6,"incomplete"), OVER_SUPPLY(7,"over supply"), STORAGE(8,"storage"), ON_HOLD(9,"on hold"),MMR_REQUIRED(10,"mmr required"),
-    MISSING(11,"missing"),DELETED(12,"deleted"), SHIPPED(13,"shipped"),BLANK(14,"none");
+    MISSING(11,"missing"),DELETED(12,"deleted"), SHIPPED(13,"shipped"),BLANK(14,"none"),COLLECTED(15,"collected"), SHIPPING_PENDING(16,"shipping pending"),
+    AS_DIRECTED(17,"as directed");
 
     private Integer id;
     private String label;

@@ -448,7 +448,10 @@
                         </div>
                     </div>
 
-
+                    <div style="border: 1px solid black; margin-left: -15px; padding-left: 6px; margin-top: 10px; padding-bottom: 5px;
+                                padding-top: 5px; width: 1023px; height: 225px; z-index: -10; margin-bottom: -216px; border-radius: 4px;"></div>
+                    <div style="margin-left: -9px; padding-left: 9px; margin-bottom: 5px;
+                                margin-top: 0px; padding-bottom: 5px; padding-top: 5px; height: 225px;">
                     <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
@@ -494,6 +497,42 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['lbl.intro.email.sent.comment']}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            <div class="form-group input-general-po">
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.intro.email.sent']}"/>
+
+                                <div class="calendar-general-po">
+                                    <p:calendar id="introEmailDate" type="text"
+                                                styleClass="calendar-date-po"
+                                                mask="#{configuration.mask}" navigator="true"
+                                                pattern="#{configuration.formatDate}"
+                                                converterMessage="#{msgs['validator.date.invalid']}"
+                                                jsf:placeholder="#{configuration.formatDate}"
+                                                converter="#{dateConverter}"
+                                                timeZone="#{configuration.timeZone}"
+                                                value="#{purchaseOrderEdit.poEdit.introEmail}"
+                                                onselect="calendarChanges();" onclick="calendarChanges();"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <p:inputTextarea
+                                    maxlength="950" type="text"
+                                    value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
+                                    jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control" rows="3"/>
+                        </div>
+                    </div>
                     </div>
                     <ui:include src="components/additionalDataEdit.xhtml"/>
 
