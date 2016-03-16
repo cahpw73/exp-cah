@@ -152,17 +152,6 @@
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                #{msgs['po.lbl.expediting.status']}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Text input-->
-                        <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.po.title']}"/>
@@ -173,21 +162,6 @@
                                                  class="form-control" readonly="true"/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="section-text-area-po">
-                            <div class="col-md-12">
-                                <div class='form-group card'>
-                                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
-                                    <select id="poStatuses" multiple="multiple">
-                                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
-                                        </ui:repeat>
-                                    </select>
-                                </div>
-                            </div>
-                            <p:remoteCommand name="onload"
-                                             oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
-                                             autoRun="true"></p:remoteCommand>
                         </div>
                     </div>
 
@@ -200,25 +174,6 @@
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
-                                    <ui:remove>
-                                        <p:selectOneMenu styleClass="menu-po-status"
-                                                         filter="true" disabled="true"
-                                                         id="supplierNameId"
-                                                         style="min-width:345px; max-width:345px;"
-                                                         filterMatchMode="contains"
-                                                         value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier}"
-                                                         converter="supplierConverter">
-                                            <f:selectItem itemLabel="Select One" itemValue=""/>
-                                            <f:selectItems var="_supplier"
-                                                           value="#{supplierProcList.suppliers}"
-                                                           itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
-                                            <p:ajax async="false" event="change"
-                                                    update="supplierAddress supplierPhoneTxt supplierSuburb supplierState
-                                                     btnViewContact btnAddContact
-                                                    supplierPostCode supplierCountry contactId"/>
-                                        </p:selectOneMenu>
-                                        <p:message for="supplierNameId"/>
-                                    </ui:remove>
                                 </div>
                             </div>
                         </div>
