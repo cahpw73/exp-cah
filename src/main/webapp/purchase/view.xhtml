@@ -83,19 +83,6 @@
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                #{msgs['po.lbl.status']}
-                            </div>
-                            <div class="col-md-6">
-                                #{msgs['po.lbl.expediting.status']}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="text-lbl-ltr label-general-po control-label"
                                                value="#{msgs['po.lbl.variation']}"/>
@@ -112,14 +99,6 @@
                                 <h:inputText disabled="true"
                                              value="#{configuration.getPOProcStatus(purchaseOrderView.purchaseOrder.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
-                            </div>
-                            <div class="col-md-6" style="padding-right: 0px!important;">
-                                <ui:remove>
-                                <h:inputText readonly="true" styleClass="form-control view-po"
-                                             value="#{configuration.getPOStatus(purchaseOrderView.purchaseOrder.purchaseOrderStatus)}"/>
-                                </ui:remove>
-                                <h:inputTextarea value="#{purchaseOrderView.expeditingStatuses}" rows="3" styleClass="form-control"
-                                                 style="max-height: 62px; height: 62px " readonly="true"/>
                             </div>
                         </div>
                     </div>

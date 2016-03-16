@@ -112,6 +112,25 @@
                              jsf:placeholder="#{msgs['po.lbl.next.key.date.comment']}" class="form-control" rows="3"/>
         </div>
     </div>
+    <div class="row">
+        <div class="section-lbl-input-po">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.expediting.status']}"/>
+                <div class="inputText-general-po">
+                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
+                    <select id="poStatuses" multiple="multiple">
+                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                        </ui:repeat>
+                    </select>
+                </div>
+                <p:remoteCommand name="onload"
+                                 oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
+                                 autoRun="true"></p:remoteCommand>
+            </div>
+        </div>
+    </div>
     <div class="row" style="margin-top: 15px!important;">
         <div style="width: 1005px;float: left;padding-left: 15px;">
             <div class="form-group input-general-po">
