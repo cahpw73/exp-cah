@@ -287,6 +287,7 @@ public class PurchaseOrderEdit implements Serializable {
         String url;
         if (hashCode.intValue() == currentHashCode.intValue()) {
             updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
             url = "view?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
         } else {

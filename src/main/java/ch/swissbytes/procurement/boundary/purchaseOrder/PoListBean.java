@@ -794,33 +794,6 @@ public class PoListBean implements Serializable {
 
     }
 
-    public String loadPurchaseOrderStatuses(final Long purchaseOrderId) {
-        String expeditingStatuses = "";
-        if (purchaseOrderId != null) {
-            List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(purchaseOrderId);
-            for (ExpeditingStatusEntity ex : expeditingStatusList) {
-                expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
-            }
-            if (expeditingStatuses.length() > 0) {
-                expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 1);
-                String[] ids = expeditingStatuses.split(",");
-                String expStatuses = "";
-                for (int i = 0; i < ids.length; i++) {
-                    try {
-                        String exStatus = bundle.getString("postatus." + ExpeditingStatusEnum.getEnum(Integer.valueOf(ids[i]).intValue()).name());
-                        expStatuses = expStatuses + exStatus + ", ";
-                    } catch (NumberFormatException nfe) {
-                        log.info("");
-                    }
-
-                }
-                expeditingStatuses = expStatuses;
-                expeditingStatuses = expeditingStatuses.substring(0, expeditingStatuses.length() - 2);
-            }
-        }
-        return expeditingStatuses;
-    }
-
     public List<PurchaseOrderEntity> getPurchaseOrders() {
         return purchaseOrders;
     }
