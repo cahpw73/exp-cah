@@ -50,6 +50,8 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     private Date requiredDate;
 
+    private String expeditingStatus;
+
     @Id
     public Long getId() {
         return id;
@@ -207,6 +209,15 @@ public class VPurchaseOrder implements Serializable ,Comparable<VPurchaseOrder>{
 
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
+    }
+
+    @Column(name = "expediting_status_id")
+    public String getExpeditingStatus() {
+        return expeditingStatus;
+    }
+
+    public void setExpeditingStatus(String expeditingStatus) {
+        this.expeditingStatus = expeditingStatus;
     }
 
     @Override

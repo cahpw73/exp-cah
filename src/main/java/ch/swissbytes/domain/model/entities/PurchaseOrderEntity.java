@@ -40,6 +40,7 @@ public class PurchaseOrderEntity implements Serializable{
     private Date lastUpdate;
     private StatusEntity status;
     private String rfeComment;
+    private String expeditingStatus;
     private ExpeditingStatusEnum purchaseOrderStatus;
     private ProjectEntity projectEntity;
     private PurchaseOrderProcurementEntity purchaseOrderProcurementEntity;
@@ -396,6 +397,15 @@ public class PurchaseOrderEntity implements Serializable{
 
     public void setLastActivityUpdate(Date lastActivityUpdate) {
         this.lastActivityUpdate = lastActivityUpdate;
+    }
+
+    @Column(name="expediting_status_id")
+    public String getExpeditingStatus() {
+        return expeditingStatus;
+    }
+
+    public void setExpeditingStatus(String expeditingStatus) {
+        this.expeditingStatus = expeditingStatus;
     }
 
     @Override

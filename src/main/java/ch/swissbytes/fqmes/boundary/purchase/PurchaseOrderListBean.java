@@ -7,6 +7,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.fqm.boundary.UserSession;
 import org.apache.commons.lang.StringUtils;
 
@@ -20,7 +21,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 /**
@@ -45,6 +46,7 @@ public class PurchaseOrderListBean implements Serializable {
     @Inject
     private ProjectService projectService;
 
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
     private PurchaseOrderViewTbl vTbl;
 
@@ -56,7 +58,7 @@ public class PurchaseOrderListBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(PurchaseOrderListBean.class.getName());
 
-    private String PREFIX="v";
+    private String PREFIX = "v";
 
     private String scrollTop = "0";
 
@@ -64,43 +66,43 @@ public class PurchaseOrderListBean implements Serializable {
 
 
     @PostConstruct
-    public void create(){
+    public void create() {
         log.info("creating bean purchase list");
-        searchPurchase=new SearchPurchase();
+        searchPurchase = new SearchPurchase();
         List<Long> projectsAssignIds = new ArrayList<>();
         List<ProjectEntity> projects = projectService.findByPermissionForUser(userSession.getCurrentUser().getId());
-        for (ProjectEntity p : projects){
+        for (ProjectEntity p : projects) {
             projectsAssignIds.add(p.getId());
         }
         searchPurchase.getProjectsAssignedId().addAll(projectsAssignIds);
-        vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
+        vTbl = new PurchaseOrderViewTbl(dao, searchPurchase);
     }
 
-    private void  search(){
-        log.info("search..."+searchPurchase);
-        vTbl = new PurchaseOrderViewTbl(dao,searchPurchase);
+    private void search() {
+        log.info("search..." + searchPurchase);
+        vTbl = new PurchaseOrderViewTbl(dao, searchPurchase);
     }
 
-    public void selectPurchaseOrderId(final Long purchaseOrderId){
-        log.info("selectPurchaseOrderId(purchaseOrderId["+purchaseOrderId+"])");
+    public void selectPurchaseOrderId(final Long purchaseOrderId) {
+        log.info("selectPurchaseOrderId(purchaseOrderId[" + purchaseOrderId + "])");
         this.purchaseOrderId = purchaseOrderId;
-        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class,purchaseOrderId).get(0);
+        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class, purchaseOrderId).get(0);
         log.info("Purchase Selected: " + purchaseOrderSelected.getProject());
     }
 
-    public void selectPurchaseOrder(){
+    public void selectPurchaseOrder() {
         log.info("selectPurchaseOrder()");
         log.info("purchaseOrderId: " + purchaseOrderId);
-        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class,purchaseOrderId).get(0);
+        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class, purchaseOrderId).get(0);
         log.info("Purchase Selected: " + purchaseOrderSelected.getProject());
     }
 
-    public void doDeletePurchaseOrder(){
+    public void doDeletePurchaseOrder() {
         purchaseOrderService.doDelete(purchaseOrderId);
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         log.info("destroying bean");
     }
 
@@ -108,21 +110,47 @@ public class PurchaseOrderListBean implements Serializable {
         return vTbl;
     }
 
-    public void doSearch(){
+    public void doSearch() {
         log.info("doSearch");
         search();
     }
-    public void doClean(){
+
+    public void doClean() {
         searchPurchase.clean();
         search();
     }
-    public String addPrefixToVariation(VPurchaseOrder po){
-        String variation="";
-        if(po!=null&& StringUtils.isNotEmpty(po.getVariation())&&StringUtils.isNotBlank(po.getVariation())){
-            variation=PREFIX+po.getVariation();
+
+    public String addPrefixToVariation(VPurchaseOrder po) {
+        String variation = "";
+        if (po != null && StringUtils.isNotEmpty(po.getVariation()) && StringUtils.isNotBlank(po.getVariation())) {
+            variation = PREFIX + po.getVariation();
         }
         return variation;
 
+    }
+
+    public String loadStatusNameById(String ids) {
+        String statusStr = "";
+        if (ids.length() > 1) {
+            String[] statusIds = ids.split(",");
+            for (int i = 0; i < statusIds.length; i++) {
+                if(StringUtils.isNotEmpty(ids)) {
+                    Integer expeditingStatusId = Integer.valueOf(statusIds[i]);
+                    ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+                }
+            }
+        } else {
+            if(StringUtils.isNotEmpty(ids)) {
+                Integer expeditingStatusId = Integer.valueOf(ids);
+                ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+            }
+        }
+        if(statusStr.length()>1) {
+            statusStr = statusStr.substring(0, statusStr.length() - 1);
+        }
+        return statusStr;
     }
 
     @Produces
@@ -145,21 +173,21 @@ public class PurchaseOrderListBean implements Serializable {
     }
 
     public void setPurchaseOrderId(Long purchaseOrderId) {
-        log.info("setPurchaseOrderId(Long purchaseOrderId["+purchaseOrderId+"])");
+        log.info("setPurchaseOrderId(Long purchaseOrderId[" + purchaseOrderId + "])");
         this.purchaseOrderId = purchaseOrderId;
-        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class,purchaseOrderId).get(0);
+        purchaseOrderSelected = dao.findById(PurchaseOrderEntity.class, purchaseOrderId).get(0);
         log.info("Purchase Selected: " + purchaseOrderSelected.getProject());
     }
 
-    public String redirectCreatePurchaseOrder(){
+    public String redirectCreatePurchaseOrder() {
         return "/purchase/create?faces-redirect=true";
     }
 
-    public String redirectToEdit(){
+    public String redirectToEdit() {
         return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
-    public String redirectToView(){
+    public String redirectToView() {
         return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
