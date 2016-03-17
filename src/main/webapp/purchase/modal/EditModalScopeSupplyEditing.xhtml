@@ -323,84 +323,7 @@
             </div>
             <div class="clearfix"></div>
             <br/>
-            <h4 class="sub-header fq-sub-header">#{msgs['tdp.lbl.list']}</h4>
 
-            <div class="fq-form-table tdp-data-table-poi">
-                <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.activesTdp()}"
-                             var="_tdp" rowIndexVar="_index" styleClass="data-table-po-sc">
-                    <p:column headerText="#{msgs['tdp.column.location']}" width="170">
-                        #{_tdp.location}
-                    </p:column>
-                    <p:column headerText="#{msgs['tdp.column.lead.time']}" width="300">
-                        #{_tdp.leadTime}
-                        &#160;
-                        #{ configuration.getTimeMeasurement(_tdp.measurementTime)}
-                    </p:column>
-                    <p:column headerText="#{msgs['tdp.column.forecast.delivery.date']}" width="255">
-                        #{util.toLocal(_tdp.forecastDeliveryDate)}
-                        &#160;
-                        <h:outputText rendered="#{_tdp.isForecastSiteDateManual}"
-                                      value="#{msgs['lbl.automatic']}"/>
-                        <h:outputText rendered="#{! _tdp.isForecastSiteDateManual}"
-                                      value="#{msgs['lbl.manual']}"/>
-                    </p:column>
-                    <p:column headerText="#{msgs['tdp.column.actual.delivery.date']}" width="190">
-                        #{util.toLocal(_tdp.actualDeliveryDate)}
-                    </p:column>
-                    <p:column headerText="#{msgs['lbl.actions']}" width="140">
-                        <div class="pull-right">
-                            <div style="color: #ffffff">
-                                <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply"
-                                               value="#{msgs['lbl.edit']}">
-                                    <p:ajax listener="#{purchaseOrderEdit.selectTdpEditing(_tdp.id)}"
-                                            update=":TDPEdit"
-                                            onsuccess="PF('edittdp').show();"/>
-                                </h:commandLink>
-                                &#160;
-                                <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply"
-                                               value="#{msgs['lbl.delete']}">
-                                    <p:ajax update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forescastSiteDateEditing"
-                                            async="false" delay="500"
-                                            listener="#{purchaseOrderEdit.deleteTdpOnEdition(_tdp.id)}"/>
-                                </h:commandLink>
-                            </div>
-                        </div>
-                    </p:column>
-                </p:dataTable>
-            </div>
-            <div class="clearfix"></div>
-            <br/>
-
-            <div style="width: 1065px;">
-                <div class="pull-right">
-                    <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['tdp.btn.add']}">
-                        <p:ajax oncomplete="PF('tdp').show();" update=":TDP"
-                                async="false" delay="500"
-                                listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"></p:ajax>
-                    </h:commandButton>
-                </div>
-            </div>
-            <br/>
-
-            <div class="clearfix"></div>
-            <br/>
-
-            <div style="width: 1065px;">
-                <div class="pull-right">
-                    <h:commandButton value="#{msgs['lbl.update']}"
-                                     action="#{purchaseOrderEdit.doUpdateScopeSupply()}"
-                                     styleClass="btn btn-primary btn-sm">
-                    </h:commandButton>
-                    &#160;
-                    <h:commandButton onclick="PF('confCancelScopeSupplyEditDlg').show();"
-                                     value="#{msgs['lbl.cancel']}"
-                                     styleClass="btn btn-primary btn-sm">
-                        <p:ajax process="@this" async="false"/>
-                    </h:commandButton>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <br/>
             <h4 class="sub-header fq-sub-header">#{msgs['supply.scope.split.lbl.destination']}</h4>
 
             <div class="row fq-section-row">
@@ -547,6 +470,82 @@
             </div>
             <div class="clearfix"/>
             <br/>
+            <h4 class="sub-header fq-sub-header">#{msgs['tdp.lbl.list']}</h4>
+
+            <div class="fq-form-table tdp-data-table-poi">
+                <p:dataTable id="tdpCreate" value="#{purchaseOrderEdit.activesTdp()}"
+                             var="_tdp" rowIndexVar="_index" styleClass="data-table-po-sc">
+                    <p:column headerText="#{msgs['tdp.column.location']}" width="170">
+                        #{_tdp.location}
+                    </p:column>
+                    <p:column headerText="#{msgs['tdp.column.lead.time']}" width="300">
+                        #{_tdp.leadTime}
+                        &#160;
+                        #{ configuration.getTimeMeasurement(_tdp.measurementTime)}
+                    </p:column>
+                    <p:column headerText="#{msgs['tdp.column.forecast.delivery.date']}" width="255">
+                        #{util.toLocal(_tdp.forecastDeliveryDate)}
+                        &#160;
+                        <h:outputText rendered="#{_tdp.isForecastSiteDateManual}"
+                                      value="#{msgs['lbl.automatic']}"/>
+                        <h:outputText rendered="#{! _tdp.isForecastSiteDateManual}"
+                                      value="#{msgs['lbl.manual']}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['tdp.column.actual.delivery.date']}" width="190">
+                        #{util.toLocal(_tdp.actualDeliveryDate)}
+                    </p:column>
+                    <p:column headerText="#{msgs['lbl.actions']}" width="140">
+                        <div class="pull-right">
+                            <div style="color: #ffffff">
+                                <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply"
+                                               value="#{msgs['lbl.edit']}">
+                                    <p:ajax listener="#{purchaseOrderEdit.selectTdpEditing(_tdp.id)}"
+                                            update=":TDPEdit"
+                                            onsuccess="PF('edittdp').show();"/>
+                                </h:commandLink>
+                                &#160;
+                                <h:commandLink styleClass="btn btn-primary btn-sm cLink-color-scope-supply"
+                                               value="#{msgs['lbl.delete']}">
+                                    <p:ajax update=":scopeSupplyEditFormId:tdpCreate :scopeSupplyEditFormId:forescastSiteDateEditing"
+                                            async="false" delay="500"
+                                            listener="#{purchaseOrderEdit.deleteTdpOnEdition(_tdp.id)}"/>
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+
+            <div style="width: 1065px;">
+                <div class="pull-right">
+                    <h:commandButton styleClass="btn btn-primary btn-sm" value="#{msgs['tdp.btn.add']}">
+                        <p:ajax oncomplete="PF('tdp').show();" update=":TDP"
+                                async="false" delay="500"
+                                listener="#{purchaseOrderEdit.cleanTransitDeliveryPoint()}"></p:ajax>
+                    </h:commandButton>
+                </div>
+            </div>
+            <br/>
+
+            <div class="clearfix"></div>
+            <br/>
+
+            <div style="width: 1065px;">
+                <div class="pull-right">
+                    <h:commandButton value="#{msgs['lbl.update']}"
+                                     action="#{purchaseOrderEdit.doUpdateScopeSupply()}"
+                                     styleClass="btn btn-primary btn-sm">
+                    </h:commandButton>
+                    &#160;
+                    <h:commandButton onclick="PF('confCancelScopeSupplyEditDlg').show();"
+                                     value="#{msgs['lbl.cancel']}"
+                                     styleClass="btn btn-primary btn-sm">
+                        <p:ajax process="@this" async="false"/>
+                    </h:commandButton>
+                </div>
+            </div>
 
             <p:confirmDialog widgetVar="confCancelScopeSupplyEditDlg" id="confirmDialogId" header="Cancel">
                 <f:facet name="message">
