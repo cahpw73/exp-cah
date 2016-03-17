@@ -5,6 +5,25 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 <h:form id="commentFormId" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
         styleClass="form-horizontal">
+    <div style="margin-top: -20px!important;">
+        <h:inputText style="margin-left: -300px!important;"/>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-3 control-label"
+                           value="#{msgs['po.attach.tbl.date']}"/>
+            <div class="col-sm-5">
+                <p:calendar id="commentDateId"
+                            value="#{purchaseOrderEdit.commentEdit.commentDate}"
+                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
+                            pattern="#{configuration.formatDate}"
+                            converter="#{dateConverter}"
+                            timeZone="#{configuration.timeZone}"
+                            onselect="calendarChanges();" onclick="calendarChanges();">
+                </p:calendar>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-12">
         <div class="form-group">
             <h:outputLabel class="col-sm-3 control-label"
@@ -54,22 +73,6 @@
                              id="descriptionComment" style="max-height: 63px" rows="3"
                              class="form-control"
                              value="#{purchaseOrderEdit.commentEdit.description}"/>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-12">
-        <div class="form-group">
-            <h:outputLabel class="col-sm-3 control-label"
-                           value="#{msgs['po.attach.tbl.date']}"/>
-            <div class="col-sm-5">
-                <p:calendar id="commentDateId"
-                            value="#{purchaseOrderEdit.commentEdit.commentDate}"
-                            navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                            pattern="#{configuration.formatDate}"
-                            converter="#{dateConverter}"
-                            timeZone="#{configuration.timeZone}"
-                            onselect="calendarChanges();" onclick="calendarChanges();">
-                </p:calendar>
             </div>
         </div>
     </div>
