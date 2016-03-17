@@ -73,7 +73,7 @@
                                                        value="#{msgs['po.lbl.project.type.required']}"/>
 
                                         <div class="inputText-general-po">
-                                            <h:inputText id="project" jsf:placeholder="#{msgs['po.ph.project']}" maxlength="50"
+                                            <h:inputText id="project" maxlength="50"
                                                          disabled="true"
                                                          value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}"
                                                          class="form-control" required="true"
@@ -84,7 +84,6 @@
                                 </div>
                                 <div class="section-text-area-po">
                                     <p:inputTextarea value="#{purchaseOrderEdit.poEdit.commentForProject()}"
-                                                     jsf:placeholder="#{msgs['po.ph.projectNameComment']}"
                                                      maxlength="950"
                                                      readonly="true"
                                                      class="form-control"/>
@@ -105,7 +104,7 @@
                                                        value="#{msgs['po.lbl.po.type.required']}"/>
 
                                         <div class="inputText-general-po">
-                                            <h:outputText id="po" maxlength="50" jsf:placeholder="#{msgs['po.ph.po']}"
+                                            <h:outputText id="po" maxlength="50"
                                                           value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"
                                                           required="true"
                                                           requiredMessage="#{msgs['po.lbl.reference.required']}"/>
@@ -140,7 +139,7 @@
                                                value="#{msgs['po.lbl.variation']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" disabled="true"
+                                    <h:inputText disabled="true"
                                                  value="#{purchaseOrderEdit.poEdit.variation}"
                                                  class="form-control po-view"/>
                                 </div>
@@ -162,7 +161,6 @@
 
                                 <div class="inputText-general-po">
                                     <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
-                                                 jsf:placeholder="#{msgs['po.ph.po.title']}"
                                                  class="form-control" readonly="true"/>
                                 </div>
                             </div>
@@ -198,7 +196,6 @@
 
                                 <div class="inputText-general-po">
                                     <p:inputTextarea id="supplierAddress" maxlength="450"
-                                                     jsf:placeholder="#{msgs['po.ph.address']}"
                                                      style="height: 90px;"
                                                      readonly="true"
                                                      value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.street}"
@@ -315,7 +312,6 @@
                                                      readonly="true"
                                                      maxlength="950"
                                                      value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactEntity.email}"
-                                                     jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                                                      class="form-control"/>
                                 </div>
                             </ui:remove>
@@ -369,7 +365,7 @@
                         </div>
                         <div class="section-text-area-po">
                             <p:inputTextarea
-                                    maxlength="950" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
+                                    maxlength="950"
                                     value="#{purchaseOrderEdit.poEdit.deliveryDateComment}"
                                     class="form-control" rows="3"/>
                         </div>
@@ -402,7 +398,6 @@
                         <div class="section-text-area-po">
                             <p:inputTextarea
                                     maxlength="950" value="#{purchaseOrderEdit.poEdit.fullIncoTerms}"
-                                    jsf:placeholder="#{msgs['po.ph.inco.term.description']}"
                                     class="form-control" rows="3"/>
                         </div>
                     </div>
@@ -428,7 +423,6 @@
                                     <div class="inputText-general-po">
                                         <h:inputText maxlength="100"
                                                      value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
-                                                     jsf:placeholder="#{msgs['po.ph.responsible']}"
                                                      class="form-control"/>
                                     </div>
                                 </div>
@@ -438,7 +432,6 @@
                                         id="rfeComment"
                                         maxlength="950" type="text"
                                         value="#{purchaseOrderEdit.poEdit.rfeComment}"
-                                        jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"
                                         rows="3"/>
                                 <p:message for="rfeComment"/>
                             </div>
@@ -453,7 +446,6 @@
                                     <div class="inputText-general-po">
                                         <h:inputText id="expeditingTitleId" maxlength="50"
                                                      value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
-                                                     jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
                                                      class="form-control"/>
                                     </div>
                                 </div>
@@ -479,7 +471,6 @@
                                                     mask="#{configuration.mask}" navigator="true"
                                                     pattern="#{configuration.formatDate}"
                                                     converterMessage="#{msgs['validator.date.invalid']}"
-                                                    jsf:placeholder="#{configuration.formatDate}"
                                                     converter="#{dateConverter}"
                                                     timeZone="#{configuration.timeZone}"
                                                     value="#{purchaseOrderEdit.poEdit.introEmail}"
@@ -491,7 +482,6 @@
                                 <p:inputTextarea
                                         maxlength="950" type="text"
                                         value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
-                                        jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}"
                                         class="form-control" rows="3"/>
                             </div>
                         </div>

@@ -30,9 +30,7 @@
                                    value="#{msgs['po.supply.scope.lbl.code']}"/>
 
                     <div class="inputText-general-poi">
-                        <h:inputText type="text" jsf:placeholder="#{msgs['po.supply.scope.ph.code']}"
-                                     maxlength="50"
-                                     id="code"
+                        <h:inputText type="text" maxlength="50" id="code"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.code}"
                                      class="form-control"/>
                         <p:message for="code"/>
@@ -44,7 +42,6 @@
 
                     <div class="incoTerm-unit-totalPrice-IncoTerms-poi">
                         <h:inputText id="scopeSupplyQuantityEdit" type="text"
-                                     jsf:placeholder="#{msgs['po.supply.scope.ph.quantity']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.quantity}"
                                      class="form-control scopeSupplyQuantity"
                                      validatorMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
@@ -77,7 +74,6 @@
 
                     <div class="inputText-general-poi">
                         <p:inputTextarea id="description" maxlength="950" style="height: 75px" autoResize="false"
-                                         jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
                                          styleClass="form-control"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.description}"/>
 
@@ -91,7 +87,6 @@
                     <div class="inputText-general-poi">
                         <p:inputTextarea id="tagNoId" maxlength="950"
                                          styleClass="form-control" style="height: 75px" autoResize="false"
-                                         jsf:placeholder="#{msgs['po.supply.scope.column.tag.number']}"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.tagNo}"/>
                         <p:message for="tagNoId"/>
                     </div>
@@ -102,7 +97,6 @@
 
                     <div class="incoTerm-unit-totalPrice-IncoTerms-poi">
                         <h:inputText id="scopeSupplyCostEdit" type="text"
-                                     jsf:placeholder="#{msgs['po.supply.scope.ph.cost']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.cost}"
                                      class="form-control scopeSupplyCost"
                                      validatorMessage="#{msgs['po.supply.scope.lbl.cost.msg.error']}"
@@ -122,7 +116,6 @@
                     <div class="unitPrice-currency-text-poi">
                         <h:inputText type="text" maxlength="5"
                                      id="currency"
-                                     jsf:placeholder="#{msgs['po.supply.scope.ph.currency']}"
                                      value="#{purchaseOrderEdit.scopeSupplyEditing.currency}"
                                      class="form-control currencyPrice"
                                      onkeyup="copyCurrencyLabel();"/>
@@ -140,7 +133,6 @@
 
                     <div class="incoTerm-unit-totalPrice-IncoTerms-poi">
                         <h:inputText id="totalPriceTxt" type="text"
-                                     jsf:placeholder="#{msgs['po.supply.scope.column.total.price']}"
                                      value="" disabled="true"
                                      class="form-control totalPriceTxt">
                             <f:convertNumber locale="#{configuration.langLocalDecimal}"
@@ -167,7 +159,6 @@
                                          id="spIncoTermDescription"
                                          maxlength="950" type="text"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.spIncoTermDescription}"
-                                         jsf:placeholder="#{msgs['po.supply.scope.lbl.inco.term.description']}"
                                          class="form-control"/>
                         <p:message for="spIncoTermDescription"/>
                     </div>
@@ -179,8 +170,7 @@
                     <div class="inputText-general-poi">
                         <h:inputText type="text" maxlength="100" id="responsibleExpediting"
                                      class="form-control"
-                                     value="#{purchaseOrderEdit.scopeSupplyEditing.responsibleExpediting}"
-                                     jsf:placeholder="#{msgs['purchase.order.filter.hg.responsible']}"/>
+                                     value="#{purchaseOrderEdit.scopeSupplyEditing.responsibleExpediting}"/>
                         <p:message for="responsibleExpediting"/>
                     </div>
 
@@ -241,7 +231,6 @@
                                          style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="deliveryDateObs"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.deliveryDateObs}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.date.observations']}"
                                          class="form-control"/>
                         <p:message for="deliveryDateObs"/>
                     </div>
@@ -275,7 +264,6 @@
                                          style="margin-top: 10px; width: 220px; max-height: 62px;" rows="3"
                                          id="exWorkDateDescription"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.exWorkDateDescription}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
                                          class="form-control"/>
                         <p:message for="exWorkDateDescription"/>
                     </div>
@@ -310,7 +298,6 @@
                                              id="actualExWorkDateObs"
                                              style="margin-top: 10px; max-height: 62px;" rows="3"
                                              value="#{purchaseOrderEdit.scopeSupplyEditing.actualExWorkDateObs}"
-                                             jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
                                              class="form-control"/>
                             <p:message for="actualExWorkDateObs"/>
                         </div>
@@ -436,7 +423,6 @@
                                          maxlength="950" type="text"
                                          style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.requiredSiteDateObs}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.required.site.date.observations']}"
                                          class="form-control"/>
                         <p:message for="requiredSiteDateObs"/>
                     </div>
@@ -450,7 +436,6 @@
                                 <h:inputText id="deliveryLeadTimeQtId" type="text"
                                              styleClass="destination-block-lead-time-text"
                                              value="#{purchaseOrderEdit.scopeSupplyEditing.deliveryLeadTimeQt}"
-                                             jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
                                              requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                              validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                              converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
@@ -475,7 +460,6 @@
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="deliveryLeadTimeDescription"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.getDeliveryLeadTimeDescription}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.lead.time.observations']}"
                                          class="form-control"/>
                         <p:message for="deliveryLeadTimeDescription"/>
                     </div>
@@ -517,7 +501,6 @@
                                          id="siteDateDescription"
                                          style="width:220px; margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.siteDateDescription}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.forecast.site.date.observations']}"
                                          class="form-control"/>
                         <p:message for="siteDateDescription"/>
                     </div>
@@ -540,7 +523,6 @@
                                          id="actualSiteDateObs"
                                          style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplyEditing.actualSiteDateObs}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.actual.site.date.observations']}"
                                          class="form-control"/>
                         <p:message for="actualSiteDateObs"/>
                     </div>
