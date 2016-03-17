@@ -307,7 +307,7 @@
             <div class="clearfix"></div>
             <br/>
 
-            <div class="source-btn-save-cancel">
+            <div class="source-btn-save-cancel" style="margin-left: -164px!important;">
                 <div class="pull-right" style="margin-top: 10px;">
                     <h:commandButton value="#{msgs['lbl.update']}"
                                      action="#{purchaseOrderEdit.doUpdateScopeSupply()}"
@@ -327,29 +327,6 @@
             <h4 class="sub-header fq-sub-header">#{msgs['supply.scope.split.lbl.destination']}</h4>
 
             <div class="row fq-section-row">
-                <div class="source-section-date-poi">
-                    <div class="form-horizontal">
-                        <h:outputLabel for="siteDateId" style="margin-bottom: 10px;"
-                                       value="#{msgs['supply.scope.lbl.required.site.date']}"/>
-                        <p:calendar id="siteDateId" mask="#{configuration.mask}"
-                                    navigator="true"
-                                    pattern="#{configuration.formatDate}"
-                                    converterMessage="#{msgs['validator.date.invalid']}"
-                                    jsf:placeholder="#{configuration.formatDate}"
-                                    timeZone="#{configuration.timeZone}"
-                                    converter="#{dateConverter}"
-                                    value="#{purchaseOrderEdit.scopeSupplyEditing.requiredSiteDate}"
-                                    onselect="calendarChanges();" onchange="calendarChanges();">
-                        </p:calendar>
-                        <p:message id="msgSiteDate" for="siteDateId"/>
-                        <p:inputTextarea id="requiredSiteDateObs"
-                                         maxlength="950" type="text"
-                                         style="margin-top: 10px; max-height: 62px;" rows="3"
-                                         value="#{purchaseOrderEdit.scopeSupplyEditing.requiredSiteDateObs}"
-                                         class="form-control"/>
-                        <p:message for="requiredSiteDateObs"/>
-                    </div>
-                </div>
                 <div class="destination-block-lead-time">
                     <div class="form-horizontal">
                         <h:outputLabel for="deliveryLeadTimeQtId" style="margin-bottom: 10px;"
@@ -450,11 +427,34 @@
                         <p:message for="actualSiteDateObs"/>
                     </div>
                 </div>
+                <div class="source-section-date-poi">
+                    <div class="form-horizontal">
+                        <h:outputLabel for="siteDateId" style="margin-bottom: 10px;"
+                                       value="#{msgs['supply.scope.lbl.required.site.date']}"/>
+                        <p:calendar id="siteDateId" mask="#{configuration.mask}"
+                                    navigator="true"
+                                    pattern="#{configuration.formatDate}"
+                                    converterMessage="#{msgs['validator.date.invalid']}"
+                                    jsf:placeholder="#{configuration.formatDate}"
+                                    timeZone="#{configuration.timeZone}"
+                                    converter="#{dateConverter}"
+                                    value="#{purchaseOrderEdit.scopeSupplyEditing.requiredSiteDate}"
+                                    onselect="calendarChanges();" onchange="calendarChanges();">
+                        </p:calendar>
+                        <p:message id="msgSiteDate" for="siteDateId"/>
+                        <p:inputTextarea id="requiredSiteDateObs"
+                                         maxlength="950" type="text"
+                                         style="margin-top: 10px; max-height: 62px;" rows="3"
+                                         value="#{purchaseOrderEdit.scopeSupplyEditing.requiredSiteDateObs}"
+                                         class="form-control"/>
+                        <p:message for="requiredSiteDateObs"/>
+                    </div>
+                </div>
             </div>
             <div class="clearfix"/>
             <br/>
 
-            <div style="width: 875px;">
+            <div style="width: 875px; margin-left: -23px!important;">
                 <div class="pull-right" style="margin-top: 10px;">
                     <h:commandButton value="#{msgs['lbl.update']}"
                                      action="#{purchaseOrderEdit.doUpdateScopeSupply()}"
