@@ -20,7 +20,6 @@
                                value="#{msgs['supply.scope.split.lbl.initial.quantity']}"/>
                 <div style="width: 130px!important;">
                     <h:inputText id="arrivedQuantity" type="text"
-                                 jsf:placeholder="#{msgs['supply.scope.split.pg.initial.quantity']}"
                                  value="#{purchaseOrderEdit.selectedScopeSupply.quantity}"
                                  class="form-control"
                                  requiredMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
@@ -56,7 +55,6 @@
                     <p:outputLabel for="newQuantitySupplySplit" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
                     <div style="width: 130px!important;">
                     <h:inputText id="newQuantitySupplySplit"
-                                 jsf:placeholder="#{msgs['po.supply.scope.ph.quantity']}"
                                  value="#{purchaseOrderEdit.scopeSupplySplit.quantity}"
                                  class="form-control"
                                  requiredMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
@@ -85,9 +83,7 @@
                     <h:outputLabel for="descriptionSplit"
                                    value="#{msgs['po.supply.scope.column.description']}"/>
                     <p:inputTextarea id="descriptionSplit" value="#{purchaseOrderEdit.scopeSupplySplit.description}"
-                                     maxlength="950"
-                                     jsf:placeholder="#{msgs['po.supply.scope.ph.description']}"
-                                     styleClass="form-control"/>
+                                     maxlength="950" styleClass="form-control"/>
                     <p:message for="descriptionSplit"/>
                 </div>
             </div>
@@ -117,9 +113,7 @@
                         <p:message id="msgSiteDate" for="exWorkDateSplit"/>
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.deliveryDateObs}"
-                                         id="deliveryDateObs"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.date.observations']}"
-                                         class="form-control"/>
+                                         id="deliveryDateObs"  class="form-control"/>
                         <p:message  for="deliveryDateObs"/>
                     </div>
                     <div style="float: left; margin-left: 335px; width: 220px;">
@@ -146,7 +140,6 @@
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="exWorkDateDescription"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDateDescription}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.work.date.observations']}"
                                          class="form-control"/>
                         <p:message  for="exWorkDateDescription"/>
 
@@ -174,7 +167,6 @@
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDateObs}"
                                          id="actualExWorkDateObs"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.actual.date.observations']}"
                                          class="form-control"/>
                         <p:message  for="actualExWorkDateObs"/>
                             </div>
@@ -204,7 +196,6 @@
                                          style="margin-top: 10px; max-height: 62px;" rows="3"
                                          id="requiredSiteDateObs"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDateObs}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.required.site.date.observations']}"
                                          class="form-control"/>
                         <p:message  for="requiredSiteDateObs"/>
                         </div>
@@ -218,7 +209,6 @@
                             <h:panelGroup id="deliveryLeadTimeGrpId" style="float: left; margin-right: 10px; width: 130px;">
                                 <h:inputText id="deliveryTimeId" maxlength="255" type="text"
                                              value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeQt}"
-                                             jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
                                              class="form-control">
 
                                     <p:ajax event="change" async="false" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
@@ -266,9 +256,7 @@
                         </h:panelGroup>
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; width:220px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.siteDateDescription}"
-                                         id="siteDateDescription"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.forecast.site.date.observations']}"
-                                         class="form-control"/>
+                                         id="siteDateDescription" class="form-control"/>
                         <p:message  for="siteDateDescription"/>
                     </div>
                 </div>
@@ -287,9 +275,7 @@
                         </p:calendar>
                         <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDateObs}"
-                                         id="actualSiteDateObs"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.actual.site.date.observations']}"
-                                         class="form-control"/>
+                                         id="actualSiteDateObs" class="form-control"/>
                         <p:message  for="actualSiteDateObs"/>
                     </div>
                 </div>

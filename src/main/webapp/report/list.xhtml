@@ -31,48 +31,41 @@
             <div class="col-md-4">
                 <div class='form-group'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.project']}"
-                                 value="#{reportListBean.searchPurchase.project}" styleClass="form-control">
-                    </h:inputText>
+                    <h:inputText value="#{reportListBean.searchPurchase.project}" styleClass="form-control"/>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.po']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.po']}"
-                                 value="#{reportListBean.searchPurchase.po}" class='form-control'
+                    <h:inputText value="#{reportListBean.searchPurchase.po}" class='form-control'
                                  type='text'/>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.variation']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.variation']}"
-                                 value="#{reportListBean.searchPurchase.variation}" class='form-control'
+                    <h:inputText value="#{reportListBean.searchPurchase.variation}" class='form-control'
                                  type='text'/>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.potitle']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.potitle']}"
-                                 value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
+                    <h:inputText value="#{reportListBean.searchPurchase.poTitle}" class='form-control'
                                  type='text'/>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.supplier']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['purchase.order.filter.ph.supplier']}"
-                                 value="#{reportListBean.searchPurchase.supplier}" class='form-control'
+                    <h:inputText value="#{reportListBean.searchPurchase.supplier}" class='form-control'
                                  type='text'/>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class='form-group card'>
                     <label class='control-label'>#{msgs['po.supply.scope.column.r.expediting']}</label>
-                    <h:inputText jsf:placeholder="#{msgs['po.supply.scope.column.ph.r.expediting']}"
-                                 value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
+                    <h:inputText value="#{reportListBean.searchPurchase.responsibleExpediting}" class='form-control'
                                  size='4' type='text'/>
                 </div>
             </div>
@@ -122,7 +115,6 @@
                 <ui:remove>
                     <div class='form-group card'>
                         <label class='control-label'>#{msgs['po.lbl.next.key.date']}</label>
-
                         <div>
                             <div class="col-md-6" style="padding-left: 0px;">
                                 <div>

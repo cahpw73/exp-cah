@@ -227,7 +227,7 @@ textarea.form-control {
 
 .source-forecastExWorkDate {
     float: left;
-    margin-left: 340px;
+    margin-left: 176px;
     width: 220px !important;
 }
 
@@ -238,7 +238,7 @@ textarea.form-control {
 .destination-block-lead-time {
     width: 270px;
     float: left;
-    margin-left: 40px;
+    margin-left: 15px;
 }
 
 .destination-block-lead-time-text {

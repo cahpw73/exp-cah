@@ -97,7 +97,6 @@
                                          disabled="#{purchaseOrderEdit.hasValueForecastSiteDate}"
                                          styleClass="destination-block-lead-time-text"
                                          value="#{purchaseOrderEdit.bulkScopeSupply.deliveryLeadTimeQt}"
-                                         jsf:placeholder="#{msgs['supply.scope.ph.delivery.number']}"
                                          requiredMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          validatorMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}"
                                          converterMessage="#{msgs['po.supply.scope.lbl.lead.time.msg.error']}">
@@ -191,7 +190,6 @@
 
                 <div class="col-sm-7">
                     <h:inputText type="text" maxlength="50"
-                                 jsf:placeholder="#{msgs['po.ph.responsible']}"
                                  class="form-control"
                                  value="#{purchaseOrderEdit.bulkScopeSupply.responsibleExpediting}"/>
                 </div>
