@@ -18,16 +18,35 @@ function initializeMultiselection(idsSelected) {
     $('#poStatuses').multiselect(
         {
             onChange: function (option, checked, select) {
-                console.log("value affected " + option.val());
-                if (checked) {
-                    selectedValues[selectedValues.length] = option.val();
+                values = ''
+                if (option) {
+                    values = option.val();
                 } else {
-                    index = selectedValues.indexOf(option.val());
-                    selectedValues.splice(index, 1);
+                    if (checked) {
+                        values = '0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'
+                    }
+                }
+                if (checked) {
+                    if (values.length > 1) {
+                        val = values.split(',')
+                        for (i = 0; i < val.length; i++) {
+                            selectedValues[selectedValues.length] = val[i];
+                        }
+                    } else {
+                        selectedValues[selectedValues.length] = values;
+                    }
+                } else {
+                    if (option) {
+                        index = selectedValues.indexOf(values);
+                        selectedValues.splice(index, 1);
+                    } else {
+                        selectedValues = '';
+                    }
                 }
                 $('#poStatusesHidenId').val(selectedValues.toString());
                 console.log("selected values 2 onChange = " + selectedValues.toString());
             },
+            includeSelectAllOption: true,
             numberDisplayed: 2,
             buttonClass: 'form-control multiselect-button-po'
         }
