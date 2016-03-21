@@ -12,6 +12,7 @@
             <!--<property name="hibernate.hbm2ddl.auto" value="validate"/>-->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.jdbc.use_streams_for_binary" value="true" />
+            <property name="hibernate.connection.release_mode" value="after_transaction"/>
         </properties>
     </persistence-unit>
 </persistence>

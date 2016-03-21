@@ -17,6 +17,7 @@ import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -24,6 +25,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
@@ -40,6 +42,10 @@ public class ReportBean implements Serializable {
 
     @PersistenceContext(unitName = "fqmPU")
     private EntityManager entityManager;
+
+    @Resource(lookup = "java:/fqm/procurementDS")
+    private DataSource dataSource;
+
 
     @Inject
     private PurchaseOrderService service;
@@ -126,7 +132,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportReceivableManifest()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF);
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -135,7 +141,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportReceivableManifest()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.XLS);
+        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.XLS,dataSource);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -144,7 +150,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportJobSummary()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF);
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -165,7 +171,7 @@ public class ReportBean implements Serializable {
         log.info("public void printReportDashboard()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDashboard("/Dashboard/dashboard", "Dashboard.Expediting", messages, locale, entityManager, configuration, parameterDashboard);
+        ReportView reportView = new ReportDashboard("/Dashboard/dashboard", "Dashboard.Expediting", messages, locale, entityManager, configuration, parameterDashboard,dataSource);
         reportView.printDocument(null);
         openReport = true;
     }

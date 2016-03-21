@@ -5,6 +5,7 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.fqmes.util.Configuration;
 
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class ReportPosRegister extends ReportProject implements Serializable {
      */
     public ReportPosRegister(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                              Configuration configuration, ProjectEntity project, Map<String, Boolean> sortMap, EntityManager entityManager,
-                             Map<String, Boolean> filterMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap);
+                             Map<String, Boolean> filterMap,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap,ds);
         this.entityManager = entityManager;
         this.filterMap = filterMap;
         loadAdditionalParameters1();

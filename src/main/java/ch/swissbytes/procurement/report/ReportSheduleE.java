@@ -20,6 +20,7 @@ import org.joda.time.DateTimeZone;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
@@ -42,7 +43,6 @@ public class ReportSheduleE extends ReportView implements Serializable {
     private List<ItemEntity> itemEntityList;
     private String preamble;
     private List<ClausesEntity> clausesList;
-    private Connection connection;
     private CashflowEntity cashflowEntity;
     private EntityManager entityManager;
     private int nivel = 1;
@@ -61,8 +61,9 @@ public class ReportSheduleE extends ReportView implements Serializable {
      */
     public ReportSheduleE(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                           Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
-                          String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+                          String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList,
+                          DataSource ds) throws IOException, DocumentException {
+        super(filenameJasper, reportNameMsgKey, messages, locale,ds);
         try {
             this.configuration = configuration;
             this.po = po;
@@ -83,10 +84,6 @@ public class ReportSheduleE extends ReportView implements Serializable {
             //TODO Va al Schedule
             addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
 
-            connection = getConnection();
-
-
-            addParameters("REPORT_CONNECTION", connection);
             loadParamPurchaseOrder();
             addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
             addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");

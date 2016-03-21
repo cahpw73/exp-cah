@@ -192,9 +192,9 @@ public class ProjectService implements Serializable {
     }
 
 
-    public ProjectEntity findById(final Long projectId) {
-        ProjectEntity entity = projectDao.findById(ProjectEntity.class, projectId).get(0);
-        return entity != null ? entity : null;
+    public ProjectEntity findById(Long id) {
+        List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, id);
+        return list.isEmpty() ? null : list.get(0);
     }
 
     public List<ProjectEntity> findAllProjects() {

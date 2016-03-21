@@ -88,11 +88,11 @@ public class PurchaseOrderService extends Service implements Serializable {
     @Inject
     private ExpeditingStatusDao expeditingStatusDao;
 
+    @Inject
     private PODocumentService poDocumentService;
 
     @Inject
     private ProjectDocumentService projectDocumentService;
-
 
     private final String PREFIX = "v";
 
@@ -517,7 +517,6 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setFullIncoTerms(null);
         }
         purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
-
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         //TODO Remove if sure that not is necessary
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
@@ -827,7 +826,6 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         return null;
     }
-
 
     public PurchaseOrderEntity findByIdOnly(final Long id) {
         List<PurchaseOrderEntity> list = dao.findPOByIdOnly(id);

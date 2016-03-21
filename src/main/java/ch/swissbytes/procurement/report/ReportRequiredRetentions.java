@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 
+import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -26,8 +27,8 @@ public class ReportRequiredRetentions extends ReportProject implements Serializa
      * @param locale           {@link java.util.Locale}
      */
     public ReportRequiredRetentions(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                    Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap);
+                                    Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap,ds);
         loadAdditionalParameters();
     }
 

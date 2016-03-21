@@ -10,6 +10,7 @@ import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -37,8 +38,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               EntityManager entityManager, final List<Long> ids,Configuration configuration, DocTypeEnum docTypeEnum) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+                               EntityManager entityManager, final List<Long> ids,Configuration configuration, DocTypeEnum docTypeEnum,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,ds);
         setReportType(docTypeEnum);
         this.configuration = configuration;
         this.entityManager=entityManager;

@@ -79,10 +79,10 @@ public class PoListBean implements Serializable {
     @Inject
     private PoListManagerTable managerTable;
 
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
-
     @Inject
     private PODocumentService poDocumentService;
+
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
 
     private String projectId;
@@ -467,6 +467,7 @@ public class PoListBean implements Serializable {
         }
         return false;
     }
+
     public boolean canDelete(PurchaseOrderEntity entity) {
         if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
