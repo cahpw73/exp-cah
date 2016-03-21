@@ -528,6 +528,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
 
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+        purchaseOrderEntity.setGeneralComment(null);
+        purchaseOrderEntity.setNextKeyDateComment(null);
+        purchaseOrderEntity.setNextKeyDate(null);
         dao.update(purchaseOrderEntity);
         return purchaseOrderEntity;
     }
