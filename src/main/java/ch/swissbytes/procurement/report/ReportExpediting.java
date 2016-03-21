@@ -13,6 +13,7 @@ import ch.swissbytes.procurement.boundary.report.expediting.ExpeditingDto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -41,8 +42,8 @@ public class ReportExpediting extends ReportView implements Serializable {
      */
     public ReportExpediting(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                             Configuration configuration, PurchaseOrderEntity po, Long projectId, String poNo,
-                            EntityManager entityManager) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+                            EntityManager entityManager,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,ds);
         this.configuration = configuration;
         this.po = po;
         this.projectId = projectId;

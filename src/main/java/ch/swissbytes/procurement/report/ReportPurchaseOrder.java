@@ -20,8 +20,10 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
 import org.xml.sax.SAXParseException;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
@@ -45,7 +47,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private List<ItemEntity> itemEntityList;
     private String preamble;
     private List<ClausesEntity> clausesList;
-    private Connection connection;
     private CashflowEntity cashflowEntity;
     private EntityManager entityManager;
     private int nivel = 1;
@@ -64,9 +65,9 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      * @param locale           {@link java.util.Locale}
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                               Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
+                               Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList, DataSource dataSource,
                                String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+        super(filenameJasper, reportNameMsgKey, messages, locale,dataSource);
         startDate = new Date();
         try {
             this.configuration = configuration;
@@ -83,11 +84,6 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
             addParameters("TIME_ZONE", configuration.getTimeZone());
             addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
-
-            connection = getConnection();
-
-
-            addParameters("REPORT_CONNECTION", connection);
             loadParamPurchaseOrder();
             addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
             addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
@@ -766,7 +762,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         Locale locale = new Locale(Locale.ENGLISH.getLanguage());
         Map<String, String> messages = new HashMap<>();
         ReportView reportView = new ReportSheduleE("/procurement/printPo/Schedule", "procurement.schedule",
-                messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager, draft, poDocumentList);
+                messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager, draft, poDocumentList,getDataSource());
         Date endReportSchedule = new Date();
         log.info("endReportSchedule time - startReportSchedule time = "+ (endReportSchedule.getTime()-startReportSchedule.getTime())+"ms");
         return reportView.getByteArrayOutputStreamReport(null);
@@ -774,31 +770,16 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     @Override
     public void printDocument(Long documentId) {
-        if (connection != null) {
-            try {
-                runReport(null, otherDocumentList);
-                endDate = new Date();
-                log.info("end time - start time = " + (endDate.getTime() - startDate.getTime()) + "ms");
-            } catch (Exception ex) {
-                if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
-                    log.info("ex message contains SAXParseException;");
-                    ex.printStackTrace();
-                } else {
-                    log.log(Level.WARNING, "A special character is being used [&]");
-                }
-            } finally {
-                try {
-                    if (connection != null && !connection.isClosed()) ;
-                    {
-                        try {
-                            connection.close();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        try {
+            runReport(null, otherDocumentList);
+            endDate = new Date();
+            log.info("end time - start time = " + (endDate.getTime() - startDate.getTime()) + "ms");
+        } catch (Exception ex) {
+            if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
+                log.info("ex message contains SAXParseException;");
+                ex.printStackTrace();
+            } else {
+                log.log(Level.WARNING, "A special character is being used [&]");
             }
         }
     }

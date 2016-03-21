@@ -7,6 +7,7 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 
+import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -28,8 +29,8 @@ public class ReportSummaryPurchaseOrder extends ReportProject implements Seriali
      * @param locale           {@link java.util.Locale}
      */
     public ReportSummaryPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap);
+                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap,ds);
     }
 
     @Override

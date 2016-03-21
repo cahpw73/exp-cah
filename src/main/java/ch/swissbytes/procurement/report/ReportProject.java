@@ -8,6 +8,7 @@ import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.LookupValueFactory;
 import ch.swissbytes.fqmes.util.Util;
 
+import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -37,8 +38,8 @@ public class ReportProject extends ReportView implements Serializable {
      * @param locale           {@link Locale}
      */
     public ReportProject(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                         Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+                         Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,ds);
         this.configuration = configuration;
         this.project = project;
         this.sortMap = sortMap;
