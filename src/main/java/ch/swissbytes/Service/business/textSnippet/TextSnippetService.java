@@ -5,6 +5,7 @@ import ch.swissbytes.Service.business.Service;
 
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
+import org.omnifaces.util.Messages;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -31,12 +32,17 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
 
     @Transactional
     public void delete(TextSnippetEntity currency) {
-        currency.setStatus(StatusEnum.DELETED);
-        currency.setLastUpdate(new Date());
-        dao.update(currency);
+        if(canDeleteTextSnippet(currency)) {
+            currency.setStatus(StatusEnum.DELETED);
+            currency.setLastUpdate(new Date());
+            dao.update(currency);
+        }else{
+            Messages.addFlashGlobalError("Can not delete " + currency.getCode() + " because it is already being used");
+        }
     }
+
     @Transactional
-    public void doSave(TextSnippetEntity textSnippet){
+    public void doSave(TextSnippetEntity textSnippet) {
         textSnippet.setLastUpdate(new Date());
         textSnippet.setStatus(StatusEnum.ENABLE);
         textSnippet.setCode(textSnippet.getCode().toUpperCase());
@@ -44,7 +50,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
     @Override
-    public TextSnippetEntity save(TextSnippetEntity textSnippetEntity){
+    public TextSnippetEntity save(TextSnippetEntity textSnippetEntity) {
         textSnippetEntity.setLastUpdate(new Date());
         textSnippetEntity.setStatus(StatusEnum.ENABLE);
         return super.save(textSnippetEntity);
@@ -68,12 +74,16 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
     @Transactional
-    public List<TextSnippetEntity>findByText(final String text){
+    public List<TextSnippetEntity> findByText(final String text) {
         return dao.findByText(text);
     }
 
     @Transactional
     public List findGlobalAndByProject(Long id) {
         return dao.findGlobalAndByProject(id);
+    }
+
+    public boolean canDeleteTextSnippet(TextSnippetEntity entity) {
+        return dao.findProjectTextSnippetByTextSnippetId(entity.getId()).isEmpty() ? true : false;
     }
 }

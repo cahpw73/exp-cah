@@ -2,6 +2,8 @@ package ch.swissbytes.Service.business.textSnippet;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
+import ch.swissbytes.domain.model.entities.ProjectTextSnippetEntity;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.apache.commons.lang3.StringUtils;
@@ -100,5 +102,17 @@ public class TextSnippetDao extends GenericDao<TextSnippetEntity> implements Ser
         map.put("ENABLED", StatusEnum.ENABLE);
         map.put("PROJECT_ID", id==null?0L:id);
         return super.findBy(sb.toString(),map);
+    }
+
+    public List<ProjectTextSnippetEntity> findProjectTextSnippetByTextSnippetId(final Long textSnippetId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ProjectTextSnippetEntity x ");
+        sb.append(" WHERE x.status = :ENABLE ");
+        sb.append(" AND x.textSnippet.id = :TEXT_SNIPPET_ID ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("TEXT_SNIPPET_ID",textSnippetId);
+        return super.findBy(sb.toString(), params);
     }
 }

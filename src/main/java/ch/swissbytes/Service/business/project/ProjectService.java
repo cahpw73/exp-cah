@@ -1,6 +1,9 @@
 package ch.swissbytes.Service.business.project;
 
+import ch.swissbytes.Service.business.mainDocument.AttachmentMainDocumentService;
+import ch.swissbytes.Service.business.mainDocument.MainDocumentService;
 import ch.swissbytes.Service.business.projectCurrency.ProjectCurrencyService;
+import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.domain.model.entities.*;
@@ -32,6 +35,15 @@ public class ProjectService implements Serializable {
     @Inject
     private TextSnippetService textSnippetService;
 
+    @Inject
+    private ProjectDocumentService projectDocumentService;
+
+    @Inject
+    private AttachmentMainDocumentService attachmentMainDocumentService;
+
+    @Inject
+    private MainDocumentService mainDocumentService;
+
 
     @Transactional
     public ProjectEntity doSave(ProjectEntity entity) {
@@ -42,35 +54,38 @@ public class ProjectService implements Serializable {
             entity.setTitle(entity.getTitle().toUpperCase());
             entity.setInvoiceTo(entity.getInvoiceTo().toUpperCase());
             projectDao.doSave(entity);
-            for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
-                if (pc.getId() < 0) {
-                    pc.setId(null);
-                }
-                pc.setProject(entity);
-                projectCurrencyService.doSave(pc);
-            }
-            for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
-
-                pt.setProject(entity);
-                if (pt.getTextSnippet().getId() < 0) {
-                    pt.getTextSnippet().setId(null);
-                    pt.getTextSnippet().setProject(entity);
-                    pt.getTextSnippet().setLastUpdate(new Date());
-                    pt.getTextSnippet().setStatus(StatusEnum.ENABLE);
-                    TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
-                    pt.setTextSnippet(textSnippetEntity);
-                }
-                projectTextSnippetService.doSave(pt);
-                for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
-                    if (ts.getId() < 0) {
-                        ts.setId(null);
-                        ts.setProject(entity);
-                        textSnippetService.save(ts);
-                    }
-                }
-            }
+            doSaveProjectCurrency(entity);
+            doSaveProjectTextSnippet(entity);
+            doSaveProjectDocument(entity);
         }
         return entity;
+    }
+
+    private void doSaveProjectCurrency(ProjectEntity entity) {
+        for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
+            if (pc.getId() < 0) {
+                pc.setId(null);
+            }
+            pc.setProject(entity);
+            projectCurrencyService.doSave(pc);
+        }
+    }
+
+    private void doSaveProjectTextSnippet(ProjectEntity entity) {
+        for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
+            pt.setProject(entity);
+            projectTextSnippetService.doSave(pt);
+        }
+    }
+
+    private void doSaveProjectDocument(ProjectEntity entity) {
+        for (ProjectDocumentEntity pt : entity.getProjectDocumentList()) {
+            if(pt.getProject()==null) {
+                pt.setProject(entity);
+            }
+            pt.setLastUpdate(new Date());
+            projectDocumentService.doSave(pt);
+        }
     }
 
     @Transactional
@@ -81,47 +96,68 @@ public class ProjectService implements Serializable {
             entity.setTitle(entity.getTitle().toUpperCase());
             entity.setInvoiceTo(entity.getInvoiceTo().toUpperCase());
             projectDao.doUpdate(entity);
-            for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
-                if (pc.getId() < 0) {
-                    pc.setId(null);
-                    pc.setProject(entity);
-                }
-                projectCurrencyService.doUpdate(pc);
-            }
-            for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
-                if (pt.getId() == null) {
-                    pt.setProject(entity);
-                }
-                if (pt.getTextSnippet().getId() == null || pt.getTextSnippet().getId() < 0) {
-                    pt.getTextSnippet().setId(null);
-                    pt.getTextSnippet().setProject(entity);
-                    pt.getTextSnippet().setStatusEnum(StatusEnum.ENABLE);
-                    pt.getTextSnippet().setLastUpdate(new Date());
-                    TextSnippetEntity textSnippetEntity = textSnippetService.save(pt.getTextSnippet());
-                    pt.setTextSnippet(textSnippetEntity);
-                }
-                pt.setLastUpdate(new Date());
-                projectTextSnippetService.doUpdate(pt);
-            }
-            for (TextSnippetEntity ts : entity.getGlobalStandardTextList()) {
-                if (ts.getId() < 0) {
-                    ts.setId(null);
-                    ts.setProject(entity);
-                    textSnippetService.save(ts);
-                }
-            }
+            doUpdateProjectCurrency(entity);
+            doUpdateProjectTextSnippet(entity);
+            doUpdateProjectDocument(entity);
+            doUpdateMainDocument(entity);
         }
         return entity;
     }
 
+    private void doUpdateProjectCurrency(ProjectEntity entity) {
+        for (ProjectCurrencyEntity pc : entity.getCurrencies()) {
+            if (pc.getId() < 0) {
+                pc.setId(null);
+                pc.setProject(entity);
+            }
+            projectCurrencyService.doUpdate(pc);
+        }
+    }
+
+    private void doUpdateProjectTextSnippet(ProjectEntity entity) {
+        for (ProjectTextSnippetEntity pt : entity.getProjectTextSnippetList()) {
+            if (pt.getId() < 0L) {
+                pt.setId(null);
+                pt.setProject(entity);
+            }
+            if (pt.getTextSnippet() != null && pt.getTextSnippet().getId() != null && pt.getTextSnippet().getId().longValue() < 0L) {
+                pt.setTextSnippet(null);
+            }
+            pt.setLastUpdate(new Date());
+            projectTextSnippetService.doUpdate(pt);
+        }
+    }
+
+    private void doUpdateProjectDocument(ProjectEntity entity) {
+        for (ProjectDocumentEntity pt : entity.getProjectDocumentList()) {
+            pt.setProject(entity);
+            pt.setLastUpdate(new Date());
+            if (pt.getId() < 0) {
+                pt.setId(null);
+                pt.setProject(entity);
+                if (pt.getMainDocumentEntity().getId() < 0) {
+                    pt.setMainDocumentEntity(null);
+                }
+            }
+            projectDocumentService.doUpdate(pt);
+        }
+    }
+
+    private void doUpdateMainDocument(ProjectEntity entity){
+        for(MainDocumentEntity md : entity.getMainDocumentList()){
+            if(md.getId()<0){
+                md.setId(null);
+                md.setLastUpdate(new Date());
+                md.setStatus(StatusEnum.ENABLE);
+                mainDocumentService.doSave(md);
+            }
+        }
+    }
+
     @Transactional
     public ProjectTextSnippetEntity addNewTextSnippet(ProjectEntity projectEntity, TextSnippetEntity textSnippetEntity) {
-        textSnippetEntity.setId(null);
-        textSnippetEntity.setProject(projectEntity);
-        textSnippetEntity = textSnippetService.save(textSnippetEntity);
         ProjectTextSnippetEntity projectTextSnippetEntity = new ProjectTextSnippetEntity();
         projectTextSnippetEntity.setLastUpdate(new Date());
-        projectTextSnippetEntity.setTextSnippet(textSnippetEntity);
         projectTextSnippetEntity.setProject(projectEntity);
         projectTextSnippetEntity.setStatus(StatusEnum.ENABLE);
         projectTextSnippetEntity.setCode(textSnippetEntity.getCode());
@@ -155,9 +191,10 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
-    public ProjectEntity findById(Long id) {
-        List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, id);
-        return list.isEmpty() ? null : list.get(0);
+
+    public ProjectEntity findById(final Long projectId) {
+        ProjectEntity entity = projectDao.findById(ProjectEntity.class, projectId).get(0);
+        return entity != null ? entity : null;
     }
 
     public List<ProjectEntity> findAllProjects() {
@@ -206,6 +243,11 @@ public class ProjectService implements Serializable {
     @Transactional
     public List<ProjectTextSnippetEntity> findProjectTextSnippetByProjectId(Long projectId) {
         return projectTextSnippetService.findByProjectId(projectId);
+    }
+
+    @Transactional
+    public List<ProjectTextSnippetEntity> findProjectTextSnippetByProjectIdOnlyProject(Long projectId) {
+        return projectTextSnippetService.findByProjectIdCreatePO(projectId);
     }
 
     public List<ProjectEntity> findByLogoId(final Long logoId) {

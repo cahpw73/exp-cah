@@ -8,7 +8,9 @@ import ch.swissbytes.Service.business.deliverable.DeliverableDao;
 import ch.swissbytes.Service.business.enumService.EnumService;
 import ch.swissbytes.Service.business.expeditingStatus.ExpeditingStatusDao;
 import ch.swissbytes.Service.business.item.ItemService;
+import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
@@ -85,6 +87,12 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Inject
     private ExpeditingStatusDao expeditingStatusDao;
+
+    private PODocumentService poDocumentService;
+
+    @Inject
+    private ProjectDocumentService projectDocumentService;
+
 
     private final String PREFIX = "v";
 
@@ -297,7 +305,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPoExpeditingDeliveryDate(purchaseOrderEntity.getPoDeliveryDate());
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
-        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
+        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().trim().toUpperCase());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
         String incoTerms = getStrToIncoTerm(po.getPoint());
         String fullIncoTerms = po.getPoint();
@@ -310,6 +318,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.save(purchaseOrderEntity);
+        doUpdateProjectTextEntity(purchaseOrderEntity);
+        doUpdateProjectDocument(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
         //items
@@ -320,8 +330,27 @@ public class PurchaseOrderService extends Service implements Serializable {
         cashflowService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow(), po);
         //Text
         textService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getTextEntity(), po);
+        //PO Document
+        poDocumentService.doSave(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoDocumentList(),po);
 
         return purchaseOrderEntity;
+    }
+
+    private void doUpdateProjectTextEntity(PurchaseOrderEntity po){
+        List<ProjectTextSnippetEntity> projectTextSnippetEntities =  new ArrayList<>();
+        projectTextSnippetEntities.addAll(po.getPurchaseOrderProcurementEntity().getProjectTextSnippetList());
+        for (ProjectTextSnippetEntity pr : projectTextSnippetEntities){
+            pr.setPurchaseOrder(po);
+            projectTextSnippetService.doUpdate(pr);
+        }
+    }
+
+    private void doUpdateProjectDocument(PurchaseOrderEntity po){
+        List<ProjectDocumentEntity> projectDocumentEntities = po.getPurchaseOrderProcurementEntity().getProjectDocumentList();
+        for(ProjectDocumentEntity pd : projectDocumentEntities){
+            pd.setPurchaseOrder(po);
+            projectDocumentService.doUpdate(pd);
+        }
     }
 
     public boolean exitsDeliveryPointInIncoTerms(String point) {
@@ -386,7 +415,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setPoExpeditingDeliveryDate(purchaseOrderEntity.getPoDeliveryDate());
         purchaseOrderEntity.setVariation(purchaseOrderEntity.getVariation());
-        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().toUpperCase());
+        purchaseOrderEntity.setPoTitle(purchaseOrderEntity.getPoTitle().trim().toUpperCase());
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setPoint(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint().toUpperCase());
         String incoTerms = getStrToIncoTerm(po.getPoint());
         if (exitsDeliveryPointInIncoTerms(incoTerms)) {
@@ -398,6 +427,8 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
         verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.update(purchaseOrderEntity);
+        doUpdateProjectTextEntity(purchaseOrderEntity);
+        doUpdateProjectDocument(purchaseOrderEntity);
         //requisition daos
         requisitionDao.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity(), po.getRequisitions());
         //items
@@ -408,6 +439,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         cashflowService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getCashflow(), po);
         //Text
         textService.doUpdate(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getTextEntity(), po);
+        //PO Document
+        List<PODocumentEntity> poDocList = purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoDocumentList();
+        List<ProjectDocumentEntity> projectDocList = purchaseOrderEntity.getPurchaseOrderProcurementEntity().getProjectDocList();
+        poDocumentService.doUpdate(poDocList,projectDocList,po);
         return purchaseOrderEntity;
     }
 
@@ -482,6 +517,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setFullIncoTerms(null);
         }
         purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
+
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         //TODO Remove if sure that not is necessary
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
@@ -511,6 +547,10 @@ public class PurchaseOrderService extends Service implements Serializable {
         po.getRequisitions().addAll(poe.getPurchaseOrderProcurementEntity().getRequisitions());
         po.setCashflow(poe.getPurchaseOrderProcurementEntity().getCashflow());
         po.setTextEntity(poe.getPurchaseOrderProcurementEntity().getTextEntity());
+        po.getPoDocumentList().addAll(poe.getPurchaseOrderProcurementEntity().getPoDocumentList());
+        po.getProjectDocList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectDocList());
+        po.getProjectTextSnippetList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectTextSnippetList());
+        po.getProjectDocumentList().addAll(poe.getPurchaseOrderProcurementEntity().getProjectDocumentList());
     }
 
     public PurchaseOrderEntity findById(Long id) {
@@ -729,7 +769,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.getNumberOfOpenPOs(projectId);
     }
 
-    public int getNumberDeliveryNextMoth(final Long projectId, final Date nextMothIni, final Date nextMothEnd) {
+    public int getNumberDeliveryNextMoth(final Long projectId,final Date nextMothIni,final Date nextMothEnd) {
         return dao.getNumberDeliveryNextMoth(projectId, nextMothIni, nextMothEnd);
     }
 
@@ -788,6 +828,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return null;
     }
 
+
     public PurchaseOrderEntity findByIdOnly(final Long id) {
         List<PurchaseOrderEntity> list = dao.findPOByIdOnly(id);
         if (!list.isEmpty()) {
@@ -796,6 +837,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         return null;
     }
 
+    public PurchaseOrderProcurementEntity findPOEById(final Long poeId){
+        return dao.findPOEntityById(poeId);
+    }
 
     public PurchaseOrderEntity findPOPreviousRevision(Long projectId, String po, Integer previousOrderedVariation) {
         List<PurchaseOrderEntity> list = dao.findPreviousRevisionPO(projectId, po, previousOrderedVariation);

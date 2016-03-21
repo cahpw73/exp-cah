@@ -2,6 +2,7 @@ package ch.swissbytes.procurement.boundary.purchaseOrder;
 
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDEService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
+import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
@@ -79,6 +80,10 @@ public class PoListBean implements Serializable {
     private PoListManagerTable managerTable;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
+
+    @Inject
+    private PODocumentService poDocumentService;
+
 
     private String projectId;
 
@@ -462,15 +467,6 @@ public class PoListBean implements Serializable {
         }
         return false;
     }
-
-    public void startTable() {
-        start = new Date();
-    }
-
-    public void endTable() {
-        end = new Date();
-    }
-
     public boolean canDelete(PurchaseOrderEntity entity) {
         if (entity.getId() != null) {
             return entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null &&
@@ -526,7 +522,8 @@ public class PoListBean implements Serializable {
         TextEntity textEntity = textService.findByPoId(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
         String preamble = textEntity != null ? textEntity.getPreamble() : "";
         List<ClausesEntity> clausesEntityList = getClausesEntitiesByPOid(textEntity);
-        reportProcBean.printPurchaseOrder(currentPurchaseOrder, itemEntities, preamble, clausesEntityList, draft);
+        List<PODocumentEntity> poDocumentList = poDocumentService.findByPOId(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder, itemEntities, preamble, clausesEntityList, draft,poDocumentList);
     }
 
     private List<ClausesEntity> getClausesEntitiesByPOid(TextEntity textEntity) {

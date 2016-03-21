@@ -25,6 +25,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     private Date lastUpdate;
     private ProjectEntity project;
     private TextSnippetEntity textSnippet;
+    private PurchaseOrderEntity purchaseOrder;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -89,13 +90,23 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     }
 
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="text_snippet_id", nullable = false)
+    @JoinColumn(name="text_snippet_id", nullable = true)
     public TextSnippetEntity getTextSnippet() {
         return textSnippet;
     }
 
     public void setTextSnippet(TextSnippetEntity textSnippet) {
         this.textSnippet = textSnippet;
+    }
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="po_id")
+    public PurchaseOrderEntity getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrderEntity purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
     }
 
     @Override

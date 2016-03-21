@@ -32,7 +32,6 @@ public class TextService implements Serializable {
         for(ClausesEntity ps: entity.getClausesList()){
             ps.setId(null);
             ps.setText(entity);
-            //ps.setClauses(ps.getTextSnippet().getTextSnippet());
             textClausesDao.doSave(ps);
         }
     }
@@ -70,5 +69,16 @@ public class TextService implements Serializable {
     @Transactional
     public List<ClausesEntity> findClausesByTextId(Long id) {
         return textClausesDao.findClausesByTextId(id);
+    }
+
+    @Transactional
+    public void doBulkUpdateCode(List<ProjectTextSnippetEntity> projectTextSnippetList){
+        for(ProjectTextSnippetEntity p : projectTextSnippetList){
+            List<ClausesEntity> list = textClausesDao.findByProjectTextId(p.getId());
+            for(ClausesEntity c : list){
+                c.setCode(p.getCode().toUpperCase());
+                textClausesDao.doUpdate(c);
+            }
+        }
     }
 }

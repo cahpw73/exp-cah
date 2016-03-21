@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="518" pageHeight="802" columnWidth="518" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Schedule" pageWidth="595" pageHeight="842" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" uuid="a15ea7ff-e275-4573-af52-0c6198ec7dbf">
 	<property name="ireport.zoom" value="1.8627639691774651"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial" pdfFontName="C:\fonts\arial.ttf"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf"/>
 	<style name="Arial-Bold-Italic" pdfFontName="C:\fonts\arialbi.ttf"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE2" class="java.lang.String"/>
@@ -26,6 +27,7 @@
 	<parameter name="currenciesNumber" class="java.lang.Integer"/>
 	<parameter name="variation" class="java.lang.String"/>
 	<parameter name="titleReport" class="java.lang.String"/>
+	<parameter name="docs" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 1]]>
 	</queryString>

@@ -50,7 +50,7 @@
                                  action="#{projectBean.addToProjectText}"
                                  styleClass="btn btn-primary btn-sm"
                                  style="margin-bottom: 20px!important;">
-                    <p:ajax update="globalTextDt,projectTextDt"
+                    <p:ajax update="globalTextDt projectTextDt"
                             process="@this,globalTextDt" async="false"/>
                 </h:commandButton>
                 <br/>
@@ -103,12 +103,11 @@
                 </h:panelGroup>
                 <br/>
 
-                <p:commandLink
+                <p:commandLink id="addStandarTextBtnId" disabled="#{projectBean.createProject}"
                         value="#{msgs['project.standard.text.lbl.btn.add.custom.text']}"
-                        onclick="PF('textSnippetModal').show();"
-                        action="#{textSnippetBean.clear}"
-                        styleClass="btn btn-primary btn-sm">
-                    <p:ajax onsuccess="doChange();" async="false" update=":textSnippetModalId" process="@this"/>
+                        action="#{textSnippetBean.openTextSnippetDialogToAddNew}"
+                        styleClass="btn btn-primary btn-commandLink-primeFaces" onclick="doChangeProc()">
+                    <p:ajax  async="false" update=":textSnippetModalId" process="@this"/>
                 </p:commandLink>
             </div>
         </div>

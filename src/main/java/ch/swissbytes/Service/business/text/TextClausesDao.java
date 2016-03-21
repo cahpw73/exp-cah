@@ -26,7 +26,8 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
     }
 
     public void doUpdate(ClausesEntity detachedEntity){
-       super.update(detachedEntity);
+        ClausesEntity entity = super.merge(detachedEntity);
+       super.update(entity);
     }
 
     public void doDelete(ClausesEntity entity){
@@ -64,6 +65,18 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
         sb.append(" ORDER BY x.id ");
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("TEXT_ID", textEntityId);
+        return super.findBy(sb.toString(),map);
+    }
+
+    public List<ClausesEntity> findByProjectTextId(Long projectTextId) {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ClausesEntity x ");
+        sb.append(" WHERE x.projectTextSnippet.id = :TEXT_ID ");
+        sb.append(" AND x.status = :ENABLED ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("TEXT_ID", projectTextId);
+        map.put("ENABLED", StatusEnum.ENABLE);
         return super.findBy(sb.toString(),map);
     }
 

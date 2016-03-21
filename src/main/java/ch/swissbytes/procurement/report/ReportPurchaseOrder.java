@@ -4,6 +4,7 @@ package ch.swissbytes.procurement.report;
 import ch.swissbytes.Service.processor.Processor;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ClassEnum;
+import ch.swissbytes.domain.types.StatusEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
@@ -12,6 +13,8 @@ import ch.swissbytes.procurement.report.dtos.PurchaseOrderReportDto;
 import ch.swissbytes.procurement.report.dtos.PurchaseOrderSummaryDto;
 import ch.swissbytes.procurement.util.ImageUtil;
 import ch.swissbytes.procurement.util.ResourceUtils;
+import ch.swissbytes.procurement.util.XmlWorker;
+import com.itextpdf.text.DocumentException;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
@@ -20,10 +23,7 @@ import org.xml.sax.SAXParseException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -51,7 +51,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private int nivel = 1;
     private boolean draft;
     private BigInteger[] currenciesIdsPo = new BigInteger[3];
-    //private
+    private List<PODocumentEntity> poDocumentList;
+    private List<ByteArrayOutputStream> otherDocumentList = new ArrayList<>();
+    private Date startDate;
+    private Date endDate;
 
 
     /**
@@ -62,34 +65,39 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
      */
     public ReportPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
                                Configuration configuration, PurchaseOrderEntity po, List<ItemEntity> itemEntityList,
-                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft) {
+                               String preamble, List<ClausesEntity> clausesList, CashflowEntity cashflowEntity, EntityManager entityManager, boolean draft, List<PODocumentEntity> poDocumentList) throws IOException, DocumentException {
         super(filenameJasper, reportNameMsgKey, messages, locale);
-        this.configuration = configuration;
-        this.po = po;
-        this.itemEntityList = itemEntityList;
-        this.preamble = preamble;
-        this.clausesList = clausesList;
-        this.cashflowEntity = cashflowEntity;
-        this.entityManager = entityManager;
-        this.draft = draft;
-        addParameters("patternDecimal", configuration.getPatternDecimal());
-        addParameters("FORMAT_DATE", configuration.getFormatDate());
-        addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
-        addParameters("TIME_ZONE", configuration.getTimeZone());
-        addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
+        startDate = new Date();
         try {
+            this.configuration = configuration;
+            this.po = po;
+            this.itemEntityList = itemEntityList;
+            this.preamble = preamble;
+            this.clausesList = clausesList;
+            this.cashflowEntity = cashflowEntity;
+            this.entityManager = entityManager;
+            this.draft = draft;
+            this.poDocumentList = poDocumentList;
+            addParameters("patternDecimal", configuration.getPatternDecimal());
+            addParameters("FORMAT_DATE", configuration.getFormatDate());
+            addParameters("FORMAT_DATE2", configuration.getHardFormatDate());
+            addParameters("TIME_ZONE", configuration.getTimeZone());
+            addParameters("SUBREPORT_DIR", "reports/procurement/printPo/");
+
             connection = getConnection();
+
+
+            addParameters("REPORT_CONNECTION", connection);
+            loadParamPurchaseOrder();
+            addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
+            addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
+            addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
+            addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
+            addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
+            loadOtherDocumentList();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        addParameters("REPORT_CONNECTION", connection);
-        loadParamPurchaseOrder();
-        addParameters("paymentTerm", cashflowEntity != null && cashflowEntity.getPaymentTerms() != null ? cashflowEntity.getPaymentTerms().getLabel().toUpperCase() : null);
-        addParameters("retentionApplicable", cashflowEntity != null && cashflowEntity.getApplyRetention() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetention()).toUpperCase() : "NO");
-        addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
-        addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
-        addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
     }
 
     private void loadParamPurchaseOrder() {
@@ -124,13 +132,13 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         } else if (po.getOrderedVariation().intValue() > 1) {
             addParameters("poSummaryList", createDataSource(getPOSummary()));
         }
-        if(po.getPurchaseOrderProcurementEntity().getClazz()!=null) {
+        if (po.getPurchaseOrderProcurementEntity().getClazz() != null) {
             if (po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal() || po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.MINING_FLEET.ordinal()) {
                 addParameters("titleReport", "Purchase Order");
             } else {
                 addParameters("titleReport", "Contract");
             }
-        }else{
+        } else {
             addParameters("titleReport", "Purchase Order");
         }
 
@@ -174,6 +182,8 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         addParameters("currentDate", Util.convertUTC(now, configuration.getTimeZone()));
         addParameters("bigLogo", po.getProjectEntity().getClient().getBigImage() != null ? po.getProjectEntity().getClient().getBigImage() : false);
         addParameters("showClientName", po.getProjectEntity().getClient().getShowTitle() != null ? po.getProjectEntity().getClient().getShowTitle() : false);
+        String doc = poDocumentList.isEmpty() ? "" : poDocumentList.get(0).getDescription();
+        addParameters("docs", doc);
     }
 
     private String convertDeliveryDate() {
@@ -191,10 +201,10 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     private void loadParamLogos() {
         ImageUtil imageUtil = new ImageUtil();
         if (po.getProjectEntity().getClient() != null && po.getProjectEntity().getClient().getHeaderLogo() != null) {
-            if(imageUtil.hasDimensionHeaderLogoCorrect(po.getProjectEntity().getClient().getHeaderLogo().getFile())){
+            if (imageUtil.hasDimensionHeaderLogoCorrect(po.getProjectEntity().getClient().getHeaderLogo().getFile())) {
                 InputStream logo = new ByteArrayInputStream(po.getProjectEntity().getClient().getHeaderLogo().getFile());
                 addParameters("headerLogo", logo);
-            }else{
+            } else {
                 BufferedImage newHeaderLogo = imageUtil.getNewImageResized(po.getProjectEntity().getClient().getHeaderLogo().getFile());
                 InputStream logo = imageUtil.convertBufferedImageToInputStream(newHeaderLogo);
                 addParameters("headerLogo", logo);
@@ -558,7 +568,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
         dtos.add(dto);
     }
 
-    private void  loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
+    private void loadPOSummaryOriginal(final List<Object> list, List<PurchaseOrderSummaryDto> dtos) {
         PurchaseOrderSummaryDto dto = new PurchaseOrderSummaryDto();
         dto.setTitle("Original Order Value");
 
@@ -694,29 +704,101 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
 
+    private void loadOtherDocumentList() throws IOException, DocumentException {
+        log.info("Loading others documents");
+        Date startOtherDocuments = new Date();
+        if (!poDocumentList.isEmpty()) {
+            for (PODocumentEntity pd : poDocumentList) {
+                if (pd.getScheduleE() == null) {
+                    if (StringUtils.isNotEmpty(pd.getDescription())) {
+                        pd.setDescription(pd.getDescription().replaceAll("\\{po-title}", po.getPoTitle()));
+                        pd.setDescription(pd.getDescription().replaceAll("\\{po-number}", po.getPo() + "v" + po.getVariation()));
+                        otherDocumentList.add(getReportFromHtml(pd.getDescription()));
+                    } else {
+                        log.info("attachmentPoDocId = " + pd.getAttachmentProjectDocument().getId());
+                        AttachmentMainDocumentEntity attachmentMainDocument = getAttachmentDocument(pd.getAttachmentProjectDocument().getId());
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream(attachmentMainDocument.getFile().length);
+                        baos.write(attachmentMainDocument.getFile(), 0, attachmentMainDocument.getFile().length);
+                        otherDocumentList.add(baos);
+                    }
+                } else {
+                    otherDocumentList.add(getReportSchedule());
+                }
+            }
+        } else {
+            otherDocumentList.add(getReportSchedule());
+        }
+        Date endOtherDocuments = new Date();
+        log.info("endOtherDocuments time - startOtherDocuments time = "+(endOtherDocuments.getTime()-startOtherDocuments.getTime())+"ms");
+    }
+
+    public AttachmentMainDocumentEntity getAttachmentDocument(final Long id) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM AttachmentMainDocumentEntity x ");
+        sb.append("WHERE x.id=:MAIN_DOC_ID ");
+        Query query = entityManager.createQuery(sb.toString());
+        query.setParameter("MAIN_DOC_ID", id);
+        List<AttachmentMainDocumentEntity> list = query.getResultList();
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {
+
+        log.info("converting html to pdf");
+        String titleHeader;
+        if (po.getPurchaseOrderProcurementEntity().getClazz() != null) {
+            if (po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal() || po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.MINING_FLEET.ordinal()) {
+                titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+            } else {
+                titleHeader = "CONTRACT" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+            }
+        } else {
+            titleHeader = "PURCHASE ORDER" + " " + po.getProjectEntity().getProjectNumber() + "-" + po.getPo() + (po.getOrderedVariation() > 1 ? ("v" + po.getVariation()) : "");
+        }
+        XmlWorker xmlWorker = new XmlWorker();
+        return xmlWorker.convertHtml(contentPdf, titleHeader);
+    }
+
+    public ByteArrayOutputStream getReportSchedule() throws IOException, DocumentException {
+        Date startReportSchedule = new Date();
+        log.info("getting schedule report");
+        Locale locale = new Locale(Locale.ENGLISH.getLanguage());
+        Map<String, String> messages = new HashMap<>();
+        ReportView reportView = new ReportSheduleE("/procurement/printPo/Schedule", "procurement.schedule",
+                messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager, draft, poDocumentList);
+        Date endReportSchedule = new Date();
+        log.info("endReportSchedule time - startReportSchedule time = "+ (endReportSchedule.getTime()-startReportSchedule.getTime())+"ms");
+        return reportView.getByteArrayOutputStreamReport(null);
+    }
+
     @Override
     public void printDocument(Long documentId) {
-        try {
-            runReport(null);
-        } catch (Exception ex) {
-            if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
-                log.info("ex message contains SAXParseException;");
-                ex.printStackTrace();
-            } else {
-                log.log(Level.WARNING, "A special character is being used [&]");
-            }
-        } finally {
+        if (connection != null) {
             try {
-                if (connection != null && !connection.isClosed()) ;
-                {
-                    try {
-                        connection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
+                runReport(null, otherDocumentList);
+                endDate = new Date();
+                log.info("end time - start time = " + (endDate.getTime() - startDate.getTime()) + "ms");
             } catch (Exception ex) {
-                ex.printStackTrace();
+                if (!(ex.getMessage().contains("'&'") && ex.getMessage().contains("org.xml.sax.SAXParseException;"))) {
+                    log.info("ex message contains SAXParseException;");
+                    ex.printStackTrace();
+                } else {
+                    log.log(Level.WARNING, "A special character is being used [&]");
+                }
+            } finally {
+                try {
+                    if (connection != null && !connection.isClosed()) ;
+                    {
+                        try {
+                            connection.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

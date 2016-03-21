@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
+import com.itextpdf.text.DocumentException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Logger;
@@ -78,7 +80,7 @@ public class ReportProcBean implements Serializable {
         openReport = true;
     }
 
-    public void printPurchaseOrder(final PurchaseOrderEntity po,List<ItemEntity> list,String preamble,List<ClausesEntity> clausesList,boolean draft) {
+    public void printPurchaseOrder(final PurchaseOrderEntity po,List<ItemEntity> list,String preamble,List<ClausesEntity> clausesList,boolean draft,List<PODocumentEntity> poDocumentList) {
         log.info("printPurchaseOrder(purchaseOrderId[" + po.getId() + "])");
         openReport = false;
         PurchaseOrderEntity purchaseOrder=service.findById(po.getId());
@@ -91,8 +93,15 @@ public class ReportProcBean implements Serializable {
                 cashflowEntity.getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(cashflowEntity.getId()));
             }
             String fileName = service.generateName(po);
-            ReportView reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
-                                                messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager,draft);
+            ReportView reportView = null;
+            try {
+                reportView = new ReportPurchaseOrder("/procurement/printPo/PrintPurchaseOrder", fileName.length() > 0 ? fileName : "Purchase Order",
+                                                    messages, locale, configuration, purchaseOrder, list, preamble, clausesList, cashflowEntity, entityManager,draft,poDocumentList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
             reportView.printDocument(null);
         }
         openReport = true;
@@ -102,6 +111,14 @@ public class ReportProcBean implements Serializable {
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.project.purchase.order", messages, locale, configuration, project, sortMap,entityManager);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+    public void printPosRegister(final ProjectEntity project, final Map<String, Boolean> sortMap,final Map<String, Boolean> filterMap) {
+        log.info("printPosRegister");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPosRegister("/procurement/posRegisterReport/posRegisterReport", "Procurement.pos.register", messages, locale, configuration, project, sortMap,entityManager,filterMap);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -149,6 +166,7 @@ public class ReportProcBean implements Serializable {
         reportView.printDocument(null);
         openReport = true;
     }
+
 
     public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
         log.info("printSummaryPurchaseOrder");
