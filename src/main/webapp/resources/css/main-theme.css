@@ -646,4 +646,10 @@ label.checkbox {
 /*Input text type search*/
 .input-search{
     border-radius: 15px!important;
+    width: 200px;
+    color: #000000;
+}
+.box-document-list{
+    display: block!important;
+    height: 50px!important;
 }

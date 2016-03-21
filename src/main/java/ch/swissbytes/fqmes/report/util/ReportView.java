@@ -84,27 +84,19 @@ public abstract class ReportView implements Serializable {
         fcontext.responseComplete();
     }
 
-    public ByteArrayOutputStream getByteArrayOutputStreamReport(final List<?> beanCollection) {
-        //FacesContext fcontext = FacesContext.getCurrentInstance();
+    public ByteArrayOutputStream getByteArrayOutputStreamReport() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try {
-            //HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
-            final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
+        try (Connection connection = dataSource.getConnection()){
+            addParameters("REPORT_CONNECTION", connection);
+            final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((null)));
             exportScheduleReport(jasperPrint, outputStream, getOnlyReportNameFormat(reportName.toString()));
-
-            /*outputStream.writeTo(response.getOutputStream());*/
-            //response.setContentLength(outputStream.size());
         } catch (JRException ex) {
             ex.printStackTrace();
-        } /*catch (IOException e) {
-            e.printStackTrace();
-        }*/ catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             IOUtils.closeQuietly(outputStream);
         }
-
-        //fcontext.responseComplete();
         return outputStream;
     }
 

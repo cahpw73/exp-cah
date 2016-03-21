@@ -84,6 +84,7 @@ public class PoListBean implements Serializable {
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
+
     private String projectId;
 
     private ProjectEntity project;

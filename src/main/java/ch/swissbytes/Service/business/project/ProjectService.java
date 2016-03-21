@@ -190,6 +190,7 @@ public class ProjectService implements Serializable {
         return entity;
     }
 
+
     public ProjectEntity findById(Long id) {
         List<ProjectEntity> list = projectDao.findById(ProjectEntity.class, id);
         return list.isEmpty() ? null : list.get(0);

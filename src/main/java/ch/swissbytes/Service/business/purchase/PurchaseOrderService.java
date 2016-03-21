@@ -768,7 +768,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return dao.getNumberOfOpenPOs(projectId);
     }
 
-    public int getNumberDeliveryNextMoth(final Long projectId,final Date nextMothIni, final Date nextMothEnd) {
+    public int getNumberDeliveryNextMoth(final Long projectId,final Date nextMothIni,final Date nextMothEnd) {
         return dao.getNumberDeliveryNextMoth(projectId, nextMothIni, nextMothEnd);
     }
 
@@ -835,7 +835,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         return null;
     }
 
-    public PurchaseOrderProcurementEntity findPOEById(final Long poeId) {
+    public PurchaseOrderProcurementEntity findPOEById(final Long poeId){
         return dao.findPOEntityById(poeId);
     }
 
