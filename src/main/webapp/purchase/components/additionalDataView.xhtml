@@ -48,54 +48,59 @@
                              value="#{purchaseOrderView.purchaseOrder.actualSiteDateComment}"/>
         </div>
     </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            &#160;
+    <div style="border: 1px solid #cccccc; margin-left: -15px; padding-left: 6px; margin-top: 10px; padding-bottom: 5px;
+                                padding-top: 5px; width: 1023px; height: 225px; z-index: -10; margin-bottom: -216px; border-radius: 4px;"></div>
+    <div style="margin-left: -9px; padding-left: 9px; margin-bottom: 5px;
+                                margin-top: 0px; padding-bottom: 5px; padding-top: 5px; height: 225px;">
+        <div class="row">
+            <div class="section-lbl-input-po">
+                &#160;
+            </div>
+            <div class="section-text-area-po" style="height: 12px!important;">
+                #{msgs['po.lbl.next.key.date.comment']}
+            </div>
         </div>
-        <div class="section-text-area-po" style="height: 12px!important;">
-            #{msgs['po.lbl.next.key.date.comment']}
-        </div>
-    </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            <div class="form-group input-general-po">
-                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                               value="#{msgs['po.lbl.next.key.date']}"/>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['po.lbl.next.key.date']}"/>
 
-                <div class="calendar-general-po">
-                    <h:inputText styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.nextKeyDate)}"/>
+                    <div class="calendar-general-po">
+                        <h:inputText styleClass="form-control view-po" value="#{util.toLocal(purchaseOrderView.purchaseOrder.nextKeyDate)}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="section-text-area-po">
+                <h:inputTextarea readonly="true" styleClass="form-control"
+                                 value="#{purchaseOrderView.purchaseOrder.nextKeyDateComment}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['po.lbl.expediting.status']}"/>
+
+                    <div class="inputText-general-po">
+                        <p:inputTextarea value="#{purchaseOrderView.loadStatusNameById(purchaseOrderView.purchaseOrder.expeditingStatus)}"
+                                         rows="1" styleClass="form-control"
+                                         style="max-height: 31px; cursor: pointer;" readonly="true"/>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="section-text-area-po">
-            <h:inputTextarea readonly="true" styleClass="form-control"
-                             value="#{purchaseOrderView.purchaseOrder.nextKeyDateComment}"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            <div class="form-group input-general-po">
-                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                               value="#{msgs['po.lbl.expediting.status']}"/>
+        <div class="row" style="margin-top: 15px!important;">
+            <div style="width: 1005px;float: left;padding-left: 15px;">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['po.lbl.general.comment']}"/>
 
-                <div class="inputText-general-po">
-                    <p:inputTextarea value="#{purchaseOrderView.loadStatusNameById(purchaseOrderView.purchaseOrder.expeditingStatus)}"
-                                     rows="1" styleClass="form-control"
-                                     style="max-height: 31px; cursor: pointer;" readonly="true"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 15px!important;">
-        <div style="width: 1005px;float: left;padding-left: 15px;">
-            <div class="form-group input-general-po">
-                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                               value="#{msgs['po.lbl.general.comment']}"/>
-
-                <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
-                    <h:inputTextarea readonly="true"
-                            value="#{purchaseOrderView.purchaseOrder.generalComment}"
-                            class="form-control" rows="3"/>
+                    <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
+                        <h:inputTextarea readonly="true"
+                                         value="#{purchaseOrderView.purchaseOrder.generalComment}"
+                                         class="form-control" rows="3"/>
+                    </div>
                 </div>
             </div>
         </div>

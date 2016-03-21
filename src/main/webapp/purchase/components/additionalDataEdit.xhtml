@@ -77,74 +77,80 @@
                     class="form-control" rows="3"/>
         </div>
     </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            &#160;
+    <div style="border: 1px solid #cccccc; margin-left: -15px; padding-left: 6px; margin-top: 10px; padding-bottom: 5px;
+                                padding-top: 5px; width: 1023px; height: 225px; z-index: -10; margin-bottom: -216px; border-radius: 4px;"></div>
+    <div style="margin-left: -9px; padding-left: 9px; margin-bottom: 5px;
+                                margin-top: 0px; padding-bottom: 5px; padding-top: 5px; height: 225px;">
+        <div class="row">
+            <div class="section-lbl-input-po">
+                &#160;
+            </div>
+            <div class="section-text-area-po" style="height: 12px!important;">
+                #{msgs['po.lbl.next.key.date.comment']}
+            </div>
         </div>
-        <div class="section-text-area-po" style="height: 12px!important;">
-            #{msgs['po.lbl.next.key.date.comment']}
-        </div>
-    </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            <div class="form-group input-general-po">
-                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                               value="#{msgs['po.lbl.next.key.date']}"/>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['po.lbl.next.key.date']}"/>
 
-                <div class="calendar-general-po">
-                    <p:calendar id="nextKeyDateId" type="text"
-                                navigator="true"
-                                mask="#{configuration.mask}"
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                value="#{purchaseOrderEdit.poEdit.nextKeyDate}"
-                                onselect="calendarChanges();" onclick="calendarChanges();"/>
+                    <div class="calendar-general-po">
+                        <p:calendar id="nextKeyDateId" type="text"
+                                    navigator="true"
+                                    mask="#{configuration.mask}"
+                                    pattern="#{configuration.formatDate}"
+                                    converterMessage="#{msgs['validator.date.invalid']}"
+                                    converter="#{dateConverter}"
+                                    timeZone="#{configuration.timeZone}"
+                                    jsf:placeholder="#{configuration.formatDate}"
+                                    value="#{purchaseOrderEdit.poEdit.nextKeyDate}"
+                                    onselect="calendarChanges();" onclick="calendarChanges();"/>
+                    </div>
+                </div>
+            </div>
+            <div class="section-text-area-po">
+                <p:inputTextarea id="nextKeyDateCommentId"
+                                 maxlength="950" type="text"
+                                 value="#{purchaseOrderEdit.poEdit.nextKeyDateComment}"
+                                 class="form-control" rows="3"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="section-lbl-input-po">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['po.lbl.expediting.status']}"/>
+                    <div class="inputText-general-po">
+                        <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
+                        <select id="poStatuses" multiple="multiple">
+                            <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                                <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                            </ui:repeat>
+                        </select>
+                    </div>
+                    <p:remoteCommand name="onload"
+                                     oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
+                                     autoRun="true"></p:remoteCommand>
                 </div>
             </div>
         </div>
-        <div class="section-text-area-po">
-            <p:inputTextarea id="nextKeyDateCommentId"
-                             maxlength="950" type="text"
-                             value="#{purchaseOrderEdit.poEdit.nextKeyDateComment}"
-                             class="form-control" rows="3"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="section-lbl-input-po">
-            <div class="form-group input-general-po">
-                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                               value="#{msgs['po.lbl.expediting.status']}"/>
-                <div class="inputText-general-po">
-                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
-                    <select id="poStatuses" multiple="multiple">
-                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
-                        </ui:repeat>
-                    </select>
-                </div>
-                <p:remoteCommand name="onload"
-                                 oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
-                                 autoRun="true"></p:remoteCommand>
-            </div>
-        </div>
-    </div>
-    <div class="row" style="margin-top: 15px!important;">
-        <div style="width: 1005px;float: left;padding-left: 15px;">
-            <div class="form-group input-general-po">
-                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                               value="#{msgs['po.lbl.general.comment']}"/>
+        <div class="row" style="margin-top: 15px!important;">
+            <div style="width: 1005px;float: left;padding-left: 15px;">
+                <div class="form-group input-general-po">
+                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                   value="#{msgs['po.lbl.general.comment']}"/>
 
-                <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
-                    <p:inputTextarea
-                            maxlength="19800" type="text"
-                            value="#{purchaseOrderEdit.poEdit.generalComment}"
-                            class="form-control" rows="3"/>
+                    <div style="float: left;padding-left: 15px; width:773px; height: 60px !important;">
+                        <p:inputTextarea
+                                maxlength="19800" type="text"
+                                value="#{purchaseOrderEdit.poEdit.generalComment}"
+                                class="form-control" rows="3"/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 </ui:composition>
