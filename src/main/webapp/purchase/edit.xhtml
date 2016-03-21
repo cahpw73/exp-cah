@@ -51,70 +51,31 @@
                     </script>
 
                     <!-- Form Name -->
-                    <div style="position: fixed; width: 96%; background-color: #eeeeee; z-index: 1000; height: 100px; display: table; margin-top: -40px;margin-left: -15px; padding-left: 15px;">
+                    <div style="position: fixed; width: 96%; background-color: #eeeeee; z-index: 1000; height: 60px; display: table; margin-top: -12px;margin-left: -15px; padding-left: 15px;">
                         <div style="width: 100%; vertical-align: middle; display: table-cell">
-                            <div class="title-page">
-                                <h4 class="page-header" style="margin-bottom: 5px!important;">#{msgs['po.view.edit']}</h4>
-                            </div>
-                            <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
-                            <div class="row">
-                                <div class="section-lbl-input-po">
-                                    &#160;
-                                </div>
-                                <div class="section-text-area-po" style="height: 12px!important;">
-                                    #{msgs['lbl.project.name.comment']}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="section-lbl-input-po">
-                                    <!-- Text input-->
-                                    <div class="form-group input-general-po">
-                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project"
-                                                       value="#{msgs['po.lbl.project.type.required']}"/>
-
-                                        <div class="inputText-general-po">
-                                            <h:inputText id="project" maxlength="50"
-                                                         disabled="true"
-                                                         value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}"
-                                                         class="form-control" required="true"
-                                                         requiredMessage="#{msgs['po.lbl.project.required']}"/>
-                                            <p:message for="project" id="msgProject"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="section-text-area-po">
-                                    <p:inputTextarea value="#{purchaseOrderEdit.poEdit.commentForProject()}"
-                                                     maxlength="950"
-                                                     readonly="true"
-                                                     class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="section-lbl-input-po">
-                                    &#160;
-                                </div>
-                                <div class="section-text-area-po" style="height: 12px!important;">
-                                    #{msgs['po.lbl.date']}
-                                </div>
-                            </div>
                             <div class="row" style="margin-bottom: -13px!important;">
-                                <div class="section-lbl-input-po">
+                                <div class="section-lbl-input-po" style="width: 500px!important;">
                                     <div class="form-group input-general-po">
-                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"
+                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                        value="#{msgs['po.lbl.po.type.required']}"/>
 
-                                        <div class="inputText-general-po">
-                                            <h:outputText id="po" maxlength="50"
-                                                          value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"
-                                                          required="true"
-                                                          requiredMessage="#{msgs['po.lbl.reference.required']}"/>
+                                        <div class="inputText-general-po" style="width: 250px!important;">
+                                            <h:outputText maxlength="50"
+                                                          value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"/>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="section-text-area-po">
-                                    <h:outputText
-                                            value="#{util.toLocal(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.orderDate)}"
-                                            class="form-control view-po"/>
+                                <div class="section-lbl-input-po">
+                                    <div class="form-group input-general-po">
+                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                       value="#{msgs['po.lbl.variation']}"
+                                                       style="width: 112px!important; padding-right: 0px!important; padding-left: 0px!important;"/>
+
+                                        <div class="inputText-general-po" style="padding-left: 0px!important; width: 255px!important;">
+                                            <h:outputText maxlength="50"
+                                                          value="#{purchaseOrderEdit.poEdit.variation}" class="form-control view-po"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -122,35 +83,48 @@
                     <div class="clearfix"></div>
                     <br/>
 
-                    <div class="row" style="margin-top: 116px!important;">
+                    <div class="title-page">
+                        <h4 class="page-header" style="margin-bottom: 5px!important;">#{msgs['po.view.edit']}</h4>
+                    </div>
+                    <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
+                    <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
                         </div>
                         <div class="section-text-area-po" style="height: 12px!important;">
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                #{msgs['po.lbl.status']}
-                            </div>
+                            #{msgs['lbl.project.name.comment']}
                         </div>
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
+                            <!-- Text input-->
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.variation']}"/>
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project"
+                                               value="#{msgs['po.lbl.project.type.required']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText disabled="true"
-                                                 value="#{purchaseOrderEdit.poEdit.variation}"
-                                                 class="form-control po-view"/>
+                                    <h:inputText id="project" maxlength="50"
+                                                 disabled="true"
+                                                 value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}"
+                                                 class="form-control" required="true"
+                                                 requiredMessage="#{msgs['po.lbl.project.required']}"/>
+                                    <p:message for="project" id="msgProject"/>
                                 </div>
                             </div>
                         </div>
                         <div class="section-text-area-po">
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                <h:inputText disabled="true"
-                                             value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
-                                             class="form-control po-view"/>
-                            </div>
+                            <p:inputTextarea value="#{purchaseOrderEdit.poEdit.commentForProject()}"
+                                             maxlength="950"
+                                             readonly="true"
+                                             class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            #{msgs['po.lbl.date']}
                         </div>
                     </div>
                     <div class="row">
@@ -165,8 +139,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="section-text-area-po">
+                            <h:outputText
+                                    value="#{util.toLocal(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.orderDate)}"
+                                    class="form-control view-po"/>
+                        </div>
                     </div>
-
+                    <div class="row">
+                        <div class="section-lbl-input-po">
+                            &#160;
+                        </div>
+                        <div class="section-text-area-po" style="height: 12px!important;">
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                #{msgs['po.lbl.status']}
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
@@ -177,6 +165,13 @@
                                     <h:inputText readonly="true" styleClass="form-control view-po"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="section-text-area-po">
+                            <div class="col-md-6" style="padding-left: 0px;">
+                                <h:inputText disabled="true"
+                                             value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
+                                             class="form-control po-view"/>
                             </div>
                         </div>
                     </div>
