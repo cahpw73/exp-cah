@@ -90,7 +90,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
             addParameters("retentionForm", cashflowEntity != null && cashflowEntity.getForm() != null ? cashflowEntity.getForm().toUpperCase() : null);
             addParameters("securityDeposit", cashflowEntity != null && cashflowEntity.getApplyRetentionSecurityDeposit() != null ? BooleanUtils.toStringYesNo(cashflowEntity.getApplyRetentionSecurityDeposit()).toUpperCase() : "NO");
             addParameters("securityDepositForm", cashflowEntity != null && cashflowEntity.getFormSecurityDeposit() != null ? cashflowEntity.getFormSecurityDeposit().toUpperCase() : null);
-            loadOtherDocumentList();
+            loadOtherDocumentList(dataSource);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -700,7 +700,7 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
 
-    private void loadOtherDocumentList() throws IOException, DocumentException {
+    private void loadOtherDocumentList(DataSource dataSource) throws IOException, DocumentException {
         log.info("Loading others documents");
         Date startOtherDocuments = new Date();
         if (!poDocumentList.isEmpty()) {
@@ -757,15 +757,12 @@ public class ReportPurchaseOrder extends ReportView implements Serializable {
     }
 
     public ByteArrayOutputStream getReportSchedule() throws IOException, DocumentException {
-        Date startReportSchedule = new Date();
         log.info("getting schedule report");
         Locale locale = new Locale(Locale.ENGLISH.getLanguage());
         Map<String, String> messages = new HashMap<>();
         ReportView reportView = new ReportSheduleE("/procurement/printPo/Schedule", "procurement.schedule",
                 messages, locale, configuration, po, itemEntityList, preamble, clausesList, cashflowEntity, entityManager, draft, poDocumentList,getDataSource());
-        Date endReportSchedule = new Date();
-        log.info("endReportSchedule time - startReportSchedule time = "+ (endReportSchedule.getTime()-startReportSchedule.getTime())+"ms");
-        return reportView.getByteArrayOutputStreamReport(null);
+        return reportView.getByteArrayOutputStreamReport();
     }
 
     @Override
