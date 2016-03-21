@@ -22,6 +22,7 @@
             <o:highlight/>
             <h:outputScript name="js/multipleSelectionPoEdit.js"/>
             <h:outputScript name="js/submitSearch.js"/>
+
             <div class="col-lg-12">
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
                         acceptcharset="UTF-8">
@@ -50,76 +51,78 @@
                     </script>
 
                     <!-- Form Name -->
-                    <div class="title-page">
-                        <h4 class="page-header">#{msgs['po.view.edit']}</h4>
+                    <div style="position: fixed; width: 96%; background-color: #eeeeee; z-index: 1000; height: 100px; display: table; margin-top: -40px;margin-left: -15px; padding-left: 15px;">
+                        <div style="width: 100%; vertical-align: middle; display: table-cell">
+                            <div class="title-page">
+                                <h4 class="page-header" style="margin-bottom: 5px!important;">#{msgs['po.view.edit']}</h4>
+                            </div>
+                            <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
+                            <div class="row">
+                                <div class="section-lbl-input-po">
+                                    &#160;
+                                </div>
+                                <div class="section-text-area-po" style="height: 12px!important;">
+                                    #{msgs['lbl.project.name.comment']}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="section-lbl-input-po">
+                                    <!-- Text input-->
+                                    <div class="form-group input-general-po">
+                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project"
+                                                       value="#{msgs['po.lbl.project.type.required']}"/>
+
+                                        <div class="inputText-general-po">
+                                            <h:inputText id="project" maxlength="50"
+                                                         disabled="true"
+                                                         value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}"
+                                                         class="form-control" required="true"
+                                                         requiredMessage="#{msgs['po.lbl.project.required']}"/>
+                                            <p:message for="project" id="msgProject"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-text-area-po">
+                                    <p:inputTextarea value="#{purchaseOrderEdit.poEdit.commentForProject()}"
+                                                     maxlength="950"
+                                                     readonly="true"
+                                                     class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="section-lbl-input-po">
+                                    &#160;
+                                </div>
+                                <div class="section-text-area-po" style="height: 12px!important;">
+                                    #{msgs['po.lbl.date']}
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: -13px!important;">
+                                <div class="section-lbl-input-po">
+                                    <div class="form-group input-general-po">
+                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"
+                                                       value="#{msgs['po.lbl.po.type.required']}"/>
+
+                                        <div class="inputText-general-po">
+                                            <h:outputText id="po" maxlength="50"
+                                                          value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"
+                                                          required="true"
+                                                          requiredMessage="#{msgs['po.lbl.reference.required']}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-text-area-po">
+                                    <h:outputText
+                                            value="#{util.toLocal(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.orderDate)}"
+                                            class="form-control view-po"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <br/>
-                    <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
-                    <br/>
 
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.project.name.comment']}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <!-- Text input-->
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="project"
-                                               value="#{msgs['po.lbl.project.type.required']}"/>
-
-                                <div class="inputText-general-po">
-                                    <h:inputText id="project" jsf:placeholder="#{msgs['po.ph.project']}" maxlength="50"
-                                                 disabled="true"
-                                                 value="#{purchaseOrderEdit.poEdit.projectEntity.projectNumber}"
-                                                 class="form-control" required="true"
-                                                 requiredMessage="#{msgs['po.lbl.project.required']}"/>
-                                    <p:message for="project" id="msgProject"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-text-area-po">
-                            <p:inputTextarea value="#{purchaseOrderEdit.poEdit.commentForProject()}"
-                                             jsf:placeholder="#{msgs['po.ph.projectNameComment']}"
-                                             maxlength="950"
-                                             readonly="true"
-                                             class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['po.lbl.date']}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"
-                                               value="#{msgs['po.lbl.po.type.required']}"/>
-
-                                <div class="inputText-general-po">
-                                    <h:outputText id="po" maxlength="50" jsf:placeholder="#{msgs['po.ph.po']}"
-                                                  value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"
-                                                  required="true"
-                                                  requiredMessage="#{msgs['po.lbl.reference.required']}"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-text-area-po">
-                            <h:outputText
-                                    value="#{util.toLocal(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.orderDate)}"
-                                    class="form-control view-po"/>
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 116px!important;">
                         <div class="section-lbl-input-po">
                             &#160;
                         </div>
@@ -136,7 +139,7 @@
                                                value="#{msgs['po.lbl.variation']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText jsf:placeholder="#{msgs['po.ph.variation']}" disabled="true"
+                                    <h:inputText disabled="true"
                                                  value="#{purchaseOrderEdit.poEdit.variation}"
                                                  class="form-control po-view"/>
                                 </div>
@@ -152,42 +155,15 @@
                     </div>
                     <div class="row">
                         <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            <div class="col-md-6" style="padding-left: 0px;">
-                                #{msgs['po.lbl.expediting.status']}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Text input-->
-                        <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
                                                value="#{msgs['po.lbl.po.title']}"/>
 
                                 <div class="inputText-general-po">
                                     <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
-                                                 jsf:placeholder="#{msgs['po.ph.po.title']}"
                                                  class="form-control" readonly="true"/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="section-text-area-po">
-                            <div class="col-md-12">
-                                <div class='form-group card'>
-                                    <h:inputHidden id="poStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
-                                    <select id="poStatuses" multiple="multiple">
-                                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
-                                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
-                                        </ui:repeat>
-                                    </select>
-                                </div>
-                            </div>
-                            <p:remoteCommand name="onload"
-                                             oncomplete="initializeMultiselection('#{purchaseOrderEdit.expeditingStatuses}');"
-                                             autoRun="true"></p:remoteCommand>
                         </div>
                     </div>
 
@@ -200,25 +176,6 @@
                                 <div class="inputText-general-po">
                                     <h:inputText readonly="true" styleClass="form-control view-po"
                                                  value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
-                                    <ui:remove>
-                                        <p:selectOneMenu styleClass="menu-po-status"
-                                                         filter="true" disabled="true"
-                                                         id="supplierNameId"
-                                                         style="min-width:345px; max-width:345px;"
-                                                         filterMatchMode="contains"
-                                                         value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier}"
-                                                         converter="supplierConverter">
-                                            <f:selectItem itemLabel="Select One" itemValue=""/>
-                                            <f:selectItems var="_supplier"
-                                                           value="#{supplierProcList.suppliers}"
-                                                           itemLabel="#{_supplier.fullName}" itemValue="#{_supplier}"/>
-                                            <p:ajax async="false" event="change"
-                                                    update="supplierAddress supplierPhoneTxt supplierSuburb supplierState
-                                                     btnViewContact btnAddContact
-                                                    supplierPostCode supplierCountry contactId"/>
-                                        </p:selectOneMenu>
-                                        <p:message for="supplierNameId"/>
-                                    </ui:remove>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +196,6 @@
 
                                 <div class="inputText-general-po">
                                     <p:inputTextarea id="supplierAddress" maxlength="450"
-                                                     jsf:placeholder="#{msgs['po.ph.address']}"
                                                      style="height: 90px;"
                                                      readonly="true"
                                                      value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.street}"
@@ -343,7 +299,7 @@
                                         <f:selectItems var="_contact"
                                                        value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.contacts}"
                                                        itemLabel="#{_contact.fullName}" itemValue="#{_contact}"/>
-                                        <p:ajax async="false" update="btnViewContact" event="change" />
+                                        <p:ajax async="false" update="btnViewContact" event="change"/>
                                     </p:selectOneMenu>
                                 </div>
                             </div>
@@ -356,7 +312,6 @@
                                                      readonly="true"
                                                      maxlength="950"
                                                      value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactEntity.email}"
-                                                     jsf:placeholder="#{msgs['po.ph.contact.name.description']}"
                                                      class="form-control"/>
                                 </div>
                             </ui:remove>
@@ -410,9 +365,9 @@
                         </div>
                         <div class="section-text-area-po">
                             <p:inputTextarea
-                                             maxlength="950" jsf:placeholder="#{msgs['po.ph.delivery.date']}"
-                                             value="#{purchaseOrderEdit.poEdit.deliveryDateComment}"
-                                             class="form-control" rows="3"/>
+                                    maxlength="950"
+                                    value="#{purchaseOrderEdit.poEdit.deliveryDateComment}"
+                                    class="form-control" rows="3"/>
                         </div>
                     </div>
                     <div class="row">
@@ -442,9 +397,8 @@
                         </div>
                         <div class="section-text-area-po">
                             <p:inputTextarea
-                                             maxlength="950" value="#{purchaseOrderEdit.poEdit.fullIncoTerms}"
-                                             jsf:placeholder="#{msgs['po.ph.inco.term.description']}"
-                                             class="form-control" rows="3"/>
+                                    maxlength="950" value="#{purchaseOrderEdit.poEdit.fullIncoTerms}"
+                                    class="form-control" rows="3"/>
                         </div>
                     </div>
 
@@ -452,87 +406,85 @@
                                 padding-top: 5px; width: 1023px; height: 225px; z-index: -10; margin-bottom: -216px; border-radius: 4px;"></div>
                     <div style="margin-left: -9px; padding-left: 9px; margin-bottom: 5px;
                                 margin-top: 0px; padding-bottom: 5px; padding-top: 5px; height: 225px;">
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
+                        <div class="row">
+                            <div class="section-lbl-input-po">
+                                &#160;
+                            </div>
+                            <div class="section-text-area-po" style="height: 12px!important;">
+                                #{msgs['lbl.rfe.comment']}
+                            </div>
                         </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.rfe.comment']}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.responsible']}"/>
+                        <div class="row">
+                            <div class="section-lbl-input-po">
+                                <div class="form-group input-general-po">
+                                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                   value="#{msgs['po.lbl.responsible']}"/>
 
-                                <div class="inputText-general-po">
-                                    <h:inputText maxlength="100"
-                                                 value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
-                                                 jsf:placeholder="#{msgs['po.ph.responsible']}" class="form-control"/>
+                                    <div class="inputText-general-po">
+                                        <h:inputText maxlength="100"
+                                                     value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
+                                                     class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-text-area-po">
+                                <p:inputTextarea
+                                        id="rfeComment"
+                                        maxlength="950" type="text"
+                                        value="#{purchaseOrderEdit.poEdit.rfeComment}"
+                                        rows="3"/>
+                                <p:message for="rfeComment"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Text input-->
+                            <div class="section-lbl-input-po">
+                                <div class="form-group input-general-po">
+                                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                   value="#{msgs['po.lbl.expediting.title']}"/>
+
+                                    <div class="inputText-general-po">
+                                        <h:inputText id="expeditingTitleId" maxlength="50"
+                                                     value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
+                                                     class="form-control"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="section-text-area-po">
-                            <p:inputTextarea
-                                             id="rfeComment"
-                                             maxlength="950" type="text"
-                                             value="#{purchaseOrderEdit.poEdit.rfeComment}"
-                                             jsf:placeholder="#{msgs['po.ph.responsible.obs']}" class="form-control"
-                                             rows="3"/>
-                            <p:message for="rfeComment"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <!-- Text input-->
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.expediting.title']}"/>
-
-                                <div class="inputText-general-po">
-                                    <h:inputText id="expeditingTitleId" maxlength="50" value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
-                                                 jsf:placeholder="#{msgs['po.lbl.expediting.title']}"
-                                                 class="form-control"/>
-                                </div>
+                        <div class="row">
+                            <div class="section-lbl-input-po">
+                                &#160;
+                            </div>
+                            <div class="section-text-area-po" style="height: 12px!important;">
+                                #{msgs['lbl.intro.email.sent.comment']}
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            &#160;
-                        </div>
-                        <div class="section-text-area-po" style="height: 12px!important;">
-                            #{msgs['lbl.intro.email.sent.comment']}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.intro.email.sent']}"/>
+                        <div class="row">
+                            <div class="section-lbl-input-po">
+                                <div class="form-group input-general-po">
+                                    <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                   value="#{msgs['po.lbl.intro.email.sent']}"/>
 
-                                <div class="calendar-general-po">
-                                    <p:calendar id="introEmailDate" type="text"
-                                                styleClass="calendar-date-po"
-                                                mask="#{configuration.mask}" navigator="true"
-                                                pattern="#{configuration.formatDate}"
-                                                converterMessage="#{msgs['validator.date.invalid']}"
-                                                jsf:placeholder="#{configuration.formatDate}"
-                                                converter="#{dateConverter}"
-                                                timeZone="#{configuration.timeZone}"
-                                                value="#{purchaseOrderEdit.poEdit.introEmail}"
-                                                onselect="calendarChanges();" onclick="calendarChanges();"/>
+                                    <div class="calendar-general-po">
+                                        <p:calendar id="introEmailDate" type="text"
+                                                    styleClass="calendar-date-po"
+                                                    mask="#{configuration.mask}" navigator="true"
+                                                    pattern="#{configuration.formatDate}"
+                                                    converterMessage="#{msgs['validator.date.invalid']}"
+                                                    converter="#{dateConverter}"
+                                                    timeZone="#{configuration.timeZone}"
+                                                    value="#{purchaseOrderEdit.poEdit.introEmail}"
+                                                    onselect="calendarChanges();" onclick="calendarChanges();"/>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="section-text-area-po">
+                                <p:inputTextarea
+                                        maxlength="950" type="text"
+                                        value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
+                                        class="form-control" rows="3"/>
+                            </div>
                         </div>
-                        <div class="section-text-area-po">
-                            <p:inputTextarea
-                                    maxlength="950" type="text"
-                                    value="#{purchaseOrderEdit.poEdit.introEmailSentComment}"
-                                    jsf:placeholder="#{msgs['po.ph.intro.email.sent.description']}" class="form-control" rows="3"/>
-                        </div>
-                    </div>
                     </div>
                     <ui:include src="components/additionalDataEdit.xhtml"/>
 
@@ -540,14 +492,14 @@
                     <br/>
 
                     <div style="width: 940px;">
-                            <div class="pull-left">
-                                <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
-                                               styleClass="btn btn-primary btn-commandLink-primeFaces"
-                                               action="#{purchaseOrderEdit.resetBulkUpdateModal}"
-                                               rendered="#{permissionBean.hasPermission(1410)}"
-                                               oncomplete="PF('bulkUpdateSp').show();"
-                                               update=":bulkUpdateScopeSupplyFormId"/>
-                            </div>
+                        <div class="pull-left">
+                            <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
+                                           styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                           action="#{purchaseOrderEdit.resetBulkUpdateModal}"
+                                           rendered="#{permissionBean.hasPermission(1410)}"
+                                           oncomplete="PF('bulkUpdateSp').show();"
+                                           update=":bulkUpdateScopeSupplyFormId"/>
+                        </div>
 
                         <div class="pull-right">
                             <h:commandButton id="save0" value="#{msgs['lbl.update']}"

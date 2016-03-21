@@ -9,6 +9,7 @@ import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.fqmes.util.SortBean;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -161,6 +162,30 @@ public class PurchaseOrderView implements Serializable {
             return comments.get(index).getAttachments();
         }
         return new ArrayList<>();
+    }
+
+    public String loadStatusNameById(String ids) {
+        String statusStr = "";
+        if (ids.length() > 1) {
+            String[] statusIds = ids.split(",");
+            for (int i = 0; i < statusIds.length; i++) {
+                if(StringUtils.isNotEmpty(ids)) {
+                    Integer expeditingStatusId = Integer.valueOf(statusIds[i]);
+                    ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+                }
+            }
+        } else {
+            if(StringUtils.isNotEmpty(ids)) {
+                Integer expeditingStatusId = Integer.valueOf(ids);
+                ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+            }
+        }
+        if(statusStr.length()>1) {
+            statusStr = statusStr.substring(0, statusStr.length() - 1);
+        }
+        return statusStr;
     }
 
     public Long getCurrentSelected() {

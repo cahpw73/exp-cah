@@ -4,6 +4,7 @@ package ch.swissbytes.procurement.report;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.fqmes.util.Configuration;
 
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
@@ -20,8 +21,8 @@ public class ReportRequiredSecurityDeposits extends ReportProject implements Ser
      * @param locale           {@link java.util.Locale}
      */
     public ReportRequiredSecurityDeposits(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                          Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap) {
-        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap);
+                                          Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale, configuration, project, sortMap,ds);
         loadAdditionalParameters();
     }
 

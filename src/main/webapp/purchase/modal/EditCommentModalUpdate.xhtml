@@ -5,60 +5,8 @@
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
 <h:form id="commentEditFormId" role="form" prependId="false" enctype="multipart/form-data" acceptcharset="UTF-8"
         styleClass="form-horizontal">
-
-    <div class="col-lg-12">
-        <div class="form-group">
-            <h:outputLabel class="col-sm-3 control-label"
-                           value="#{msgs['po.attach.tbl.column.from']}"/>
-            <div class="col-sm-9">
-                <h:inputText type="text" maxlength="50"
-                             id="nameEditComment"
-                             jsf:placeholder="#{msgs['po.attach.tbl.column.from']}"
-                             class="form-control"
-                             value="#{purchaseOrderEdit.editingComment.name}"/>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12">
-    <div class="form-group">
-        <h:outputLabel class="col-sm-3 control-label"
-                       value="#{msgs['po.attach.tbl.column.to']}"/>
-        <div class="col-sm-9">
-            <h:inputText type="text"
-                         id="fieldTo"
-                         maxlength="50"
-                         jsf:placeholder="#{msgs['po.attach.tbl.column.to']}"
-                         class="form-control"
-                         value="#{purchaseOrderEdit.editingComment.to}"/>
-        </div>
-        </div>
-    </div>
-    <div class="col-lg-12">
-        <div class="form-group">
-            <h:outputLabel class="col-sm-3 control-label"
-                           value="#{msgs['po.attach.tbl.column.reason']}"/>
-
-            <div class="col-sm-9">
-                <p:inputTextarea type="text" maxlength="19800"
-                                 id="reasonEditComment" style="max-height: 63px" rows="3"
-                                 jsf:placeholder="#{msgs['po.attach.tbl.column.reason']}"
-                                 class="form-control"
-                                 value="#{purchaseOrderEdit.editingComment.subject}"/>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-12">
-        <div class="form-group">
-            <h:outputLabel class="col-sm-3 control-label"
-                           value="#{msgs['po.attach.tbl.column.observations']}"/>
-            <div class="col-sm-9">
-                <p:inputTextarea type="text" maxlength="19800"
-                             id="descriptionEditComment" style="max-height: 63px" rows="3"
-                             jsf:placeholder="#{msgs['po.attach.tbl.column.observations']}"
-                             class="form-control"
-                             value="#{purchaseOrderEdit.editingComment.description}"/>
-            </div>
-        </div>
+    <div style="margin-top: -20px!important;">
+        <h:inputText style="margin-left: -300px!important;"/>
     </div>
     <div class="col-lg-12">
         <div class="form-group">
@@ -73,6 +21,56 @@
                             timeZone="#{configuration.timeZone2}"
                             onselect="calendarChanges();" onclick="calendarChanges();">
                 </p:calendar>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-3 control-label"
+                           value="#{msgs['po.attach.tbl.column.from']}"/>
+            <div class="col-sm-9">
+                <h:inputText type="text" maxlength="50"
+                             id="nameEditComment" jsf:autofocus="true"
+                             class="form-control"
+                             value="#{purchaseOrderEdit.editingComment.name}"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+    <div class="form-group">
+        <h:outputLabel class="col-sm-3 control-label"
+                       value="#{msgs['po.attach.tbl.column.to']}"/>
+        <div class="col-sm-9">
+            <h:inputText type="text"
+                         id="fieldTo"
+                         maxlength="50"
+                         class="form-control"
+                         value="#{purchaseOrderEdit.editingComment.to}"/>
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-3 control-label"
+                           value="#{msgs['po.attach.tbl.column.reason']}"/>
+
+            <div class="col-sm-9">
+                <p:inputTextarea type="text" maxlength="19800"
+                                 id="reasonEditComment" style="max-height: 63px" rows="3"
+                                 class="form-control"
+                                 value="#{purchaseOrderEdit.editingComment.subject}"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <h:outputLabel class="col-sm-3 control-label"
+                           value="#{msgs['po.attach.tbl.column.observations']}"/>
+            <div class="col-sm-9">
+                <p:inputTextarea type="text" maxlength="19800"
+                             id="descriptionEditComment" style="max-height: 63px" rows="3"
+                             class="form-control"
+                             value="#{purchaseOrderEdit.editingComment.description}"/>
             </div>
         </div>
     </div>

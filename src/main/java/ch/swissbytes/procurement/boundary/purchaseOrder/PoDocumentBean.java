@@ -140,7 +140,7 @@ public class PoDocumentBean implements Serializable {
     private PODocumentEntity createEntity() {
         PODocumentEntity entity = new PODocumentEntity();
         entity.setId(tempPODocumentId);
-        entity.setDescription("<h3>Schedule E</h3>");
+        entity.setDescription("<h4>Schedule E</h4>");
         entity.setCode("scheduleE");
         entity.setStatus(StatusEnum.ENABLE);
         entity.setLastUpdate(new Date());

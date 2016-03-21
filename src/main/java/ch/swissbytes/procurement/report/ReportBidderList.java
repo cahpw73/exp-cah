@@ -6,6 +6,7 @@ import ch.swissbytes.fqmes.report.util.ReportView;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
 
+import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -34,8 +35,8 @@ public class ReportBidderList extends ReportView implements Serializable {
      * @param locale           {@link Locale}
      */
     public ReportBidderList(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,ProjectEntity project) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+                            Configuration configuration, List<Long>suppliers,String packageNumber,String description,ProjectEntity project,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,ds);
         this.configuration = configuration;
         this.suppliers=suppliers;
         this.packageNumber=packageNumber;

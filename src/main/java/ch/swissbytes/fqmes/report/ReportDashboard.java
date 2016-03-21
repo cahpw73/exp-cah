@@ -10,6 +10,7 @@ import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.ResourceUtils;
 
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.*;
@@ -38,8 +39,8 @@ public class ReportDashboard extends ReportView implements Serializable {
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportDashboard(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale, EntityManager entityManager, Configuration configuration,Map<String,String> parameterDashboard) {
-        super(filenameJasper, reportNameMsgKey, messages, locale);
+    public ReportDashboard(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale, EntityManager entityManager, Configuration configuration,Map<String,String> parameterDashboard,DataSource ds) {
+        super(filenameJasper, reportNameMsgKey, messages, locale,ds);
         this.configuration = configuration;
         this.entityManager=entityManager;
         addParameters("SUBREPORT_DIR","reports/jobSummary/");

@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.SAXParseException;
 
+import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +35,7 @@ public abstract class ReportView implements Serializable {
 
     private final Map<String, Object> parameters = new HashMap<String, Object>();
 
-    private final String DATA_SOURCE = "java:/fqm/procurementDS";
+    private DataSource dataSource;
 
     /**
      * @param filenameJasper   - fileName the reports to use
@@ -42,10 +43,11 @@ public abstract class ReportView implements Serializable {
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
-    public ReportView(final String filenameJasper, final String reportNameMsgKey, final Map<String, String> messages, final Locale locale) {
+    public ReportView(final String filenameJasper, final String reportNameMsgKey, final Map<String, String> messages, final Locale locale,DataSource dataSource) {
         this.messages = messages;
         this.filenameJasper = filenameJasper;
         this.reportName = new StringBuilder(reportNameMsgKey);
+        this.dataSource = dataSource;
         parameters.put(JRParameter.REPORT_LOCALE, locale);
     }
 
@@ -56,18 +58,15 @@ public abstract class ReportView implements Serializable {
         printDocument(documentId);
     }
 
-    protected Connection getConnection()throws SQLClientInfoException,JRException, Exception{
-        return getDataSource().getConnection();
-    }
-
     protected void runReport(final List<?> beanCollection) {
 
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        try {
+        try (Connection connection = dataSource.getConnection()){
 
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
+            addParameters("REPORT_CONNECTION", connection);
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
             exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
 
@@ -82,7 +81,6 @@ public abstract class ReportView implements Serializable {
         } finally {
             IOUtils.closeQuietly(outputStream);
         }
-
         fcontext.responseComplete();
     }
 
@@ -113,10 +111,9 @@ public abstract class ReportView implements Serializable {
     protected void runReport() throws Exception {
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Connection connection = null;
-        try {
-            connection = getDataSource().getConnection();
+        try (Connection connection = dataSource.getConnection()){
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
+            addParameters("REPORT_CONNECTION", connection);
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, connection);
             exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
             outputStream.writeTo(response.getOutputStream());
@@ -130,10 +127,6 @@ public abstract class ReportView implements Serializable {
         } catch (Exception e) {
             //LOG.error(" Unknown error!.", e);r
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
 
         fcontext.responseComplete();
@@ -143,8 +136,10 @@ public abstract class ReportView implements Serializable {
         FacesContext fcontext = FacesContext.getCurrentInstance();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         XmlWorker xmlWorker = new XmlWorker();
-        try {
+
+        try (Connection connection = dataSource.getConnection()){
             HttpServletResponse response = (HttpServletResponse) fcontext.getExternalContext().getResponse();
+            addParameters("REPORT_CONNECTION", connection);
             final JasperPrint jasperPrint = JasperFillManager.fillReport(ReportFileUtils.loadReport(filenameJasper), parameters, createDataSource((beanCollection)));
             exportReport(jasperPrint, outputStream, response, getOnlyReportNameFormat(reportName.toString()));
             xmlWorker.manipulatePdf(outputStream.toByteArray(), otherDocList).writeTo(response.getOutputStream());
@@ -159,6 +154,7 @@ public abstract class ReportView implements Serializable {
             ex.printStackTrace();
         } finally {
             IOUtils.closeQuietly(outputStream);
+
         }
         fcontext.responseComplete();
     }
@@ -207,15 +203,15 @@ public abstract class ReportView implements Serializable {
             reportName.append(word);
         }
     }
-
-    private DataSource getDataSource() {
-        try {
-            InitialContext ctx = new InitialContext();
-            return (DataSource) ctx.lookup(DATA_SOURCE);
-        } catch (Exception e) {
-            throw new RuntimeException("Datasource not accessible: " + e, e);
-        }
-    }
+//
+//    private DataSource getDataSource() {
+//        try {
+//            InitialContext ctx = new InitialContext();
+//            return (DataSource) ctx.lookup(DATA_SOURCE);
+//        } catch (Exception e) {
+//            throw new RuntimeException("Datasource not accessible: " + e, e);
+//        }
+//    }
 
     private void exportReport(final JasperPrint jasperPrint, final OutputStream outputStream, final HttpServletResponse response, final String reportName) throws JRException {
         JRAbstractExporter exporter = ExporterReportUtils.crateExporterReportAction(reportType, jasperPrint, outputStream, response, reportName);
@@ -255,5 +251,9 @@ public abstract class ReportView implements Serializable {
 
     public String getMessage(final String parentKey, final String key) {
         return messages.get(parentKey + "." + key);
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
     }
 }
