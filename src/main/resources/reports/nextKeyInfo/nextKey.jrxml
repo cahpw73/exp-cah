@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nextKeyInfo" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71430e76-2a1b-4fbb-a63c-2ff243ffaee5">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="purchaseID" class="java.util.Collection"/>
+	<parameter name="TIME_MEASUREMENT" class="java.util.Map"/>
+	<parameter name="FORMAT_DATE" class="java.lang.String"/>
+	<parameter name="CURRENT_DATE" class="java.util.Date"/>
+	<parameter name="STATUS_EXPEDITING" class="java.util.Map"/>
+	<parameter name="TIME_ZONE" class="java.lang.String"/>
+	<parameter name="itemLbl" class="java.lang.String"/>
+	<parameter name="qtyLbl" class="java.lang.String"/>
+	<parameter name="uomLbl" class="java.lang.String"/>
+	<parameter name="titleLbl" class="java.lang.String"/>
+	<parameter name="equipmentLbl" class="java.lang.String"/>
+	<parameter name="incoTermLbl" class="java.lang.String"/>
+	<parameter name="deliveryDateLbl" class="java.lang.String"/>
+	<parameter name="forecastExWorksDateLbl" class="java.lang.String"/>
+	<parameter name="actualExWorksDateLbl" class="java.lang.String"/>
+	<parameter name="leadTimeLbl" class="java.lang.String"/>
+	<parameter name="forecastSiteDateLbl" class="java.lang.String"/>
+	<parameter name="actualSiteDateLbl" class="java.lang.String"/>
+	<parameter name="requiredOnSiteDateLbl" class="java.lang.String"/>
+	<parameter name="deliveryCommentLbl" class="java.lang.String"/>
+	<parameter name="fullIncoTermLbl" class="java.lang.String"/>
+	<parameter name="varLbl" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select id,project,po
+from purchase_order
+WHERE  $X{IN, id, purchaseID} and status_id=1
+order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="project" class="java.lang.String"/>
+	<field name="po" class="java.lang.String"/>
+	<title>
+		<band height="56" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="e1ae8a1c-7746-41d6-a0f0-e42b0840d72b" x="437" y="0" width="117" height="15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="7"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.toLocal(new Date(),$P{TIME_ZONE},$P{FORMAT_DATE})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d13e8b7b-4ae0-400a-87a8-3debb7774220" x="130" y="7" width="261" height="42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="18" isBold="true" pdfFontName="Helvetica-Bold">Next Key Info Report</style>]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fcebc095-5b3b-4181-b8c0-46a03a3a4f63" x="108" y="3" width="180" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e02c6167-812c-43a3-afb6-4d2fa71b94c9" x="36" y="3" width="35" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e65efd7c-1074-4dc1-a769-73ca4589d487" x="72" y="3" width="35" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9bbdeea3-6418-46f0-bfde-9348a53959dc" x="290" y="3" width="50" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e142ee5c-a99c-458e-8723-1d3c0041e206" x="343" y="3" width="180" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date Comment</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ddec6c9-0f49-47b2-9f12-be08942ffcfc" x="0" y="3" width="35" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="74eb6231-0a60-41aa-9126-71c90f054566" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="b57da03b-d1a9-4341-94ee-3660e9786246" x="0" y="1" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<subreport>
+				<reportElement uuid="145bff17-8010-4806-8c3e-e69cf4db775d" x="0" y="0" width="555" height="17"/>
+				<subreportParameter name="FORMAT_DATE">
+					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="TIME_ZONE">
+					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PURCHASE_ORDER_ID">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "nextKeySubreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="f779b89a-60bd-4125-bbe0-280a091b4ee9" x="523" y="0" width="30" height="18"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="384ce6ac-1b80-4adb-bdfe-03b8e42ec97e" x="518" y="0" width="5" height="18"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="37fdd986-335d-4860-94d2-7b3d489e9e94" x="2" y="0" width="222" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[First Quantum Mineral Expediting System]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="603342f6-27f1-4162-8b8e-9d48ba1fee72" x="488" y="0" width="30" height="18"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

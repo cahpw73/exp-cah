@@ -155,6 +155,15 @@ public class ReportBean implements Serializable {
         openReport = true;
     }
 
+    public void printReportNextKey() {
+        log.info("public void printReportNextKey");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportNextKey("/nextKeyInfo/nextKey", "Next.Key.Info", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
     public StreamedContent downloadJobSummaryFileExport() {
         InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xlsx");
