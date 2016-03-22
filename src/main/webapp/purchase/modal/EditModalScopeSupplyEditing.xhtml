@@ -7,6 +7,7 @@
                 template="/WEB-INF/layout/template.xhtml">
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewParam name="anchorScope" value="#{purchaseOrderEdit.anchorScope}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form id="scopeSupplyEditFormId" role="form" prependId="false" enctype="multipart/form-data"
