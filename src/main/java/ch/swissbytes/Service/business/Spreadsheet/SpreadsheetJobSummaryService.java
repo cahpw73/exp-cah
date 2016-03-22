@@ -130,7 +130,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
                 aux = aux + supplierH;
                 nexIndex = aux.length();
 
-                String statusH = "Status: " + "[" + entity.getPurchaseOrderStatus().getLabel().toUpperCase() + "], ";
+                String statusH = "Status: " + "[" + Util.getNamesStatuses(entity.getExpeditingStatus()).toUpperCase()  + "], ";
                 indexRichString.put("statusIni", nexIndex);
                 indexRichString.put("statusEnd", nexIndex + 8);
                 aux = aux + statusH;
