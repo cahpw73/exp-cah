@@ -3,6 +3,7 @@ package ch.swissbytes.fqmes.util;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.interfaces.ManageFile;
 import ch.swissbytes.domain.model.entities.ScopeSupplyEntity;
+import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeZone;
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,6 +36,8 @@ public class Util {
 
     @Inject
     private PurchaseOrderService purchaseOrderService;
+
+    private static ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
     private static final Logger log = Logger.getLogger(Util.class.getName());
 
@@ -118,22 +122,39 @@ public class Util {
         return value;
     }
 
+    /**
+     * This method is begins used in Job Summary Report PDF and Xls
+     * @param ids
+     * @return
+     */
+
+    public static String getNamesStatuses(String ids){
+        String statusStr = "";
+        if (ids.length() > 1) {
+            String[] statusIds = ids.split(",");
+            for (int i = 0; i < statusIds.length; i++) {
+                if(StringUtils.isNotEmpty(ids)) {
+                    Integer expeditingStatusId = Integer.valueOf(statusIds[i]);
+                    ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+                }
+            }
+        } else {
+            if(StringUtils.isNotEmpty(ids)) {
+                Integer expeditingStatusId = Integer.valueOf(ids);
+                ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+            }
+        }
+        if(statusStr.length()>1) {
+            statusStr = statusStr.substring(0, statusStr.length() - 1);
+        }
+        return statusStr;
+    }
+
     public String calculateVariance(ScopeSupplyEntity scopeSupply) {
         if (scopeSupply != null && scopeSupply.getRequiredSiteDate() != null && scopeSupply.getForecastSiteDate() != null) {
-           /* Calendar with = Calendar.getInstance();
-            with.setTime(scopeSupply.getForecastSiteDate());
-            Calendar to = Calendar.getInstance();
-            to.setTime(scopeSupply.getRequiredSiteDate());
-            to.set(Calendar.YEAR, with.get(Calendar.YEAR));
-            int withDAY = with.get(Calendar.DAY_OF_YEAR);
-            System.out.println("withDay   "+withDAY);
-            int toDAY = to.get(Calendar.DAY_OF_YEAR);
-            System.out.println("toDay   "+toDAY);
-            int diffDay = withDAY - toDAY;*/
             long diff =scopeSupply.getRequiredSiteDate().getTime()- scopeSupply.getForecastSiteDate().getTime() ;
-
-         //   System.out.println ("Days: " + diff / 1000 / 60 / 60 / 24);
-            //return Integer.toString(diffDay);
             return Long.toString(diff / 1000 / 60 / 60 / 24);
         }
         return "";
