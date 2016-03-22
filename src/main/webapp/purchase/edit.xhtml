@@ -52,10 +52,50 @@
 
                     <!-- Form Name -->
 
-                    <div class="title-page">
-                        <h4 class="page-header" style="margin-bottom: 5px!important;">#{msgs['po.view.edit']}</h4>
+                    <div style="position: fixed; width: 96%; background-color: #eeeeee; z-index: 1000; height: 60px; display: table; margin-top: -13px; margin-left: -15px; padding-left: 15px;">
+                        <div style="width: 100%; vertical-align: middle; display: table-cell">
+                            <div style="height: 15px!important;"></div>
+                            <div class="row" style="margin-bottom: -13px!important;">
+                                <div class="section-lbl-input-po" style="width: 500px!important;">
+                                    <div class="form-group input-general-po">
+                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                       value="#{msgs['po.lbl.po.type.required']}"/>
+
+                                        <div class="inputText-general-po" style="width: 250px!important;">
+                                            <h:outputText maxlength="50"
+                                                          value="#{purchaseOrderEdit.poEdit.po}"
+                                                          class="form-control view-po"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-lbl-input-po">
+                                    <div class="form-group input-general-po">
+                                        <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                                       value="#{msgs['po.lbl.variation']}"
+                                                       style="width: 112px!important; padding-right: 0px!important; padding-left: 0px!important;"/>
+
+                                        <div class="inputText-general-po"
+                                             style="padding-left: 0px!important; width: 255px!important;">
+                                            <h:outputText maxlength="50"
+                                                          value="#{purchaseOrderEdit.poEdit.variation}"
+                                                          class="form-control view-po"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0;"></div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br/>
+
+                    <div class="title-page" style="margin-top: 42px!important;">
+                        <h4 class="sub-header" style="margin-bottom: 5px!important;">#{msgs['po.view.title']}</h4>
                     </div>
                     <h4 class="sub-header">#{msgs['lbl.ph.title.general']}</h4>
+                    <br/>
+
                     <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
@@ -99,14 +139,12 @@
                     <div class="row">
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label" for="po"
-                                               value="#{msgs['po.lbl.po.type.required']}"/>
+                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                                               value="#{msgs['po.lbl.po.title']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:outputText id="po" maxlength="50"
-                                                  value="#{purchaseOrderEdit.poEdit.po}" class="form-control view-po"
-                                                  required="true"
-                                                  requiredMessage="#{msgs['po.lbl.reference.required']}"/>
+                                    <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
+                                                 class="form-control" readonly="true"/>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +154,6 @@
                                     class="form-control view-po"/>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="section-lbl-input-po">
                             &#160;
@@ -131,12 +168,11 @@
                         <div class="section-lbl-input-po">
                             <div class="form-group input-general-po">
                                 <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.variation']}"/>
+                                               value="#{msgs['po.lbl.supplier']}"/>
 
                                 <div class="inputText-general-po">
-                                    <h:inputText disabled="true"
-                                                 value="#{purchaseOrderEdit.poEdit.variation}"
-                                                 class="form-control po-view"/>
+                                    <h:inputText readonly="true" styleClass="form-control view-po"
+                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
                                 </div>
                             </div>
                         </div>
@@ -145,33 +181,6 @@
                                 <h:inputText disabled="true"
                                              value="#{configuration.getPOProcStatus(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.poProcStatus)}"
                                              class="form-control po-view"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.po.title']}"/>
-
-                                <div class="inputText-general-po">
-                                    <h:inputText maxlength="50" value="#{purchaseOrderEdit.poEdit.poTitle}"
-                                                 class="form-control" readonly="true"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="section-lbl-input-po">
-                            <div class="form-group input-general-po">
-                                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
-                                               value="#{msgs['po.lbl.supplier']}"/>
-
-                                <div class="inputText-general-po">
-                                    <h:inputText readonly="true" styleClass="form-control view-po"
-                                                 value="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.company}"/>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -397,7 +406,7 @@
                         </div>
                     </div>
 
-                    <div style="border: 1px solid black; margin-left: -15px; padding-left: 6px; margin-top: 10px; padding-bottom: 5px;
+                    <div style="border: 1px solid #cccccc; margin-left: -15px; padding-left: 6px; margin-top: 10px; padding-bottom: 5px;
                                 padding-top: 5px; width: 1023px; height: 225px; z-index: -10; margin-bottom: -216px; border-radius: 4px;"></div>
                     <div style="margin-left: -9px; padding-left: 9px; margin-bottom: 5px;
                                 margin-top: 0px; padding-bottom: 5px; padding-top: 5px; height: 225px;">

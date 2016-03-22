@@ -118,7 +118,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
                 aux = aux + deliveryDateH;
                 nexIndex = aux.length();
 
-                String incoTermH = "INCO Term: " + entity.getIncoTerm() + " " + entity.getFullIncoTerms() + ", ";
+                String incoTermH = "INCO Term: " + " " + entity.getFullIncoTerms() + ", ";
                 indexRichString.put("incoIni", nexIndex);
                 indexRichString.put("incoEnd", nexIndex + 11);
                 aux = aux + incoTermH;
