@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:confirmDialog widgetVar="confCancelDashboard" id="confDashboard" header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-2">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-10">
+                    You have unsaved data
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:commandButton value="Exit and Save" type='submit'
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitAndSaveRedirectToDashboard}">
+            </h:commandButton>
+            &#160;
+            <h:commandButton value="Exit Only (no save)" immediate="true"
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToDashboard}">
+            </h:commandButton>
+        </div>
+    </p:confirmDialog>
+
+    <p:confirmDialog widgetVar="confCancelPurchaseList" id="confrDialogLinkId" header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-2">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-10">
+                    You have unsaved data
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:commandButton value="Exit and Save" type='submit'
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitAndSaveRedirectToPurchaseList}">
+            </h:commandButton>
+            &#160;
+            <h:commandButton value="Exit Only (no save)" immediate="true"
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToPurchaseList}">
+            </h:commandButton>
+        </div>
+    </p:confirmDialog>
+
+    <p:confirmDialog widgetVar="confCancelReportList" id="confrDialogReportId" header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-2">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-10">
+                    You have unsaved data
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:commandButton value="Exit and Save" type='submit'
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitAndSaveRedirectToReportList}">
+            </h:commandButton>
+            &#160;
+            <h:commandButton value="Exit Only (no save)" immediate="true"
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToReportList}">
+            </h:commandButton>
+        </div>
+    </p:confirmDialog>
+
+    <p:confirmDialog widgetVar="confCancelHometList"  id="confrDialogHomeId" header="Cancel">
+        <f:facet name="message">
+            <div>
+                <div class="col-md-1">
+                    <h:graphicImage name="img/icon-alert.jpg"/>
+                </div>
+                <div class="col-md-11">
+                    Do you wish to leave this page and lose your unsaved data?
+                    <br/>(including changes to Scopes of Supply).
+                </div>
+            </div>
+        </f:facet>
+
+        <div class="pull-right">
+            <h:link outcome="/home" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
+            &#160;
+            <button class="btn btn-primary btn-sm color-btn-data-table" type="button"
+                    onclick="PF('confCancelHometList').hide();">
+                #{msgs['lbl.no']}
+            </button>
+        </div>
+    </p:confirmDialog>
+
+</ui:composition>

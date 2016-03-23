@@ -551,31 +551,28 @@
             <p:confirmDialog widgetVar="confCancelScopeSupplyEditDlg" id="confirmDialogId" header="Cancel">
                 <f:facet name="message">
                     <div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <h:graphicImage name="img/icon-alert.jpg"/>
                         </div>
-                        <div class="col-md-11">
-                            Do you wish to leave this page and lose your unsaved data?
-                            <br/>(including changes to Scopes of Supply).
+                        <div class="col-md-10">
+                            You have unsaved data
                         </div>
                     </div>
                 </f:facet>
 
                 <div class="pull-right">
-                    <h:commandButton value="#{msgs['lbl.yes']}" type="submit"
-                                     role="button"
+                    <h:commandButton value="Exit and Save" type='submit'
                                      styleClass="btn btn-primary btn-sm"
-                                     action="#{purchaseOrderEdit.cancel}">
+                                     action="#{purchaseOrderEdit.exitAndSaveRedirectToEdit}">
                     </h:commandButton>
                     &#160;
-                    <button class="btn btn-primary btn-sm" type="button"
-                            onclick="PF('confCancelScopeSupplyEditDlg').hide();">
-                        #{msgs['lbl.no']}
-                    </button>
+                    <h:commandButton value="Exit Only (no save)" immediate="true"
+                                     styleClass="btn btn-primary btn-sm"
+                                     action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToEdit}">
+                    </h:commandButton>
                 </div>
             </p:confirmDialog>
-
-
+            <ui:include src="../../WEB-INF/layout/confirmDialogs/confirm-dialogs-expediting-scope-supply.xhtml"/>
         </h:form>
         <p:dialog id="tdpId" header="#{msgs['tdp.create']}" widgetVar="tdp" resizable="false" height="300" width="800">
             <ui:include src="/purchase/modal/tpd/edit/ModalTDP2.xhtml"/>

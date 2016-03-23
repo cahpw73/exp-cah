@@ -720,6 +720,189 @@ public class PurchaseOrderEdit implements Serializable {
         return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope;
     }
 
+    public String exitOnlyNoSave(){
+        return "/purchase/list?faces-redirect=true&anchor="+anchor;
+    }
+
+    public String exitOnlyNoSaveRedirectToReportList(){
+        return "/report/list?faces-redirect=true";
+    }
+    public String exitOnlyNoSaveRedirectToPurchaseList(){
+        return "/purchase/list?faces-redirect=true&anchor="+anchor;
+    }
+    public String exitOnlyNoSaveRedirectToDashboard(){
+        return "/home?faces-redirect=true";
+    }
+    public String exitOnlyNoSaveRedirectToEdit(){
+        return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope;
+    }
+
+    public String exitAndSave() {
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/purchase/list?faces-redirect=true&anchor=" + anchor;
+        } else {
+            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
+    public String exitAndSaveRedirectToDashboard() {
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/home?faces-redirect=true";
+        } else {
+            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
+    public String exitAndSaveRedirectToPurchaseList() {
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/purchase/list?faces-redirect=true&anchor=" + anchor;
+        } else {
+            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
+    public String exitAndSaveRedirectToReportList() {
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/report/list?faces-redirect=true&anchor=" + anchor;
+        } else {
+            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
+    public String exitAndSaveFromScopeSupplyRedirectDashboard(){
+        if (isValidDataUpdate()) {
+            if (indexForScopeSupplyEditing >= 0) {
+                ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplyEditing);
+                ss.getTdpList().clear();
+                ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
+                ss.getAttachments().addAll(scopeSupplyEditing.getAttachments());
+                scopeSupplies.set(indexForScopeSupplyEditing, ss);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+        }
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/home?faces-redirect=true";
+        } else {
+            url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
+    public String exitAndSaveFromScopeSupplyRedirectPurchaseList(){
+        if (isValidDataUpdate()) {
+            if (indexForScopeSupplyEditing >= 0) {
+                ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplyEditing);
+                ss.getTdpList().clear();
+                ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
+                ss.getAttachments().addAll(scopeSupplyEditing.getAttachments());
+                scopeSupplies.set(indexForScopeSupplyEditing, ss);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+        }
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor;
+        } else {
+            url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
+    public String exitAndSaveFromScopeSupplyRedirectReportList(){
+        if (isValidDataUpdate()) {
+            if (indexForScopeSupplyEditing >= 0) {
+                ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplyEditing);
+                ss.getTdpList().clear();
+                ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
+                ss.getAttachments().addAll(scopeSupplyEditing.getAttachments());
+                scopeSupplies.set(indexForScopeSupplyEditing, ss);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+        }
+        Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+        log.info(String.format("hashCode [%s]", hashCode));
+        String url;
+        if (hashCode.intValue() == currentHashCode.intValue()) {
+            updateStatusesAndLastUpdate();
+            poEdit.setExpeditingStatus(expeditingStatuses);
+            service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+            url = "/report/list?faces-redirect=true&fase=1";
+        } else {
+            url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+        }
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+        return url;
+    }
+
     public String split() {
         String url = "/purchase/edit?faces-redirect=true&fase=1";
         if (validateValuesAboutSplit()) {
@@ -769,6 +952,24 @@ public class PurchaseOrderEdit implements Serializable {
 
     public String doUpdateScopeSupply() {
         log.info("doUpdateScopeSupply");
+        if (isValidDataUpdate()) {
+            if (indexForScopeSupplyEditing >= 0) {
+                ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplyEditing);
+                ss.getTdpList().clear();
+                ss.getTdpList().addAll(scopeSupplyEditing.getTdpList());
+                ss.getAttachments().addAll(scopeSupplyEditing.getAttachments());
+                scopeSupplies.set(indexForScopeSupplyEditing, ss);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+            log.info("anchorscope= " + anchorScope);
+            return "/purchase/edit?faces-redirect=true&fase=1&anchorsp="+anchorScope;
+        }
+        return "";
+    }
+
+    public String exitAndSaveRedirectToEdit(){
+        log.info("exitAndSaveRedirectToEdit");
         if (isValidDataUpdate()) {
             if (indexForScopeSupplyEditing >= 0) {
                 ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplyEditing);
