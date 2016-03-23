@@ -7,7 +7,6 @@
     <h4 class="sub-header fq-sub-header">#{msgs['po.supply.scope.title']}</h4>
 
     <div class="fq-form-table">
-        <h:inputHidden id="scrollTopScopeId" value="#{purchaseOrderEdit.scrollScopeTop}"/>
         <p:dataTable id="scopeSupplyList" var="_scopeSupply"
                      styleClass="data-table-po-sc data-table-po-lists"
                      value="#{purchaseOrderEdit.activeScopeSupplies}" rowKey="#{_index+1}"

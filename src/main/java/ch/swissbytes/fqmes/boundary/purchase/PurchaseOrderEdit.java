@@ -814,7 +814,7 @@ public class PurchaseOrderEdit implements Serializable {
         scopeSupplyEditing.getTdpList().addAll(scopeSupplies.get(index).getTdpList());
         scopeSupplyEditing.getAttachments().addAll(scopeSupplies.get(index).getAttachments());
         updateTdpActives();
-        return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id+"&anchorScope="+anchorScope;
+        return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id;
     }
 
     public ScopeSupplyEntity getScopeSupplySplit() {
