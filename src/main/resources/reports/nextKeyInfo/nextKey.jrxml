@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nextKeyInfo" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71430e76-2a1b-4fbb-a63c-2ff243ffaee5">
-	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.zoom" value="1.7715610000000017"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -52,7 +52,7 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="18" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="18" isBold="true" pdfFontName="Helvetica-Bold">Next Key Info Report</style>]]></text>
+				<text><![CDATA[<style size="18" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date Report</style>]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -64,44 +64,44 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 			<staticText>
 				<reportElement uuid="fcebc095-5b3b-4181-b8c0-46a03a3a4f63" x="108" y="3" width="180" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e02c6167-812c-43a3-afb6-4d2fa71b94c9" x="36" y="3" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">PO No</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e65efd7c-1074-4dc1-a769-73ca4589d487" x="72" y="3" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Var No</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="9bbdeea3-6418-46f0-bfde-9348a53959dc" x="290" y="3" width="50" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e142ee5c-a99c-458e-8723-1d3c0041e206" x="343" y="3" width="180" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date Comment</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Next Key Date Comment</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="1ddec6c9-0f49-47b2-9f12-be08942ffcfc" x="0" y="3" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
-					<font size="7" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="74eb6231-0a60-41aa-9126-71c90f054566" x="0" y="15" width="555" height="1"/>
