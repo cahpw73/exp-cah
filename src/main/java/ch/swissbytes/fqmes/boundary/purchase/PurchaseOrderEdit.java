@@ -166,9 +166,9 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String anchor;
 
-    private String scrollScopeTop="0";
-
     private String anchorScope;
+
+    private String scrollTop = "0";
 
 
     public void selectingForAttachment(Long id) {
@@ -401,7 +401,7 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void cleanComment() {
         commentEdit = new CommentEntity();
-        commentEdit.setCommentDate(Util.convertUTC(new Date(),configuration.getTimeZone()));
+        commentEdit.setCommentDate(Util.convertUTC(new Date(), configuration.getTimeZone()));
 
         commentIndexSelected = -1;
     }
@@ -716,7 +716,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     public String cancel() {
         log.info("cancel to edit purchase order...........");
-        return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1";
+        log.info("anchorscope= " + anchorScope);
+        return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope;
     }
 
     public String split() {
@@ -767,6 +768,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public String doUpdateScopeSupply() {
+        log.info("doUpdateScopeSupply");
         if (isValidDataUpdate()) {
             if (indexForScopeSupplyEditing >= 0) {
                 ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplyEditing);
@@ -777,7 +779,8 @@ public class PurchaseOrderEdit implements Serializable {
             }
             scopeActives.clear();
             scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
-            return "/purchase/edit?faces-redirect=true&fase=1&anchorScope="+anchorScope;
+            log.info("anchorscope= " + anchorScope);
+            return "/purchase/edit?faces-redirect=true&fase=1&anchorsp="+anchorScope;
         }
         return "";
     }
@@ -814,6 +817,8 @@ public class PurchaseOrderEdit implements Serializable {
         scopeSupplyEditing.getTdpList().addAll(scopeSupplies.get(index).getTdpList());
         scopeSupplyEditing.getAttachments().addAll(scopeSupplies.get(index).getAttachments());
         updateTdpActives();
+        anchorScope = scrollTop;
+        log.info("anchorScope= "+ anchorScope);
         return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id;
     }
 
@@ -1166,19 +1171,19 @@ public class PurchaseOrderEdit implements Serializable {
         this.anchor = anchor;
     }
 
-    public String getScrollScopeTop() {
-        return scrollScopeTop;
-    }
-
-    public void setScrollScopeTop(String scrollScopeTop) {
-        this.scrollScopeTop = scrollScopeTop;
-    }
-
     public String getAnchorScope() {
         return anchorScope;
     }
 
     public void setAnchorScope(String anchorScope) {
         this.anchorScope = anchorScope;
+    }
+
+    public String getScrollTop() {
+        return scrollTop;
+    }
+
+    public void setScrollTop(String scrollTop) {
+        this.scrollTop = scrollTop;
     }
 }
