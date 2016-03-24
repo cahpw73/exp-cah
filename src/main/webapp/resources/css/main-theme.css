@@ -170,7 +170,6 @@ textarea.form-control {
     padding-right: 0px;
     padding-left: 15px;
     float: left;
-    height: 60px !important;
 }
 
 .inputText-general-po {
@@ -612,11 +611,11 @@ label.checkbox {
     color: #ffffff;
 }
 
-
 .box-document-list {
     display: block !important;
     height: 50px !important;
 }
+
 /*Styles to input type search*/
 
 .left-inner-addon {

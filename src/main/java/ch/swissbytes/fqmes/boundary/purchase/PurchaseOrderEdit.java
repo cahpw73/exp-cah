@@ -170,6 +170,9 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String scrollTop = "0";
 
+    private boolean showButtons = false;
+
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -1386,5 +1389,17 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setScrollTop(String scrollTop) {
         this.scrollTop = scrollTop;
+    }
+
+    public boolean isShowButtons() {
+        return showButtons;
+    }
+
+    public void setShowButtons(boolean showButtons) {
+        this.showButtons = showButtons;
+    }
+
+    public void renderButtons() {
+        setShowButtons(true);
     }
 }
