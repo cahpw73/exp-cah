@@ -816,6 +816,62 @@ public class PurchaseOrderEdit implements Serializable {
         return url;
     }
 
+    public String exitAndSaveFromPartDeliveryRedirectDashboard(){
+        String url;
+        if (validateValuesAboutSplit()) {
+            relativeCurrentScopeSupplyId--;
+            scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
+            scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
+            ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
+            ss.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+            ss.getTdpList().clear();
+            ss.getAttachments().clear();
+            for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
+                currentIndexForTdp--;
+                TransitDeliveryPointEntity tdp = tdpService.clone(tdpe);
+                tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
+                ss.getTdpList().add(tdp);
+            }
+            for (AttachmentScopeSupply acs : selectedScopeSupply.getAttachments()) {
+                temporaryId--;
+                AttachmentScopeSupply attachmentScopeSupply = new AttachmentScopeSupplyService().clone(acs);
+                attachmentScopeSupply.setId(temporaryId);
+                attachmentScopeSupply.setLastUpdate(new Date());
+                ss.getAttachments().add(attachmentScopeSupply);
+            }
+            scopeSupplies.add(ss);
+            final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
+            if (index >= 0 && index < scopeSupplies.size()) {
+                ScopeSupplyEntity sse = scopeSupplyService.clone(selectedScopeSupply);
+                sse.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+                sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
+                sse.getAttachments().addAll(selectedScopeSupply.getAttachments());
+                scopeSupplies.set(index, sse);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+            Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+            log.info(String.format("hashCode [%s]", hashCode));
+
+            if (hashCode.intValue() == currentHashCode.intValue()) {
+                updateStatusesAndLastUpdate();
+                poEdit.setExpeditingStatus(expeditingStatuses);
+                service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+                url = "/home?faces-redirect=true";
+            } else {
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+            }
+            if (!conversation.isTransient()) {
+                conversation.end();
+            }
+        } else {
+            Messages.addGlobalError("You are not able to split with these values");
+            url = "";
+        }
+
+        return url;
+    }
     public String exitAndSaveFromScopeSupplyRedirectDashboard(){
         if (isValidDataUpdate()) {
             if (indexForScopeSupplyEditing >= 0) {
@@ -846,6 +902,119 @@ public class PurchaseOrderEdit implements Serializable {
         return url;
     }
 
+    public String exitAndSaveSplitAndRedirectReportList(){
+        String url;
+        if (validateValuesAboutSplit()) {
+            relativeCurrentScopeSupplyId--;
+            scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
+            scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
+            ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
+            ss.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+            ss.getTdpList().clear();
+            ss.getAttachments().clear();
+            for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
+                currentIndexForTdp--;
+                TransitDeliveryPointEntity tdp = tdpService.clone(tdpe);
+                tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
+                ss.getTdpList().add(tdp);
+            }
+            for (AttachmentScopeSupply acs : selectedScopeSupply.getAttachments()) {
+                temporaryId--;
+                AttachmentScopeSupply attachmentScopeSupply = new AttachmentScopeSupplyService().clone(acs);
+                attachmentScopeSupply.setId(temporaryId);
+                attachmentScopeSupply.setLastUpdate(new Date());
+                ss.getAttachments().add(attachmentScopeSupply);
+            }
+            scopeSupplies.add(ss);
+            final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
+            if (index >= 0 && index < scopeSupplies.size()) {
+                ScopeSupplyEntity sse = scopeSupplyService.clone(selectedScopeSupply);
+                sse.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+                sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
+                sse.getAttachments().addAll(selectedScopeSupply.getAttachments());
+                scopeSupplies.set(index, sse);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+            Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+            log.info(String.format("hashCode [%s]", hashCode));
+
+            if (hashCode.intValue() == currentHashCode.intValue()) {
+                updateStatusesAndLastUpdate();
+                poEdit.setExpeditingStatus(expeditingStatuses);
+                service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+                url = "/report/list?faces-redirect=true&fase=1";
+            } else {
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+            }
+            if (!conversation.isTransient()) {
+                conversation.end();
+            }
+        } else {
+            Messages.addGlobalError("You are not able to split with these values");
+            url = "";
+        }
+
+        return url;
+    }
+
+    public String exitAndSaveSplitAndRedirectPurchaseList(){
+        String url;
+        if (validateValuesAboutSplit()) {
+            relativeCurrentScopeSupplyId--;
+            scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
+            scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
+            ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
+            ss.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+            ss.getTdpList().clear();
+            ss.getAttachments().clear();
+            for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
+                currentIndexForTdp--;
+                TransitDeliveryPointEntity tdp = tdpService.clone(tdpe);
+                tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
+                ss.getTdpList().add(tdp);
+            }
+            for (AttachmentScopeSupply acs : selectedScopeSupply.getAttachments()) {
+                temporaryId--;
+                AttachmentScopeSupply attachmentScopeSupply = new AttachmentScopeSupplyService().clone(acs);
+                attachmentScopeSupply.setId(temporaryId);
+                attachmentScopeSupply.setLastUpdate(new Date());
+                ss.getAttachments().add(attachmentScopeSupply);
+            }
+            scopeSupplies.add(ss);
+            final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
+            if (index >= 0 && index < scopeSupplies.size()) {
+                ScopeSupplyEntity sse = scopeSupplyService.clone(selectedScopeSupply);
+                sse.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+                sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
+                sse.getAttachments().addAll(selectedScopeSupply.getAttachments());
+                scopeSupplies.set(index, sse);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+            Integer hashCode = service.getAbsoluteHashcode(poEdit.getId());
+            log.info(String.format("hashCode [%s]", hashCode));
+
+            if (hashCode.intValue() == currentHashCode.intValue()) {
+                updateStatusesAndLastUpdate();
+                poEdit.setExpeditingStatus(expeditingStatuses);
+                service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
+                url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor;
+            } else {
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
+            }
+            if (!conversation.isTransient()) {
+                conversation.end();
+            }
+        } else {
+            Messages.addGlobalError("You are not able to split with these values");
+            url = "";
+        }
+
+        return url;
+    }
     public String exitAndSaveFromScopeSupplyRedirectPurchaseList(){
         if (isValidDataUpdate()) {
             if (indexForScopeSupplyEditing >= 0) {
@@ -971,6 +1140,47 @@ public class PurchaseOrderEdit implements Serializable {
         return "";
     }
 
+    public String exitAndSaveSplitRedirectToEdit(){
+        String url = "/purchase/edit?faces-redirect=true&fase=1";
+        if (validateValuesAboutSplit()) {
+            relativeCurrentScopeSupplyId--;
+            scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
+            scopeSupplySplit.setStatus(enumService.getStatusEnumEnable());
+            ScopeSupplyEntity ss = scopeSupplyService.clone(scopeSupplySplit);
+            ss.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+            ss.getTdpList().clear();
+            ss.getAttachments().clear();
+            for (TransitDeliveryPointEntity tdpe : selectedScopeSupply.getTdpList()) {
+                currentIndexForTdp--;
+                TransitDeliveryPointEntity tdp = tdpService.clone(tdpe);
+                tdp.setId(Long.parseLong(Integer.toString(currentIndexForTdp)));
+                ss.getTdpList().add(tdp);
+            }
+            for (AttachmentScopeSupply acs : selectedScopeSupply.getAttachments()) {
+                temporaryId--;
+                AttachmentScopeSupply attachmentScopeSupply = new AttachmentScopeSupplyService().clone(acs);
+                attachmentScopeSupply.setId(temporaryId);
+                attachmentScopeSupply.setLastUpdate(new Date());
+                ss.getAttachments().add(attachmentScopeSupply);
+            }
+            scopeSupplies.add(ss);
+            final int index = scopeSupplyService.getIndexById(selectedScopeSupply.getId(), scopeSupplies);
+            if (index >= 0 && index < scopeSupplies.size()) {
+                ScopeSupplyEntity sse = scopeSupplyService.clone(selectedScopeSupply);
+                sse.setTotalCost(ss.getCost().multiply(ss.getQuantity()));
+                sse.getTdpList().addAll(selectedScopeSupply.getTdpList());
+                sse.getAttachments().addAll(selectedScopeSupply.getAttachments());
+                scopeSupplies.set(index, sse);
+            }
+            scopeActives.clear();
+            scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
+        } else {
+            Messages.addGlobalError("You are not able to split with these values");
+            url = "";
+        }
+        return url;
+    }
+
     public String exitAndSaveRedirectToEdit(){
         log.info("exitAndSaveRedirectToEdit");
         if (isValidDataUpdate()) {
@@ -1006,6 +1216,8 @@ public class PurchaseOrderEdit implements Serializable {
             scopeSupplySplit.setQuantity(new BigDecimal("0"));
 
         }
+        anchorScope = scrollTop;
+        log.info("anchorScope= "+ anchorScope);
         return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;
     }
 

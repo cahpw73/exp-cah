@@ -1,4 +1,5 @@
 window.onload = function () {
+    renderBodyButtons();
     var body = document.body
     var html = document.documentElement;
     var url = window.location.href;
