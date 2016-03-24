@@ -24,42 +24,42 @@ order by po.orderedvariation]]>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="362a71dd-5b7f-4301-9c7f-a69d085082ed" positionType="Float" x="36" y="2" width="35" height="12"/>
 				<textElement>
-					<font size="7"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="f2015390-2a0a-42bc-a814-3ae533f0372f" positionType="Float" x="73" y="2" width="35" height="12"/>
 				<textElement>
-					<font size="7"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="112a5b47-4d1f-4968-b046-a1940d974d9d" positionType="Float" x="108" y="2" width="180" height="12"/>
 				<textElement>
-					<font size="7"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{po_title}!=null?$F{po_title}:($F{expediting_title}!=null?$F{expediting_title}:"")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{po_title}!=null?$F{po_title}:""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="ccd7806e-9682-4ccf-8471-f554b18e56aa" positionType="Float" x="290" y="2" width="50" height="12"/>
 				<textElement>
-					<font size="7"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{next_key_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{next_key_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="d2766378-663f-44bc-a30e-da495dd7eeef" positionType="Float" x="343" y="2" width="180" height="12"/>
 				<textElement>
-					<font size="7"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{next_key_date_comment}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="997a77da-4e11-45d4-a240-3fdcb7681bf6" x="0" y="2" width="35" height="12"/>
 				<textElement>
-					<font size="7"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{project}]]></textFieldExpression>
 			</textField>

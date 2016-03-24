@@ -66,7 +66,7 @@ order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
+				<text><![CDATA[<style size="8" isBold="true" pdfFontName="Helvetica-Bold">PO Title</style>]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="e02c6167-812c-43a3-afb6-4d2fa71b94c9" x="36" y="3" width="35" height="12"/>
