@@ -110,7 +110,7 @@
                     <p:commandLink oncomplete="PF('attachmentScopeSupplyModal').show()"
                                    styleClass="icon-attachment"
                                    onclick="doChange();"
-                                   async="false" delay="500"
+                                   async="false"
                                    action="#{purchaseOrderEdit.selectingForAttachment(_scopeSupply.id)}"
                                    update=":attachmentScopeSupplyId">
                         <h:graphicImage
@@ -129,7 +129,7 @@
                                    style="margin-top: 2px;margin-bottom: 2px;"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax update="scopeSupplyList"
-                                async="false" delay="500"
+                                async="false"
                                 listener="#{purchaseOrderEdit.deleteScopeSupply(_scopeSupply.id)}"/>
                     </h:commandLink>
                 </div>
@@ -144,7 +144,7 @@
                 <div class="pull-left">
                     <p:commandLink value="#{msgs['supply.scope.lbl.dont.expedite']}"
                                    style="margin-top: 2px;margin-bottom: 2px;"
-                                   update="@form" ajax="true" async="false" delay="500"
+                                   update="@form" ajax="true" async="false"
                                    action="#{purchaseOrderEdit.updateScopeSupplyExcludeFromExpedite}"
                                    disabled="#{_scopeSupply.excludeFromExpediting}"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table btn-commandLink-primeFaces">
@@ -159,7 +159,7 @@
                 <div class="pull-left">
                     <p:commandLink value="#{msgs['supply.scope.lbl.expedite']}"
                                    style="margin-top: 2px;margin-bottom: 2px;"
-                                   update="@form" ajax="true" async="false" delay="500"
+                                   update="@form" ajax="true" async="false"
                                    action="#{purchaseOrderEdit.addItemToExpedite}"
                                    disabled="#{!_scopeSupply.excludeFromExpediting}"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table btn-commandLink-primeFaces">
