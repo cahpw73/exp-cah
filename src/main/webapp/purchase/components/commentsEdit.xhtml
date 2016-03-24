@@ -39,7 +39,7 @@
                                 width="20" height="20"/>
                         <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
                                 process="@this"
-                                async="false"
+                                async="false" delay="500"
                                 listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
                     </p:commandLink>
                 </div>
@@ -50,7 +50,7 @@
                                    onclick="doChange();"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
-                                async="false"
+                                async="false" delay="500"
                                 process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
                     </h:commandLink>
                     &#160;
@@ -58,7 +58,7 @@
                                    onclick="doChange();"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax update="commentList" process="@this"
-                                async="false"
+                                async="false" delay="500"
                                 listener="#{purchaseOrderEdit.deleteComment(_comment.id)}"/>
                     </h:commandLink>
                 </div>
@@ -67,11 +67,16 @@
 
         <div class="action-button-po">
             <div class="pull-right">
-                <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right"
-                                 onclick="doChange();"
-                                 value="#{msgs['lbl.add.comment']}" action="#{purchaseOrderEdit.cleanComment()}">
-                    <p:ajax update=":commentModalId" async="false" oncomplete="PF('commentEditModal').show();"/>
-                </h:commandButton>
+                <h:panelGroup id="bntCommnentShow">
+                    <h:panelGroup rendered="#{purchaseOrderEdit.showButtons}">
+                        <h:commandButton styleClass="component-left btn btn-primary btn-sm pull-right"
+                                         onclick="doChange();"
+                                         value="#{msgs['lbl.add.comment']}"
+                                         action="#{purchaseOrderEdit.cleanComment()}">
+                            <p:ajax update=":commentModalId" async="false" oncomplete="PF('commentEditModal').show();"/>
+                        </h:commandButton>
+                    </h:panelGroup>
+                </h:panelGroup>
             </div>
         </div>
     </div>

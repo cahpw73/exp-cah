@@ -166,6 +166,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String anchor;
 
+    private boolean showButtons = false;
+
 
     public void selectingForAttachment(Long id) {
         idForAttachment = id;
@@ -1160,5 +1162,18 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void setAnchor(String anchor) {
         this.anchor = anchor;
+    }
+
+
+    public boolean isShowButtons() {
+        return showButtons;
+    }
+
+    public void setShowButtons(boolean showButtons) {
+        this.showButtons = showButtons;
+    }
+
+    public void renderButtons() {
+        setShowButtons(true);
     }
 }

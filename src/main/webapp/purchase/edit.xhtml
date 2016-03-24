@@ -27,6 +27,9 @@
                 <h:form id="empForm" class="form-horizontal" role="form" prependId="false" enctype="multipart/form-data"
                         acceptcharset="UTF-8">
                     <script>
+                        window.onload = function () {
+                            renderBodyButtons();
+                        };
                         $(document).ready(function () {
                             if (document.referrer != "") {
                                 var referringURL = document.referrer;
@@ -49,7 +52,9 @@
                             }
                         });
                     </script>
-
+                    <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"
+                                     update="bntContactShow bntBulkUpdateShow bntCommnentShow"
+                                     process="@this" action="#{purchaseOrderEdit.renderButtons()}"/>
                     <!-- Form Name -->
 
                     <div style="position: fixed; width: 96%; background-color: #eeeeee; z-index: 1000; height: 60px; display: table; margin-top: -13px; margin-left: -15px; padding-left: 15px;">
@@ -321,24 +326,28 @@
                             </ui:remove>
 
                             <div class="col-sm-7 pull-left">
-                                <h:commandButton
-                                        id="btnAddContact"
-                                        value="#{msgs['po.supplier.lbl.btn.add.contact2']}"
-                                        disabled="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier==null}"
-                                        action="#{contactBean.start(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.id)}"
-                                        onclick="PF('contactModal').show();"
-                                        styleClass="btn btn-primary btn-sm">
-                                    <p:ajax async="false" update=":editContact"/>
-                                </h:commandButton>
-                                &#160;
-                                <h:commandButton
-                                        id="btnViewContact"
-                                        value="#{msgs['po.supplier.lbl.btn.view.contact']}"
-                                        disabled="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactEntity==null}"
-                                        onclick="PF('contactViewModal').show();"
-                                        styleClass="btn btn-primary btn-sm">
-                                    <p:ajax async="false" update=":contactViewId"/>
-                                </h:commandButton>
+                                <h:panelGroup id="bntContactShow">
+                                    <h:panelGroup rendered="#{purchaseOrderEdit.showButtons}">
+                                        <h:commandButton
+                                                id="btnAddContact"
+                                                value="#{msgs['po.supplier.lbl.btn.add.contact2']}"
+                                                disabled="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier==null}"
+                                                action="#{contactBean.start(purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.supplier.id)}"
+                                                onclick="PF('contactModal').show();"
+                                                styleClass="btn btn-primary btn-sm">
+                                            <p:ajax async="false" update=":editContact"/>
+                                        </h:commandButton>
+                                        &#160;
+                                        <h:commandButton
+                                                id="btnViewContact"
+                                                value="#{msgs['po.supplier.lbl.btn.view.contact']}"
+                                                disabled="#{purchaseOrderEdit.poEdit.purchaseOrderProcurementEntity.contactEntity==null}"
+                                                onclick="PF('contactViewModal').show();"
+                                                styleClass="btn btn-primary btn-sm">
+                                            <p:ajax async="false" update=":contactViewId"/>
+                                        </h:commandButton>
+                                    </h:panelGroup>
+                                </h:panelGroup>
                             </div>
                         </div>
                     </div>
@@ -497,12 +506,16 @@
 
                     <div style="width: 940px;">
                         <div class="pull-left">
-                            <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
-                                           styleClass="btn btn-primary btn-commandLink-primeFaces"
-                                           action="#{purchaseOrderEdit.resetBulkUpdateModal}"
-                                           rendered="#{permissionBean.hasPermission(1410)}"
-                                           oncomplete="PF('bulkUpdateSp').show();"
-                                           update=":bulkUpdateScopeSupplyFormId"/>
+                            <h:panelGroup id="bntBulkUpdateShow">
+                                <h:panelGroup rendered="#{purchaseOrderEdit.showButtons}">
+                                    <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
+                                                   styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                                   action="#{purchaseOrderEdit.resetBulkUpdateModal}"
+                                                   rendered="#{permissionBean.hasPermission(1410)}"
+                                                   oncomplete="PF('bulkUpdateSp').show();"
+                                                   update=":bulkUpdateScopeSupplyFormId"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
                         </div>
 
                         <div class="pull-right">
