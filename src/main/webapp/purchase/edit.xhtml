@@ -661,6 +661,10 @@
                 <ui:include src="../procurement/admin/supplier/components/addBrand.xhtml"/>
             </h:form>
         </p:dialog>
-
+        <script>
+            window.onload = function () {
+                renderBodyButtons();
+            };
+        </script>
     </ui:define>
 </ui:composition>
