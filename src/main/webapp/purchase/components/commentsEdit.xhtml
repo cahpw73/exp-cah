@@ -39,7 +39,7 @@
                                 width="20" height="20"/>
                         <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
                                 process="@this"
-                                async="false" delay="500"
+                                async="false"
                                 listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
                     </p:commandLink>
                 </div>
@@ -50,7 +50,7 @@
                                    onclick="doChange();"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax oncomplete="PF('commentUpdateModal').show();" update=":commentEditFormId"
-                                async="false" delay="500"
+                                async="false"
                                 process="@this" listener="#{purchaseOrderEdit.selectComment(_comment.id)}"/>
                     </h:commandLink>
                     &#160;
@@ -58,7 +58,7 @@
                                    onclick="doChange();"
                                    styleClass="btn btn-primary btn-sm color-btn-data-table">
                         <p:ajax update="commentList" process="@this"
-                                async="false" delay="500"
+                                async="false"
                                 listener="#{purchaseOrderEdit.deleteComment(_comment.id)}"/>
                     </h:commandLink>
                 </div>
