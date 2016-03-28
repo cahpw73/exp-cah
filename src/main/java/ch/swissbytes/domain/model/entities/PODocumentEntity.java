@@ -63,8 +63,7 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
     }
 
     @Lob
-    @Size(max = 20000)
-    @Column(name = "description", nullable = true, length = 20000)
+    @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
     }

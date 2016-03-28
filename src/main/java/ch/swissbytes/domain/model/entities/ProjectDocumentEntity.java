@@ -61,8 +61,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
     }
 
     @Lob
-    @Size(max = 20000)
-    @Column(name = "description", nullable = true, length = 20000)
+    @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
     }

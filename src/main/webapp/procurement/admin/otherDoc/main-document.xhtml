@@ -63,7 +63,7 @@
                                                  styleClass="form-control" maxlength="50"/>
                                     <p:message for="codeTS"/>
                                     <br/>
-                                    <h:inputText value="#{mainDocumentBean.mainDocument.description}" id="editorValue"  styleClass="textCKEditor"
+                                    <h:inputTextarea value="#{mainDocumentBean.mainDocument.description}" id="editorValue"  styleClass="textCKEditor"
                                                  style="position: absolute; top:-200px"/>
                                     <textarea cols="140" rows="40" id="editor1" name="editor1">
                                     </textarea>
@@ -104,7 +104,7 @@
                                             <p:media value="/document/pdf?pdfId=#{mainDocumentBean.pdfId}" height="300px" width="100%" player="pdf"/>
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{mainDocumentBean.selected.attachmentMainDocument eq null}">
-                                            <h:inputText value="#{mainDocumentBean.selected.description}" id="editorValue2"  styleClass="textCKEditor2"
+                                            <h:inputTextarea value="#{mainDocumentBean.selected.description}" id="editorValue2"  styleClass="textCKEditor2"
                                                          style="position: absolute; top:-200px"/>
                                             <textarea id="editor2" name="editor2">
                                                 <h:outputText value="#{mainDocumentBean.selected.description}"/>

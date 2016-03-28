@@ -1,5 +1,5 @@
 /**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
@@ -21,5 +21,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'about', groups: [ 'about' ] }
 	];
 
-	config.removeButtons = 'Subscript,Superscript,Link,Unlink,Anchor,Scayt,Image,HorizontalRule,SpecialChar,Blockquote,Styles,About,Source';
+	config.removeButtons = 'Underline,Subscript,Superscript,PasteText,PasteFromWord,Link,Unlink,Anchor,Scayt,Image,SpecialChar,HorizontalRule,Blockquote,About,Styles,RemoveFormat';
+	config.pasteFromWordRemoveStyles = false;
+    config.pasteFromWordRemoveFontStyles = false;
 };
