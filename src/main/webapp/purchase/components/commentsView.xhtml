@@ -9,7 +9,7 @@
                  rowIndexVar="_index" var="_comment">
         <p:column headerText="#{msgs['po.attach.tbl.column.date']}" width="95" sortBy="#{_comment.commentDate}"
                   sortFunction="#{sortBean.sortDate}">
-            #{util.toLocalDateGMT(_comment.commentDate)}
+            #{util.toLocal(_comment.commentDate)}
         </p:column>
         <p:column headerText="#{msgs['po.attach.tbl.column.from']}" width="200" sortBy="#{_comment.name}"
                   sortFunction="#{sortBean.sortStrings}">
