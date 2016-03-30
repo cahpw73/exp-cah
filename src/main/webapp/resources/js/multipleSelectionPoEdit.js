@@ -4,11 +4,32 @@
 selectedValues = [];
 $(document).ready(function () {
     initializeMultiselection();
+    renderBodyButtons();
+    var body = document.body
+    var html = document.documentElement;
+    var url = window.location.href;
+    index = url.indexOf("anchorsp=");
+    if (index > -1) {
+        index2=url.substr(index+9).indexOf("&");
+        if(index2>-1){
+            scroll=url.substr(index+9,index2);
+        }else{
+            scroll=url.substr(index+9);
+        }
+        if(body.scrollTop == 0 && html.scrollTop == 0) {
+            body.scrollTop += scroll;
+            html.scrollTop += scroll;
+        }
+    }
+});
+
+$(window).scroll(function (event) {
+    var scroll = $(window).scrollTop();
+    document.getElementById("scrollTopId").value = scroll;
 });
 
 function initializeMultiselection(idsSelected) {
     var array = [];
-    console.log('selected first print ' + idsSelected);
     selectedValues = [];
     if (idsSelected) {
         selectedValues = idsSelected.split(',')
@@ -25,7 +46,6 @@ function initializeMultiselection(idsSelected) {
                     index = selectedValues.indexOf(option.val());
                     selectedValues.splice(index, 1);
                 }
-                console.log("val before  " + selectedValues);
                 $('#poStatusesHidenId').val(selectedValues.toString());
 
             },
@@ -35,19 +55,15 @@ function initializeMultiselection(idsSelected) {
     );
     if (idsSelected) {
         array = JSON.parse("[" + idsSelected + "]");
-        console.log('second print selected ' + array);
         $('#poStatuses').multiselect('select', array);
     }
 }
 
 function verifyExcludeValues(optionSelected) {
-    console.log("verifyExcludeValues")
-    console.log("optionSelected= " + optionSelected);
     deleted=12;
     completed=5;
     cancelled=1;
     if (optionSelected == completed || optionSelected == deleted || optionSelected == cancelled) {
-        console.log("has some to evaluation")
         if(optionSelected==completed){
             deletedExcludeValues(deleted,cancelled);
         }else if(optionSelected==deleted){
@@ -59,14 +75,8 @@ function verifyExcludeValues(optionSelected) {
 }
 
 function deletedExcludeValues(status1, status2){
-    console.log("deletedExcludeValues");
-    console.log("status1= " + status1);
-    console.log("status2= " + status2);
-    console.log("selectedValues = " + selectedValues)
     index1 = selectedValues.indexOf(status1.toString());
     index2 = selectedValues.indexOf(status2.toString());
-    console.log("index1= " + index1);
-    console.log("index2= " + index2);
     if(index1>-1){
         $('#poStatuses').multiselect('deselect', [status1.toString()]);
         selectedValues.splice(index1,1);
