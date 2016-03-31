@@ -5,7 +5,7 @@
 
     <div class="col-md-12">
         <h:form id="poDocFormDlg#{id}">
-            <h:inputText value="#{bean.description}" id="editPODocValue"  styleClass="editPODocCKEditor#{id}"
+            <h:inputTextarea value="#{bean.description}" id="editPODocValue"  styleClass="editPODocCKEditor#{id}"
                          style="position: absolute; top:-200px"/>
             <h:panelGroup rendered="#{!poDocumentBean.docPreview}">
                 <textarea id="editPODoceditor#{id}" name="editPODoceditor#{id}"
@@ -16,6 +16,7 @@
                     CKEDITOR.replace('editPODoceditor#{id}');
                 </script>
             </h:panelGroup>
+
             <h:panelGroup rendered="#{poDocumentBean.docPreview}">
                 <textarea id="editPODoceditorPr#{id}" name="editPODoceditorPr#{id}"
                           style="width: 730px!important; height: 275px!important;" disabled="disabled">
@@ -25,6 +26,7 @@
                     CKEDITOR.replace('editPODoceditorPr#{id}');
                 </script>
             </h:panelGroup>
+
             <br/>
             <p:commandLink value="#{msgs['lbl.save']}" action="#{poDocumentBean.updatePODocumentDt(id)}"
                            rendered="#{poBean.beingEdited and !poDocumentBean.docPreview}"

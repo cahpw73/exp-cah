@@ -304,6 +304,7 @@ public class PoDocumentBean implements Serializable {
     }
 
     public void saveNewPODocument() {
+        log.info("saving new po document");
         PurchaseOrderProcurementEntity poe = poeService.findPOEById(poId);
         poDocumentEntity.setId(null);
         poDocumentEntity.setStatus(StatusEnum.ENABLE);

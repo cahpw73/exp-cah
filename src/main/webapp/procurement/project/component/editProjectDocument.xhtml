@@ -5,7 +5,7 @@
 
     <div class="col-md-12">
         <h:form id="projectDocFormDlg#{id}">
-            <h:inputText value="#{bean.description}" id="editorValue#{id}"  styleClass="textCKEditor"
+            <h:inputTextarea value="#{bean.description}" id="editorValue#{id}"  styleClass="textCKEditor"
                          style="position: absolute; top:-200px"/>
             <h:panelGroup rendered="#{!documentBean.docPreview}">
                 <textarea id="editor#{id}" name="editor#{id}" style="width: 730px!important; height: 275px!important;">
