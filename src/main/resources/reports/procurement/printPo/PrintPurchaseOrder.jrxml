@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1506"/>
+	<property name="ireport.y" value="546"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -720,22 +720,20 @@
 						</jr:columnHeader>
 						<jr:detailCell height="18" rowSpan="1">
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="1" y="0" width="257" height="12" isRemoveLineWhenBlank="true">
+								<reportElement uuid="1c130ae7-8e3a-4e39-81a9-c6d449be3062" positionType="Float" x="5" y="0" width="263" height="12" isRemoveLineWhenBlank="true">
 									<printWhenExpression><![CDATA[$F{poTitle}==null]]></printWhenExpression>
 								</reportElement>
 								<textElement verticalAlignment="Middle" markup="styled">
 									<font size="8"/>
-									<paragraph leftIndent="3" rightIndent="4"/>
 								</textElement>
 								<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true,"arial",8).processSnippetText($F{description}!=null?$F{description}:$F{preamble}))]]></textFieldExpression>
 							</textField>
 							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="1" y="0" width="272" height="12" isRemoveLineWhenBlank="true">
+								<reportElement uuid="3377c7c3-c118-42d3-aeff-9c04ae79e695" style="Arial-Bold" x="5" y="0" width="263" height="12" isRemoveLineWhenBlank="true">
 									<printWhenExpression><![CDATA[$F{poTitle}!=null]]></printWhenExpression>
 								</reportElement>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 									<font size="10" isBold="true" isItalic="false"/>
-									<paragraph leftIndent="3" rightIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{poTitle}]]></textFieldExpression>
 							</textField>
