@@ -130,24 +130,26 @@ public class Util {
 
     public static String getNamesStatuses(String ids){
         String statusStr = "";
-        if (ids.length() > 1) {
-            String[] statusIds = ids.split(",");
-            for (int i = 0; i < statusIds.length; i++) {
-                if(StringUtils.isNotEmpty(ids)) {
-                    Integer expeditingStatusId = Integer.valueOf(statusIds[i]);
+        if(StringUtils.isNotEmpty(ids)) {
+            if (ids.length() > 1) {
+                String[] statusIds = ids.split(",");
+                for (int i = 0; i < statusIds.length; i++) {
+                    if (StringUtils.isNotEmpty(ids)) {
+                        Integer expeditingStatusId = Integer.valueOf(statusIds[i]);
+                        ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
+                        statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name()) + ",";
+                    }
+                }
+            } else {
+                if (StringUtils.isNotEmpty(ids)) {
+                    Integer expeditingStatusId = Integer.valueOf(ids);
                     ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
-                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name()) + ",";
                 }
             }
-        } else {
-            if(StringUtils.isNotEmpty(ids)) {
-                Integer expeditingStatusId = Integer.valueOf(ids);
-                ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
-                statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name())+",";
+            if (statusStr.length() > 1) {
+                statusStr = statusStr.substring(0, statusStr.length() - 1);
             }
-        }
-        if(statusStr.length()>1) {
-            statusStr = statusStr.substring(0, statusStr.length() - 1);
         }
         return statusStr;
     }
