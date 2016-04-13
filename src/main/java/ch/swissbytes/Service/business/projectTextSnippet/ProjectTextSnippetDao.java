@@ -115,4 +115,18 @@ public class ProjectTextSnippetDao extends GenericDao<ProjectTextSnippetEntity> 
     }
 
 
+    public List<ProjectTextSnippetEntity> isProjectTextCreateInPO(final Long projectTextId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectTextSnippetEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND p.textSnippet is null ");
+        sb.append(" AND (p.purchaseOrder is not null ");
+        sb.append(" OR p.purchaseOrder is null) ");
+        sb.append(" AND p.id = :PROJECT_TEXT_ID ");
+        Map<String,Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("PROJECT_TEXT_ID",projectTextId);
+        return super.findBy(sb.toString(),params);
+    }
 }

@@ -16,6 +16,8 @@ import java.util.logging.Logger;
  */
 public class ProjectTextSnippetService implements Serializable {
 
+    public static final Logger log = Logger.getLogger(ProjectTextSnippetService.class.getName());
+
     @Inject
     private ProjectTextSnippetDao dao;
 
@@ -68,5 +70,13 @@ public class ProjectTextSnippetService implements Serializable {
             dao.doUpdate(p);
         }
         return list;
+    }
+
+    @Transactional
+    public boolean canDeleteProjectTextCreateOnPO(final Long projectTextId){
+        log.info("canDeleteFromPO( projectTextId["+projectTextId+"])");
+        List<ProjectTextSnippetEntity> list = dao.isProjectTextCreateInPO(projectTextId);
+        log.info("list size : " + list.size());
+        return !list.isEmpty();
     }
 }

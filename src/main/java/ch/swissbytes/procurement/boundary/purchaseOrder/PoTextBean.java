@@ -13,6 +13,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -69,6 +70,18 @@ public class PoTextBean implements Serializable {
         droppedTextSnippetList.add(clauses);
         reorderDroppedTextSnippetList();
         textSnippetList.remove(text);
+    }
+
+    @Transactional
+    public void deleteProjectText(ProjectTextSnippetEntity text){
+        log.info("Deleting project text...");
+        text.setStatus(StatusEnum.DELETED);
+        projectTextSnippetService.doUpdate(text);
+        textSnippetList.remove(text);
+    }
+
+    public boolean canDeleteProjectText(ProjectTextSnippetEntity text){
+        return projectTextSnippetService.canDeleteProjectTextCreateOnPO(text.getId());
     }
 
     @PreDestroy
