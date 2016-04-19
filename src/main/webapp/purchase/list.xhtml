@@ -113,7 +113,7 @@
                 <p:column headerText="#{msgs['po.lbl.po.status']}" width="170"
                           sortBy="#{_purchase.purchaseOrderStatus}"
                           styleClass="column-list-header-po">
-                    <p:inputTextarea value="#{purchaseOrderListBean.loadStatusNameById( _purchase.expeditingStatus)}"
+                    <p:inputTextarea value="#{purchaseOrderListBean.loadStatusNameById(_purchase.expeditingStatus)}"
                                      styleClass="form-control" readonly="true"
                                      style="max-height: 29px; height: 29px; cursor:pointer!important;" />
                 </p:column>

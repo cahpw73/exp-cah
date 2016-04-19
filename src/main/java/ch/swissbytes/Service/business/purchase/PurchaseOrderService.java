@@ -520,6 +520,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         //TODO Remove if sure that not is necessary
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+        purchaseOrderEntity.setExpeditingStatus(String.valueOf(ExpeditingStatusEnum.ISSUED.ordinal()));
         if(!existExpeditingStatus(purchaseOrderEntity.getId(),ExpeditingStatusEnum.ISSUED)){
             ExpeditingStatusEntity expeditingStatusEntity = new ExpeditingStatusEntity();
             expeditingStatusEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
