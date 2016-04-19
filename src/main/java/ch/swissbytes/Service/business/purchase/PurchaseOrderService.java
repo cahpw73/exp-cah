@@ -389,6 +389,7 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.setLastUpdate(new Date());
         purchaseOrderEntity.setStatus(enumService.getStatusEnumEnable());
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+        purchaseOrderEntity.setExpeditingStatus(null);
         purchaseOrderEntity.setPoDeliveryDate(null);
         purchaseOrderEntity.setIntroEmail(null);
         purchaseOrderEntity.setIntroEmailSentComment(null);
@@ -520,14 +521,13 @@ public class PurchaseOrderService extends Service implements Serializable {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         //TODO Remove if sure that not is necessary
         purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
-        purchaseOrderEntity.setExpeditingStatus(String.valueOf(ExpeditingStatusEnum.ISSUED.ordinal()));
-        if(!existExpeditingStatus(purchaseOrderEntity.getId(),ExpeditingStatusEnum.ISSUED)){
+        if(StringUtils.isEmpty(purchaseOrderEntity.getExpeditingStatus())) {
+            purchaseOrderEntity.setExpeditingStatus(String.valueOf(ExpeditingStatusEnum.ISSUED.ordinal()));
             ExpeditingStatusEntity expeditingStatusEntity = new ExpeditingStatusEntity();
             expeditingStatusEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
             expeditingStatusEntity.setPurchaseOrderEntity(purchaseOrderEntity);
             expeditingStatusDao.doSave(expeditingStatusEntity);
         }
-
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
         purchaseOrderEntity.setGeneralComment(null);
         purchaseOrderEntity.setNextKeyDateComment(null);
