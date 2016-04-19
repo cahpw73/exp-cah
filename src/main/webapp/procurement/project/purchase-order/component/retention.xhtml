@@ -147,7 +147,7 @@
                                 <p:ajax event="change" process="@this" async="false"/>
                             </h:selectOneMenu>
                             <h:inputText readonly="true" styleClass="form-control view-po"
-                                         value="#{CURRENCY}"
+                                         value="#{CURRENCY.currency.code}"
                                          rendered="#{poBean.beingViewed}"/>
                         </div>
 
