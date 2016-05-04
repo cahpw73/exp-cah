@@ -364,6 +364,7 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     }
 
     public int getTotalNumberOfPOs(final Long projectId) {
+        log.info("getTotalNumberOfPOs(Long projectId["+projectId+"])");
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT COUNT(po.id) ");
         sb.append(" FROM PurchaseOrderEntity po ");
@@ -384,10 +385,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
+        log.info("result : " + result);
+        log.info("script : " + sb.toString());
         return result.intValue();
     }
 
     public int getNumberOfCompletedPOs(final Long projectId) {
+        log.info("getNumberOfCompletedPOs(Long projectId["+projectId+"])");
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT COUNT(po.id) ");
         sb.append(" FROM PurchaseOrderEntity po ");
@@ -406,10 +410,13 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
+        log.info("result : " + result);
+        log.info("script : " + sb.toString());
         return result.intValue();
     }
 
     public int getNumberOfOpenPOs(Long projectId) {
+        log.info("getNumberOfOpenPOs(Long projectId["+projectId+"])");
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT COUNT(po.id) ");
         sb.append(" FROM PurchaseOrderEntity po ");
@@ -432,6 +439,8 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
+        log.info("result : " + result);
+        log.info("script : " + sb.toString());
         return result.intValue();
     }
 
