@@ -35,6 +35,16 @@
                                 <p:ajax async="false" process="@this"
                                         update=":editPoForm:standardTextDt :editPoForm:clausesAuxDt :editPoForm:bbtnt"/>
                             </h:commandLink>
+                            &#160;
+                            <p:commandLink value="Delete" rendered="#{poTextBean.canDeleteProjectText(_t)}"
+                                           action="#{poTextBean.deleteProjectText(_t)}"
+                                           async="false" process="@this"
+                                           update=":editPoForm:standardTextDt :editPoForm:bbtnt">
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['po.text.lbl.message.remove.standard.text']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
                         </p:column>
                     </p:dataTable>
                 </div>
