@@ -32,7 +32,7 @@
 		<![CDATA[select id,project,po
 from purchase_order
 WHERE  $X{IN, id, purchaseID} and status_id=1
-order by project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
+order by orderedvariation,project, CASE WHEN isnumeric(po) THEN lpad(po, 50, '0') ELSE po END;]]>
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="project" class="java.lang.String"/>

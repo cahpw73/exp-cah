@@ -44,7 +44,7 @@ public class ReportNextKey extends ReportView implements Serializable {
         this.configuration = configuration;
         this.entityManager=entityManager;
         if(ids!=null&&ids.size()>0){
-            log.info("List Ids scopeSupplies: " + ids.size());
+            log.info("List Ids PurchaseOrder: " + ids.size());
             addParameters("purchaseID", ids);
             for(Long id : ids){
                 log.info("Id : "+ id);
