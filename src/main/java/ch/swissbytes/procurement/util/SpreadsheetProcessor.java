@@ -49,6 +49,11 @@ public class SpreadsheetProcessor implements Serializable {
         row = spreadsheet.createRow((short) rowNo);
     }
 
+    public void createRowWithHeight(int rowNo,short height) {
+        row = spreadsheet.createRow((short) rowNo);
+        row.setHeight(height);
+    }
+
     public void writeStringValue(int colNo, String value) {
         row.createCell(colNo).setCellValue(value);
     }

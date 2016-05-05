@@ -2,6 +2,7 @@ package ch.swissbytes.fqmes.report;
 
 
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJobSummaryService;
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetPlannerService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetReceivableManifestService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.ExpeditingStatusEntity;
@@ -58,6 +59,9 @@ public class ReportBean implements Serializable {
 
     @Inject
     private SpreadsheetReceivableManifestService spreadsheetReceivableManifestService;
+
+    @Inject
+    private SpreadsheetPlannerService spreadsheetPlannerService;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
@@ -173,6 +177,12 @@ public class ReportBean implements Serializable {
     public StreamedContent downloadReceivableManifestFileExport() {
         InputStream stream = spreadsheetReceivableManifestService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Receivable.Manifest.xlsx");
+        return file;
+    }
+
+    public StreamedContent downloadPlannerReportFileExport() {
+        InputStream stream = spreadsheetPlannerService.generateWorkbook(purchaseOrderList());
+        file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Planner.xlsx");
         return file;
     }
 
