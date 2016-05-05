@@ -385,8 +385,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
-        log.info("result : " + result);
-        log.info("script : " + sb.toString());
         return result.intValue();
     }
 
@@ -410,8 +408,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
-        log.info("result : " + result);
-        log.info("script : " + sb.toString());
         return result.intValue();
     }
 
@@ -439,8 +435,6 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         List<PurchaseOrderEntity> list = super.findBy(sb.toString(), parameters);
         Object object = list.get(0);
         Long result = (Long) object;
-        log.info("result : " + result);
-        log.info("script : " + sb.toString());
         return result.intValue();
     }
 
