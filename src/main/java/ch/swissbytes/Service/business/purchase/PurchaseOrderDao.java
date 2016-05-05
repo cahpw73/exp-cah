@@ -427,8 +427,8 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" SELECT ex.purchaseOrderEntity.id ");
         sb.append(" FROM ExpeditingStatusEntity ex ");
         sb.append(" WHERE ex.purchaseOrderStatus = :COMPLETED ");
-        sb.append(" OR po.purchaseOrderStatus = :DELETED ");
-        sb.append(" OR po.purchaseOrderStatus = :CANCELLED) ");
+        sb.append(" OR ex.purchaseOrderStatus = :DELETED ");
+        sb.append(" OR ex.purchaseOrderStatus = :CANCELLED) ");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("ENABLED", StatusEnum.ENABLE.getId());
         parameters.put("COMPLETED", ExpeditingStatusEnum.COMPLETED);
