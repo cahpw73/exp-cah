@@ -137,20 +137,20 @@ public class ReportBean implements Serializable {
         openReport = true;
     }
 
-    public void printReportReceivableManifestToXls() {
-        log.info("public void printReportReceivableManifest()");
-        openReport = false;
-        initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.XLS,dataSource);
-        reportView.printDocument(null);
-        openReport = true;
-    }
-
     public void printReportJobSummary() {
         log.info("public void printReportJobSummary()");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "Job.Summary", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
+        ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "job.summary", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
+        reportView.printDocument(null);
+        openReport = true;
+    }
+
+    public void printPlannerReport(){
+        log.info("public void printPlannerReport()");
+        openReport = false;
+        initializeParametersToJasperReport();
+        ReportView reportView = new ReportPurchaseOrder("/planner/plannerReport", "planner.report", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
         reportView.printDocument(null);
         openReport = true;
     }

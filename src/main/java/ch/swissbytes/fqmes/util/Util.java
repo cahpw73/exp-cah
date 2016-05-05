@@ -137,18 +137,18 @@ public class Util {
                     if (StringUtils.isNotEmpty(ids)) {
                         Integer expeditingStatusId = Integer.valueOf(statusIds[i]);
                         ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
-                        statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name()) + ",";
+                        statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name()) + ", ";
                     }
                 }
             } else {
                 if (StringUtils.isNotEmpty(ids)) {
                     Integer expeditingStatusId = Integer.valueOf(ids);
                     ExpeditingStatusEnum expeditingStatusEnum = ExpeditingStatusEnum.getEnum(expeditingStatusId);
-                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name()) + ",";
+                    statusStr = statusStr + bundle.getString("postatus." + expeditingStatusEnum.name()) + ", ";
                 }
             }
             if (statusStr.length() > 1) {
-                statusStr = statusStr.substring(0, statusStr.length() - 1);
+                statusStr = statusStr.substring(0, statusStr.length() - 2);
             }
         }
         return statusStr;

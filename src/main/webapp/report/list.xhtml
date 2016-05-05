@@ -247,12 +247,12 @@
                     <h:outputLabel value="#{msgs['report.purchase.order.btn.get.scope.supply.report.label']}"/>
                     &#160;
                     <h:commandLink styleClass="btn btn-primary btn-sm"
-                                   value="#{msgs['report.purchase.order.btn.get.scope.supply.report.pdf']}"
+                                   value="#{msgs['report.purchase.order.btn.get.pdf.label']}"
                                    action="#{reportBean.printReportReceivableManifest()}"
                                    target="_blank"/>
                     &#160;
                     <h:commandButton styleClass="btn btn-primary btn-sm"
-                                     value="#{msgs['report.purchase.order.btn.get.scope.supply.report.xls']}">
+                                     value="#{msgs['report.purchase.order.btn.get.xls.label']}">
                         <p:fileDownload value="#{reportBean.downloadReceivableManifestFileExport()}"/>
                     </h:commandButton>
                 </div>
@@ -262,13 +262,28 @@
                     <h:outputLabel value="#{msgs['report.purchase.order.btn.get.job.summary.report.label']}"/>
                     &#160;
                     <h:commandLink styleClass="btn btn-primary btn-sm"
-                                   value="#{msgs['report.purchase.order.btn.get.job.summary.report.pdf']}"
+                                   value="#{msgs['report.purchase.order.btn.get.pdf.label']}"
                                    action="#{reportBean.printReportJobSummary()}"
                                    target="_blank" style="margin-left: 40px;"/>
                     &#160;
                     <h:commandButton styleClass="btn btn-primary btn-sm"
                                      onclick="PrimeFaces.monitorDownload(start, stop);"
-                                     value="#{msgs['report.purchase.order.btn.get.job.summary.report.xls']}">
+                                     value="#{msgs['report.purchase.order.btn.get.xls.label']}">
+                        <p:fileDownload value="#{reportBean.downloadJobSummaryFileExport()}"/>
+                    </h:commandButton>
+                </div>
+                <br/>
+                <div>
+                    <h:outputLabel value="#{msgs['report.purchase.order.btn.get.job.planner.report.label']}"/>
+                    &#160;
+                    <h:commandLink styleClass="btn btn-primary btn-sm"
+                                   value="#{msgs['report.purchase.order.btn.get.pdf.label']}"
+                                   action="#{reportBean.printPlannerReport()}"
+                                   target="_blank" style="margin-left: 75px;"/>
+                    &#160;
+                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);"
+                                     value="#{msgs['report.purchase.order.btn.get.xls.label']}">
                         <p:fileDownload value="#{reportBean.downloadJobSummaryFileExport()}"/>
                     </h:commandButton>
                 </div>
