@@ -67,7 +67,7 @@
                                 </h:panelGroup>
                             </p:column>
 
-                            <p:column headerText="#{msgs['po.items.dt.column.description']}" width="570"
+                            <p:column headerText="#{msgs['po.items.dt.column.description']}" width="485"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
                                     <p:inputTextarea value="#{_i.description}"
