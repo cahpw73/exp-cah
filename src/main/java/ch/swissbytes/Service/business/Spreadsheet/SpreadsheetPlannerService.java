@@ -10,12 +10,14 @@ import ch.swissbytes.fqmes.util.LanguagePreference;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import javax.inject.Inject;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -105,27 +107,30 @@ public class SpreadsheetPlannerService implements Serializable {
     }
     private void createHeaderPO() {
         processor.createRowWithHeight(2,(short)600);
-        processor.writeStringValue(0, "PO");
-        processor.writeStringValue(1, "Title");
-        processor.writeStringValue(2, "PO Del Date");
-        processor.writeStringValue(3, "INCO Term");
-        processor.writeStringValue(4, "Supplier");
-        processor.writeStringValue(5, "Status");
-        processor.writeStringValue(6, "Rfe");
-        processor.writeStringValue(7, "Item No");
-        processor.writeStringValue(8, "Qty");
-        processor.writeStringValue(9, "Unit");
-        processor.writeStringValue(10, "Item Description");
-        processor.writeStringValue(11, "Equipment Tag");
-        processor.writeStringValue(12, "Full Inco Term");
-        processor.writeStringValue(13, "PO Delivery Date");
-        processor.writeStringValue(14, "Forecast Ex Works Date");
-        processor.writeStringValue(15, "Actual Ex Works");
-        processor.writeStringValue(16, "Lead Time");
-        processor.writeStringValue(17, "Forecast Site Date");
-        processor.writeStringValue(18, "Actual Site Date");
-        processor.writeStringValue(19, "Required on Site Date");
-        processor.writeStringValue(20, "Var");
+        List<XSSFCellStyle> styles = new ArrayList<>();
+        styles.add(processor.getStyleAlignTop());
+        styles.add(processor.getStyleVerticalJustify());
+        processor.writeStringValueWithStyles(0, "PO", styles);
+        processor.writeStringValueWithStyles(1, "Title",styles);
+        processor.writeStringValueWithStyles(2, "PO Del Date",styles);
+        processor.writeStringValueWithStyles(3, "INCO Term",styles);
+        processor.writeStringValueWithStyles(4, "Supplier",styles);
+        processor.writeStringValueWithStyles(5, "Status",styles);
+        processor.writeStringValueWithStyles(6, "Rfe",styles);
+        processor.writeStringValueWithStyles(7, "Item No",styles);
+        processor.writeStringValueWithStyles(8, "Qty",styles);
+        processor.writeStringValueWithStyles(9, "Unit",styles);
+        processor.writeStringValueWithStyles(10, "Item Description",styles);
+        processor.writeStringValueWithStyles(11, "Equipment Tag",styles);
+        processor.writeStringValueWithStyles(12, "Full Inco Term",styles);
+        processor.writeStringValueWithStyles(13, "PO Delivery Date",styles);
+        processor.writeStringValueWithStyles(14, "Forecast Ex Works Date",styles);
+        processor.writeStringValueWithStyles(15, "Actual Ex Works",styles);
+        processor.writeStringValueWithStyles(16, "Lead Time",styles);
+        processor.writeStringValueWithStyles(17, "Forecast Site Date",styles);
+        processor.writeStringValueWithStyles(18, "Actual Site Date",styles);
+        processor.writeStringValueWithStyles(19, "Required on Site Date",styles);
+        processor.writeStringValueWithStyles(20, "Var",styles);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {

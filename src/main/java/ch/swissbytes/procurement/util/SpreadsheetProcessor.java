@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -56,6 +57,25 @@ public class SpreadsheetProcessor implements Serializable {
 
     public void writeStringValue(int colNo, String value) {
         row.createCell(colNo).setCellValue(value);
+    }
+
+    public void writeStringValueWithStyles(int colNo, String value,List<XSSFCellStyle> styles){
+        XSSFCell cell = row.createCell(colNo);
+        cell.setCellValue(value);
+        for(XSSFCellStyle style : styles){
+            cell.setCellStyle(style);
+        }
+    }
+
+    public XSSFCellStyle getStyleAlignTop(){
+        XSSFCellStyle style1 = workbook.createCellStyle();
+        style1.setVerticalAlignment(XSSFCellStyle.VERTICAL_TOP);
+        return style1;
+    }
+    public XSSFCellStyle getStyleVerticalJustify(){
+        XSSFCellStyle style1 = workbook.createCellStyle();
+        style1.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
+        return style1;
     }
 
     public void writeStringBoldValue(int colNo, String value) {
