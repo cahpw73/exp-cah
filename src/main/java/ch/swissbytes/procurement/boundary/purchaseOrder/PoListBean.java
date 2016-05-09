@@ -219,6 +219,14 @@ public class PoListBean implements Serializable {
         purchaseOrderToVariation.setId(null);
 
         purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setId(null);
+        /*if(purchaseOrderToVariation.getOrderedVariation()>1){
+            PurchaseOrderEntity previousPO = service.findPOPreviousRevision(purchaseOrderToVariation.getProjectEntity().getId(),purchaseOrderToVariation.getPo(),purchaseOrderToVariation.getOrderedVariation());
+            if(previousPO!=null){
+                purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setDeliveryInstruction(previousPO.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
+            }
+        }else {
+            purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setDeliveryInstruction(project.getDeliveryInstructions());
+        }*/
         purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setDeliveryInstruction(project.getDeliveryInstructions());
         purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
         purchaseOrderToVariation.setVariation(newVariationNumber);
