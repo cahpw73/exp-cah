@@ -74,9 +74,7 @@ public class ProjectTextSnippetService implements Serializable {
 
     @Transactional
     public boolean canDeleteProjectTextCreateOnPO(final Long projectTextId){
-        log.info("canDeleteFromPO( projectTextId["+projectTextId+"])");
         List<ProjectTextSnippetEntity> list = dao.isProjectTextCreateInPO(projectTextId);
-        log.info("list size : " + list.size());
         return !list.isEmpty();
     }
 }

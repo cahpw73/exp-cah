@@ -4,21 +4,21 @@ import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
-import ch.swissbytes.domain.model.entities.*;
+import ch.swissbytes.domain.model.entities.CashflowDetailEntity;
+import ch.swissbytes.domain.model.entities.ItemEntity;
+import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.util.Configuration;
-import ch.swissbytes.fqmes.util.Purchase;
 import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,9 +26,9 @@ import java.util.logging.Logger;
 /**
  * Created by Christian on 21/07/2015.
  */
-public class SpreadsheetJDEService implements Serializable {
+public class SpreadsheetJDECsvService implements Serializable {
 
-    public static final Logger log = Logger.getLogger(SpreadsheetJDEService.class.getName());
+    public static final Logger log = Logger.getLogger(SpreadsheetJDECsvService.class.getName());
 
     @Inject
     private PurchaseOrderService service;
