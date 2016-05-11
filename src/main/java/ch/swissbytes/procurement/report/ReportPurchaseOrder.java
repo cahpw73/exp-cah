@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 /**
  * Created by christian on 11/06/14.
  */
-public class ReportPurchaseOrder extends ReportView implements Serializable {
+    public class ReportPurchaseOrder extends ReportView implements Serializable {
 
     private final Logger log = Logger.getLogger(ReportPurchaseOrder.class.getName());
     // private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");

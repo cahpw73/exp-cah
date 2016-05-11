@@ -137,6 +137,10 @@ public class Configuration implements Serializable {
         return "dd-MMM-yy";
     }
 
+    public String getHardFormatDateJDECscFile(){
+        return "dd/mm/yyyy";
+    }
+
     public String convertDateToExportFile(Date date) {
         String converted = "";
         if (date != null) {
@@ -144,6 +148,17 @@ public class Configuration implements Serializable {
             long utc = dtz.convertUTCToLocal(date.getTime());
             date.setTime(utc);
             converted = new java.text.SimpleDateFormat(getHardFormatDateExportFile(), new Locale("en")).format(date).toUpperCase();
+        }
+        return converted;
+    }
+
+    public String convertDateToExportFileCsv(Date date) {
+        String converted = "";
+        if (date != null) {
+            DateTimeZone dtz = org.joda.time.DateTimeZone.forID(getTimeZone());
+            long utc = dtz.convertUTCToLocal(date.getTime());
+            date.setTime(utc);
+            converted = new java.text.SimpleDateFormat(getHardFormatDateJDECscFile(), new Locale("en")).format(date).toUpperCase();
         }
         return converted;
     }

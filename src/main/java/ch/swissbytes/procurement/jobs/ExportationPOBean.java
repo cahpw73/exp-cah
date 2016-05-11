@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.jobs;
 
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDECsvService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDEService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
 import ch.swissbytes.Service.business.cashflow.CashflowService;
@@ -40,6 +41,9 @@ public class ExportationPOBean implements Serializable {
     private SpreadsheetJDEService exporterToJDE;
 
     @Inject
+    private SpreadsheetJDECsvService exporterToJDECsv;
+
+    @Inject
     private ProjectService projectService;
 
     @Inject
@@ -72,14 +76,15 @@ public class ExportationPOBean implements Serializable {
                 poListCMS = poService.findPOListWithoutExportCMS(p.getId());
                 poListJDE = poService.findPOListWithoutExportJDE(p.getId());
                 if (!poListCMS.isEmpty()) {
-                    exportCMS(poListCMS, p);
+                    //exportCMS(poListCMS, p);
                 }
                 if (!poListJDE.isEmpty()) {
                     for (PurchaseOrderEntity po : poListJDE) {
                         List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
                         po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
                     }
-                    exportJDE(poListJDE, p);
+                    //exportJDE(poListJDE, p);
+                    exportJDECsv(poListJDE, p);
                 }
             }
         }catch (Exception e){
@@ -109,5 +114,11 @@ public class ExportationPOBean implements Serializable {
         /*for(PurchaseOrderEntity po : list) {
             poService.markJDEAsExported(po);
         }*/
+    }
+
+    public void exportJDECsv(List<PurchaseOrderEntity> list, ProjectEntity project) throws Exception {
+        log.info("exportJDECsv");
+        String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        exporterToJDECsv.generateWorkbookToExport(list, fName);
     }
 }

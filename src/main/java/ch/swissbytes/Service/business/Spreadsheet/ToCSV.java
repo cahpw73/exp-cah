@@ -16,13 +16,7 @@
 ==================================================================== */
 package ch.swissbytes.Service.business.Spreadsheet;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -456,7 +450,8 @@ public class ToCSV {
 
             // Open a writer onto the CSV file.
             fw = new FileWriter(file);
-            bw = new BufferedWriter(fw);
+            //bw = new BufferedWriter(fw);
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
 
             // Step through the elements of the ArrayList that was used to hold
             // all of the data recovered from the Excel workbooks' sheets, rows
@@ -673,7 +668,7 @@ public class ToCSV {
             if(true) {
                 // Just the Source File/Folder and Destination Folder were
                 // passed to the main method.
-                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\10 MAY 16 - Commitments.xlsx", "D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\");
+                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\11 MAY 16 - CommitmentsCsv.xlsx", "D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\");
             }
             else if(args.length == 3){
                 // The Source File/Folder, Destination Folder and Separator

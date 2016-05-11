@@ -33,7 +33,7 @@ public class JobExportCMSandJDE implements Serializable {
         log.info("Shut down in progress JobExportCMSandJDE");
     }
 
-    @Schedule(dayOfMonth = "*", hour = "14", minute = "42", info = "Every day at 00:00 am")
+    @Schedule(dayOfMonth = "*", hour = "18", minute = "11", info = "Every day at 00:00 am")
     public void startExportationDaily() {
         log.info("startExportationDaily");
         try {
