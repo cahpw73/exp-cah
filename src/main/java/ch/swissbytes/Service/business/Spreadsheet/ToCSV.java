@@ -668,7 +668,7 @@ public class ToCSV {
             if(true) {
                 // Just the Source File/Folder and Destination Folder were
                 // passed to the main method.
-                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\11 MAY 16 - CommitmentsCsv.xlsx", "D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\");
+                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\12 MAY 16 - temporal.xlsx", "\\\\192.168.0.5\\transfer\\alexander");
             }
             else if(args.length == 3){
                 // The Source File/Folder, Destination Folder and Separator

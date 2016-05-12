@@ -36,10 +36,10 @@ public class AuthenticatorBean {
 
 
     public String login() {
-        log.info("using another login");
         loginIfAny();
         if (identity.isLoggedIn()) {
             User user = (User) identity.getAccount();
+            log.info("trying login: " + user.getLoginName());
             List<ModuleGrantedAccessEntity> systemList = service.getModulesGranted(user.getLoginName());
             if (systemList.isEmpty()) {
                 identity.logout();

@@ -11,16 +11,14 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.util.CreateEmailSender;
 import org.apache.commons.lang.StringUtils;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import java.io.*;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -76,14 +74,14 @@ public class ExportationPOBean implements Serializable {
                 poListCMS = poService.findPOListWithoutExportCMS(p.getId());
                 poListJDE = poService.findPOListWithoutExportJDE(p.getId());
                 if (!poListCMS.isEmpty()) {
-                    //exportCMS(poListCMS, p);
+                    exportCMS(poListCMS, p);
                 }
                 if (!poListJDE.isEmpty()) {
                     for (PurchaseOrderEntity po : poListJDE) {
                         List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
                         po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
                     }
-                    //exportJDE(poListJDE, p);
+                    exportJDE(poListJDE, p);
                     exportJDECsv(poListJDE, p);
                 }
             }
@@ -121,4 +119,6 @@ public class ExportationPOBean implements Serializable {
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporterToJDECsv.generateWorkbookToExport(list, fName);
     }
+
+
 }

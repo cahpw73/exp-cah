@@ -133,7 +133,7 @@ public class ReportBean implements Serializable {
     }
 
     public void printReportReceivableManifest() {
-        log.info("public void printReportReceivableManifest()");
+        log.info("Printing Receivable Manifest Report");
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportPurchaseOrder("/receivableManifest/receivableManifest", "Receivable.Manifest", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
@@ -142,7 +142,7 @@ public class ReportBean implements Serializable {
     }
 
     public void printReportJobSummary() {
-        log.info("public void printReportJobSummary()");
+        log.info("Printing Job Summary Report");
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportPurchaseOrder("/jobSummary/JobSummary", "job.summary", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
@@ -151,7 +151,7 @@ public class ReportBean implements Serializable {
     }
 
     public void printPlannerReport(){
-        log.info("public void printPlannerReport()");
+        log.info("Printing Planner Report");
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportPurchaseOrder("/planner/plannerReport", "planner.report", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
@@ -160,7 +160,7 @@ public class ReportBean implements Serializable {
     }
 
     public void printReportNextKey() {
-        log.info("public void printReportNextKey");
+        log.info("Printing Next Key Report");
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportNextKey("/nextKeyInfo/nextKey", "Next.Key.Info", messages, locale, entityManager, collectIds(), configuration, DocTypeEnum.PDF,dataSource);
@@ -169,25 +169,28 @@ public class ReportBean implements Serializable {
     }
 
     public StreamedContent downloadJobSummaryFileExport() {
+        log.info("Downloading Job Summary File Export XLS");
         InputStream stream = spreadsheetJobSummaryService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Job.Summary.xlsx");
         return file;
     }
 
     public StreamedContent downloadReceivableManifestFileExport() {
+        log.info("Downloading Receivable Manifest File Export XLS");
         InputStream stream = spreadsheetReceivableManifestService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Receivable.Manifest.xlsx");
         return file;
     }
 
     public StreamedContent downloadPlannerReportFileExport() {
+        log.info("Downloading Planner File Export XLS");
         InputStream stream = spreadsheetPlannerService.generateWorkbook(purchaseOrderList());
         file = new DefaultStreamedContent(stream, "application/vnd.ms-excel", "Planner.xlsx");
         return file;
     }
 
     public void printReportDashboard(Map<String, String> parameterDashboard) {
-        log.info("public void printReportDashboard()");
+        log.info("Printing Dashboard Report");
         openReport = false;
         initializeParametersToJasperReport();
         ReportView reportView = new ReportDashboard("/Dashboard/dashboard", "Dashboard.Expediting", messages, locale, entityManager, configuration, parameterDashboard,dataSource);
