@@ -48,32 +48,47 @@ public class SpreadsheetJDECsvService implements Serializable {
     int rowNo;
     int rowNoMilestone;
 
+    private static final String packageHeaderInformation="PkgHdr.xlsx";
+    private static final String packageScheduleInformation="PkgScInf.xlsx";
+
     public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
         rowNo = 0;
-        rowNoMilestone = 2;
         String pathJDE = System.getProperty("fqmes.path.export.jde");
         pathJDE = pathJDE.replace("{project_field}", folderName);
+        log.info("Create spreadSheet for JDE PkgHdr csv");
         processWorkbook(list);
-        processor.doSaveWorkBook(pathJDE, generateFileName());
-        log.info("written JDE CSV successfully...");
-        log.info("Converting xlsx file to csv file");
-        convertToCsv(pathJDE+ File.separator+generateFileName(),pathJDE);
-        log.info("Deleting temporal xlsx file");
-        //deleteFileTemporal(pathJDE+ File.separator+generateFileName());
-        log.info("process to Export JDE CSV file completed");
-    }
+        processor.doSaveWorkBook(pathJDE, packageHeaderInformation);
 
-    private String generateFileName() {
-        SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
-        String dateStr = format.format(new Date());
-        String fileName = dateStr.toUpperCase() + " - " + "temporal.xlsx";
-        return fileName;
+        log.info("written JDE PkgHdr CSV successfully...");
+        log.info("Converting PkgHdr.xlsx file to csv file");
+
+        convertToCsv(pathJDE+ File.separator+packageHeaderInformation,pathJDE);
+
+        log.info("Deleting PkgHdr.xlsx file");
+        //deleteFileTemporal(pathJDE+ File.separator+packageHeaderInformation);
+        log.info("process to Export JDE PkgHdr.xlsx CSV file completed");
+
+        log.info("Create spreadSheet for JDE PkgScInf csv");
+        rowNoMilestone = 0;
+        processWorkbookForMilestone(list);
+        processor.doSaveWorkBook(pathJDE, packageScheduleInformation);
+        log.info("written JDE PkgScInf CSV successfully...");
+        convertToCsv(pathJDE+ File.separator+packageScheduleInformation,pathJDE);
+        log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
+        //deleteFileTemporal(pathJDE+ File.separator+packageScheduleInformation);
+        log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
     }
 
     public void processWorkbook(final List<PurchaseOrderEntity> list) {
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         createPagePackageHeader(list);
+        //createPagePackageMilestone(list);
+    }
+
+    public void processWorkbookForMilestone(final List<PurchaseOrderEntity> list) {
+        processor = new SpreadsheetProcessor();
+        processor.createWorkbook();
         createPagePackageMilestone(list);
     }
 
@@ -281,8 +296,8 @@ public class SpreadsheetJDECsvService implements Serializable {
 
     private void createPagePackageMilestone(final List<PurchaseOrderEntity> list) {
         processor.createSpreadsheet("PkgScInf");
-        createHeaderCMS(list.get(0));
-        createHeaderMilestone();
+        /*createHeaderCMS(list.get(0));
+        createHeaderMilestone();*/
         generateSpreadsheetCashflowDetail(list);
     }
 
@@ -347,8 +362,8 @@ public class SpreadsheetJDECsvService implements Serializable {
         Util util = new Util();
         util.setConfiguration(configuration);
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(0, entity.getPo() != null ? entity.getPo() : "");
-        processor.writeStringValue(1, entity.getVariation() != null ? entity.getVariation() : "");
+        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : "");
+        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
         processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : "");
         processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : "");
         processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : "");
