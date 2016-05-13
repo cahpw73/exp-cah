@@ -516,7 +516,7 @@
                                                    action="#{purchaseOrderEdit.resetBulkUpdateModal}"
                                                    rendered="#{permissionBean.hasPermission(1410)}"
                                                    oncomplete="PF('bulkUpdateSp').show();"
-                                                   update=":bulkUpdateScopeSupplyFormId"/>
+                                                   update=":bulkUpdateScopeSupplyFormId" async="false"/>
                                 </h:panelGroup>
                             </h:panelGroup>
                         </div>
@@ -525,7 +525,8 @@
                             <h:commandButton id="save0" value="#{msgs['lbl.update']}"
                                              styleClass="btn btn-primary btn-sm"
                                              action="#{purchaseOrderEdit.doUpdate}"
-                                             type='submit'/>
+                                             type='submit'
+                                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);"/>
                             &#160;
                             <h:link id="cancelPOCreateBtn" value="#{msgs['lbl.cancel']}"
                                     styleClass="btn btn-primary btn-sm"
@@ -557,7 +558,8 @@
                         <div class="pull-right">
                             <h:commandButton id="save" value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm"
                                              action="#{purchaseOrderEdit.doUpdate}"
-                                             type='submit'/>
+                                             type='submit'
+                                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);"/>
                             &#160;
 
                             <h:link id="cancelCreateBtn" value="#{msgs['lbl.close']}"
@@ -586,9 +588,10 @@
                         </f:facet>
 
                         <div class="pull-right">
-                            <h:commandButton value="Exit and Save" type='submit'
+                            <h:commandButton id="confSaveIdBtn" value="Exit and Save" type='submit'
                                              styleClass="btn btn-primary btn-sm"
-                                             action="#{purchaseOrderEdit.exitAndSave}">
+                                             action="#{purchaseOrderEdit.exitAndSave}"
+                                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);">
                             </h:commandButton>
                             &#160;
                             <h:commandButton value="Exit Only (no save)" immediate="true"
