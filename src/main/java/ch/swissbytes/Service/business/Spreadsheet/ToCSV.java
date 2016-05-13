@@ -451,7 +451,7 @@ public class ToCSV {
             // Open a writer onto the CSV file.
             fw = new FileWriter(file);
             //bw = new BufferedWriter(fw);
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "CP1252"));
 
             // Step through the elements of the ArrayList that was used to hold
             // all of the data recovered from the Excel workbooks' sheets, rows
@@ -486,7 +486,9 @@ public class ToCSV {
                 }
 
                 // Once the line is built, write it away to the CSV file.
-                bw.write(buffer.toString().trim());
+                byte[] b = buffer.toString().getBytes("CP1252");
+                String str = new String(b, "CP1252");
+                bw.write(str.trim());
 
                 // Condition the inclusion of new line characters so as to
                 // avoid an additional, superfluous, new line at the end of
@@ -668,7 +670,7 @@ public class ToCSV {
             if(true) {
                 // Just the Source File/Folder and Destination Folder were
                 // passed to the main method.
-                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\12 MAY 16 - temporal.xlsx", "\\\\192.168.0.5\\transfer\\alexander");
+                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\13 MAY 16 - temporal.xlsx", "D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\");
             }
             else if(args.length == 3){
                 // The Source File/Folder, Destination Folder and Separator

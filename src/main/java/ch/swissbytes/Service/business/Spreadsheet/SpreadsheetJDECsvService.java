@@ -59,7 +59,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         log.info("Converting xlsx file to csv file");
         convertToCsv(pathJDE+ File.separator+generateFileName(),pathJDE);
         log.info("Deleting temporal xlsx file");
-        deleteFileTemporal(pathJDE+ File.separator+generateFileName());
+        //deleteFileTemporal(pathJDE+ File.separator+generateFileName());
         log.info("process to Export JDE CSV file completed");
     }
 
@@ -74,6 +74,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         createPagePackageHeader(list);
+        createPagePackageMilestone(list);
     }
 
     private void createPagePackageHeader(final List<PurchaseOrderEntity> list) {
@@ -132,6 +133,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : "");
         processor.writeStringValue(20, item.getProjectCurrency().getCurrency().getCode());
+        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():"");
 
     }
 
@@ -159,6 +161,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : "");
         processor.writeStringValue(20, item.getProjectCurrency().getCurrency().getCode());
+        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():"");
     }
 
     private String collectMRNo(PurchaseOrderEntity po) {
