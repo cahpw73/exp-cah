@@ -17,9 +17,10 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:commandButton value="Exit and Save" type='submit'
+            <h:commandButton id="exitSavePOEditBtn0" value="Exit and Save" type='submit'
                              styleClass="btn btn-primary btn-sm"
-                             action="#{purchaseOrderEdit.exitAndSaveRedirectToDashboard}">
+                             action="#{purchaseOrderEdit.exitAndSaveRedirectToDashboard}"
+                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);">
             </h:commandButton>
             &#160;
             <h:commandButton value="Exit Only (no save)" immediate="true"
@@ -42,9 +43,10 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:commandButton value="Exit and Save" type='submit'
+            <h:commandButton id="exitSavePOEditBtn2" value="Exit and Save" type='submit'
                              styleClass="btn btn-primary btn-sm"
-                             action="#{purchaseOrderEdit.exitAndSaveRedirectToPurchaseList}">
+                             action="#{purchaseOrderEdit.exitAndSaveRedirectToPurchaseList}"
+                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);">
             </h:commandButton>
             &#160;
             <h:commandButton value="Exit Only (no save)" immediate="true"
@@ -67,9 +69,10 @@
         </f:facet>
 
         <div class="pull-right">
-            <h:commandButton value="Exit and Save" type='submit'
+            <h:commandButton id="exitSavePOEditBtn1" value="Exit and Save" type='submit'
                              styleClass="btn btn-primary btn-sm"
-                             action="#{purchaseOrderEdit.exitAndSaveRedirectToReportList}">
+                             action="#{purchaseOrderEdit.exitAndSaveRedirectToReportList}"
+                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);">
             </h:commandButton>
             &#160;
             <h:commandButton value="Exit Only (no save)" immediate="true"
