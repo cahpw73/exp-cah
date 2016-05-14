@@ -65,7 +65,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         convertToCsv(pathJDE+ File.separator+packageHeaderInformation,pathJDE);
 
         log.info("Deleting PkgHdr.xlsx file");
-        //deleteFileTemporal(pathJDE+ File.separator+packageHeaderInformation);
+        deleteFileTemporal(pathJDE+ File.separator+packageHeaderInformation);
         log.info("process to Export JDE PkgHdr.xlsx CSV file completed");
 
         log.info("Create spreadSheet for JDE PkgScInf csv");
@@ -75,7 +75,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         log.info("written JDE PkgScInf CSV successfully...");
         convertToCsv(pathJDE+ File.separator+packageScheduleInformation,pathJDE);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
-        //deleteFileTemporal(pathJDE+ File.separator+packageScheduleInformation);
+        deleteFileTemporal(pathJDE+ File.separator+packageScheduleInformation);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
     }
 

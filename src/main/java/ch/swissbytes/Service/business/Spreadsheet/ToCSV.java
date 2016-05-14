@@ -620,6 +620,10 @@ public class ToCSV {
                     buffer.insert(0, "\"");
                     buffer.append("\"");
                 }
+                else{
+                    buffer.insert(0, "\"");
+                    buffer.append("\"");
+                }
             }
             return(buffer.toString().trim());
         }
@@ -670,7 +674,7 @@ public class ToCSV {
             if(true) {
                 // Just the Source File/Folder and Destination Folder were
                 // passed to the main method.
-                converter.convertExcelToCSV("D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\13 MAY 16 - temporal.xlsx", "D:\\PerDevl\\1824 - Cobre Panama\\500 Procurement\\Commitments to JDE\\");
+                converter.convertExcelToCSV("D:\\PerDevl\\AFCE\\FQMEA\\500 Procurement\\Commitments to JDE\\PkgScInf.xlsx", "D:\\PerDevl\\AFCE\\FQMEA\\500 Procurement\\Commitments to JDE");
             }
             else if(args.length == 3){
                 // The Source File/Folder, Destination Folder and Separator
