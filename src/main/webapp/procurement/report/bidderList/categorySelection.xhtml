@@ -87,7 +87,8 @@
                                             <h:commandLink styleClass="btn btn-primary btn-sm"
                                                            value="#{msgs['bid.list.btn']}"
                                                            target="_blank"
-                                                           action="#{bidListBean.generateReport}">
+                                                           action="#{bidListBean.generateReport}"
+                                                           type="submit">
                                             </h:commandLink>
                                         </div>
                                     </div>
@@ -134,8 +135,8 @@
                                                 #{_supplier.country}
                                             </p:column>
                                             <p:column headerText="Print">
-                                                <h:selectBooleanCheckbox value="#{bidListBean.canPrintSupplier}">
-                                                    <p:ajax async="true" event="blur" update=":bidderForm:supCommentsId"
+                                                <h:selectBooleanCheckbox >
+                                                    <p:ajax async="true" event="change" update=":bidderForm:supCommentsId"
                                                             listener="#{bidListBean.selectSupplier(_supplier)}"/>
                                                 </h:selectBooleanCheckbox>
                                             </p:column>

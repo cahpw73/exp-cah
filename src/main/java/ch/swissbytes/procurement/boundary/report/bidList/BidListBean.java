@@ -15,6 +15,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,6 @@ public class BidListBean implements Serializable {
     private String description;
     private String supplierComments;
     private List<Long> supplierSelected;
-    private boolean canPrintSupplier = false;
     private List<SupplierProcEntity> supplierProcList;
 
     @PostConstruct
@@ -59,11 +59,10 @@ public class BidListBean implements Serializable {
     }
 
     public void generateReport() {
-        log.info("generating bidder list report");
+        log.info("generation bidder list report");
         doUpdateCommentsForEachSupplier();
         packageNo = packageNo.toUpperCase();
         description = description.toUpperCase();
-        log.info("Data: supplierSelected size["+supplierSelected.size()+"], packageNo["+packageNo+"], description["+description+"], projectId["+project.getId()+" "+project.getProjectNumber()+"]");
         reportProcBean.printBidderList(supplierSelected, packageNo, description, project);
     }
 
@@ -93,17 +92,23 @@ public class BidListBean implements Serializable {
 
     public void selectSupplier(SupplierProcEntity sp) {
         log.info("selectSupplier: " + sp.getCompany());
-        if (supplierSelected.contains(sp.getId())) {
-            supplierSelected.remove(sp.getId());
-        } else {
+        boolean canAdd = true;
+        if(!supplierSelected.isEmpty()) {
+            for (Long id : supplierSelected) {
+                if (id.longValue() == sp.getId().longValue()) {
+                    supplierSelected.remove(sp.getId());
+                    canAdd = false;
+                    break;
+                }
+            }
+        }
+        if (canAdd) {
             supplierSelected.add(sp.getId());
         }
-        log.info("List supplierSelected size: " + supplierSelected.size());
     }
 
     public void supplierListClear(final CategoryEntity category) {
         supplierSelected.clear();
-        canPrintSupplier = false;
         if (category != null) {
             description = category.getName();
         }
@@ -164,11 +169,4 @@ public class BidListBean implements Serializable {
         return list;
     }
 
-    public boolean isCanPrintSupplier() {
-        return canPrintSupplier;
-    }
-
-    public void setCanPrintSupplier(boolean canPrintSupplier) {
-        this.canPrintSupplier = canPrintSupplier;
-    }
 }
