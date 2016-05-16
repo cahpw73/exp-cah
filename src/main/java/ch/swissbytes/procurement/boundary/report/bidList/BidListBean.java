@@ -60,25 +60,38 @@ public class BidListBean implements Serializable {
 
     public void generateReport() {
         log.info("generation bidder list report");
-        doUpdateCommentsForEachSupplier();
+        log.info("SupplierProcList size: " + supplierProcList.size());
+        supplierSelected.clear();
         packageNo = packageNo.toUpperCase();
         description = description.toUpperCase();
+        for(SupplierProcEntity sp : supplierProcList) {
+            if (sp.isCanPrint()){
+                supplierSelected.add(sp.getId());
+            }
+        }
+        log.info("supplierSelected size: "+ supplierSelected.size());
+        doUpdateCommentsForEachSupplier();
         reportProcBean.printBidderList(supplierSelected, packageNo, description, project);
+        resetCanPrint();
+    }
+
+    private void resetCanPrint(){
+        for(SupplierProcEntity sp : supplierProcList) {
+            sp.setCanPrint(false);
+        }
     }
 
     private void doUpdateCommentsForEachSupplier(){
         log.info("doUpdateCommentsForEachSupplier");
-        List<SupplierProcEntity> list = new ArrayList<>();
+        List<SupplierProcEntity> supplierList = new ArrayList<>();
         for (Long supId : supplierSelected){
             for(SupplierProcEntity sp : supplierProcList){
-                if(sp.getId().longValue()==supId){
-                    list.add(sp);
+                if(sp.getId().longValue()==supId.longValue()){
+                    supplierList.add(sp);
                 }
             }
         }
-        supplierProcList.clear();
-        supplierProcList.addAll(list);
-        for (SupplierProcEntity sp : supplierProcList){
+        for (SupplierProcEntity sp : supplierList){
             StringBuilder comments = new StringBuilder();
             if(StringUtils.isNotEmpty(sp.getComments())) {
                 comments.append(sp.getComments());
@@ -166,7 +179,7 @@ public class BidListBean implements Serializable {
         List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category != null ? category.getId() : null, project != null ? project.getId() : null);
         supplierProcList.clear();
         supplierProcList.addAll(list);
-        return list;
+        return supplierProcList;
     }
 
 }

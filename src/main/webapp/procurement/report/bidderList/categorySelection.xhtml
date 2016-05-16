@@ -135,9 +135,7 @@
                                                 #{_supplier.country}
                                             </p:column>
                                             <p:column headerText="Print">
-                                                <h:selectBooleanCheckbox >
-                                                    <p:ajax async="true" event="change" update=":bidderForm:supCommentsId"
-                                                            listener="#{bidListBean.selectSupplier(_supplier)}"/>
+                                                <h:selectBooleanCheckbox value="#{_supplier.canPrint}">
                                                 </h:selectBooleanCheckbox>
                                             </p:column>
                                         </p:dataTable>
