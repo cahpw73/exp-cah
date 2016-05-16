@@ -37,6 +37,7 @@ public class SupplierProcEntity implements Serializable {
     private String abnRegNo;
     private String comments;
     private Date lastUpdate;
+    private boolean canPrint = false;
 
     private List<ContactEntity> contacts = new ArrayList<>();
     private List<CategoryEntity> categories = new ArrayList<>();
@@ -219,6 +220,15 @@ public class SupplierProcEntity implements Serializable {
     @Transient
     public String getFullName(){
         return (supplierId!=null&&supplierId.trim().length()>0?"("+supplierId.trim()+") ":"")+company;
+    }
+
+    @Transient
+    public boolean isCanPrint() {
+        return canPrint;
+    }
+
+    public void setCanPrint(boolean canPrint) {
+        this.canPrint = canPrint;
     }
 
     @Override
