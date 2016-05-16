@@ -59,9 +59,11 @@ public class BidListBean implements Serializable {
     }
 
     public void generateReport() {
+        log.info("generating bidder list report");
         doUpdateCommentsForEachSupplier();
         packageNo = packageNo.toUpperCase();
         description = description.toUpperCase();
+        log.info("Data: supplierSelected size["+supplierSelected.size()+"], packageNo["+packageNo+"], description["+description+"], projectId["+project.getId()+" "+project.getProjectNumber()+"]");
         reportProcBean.printBidderList(supplierSelected, packageNo, description, project);
     }
 
@@ -96,6 +98,7 @@ public class BidListBean implements Serializable {
         } else {
             supplierSelected.add(sp.getId());
         }
+        log.info("List supplierSelected size: " + supplierSelected.size());
     }
 
     public void supplierListClear(final CategoryEntity category) {
