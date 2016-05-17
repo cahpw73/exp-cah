@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.persistence.Query;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,6 +170,22 @@ public class SupplierProcDao extends GenericDao<SupplierProcEntity> implements S
         params.put("ENABLE_ID",StatusEnum.ENABLE.getId());
        // params.put("PROJECT_ID", projectId);
         params.put("CATEGORY_ID", categoryId != null ? categoryId : 0);
+        return super.findBy(sb.toString(), params);
+    }
+
+    public List<SupplierProcEntity> getSupplierList(List<SupplierProcEntity> list){
+        List<Long> ids = new ArrayList<>();
+        for (SupplierProcEntity p : list){
+            ids.add(p.getId());
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT s ");
+        sb.append(" FROM SupplierProcEntity s  ");
+        sb.append(" WHERE s.id IN :IDS ");
+        sb.append(" ORDER BY s.id ");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("IDS", ids);
         return super.findBy(sb.toString(), params);
     }
 
