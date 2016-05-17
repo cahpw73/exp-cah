@@ -67,11 +67,6 @@
 				</textElement>
 				<text><![CDATA[The following progress payments base on the supplier's achievement of specified milestones have been agreed and will be paid to the Supplier in accordance with the payment provisions of the Purchase Order:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement uuid="5bdd5435-f52f-4d26-be3b-8bc17fd44ffc" style="Arial-Bold-Italic" x="438" y="3" width="69" height="15"/>
-				<textElement verticalAlignment="Middle" markup="styled"/>
-				<text><![CDATA[SCHEDULE E]]></text>
-			</staticText>
 			<textField>
 				<reportElement uuid="ac28305c-d887-4445-b21f-e07395a39c61" style="Arial-Bold-Italic" x="0" y="3" width="366" height="15"/>
 				<textElement verticalAlignment="Middle" markup="styled">
