@@ -575,31 +575,6 @@
                     </div>
                     <div class="clearfix"></div>
                     <br/>
-                    <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel" global="true">
-                        <f:facet name="message">
-                            <div>
-                                <div class="col-md-2">
-                                    <h:graphicImage name="img/icon-alert.jpg"/>
-                                </div>
-                                <div class="col-md-10">
-                                    You have unsaved data
-                                </div>
-                            </div>
-                        </f:facet>
-
-                        <div class="pull-right">
-                            <h:commandButton id="confSaveIdBtn" value="Exit and Save" type='submit'
-                                             styleClass="btn btn-primary btn-sm"
-                                             action="#{purchaseOrderEdit.exitAndSave}"
-                                             onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);">
-                            </h:commandButton>
-                            &#160;
-                            <h:commandButton value="Exit Only (no save)" immediate="true"
-                                             styleClass="btn btn-primary btn-sm"
-                                             action="#{purchaseOrderEdit.exitOnlyNoSave}">
-                            </h:commandButton>
-                        </div>
-                    </p:confirmDialog>
                     <ui:include src="../WEB-INF/layout/confirmDialogs/confirm-dialogs-expediting-edit.xhtml"/>
                 </h:form>
             </div>

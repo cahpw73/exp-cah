@@ -131,5 +131,13 @@ public class SupplierProcService extends Service<SupplierProcEntity> implements 
             return new ArrayList<>();
         }
     }
+    public List<SupplierProcEntity> getSupplierListByCountriesAndCategory(final Long categoryId, final Long projectId){
+        List<SupplierProcEntity> list = findSupplierByProjectAndCategory(categoryId, projectId);
+        List<SupplierProcEntity> spList = new ArrayList<>();
+        if(!list.isEmpty()) {
+            spList = dao.getSupplierList(list);
+        }
+        return spList;
+    }
 
 }

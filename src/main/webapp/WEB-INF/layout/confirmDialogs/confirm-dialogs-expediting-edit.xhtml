@@ -4,18 +4,44 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:confirmDialog widgetVar="confCancelDashboard" id="confDashboard" header="Cancel" global="true">
-        <f:facet name="message">
-            <div>
-                <div class="col-md-2">
-                    <h:graphicImage name="img/icon-alert.jpg"/>
-                </div>
-                <div class="col-md-10">
-                    You have unsaved data
-                </div>
-            </div>
-        </f:facet>
 
+    <p:dialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel" modal="true" resizable="false" width="300">
+
+        <div>
+            <div class="col-md-2">
+                <h:graphicImage name="img/icon-alert.jpg"/>
+            </div>
+            <div class="col-md-10">
+                You have unsaved data
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
+        <div class="pull-right">
+            <h:commandButton value="Exit and Save" type='submit'
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitAndSave}">
+            </h:commandButton>
+            &#160;
+            <h:commandButton value="Exit Only (no save)" immediate="true"
+                             styleClass="btn btn-primary btn-sm"
+                             action="#{purchaseOrderEdit.exitOnlyNoSave}">
+            </h:commandButton>
+        </div>
+    </p:dialog>
+
+    <p:dialog widgetVar="confCancelDashboard" id="confDashboard" header="Cancel" modal="true" resizable="false" width="300">
+
+        <div>
+            <div class="col-md-2">
+                <h:graphicImage name="img/icon-alert.jpg"/>
+            </div>
+            <div class="col-md-10">
+                You have unsaved data
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
         <div class="pull-right">
             <h:commandButton id="exitSavePOEditBtn0" value="Exit and Save" type='submit'
                              styleClass="btn btn-primary btn-sm"
@@ -28,20 +54,19 @@
                              action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToDashboard}">
             </h:commandButton>
         </div>
-    </p:confirmDialog>
+    </p:dialog>
 
-    <p:confirmDialog widgetVar="confCancelPurchaseList" id="confrDialogLinkId" header="Cancel" global="true">
-        <f:facet name="message">
-            <div>
-                <div class="col-md-2">
-                    <h:graphicImage name="img/icon-alert.jpg"/>
-                </div>
-                <div class="col-md-10">
-                    You have unsaved data
-                </div>
+    <p:dialog widgetVar="confCancelPurchaseList" id="confrDialogLinkId" header="Cancel" modal="true" resizable="false" width="300">
+        <div>
+            <div class="col-md-2">
+                <h:graphicImage name="img/icon-alert.jpg"/>
             </div>
-        </f:facet>
-
+            <div class="col-md-10">
+                You have unsaved data
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
         <div class="pull-right">
             <h:commandButton id="exitSavePOEditBtn2" value="Exit and Save" type='submit'
                              styleClass="btn btn-primary btn-sm"
@@ -54,20 +79,19 @@
                              action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToPurchaseList}">
             </h:commandButton>
         </div>
-    </p:confirmDialog>
+    </p:dialog>
 
-    <p:confirmDialog widgetVar="confCancelReportList" id="confrDialogReportId" header="Cancel" global="true">
-        <f:facet name="message">
-            <div>
-                <div class="col-md-2">
-                    <h:graphicImage name="img/icon-alert.jpg"/>
-                </div>
-                <div class="col-md-10">
-                    You have unsaved data
-                </div>
+    <p:dialog widgetVar="confCancelReportList" id="confrDialogReportId" header="Cancel" modal="true" resizable="false" width="300">
+        <div>
+            <div class="col-md-2">
+                <h:graphicImage name="img/icon-alert.jpg"/>
             </div>
-        </f:facet>
-
+            <div class="col-md-10">
+                You have unsaved data
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
         <div class="pull-right">
             <h:commandButton id="exitSavePOEditBtn1" value="Exit and Save" type='submit'
                              styleClass="btn btn-primary btn-sm"
@@ -80,21 +104,20 @@
                              action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToReportList}">
             </h:commandButton>
         </div>
-    </p:confirmDialog>
+    </p:dialog>
 
-    <p:confirmDialog widgetVar="confCancelHometList"  id="confrDialogHomeId" header="Cancel" global="true">
-        <f:facet name="message">
-            <div>
-                <div class="col-md-1">
-                    <h:graphicImage name="img/icon-alert.jpg"/>
-                </div>
-                <div class="col-md-11">
-                    Do you wish to leave this page and lose your unsaved data?
-                    <br/>(including changes to Scopes of Supply).
-                </div>
+    <p:dialog widgetVar="confCancelHometList"  id="confrDialogHomeId" header="Cancel" modal="true" resizable="false" width="300">
+        <div>
+            <div class="col-md-1">
+                <h:graphicImage name="img/icon-alert.jpg"/>
             </div>
-        </f:facet>
-
+            <div class="col-md-11">
+                Do you wish to leave this page and lose your unsaved data?
+                <br/>(including changes to Scopes of Supply).
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br/>
         <div class="pull-right">
             <h:link outcome="/home" styleClass="btn btn-primary btn-sm color-btn-data-table">#{msgs['lbl.yes']}</h:link>
             &#160;
@@ -103,6 +126,6 @@
                 #{msgs['lbl.no']}
             </button>
         </div>
-    </p:confirmDialog>
+    </p:dialog>
 
 </ui:composition>

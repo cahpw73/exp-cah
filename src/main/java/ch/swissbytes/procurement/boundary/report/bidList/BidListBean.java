@@ -176,7 +176,7 @@ public class BidListBean implements Serializable {
     }
 
     public List<SupplierProcEntity> supplieres1(CategoryEntity category) {
-        List<SupplierProcEntity> list = supplierService.findSupplierByProjectAndCategory(category != null ? category.getId() : null, project != null ? project.getId() : null);
+        List<SupplierProcEntity> list = supplierService.getSupplierListByCountriesAndCategory(category != null ? category.getId() : null, project != null ? project.getId() : null);
         supplierProcList.clear();
         supplierProcList.addAll(list);
         return supplierProcList;
