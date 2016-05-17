@@ -59,12 +59,10 @@
                                process=":#{FORM}:contactList"
                                action="#{contactBean.confirm(_contact.id)}" update="contactList"/>
                 &#160;
-                <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}" process="@this"
+                <p:commandLink value="#{msgs['lbl.delete']}" rendered="#{!_contact.isEditable}"
                                action="#{contactBean.delete(_contact.id)}" update="contactList">
                     <p:confirm header="Remove contact"
-                               message="Are you sure to delete this contact?"
-                               icon="ui-icon-alert">
-                    </p:confirm>
+                               message="Are you sure to delete this contact?"/>
                 </p:commandLink>
                 <p:commandLink value="#{msgs['lbl.cancel']}" rendered="#{_contact.isEditable}" process="@this"
                                action="#{contactBean.cancel(_contact.id)}" update="contactList"/>
