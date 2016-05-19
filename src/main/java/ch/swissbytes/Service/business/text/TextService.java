@@ -49,7 +49,7 @@ public class TextService implements Serializable {
         }
         Integer order=0;
         for(ClausesEntity ps: entity.getClausesList()){
-            if(ps.getId() >= 1000 || ps.getId() < 0){
+            if(ps.getId() < 0){
                 ps.setId(null);
                 ps.setText(entity);
             }
