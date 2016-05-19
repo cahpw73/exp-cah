@@ -603,7 +603,6 @@ public class PoBean extends Bean {
 
     private void collectData() {
         purchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemBean.getScopeSupplyList());
-        log.info("Requisition List size: " + requisitionBean.getList().size());
         purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions().clear();
         purchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionBean.getList());
         purchaseOrder.getPurchaseOrderProcurementEntity().getDeliverables().addAll(deliverableBean.getList());
@@ -613,7 +612,6 @@ public class PoBean extends Bean {
         purchaseOrder.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(poTextBean.getDroppedTextSnippetList());
         purchaseOrder.getPurchaseOrderProcurementEntity().getPoDocumentList().addAll(poDocumentBean.getDroppedPODocumentList());
         purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocList().addAll(poDocumentBean.getProjectDocumentList());
-        log.info("projectBean.getProjectTextSnippetListFromPO() size: " + projectBean.getProjectTextSnippetListFromPO().size());
         purchaseOrder.getPurchaseOrderProcurementEntity().getProjectTextSnippetList().addAll(projectBean.getProjectTextSnippetListFromPO());
         purchaseOrder.getPurchaseOrderProcurementEntity().getProjectDocumentList().addAll(poDocumentBean.getProjectDocumentListToPO());
     }
