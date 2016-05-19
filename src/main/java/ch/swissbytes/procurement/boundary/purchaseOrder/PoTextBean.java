@@ -48,7 +48,7 @@ public class PoTextBean implements Serializable {
 
     private TextEntity textEntity;
 
-    private Long tempClausesId = 1000L;
+    private Long tempClausesId = -1L;
 
 
     @PostConstruct
@@ -129,7 +129,7 @@ public class PoTextBean implements Serializable {
     private ClausesEntity createClausesEntity(ProjectTextSnippetEntity poText) {
         ClausesEntity entity = new ClausesEntity();
         entity.setId(tempClausesId);
-        tempClausesId++;
+        tempClausesId--;
         entity.setLastUpdate(new Date());
         entity.setClauses(poText.getDescription());
         entity.setCode(poText.getCode());
@@ -146,7 +146,7 @@ public class PoTextBean implements Serializable {
     public void removeClauses() {
         for (ClausesEntity ts : selectedClausesTextList) {
             textSnippetList.add(projectTextSnippetService.findById(ts.getProjectTextSnippet().getId()));
-            if (ts.getId() > 0 && ts.getId() < 1000) {
+            if (ts.getId() > 0) {
                 for (ClausesEntity pl : droppedTextSnippetList) {
                     if (ts.getId().intValue() == pl.getId().intValue()) {
                         pl.setStatus(StatusEnum.DELETED);

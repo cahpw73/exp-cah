@@ -97,7 +97,7 @@
                                     </p:inputTextarea>
                                 </h:panelGroup>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poTextBean.hasStatusEnable(_dt)}"
+                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poTextBean.hasStatusEnable(_dt) and !poBean.modeView}"
                                       style="padding-left: 8px!important;">
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_dt.isEditable}" process="@this"
                                                action="#{poTextBean.editItem(_dt)}"

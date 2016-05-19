@@ -64,7 +64,7 @@
                                     <h:outputText value="#{_dt.description}" styleClass="box-document-list" escape="false"/>
                                 </p:column>
                             </ui:remove>
-                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
+                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt) and !poBean.modeView}"
                                       style="padding-left: 8px!important;">
                                 <h:panelGroup rendered="#{!poDocumentBean.verifyScheduleValue(_dt)}">
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
