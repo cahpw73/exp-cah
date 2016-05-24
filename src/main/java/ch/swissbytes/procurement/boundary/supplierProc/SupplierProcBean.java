@@ -55,6 +55,8 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     private String criteria;
 
+    private String anchor;
+
 
     @PostConstruct
     public void create() {
@@ -63,6 +65,7 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public void load() {
         Long id = null;
+        criteria="";
         putModeCreation();
         if (supplierId != null) {
             try {
@@ -107,7 +110,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         Messages.addFlashGlobalInfo("The supplier has been saved!");
         managerTable.rememberPage();
 
-        return "list?faces-redirect=true&FILTER="+criteria;
+        return "list?faces-redirect=true&FILTER="+criteria+"&anchor="+anchor;
     }
 
     public SupplierProcEntity save() {
@@ -135,7 +138,7 @@ public class SupplierProcBean extends Bean implements Serializable {
         Messages.addFlashGlobalInfo("The supplier has been saved!");
         managerTable.setLastEdited(supplier.getId());
         managerTable.rememberPage();
-        return "list?faces-redirect=true&FILTER="+criteria;
+        return "list?faces-redirect=true&FILTER="+criteria+"&anchor="+anchor;
     }
 
     private boolean validate() {
@@ -262,5 +265,13 @@ public class SupplierProcBean extends Bean implements Serializable {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public void setAnchor(String anchor) {
+        this.anchor = anchor;
     }
 }

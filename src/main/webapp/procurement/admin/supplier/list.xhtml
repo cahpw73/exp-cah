@@ -65,6 +65,7 @@
             <h:form prependId="false">
                 <p:remoteCommand autoRun="true" name="onload"
                                  oncomplete="PF('supplierTbl').getPaginator().setPage('#{supplierManagerTable.findCurrentPage()}');"/>
+                <h:inputHidden id="scrollTopId" value="#{supplierProcList.scrollTop}"/>
                 <p:dataTable value="#{supplierProcList.list}" var="_supplier"
                              paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              widgetVar="supplierTbl"
@@ -87,11 +88,20 @@
                         #{_supplier.country}
                     </p:column>
                     <p:column headerText="#{msgs['lbl.actions']}" width="200">
+                        <ui:remove>
                         <h:link value="#{msgs['lbl.edit']}" outcome="edit"
-                                style="color: #428BCA; ">
+                                style="color: #428BCA; " fragment="#{supplierProcList.scrollTop}">
                             <f:param name="supplierId" value="#{_supplier.id}"/>
                             <f:param name="FILTER" value="#{supplierProcList.filter.criteria}"/>
+                            <f:param name="anchor" value="#{supplierProcList.scrollTop}"></f:param>
                         </h:link>
+                        </ui:remove>
+                        <h:commandLink value="#{msgs['lbl.edit']}"
+                                       style="float: left!important; color: #428BCA; margin-right:5px;"
+                                       action="#{supplierProcList.redirectToEdit}">
+                            <f:setPropertyActionListener target="#{supplierProcList.supplierId}"
+                                                         value="#{_supplier.id}"/>
+                        </h:commandLink>
                         &#160;
                         <h:link value="#{msgs['lbl.view']}" outcome="edit"
                                 style=" color: #428BCA;">
@@ -119,5 +129,6 @@
                 </h:link>
             </ui:remove>
         </div>
+        <h:outputScript name="js/scrollSneak.js"/>
     </ui:define>
 </ui:composition>
