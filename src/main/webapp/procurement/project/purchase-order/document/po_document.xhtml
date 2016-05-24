@@ -44,43 +44,58 @@
                     <h:outputLabel value="#{msgs['po.doc.lbl.pod']}" for="poDocDt"/>
 
                     <div style="margin-top: 0px;">
-
-                        <p:dataTable id="poDocDt" var="_dt" draggableRows="true"
-                                     value="#{poDocumentBean.droppedPODocumentList}"
-                                     selectionMode="multiple" selection="#{poDocumentBean.selectedPODocumentList}"
-                                     rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
-                            <p:ajax event="rowReorder" listener="#{poDocumentBean.onRowReorder}" update="poDocDt :editPoForm:poDocBbtnt"/>
-                            <p:column id="poDocClId" headerText="#{msgs['po.doc.lbl.pod.column.no']}"
-                                      rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 10%!important;">
-                                <h:outputText value="#{_dt.numberPODoc}"/>
-                            </p:column>
-                            <p:column id="poDocCode" headerText="#{msgs['po.doc.lbl.pod.column.code']}"
-                                      rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 70%!important;">
-                                #{_dt.code}
-                            </p:column>
-                            <ui:remove>
-                                <p:column id="poDocCl" headerText="#{msgs['po.doc.lbl.pod.column.doc']}"
-                                          rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
-                                    <h:outputText value="#{_dt.description}" styleClass="box-document-list" escape="false"/>
+                        <h:panelGroup rendered="#{poBean.modeView==null}">
+                            <p:dataTable id="poDocDt" var="_dt" draggableRows="true"
+                                         value="#{poDocumentBean.droppedPODocumentList}"
+                                         selectionMode="multiple" selection="#{poDocumentBean.selectedPODocumentList}"
+                                         rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
+                                <p:ajax event="rowReorder" listener="#{poDocumentBean.onRowReorder}" update="poDocDt :editPoForm:poDocBbtnt"/>
+                                <p:column id="poDocClId" headerText="#{msgs['po.doc.lbl.pod.column.no']}"
+                                          rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 10%!important;">
+                                    <h:outputText value="#{_dt.numberPODoc}"/>
                                 </p:column>
-                            </ui:remove>
-                            <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt) and !poBean.modeView}"
-                                      style="padding-left: 8px!important;">
-                                <h:panelGroup rendered="#{!poDocumentBean.verifyScheduleValue(_dt)}">
-                                <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
-                                               update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
-                                               async="false" action="#{poDocumentBean.loadSelectedPODocument(_dt)}"/>
-                                &#160;
-                                <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
-                                               update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
-                                               async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
-                                <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument != null}" process="@this"
-                                               update=":previewPODocModalId1" oncomplete="PF('previewPODocModal1').show()"
-                                               async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
-                                </h:panelGroup>
+                                <p:column id="poDocCode" headerText="#{msgs['po.doc.lbl.pod.column.code']}"
+                                          rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 70%!important;">
+                                    #{_dt.code}
+                                </p:column>
+                                <ui:remove>
+                                    <p:column id="poDocCl" headerText="#{msgs['po.doc.lbl.pod.column.doc']}"
+                                              rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 80%!important;">
+                                        <h:outputText value="#{_dt.description}" styleClass="box-document-list" escape="false"/>
+                                    </p:column>
+                                </ui:remove>
+                                <p:column headerText="#{msgs['lbl.actions']}" rendered="#{poDocumentBean.hasStatusEnable(_dt)}"
+                                          style="padding-left: 8px!important;">
+                                    <h:panelGroup rendered="#{!poDocumentBean.verifyScheduleValue(_dt)}">
+                                    <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
+                                                   update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                                   async="false" action="#{poDocumentBean.loadSelectedPODocument(_dt)}"/>
+                                    &#160;
+                                    <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
+                                                   update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                                   async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
+                                    <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument != null}" process="@this"
+                                                   update=":previewPODocModalId1" oncomplete="PF('previewPODocModal1').show()"
+                                                   async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
+                                    </h:panelGroup>
 
-                            </p:column>
-                        </p:dataTable>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{poBean.modeView!=null}">
+                            <p:dataTable id="poDocDtView" var="_dt"
+                                         value="#{poDocumentBean.droppedPODocumentList}"
+                                         rowKey="#{_dt.id}" scrollable="true" scrollHeight="300">
+                                <p:column id="poDocClIdView" headerText="#{msgs['po.doc.lbl.pod.column.no']}"
+                                          rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 10%!important;">
+                                    <h:outputText value="#{_dt.numberPODoc}"/>
+                                </p:column>
+                                <p:column id="poDocCodeView" headerText="#{msgs['po.doc.lbl.pod.column.code']}"
+                                          rendered="#{poDocumentBean.hasStatusEnable(_dt)}" style="width: 70%!important;">
+                                    #{_dt.code}
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
                     </div>
 
                 </div>
@@ -128,7 +143,7 @@
                     </p:commandLink>
                 </h:panelGroup>
             </div>
-            <h:panelGroup id="poDocBbtnt" rendered="#{poBean.beingEdited}">
+            <h:panelGroup id="poDocBbtnt" rendered="#{poBean.beingEdited and poBean.modeView == null}">
                 <p:droppable id="poDocDroppDt" for="poDocDt" activeStyleClass="ui-state-highlight"
                              datasource="projectDocDt" tolerance="touch"
                              scope="poDocScope"
