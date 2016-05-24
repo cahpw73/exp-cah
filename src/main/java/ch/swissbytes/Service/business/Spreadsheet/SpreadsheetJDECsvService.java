@@ -144,7 +144,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(15, item.getCode() != null ? item.getCode() : "");
         processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : "");
         processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : "");
-        processor.writeStringValue(18, item.getDescription() != null ? item.getDescription() : "");
+        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): "");
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : "");
         processor.writeStringValue(20, item.getProjectCurrency().getCurrency().getCode());
@@ -172,7 +172,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(15, item.getCode() != null ? item.getCode() : "");
         processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : "");
         processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : "");
-        processor.writeStringValue(18, item.getDescription() != null ? item.getDescription() : "");
+        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): "");
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : "");
         processor.writeStringValue(20, item.getProjectCurrency().getCurrency().getCode());
