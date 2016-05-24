@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.data.SortEvent;
 
@@ -37,15 +38,15 @@ public class SupplierProcList implements Serializable {
     private SupplierProcDao dao;
     @Inject
     private SupplierProcService service;
-    private SupplierTbl list;
-    private List<SupplierProcEntity> suppliers;
     @Inject
     private SupplierManagerTable managerTable;
 
+    private SupplierTbl list;
+    private List<SupplierProcEntity> suppliers;
     private Filter filter;
-
     private String criteria;
-
+    private String scrollTop = "0";
+    private Long supplierId;
 
     @PostConstruct
     public void create() {
@@ -53,16 +54,17 @@ public class SupplierProcList implements Serializable {
         if (!managerTable.getRemember()) {
             managerTable.clear();
         }
-        filter=new Filter();
+        filter = new Filter();
         filter.setCriteria("");
         list = new SupplierTbl(dao, filter);
 
     }
-    public void load(){
-        if(criteria!=null){
+
+    public void load() {
+        if (criteria != null) {
             filter.setCriteria(criteria);
         }
-        list=new SupplierTbl(dao,filter);
+        list = new SupplierTbl(dao, filter);
     }
 
     public String getCriteria() {
@@ -91,7 +93,7 @@ public class SupplierProcList implements Serializable {
 
     public void doSearch() {
         managerTable.clear();
-        list = new SupplierTbl(dao,filter);
+        list = new SupplierTbl(dao, filter);
     }
 
     public SupplierTbl getList() {
@@ -106,7 +108,7 @@ public class SupplierProcList implements Serializable {
         ExpressionFactory expressionFactory = ExpressionFactory.newInstance();
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         if (managerTable.isSortInitialized()) {
-            log.info("sorting by "+managerTable.getSortBy());
+            log.info("sorting by " + managerTable.getSortBy());
             datatable.setValueExpression("sortBy", expressionFactory.createValueExpression(elContext, managerTable.getSortBy(), Object.class));
             datatable.setSortOrder(managerTable.getDirection());
         }
@@ -119,6 +121,15 @@ public class SupplierProcList implements Serializable {
         managerTable.setSortInitialized(true);
     }
 
+    public String redirectToEdit() {
+        log.info("redirectToEdit");
+        String criteriaFilter = StringUtils.isNotEmpty(filter.getCriteria()) ? filter.getCriteria() : "";
+        log.info("supplierId=\" + ["+supplierId+"] + \"&FILTER=\" + ["+criteriaFilter+"] + \"&anchor=\" + ["+scrollTop+"];");
+        String url="edit.xhtml?faces-redirect=true&supplierId=" + supplierId + "&FILTER=" + criteriaFilter + "&anchor=" + scrollTop;
+        log.info(url);
+        return url;
+    }
+
     public Filter getFilter() {
         return filter;
     }
@@ -127,4 +138,19 @@ public class SupplierProcList implements Serializable {
         this.filter = filter;
     }
 
+    public String getScrollTop() {
+        return scrollTop;
+    }
+
+    public void setScrollTop(String scrollTop) {
+        this.scrollTop = scrollTop;
+    }
+
+    public Long getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
+    }
 }

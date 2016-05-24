@@ -105,7 +105,8 @@
                         <h:panelGroup rendered="#{MODE ==null}">
                             <h:link id="ccb2" value="#{msgs['lbl.close']}" rendered="#{supplierProcBean.supplierMode}"
                                     outcome="list" styleClass="btn btn-primary btn-sm"
-                                    onclick="verifyToLeaveSupplierEdit(event)">
+                                    onclick="verifyToLeaveSupplierEdit(event)"
+                                    fragment="#{supplierProcBean.anchor}">
                                 <f:param name="FILTER" value="#{supplierProcBean.criteria}"/>
                             </h:link>
 
