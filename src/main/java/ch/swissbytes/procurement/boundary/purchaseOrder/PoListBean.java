@@ -120,7 +120,9 @@ public class PoListBean implements Serializable {
     }
 
     public void renderButtons() {
+        log.info("renderButtons");
         setShowButtons(true);
+        log.info("showButtons: " + isShowButtons());
     }
 
     @PostConstruct
