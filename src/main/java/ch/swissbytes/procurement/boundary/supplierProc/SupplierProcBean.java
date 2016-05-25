@@ -221,6 +221,10 @@ public class SupplierProcBean extends Bean implements Serializable {
         }
     }
 
+    public String closePo() {
+        return "list?faces-redirect=true&FILTER="+criteria+"&anchor="+anchor;
+    }
+
     public String getCriteria() {
         return criteria;
     }
