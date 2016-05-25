@@ -103,13 +103,19 @@
                             </h:commandButton>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{MODE ==null}">
+                            <ui:remove>
                             <h:link id="ccb2" value="#{msgs['lbl.close']}" rendered="#{supplierProcBean.supplierMode}"
                                     outcome="list" styleClass="btn btn-primary btn-sm"
                                     onclick="verifyToLeaveSupplierEdit(event)"
                                     fragment="#{supplierProcBean.anchor}">
                                 <f:param name="FILTER" value="#{supplierProcBean.criteria}"/>
                             </h:link>
-
+                            </ui:remove>
+                            <h:commandLink id="ccb6" value="#{msgs['lbl.close']}" rendered="#{supplierProcBean.supplierMode}"
+                                           action="#{supplierProcBean.closePo()}"
+                                           onclick="verifyToLeaveSupplierEdit(event)"
+                                           styleClass="btn btn-primary btn-sm">
+                            </h:commandLink>
                             <h:commandButton id="ccb1" value="#{msgs['lbl.cancel']}"
                                              styleClass="btn btn-primary btn-sm"
                                              rendered="#{not supplierProcBean.supplierMode}">
