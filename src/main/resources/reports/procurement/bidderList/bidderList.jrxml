@@ -17,7 +17,7 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select company,suburb,street,phone,fax,post_code,state,country,id
+		<![CDATA[select company,suburb,street,phone,fax,post_code,state,country,id,active
 from supplier_proc
 WHERE $X{IN,id,supplier}
 ORDER BY $P{sortBy}]]>
@@ -31,6 +31,7 @@ ORDER BY $P{sortBy}]]>
 	<field name="state" class="java.lang.String"/>
 	<field name="country" class="java.lang.String"/>
 	<field name="id" class="java.lang.Long"/>
+	<field name="active" class="java.lang.Boolean"/>
 	<sortField name="company"/>
 	<title>
 		<band height="122" splitType="Stretch">
@@ -131,7 +132,7 @@ ORDER BY $P{sortBy}]]>
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="25e9f1e9-c700-4875-a83d-cef549d0db54" x="295" y="0" width="90" height="16"/>
+				<reportElement uuid="25e9f1e9-c700-4875-a83d-cef549d0db54" x="286" y="0" width="80" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -145,38 +146,45 @@ ORDER BY $P{sortBy}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Name and Address</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="204" y="0" width="90" height="16"/>
+				<reportElement uuid="1f86565b-f6f6-446a-9334-f36ed946247d" x="204" y="0" width="80" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Telephone</style>]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="949813a3-065d-4bde-8014-70181b8bbf1a" x="22" y="0" width="515" height="1"/>
+				<reportElement uuid="949813a3-065d-4bde-8014-70181b8bbf1a" x="22" y="0" width="531" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="a59206d9-0b62-4c53-8726-b9303211ea0b" x="22" y="15" width="515" height="1"/>
+				<reportElement uuid="a59206d9-0b62-4c53-8726-b9303211ea0b" x="22" y="15" width="531" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="a1fa0f57-d163-4741-ab31-1d457cd1ba9c" x="387" y="0" width="165" height="16"/>
+				<reportElement uuid="a1fa0f57-d163-4741-ab31-1d457cd1ba9c" x="367" y="0" width="130" height="16"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Email</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="84f33ad5-1edf-4bc4-a71f-6f09df652d0e" x="500" y="0" width="54" height="16"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Active/Inactive</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="58" splitType="Stretch">
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="204" y="1" width="90" height="10"/>
+				<reportElement uuid="94f532de-fcc7-45d9-b527-fdbc55c2a69d" x="204" y="1" width="80" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="db1fd75b-70e0-4e71-a5cc-62d6011cfbf9" x="295" y="1" width="90" height="10"/>
+				<reportElement uuid="db1fd75b-70e0-4e71-a5cc-62d6011cfbf9" x="286" y="1" width="80" height="10"/>
 				<textElement verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
@@ -219,13 +227,20 @@ ORDER BY $P{sortBy}]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bidderContactName.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement uuid="c6e47c91-da44-4987-98e7-7be94fcdb8de" x="387" y="0" width="165" height="11"/>
+				<reportElement uuid="c6e47c91-da44-4987-98e7-7be94fcdb8de" x="367" y="0" width="130" height="11"/>
 				<subreportParameter name="SUPPLIER_ID">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "bidderEmailContact.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement uuid="5ce26912-051e-4620-bf7e-7a07d83ff949" x="500" y="1" width="54" height="10"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{active}!=null && $F{active}==true)?"active":"inactive"]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

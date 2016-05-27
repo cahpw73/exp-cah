@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.component.datatable.DataTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.SortEvent;
 
 
@@ -47,6 +48,7 @@ public class SupplierProcList implements Serializable {
     private String criteria;
     private String scrollTop = "0";
     private Long supplierId;
+    private SupplierProcEntity currentSupplier;
 
     @PostConstruct
     public void create() {
@@ -128,6 +130,33 @@ public class SupplierProcList implements Serializable {
         String url="edit.xhtml?faces-redirect=true&supplierId=" + supplierId + "&FILTER=" + criteriaFilter + "&anchor=" + scrollTop;
         log.info(url);
         return url;
+    }
+
+    public void loadSupplierToEdit(SupplierProcEntity supplier){
+        log.info("loadSupplierToEdit(SupplierProcEntity supplier ["+(supplier.getActive()!=null?supplier.getActive():false)+"])");
+        currentSupplier = supplier;
+        log.info("After changes supplier ["+(currentSupplier.getActive()!=null?currentSupplier.getActive():false)+"])");
+    }
+
+    public String onlyExit(){
+        log.info("onlyExit");
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('confSaveActiveSupplierDlg').hide();");
+        currentSupplier = null;
+        load();
+        criteria = StringUtils.isNotEmpty(criteria)?criteria:"";
+        return "list?faces-redirect=true&FILTER="+criteria+"&anchor="+scrollTop;
+    }
+
+    public String exitAndSave(){
+        log.info("exitAndSave");
+        service.doUpdate(currentSupplier);
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('confSaveActiveSupplierDlg').hide();");
+        currentSupplier = null;
+        load();
+        criteria = StringUtils.isNotEmpty(criteria)?criteria:"";
+        return "list?faces-redirect=true&FILTER="+criteria+"&anchor="+scrollTop;
     }
 
     public Filter getFilter() {

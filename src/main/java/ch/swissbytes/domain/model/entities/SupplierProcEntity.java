@@ -38,6 +38,7 @@ public class SupplierProcEntity implements Serializable {
     private String comments;
     private Date lastUpdate;
     private boolean canPrint = false;
+    private Boolean active;
 
     private List<ContactEntity> contacts = new ArrayList<>();
     private List<CategoryEntity> categories = new ArrayList<>();
@@ -186,16 +187,14 @@ public class SupplierProcEntity implements Serializable {
         this.fax = fax;
     }
 
-   /* @Size(max = 250)
-    @Pattern(regexp = "\\s*$|^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?",message = "Enter a valid email account")
-    @Column(name = "COMPANY_EMAIL", length = 250)
-    public String getCompanyEmail() {
-        return companyEmail;
+    @Column(name = "active", length = 250)
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setCompanyEmail(String companyEmail) {
-        this.companyEmail = companyEmail;
-    }*/
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     @Transient
     public List<ContactEntity> getContacts() {

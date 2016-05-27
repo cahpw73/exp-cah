@@ -62,11 +62,11 @@
             </div>
             <div class="clearfix"></div>
             <br/>
-            <h:form prependId="false">
+            <h:form id="supplierListForm" prependId="false">
                 <p:remoteCommand autoRun="true" name="onload"
                                  oncomplete="PF('supplierTbl').getPaginator().setPage('#{supplierManagerTable.findCurrentPage()}');"/>
                 <h:inputHidden id="scrollTopId" value="#{supplierProcList.scrollTop}"/>
-                <p:dataTable value="#{supplierProcList.list}" var="_supplier"
+                <p:dataTable id="supplierListDt" value="#{supplierProcList.list}" var="_supplier"
                              paginator="true" rows="#{tableCommonFeature.defaultPageSize}" lazy="true"
                              widgetVar="supplierTbl"
                              binding="#{supplierProcList.dataTable}"
@@ -86,6 +86,12 @@
                     </p:column>
                     <p:column headerText="#{msgs['supplier.lbl.country']}" sortBy="#{_supplier.country}">
                         #{_supplier.country}
+                    </p:column>
+                    <p:column headerText="#{msgs['supplier.lbl.active']}" width="60">
+                        <h:selectBooleanCheckbox value="#{_supplier.active}" >
+                            <p:ajax event="change" listener="#{supplierProcList.loadSupplierToEdit(_supplier)}"
+                                    oncomplete="PF('confSaveActiveSupplierDlg').show();"/>
+                        </h:selectBooleanCheckbox>
                     </p:column>
                     <p:column headerText="#{msgs['lbl.actions']}" width="200">
                         <ui:remove>
@@ -119,15 +125,30 @@
                             </p:confirm>
                         </p:commandLink>
                     </p:column>
-
                 </p:dataTable>
+                <p:dialog widgetVar="confSaveActiveSupplierDlg" id="confirmSaveSupplierId" header="Update Supplier" modal="true" resizable="false" width="424">
+
+                    <div>
+                        <div class="col-md-12">
+                            Are you sure change status active/inactive for this supplier?
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br/>
+                    <div class="pull-right">
+                        <h:commandButton value="#{msgs['lbl.save']}" type='submit'
+                                         styleClass="btn btn-primary btn-sm"
+                                         action="#{supplierProcList.exitAndSave}">
+                        </h:commandButton>
+                        &#160;
+                        <h:commandButton value="#{msgs['lbl.cancel']}" type='submit'
+                                         styleClass="btn btn-primary btn-sm"
+                                         action="#{supplierProcList.onlyExit}">
+                        </h:commandButton>
+                    </div>
+                </p:dialog>
             </h:form>
-            <br/>
-            <ui:remove>
-                <h:link
-                        outcome="/procurement/report/bidderList/categorySelection">#{msgs['supplier.create.bidder.list']}
-                </h:link>
-            </ui:remove>
+
         </div>
         <h:outputScript name="js/scrollSneakSupplierList.js"/>
     </ui:define>
