@@ -85,7 +85,6 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         createPagePackageHeader(list);
-        //createPagePackageMilestone(list);
     }
 
     public void processWorkbookForMilestone(final List<PurchaseOrderEntity> list) {
@@ -125,60 +124,62 @@ public class SpreadsheetJDECsvService implements Serializable {
     private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, boolean hasOneItem, PurchaseOrderEntity originalPO, CashflowEntity cashflowEntity) {
         Util util = new Util();
         util.setConfiguration(configuration);
-        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : "");
-        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
-        processor.writeStringValue(2, entity.getPoTitle() != null ? entity.getPoTitle() : "");
-        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getPoint() != null ? entity.getPurchaseOrderProcurementEntity().getPoint() : "");
-        processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getSupplierId() : "");
-        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() : "");
+        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : " ");
+        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : " ");
+        processor.writeStringValue(2, entity.getPoTitle() != null ? entity.getPoTitle() : " ");
+        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getPoint() != null ? entity.getPurchaseOrderProcurementEntity().getPoint() : " ");
+        processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getSupplierId() : " ");
+        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() : " ");
         processor.writeStringValue(6, collectMRNo(entity));
         processor.writeStringValue(7, collectRTFNo(entity));
         Date originalOrderDate = originalPO != null ? originalPO.getPurchaseOrderProcurementEntity().getOrderDate() : entity.getPurchaseOrderProcurementEntity().getOrderDate();
-        processor.writeStringValue(8, originalOrderDate != null ? configuration.convertDateToExportFileCsv(originalOrderDate) : "");
+        processor.writeStringValue(8, originalOrderDate != null ? configuration.convertDateToExportFileCsv(originalOrderDate) : " ");
         Date originalDeliveryDate = originalPO != null ? originalPO.getPoDeliveryDate() : entity.getPoDeliveryDate();
-        processor.writeStringValue(9, originalDeliveryDate != null ? configuration.convertDateToExportFileCsv(originalDeliveryDate) : "");
-        processor.writeStringValue(10, entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : "");
-        processor.writeStringValue(11, entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation()).toUpperCase() : "");
-        processor.writeStringValue(12, entity.getPurchaseOrderProcurementEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getVendorDrawingData()).toUpperCase() : "");
+        processor.writeStringValue(9, originalDeliveryDate != null ? configuration.convertDateToExportFileCsv(originalDeliveryDate) : " ");
+        processor.writeStringValue(10, entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : " ");
+        processor.writeStringValue(11, entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation()).toUpperCase() : " ");
+        processor.writeStringValue(12, entity.getPurchaseOrderProcurementEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getVendorDrawingData()).toUpperCase() : " ");
         processor.writeStringValue(13, getValueBankGuarantee(cashflowEntity));
         processor.writeStringValue(14, getValueCashflowPercentage(cashflowEntity));
 
-        processor.writeStringValue(15, item.getCode() != null ? item.getCode() : "");
-        processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : "");
-        processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : "");
-        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): "");
+        processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
+        processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
+        processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
+        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): " ");
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : "");
-        processor.writeStringValue(20, item.getProjectCurrency().getCurrency().getCode());
-        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():"");
+        processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
+        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() !=null && item.getProjectCurrency().getCurrency().getCode()!=null) ? item.getProjectCurrency().getCurrency().getCode(): " ";
+        processor.writeStringValue(20, currencyCode);
+        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():" ");
 
     }
 
     private void prepareDetailContent(ItemEntity item) {
-        processor.writeStringValue(0, "");
-        processor.writeStringValue(1, "");
-        processor.writeStringValue(2, "");
-        processor.writeStringValue(3, "");
-        processor.writeStringValue(4, "");
-        processor.writeStringValue(5, "");
-        processor.writeStringValue(6, "");
-        processor.writeStringValue(7, "");
-        processor.writeStringValue(8, "");
-        processor.writeStringValue(9, "");
-        processor.writeStringValue(10, "");
-        processor.writeStringValue(11, "");
-        processor.writeStringValue(12, "");
-        processor.writeStringValue(13, "");
-        processor.writeStringValue(14, "");
+        processor.writeStringValue(0, " ");
+        processor.writeStringValue(1, " ");
+        processor.writeStringValue(2, " ");
+        processor.writeStringValue(3, " ");
+        processor.writeStringValue(4, " ");
+        processor.writeStringValue(5, " ");
+        processor.writeStringValue(6, " ");
+        processor.writeStringValue(7, " ");
+        processor.writeStringValue(8, " ");
+        processor.writeStringValue(9, " ");
+        processor.writeStringValue(10, " ");
+        processor.writeStringValue(11, " ");
+        processor.writeStringValue(12, " ");
+        processor.writeStringValue(13, " ");
+        processor.writeStringValue(14, " ");
 
-        processor.writeStringValue(15, item.getCode() != null ? item.getCode() : "");
-        processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : "");
-        processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : "");
-        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): "");
+        processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
+        processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
+        processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
+        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): " ");
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : "");
-        processor.writeStringValue(20, item.getProjectCurrency().getCurrency().getCode());
-        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():"");
+        processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
+        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() !=null && item.getProjectCurrency().getCurrency().getCode()!=null) ? item.getProjectCurrency().getCurrency().getCode(): " ";
+        processor.writeStringValue(20, currencyCode);
+        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():" ");
     }
 
     private String collectMRNo(PurchaseOrderEntity po) {
@@ -187,7 +188,7 @@ public class SpreadsheetJDECsvService implements Serializable {
             sb.append(requisitionEntity.getRequisitionNumber());
             sb.append("-");
         }
-        return sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : "";
+        return sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : " ";
     }
 
     private String collectRTFNo(PurchaseOrderEntity po) {
@@ -200,7 +201,7 @@ public class SpreadsheetJDECsvService implements Serializable {
             }
             sb.append("-");
         }
-        return sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : "";
+        return sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : " ";
     }
 
     private String getValueBankGuarantee(CashflowEntity cashflowEntity) {
@@ -209,14 +210,14 @@ public class SpreadsheetJDECsvService implements Serializable {
         } else if (hasSecurityDeposit(cashflowEntity)) {
             return valueFromRetentionForm(cashflowEntity);
         }
-        return "";
+        return " ";
     }
 
     private String valueFromRetentionForm(CashflowEntity entity) {
         boolean isBankGuarantee = StringUtils.equals(RetentionFormEnum.BANK_GUARANTEE.getLabel(), entity.getForm());
         boolean isInsuranceBond = StringUtils.equals(RetentionFormEnum.INSURANCE_BOND.getLabel(), entity.getForm());
         boolean isOutBalance = StringUtils.equals("Out of Balance", entity.getForm());
-        return isBankGuarantee ? "B" : (isInsuranceBond ? "I" : (isOutBalance ? "O" : ""));
+        return isBankGuarantee ? "B" : (isInsuranceBond ? "I" : (isOutBalance ? "O" : " "));
     }
 
     private CashflowEntity getCashflowEntity(PurchaseOrderEntity entity) {
@@ -275,69 +276,9 @@ public class SpreadsheetJDECsvService implements Serializable {
         }
     }
 
-    ///-----------------------------------------------
-
-    public InputStream generateWorkbook(final List<PurchaseOrderEntity> list) {
-        processWorkbook(list);
-        log.info("written successfully...");
-        return processor.getContentSheet();
-    }
-
-    private void prepareWithColumns() {
-        processor.configureWithColumn(2, 3000);
-        processor.configureWithColumn(3, 8000);
-        processor.configureWithColumn(5, 10000);
-        processor.configureWithColumn(7, 4000);
-        processor.configureWithColumn(9, 4000);
-        processor.configureWithColumn(10, 4000);
-        processor.configureWithColumn(11, 8500);
-        processor.configureWithColumn(12, 3000);
-        processor.configureWithColumn(13, 2500);
-        processor.configureWithColumn(14, 2500);
-    }
-
     private void createPagePackageMilestone(final List<PurchaseOrderEntity> list) {
         processor.createSpreadsheet("PkgScInf");
-        /*createHeaderCMS(list.get(0));
-        createHeaderMilestone();*/
         generateSpreadsheetCashflowDetail(list);
-    }
-
-    private void createRowTotalPrice(PurchaseOrderEntity entity, BigDecimal totalForCurrency) {
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.createRow(rowNo);
-        processor.writeStringBoldValue(9, entity.getPo().toUpperCase() + "v" + entity.getVariation() + " TOTAL");
-        processor.writeStringBoldValue(10, totalForCurrency != null ? decFormat.format(totalForCurrency) : "");
-        processor.writeStringValue(13, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetention() ? "Yes" : "No");
-        processor.writeStringValue(14, entity.getPurchaseOrderProcurementEntity().getCashflow().getApplyRetentionSecurityDeposit() ? "Yes" : "No");
-    }
-
-    private void createHeaderPO() {
-        processor.createRow(1);
-        processor.writeStringBoldValue(0, "PO No.");
-        processor.writeStringBoldValue(1, "Var");
-        processor.writeStringBoldValue(2, "PO Date");
-        processor.writeStringBoldValue(3, "Supplier");
-        processor.writeStringBoldValue(4, "Item");
-        processor.writeStringBoldValue(5, "Description");
-        processor.writeStringBoldValue(6, "Currency");
-        processor.writeStringBoldValue(7, "Unit Price");
-        processor.writeStringBoldValue(8, "UOM");
-        processor.writeStringBoldValue(9, "Qty");
-        processor.writeStringBoldValue(10, "Total Price");
-        processor.writeStringBoldValue(11, "Terms");
-        processor.writeStringBoldValue(12, "Cost Code");
-        processor.writeStringBoldValue(13, "Retention");
-        processor.writeStringBoldValue(14, "Security");
-    }
-
-    private void createHeaderCMS(PurchaseOrderEntity entity) {
-        processor.createRow(0);
-        processor.writeStringBoldValue(0, "PROJECT: ");
-        processor.writeStringValue(1, entity.getProjectEntity().getProjectNumber());
-        processor.writeStringBoldValue(5, "EXPORT TO JDE");
-        processor.writeStringBoldValue(6, "DATE:");
-        processor.writeStringValue(7, configuration.convertDateToExportFile(new Date()));
     }
 
     private void generateSpreadsheetCashflowDetail(List<PurchaseOrderEntity> list) {
@@ -364,33 +305,22 @@ public class SpreadsheetJDECsvService implements Serializable {
         Util util = new Util();
         util.setConfiguration(configuration);
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : "");
-        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
-        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : "");
-        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : "");
-        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : "");
-        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : "");
-        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : "");
+        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : " ");
+        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : " ");
+        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : " ");
+        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : " ");
+        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : " ");
+        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : " ");
+        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : " ");
     }
 
     private void prepareDetailContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail) {
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : "");
-        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : "");
-        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : "");
-        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : "");
-        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : "");
-    }
-
-    private void createHeaderMilestone() {
-        processor.createRow(1);
-        processor.writeStringBoldValue(0, "Po");
-        processor.writeStringBoldValue(1, "Variation");
-        processor.writeStringBoldValue(2, "Milestone Number");
-        processor.writeStringBoldValue(3, "Milestone Description");
-        processor.writeStringBoldValue(4, "Currency");
-        processor.writeStringBoldValue(5, "Amount");
-        processor.writeStringBoldValue(6, "Date");
+        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : " ");
+        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : " ");
+        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : " ");
+        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : " ");
+        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : " ");
     }
 
     private String generateFileName(String fileNameSource) {
