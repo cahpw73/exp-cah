@@ -57,25 +57,27 @@ public class SpreadsheetJDECsvService implements Serializable {
         pathJDE = pathJDE.replace("{project_field}", folderName);
         log.info("Create spreadSheet for JDE PkgHdr csv");
         processWorkbook(list);
-        processor.doSaveWorkBook(pathJDE, packageHeaderInformation);
+        String fileNamePckIGenerated = generateFileName(packageHeaderInformation);
+        processor.doSaveWorkBook(pathJDE, fileNamePckIGenerated);
 
         log.info("written JDE PkgHdr CSV successfully...");
         log.info("Converting PkgHdr.xlsx file to csv file");
 
-        convertToCsv(pathJDE+ File.separator+packageHeaderInformation,pathJDE);
+        convertToCsv(pathJDE+ File.separator+fileNamePckIGenerated,pathJDE);
 
         log.info("Deleting PkgHdr.xlsx file");
-        deleteFileTemporal(pathJDE+ File.separator+packageHeaderInformation);
+        deleteFileTemporal(pathJDE+ File.separator+fileNamePckIGenerated);
         log.info("process to Export JDE PkgHdr.xlsx CSV file completed");
 
         log.info("Create spreadSheet for JDE PkgScInf csv");
         rowNoMilestone = 0;
         processWorkbookForMilestone(list);
-        processor.doSaveWorkBook(pathJDE, packageScheduleInformation);
+        String fileNameScheludeIGenerated = generateFileName(packageScheduleInformation);
+        processor.doSaveWorkBook(pathJDE, fileNameScheludeIGenerated);
         log.info("written JDE PkgScInf CSV successfully...");
-        convertToCsv(pathJDE+ File.separator+packageScheduleInformation,pathJDE);
+        convertToCsv(pathJDE+ File.separator+fileNameScheludeIGenerated,pathJDE);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
-        deleteFileTemporal(pathJDE+ File.separator+packageScheduleInformation);
+        deleteFileTemporal(pathJDE+ File.separator+fileNameScheludeIGenerated);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
     }
 
@@ -389,6 +391,13 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringBoldValue(4, "Currency");
         processor.writeStringBoldValue(5, "Amount");
         processor.writeStringBoldValue(6, "Date");
+    }
+
+    private String generateFileName(String fileNameSource) {
+        SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
+        String dateStr = format.format(new Date());
+        String fileName = dateStr.toUpperCase() + " - " + fileNameSource;
+        return fileName;
     }
 
 }

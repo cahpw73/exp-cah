@@ -64,6 +64,7 @@ public class ExportationPOBean implements Serializable {
     public void dailyExportation(CreateEmailSender createEmailSender) {
         log.info("running process to export.");
         String projectName = "";
+        String filePathProcess = "";
         try {
             List<ProjectEntity> projectEntities = projectService.findAllProjects();
             List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
@@ -74,6 +75,7 @@ public class ExportationPOBean implements Serializable {
                 poListCMS = poService.findPOListWithoutExportCMS(p.getId());
                 poListJDE = poService.findPOListWithoutExportJDE(p.getId());
                 if (!poListCMS.isEmpty()) {
+                    filePathProcess = filePathCMS(p);
                     exportCMS(poListCMS, p);
                 }
                 if (!poListJDE.isEmpty()) {
@@ -81,12 +83,13 @@ public class ExportationPOBean implements Serializable {
                         List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
                         po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
                     }
+                    filePathProcess = filePathJDE(p);
                     exportJDE(poListJDE, p);
                     exportJDECsv(poListJDE, p);
                 }
             }
         }catch (Exception e){
-            String messageError = "Error Trying to export POs under project: " + projectName;
+            String messageError = "Error Trying to export POs under project: " + projectName +"\n"+ "In the  file path: "+ filePathProcess;
             log.info(messageError);
             log.log(Level.SEVERE, e.getMessage());
             StringWriter errors = new StringWriter();
@@ -100,18 +103,18 @@ public class ExportationPOBean implements Serializable {
         log.info("exportCMS");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporter.generateWorkbookToExport(list, fName);
-        /*for (PurchaseOrderEntity po : list) {
+        for (PurchaseOrderEntity po : list) {
             poService.markCMSAsExported(po);
-        }*/
+        }
     }
 
     public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws Exception {
         log.info("exportJDE");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
         exporterToJDE.generateWorkbookToExport(list, fName);
-        /*for(PurchaseOrderEntity po : list) {
+        for(PurchaseOrderEntity po : list) {
             poService.markJDEAsExported(po);
-        }*/
+        }
     }
 
     public void exportJDECsv(List<PurchaseOrderEntity> list, ProjectEntity project) throws Exception {
@@ -120,5 +123,18 @@ public class ExportationPOBean implements Serializable {
         exporterToJDECsv.generateWorkbookToExport(list, fName);
     }
 
+    public String filePathCMS(ProjectEntity project){
+        String folderName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        String pathCMS = System.getProperty("fqmes.path.export.cms");
+        pathCMS = pathCMS.replace("{project_field}", folderName);
+        return pathCMS;
+    }
+
+    public String filePathJDE(ProjectEntity project){
+        String folderName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        String pathJDE = System.getProperty("fqmes.path.export.jde");
+        pathJDE = pathJDE.replace("{project_field}", folderName);
+        return pathJDE;
+    }
 
 }
