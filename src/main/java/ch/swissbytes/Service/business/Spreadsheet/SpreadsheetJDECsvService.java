@@ -48,8 +48,8 @@ public class SpreadsheetJDECsvService implements Serializable {
     int rowNo;
     int rowNoMilestone;
 
-    private static final String packageHeaderInformation="PkgHdr.xlsx";
-    private static final String packageScheduleInformation="PkgScInf.xlsx";
+    private static final String packageHeaderInformation = "PkgHdr.xlsx";
+    private static final String packageScheduleInformation = "PkgScInf.xlsx";
 
     public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
         rowNo = 0;
@@ -63,10 +63,10 @@ public class SpreadsheetJDECsvService implements Serializable {
         log.info("written JDE PkgHdr CSV successfully...");
         log.info("Converting PkgHdr.xlsx file to csv file");
 
-        convertToCsv(pathJDE+ File.separator+fileNamePckIGenerated,pathJDE);
+        convertToCsv(pathJDE + File.separator + fileNamePckIGenerated, pathJDE);
 
         log.info("Deleting PkgHdr.xlsx file");
-        deleteFileTemporal(pathJDE+ File.separator+fileNamePckIGenerated);
+        deleteFileTemporal(pathJDE + File.separator + fileNamePckIGenerated);
         log.info("process to Export JDE PkgHdr.xlsx CSV file completed");
 
         log.info("Create spreadSheet for JDE PkgScInf csv");
@@ -75,9 +75,9 @@ public class SpreadsheetJDECsvService implements Serializable {
         String fileNameScheludeIGenerated = generateFileName(packageScheduleInformation);
         processor.doSaveWorkBook(pathJDE, fileNameScheludeIGenerated);
         log.info("written JDE PkgScInf CSV successfully...");
-        convertToCsv(pathJDE+ File.separator+fileNameScheludeIGenerated,pathJDE);
+        convertToCsv(pathJDE + File.separator + fileNameScheludeIGenerated, pathJDE);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
-        deleteFileTemporal(pathJDE+ File.separator+fileNameScheludeIGenerated);
+        deleteFileTemporal(pathJDE + File.separator + fileNameScheludeIGenerated);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
     }
 
@@ -129,7 +129,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(2, entity.getPoTitle() != null ? entity.getPoTitle() : " ");
         processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getPoint() != null ? entity.getPurchaseOrderProcurementEntity().getPoint() : " ");
         processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getSupplierId() : " ");
-        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() : " ");
+        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? (entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().length() >= 30 ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "").substring(0, 30) : entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "")) : " ");
         processor.writeStringValue(6, collectMRNo(entity));
         processor.writeStringValue(7, collectRTFNo(entity));
         Date originalOrderDate = originalPO != null ? originalPO.getPurchaseOrderProcurementEntity().getOrderDate() : entity.getPurchaseOrderProcurementEntity().getOrderDate();
@@ -145,12 +145,13 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
         processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
         processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
-        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): " ");
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
+        processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().replace("\n", "").replace("\r", "").substring(0, 30) : item.getDescription().replace("\n", "").replace("\r", "")) : " ");
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
-        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() !=null && item.getProjectCurrency().getCurrency().getCode()!=null) ? item.getProjectCurrency().getCurrency().getCode(): " ";
+        log.info("cost: " + decFormat.format(item.getCost()));
+        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() != null && item.getProjectCurrency().getCurrency().getCode() != null) ? item.getProjectCurrency().getCurrency().getCode() : " ";
         processor.writeStringValue(20, currencyCode);
-        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():" ");
+        processor.writeStringValue(21, item.getCostCode() != null ? item.getCostCode() : " ");
 
     }
 
@@ -174,12 +175,13 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
         processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
         processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
-        processor.writeStringValue(18, item.getDescription() != null ?(item.getDescription().length()>=30?item.getDescription().replace("\n","").replace("\r","").substring(0,30):item.getDescription().replace("\n","").replace("\r","")): " ");
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
+        processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().replace("\n", "").replace("\r", "").substring(0, 30) : item.getDescription().replace("\n", "").replace("\r", "")) : " ");
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
-        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() !=null && item.getProjectCurrency().getCurrency().getCode()!=null) ? item.getProjectCurrency().getCurrency().getCode(): " ";
+        log.info("cost: " + decFormat.format(item.getCost()));
+        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() != null && item.getProjectCurrency().getCurrency().getCode() != null) ? item.getProjectCurrency().getCurrency().getCode() : " ";
         processor.writeStringValue(20, currencyCode);
-        processor.writeStringValue(21, item.getCostCode()!=null?item.getCostCode():" ");
+        processor.writeStringValue(21, item.getCostCode() != null ? item.getCostCode() : " ");
     }
 
     private String collectMRNo(PurchaseOrderEntity po) {
@@ -244,7 +246,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         return "";
     }
 
-    public void convertToCsv(String sourceFile, String destinationFolder){
+    public void convertToCsv(String sourceFile, String destinationFolder) {
         try {
             ToCSV converter = new ToCSV();
             converter.convertExcelToCSV(sourceFile, destinationFolder);
@@ -255,7 +257,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         // easilly from an exceptional set of circumstances at this point in the
         // program. It should however, ideally be replaced with one or more
         // catch clauses optimised to handle more specific problems.
-        catch(Exception ex) {
+        catch (Exception ex) {
             log.info("Caught an: " + ex.getClass().getName());
             log.info("Message: " + ex.getMessage());
             log.info("Stacktrace follows:.....");
@@ -263,15 +265,15 @@ public class SpreadsheetJDECsvService implements Serializable {
         }
     }
 
-    public void deleteFileTemporal(String filePath){
-        try{
+    public void deleteFileTemporal(String filePath) {
+        try {
             File file = new File(filePath);
-            if(file.delete()){
+            if (file.delete()) {
                 log.info(file.getName() + " is deleted!");
-            }else{
+            } else {
                 log.info("Delete operation is failed.");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

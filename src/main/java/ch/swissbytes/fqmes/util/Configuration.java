@@ -72,6 +72,10 @@ public class Configuration implements Serializable {
         return "#,##0.00";
     }
 
+    public String getPatternDecimalWithoutComma(){
+        return "##0.00";
+    }
+
     public String getPatternIntegerDecimal(){
         return "###.##";
     }
