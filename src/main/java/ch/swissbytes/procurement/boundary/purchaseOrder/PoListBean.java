@@ -6,6 +6,7 @@ import ch.swissbytes.Service.business.poDocument.PODocumentService;
 import ch.swissbytes.Service.business.project.ProjectService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
@@ -81,6 +82,9 @@ public class PoListBean implements Serializable {
 
     @Inject
     private PODocumentService poDocumentService;
+
+    @Inject
+    private RequisitionDao requisitionDao;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
@@ -281,19 +285,52 @@ public class PoListBean implements Serializable {
 
     public void doCommitPo() {
         log.info("doCommitPo()");
-        Date d1 = new Date();
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
             if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
                 populateFromPreviousRevision(currentPurchaseOrder);
+                List<ScopeSupplyEntity> supplyList = updateROSDateInExpediting();
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
                 maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+                updateScopeSuppliesAfterCommitted(supplyList);
             }
         }
         findPOs();
-        Date d2 = new Date();
     }
+
+    private void updateScopeSuppliesAfterCommitted(List<ScopeSupplyEntity> list) {
+        log.info("updateScopeSuppliesAfterCommitted(List<ScopeSupplyEntity> list size : " + list.size());
+        for (ScopeSupplyEntity s : list) {
+            scopeSupplyService.doUpdate(s);
+        }
+    }
+
+    private List<ScopeSupplyEntity> updateROSDateInExpediting() {
+        log.info("private List<ScopeSupplyEntity> updateROSDateInExpediting()");
+        Date rosMin = null;
+        List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
+        List<RequisitionEntity> requisitionList = requisitionDao.findRequisitionByPurchaseOrder(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        rosMin = new Date();
+        boolean wasUpdateRosMin = false;
+        for (RequisitionEntity r : requisitionList) {
+            if (r.getRequiredOnSiteDate() != null && r.getRequiredOnSiteDate().before(rosMin)) {
+                rosMin = r.getRequiredOnSiteDate();
+                wasUpdateRosMin = true;
+            }
+        }
+        if (!requisitionList.isEmpty() && wasUpdateRosMin) {
+            scopeSupplyList = scopeSupplyService.findByPoId(currentPurchaseOrder.getId());
+            for (ScopeSupplyEntity s : scopeSupplyList) {
+                s.setRequiredSiteDate(rosMin);
+            }
+        }
+        if(rosMin!=null && wasUpdateRosMin) {
+            currentPurchaseOrder.setRequiredDate(rosMin);
+        }
+        return scopeSupplyList;
+    }
+
 
     private void populateFromPreviousRevision(PurchaseOrderEntity currentPurchaseOrder) {
         if (currentPurchaseOrder.getOrderedVariation() > 0) {
@@ -534,7 +571,7 @@ public class PoListBean implements Serializable {
         String preamble = textEntity != null ? textEntity.getPreamble() : "";
         List<ClausesEntity> clausesEntityList = getClausesEntitiesByPOid(textEntity);
         List<PODocumentEntity> poDocumentList = poDocumentService.findByPOId(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
-        reportProcBean.printPurchaseOrder(currentPurchaseOrder, itemEntities, preamble, clausesEntityList, draft,poDocumentList);
+        reportProcBean.printPurchaseOrder(currentPurchaseOrder, itemEntities, preamble, clausesEntityList, draft, poDocumentList);
     }
 
     private List<ClausesEntity> getClausesEntitiesByPOid(TextEntity textEntity) {

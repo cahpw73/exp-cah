@@ -52,6 +52,11 @@ public class ScopeSupplyService extends Service<ScopeSupplyEntity> implements Se
         return list;
     }
 
+    public List<ScopeSupplyEntity> findByPoId(final Long purchaseOrderId){
+        List<ScopeSupplyEntity> list=dao.findByPurchaseOrder(purchaseOrderId);
+        return list;
+    }
+
     public List<ItemEntity> findItemsByPurchaseOrder(final Long purchaseOrderId){
         List<ItemEntity> list=dao.findItemsByPurchaseOrder(purchaseOrderId);
         return list;
