@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -51,7 +52,32 @@ public class SpreadsheetJDECsvService implements Serializable {
     private static final String packageHeaderInformation = "PkgHdr.xlsx";
     private static final String packageScheduleInformation = "PkgScInf.xlsx";
 
+    public List<String> generateJDECsvFileAndGetPaths(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
+        List<String> paths = new ArrayList<>();
+
+        String pathPkgHdr = generateWorkbookToPkgHdr(list, folderName);
+        paths.add(pathPkgHdr);
+
+        String pathPkgInf = generateWorkbookToPkgInf(list, folderName);
+        paths.add(pathPkgInf);
+        return paths;
+    }
+
+    public void deleteTemporalFiles(List<String> paths){
+        for (String p : paths){
+            deleteFileTemporal(p);
+        }
+    }
+
     public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
+        String pathPkgHdr = generateWorkbookToPkgHdr(list,folderName);
+        deleteFileTemporal(pathPkgHdr);
+
+        String pathPkgInf = generateWorkbookToPkgInf(list,folderName);
+        deleteFileTemporal(pathPkgInf);
+    }
+
+    private String generateWorkbookToPkgHdr(final List<PurchaseOrderEntity> list, String folderName) throws Exception{
         rowNo = 0;
         String pathJDE = System.getProperty("fqmes.path.export.jde");
         pathJDE = pathJDE.replace("{project_field}", folderName);
@@ -66,9 +92,14 @@ public class SpreadsheetJDECsvService implements Serializable {
         convertToCsv(pathJDE + File.separator + fileNamePckIGenerated, pathJDE);
 
         log.info("Deleting PkgHdr.xlsx file");
-        deleteFileTemporal(pathJDE + File.separator + fileNamePckIGenerated);
+        //deleteFileTemporal(pathJDE + File.separator + fileNamePckIGenerated);
         log.info("process to Export JDE PkgHdr.xlsx CSV file completed");
+        return pathJDE + File.separator + fileNamePckIGenerated;
+    }
 
+    private String generateWorkbookToPkgInf(final List<PurchaseOrderEntity> list, String folderName) throws Exception{
+        String pathJDE = System.getProperty("fqmes.path.export.jde");
+        pathJDE = pathJDE.replace("{project_field}", folderName);
         log.info("Create spreadSheet for JDE PkgScInf csv");
         rowNoMilestone = 0;
         processWorkbookForMilestone(list);
@@ -77,8 +108,9 @@ public class SpreadsheetJDECsvService implements Serializable {
         log.info("written JDE PkgScInf CSV successfully...");
         convertToCsv(pathJDE + File.separator + fileNameScheludeIGenerated, pathJDE);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
-        deleteFileTemporal(pathJDE + File.separator + fileNameScheludeIGenerated);
+        //deleteFileTemporal(pathJDE + File.separator + fileNameScheludeIGenerated);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
+        return pathJDE + File.separator + fileNameScheludeIGenerated;
     }
 
     public void processWorkbook(final List<PurchaseOrderEntity> list) {

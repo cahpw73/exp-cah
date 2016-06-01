@@ -1,5 +1,6 @@
 package ch.swissbytes.procurement.boundary.purchaseOrder;
 
+import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDECsvService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJDEService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetService;
 import ch.swissbytes.Service.business.poDocument.PODocumentService;
@@ -15,6 +16,7 @@ import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
@@ -31,12 +33,14 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.Serializable;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by alvaro on 6/1/2015.
@@ -73,6 +77,9 @@ public class PoListBean implements Serializable {
 
     @Inject
     private SpreadsheetJDEService exporterToJDE;
+
+    @Inject
+    private SpreadsheetJDECsvService jdeCsvService;
 
     @Inject
     private POManagerTable poManagerTable;
@@ -645,7 +652,10 @@ public class PoListBean implements Serializable {
             return false;
         }
         return false;
+    }
 
+    public boolean canExportJDECsv(PurchaseOrderEntity entity){
+        return entity.getId() != null ? true: false;
     }
 
     public StreamedContent exportCMS() throws FileNotFoundException {
@@ -655,7 +665,7 @@ public class PoListBean implements Serializable {
             List<PurchaseOrderEntity> list = new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             InputStream is = exporter.generateWorkbook(list);
-            service.markCMSAsExported(currentPurchaseOrder);
+            //service.markCMSAsExported(currentPurchaseOrder);
             content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
         }
         return content;
@@ -668,10 +678,71 @@ public class PoListBean implements Serializable {
             List<PurchaseOrderEntity> list = new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             InputStream is = exporterToJDE.generateWorkbook(list);
-            service.markJDEAsExported(currentPurchaseOrder);
+            //service.markJDEAsExported(currentPurchaseOrder);
             content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
         }
         return content;
+    }
+
+    public void downloadJDECsvFile() throws IOException {
+        log.info("Download Zip File...");
+        List<String> pathCSVFiles = new ArrayList<>();
+        try {
+            if (currentPurchaseOrder != null && currentPurchaseOrder.getId() != null) {
+                List<PurchaseOrderEntity> list = new ArrayList<>();
+                list.add(service.findById(currentPurchaseOrder.getId()));
+                String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+                pathCSVFiles.addAll(jdeCsvService.generateJDECsvFileAndGetPaths(list,fName));
+            }
+        }catch (Exception e) {
+
+        }
+
+        List<String> pathCsv = new ArrayList<>();
+        for (String path : pathCSVFiles){
+            String[] str = path.split("\\.");
+            pathCsv.add(str[0]+".csv");
+        }
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+        response.setContentType("application/zip");
+        response.setHeader("Content-Disposition", "inline; filename=JDECsv" + ".zip;");
+
+        ServletOutputStream outputStream = null;
+        ZipOutputStream zip = null;
+        String packageHeaderInformation = "PkgHdr";
+        String packageScheduleInformation = "PkgScInf";
+        try {
+            outputStream = response.getOutputStream();
+            zip = new ZipOutputStream(outputStream);
+            int i = 1 ;
+            for (String path : pathCsv) {
+                if(i==1) {
+                    addFilesToZip(zip, path, packageHeaderInformation + ".csv");
+                }else if(i==2){
+                    addFilesToZip(zip, path, packageScheduleInformation + ".csv");
+                }
+                i++;
+
+            }
+        } finally {
+            IOUtils.closeQuietly(zip);
+            IOUtils.closeQuietly(outputStream);
+        }
+        jdeCsvService.deleteTemporalFiles(pathCSVFiles);
+    }
+
+    private void addFilesToZip(ZipOutputStream zip, String path, String fileName) throws IOException {
+        FileInputStream file = null;
+        try {
+            zip.putNextEntry(new ZipEntry(fileName));
+            file = new FileInputStream(path);
+            IOUtils.copy(file, zip);
+            zip.closeEntry();
+        } finally {
+            IOUtils.closeQuietly(file);
+        }
     }
 
     private boolean validate() {

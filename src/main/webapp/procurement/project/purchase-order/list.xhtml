@@ -270,6 +270,15 @@
                                                          value="#{_p}"/>
                         </p:commandLink>
                         &#160;
+                        <p:commandLink id="exportJdeCsv"
+                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                       value="#{msgs['project.list.action.export.jde.csv']}"
+                                       onclick="PF('jdeCsvExport').show();" update=":JDECSVformId"
+                                       rendered="#{poListBean.canExportJDECsv(_p)}">
+                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                         value="#{_p}"/>
+                        </p:commandLink>
+                        &#160;
                         <p:commandLink
                                 update="@form" ajax="true"
                                 value="#{msgs['project.list.action.finalise']}"
@@ -483,6 +492,40 @@
                 </div>
                 <br/>
             </div>
+        </p:dialog>
+        <p:dialog id="exportJDECsvId" header="Export JDE CSV" widgetVar="jdeCsvExport"
+                  resizable="false">
+            <h:form id="JDECSVformId">
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <h:outputText styleClass="col-sm-8 control-label"
+                                      style="text-align: left !important;direction: ltr !important;"
+                                      for="poVarNumberVi"
+                                      value="Are you sure to export JDE?"/>
+                    </div>
+                    <div class="clearfix"></div>
+                    <br/>
+
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <h:form>
+                                <p:commandButton id="dlgDownloadCsvId" action="#{poListBean.downloadJDECsvFile}"
+                                                 value="#{msgs['lbl.yes']}" ajax="false"
+                                                 styleClass="btn btn-primary btn-sm"
+                                                 onclick="PF('jdeCsvExport').hide();">
+                                </p:commandButton>
+                                &#160;
+                                <button class="btn btn-primary btn-sm" type="button"
+                                        onclick="PF('jdeExport').hide();">
+                                    #{msgs['lbl.no']}</button>
+
+                            </h:form>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            </h:form>
         </p:dialog>
         <h:outputScript name="js/scrollSneak.js"/>
     </ui:define>
