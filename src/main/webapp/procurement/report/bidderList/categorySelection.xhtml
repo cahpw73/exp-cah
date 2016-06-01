@@ -134,6 +134,10 @@
                                             <p:column headerText="Country">
                                                 #{_supplier.country}
                                             </p:column>
+                                            <p:column headerText="Active/Inactive">
+                                                <h:outputText rendered="#{_supplier.active}"  value="Active"/>
+                                                <h:outputText rendered="#{!_supplier.active}"  value="Inactive"/>
+                                            </p:column>
                                             <p:column headerText="Print">
                                                 <h:selectBooleanCheckbox value="#{_supplier.canPrint}">
                                                 </h:selectBooleanCheckbox>

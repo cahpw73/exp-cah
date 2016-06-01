@@ -239,7 +239,7 @@ ORDER BY $P{sortBy}]]>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{active}!=null && $F{active}==true)?"active":"inactive"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{active}!=null && $F{active}==true)?"Active":"Inactive"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
