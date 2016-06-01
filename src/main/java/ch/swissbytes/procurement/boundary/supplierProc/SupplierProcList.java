@@ -4,6 +4,8 @@ import ch.swissbytes.Service.business.supplierProc.SupplierProcDao;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 
 import ch.swissbytes.Service.infrastructure.Filter;
+import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.domain.model.entities.SupplierProcEntity;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +44,7 @@ public class SupplierProcList implements Serializable {
     @Inject
     private SupplierManagerTable managerTable;
 
+
     private SupplierTbl list;
     private List<SupplierProcEntity> suppliers;
     private Filter filter;
@@ -49,6 +52,7 @@ public class SupplierProcList implements Serializable {
     private String scrollTop = "0";
     private Long supplierId;
     private SupplierProcEntity currentSupplier;
+    private PurchaseOrderProcurementEntity poProcurement;
 
     @PostConstruct
     public void create() {
@@ -79,7 +83,10 @@ public class SupplierProcList implements Serializable {
 
     public List<SupplierProcEntity> getSuppliers() {
         if (suppliers == null || suppliers.size() == 0) {
-            suppliers = service.findAll();
+            suppliers = service.findSupplierActives();
+        }
+        if(poProcurement!=null && !poProcurement.getSupplier().getActive()){
+            suppliers.add(poProcurement.getSupplier());
         }
         return suppliers;
     }
@@ -181,5 +188,13 @@ public class SupplierProcList implements Serializable {
 
     public void setSupplierId(Long supplierId) {
         this.supplierId = supplierId;
+    }
+
+    public PurchaseOrderProcurementEntity getPoProcurement() {
+        return poProcurement;
+    }
+
+    public void setPoProcurement(PurchaseOrderProcurementEntity poProcurement) {
+        this.poProcurement = poProcurement;
     }
 }

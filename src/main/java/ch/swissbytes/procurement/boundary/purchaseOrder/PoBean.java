@@ -147,6 +147,7 @@ public class PoBean extends Bean {
         cashflowBean.loadCashflow(purchaseOrder.getPurchaseOrderProcurementEntity().getId());
         poTextBean.loadText(purchaseOrder, purchaseOrder.getProjectEntity().getId());
         poDocumentBean.loadProjectDocuments(purchaseOrder,purchaseOrder.getProjectEntity().getId());
+        list.setPoProcurement(purchaseOrder.getPurchaseOrderProcurementEntity());
         if (purchaseOrder == null) {
             throw new IllegalArgumentException("It is not a purchase order valid");
         }
