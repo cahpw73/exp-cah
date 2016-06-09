@@ -142,7 +142,7 @@ public class Configuration implements Serializable {
     }
 
     public String getHardFormatDateJDECscFile(){
-        return "dd/mm/yyyy";
+        return "dd/MM/yyyy";
     }
 
     public String convertDateToExportFile(Date date) {

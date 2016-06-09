@@ -114,9 +114,11 @@ public class SpreadsheetJDECsvService implements Serializable {
     }
 
     public void processWorkbook(final List<PurchaseOrderEntity> list) {
+        log.info("Begin processWorkbook");
         processor = new SpreadsheetProcessor();
         processor.createWorkbook();
         createPagePackageHeader(list);
+        log.info("End processWorkbook");
     }
 
     public void processWorkbookForMilestone(final List<PurchaseOrderEntity> list) {
@@ -144,6 +146,7 @@ public class SpreadsheetJDECsvService implements Serializable {
                     processor.createRow(rowNo);
                     fillingDetailContent(entity, ss, originalPO, cashflowEntity);
                     rowNo++;
+                    log.info("rowNo: " + rowNo);
                 }
             }
         }
@@ -176,74 +179,10 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().replace("\n", "").replace("\r", "").substring(0, 30) : item.getDescription().replace("\n", "").replace("\r", "")) : " ");
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
-        log.info("cost: " + decFormat.format(item.getCost()));
         String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() != null && item.getProjectCurrency().getCurrency().getCode() != null) ? item.getProjectCurrency().getCurrency().getCode() : " ";
         processor.writeStringValue(20, currencyCode);
         processor.writeStringValue(21, item.getCostCode() != null ? item.getCostCode() : " ");
 
-    }
-
-    private void prepareFirstLineContent(PurchaseOrderEntity entity, ItemEntity item, PurchaseOrderEntity originalPO, CashflowEntity cashflowEntity) {
-        Util util = new Util();
-        util.setConfiguration(configuration);
-        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : " ");
-        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : " ");
-        processor.writeStringValue(2, entity.getPoTitle() != null ? entity.getPoTitle() : " ");
-        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getPoint() != null ? entity.getPurchaseOrderProcurementEntity().getPoint() : " ");
-        processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getSupplierId() : " ");
-        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? (entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().length() >= 30 ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "").substring(0, 30) : entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "")) : " ");
-        processor.writeStringValue(6, collectMRNo(entity));
-        processor.writeStringValue(7, collectRTFNo(entity));
-        Date originalOrderDate = originalPO != null ? originalPO.getPurchaseOrderProcurementEntity().getOrderDate() : entity.getPurchaseOrderProcurementEntity().getOrderDate();
-        processor.writeStringValue(8, originalOrderDate != null ? configuration.convertDateToExportFileCsv(originalOrderDate) : " ");
-        Date originalDeliveryDate = originalPO != null ? originalPO.getPoDeliveryDate() : entity.getPoDeliveryDate();
-        processor.writeStringValue(9, originalDeliveryDate != null ? configuration.convertDateToExportFileCsv(originalDeliveryDate) : " ");
-        processor.writeStringValue(10, entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : " ");
-        processor.writeStringValue(11, entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation()).toUpperCase() : " ");
-        processor.writeStringValue(12, entity.getPurchaseOrderProcurementEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getVendorDrawingData()).toUpperCase() : " ");
-        processor.writeStringValue(13, getValueBankGuarantee(cashflowEntity));
-        processor.writeStringValue(14, getValueCashflowPercentage(cashflowEntity));
-
-        processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
-        processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
-        processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
-        processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().replace("\n", "").replace("\r", "").substring(0, 30) : item.getDescription().replace("\n", "").replace("\r", "")) : " ");
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
-        processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
-        log.info("cost: " + decFormat.format(item.getCost()));
-        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() != null && item.getProjectCurrency().getCurrency().getCode() != null) ? item.getProjectCurrency().getCurrency().getCode() : " ";
-        processor.writeStringValue(20, currencyCode);
-        processor.writeStringValue(21, item.getCostCode() != null ? item.getCostCode() : " ");
-
-    }
-
-    private void prepareDetailContent(ItemEntity item) {
-        processor.writeStringValue(0, " ");
-        processor.writeStringValue(1, " ");
-        processor.writeStringValue(2, " ");
-        processor.writeStringValue(3, " ");
-        processor.writeStringValue(4, " ");
-        processor.writeStringValue(5, " ");
-        processor.writeStringValue(6, " ");
-        processor.writeStringValue(7, " ");
-        processor.writeStringValue(8, " ");
-        processor.writeStringValue(9, " ");
-        processor.writeStringValue(10, " ");
-        processor.writeStringValue(11, " ");
-        processor.writeStringValue(12, " ");
-        processor.writeStringValue(13, " ");
-        processor.writeStringValue(14, " ");
-
-        processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
-        processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
-        processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
-        processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().replace("\n", "").replace("\r", "").substring(0, 30) : item.getDescription().replace("\n", "").replace("\r", "")) : " ");
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
-        processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
-        log.info("cost: " + decFormat.format(item.getCost()));
-        String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() != null && item.getProjectCurrency().getCurrency().getCode() != null) ? item.getProjectCurrency().getCurrency().getCode() : " ";
-        processor.writeStringValue(20, currencyCode);
-        processor.writeStringValue(21, item.getCostCode() != null ? item.getCostCode() : " ");
     }
 
     private String collectMRNo(PurchaseOrderEntity po) {
@@ -350,15 +289,8 @@ public class SpreadsheetJDECsvService implements Serializable {
             List<CashflowDetailEntity> cashflowDetailList = cashflowService.findOrderedByCurrencyAndItem(entity.getPurchaseOrderProcurementEntity().getCashflow().getId());
             if (!cashflowDetailList.isEmpty()) {
                 processor.createRow(rowNoMilestone);
-                //CashflowDetailEntity cashflowDetail = cashflowDetailList.get(0);
-               /* boolean hasOneMilestone = cashflowDetailList.size() == 1;
-                int cashflowDetailSize = cashflowDetailList.size();*/
-                /*prepareFirstLineContentCashflowDetail(entity, cashflowDetail, hasOneMilestone);
-                cashflowDetailList.remove(0);*/
-                //rowNoMilestone++;
                 for (CashflowDetailEntity cf : cashflowDetailList) {
                     processor.createRow(rowNoMilestone);
-                    //prepareDetailContentCashflowDetail(entity, cf);
                     fillingContentCashflowDetail(entity, cf);
                     rowNoMilestone++;
                 }
@@ -370,38 +302,13 @@ public class SpreadsheetJDECsvService implements Serializable {
         Util util = new Util();
         util.setConfiguration(configuration);
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
-        //processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
-
-        //DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : " ");
         processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : " ");
         processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : " ");
         processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : " ");
         processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : " ");
         processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : " ");
-        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : " ");
-    }
-
-    private void prepareFirstLineContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail, boolean hasOneMilestone) {
-        Util util = new Util();
-        util.setConfiguration(configuration);
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : " ");
-        processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : " ");
-        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : " ");
-        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : " ");
-        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : " ");
-        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : " ");
-        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : " ");
-    }
-
-    private void prepareDetailContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail) {
-        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
-        processor.writeStringValue(2, cashflowDetail.getItem() != null ? cashflowDetail.getItem() : " ");
-        processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : " ");
-        processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : " ");
-        processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : " ");
-        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFile(cashflowDetail.getPaymentDate()) : " ");
+        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFileCsv(cashflowDetail.getPaymentDate()) : " ");
     }
 
     private String generateFileName(String fileNameSource) {
