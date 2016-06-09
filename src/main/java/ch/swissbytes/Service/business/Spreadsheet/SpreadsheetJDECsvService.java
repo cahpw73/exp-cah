@@ -79,8 +79,8 @@ public class SpreadsheetJDECsvService implements Serializable {
 
     private String generateWorkbookToPkgHdr(final List<PurchaseOrderEntity> list, String folderName) throws Exception{
         rowNo = 0;
-        String pathJDE = System.getProperty("fqmes.path.export.jde");
-        pathJDE = pathJDE.replace("{project_field}", folderName);
+        String pathJDE = System.getProperty("fqmes.path.export.jde.csv.package.header");
+        //pathJDE = pathJDE.replace("{project_field}", folderName);
         log.info("Create spreadSheet for JDE PkgHdr csv");
         processWorkbook(list);
         String fileNamePckIGenerated = generateFileName(packageHeaderInformation);
@@ -92,14 +92,13 @@ public class SpreadsheetJDECsvService implements Serializable {
         convertToCsv(pathJDE + File.separator + fileNamePckIGenerated, pathJDE);
 
         log.info("Deleting PkgHdr.xlsx file");
-        //deleteFileTemporal(pathJDE + File.separator + fileNamePckIGenerated);
         log.info("process to Export JDE PkgHdr.xlsx CSV file completed");
         return pathJDE + File.separator + fileNamePckIGenerated;
     }
 
     private String generateWorkbookToPkgInf(final List<PurchaseOrderEntity> list, String folderName) throws Exception{
-        String pathJDE = System.getProperty("fqmes.path.export.jde");
-        pathJDE = pathJDE.replace("{project_field}", folderName);
+        String pathJDE = System.getProperty("fqmes.path.export.jde.csv.package.schedule.info");
+        //pathJDE = pathJDE.replace("{project_field}", folderName);
         log.info("Create spreadSheet for JDE PkgScInf csv");
         rowNoMilestone = 0;
         processWorkbookForMilestone(list);
@@ -108,7 +107,6 @@ public class SpreadsheetJDECsvService implements Serializable {
         log.info("written JDE PkgScInf CSV successfully...");
         convertToCsv(pathJDE + File.separator + fileNameScheludeIGenerated, pathJDE);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
-        //deleteFileTemporal(pathJDE + File.separator + fileNameScheludeIGenerated);
         log.info("process to Export JDE PkgScInf.xlsx CSV file completed");
         return pathJDE + File.separator + fileNameScheludeIGenerated;
     }
