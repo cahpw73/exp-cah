@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="519" leftMargin="56" rightMargin="20" topMargin="28" bottomMargin="20" isSummaryNewPage="true" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="546"/>
+	<property name="ireport.y" value="210"/>
 	<style name="table" fill="Solid">
 		<pen lineWidth="0.5"/>
 		<box>
@@ -131,6 +131,7 @@
 	<parameter name="titleReport" class="java.lang.String"/>
 	<parameter name="titleVariation" class="java.lang.String"/>
 	<parameter name="docs" class="java.lang.String"/>
+	<parameter name="titlePoSummary" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -810,6 +811,9 @@
 			</componentElement>
 			<subreport>
 				<reportElement uuid="9ef0f8ce-2f88-484c-91bd-3c6d07d88de1" positionType="Float" isPrintRepeatedValues="false" x="0" y="6" width="519" height="5"/>
+				<subreportParameter name="titlePoSummary">
+					<subreportParameterExpression><![CDATA[$P{titlePoSummary}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="poSummaryList">
 					<subreportParameterExpression><![CDATA[$P{poSummaryList}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -819,11 +823,11 @@
 				<subreportParameter name="purchaseOrderId">
 					<subreportParameterExpression><![CDATA[$P{purchaseOrderId}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="titleReport">
-					<subreportParameterExpression><![CDATA[$P{titleReport}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="titleReport">
+					<subreportParameterExpression><![CDATA[$P{titleReport}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Total.jasper"]]></subreportExpression>
