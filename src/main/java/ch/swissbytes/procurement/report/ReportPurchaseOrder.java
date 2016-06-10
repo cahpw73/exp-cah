@@ -130,12 +130,15 @@ import java.util.logging.Logger;
         }
         if (po.getPurchaseOrderProcurementEntity().getClazz() != null) {
             if (po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.PO.ordinal() || po.getPurchaseOrderProcurementEntity().getClazz().ordinal() == ClassEnum.MINING_FLEET.ordinal()) {
-                addParameters("titleReport", "Purchase Order Summary");
+                addParameters("titleReport", "Purchase Order");
+                addParameters("titlePoSummary", "Purchase Order Summary");
             } else {
-                addParameters("titleReport", "Contract Summary");
+                addParameters("titleReport", "Contract");
+                addParameters("titlePoSummary", "Contract Summary");
             }
         } else {
-            addParameters("titleReport", "Purchase Order Summary");
+            addParameters("titleReport", "Purchase Order");
+            addParameters("titlePoSummary", "Purchase Order Summary");
         }
 
         addParameters("poList", createDataSource(getPOReportDto()));

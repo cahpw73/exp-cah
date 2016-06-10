@@ -61,6 +61,7 @@
 	</parameter>
 	<parameter name="poSummaryList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<parameter name="titleReport" class="java.lang.String"/>
+	<parameter name="titlePoSummary" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select sum(total_cost)as total,currency_id,c.code,c.symbol
 from item ss
@@ -291,12 +292,12 @@ group by pc.currency_id,c.code,c.symbol]]>
 				<reportElement uuid="7057ee64-8b16-40db-ba8a-5e4ce1f00f6e" positionType="Float" x="0" y="21" width="517" height="1"/>
 			</line>
 			<textField>
-				<reportElement uuid="132b9a4a-3b25-4b0c-81fd-e6e2ab8a697a" style="Arial-Bold" x="2" y="2" width="121" height="12"/>
+				<reportElement uuid="132b9a4a-3b25-4b0c-81fd-e6e2ab8a697a" style="Arial-Bold" x="2" y="2" width="166" height="12"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{titleReport}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{titlePoSummary}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
