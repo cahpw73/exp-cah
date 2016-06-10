@@ -123,8 +123,8 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
         this.quantity = quantity;
     }
 
-    @Size(max = 1000)
-    @Column(name="description",length = 1000)
+    @Size(max = 20000)
+    @Column(name="description",length = 20000)
     public String getDescription() {
         return description;
     }
