@@ -315,13 +315,15 @@ public class PoListBean implements Serializable {
 
     private List<ScopeSupplyEntity> updateROSDateInExpediting() {
         log.info("private List<ScopeSupplyEntity> updateROSDateInExpediting()");
-        Date rosMin = null;
         List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
         List<RequisitionEntity> requisitionList = requisitionDao.findRequisitionByPurchaseOrder(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
-        rosMin = new Date();
         boolean wasUpdateRosMin = false;
+        Date rosMin = null;
         for (RequisitionEntity r : requisitionList) {
-            if (r.getRequiredOnSiteDate() != null && r.getRequiredOnSiteDate().before(rosMin)) {
+            if(rosMin == null) {
+                rosMin = r.getRequiredOnSiteDate();
+                wasUpdateRosMin = true;
+            }else if (r.getRequiredOnSiteDate() != null && r.getRequiredOnSiteDate().before(rosMin)) {
                 rosMin = r.getRequiredOnSiteDate();
                 wasUpdateRosMin = true;
             }
