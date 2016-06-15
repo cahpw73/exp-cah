@@ -159,27 +159,15 @@
             <div class="clearfix"/>
             <br/>
 
-            <div>
-                <ui:remove>
-                <div class="pull-right">
-                    <h:commandButton rendered="#{permissionBean.hasPermission(101)}" value="Create Purchase Order"
-                                     action="#{purchaseOrderListBean.redirectCreatePurchaseOrder()}"
-                                     type="submit" styleClass="btn btn-primary btn-sm"/>
-                </div>
-                </ui:remove>
-            </div>
-            <div class="clearfix"/>
-            <br/>
-
             <p:confirmDialog id="deleteDlgId" header="Delete Purchase Order" widgetVar="deleteDlg">
                 <f:facet name="message">
                     Are you sure to delete Purchase Order?
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 15px;">
                         <label for="projectDlgId">Project</label>
                         &#160;
                         <h:outputText id="projectDlgId" value="#{purchaseOrderListBean.purchaseOrderSelected.project}"/>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: -15px;">
                         <label for="poDlgId">PO Reference</label>
                         &#160;
                         <h:outputText id="poDlgId" value="#{purchaseOrderListBean.purchaseOrderSelected.po}"/>
