@@ -735,6 +735,22 @@ public class PoListBean implements Serializable {
         jdeCsvService.deleteTemporalFiles(pathCSVFiles);
     }
 
+    public void exportJdeCsv(){
+        log.info("Exporting JDE Csv from list of PO");
+        List<String> pathCSVFiles = new ArrayList<>();
+        try {
+            if (currentPurchaseOrder != null && currentPurchaseOrder.getId() != null) {
+                List<PurchaseOrderEntity> list = new ArrayList<>();
+                list.add(service.findById(currentPurchaseOrder.getId()));
+                String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+                pathCSVFiles.addAll(jdeCsvService.generateJDECsvFileAndGetPaths(list,fName));
+                jdeCsvService.deleteTemporalFiles(pathCSVFiles);
+            }
+        }catch (Exception e) {
+
+        }
+    }
+
     private void addFilesToZip(ZipOutputStream zip, String path, String fileName) throws IOException {
         FileInputStream file = null;
         try {

@@ -510,8 +510,8 @@
                     <div class="form-group">
                         <div class="pull-right">
                             <h:form>
-                                <h:commandButton id="dlgDownloadCsvId" action="#{poListBean.downloadJDECsvFile}"
-                                                 value="#{msgs['lbl.yes']}" ajax="false"
+                                <h:commandButton id="dlgDownloadCsvId" action="#{poListBean.exportJdeCsv}"
+                                                 value="#{msgs['lbl.yes']}"
                                                  styleClass="btn btn-primary btn-sm"
                                                  onclick="PF('jdeCsvExport').hide();">
                                 </h:commandButton>
