@@ -118,6 +118,10 @@ public class UserBean implements Serializable {
                 moduleGrantedAccessList.add(moduleProcurement);
             }
             userRoleList = userRoleService.findListByUserId(userId);
+            if(userRoleList.size() == 1){
+                UserRoleEntity userProcurement = new UserRoleEntity();
+                userRoleList.add(userProcurement);
+            }
             ModuleGrantedAccessEntity mga = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING);
             if (mga != null && mga.getModuleAccess() != null) {
                 moduleAccessExpediting = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING).getModuleAccess();

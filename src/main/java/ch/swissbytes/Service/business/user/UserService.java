@@ -6,6 +6,7 @@ import ch.swissbytes.domain.model.entities.ModuleGrantedAccessEntity;
 import ch.swissbytes.domain.model.entities.RoleEntity;
 import ch.swissbytes.domain.model.entities.UserEntity;
 import ch.swissbytes.domain.model.entities.UserRoleEntity;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
 import ch.swissbytes.domain.types.StatusEnum;
 
 import javax.inject.Inject;
@@ -76,7 +77,13 @@ public class UserService implements Serializable {
             }
             for (UserRoleEntity ure : userRoleList) {
                 if (ure != null) {
-                    userRoleService.doUpdate(ure);
+                    if(ure.getId()!=null) {
+                        userRoleService.doUpdate(ure);
+                    }else{
+                        ure.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                        ure.setUser(user);
+                        userRoleService.doSave(ure);
+                    }
                 }
             }
         }
