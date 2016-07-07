@@ -31,6 +31,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -379,7 +380,7 @@ public class PoListBean implements Serializable {
     public void doDeletePo() {
         log.info("do delete purchase order");
         service.doDelete(currentPurchaseOrder.getId());
-        findPOs();
+        refreshListPo();
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
@@ -650,6 +651,7 @@ public class PoListBean implements Serializable {
 
     }
 
+    @Transactional
     public StreamedContent exportCMS() throws FileNotFoundException {
         log.info("exportCMS");
         StreamedContent content = null;
@@ -663,6 +665,7 @@ public class PoListBean implements Serializable {
         return content;
     }
 
+    @Transactional
     public StreamedContent exportJDE() {
         log.info("exportJDE");
         StreamedContent content = null;
@@ -890,5 +893,17 @@ public class PoListBean implements Serializable {
         for (PurchaseOrderEntity po : purchaseOrders) {
 
         }
+    }
+
+    public void refreshListPo(){
+        log.info("refreshListPo()");
+        /*project = projectService.findProjectById(Long.parseLong(projectId));
+        if (project == null) {
+            throw new IllegalArgumentException("project Id invalid");
+        }
+        Date d1 = new Date();*/
+        maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+        ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
+        findPOs();
     }
 }

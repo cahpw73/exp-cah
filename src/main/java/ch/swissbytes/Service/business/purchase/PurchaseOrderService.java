@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
@@ -493,13 +494,13 @@ public class PurchaseOrderService extends Service implements Serializable {
         }
     }
 
-    @Transactional
+    //@Transactional
     public void markCMSAsExported(PurchaseOrderEntity purchaseOrderEntity) {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setCmsExported(true);
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
     }
 
-    @Transactional
+   // @Transactional
     public void markJDEAsExported(PurchaseOrderEntity purchaseOrderEntity) {
         purchaseOrderEntity.getPurchaseOrderProcurementEntity().setJdeExported(true);
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
