@@ -67,45 +67,11 @@ public class ExportationPOBean implements Serializable {
     public void dailyExportation(CreateEmailSender createEmailSender) {
         log.info("running process to export.");
         String projectName = "";
-//<<<<<<< HEAD
         String filePathProcess = "";
-/*        try {
-=======*/
-
-//>>>>>>> master
             List<ProjectEntity> projectEntities = projectService.findAllProjects();
             List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
             List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
             for (ProjectEntity p : projectEntities) {
-/*<<<<<<< HEAD
-                projectName = p.getProjectNumber();
-                log.info("processing PO's from Project[" + p.getProjectNumber() + "]");
-                poListCMS = poService.findPOListWithoutExportCMS(p.getId());
-                poListJDE = poService.findPOListWithoutExportJDE(p.getId());
-                if (!poListCMS.isEmpty()) {
-                    filePathProcess = filePathCMS(p);
-                    exportCMS(poListCMS, p);
-                }
-                if (!poListJDE.isEmpty()) {
-                    for (PurchaseOrderEntity po : poListJDE) {
-                        List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
-                        po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
-                    }
-                    filePathProcess = filePathJDE(p);
-                    exportJDE(poListJDE, p);
-                    exportJDECsv(poListJDE, p);
-                }
-            }
-        }catch (Exception e){
-            String messageError = "Error Trying to export POs under project: " + projectName +"\n"+ "In the  file path: "+ filePathProcess;
-            log.info(messageError);
-            log.log(Level.SEVERE, e.getMessage());
-            StringWriter errors = new StringWriter();
-            e.printStackTrace(new PrintWriter(errors));
-            createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString(),messageError);
-            e.printStackTrace();
-        }
-=======*/
                 try {
                     projectName = p.getProjectNumber();
                     log.info("processing PO's from Project[" + p.getProjectNumber() + "]");
@@ -132,8 +98,6 @@ public class ExportationPOBean implements Serializable {
                     e.printStackTrace();
                 }
             }
-
-//>>>>>>> master
     }
 
     public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
