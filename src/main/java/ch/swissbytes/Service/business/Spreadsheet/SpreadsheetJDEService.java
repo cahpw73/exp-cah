@@ -49,7 +49,7 @@ public class SpreadsheetJDEService implements Serializable {
     int rowNoMilestone;
 
 
-    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
+    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws IOException {
         rowNo = 2;
         rowNoMilestone = 2;
         String pathJDE = System.getProperty("fqmes.path.export.jde");

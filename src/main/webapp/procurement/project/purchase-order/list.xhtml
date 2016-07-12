@@ -280,7 +280,7 @@
                         </p:commandLink>
                         &#160;
                         <p:commandLink
-                                update="@form" ajax="true"
+                                update=":listPooFormId:projectListId :listPooFormId:filterButtons" ajax="true"
                                 value="#{msgs['project.list.action.finalise']}"
                                 action="#{poListBean.doFinalise()}"
                                 style="float: left!important; color: #428BCA; padding-top: 0px!important;"
@@ -309,7 +309,7 @@
                             </p:confirm>
                         </p:commandLink>
                         <p:commandLink
-                                update="@form" ajax="true"
+                                update=":listPooFormId:projectListId :listPooFormId:filterButtons" ajax="true"
                                 value="#{msgs['project.list.action.delete']}"
                                 action="#{poListBean.doDeletePo}"
                                 async="false"
@@ -332,44 +332,44 @@
         </o:form>
         <p:dialog id="variationModalId" header="Create Variation" widgetVar="variationModal"
                   resizable="false">
-            <h:panelGroup id="variationGroupId">
-                <div class="col-md-12">
-                    <div style="width: 340px!important; float: left!important;">
-                        <div class="form-group">
+            <h:form id="variationGroupId" prependId="false">
+                    <div class="col-md-12">
+                        <div style="width: 340px!important; float: left!important;">
+                            <div class="form-group">
 
-                            <h:outputLabel styleClass="col-sm-4 control-label"
-                                           style="text-align: left !important;direction: ltr !important;"
-                                           for="poVarNumberVi" value="#{msgs['po.main.data.lbl.var.number']}"/>
+                                <h:outputLabel styleClass="col-sm-4 control-label"
+                                               style="text-align: left !important;direction: ltr !important;"
+                                               for="poVarNumberVi" value="#{msgs['po.main.data.lbl.var.number']}"/>
 
-                            <div style="width: 167px; float: left;">
-                                <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"
-                                             value="#{poListBean.newVariationNumber}"/>
-                            </div>
-
-                        </div>
-                        <div class="clearfix"></div>
-                        <br/>
-
-                        <div class="form-group">
-                            <div class="pull-right" style="margin-right: 60px!important;">
-                                <h:commandButton value="#{msgs['lbl.accept']}" styleClass="btn btn-primary btn-sm"
-                                                 action="#{poListBean.doSavePOONewVariation}">
-                                    <p:ajax onsuccess="PF('variationModal').hide();"
-                                            process="variationGroupId"
-                                            async="false"
-                                            update=":listPooFormId:projectListId"/>
-                                </h:commandButton>
-                                &#160;
-                                <button class="btn btn-primary btn-sm" type="button"
-                                        onclick="PF('variationModal').hide();">
-                                    #{msgs['lbl.cancel']}</button>
+                                <div style="width: 167px; float: left;">
+                                    <h:inputText id="poVarNumberVi" readonly="true" styleClass="form-control view-po"
+                                                 value="#{poListBean.newVariationNumber}"/>
+                                </div>
 
                             </div>
+                            <div class="clearfix"></div>
+                            <br/>
+
+                            <div class="form-group">
+                                <div class="pull-right" style="margin-right: 60px!important;">
+                                    <h:commandButton value="#{msgs['lbl.accept']}" styleClass="btn btn-primary btn-sm"
+                                                     action="#{poListBean.doSavePOONewVariation}">
+                                        <p:ajax onsuccess="PF('variationModal').hide();"
+                                                process="variationGroupId"
+                                                async="false"
+                                                update=":listPooFormId:projectListId"/>
+                                    </h:commandButton>
+                                    &#160;
+                                    <button class="btn btn-primary btn-sm" type="button"
+                                            onclick="PF('variationModal').hide();">
+                                        #{msgs['lbl.cancel']}</button>
+
+                                </div>
+                            </div>
+                            <br/>
                         </div>
-                        <br/>
                     </div>
-                </div>
-            </h:panelGroup>
+            </h:form>
         </p:dialog>
         <!--Dialog for print Po-->
         <p:dialog id="printPoModalId" header="Print Purchase Order" widgetVar="printPoDlg"

@@ -11,7 +11,6 @@ import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -35,6 +34,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
@@ -386,7 +386,7 @@ public class PoListBean implements Serializable {
     public void doDeletePo() {
         log.info("do delete purchase order");
         service.doDelete(currentPurchaseOrder.getId());
-        findPOs();
+        refreshListPo();
     }
 
     public boolean canView(PurchaseOrderEntity entity) {
@@ -660,6 +660,7 @@ public class PoListBean implements Serializable {
         return entity.getId() != null ? true: false;
     }
 
+    @Transactional
     public StreamedContent exportCMS() throws FileNotFoundException {
         log.info("exportCMS");
         StreamedContent content = null;
@@ -673,6 +674,7 @@ public class PoListBean implements Serializable {
         return content;
     }
 
+    @Transactional
     public StreamedContent exportJDE() {
         log.info("exportJDE");
         StreamedContent content = null;
@@ -977,5 +979,17 @@ public class PoListBean implements Serializable {
         for (PurchaseOrderEntity po : purchaseOrders) {
 
         }
+    }
+
+    public void refreshListPo(){
+        log.info("refreshListPo()");
+        /*project = projectService.findProjectById(Long.parseLong(projectId));
+        if (project == null) {
+            throw new IllegalArgumentException("project Id invalid");
+        }
+        Date d1 = new Date();*/
+        maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
+        ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
+        findPOs();
     }
 }

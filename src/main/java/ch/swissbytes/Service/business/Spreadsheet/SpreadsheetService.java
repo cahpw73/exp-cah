@@ -11,6 +11,7 @@ import ch.swissbytes.fqmes.util.Util;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -41,7 +42,7 @@ public class SpreadsheetService implements Serializable {
 
     int rowNo;
 
-    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
+    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws IOException {
         rowNo = 2;
         String pathCMS = System.getProperty("fqmes.path.export.cms");
         pathCMS = pathCMS.replace("{project_field}", folderName);

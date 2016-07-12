@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -69,7 +70,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         }
     }
 
-    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws Exception {
+    public void generateWorkbookToExport(final List<PurchaseOrderEntity> list, String folderName) throws IOException {
         String pathPkgHdr = generateWorkbookToPkgHdr(list,folderName);
         deleteFileTemporal(pathPkgHdr);
 
@@ -77,7 +78,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         deleteFileTemporal(pathPkgInf);
     }
 
-    private String generateWorkbookToPkgHdr(final List<PurchaseOrderEntity> list, String folderName) throws Exception{
+    private String generateWorkbookToPkgHdr(final List<PurchaseOrderEntity> list, String folderName) throws IOException{
         rowNo = 0;
         String pathJDE = System.getProperty("fqmes.path.export.jde.csv.package.header");
         //pathJDE = pathJDE.replace("{project_field}", folderName);
@@ -96,7 +97,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         return pathJDE + File.separator + fileNamePckIGenerated;
     }
 
-    private String generateWorkbookToPkgInf(final List<PurchaseOrderEntity> list, String folderName) throws Exception{
+    private String generateWorkbookToPkgInf(final List<PurchaseOrderEntity> list, String folderName) throws IOException{
         String pathJDE = System.getProperty("fqmes.path.export.jde.csv.package.schedule.info");
         //pathJDE = pathJDE.replace("{project_field}", folderName);
         log.info("Create spreadSheet for JDE PkgScInf csv");

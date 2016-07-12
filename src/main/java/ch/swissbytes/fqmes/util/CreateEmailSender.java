@@ -73,22 +73,17 @@ public class CreateEmailSender implements Serializable {
         try {
             MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error,messageError);
             sendMailExprtCmsOrJde(sendToSmacneall, multipart,sendToDevs);
-            Messages.addFlashGlobalInfo("Email was sent successfully ");
             log.info("Token was generated and sent to email");
         } catch (MessagingException e) {
-            Messages.addFlashGlobalError("Error occurred while sending the token to your email");
             log.log(Level.SEVERE,"Messaging has error" + e.getMessage());
             e.printStackTrace();
         } catch (SocketConnectException e) {
-            Messages.addFlashGlobalError("Error occurred while sending the token to your email");
             e.printStackTrace();
             log.log(Level.SEVERE,"Messaging has error" + e.getCause());
         } catch (ConnectException e) {
-            Messages.addFlashGlobalError("Error occurred while sending the token to your email");
             log.log(Level.SEVERE,"Messaging has error" + e.getCause());
             e.printStackTrace();
         }catch(Exception ex){
-            Messages.addFlashGlobalError("It cannot send the email to restart the password.");
             log.log(Level.SEVERE,"Messaging has error" + ex.getCause());
             ex.printStackTrace();
         }
