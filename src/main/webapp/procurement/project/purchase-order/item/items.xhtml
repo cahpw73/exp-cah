@@ -5,13 +5,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
     <h:panelGroup id="itemsSectionId">
+
         <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
-            <div style="width: 1300px!important;">
+            <div style="width: 1310px!important;">
                 <div class="form-group">
                     <h:panelGroup id="itemsGroup">
-                        <p:dataTable id="itemsDt" var="_i"
+                        <p:dataTable id="itemsDt" var="_i" scrollable="true" scrollHeight="400"
                                      value="#{itemBean.scopeSupplyList}">
-                            <p:column headerText="#{msgs['po.items.dt.column.item.no']}" width="55"
+                            <p:column headerText="#{msgs['po.items.dt.column.item.no']}" style="width: 55px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viItemNo" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.code}"/>
@@ -24,7 +25,7 @@
                                 </h:panelGroup>
                             </p:column>
                             <p:column headerText="#{msgs['po.items.dt.column.cost.code']}"
-                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}"  width="70">
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}"  style="width: 70px!important;">
                                 <h:panelGroup id="viCostCode" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.costCode}">
                                     </h:outputText>
@@ -36,7 +37,7 @@
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
-                            <p:column headerText="#{msgs['po.items.dt.column.qty']}" width="50"
+                            <p:column headerText="#{msgs['po.items.dt.column.qty']}" style="width: 50px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viQty" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.quantity}">
@@ -54,7 +55,7 @@
                                 </h:panelGroup>
                             </p:column>
 
-                            <p:column headerText="#{msgs['po.items.dt.column.unit']}" width="50"
+                            <p:column headerText="#{msgs['po.items.dt.column.unit']}" style="width: 50px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viUnit" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.unit}"/>
@@ -67,7 +68,7 @@
                                 </h:panelGroup>
                             </p:column>
 
-                            <p:column headerText="#{msgs['po.items.dt.column.description']}" width="485"
+                            <p:column headerText="#{msgs['po.items.dt.column.description']}" style="width: 485px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
                                     <p:inputTextarea value="#{_i.description}"
@@ -86,7 +87,7 @@
                                 </h:panelGroup>
                             </p:column>
 
-                            <p:column headerText="#{msgs['po.items.dt.column.currency']}"
+                            <p:column headerText="#{msgs['po.items.dt.column.currency']}" style="width: 123px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viCurrency" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.projectCurrency.currency.code}"/>
@@ -109,7 +110,7 @@
                                     </h:selectOneMenu>
                                 </h:panelGroup>
                             </p:column>
-                            <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}"
+                            <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}" style="width: 123px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viUnitCost" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.cost}">
@@ -127,7 +128,7 @@
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
-                            <p:column headerText="#{msgs['po.items.dt.column.total.cost']}"
+                            <p:column headerText="#{msgs['po.items.dt.column.total.cost']}" style="width: 123px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{_i.calculateTotal()}">
@@ -147,7 +148,7 @@
                                 </h:panelGroup>
                             </p:column>
                             <p:column id="deliveryDateColumn" headerText="#{msgs['po.items.dt.column.delivery.date']}"
-                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}">
+                                      rendered="#{itemBean.hasNotStatusDeleted(_i)}" style="width: 123px!important;">
                                 <h:panelGroup id="viDeliveryDate" rendered="#{!_i.isEditable}">
                                     <h:outputText value="#{util.toLocal(_i.poDeliveryDate)}"/>
                                 </h:panelGroup>
@@ -165,7 +166,7 @@
                                     </p:calendar>
                                 </h:panelGroup>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.actions']}"
+                            <p:column headerText="#{msgs['lbl.actions']}" style="width: 95px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i) and poBean.beingEdited}">
                                 <p:commandLink value="#{msgs['lbl.edit']}" rendered="#{!_i.isEditable}" process="@this"
                                                action="#{itemBean.editItem(_i)}" update="itemsDt " async="false"/>
@@ -206,8 +207,8 @@
                     </h:commandButton>
                     &#160;
                     <p:commandLink  value="#{msgs['po.items.lbl.btn.copy.date']}"
-                                   styleClass="btn btn-primary btn-commandLink-primeFaces" rendered="#{poBean.beingEdited}"
-                                   onclick="var d = PF('calendarHeaderDeliveryDate').getDate(); PF('calendarDeliveryPoWV').setDate(d);">
+                                    styleClass="btn btn-primary btn-commandLink-primeFaces" rendered="#{poBean.beingEdited}"
+                                    onclick="var d = PF('calendarHeaderDeliveryDate').getDate(); PF('calendarDeliveryPoWV').setDate(d);">
                     </p:commandLink>
                 </div>
             </div>
