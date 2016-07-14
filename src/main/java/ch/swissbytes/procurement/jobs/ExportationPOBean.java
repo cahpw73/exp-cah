@@ -64,37 +64,35 @@ public class ExportationPOBean implements Serializable {
     public void dailyExportation(CreateEmailSender createEmailSender) {
         log.info("running process to export.");
         String projectName = "";
-
-            List<ProjectEntity> projectEntities = projectService.findAllProjects();
-            List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
-            List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
-            for (ProjectEntity p : projectEntities) {
-                try {
-                    projectName = p.getProjectNumber();
-                    log.info("processing PO's from Project[" + p.getProjectNumber() + "]");
-                    poListCMS = poService.findPOListWithoutExportCMS(p.getId());
-                    poListJDE = poService.findPOListWithoutExportJDE(p.getId());
-                    if (!poListCMS.isEmpty()) {
-                        exportCMS(poListCMS, p);
-                    }
-                    if (!poListJDE.isEmpty()) {
-                        for (PurchaseOrderEntity po : poListJDE) {
-                            List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
-                            po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
-                        }
-                        exportJDE(poListJDE, p);
-                    }
-                }catch (IOException e){
-                    String messageError = "Error Trying to export POs under project: " + projectName;
-                    log.info(messageError);
-                    log.log(Level.SEVERE, e.getMessage());
-                    StringWriter errors = new StringWriter();
-                    e.printStackTrace(new PrintWriter(errors));
-                    createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString(),messageError);
-                    e.printStackTrace();
+        List<ProjectEntity> projectEntities = projectService.findAllProjects();
+        List<PurchaseOrderEntity> poListCMS = new ArrayList<>();
+        List<PurchaseOrderEntity> poListJDE = new ArrayList<>();
+        for (ProjectEntity p : projectEntities) {
+            try {
+                projectName = p.getProjectNumber();
+                log.info("processing PO's from Project[" + p.getProjectNumber() + "]");
+                poListCMS = poService.findPOListWithoutExportCMS(p.getId());
+                poListJDE = poService.findPOListWithoutExportJDE(p.getId());
+                if (!poListCMS.isEmpty()) {
+                    exportCMS(poListCMS, p);
                 }
+                if (!poListJDE.isEmpty()) {
+                    for (PurchaseOrderEntity po : poListJDE) {
+                        List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
+                        po.getPurchaseOrderProcurementEntity().setCashflow((!cashflows.isEmpty() && cashflows.size() > 0) ? cashflows.get(0) : null);
+                    }
+                    exportJDE(poListJDE, p);
+                }
+            }catch (IOException e){
+                String messageError = "Error Trying to export POs under project: " + projectName;
+                log.info(messageError);
+                log.log(Level.SEVERE, e.getMessage());
+                StringWriter errors = new StringWriter();
+                e.printStackTrace(new PrintWriter(errors));
+                createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString(),messageError);
+                e.printStackTrace();
             }
-
+        }
     }
 
     public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
