@@ -124,18 +124,4 @@ public class ExportationPOBean implements Serializable {
         exporterToJDECsv.generateWorkbookToExport(list, fName);
     }
 
-    public String filePathCMS(ProjectEntity project){
-        String folderName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
-        String pathCMS = System.getProperty("fqmes.path.export.cms");
-        pathCMS = pathCMS.replace("{project_field}", folderName);
-        return pathCMS;
-    }
-
-    public String filePathJDE(ProjectEntity project){
-        String folderName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
-        String pathJDE = System.getProperty("fqmes.path.export.jde");
-        pathJDE = pathJDE.replace("{project_field}", folderName);
-        return pathJDE;
-    }
-
 }
