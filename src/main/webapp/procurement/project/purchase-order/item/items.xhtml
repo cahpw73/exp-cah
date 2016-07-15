@@ -10,7 +10,7 @@
             <div style="width: 1310px!important;">
                 <div class="form-group">
                     <h:panelGroup id="itemsGroup">
-                        <p:dataTable id="itemsDt" var="_i" scrollable="true" scrollHeight="400"
+                        <p:dataTable id="itemsDt" var="_i" scrollable="#{itemBean.notEmptyScopeSupplyList?'true':'false'}" scrollHeight="400"
                                      value="#{itemBean.scopeSupplyList}">
                             <p:column headerText="#{msgs['po.items.dt.column.item.no']}" style="width: 55px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
