@@ -248,4 +248,8 @@ public class ItemBean implements Serializable {
     public List<ItemEntity> getScopeSupplyList() {
         return scopeSupplyList;
     }
+
+    public boolean isNotEmptyScopeSupplyList(){
+        return !scopeSupplyList.isEmpty();
+    }
 }
