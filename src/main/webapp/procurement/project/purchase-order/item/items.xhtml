@@ -5,7 +5,6 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
     <h:panelGroup id="itemsSectionId">
-
         <div style="width: 1150px!important; margin-left: 15px!important; margin-right: 15px!important; margin-top: 30px">
             <div style="width: 1310px!important;">
                 <div class="form-group">
@@ -20,7 +19,8 @@
                                 <h:panelGroup id="edItemNo" rendered="#{_i.isEditable}">
                                     <p:inputText id="itemNo" value="#{_i.code}" maxlength="50" styleClass="form-control"
                                                  onkeypress="return isNumberFormat(event);"
-                                                 required="true" requiredMessage="Enter an Item No">
+                                                 required="true" requiredMessage="Enter an Item No"
+                                                 jsf:autofocus="true">
                                     </p:inputText>
                                 </h:panelGroup>
                             </p:column>
@@ -203,7 +203,7 @@
                             value="#{msgs['po.items.lbl.btn.add.item']}"
                             action="#{itemBean.addItem}" onclick="doChangeProc();"
                             styleClass="btn btn-primary btn-sm" rendered="#{poBean.beingEdited}">
-                        <p:ajax async="false" update="itemsDt" process="@this"/>
+                        <p:ajax async="false" update="itemsDt" process="@this" oncomplete="autoScrollPDatatable('editPoForm:itemsDt');"/>
                     </h:commandButton>
                     &#160;
                     <p:commandLink  value="#{msgs['po.items.lbl.btn.copy.date']}"
