@@ -16,7 +16,9 @@ import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import org.apache.commons.lang.StringUtils;
+import org.omnifaces.util.Ajax;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.api.UIData;
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.data.SortEvent;
@@ -298,6 +300,14 @@ public class PoListBean implements Serializable {
             }
         }
         findPOs();
+    }
+
+    public void doCommitPOUpdateRow(UIData table, int index) {
+        log.info("doCommitPOUpdateRow(UIData table, int index["+index+"])");
+        /*long seed = System.nanoTime();
+        Collections.shuffle(getPurchaseOrders(), new Random(seed));*/
+        doCommitPo();
+        Ajax.updateRow(table, index);
     }
 
     private void updateScopeSuppliesAfterCommitted(List<ScopeSupplyEntity> list) {
