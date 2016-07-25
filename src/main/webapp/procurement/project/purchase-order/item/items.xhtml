@@ -9,7 +9,7 @@
             <div style="width: 1310px!important;">
                 <div class="form-group">
                     <h:panelGroup id="itemsGroup">
-                        <p:dataTable id="itemsDt" var="_i" scrollable="#{itemBean.notEmptyScopeSupplyList?'true':'false'}" scrollHeight="400"
+                        <p:dataTable id="itemsDt" var="_i" scrollable="#{itemBean.notEmptyScopeSupplyList?'true':'false'}" scrollHeight="470"
                                      value="#{itemBean.scopeSupplyList}">
                             <p:column headerText="#{msgs['po.items.dt.column.item.no']}" style="width: 55px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
@@ -73,7 +73,7 @@
                                 <h:panelGroup id="viDescription" rendered="#{!_i.isEditable}">
                                     <p:inputTextarea value="#{_i.description}"
                                                      styleClass="form-control" readonly="true"
-                                                     style="min-height: 180px; max-height: 180px; width: 100%!important;"
+                                                     style="min-height: 140px; max-height: 140px; width: 100%!important;"
                                                      scrollHeight="32">
                                     </p:inputTextarea>
                                 </h:panelGroup>
@@ -81,7 +81,7 @@
                                     <p:inputTextarea id="descripItem" value="#{_i.description}"
                                                      styleClass="form-control tab-description"
                                                      required="true"
-                                                     style="min-height: 180px; max-height: 180px; width: 100%!important;"
+                                                     style="min-height: 140px; max-height: 140px; width: 100%!important;"
                                                      scrollHeight="32">
                                     </p:inputTextarea>
                                 </h:panelGroup>
