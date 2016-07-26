@@ -613,4 +613,9 @@ public class ProjectBean extends Bean implements Serializable {
     public List<ProjectTextSnippetEntity> getProjectTextSnippetListFromPO() {
         return projectTextSnippetListFromPO;
     }
+
+    /*public boolean canDeleteProjectText(ProjectTextSnippetEntity text){
+        return projectTextS
+        //return projectTextSnippetService.canDeleteProjectTextCreateOnPO(text.getId());
+    }*/
 }

@@ -223,12 +223,14 @@
                                        style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                         </p:commandLink>
                         &#160;
-                        <p:commandLink ajax="true" id="commitBtn"
+                        <p:commandLink id="commitBtn"
+                                       ajax="true" async="false"
                                        value="#{msgs['project.list.action.commit']}"
                                        update="projectListId"
                                        action="#{poListBean.doCommitPo}"
                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                       rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}">
+                                       rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}"
+                                       onstart="PF('waitingModalWg').show();" oncomplete="PF('waitingModalWg').hide();">
                             <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                          value="#{_p}"/>
                             <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -237,7 +239,7 @@
                             </p:confirm>
                         </p:commandLink>
                         &#160;
-                        <p:commandLink ajax="true"
+                        <p:commandLink ajax="true" async="false"
                                        value="#{msgs['project.list.action.uncommit']}"
                                        action="#{poListBean.doUncommit}"
                                        update="@form"
@@ -281,7 +283,8 @@
                         </p:commandLink>
                         &#160;
                         <p:commandLink
-                                update=":listPooFormId:projectListId :listPooFormId:filterButtons" ajax="true"
+                                update=":listPooFormId:projectListId :listPooFormId:filterButtons"
+                                ajax="true" async="false"
                                 value="#{msgs['project.list.action.finalise']}"
                                 action="#{poListBean.doFinalise()}"
                                 style="float: left!important; color: #428BCA; padding-top: 0px!important;"
@@ -330,6 +333,15 @@
                 <br/>
             </div>
         </o:form>
+        <p:dialog id="waitingModalId" closable="false" modal="true" resizable="false" widgetVar="waitingModalWg">
+            <h:panelGroup style="text-align: center">
+                <div style="display: inline-block">
+                    <h:outputText value="committing"/>
+                    <br/>
+                    <h:graphicImage value="/resources/img/waiting.gif"/>
+                </div>
+            </h:panelGroup>
+        </p:dialog>
         <p:dialog id="variationModalId" header="Create Variation" widgetVar="variationModal"
                   resizable="false">
             <h:form id="variationGroupId" prependId="false">
