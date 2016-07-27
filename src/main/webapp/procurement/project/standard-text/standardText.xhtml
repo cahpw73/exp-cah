@@ -43,19 +43,17 @@
                     <p:column headerText="#{msgs['project.standard.text.column.description']}">
                         <h:outputText value="#{_gt.textSnippet}" styleClass="content-big-text"></h:outputText>
                     </p:column>
-                    <ui:remove>
-                        <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;">
-                            <p:commandLink value="Delete" rendered="#{poTextBean.canDeleteProjectText(_t)}"
-                                           action="#{poTextBean.deleteProjectText(_t)}"
-                                           async="false" process="@this"
-                                           update="globalTextDt :editForm:projectGlbMsgs">
-                                <p:confirm header="#{msgs['lbl.confirmation']}"
-                                           message="#{msgs['po.text.lbl.message.remove.standard.text']}"
-                                           icon="ui-icon-alert">
-                                </p:confirm>
-                            </p:commandLink>
-                        </p:column>
-                    </ui:remove>
+                    <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;">
+                        <p:commandLink value="Delete" rendered="#{projectBean.canDeleteTextSnippetCreatedOnProject(_gt)}"
+                                       action="#{projectBean.doDeleteTextSnippetCreatedOnProject(_gt)}"
+                                       async="false" process="@this"
+                                       update="globalTextDt :editForm:projectGlbMsgs">
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['po.text.lbl.message.remove.standard.text']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
+                    </p:column>
                 </p:dataTable>
             </div>
             <div style="width: 115px!important; float: left!important; margin-left: 20px!important; top: 100px!important; position: relative;">

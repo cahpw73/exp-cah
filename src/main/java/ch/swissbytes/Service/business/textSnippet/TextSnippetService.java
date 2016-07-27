@@ -3,6 +3,7 @@ package ch.swissbytes.Service.business.textSnippet;
 
 import ch.swissbytes.Service.business.Service;
 
+import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.TextSnippetEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.omnifaces.util.Messages;
@@ -31,14 +32,21 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
     @Transactional
-    public void delete(TextSnippetEntity currency) {
-        if(canDeleteTextSnippet(currency)) {
-            currency.setStatus(StatusEnum.DELETED);
-            currency.setLastUpdate(new Date());
-            dao.update(currency);
+    public void delete(TextSnippetEntity entity) {
+        if(canDeleteTextSnippet(entity)) {
+            entity.setStatus(StatusEnum.DELETED);
+            entity.setLastUpdate(new Date());
+            dao.update(entity);
         }else{
-            Messages.addFlashGlobalError("Can not delete " + currency.getCode() + " because it is already being used");
+            Messages.addFlashGlobalError("Can not delete " + entity.getCode() + " because it is already being used");
         }
+    }
+
+    @Transactional
+    public void doDelete(TextSnippetEntity entity) {
+        entity.setStatus(StatusEnum.DELETED);
+        entity.setLastUpdate(new Date());
+        dao.update(entity);
     }
 
     @Transactional
@@ -85,5 +93,10 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
 
     public boolean canDeleteTextSnippet(TextSnippetEntity entity) {
         return dao.findProjectTextSnippetByTextSnippetId(entity.getId()).isEmpty() ? true : false;
+    }
+
+    @Transactional
+    public boolean canDeleteTextSnippetFromProject(final Long textSnippetId, final Long projectId) {
+        return dao.findTextSnippetByTextSnippetIdAndProjectId(textSnippetId,projectId).isEmpty() ? false : true;
     }
 }

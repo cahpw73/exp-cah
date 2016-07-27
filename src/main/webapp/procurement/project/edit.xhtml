@@ -73,10 +73,10 @@
 
                 <div class="row" style="margin-left: 0px">
                     <div class="col-md-4">
-                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.newProjectEntityToSave}"
+                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doSave}" styleClass="btn btn-primary btn-sm"
                                          type="submit"/>
-                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{projectBean.newProjectEntityToSave}"
+                        <h:commandButton value="#{msgs['lbl.save']}" rendered="#{!projectBean.newProjectEntityToSave}"
                                          action="#{projectBean.doUpdate}" styleClass="btn btn-primary btn-sm"/>
                         &#160;
                         <h:link id="cancelProjectBtn1" outcome="list"

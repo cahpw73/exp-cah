@@ -34,6 +34,16 @@
                             <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_t.attachmentProjectDocument != null}" process="@this"
                                            update=":previewPODocModalId2" oncomplete="PF('previewPODocModal2').show()"
                                            async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
+                            &#160;
+                            <p:commandLink value="Delete" rendered="#{poDocumentBean.canDeleteProjectDocumentCreatedFromPOEdit(_t)}"
+                                           action="#{poTextBean.deleteProjectText(_t)}"
+                                           async="false" process="@this"
+                                           update="projectDocDt">
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['po.doc.lbl.message.remove.project.doc']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -110,7 +120,7 @@
                 </h:panelGroup>
             </div>
             <div style="width: 100px!important; float: left!important; padding-top: 135px!important;">
-                <h:panelGroup rendered="#{poBean.beingEdited}">
+                <h:panelGroup rendered="#{poBean.beingOnlyEdited}">
                     <p:commandLink id="addPODocBtnId"
                             value="#{msgs['lbl.add']}"
                             oncomplete="PF('addPODocModal').show();"
@@ -129,7 +139,9 @@
                                    onclick="doChangeProc();"
                                    style="margin-top: 20px!important;">
                     </p:commandLink>
+                </h:panelGroup>
                     <br/>
+                <h:panelGroup rendered="#{poBean.beingEdited}">
                     <p:commandLink value="#{msgs['lbl.remove']}"
                                    action="#{poDocumentBean.removePODocuments}"
                                    onclick="doChangeProc();"

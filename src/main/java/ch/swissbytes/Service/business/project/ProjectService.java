@@ -98,10 +98,22 @@ public class ProjectService implements Serializable {
             projectDao.doUpdate(entity);
             doUpdateProjectCurrency(entity);
             doUpdateProjectTextSnippet(entity);
+            doUpdateTextSnippet(entity);
             doUpdateProjectDocument(entity);
             doUpdateMainDocument(entity);
         }
         return entity;
+    }
+
+    private void doUpdateTextSnippet(ProjectEntity entity) {
+        for(TextSnippetEntity ts : entity.getGlobalStandardTextList()){
+            if(ts.getId() < 0){
+                ts.setId(null);
+                ts.setProject(entity);
+                textSnippetService.doSave(ts);
+            }
+
+        }
     }
 
     private void doUpdateProjectCurrency(ProjectEntity entity) {

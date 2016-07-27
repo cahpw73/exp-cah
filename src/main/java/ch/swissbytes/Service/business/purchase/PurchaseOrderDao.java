@@ -560,4 +560,14 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         parameters.put("ORDERED_VARIATION",previousOrderedVariation);
         return super.findBy(sb.toString(), parameters);
     }
+
+    public List<PurchaseOrderEntity> findByPOProcurementId(final Long poProcurementId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT po ");
+        sb.append(" FROM PurchaseOrderEntity po ");
+        sb.append(" WHERE  po.purchaseOrderProcurementEntity.id = :PO_PROCUREMENT_ID");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("PO_PROCUREMENT_ID",poProcurementId);
+        return super.findBy(sb.toString(), parameters);
+    }
 }

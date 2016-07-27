@@ -848,4 +848,9 @@ public class PurchaseOrderService extends Service implements Serializable {
         List<PurchaseOrderEntity> list = dao.findPreviousRevisionPO(projectId, po, previousOrderedVariation);
         return list.isEmpty() ? null : list.get(0);
     }
+
+    public PurchaseOrderEntity findByPOProcurementId(final Long poeId){
+        List<PurchaseOrderEntity> list = dao.findByPOProcurementId(poeId);
+        return list.isEmpty()?null:list.get(0);
+    }
 }
