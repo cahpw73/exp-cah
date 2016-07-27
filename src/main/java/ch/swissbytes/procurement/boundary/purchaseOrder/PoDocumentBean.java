@@ -49,9 +49,6 @@ public class PoDocumentBean implements Serializable {
     private ProjectDocumentService projectDocumentService;
 
     @Inject
-    private PurchaseOrderService poService;
-
-    @Inject
     private PurchaseOrderService poeService;
 
     @Inject
@@ -357,6 +354,8 @@ public class PoDocumentBean implements Serializable {
         projDocEntity.setStatus(StatusEnum.ENABLE);
         projDocEntity.setLastUpdate(new Date());
         projDocEntity.setProject(projectEntity);
+        PurchaseOrderEntity poEntity = poeService.findByPOProcurementId(poDocumentEntity.getPoProcurementEntity().getId());
+        projDocEntity.setPurchaseOrder(poEntity);
         if(poDocumentEntity.getAttachmentProjectDocument()!=null){
             projDocEntity.setAttachmentProjectDocument(poDocumentEntity.getAttachmentProjectDocument());
         }
