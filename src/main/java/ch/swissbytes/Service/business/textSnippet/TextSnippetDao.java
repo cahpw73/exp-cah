@@ -115,4 +115,18 @@ public class TextSnippetDao extends GenericDao<TextSnippetEntity> implements Ser
         params.put("TEXT_SNIPPET_ID",textSnippetId);
         return super.findBy(sb.toString(), params);
     }
+
+    public List<TextSnippetEntity> findTextSnippetByTextSnippetIdAndProjectId(final Long textSnippetId,final Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM TextSnippetEntity x ");
+        sb.append(" WHERE x.status=:ENABLED ");
+        sb.append(" AND x.id=:ID ");
+        sb.append(" AND x.project.id=:PROJECT_ID ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("PROJECT_ID", projectId);
+        map.put("ID", textSnippetId);
+        return super.findBy(sb.toString(),map);
+    }
 }

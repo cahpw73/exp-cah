@@ -45,7 +45,7 @@
                     </p:column>
                     <ui:remove>
                         <p:column headerText="action" style="width: 110px!important; padding-left: 15px!important;">
-                            <p:commandLink value="Delete" rendered="#{poTextBean.canDeleteProjectText(_t)}"
+                            <p:commandLink value="Delete" rendered="#{projectBean.canDeleteTextSnippetCreatedOnProject(_gt)}"
                                            action="#{poTextBean.deleteProjectText(_t)}"
                                            async="false" process="@this"
                                            update="globalTextDt :editForm:projectGlbMsgs">

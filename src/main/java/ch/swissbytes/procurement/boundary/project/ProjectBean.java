@@ -373,7 +373,7 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public boolean isNewProjectEntityToSave() {
-        return projectEntity != null && projectEntity.getId() != null ? true : false;
+        return projectEntity != null && projectEntity.getId() == null ? true : false;
     }
 
     private void prepareProjectTextAndProjectDocumentToSave(){
@@ -614,8 +614,11 @@ public class ProjectBean extends Bean implements Serializable {
         return projectTextSnippetListFromPO;
     }
 
-    /*public boolean canDeleteProjectText(ProjectTextSnippetEntity text){
-        return projectTextS
-        //return projectTextSnippetService.canDeleteProjectTextCreateOnPO(text.getId());
-    }*/
+    public boolean canDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity){
+        return textSnippetService.canDeleteTextSnippetFromProject(entity.getId(), projectEntity.getId());
+    }
+
+    public void doDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity){
+        textSnippetService.delete(entity);
+    }
 }
