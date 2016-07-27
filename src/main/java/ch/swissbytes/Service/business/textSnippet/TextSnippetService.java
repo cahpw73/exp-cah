@@ -97,7 +97,6 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
 
     @Transactional
     public boolean canDeleteTextSnippetFromProject(final Long textSnippetId, final Long projectId) {
-        log.info("boolean canDeleteTextSnippetFromProject(textSnippetId["+textSnippetId+"], projectId["+projectId+"])");
         return dao.findTextSnippetByTextSnippetIdAndProjectId(textSnippetId,projectId).isEmpty() ? false : true;
     }
 }

@@ -639,7 +639,6 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public boolean canDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity){
-        log.info("boolean canDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity)");
         return textSnippetService.canDeleteTextSnippetFromProject(entity.getId(), projectEntity.getId());
     }
 

@@ -471,4 +471,8 @@ public class PoDocumentBean implements Serializable {
     public void setDocumentEditing(boolean documentEditing) {
         this.documentEditing = documentEditing;
     }
+
+    public boolean canDeleteProjectDocumentCreatedFromPOEdit(ProjectDocumentEntity entity){
+        return true;
+    }
 }
