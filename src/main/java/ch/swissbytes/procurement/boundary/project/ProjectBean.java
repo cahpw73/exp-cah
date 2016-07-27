@@ -3,6 +3,7 @@ package ch.swissbytes.procurement.boundary.project;
 import ch.swissbytes.Service.business.currency.CurrencyService;
 import ch.swissbytes.Service.business.logo.LogoService;
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.projectTextSnippet.ProjectTextSnippetService;
 import ch.swissbytes.Service.business.supplierProc.SupplierProcService;
 import ch.swissbytes.Service.business.textSnippet.TextSnippetService;
 import ch.swissbytes.domain.model.entities.*;
@@ -53,6 +54,9 @@ public class ProjectBean extends Bean implements Serializable {
 
     @Inject
     private TextSnippetService textSnippetService;
+
+    @Inject
+    private ProjectTextSnippetService projectTextSnippetService;
 
     @Inject
     private DocumentBean documentBean;
@@ -151,6 +155,18 @@ public class ProjectBean extends Bean implements Serializable {
             }
         }
         globalStandardTextList.removeAll(projectStandardTextList);
+    }
+
+    public void removedStandardTextRepeat(){
+        List<TextSnippetEntity> auxTextSnippetList = new ArrayList<>();
+        for (ProjectTextSnippetEntity pt : projectTextSnippetList) {
+            for (TextSnippetEntity ts : globalStandardTextList) {
+                if (pt.getTextSnippet()!=null && pt.getTextSnippet().getId().intValue() == ts.getId().intValue()) {
+                    auxTextSnippetList.add(ts);
+                }
+            }
+        }
+        globalStandardTextList.removeAll(auxTextSnippetList);
     }
 
     public String doSave() {
@@ -351,10 +367,11 @@ public class ProjectBean extends Bean implements Serializable {
                 }
             }else{
                 TextSnippetEntity textSnippet = new TextSnippetEntity();
-                textSnippet.setId(temporaryTextId);
+                //textSnippet.setId(temporaryTextId);
                 textSnippet.setCode(ts.getCode());
                 textSnippet.setTextSnippet(ts.getDescription());
-                globalStandardTextList.add(textSnippet);
+                textSnippet.setProject(projectEntity);
+                //globalStandardTextList.add(textSnippet);
                 temporaryTextId--;
                 if(ts.getId()>0){
                     for (ProjectTextSnippetEntity pe : projectTextSnippetList){
@@ -365,8 +382,13 @@ public class ProjectBean extends Bean implements Serializable {
                 }else {
                     auxProjectTextSnippet.add(ts);
                 }
+                textSnippetService.doSave(textSnippet);
+                globalStandardTextList.clear();
+                loadGlobalStandardTextList();
+                removedStandardTextRepeat();
+                ts.setStatus(StatusEnum.DELETED);
+                projectTextSnippetService.doUpdate(ts);
             }
-
         }
         projectTextSnippetList.removeAll(auxProjectTextSnippet);
         selectedProjectTexts.clear();
@@ -498,20 +520,22 @@ public class ProjectBean extends Bean implements Serializable {
         log.info("addNewCustomText");
         if (standartText.addProject(true)) {
             TextSnippetEntity ts = standartText.getTextSnippet();
-            ts.setId(temporaryTextId);
-            temporaryTextId--;
+            /*ts.setId(temporaryTextId);
+            temporaryTextId--;*/
             ProjectTextSnippetEntity entity = new ProjectTextSnippetEntity();
             entity.setId(tempProjectTextId);
-            entity.setTextSnippet(ts);
+            entity.setTextSnippet(null);
             entity.setCode(ts.getCode());
             entity.setDescription(ts.getTextSnippet());
             entity.setLastUpdate(new Date());
             entity.setStatus(StatusEnum.ENABLE);
+            entity.setProject(projectEntity);
             projectTextSnippetList.add(entity);
             tempProjectTextId--;
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('textSnippetModal').hide();");
             standartText.clear();
+            projectTextSnippetService.doSaveNewProjectText(entity);
         }
         log.info("end..");
     }
@@ -615,10 +639,15 @@ public class ProjectBean extends Bean implements Serializable {
     }
 
     public boolean canDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity){
+        log.info("boolean canDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity)");
         return textSnippetService.canDeleteTextSnippetFromProject(entity.getId(), projectEntity.getId());
     }
 
     public void doDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity){
-        textSnippetService.delete(entity);
+        log.info("void doDeleteTextSnippetCreatedOnProject(TextSnippetEntity entity)");
+        textSnippetService.doDelete(entity);
+        globalStandardTextList.clear();
+        loadGlobalStandardTextList();
+        removedStandardTextRepeat();
     }
 }

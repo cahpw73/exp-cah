@@ -29,6 +29,19 @@ public class ProjectTextSnippetService implements Serializable {
         }
     }
 
+    @Transactional
+    public void doSaveNewProjectText(ProjectTextSnippetEntity entity){
+        if(entity != null){
+            if(entity.getId()<0){
+                entity.setId(null);
+            }
+            entity.setStatus(StatusEnum.ENABLE);
+            entity.setLastUpdate(new Date());
+            dao.doSave(entity);
+        }
+    }
+
+    @Transactional
     public void doUpdate(ProjectTextSnippetEntity detachedEntity){
         if(detachedEntity != null){
             ProjectTextSnippetEntity entity = dao.merge(detachedEntity);

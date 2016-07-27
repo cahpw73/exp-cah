@@ -43,6 +43,13 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
     @Transactional
+    public void doDelete(TextSnippetEntity entity) {
+        entity.setStatus(StatusEnum.DELETED);
+        entity.setLastUpdate(new Date());
+        dao.update(entity);
+    }
+
+    @Transactional
     public void doSave(TextSnippetEntity textSnippet) {
         textSnippet.setLastUpdate(new Date());
         textSnippet.setStatus(StatusEnum.ENABLE);
@@ -88,6 +95,7 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
         return dao.findProjectTextSnippetByTextSnippetId(entity.getId()).isEmpty() ? true : false;
     }
 
+    @Transactional
     public boolean canDeleteTextSnippetFromProject(final Long textSnippetId, final Long projectId) {
         log.info("boolean canDeleteTextSnippetFromProject(textSnippetId["+textSnippetId+"], projectId["+projectId+"])");
         return dao.findTextSnippetByTextSnippetIdAndProjectId(textSnippetId,projectId).isEmpty() ? false : true;
