@@ -139,6 +139,15 @@ public class SupplierProcList implements Serializable {
         return url;
     }
 
+    public String redirectToView() {
+        log.info("redirectToView");
+        String criteriaFilter = StringUtils.isNotEmpty(filter.getCriteria()) ? filter.getCriteria() : "";
+        log.info("supplierId=\" + ["+supplierId+"] + \"&FILTER=\" + ["+criteriaFilter+"] + \"&anchor=\" + ["+scrollTop+"];");
+        String url="edit.xhtml?faces-redirect=true&MODE=VIEW&supplierId=" + supplierId + "&FILTER=" + criteriaFilter + "&anchor=" + scrollTop;
+        log.info(url);
+        return url;
+    }
+
     public void loadSupplierToEdit(SupplierProcEntity supplier){
         log.info("loadSupplierToEdit(SupplierProcEntity supplier ["+(supplier.getActive()!=null?supplier.getActive():false)+"])");
         currentSupplier = supplier;

@@ -94,14 +94,6 @@
                         </h:selectBooleanCheckbox>
                     </p:column>
                     <p:column headerText="#{msgs['lbl.actions']}" width="200">
-                        <ui:remove>
-                        <h:link value="#{msgs['lbl.edit']}" outcome="edit"
-                                style="color: #428BCA; " fragment="#{supplierProcList.scrollTop}">
-                            <f:param name="supplierId" value="#{_supplier.id}"/>
-                            <f:param name="FILTER" value="#{supplierProcList.filter.criteria}"/>
-                            <f:param name="anchor" value="#{supplierProcList.scrollTop}"></f:param>
-                        </h:link>
-                        </ui:remove>
                         <h:commandLink value="#{msgs['lbl.edit']}"
                                        style="float: left!important; color: #428BCA; margin-right:5px;"
                                        action="#{supplierProcList.redirectToEdit}">
@@ -109,12 +101,20 @@
                                                          value="#{_supplier.id}"/>
                         </h:commandLink>
                         &#160;
-                        <h:link value="#{msgs['lbl.view']}" outcome="edit"
-                                style=" color: #428BCA;">
-                            <f:param name="supplierId" value="#{_supplier.id}"/>
-                            <f:param name="MODE" value="VIEW"/>
-                            <f:param name="FILTER" value="#{supplierProcList.filter.criteria}"/>
-                        </h:link>
+                        <ui:remove>
+                            <h:link value="#{msgs['lbl.view']}" outcome="edit"
+                                    style=" color: #428BCA;">
+                                <f:param name="supplierId" value="#{_supplier.id}"/>
+                                <f:param name="MODE" value="VIEW"/>
+                                <f:param name="FILTER" value="#{supplierProcList.filter.criteria}"/>
+                            </h:link>
+                        </ui:remove>
+                        <h:commandLink value="#{msgs['lbl.view']}"
+                                       style="float: left!important; color: #428BCA; margin-right:5px;"
+                                       action="#{supplierProcList.redirectToView}">
+                            <f:setPropertyActionListener target="#{supplierProcList.supplierId}"
+                                                         value="#{_supplier.id}"/>
+                        </h:commandLink>
 
                         <p:commandLink style=" color: #428BCA; "
                                        action="#{supplierProcBean.doDelete(_supplier.id)}"
