@@ -99,7 +99,6 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
     }
 
     public List<ProjectDocumentEntity> findByProjectDocIdAndPoId(final Long projectDocId, final Long poId) {
-        log.info("findByProjectDocIdAndPoId(Long projectDocId["+projectDocId+"], Long poId["+poId+"])");
         StringBuilder sb = new StringBuilder();
         sb.append(" SELECT p ");
         sb.append(" FROM ProjectDocumentEntity p ");

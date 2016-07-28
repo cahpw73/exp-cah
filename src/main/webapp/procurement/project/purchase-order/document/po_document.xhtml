@@ -36,7 +36,7 @@
                                            async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
                             &#160;
                             <p:commandLink value="Delete" rendered="#{poDocumentBean.canDeleteProjectDocumentCreatedFromPOEdit(_t)}"
-                                           action="#{poTextBean.deleteProjectText(_t)}"
+                                           action="#{poDocumentBean.doDeleteProjectDocumentCreatedFromPOEdit(_t)}"
                                            async="false" process="@this"
                                            update="projectDocDt">
                                 <p:confirm header="#{msgs['lbl.confirmation']}"

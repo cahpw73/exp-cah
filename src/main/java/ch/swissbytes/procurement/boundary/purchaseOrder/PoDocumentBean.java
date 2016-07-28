@@ -22,6 +22,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -395,6 +396,24 @@ public class PoDocumentBean implements Serializable {
     public boolean canDeleteProjectDocumentCreatedFromPOEdit(ProjectDocumentEntity entity) {
         List<ProjectDocumentEntity> list = projectDocumentService.findByProjectDocIdAndPoId(entity.getId(), purchaseOrderId);
         return list.isEmpty() ? false : true;
+    }
+
+    @Transactional
+    public void doDeleteProjectDocumentCreatedFromPOEdit(ProjectDocumentEntity entity){
+        entity.setStatus(StatusEnum.DELETED);
+        projectDocumentService.doUpdate(entity);
+        filterProjectDocumentDeleted();
+    }
+
+    private void filterProjectDocumentDeleted(){
+        List<ProjectDocumentEntity> auxList = new ArrayList<>();
+        for(ProjectDocumentEntity pd : projectDocumentList){
+            if (pd.getStatus().ordinal() == StatusEnum.ENABLE.ordinal()){
+                auxList.add(pd);
+            }
+        }
+        projectDocumentList.clear();
+        projectDocumentList.addAll(auxList);
     }
 
     public void changeValueDocumentEditing() {
