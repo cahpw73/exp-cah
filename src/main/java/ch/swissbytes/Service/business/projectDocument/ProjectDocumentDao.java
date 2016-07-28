@@ -98,6 +98,20 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
         return super.findBy(sb.toString(), params);
     }
 
+    public List<ProjectDocumentEntity> findByProjectDocIdAndPoId(final Long projectDocId, final Long poId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
+        sb.append(" WHERE p.status = :ENABLE ");
+        sb.append(" AND p.id = :PROJECT_DOC_ID ");
+        sb.append(" AND p.purchaseOrder.id = :PO_ID ");
+        Map<String, Object> params = new HashMap<>();
+        params.put("ENABLE", StatusEnum.ENABLE);
+        params.put("PROJECT_DOC_ID", projectDocId);
+        params.put("PO_ID",poId);
+        return super.findBy(sb.toString(), params);
+    }
+
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {
     }

@@ -90,20 +90,29 @@ public class DocumentBean extends Bean implements Serializable {
     }
 
     public void loadMainDocumentsEdit(final Long projectId) {
-        if(projectDocumentList.isEmpty()) {
+        if (projectDocumentList.isEmpty()) {
             projectDocumentList = projectDocumentService.findByProjectId(projectId);
         }
         mainDocumentList = mainDocumentService.findMainDocumentsToEdit(projectId);
-        List<MainDocumentEntity> mainDocumentAuxList = new ArrayList<>();
+        List<String> codesRepeat = new ArrayList<>();
         for (ProjectDocumentEntity pd : projectDocumentList) {
             for (MainDocumentEntity md : mainDocumentList) {
-                boolean inProject = pd.getProject() != null && md.getProject() != null ? pd.getProject().getId().intValue() == md.getProject().getId().intValue() : false;
-                boolean inMainDoc = pd.getMainDocumentEntity() != null ? pd.getMainDocumentEntity().getId().intValue() == md.getId().intValue() : false;
-                if (inProject || inMainDoc) {
-                    mainDocumentAuxList.add(md);
+                if (StringUtils.equals(pd.getCode(), md.getCode())) {
+                    codesRepeat.add(pd.getCode());
+                    break;
                 }
             }
         }
+        List<MainDocumentEntity> mainDocumentAuxList = new ArrayList<>();
+        for (MainDocumentEntity md : mainDocumentList) {
+            for (String code : codesRepeat) {
+                if (StringUtils.equals(md.getCode(), code)) {
+                    mainDocumentAuxList.add(md);
+                    break;
+                }
+            }
+        }
+
         mainDocumentList.removeAll(mainDocumentAuxList);
     }
 
@@ -148,8 +157,9 @@ public class DocumentBean extends Bean implements Serializable {
                 }
             } else {
                 MainDocumentEntity mainDocument = mainDocumentService.findByProjectIdAndCode(pd.getProject().getId(), pd.getCode());
-                if(mainDocument==null) {
+                if (mainDocument == null) {
                     mainDocument = new MainDocumentEntity();
+                    mainDocument.setStatus(StatusEnum.ENABLE);
                     mainDocument.setId(tempMainDocId);
                     tempMainDocId--;
                     mainDocument.setDescription(pd.getDescription());
@@ -158,7 +168,7 @@ public class DocumentBean extends Bean implements Serializable {
                         mainDocument.setAttachmentMainDocument(pd.getAttachmentProjectDocument());
                     }
                     mainDocumentList.add(mainDocument);
-                }else{
+                } else {
                     mainDocumentList.add(mainDocument);
                 }
 
@@ -203,7 +213,7 @@ public class DocumentBean extends Bean implements Serializable {
         docPreview = true;
     }
 
-    public void loadSelectedMainDocumentPreview(MainDocumentEntity  entity) {
+    public void loadSelectedMainDocumentPreview(MainDocumentEntity entity) {
         selectedMainDocument = entity;
         docPreview = true;
     }
@@ -215,7 +225,7 @@ public class DocumentBean extends Bean implements Serializable {
             }
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('projectDocModal"+id+"').hide();");
+        context.execute("PF('projectDocModal" + id + "').hide();");
     }
 
     public void saveNewProjectDocumentWithProject() {
@@ -281,7 +291,28 @@ public class DocumentBean extends Bean implements Serializable {
         }
     }
 
-    public void changeValueDocumentEditing(){
+    public boolean canDeleteMainDocumentCreatedFromProject(MainDocumentEntity entity) {
+        List<MainDocumentEntity> list = mainDocumentService.findByMainDocIdAndProjectId(entity.getId(), projectEntityId);
+        return list.isEmpty() ? false : true;
+    }
+
+    public void doDeleteMainDocCreatedFromProject(MainDocumentEntity entity){
+        entity.setStatus(StatusEnum.DELETED);
+        mainDocumentService.doUpdate(entity);
+        filterMainDocFilter();
+    }
+
+    public void filterMainDocFilter(){
+        List<MainDocumentEntity> auxList = new ArrayList<>();
+        for(MainDocumentEntity md : mainDocumentList){
+            if(md.getStatus().ordinal() == StatusEnum.DELETED.ordinal()){
+                auxList.add(md);
+            }
+        }
+        mainDocumentList.removeAll(auxList);
+    }
+
+    public void changeValueDocumentEditing() {
         documentEditing = false;
     }
 

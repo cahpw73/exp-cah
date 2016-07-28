@@ -116,7 +116,7 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
         sb.append(" SELECT x ");
         sb.append(" FROM MainDocumentEntity x ");
         sb.append(" WHERE x.status=:ENABLED ");
-        sb.append(" AND (x.project is null ");
+        sb.append(" AND (x.project.id = null ");
         sb.append(" OR x.project.id = :PROJECT_ID) ");
         sb.append("ORDER BY x.code ");
         Map<String, Object> map = new HashMap<String, Object>();
@@ -152,5 +152,19 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
         params.put("ATTACH_ID", attachId);
         params.put("MAIN_ID",mainId);
         return super.findBy(sb.toString(), params);
+    }
+
+    public List<MainDocumentEntity> findByMaindDocIdAndProjectId(Long mainDocId, Long projectId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM MainDocumentEntity x ");
+        sb.append(" WHERE x.status=:ENABLED ");
+        sb.append(" AND x.project.id = :PROJECT_ID ");
+        sb.append(" AND x.id = :MAIN_DOC_ID ");
+        Map<String, Object> map = new HashMap<>();
+        map.put("ENABLED", StatusEnum.ENABLE);
+        map.put("PROJECT_ID", projectId);
+        map.put("MAIN_DOC_ID", mainDocId);
+        return super.findBy(sb.toString(), map);
     }
 }
