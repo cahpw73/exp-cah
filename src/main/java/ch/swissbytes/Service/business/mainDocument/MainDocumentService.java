@@ -125,4 +125,9 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
         Long attachId = entity.getAttachmentMainDocument() != null ? entity.getAttachmentMainDocument().getId() : -1l;
         return dao.findProjectDocumentByAttachmentIdOrMainDocumentId(attachId, entity.getId()).isEmpty() ? true : false;
     }
+
+    @Transactional
+    public List<MainDocumentEntity> findByMainDocIdAndProjectId(final Long mainDocId, final Long projectId) {
+        return dao.findByMaindDocIdAndProjectId(mainDocId,projectId);
+    }
 }

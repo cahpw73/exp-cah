@@ -47,6 +47,16 @@
                         <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_md.attachmentMainDocument != null}" process="@this"
                                        update=":previewProjectDocModalId2" oncomplete="PF('previewProjectDocModal2').show()"
                                        async="false" action="#{documentBean.loadSelectedMainDocumentPreview(_md)}"/>
+                        &#160;
+                        <p:commandLink value="Delete" rendered="#{documentBean.canDeleteMainDocumentCreatedFromProject(_md)}"
+                                       action="#{documentBean.doDeleteMainDocCreatedFromProject(_md)}"
+                                       async="false" process="@this"
+                                       update="mainDocumentDt">
+                            <p:confirm header="#{msgs['lbl.confirmation']}"
+                                       message="#{msgs['po.doc.lbl.message.remove.project.doc']}"
+                                       icon="ui-icon-alert">
+                            </p:confirm>
+                        </p:commandLink>
                     </p:column>
                 </p:dataTable>
             </div>
