@@ -107,4 +107,9 @@ public class ProjectDocumentService implements Serializable {
         return list;
     }
 
+    @Transactional
+    public List<ProjectDocumentEntity> findByProjectDocIdAndPoId(final Long projectDocId, final Long poId) {
+        return dao.findByProjectDocIdAndPoId(projectDocId,poId);
+    }
+
 }

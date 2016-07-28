@@ -81,6 +81,8 @@ public class PoDocumentBean implements Serializable {
 
     private Long poId;
 
+    private Long purchaseOrderId;
+
     private Long projectId;
 
     private boolean docPreview = false;
@@ -105,24 +107,25 @@ public class PoDocumentBean implements Serializable {
 
     public void loadProjectDocuments(final PurchaseOrderEntity po, final Long projectId) {
         log.info("load project documents to main list");
+        this.purchaseOrderId=po.getId();
         this.poId = po.getPurchaseOrderProcurementEntity().getId();
         this.projectId = projectId;
-        projectDocumentList = projectDocumentService.findByProjectIdToEdit(projectId,po.getId());
+        projectDocumentList = projectDocumentService.findByProjectIdToEdit(projectId, po.getId());
         poDocumentList = poDocumentService.findByPOId(poId);
         droppedPODocumentList = poDocumentList;
         verifyExistScheduleToPOEdit();
         filteredProjectDocumentList();
     }
 
-    private void verifyExistScheduleToPOEdit(){
+    private void verifyExistScheduleToPOEdit() {
         boolean existSchedule = false;
-        for (PODocumentEntity pd : droppedPODocumentList){
-            if(pd.getScheduleE()!=null && pd.getScheduleE()==true){
+        for (PODocumentEntity pd : droppedPODocumentList) {
+            if (pd.getScheduleE() != null && pd.getScheduleE() == true) {
                 existSchedule = true;
                 break;
             }
         }
-        if(!existSchedule){
+        if (!existSchedule) {
             droppedPODocumentList.add(createEntity());
         }
         reorderDroppedPODocumentList();
@@ -193,7 +196,7 @@ public class PoDocumentBean implements Serializable {
         entity.setStatus(StatusEnum.ENABLE);
         entity.setLastUpdate(new Date());
         entity.setProjectDocumentEntity(projDoc);
-        if(projDoc.getAttachmentProjectDocument()!=null){
+        if (projDoc.getAttachmentProjectDocument() != null) {
             entity.setAttachmentProjectDocument(projDoc.getAttachmentProjectDocument());
         }
         tempPODocumentId--;
@@ -292,7 +295,7 @@ public class PoDocumentBean implements Serializable {
             }
         }
         RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("PF('poDocModal"+id+"').hide();");
+        context.execute("PF('poDocModal" + id + "').hide();");
     }
 
     public void resetPODocument() {
@@ -315,7 +318,7 @@ public class PoDocumentBean implements Serializable {
             ps.setOrdered(order);
             order++;
         }
-        ProjectDocumentEntity projDocEntity =  doSaveNewProjectDocument(poDocumentEntity);
+        ProjectDocumentEntity projDocEntity = doSaveNewProjectDocument(poDocumentEntity);
         poDocumentEntity.setProjectDocumentEntity(projDocEntity);
         poDocumentService.doSaveNewPODocumentDlg(poDocumentEntity);
         RequestContext context = RequestContext.getCurrentInstance();
@@ -338,7 +341,7 @@ public class PoDocumentBean implements Serializable {
         }
         attachmentDocumentService.doSave(attachmentMainDocument);
         poDocumentEntity.setAttachmentProjectDocument(attachmentMainDocument);
-        ProjectDocumentEntity projDocEntity =  doSaveNewProjectDocument(poDocumentEntity);
+        ProjectDocumentEntity projDocEntity = doSaveNewProjectDocument(poDocumentEntity);
         poDocumentEntity.setProjectDocumentEntity(projDocEntity);
         poDocumentService.doSaveNewPODocumentWithPdf(poDocumentEntity);
         RequestContext context = RequestContext.getCurrentInstance();
@@ -346,7 +349,7 @@ public class PoDocumentBean implements Serializable {
         documentEditing = true;
     }
 
-    private ProjectDocumentEntity doSaveNewProjectDocument(PODocumentEntity poDocumentEntity){
+    private ProjectDocumentEntity doSaveNewProjectDocument(PODocumentEntity poDocumentEntity) {
         ProjectEntity projectEntity = projectService.findProjectById(projectId);
         ProjectDocumentEntity projDocEntity = new ProjectDocumentEntity();
         projDocEntity.setDescription(poDocumentEntity.getDescription());
@@ -356,7 +359,7 @@ public class PoDocumentBean implements Serializable {
         projDocEntity.setProject(projectEntity);
         PurchaseOrderEntity poEntity = poeService.findByPOProcurementId(poDocumentEntity.getPoProcurementEntity().getId());
         projDocEntity.setPurchaseOrder(poEntity);
-        if(poDocumentEntity.getAttachmentProjectDocument()!=null){
+        if (poDocumentEntity.getAttachmentProjectDocument() != null) {
             projDocEntity.setAttachmentProjectDocument(poDocumentEntity.getAttachmentProjectDocument());
         }
         projectDocumentService.doSave(projDocEntity);
@@ -389,7 +392,12 @@ public class PoDocumentBean implements Serializable {
         return (entity != null && entity.getScheduleE() != null) ? true : false;
     }
 
-    public void changeValueDocumentEditing(){
+    public boolean canDeleteProjectDocumentCreatedFromPOEdit(ProjectDocumentEntity entity) {
+        List<ProjectDocumentEntity> list = projectDocumentService.findByProjectDocIdAndPoId(entity.getId(), purchaseOrderId);
+        return list.isEmpty() ? false : true;
+    }
+
+    public void changeValueDocumentEditing() {
         documentEditing = false;
     }
 
@@ -471,7 +479,4 @@ public class PoDocumentBean implements Serializable {
         this.documentEditing = documentEditing;
     }
 
-    public boolean canDeleteProjectDocumentCreatedFromPOEdit(ProjectDocumentEntity entity){
-        return true;
-    }
 }
