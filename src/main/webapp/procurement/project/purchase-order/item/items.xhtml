@@ -113,7 +113,7 @@
                             <p:column headerText="#{msgs['po.items.dt.column.unit.cost']}" style="width: 123px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viUnitCost" rendered="#{!_i.isEditable}">
-                                    <h:outputText value="#{_i.cost}">
+                                    <h:outputText value="#{_i.cost}" onkeyup="calculateTotalCost();" onchange="calculateTotalCost();">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
                                     </h:outputText>
@@ -131,7 +131,9 @@
                             <p:column headerText="#{msgs['po.items.dt.column.total.cost']}" style="width: 123px!important;"
                                       rendered="#{itemBean.hasNotStatusDeleted(_i)}">
                                 <h:panelGroup id="viTotalCost" rendered="#{!_i.isEditable}">
-                                    <h:outputText value="#{_i.calculateTotal()}">
+                                    <h:outputText value="#{_i.calculateTotal()}"
+                                                  onchange="calculateUnitCost();"
+                                                  onkeyup="calculateUnitCost();">
                                         <f:convertNumber pattern="#{configuration.patternDecimal}"
                                                          locale="#{configuration.langLocalDecimal}"/>
                                     </h:outputText>
