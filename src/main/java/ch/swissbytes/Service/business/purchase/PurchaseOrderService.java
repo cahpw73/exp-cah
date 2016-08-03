@@ -666,9 +666,9 @@ public class PurchaseOrderService extends Service implements Serializable {
 
         for (ItemEntity item : list) {
             if (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency().getId().longValue() == currency.getCurrency().getId()) {
-                BigDecimal amount = item.getCost() != null ? item.getCost() : new BigDecimal("0");
-                BigDecimal quantity = new BigDecimal(item.getQuantity() != null ? item.getQuantity().toString() : "0");
-                poValue = poValue.add(amount.multiply(quantity));
+                /*BigDecimal amount = item.getCost() != null ? item.getCost() : new BigDecimal("0");
+                BigDecimal quantity = new BigDecimal(item.getQuantity() != null ? item.getQuantity().toString() : "0");*/
+                poValue = poValue.add(item.getTotalCost());
             }
         }
         return poValue;

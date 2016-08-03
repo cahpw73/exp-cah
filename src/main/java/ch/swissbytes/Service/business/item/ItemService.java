@@ -66,7 +66,7 @@ public class ItemService  implements Serializable {
         for (ItemEntity entity : supplyList){
             newOne=false;
             if(entity!=null) {
-                entity.setTotalCost(entity.getCost()!=null&&entity.getQuantity()!=null?entity.getCost().multiply(entity.getQuantity()):new BigDecimal("0"));
+                //entity.setTotalCost(entity.getCost()!=null&&entity.getQuantity()!=null?entity.getCost().multiply(entity.getQuantity()):new BigDecimal("0"));
                 entity.setLastUpdate(new Date());
                 if (entity.getId()==null||entity.getId() < 0L) {
                     entity.setId(null);
