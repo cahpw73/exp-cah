@@ -24,10 +24,13 @@
 
                     <div style="width: 85px; float: left;">
                         <h:inputText id="poOrderNumber"
+                                     style="text-transform: uppercase;"
                                      value="#{poBean.purchaseOrder.po}"
                                      maxlength="50"
                                      styleClass="form-control"
-                                     rendered="#{poBean.beingEdited}"/>
+                                     rendered="#{poBean.beingEdited}">
+                            <p:ajax process="@this poOrderNumber" event="change" listener="#{poBean.validatePoNumber()}" update=":editPoForm:poEditGlbMsgs" async="false"/>
+                        </h:inputText>
                         <p:message for="poOrderNumber" id="msgInputPoOrderNumber"/>
                         <h:inputText id="poOrderNumberVi" readonly="true" styleClass="form-control view-po"
                                      value="#{poBean.purchaseOrder.po}"
