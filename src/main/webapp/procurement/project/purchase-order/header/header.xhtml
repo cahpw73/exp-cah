@@ -160,7 +160,7 @@
                         <div style="width: 185px; float: left;">
                             <h:selectOneMenu id="headerClass" onclick="doChangeProc();"
                                              value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
-                                             styleClass="form-control" rendered="#{poBean.beingEdited}">
+                                             styleClass="form-control" rendered="#{poBean.beingEdited and poBean.poIsOriginal()}">
                                 <f:selectItem
                                         itemLabel="Select one"
                                         noSelectionOption="true"/>
@@ -168,11 +168,12 @@
                                                var="_c"
                                                itemValue="#{_c}"
                                                itemLabel="#{_c.name}"/>
+                                <p:ajax process="@this poOrderNumber" event="change" listener="#{poBean.validatePoNumber()}" update=":editPoForm:poEditGlbMsgs" async="false"/>
                             </h:selectOneMenu>
                             <p:message for="headerClass"/>
                             <h:inputText id="headerClassVi" readonly="true" styleClass="form-control view-po"
                                          value="#{poBean.purchaseOrder.purchaseOrderProcurementEntity.clazz}"
-                                         rendered="#{poBean.beingViewed}"/>
+                                         rendered="#{poBean.beingViewed or !poBean.poIsOriginal()}"/>
                         </div>
                     </div>
                 </div>
