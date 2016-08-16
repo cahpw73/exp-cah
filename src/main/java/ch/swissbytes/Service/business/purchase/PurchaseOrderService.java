@@ -539,6 +539,16 @@ public class PurchaseOrderService extends Service implements Serializable {
         return purchaseOrderEntity;
     }
 
+    @Transactional
+    public PurchaseOrderEntity updatePOAfterCommitted(PurchaseOrderEntity purchaseOrderEntity){
+        dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+        purchaseOrderEntity.setGeneralComment(null);
+        purchaseOrderEntity.setNextKeyDateComment(null);
+        purchaseOrderEntity.setNextKeyDate(null);
+        dao.update(purchaseOrderEntity);
+        return purchaseOrderEntity;
+    }
+
     public boolean existExpeditingStatus(final Long poId,final ExpeditingStatusEnum issued){
         List<ExpeditingStatusEntity> list = expeditingStatusDao.findByPOIdAndStatusIssued(poId,issued);
         return list.isEmpty()?false:true;
@@ -581,6 +591,22 @@ public class PurchaseOrderService extends Service implements Serializable {
             if (po.getPurchaseOrderProcurementEntity().getTextEntity() != null) {
                 List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPurchaseOrderProcurementEntity().getTextEntity().getId());
                 po.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(clausesEntities);
+            }
+        }
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    public PurchaseOrderEntity findPOForCommitByPoId(Long id) {
+        List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
+        PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
+        if (po != null) {
+            po.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId()));
+            po.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
+            po.getPurchaseOrderProcurementEntity().getScopeSupplyEntities().addAll(scopeSupplyDao.findByPurchaseOrder(po.getId()));
+            List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
+            po.getPurchaseOrderProcurementEntity().setCashflow(!cashflows.isEmpty() ? cashflows.get(0) : null);
+            if (po.getPurchaseOrderProcurementEntity().getCashflow() != null) {
+                po.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPurchaseOrderProcurementEntity().getCashflow().getId()));
             }
         }
         return list.isEmpty() ? null : list.get(0);
