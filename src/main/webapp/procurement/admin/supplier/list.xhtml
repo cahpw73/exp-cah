@@ -14,14 +14,21 @@
     </f:metadata>
     <ui:define name="body">
         <style>
-            .ui-paginator {
-                position: fixed;
-                width: 100%!important;
-                background-color: #eee!important;
+            table {
+                display: block;
             }
 
-            .ui-datatable-tablewrapper{
-                margin-top: 30px!important;
+            thead {
+                position: fixed;
+            }
+            .ui-paginator {
+                position: fixed;
+                width: 100% !important;
+                background-color: #eee !important;
+            }
+
+            .ui-datatable-tablewrapper {
+                margin-top: 30px !important;
             }
         </style>
         <div class="col-md-12">
@@ -74,26 +81,26 @@
                              paginatorPosition="top">
                     <p:ajax event="page" process="@this" listener="#{supplierManagerTable.onPaginate}"/>
                     <p:ajax event="sort" listener="#{supplierProcList.sortListener}"/>
-                    <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" width="150"
+                    <p:column headerText="#{msgs['supplier.lbl.supplier.id']}" style="width: 150px;"
                               sortBy="#{_supplier.supplierId}">
                         #{_supplier.supplierId}
                     </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.company']}" sortBy="#{_supplier.company}">
+                    <p:column headerText="#{msgs['supplier.lbl.company']}" sortBy="#{_supplier.company}" style="width: 352px;">
                         #{_supplier.company}
                     </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.state']}">
+                    <p:column headerText="#{msgs['supplier.lbl.state']}" style="width: 352px;">
                         #{_supplier.state}
                     </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.country']}" sortBy="#{_supplier.country}">
+                    <p:column headerText="#{msgs['supplier.lbl.country']}" sortBy="#{_supplier.country}" style="width: 352px;">
                         #{_supplier.country}
                     </p:column>
-                    <p:column headerText="#{msgs['supplier.lbl.active']}" width="60">
+                    <p:column headerText="#{msgs['supplier.lbl.active']}" style="width: 60px;">
                         <h:selectBooleanCheckbox value="#{_supplier.active}" >
                             <p:ajax event="change" listener="#{supplierProcList.loadSupplierToEdit(_supplier)}"
                                     oncomplete="PF('confSaveActiveSupplierDlg').show();"/>
                         </h:selectBooleanCheckbox>
                     </p:column>
-                    <p:column headerText="#{msgs['lbl.actions']}" width="200">
+                    <p:column headerText="#{msgs['lbl.actions']}" style="width: 200px;">
                         <h:commandLink value="#{msgs['lbl.edit']}"
                                        style="float: left!important; color: #428BCA; margin-right:5px;"
                                        action="#{supplierProcList.redirectToEdit}">
