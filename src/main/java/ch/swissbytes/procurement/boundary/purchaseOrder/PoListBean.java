@@ -387,10 +387,14 @@ public class PoListBean implements Serializable {
     }
 
     public void doUncommit() {
+        log.info("doUncommit()");
+        Date d1 = new Date();
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+            currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
         }
+        Date d2 = new Date();
+        log.info("time process doUncommit= " + (d2.getTime() - d1.getTime()));
     }
 
     public void doFinalise() {
@@ -399,19 +403,22 @@ public class PoListBean implements Serializable {
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
             if (validate()) {
-                currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
             }
         }
         findPOs();
         Date d2 = new Date();
+        log.info("time process doFinalise= " + (d2.getTime() - d1.getTime()));
     }
 
     public void doReleasePo() {
         log.info("do release purchase order");
+        Date d1 = new Date();
         currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-        currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
+        currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
+        Date d2 = new Date();
+        log.info("time process doReleasePo= " + (d2.getTime() - d1.getTime()));
     }
 
     public void doDeletePo() {

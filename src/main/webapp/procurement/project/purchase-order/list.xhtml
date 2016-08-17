@@ -206,27 +206,23 @@
                                                          value="#{_p}"/>
                         </h:commandLink>
                         &#160;
-                        <p:commandLink value="#{msgs['project.list.action.print.po']}"
+                        <p:commandLink id="printPOBtn" value="#{msgs['project.list.action.print.po']}"
                                        action="#{poListBean.loadCurrentPo(_p)}"
                                        rendered="#{permissionBean.hasPermission(1406) and _p.id!=null}"
-                                       oncomplete="PF('printPoDlg').show();"
-                                       update=":printPoGroupId" async="false"
+                                       oncomplete="PF('printPoDlg').show();"  async="false" partialSubmit="true" process="@this"
                                        style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                         </p:commandLink>
                         &#160;
-                        <p:commandLink value="#{msgs['project.list.action.variation']}"
+                        <p:commandLink id="variationBtn" value="#{msgs['project.list.action.variation']}"
                                        rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
-                                       action="#{poListBean.createVarNumberToPO(_p)}" ignoreAutoUpdate="true"
-                                       partialSubmit="true"
-                                       process="@this"
+                                       action="#{poListBean.createVarNumberToPO(_p)}" partialSubmit="true" process="@this"
                                        update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
                                        style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
                         </p:commandLink>
                         &#160;
                         <p:commandLink id="commitBtn"
-                                       ajax="true" async="false"
-                                       value="#{msgs['project.list.action.commit']}"
-                                       update="projectListId"
+                                       ajax="true" async="false" partialSubmit="true" process="@this"
+                                       value="#{msgs['project.list.action.commit']}" update="projectListId"
                                        action="#{poListBean.doCommitPo}"
                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                        rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}"
@@ -239,10 +235,9 @@
                             </p:confirm>
                         </p:commandLink>
                         &#160;
-                        <p:commandLink ajax="true" async="false"
-                                       value="#{msgs['project.list.action.uncommit']}"
-                                       action="#{poListBean.doUncommit}"
-                                       update="@form"
+                        <p:commandLink id="uncommitBtn" value="#{msgs['project.list.action.uncommit']}"
+                                       ajax="true" async="false" partialSubmit="true" process="@this"
+                                       action="#{poListBean.doUncommit}" update="projectListId"
                                        style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                        rendered="#{poListBean.canUncommit(_p) and permissionBean.hasUserPermission(1409)}">
                             <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -274,8 +269,8 @@
                         </p:commandLink>
                         &#160;
                         <p:commandLink
-                                update=":listPooFormId:projectListId :listPooFormId:filterButtons"
-                                ajax="true" async="false"
+                                id="finaliseBtn"  update="projectListId"
+                                ajax="true" async="false" partialSubmit="true" process="@this"
                                 value="#{msgs['project.list.action.finalise']}"
                                 action="#{poListBean.doFinalise()}"
                                 style="float: left!important; color: #428BCA; padding-top: 0px!important;"
@@ -289,11 +284,11 @@
                         </p:commandLink>
 
                         <p:commandLink
-                                update="@form" ajax="true"
+                                id="releaseBtn"
+                                update="projectListId" ajax="true" partialSubmit="true" process="@this"
                                 value="#{msgs['project.list.action.release']}"
                                 action="#{poListBean.doReleasePo}"
                                 async="false"
-
                                 style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                 rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
                             <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -304,10 +299,10 @@
                             </p:confirm>
                         </p:commandLink>
                         <p:commandLink
-                                update=":listPooFormId:projectListId :listPooFormId:filterButtons" ajax="true"
+                                id="deletePOBtn" update="projectListId"
+                                async="false" ajax="true" partialSubmit="true" process="@this"
                                 value="#{msgs['project.list.action.delete']}"
                                 action="#{poListBean.doDeletePo}"
-                                async="false"
                                 style="float: left!important; color: #428BCA; padding-top: 0px!important;"
                                 rendered="#{poListBean.canDelete(_p)}">
                             <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -355,7 +350,7 @@
 
                             <div class="form-group">
                                 <div class="pull-right" style="margin-right: 60px!important;">
-                                    <h:commandButton value="#{msgs['lbl.accept']}" styleClass="btn btn-primary btn-sm"
+                                    <h:commandButton id="acceptVariationBtn" value="#{msgs['lbl.accept']}" styleClass="btn btn-primary btn-sm"
                                                      action="#{poListBean.doSavePOONewVariation}">
                                         <p:ajax oncomplete="PF('variationModal').hide();"
                                                 process="@form"
