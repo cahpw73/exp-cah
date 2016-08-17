@@ -186,142 +186,146 @@
                     </p:column>
                     <p:column id="colStatus" headerText="#{msgs['project.purchase.order.column.status']}"
                               style="width: 148px;">
-                        #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
+                        <h:panelGroup id="groupStatusTxt">
+                            #{configuration.getPOProcStatus(_p.purchaseOrderProcurementEntity.poProcStatus)}
+                        </h:panelGroup>
                     </p:column>
                     <p:column id="colAction" headerText="#{msgs['lbl.dt.column.actions']}" style="width: 370px;">
+                        <h:panelGroup id="groupActionsBtn">
 
-                        <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
-                                       rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
-                                       style="float: left!important; color: #428BCA; margin-right:5px;"
-                                       action="#{poListBean.redirectToEdit}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                        </h:commandLink>
-                        &#160;
-                        <h:commandLink value="#{msgs['project.list.action.view']}"
-                                       rendered="#{poListBean.canView(_p)}"
-                                       style="float: left!important; color: #428BCA; margin-right:5px;"
-                                       action="#{poListBean.redirectToView}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                        </h:commandLink>
-                        &#160;
-                        <p:commandLink id="printPOBtn" value="#{msgs['project.list.action.print.po']}"
-                                       action="#{poListBean.loadCurrentPo(_p)}"
-                                       rendered="#{permissionBean.hasPermission(1406) and _p.id!=null}"
-                                       oncomplete="PF('printPoDlg').show();"  async="false" partialSubmit="true" process="@this"
-                                       style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink id="variationBtn" value="#{msgs['project.list.action.variation']}"
-                                       rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
-                                       action="#{poListBean.createVarNumberToPO(_p)}" partialSubmit="true" process="@this"
-                                       update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
-                                       style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink id="commitBtn"
-                                       ajax="true" async="false" partialSubmit="true" process="@this"
-                                       value="#{msgs['project.list.action.commit']}" update="projectListId"
-                                       action="#{poListBean.doCommitPo}"
-                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                       rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}"
-                                       onstart="PF('waitingModalWg').show();" oncomplete="PF('waitingModalWg').hide();" >
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                            <p:confirm header="#{msgs['lbl.confirmation']}"
-                                       message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
-                                       icon="ui-icon-alert">
-                            </p:confirm>
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink id="uncommitBtn" value="#{msgs['project.list.action.uncommit']}"
-                                       ajax="true" async="false" partialSubmit="true" process="@this"
-                                       action="#{poListBean.doUncommit}" update="projectListId"
-                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                       rendered="#{poListBean.canUncommit(_p) and permissionBean.hasUserPermission(1409)}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                            <p:confirm header="#{msgs['lbl.confirmation']}"
-                                       message="#{msgs['project.list.lbl.msg.confirmation.uncommit']}"
-                                       icon="ui-icon-alert">
-                            </p:confirm>
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
-                                       update="projectListId"
-                                       rendered="#{poListBean.canExportCMS(_p)}"
-                                       onclick="PF('cmsExport').show();"
-                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink
-                                id="exportJde"
-                                update="projectListId"
-                                value="#{msgs['project.list.action.export.jde']}"
-                                onclick="PF('jdeExport').show();"
-                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                rendered="#{poListBean.canExportJDE(_p)}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink id="exportJdeCsv"
-                                       style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                       value="#{msgs['project.list.action.export.jde.csv']}"
-                                       onclick="PF('jdeCsvExport').show();" update=":JDECSVformId"
-                                       rendered="#{poListBean.canExportJDECsv(_p)}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                        </p:commandLink>
-                        &#160;
-                        <p:commandLink
-                                id="finaliseBtn"  update="projectListId"
-                                ajax="true" async="false" partialSubmit="true" process="@this"
-                                value="#{msgs['project.list.action.finalise']}"
-                                action="#{poListBean.doFinalise()}"
-                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                rendered="#{poListBean.actionForReady(_p)}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                            <p:confirm header="#{msgs['lbl.confirmation']}"
-                                       message="#{msgs['project.list.lbl.msg.confirmation.finalise']}"
-                                       icon="ui-icon-alert">
-                            </p:confirm>
-                        </p:commandLink>
+                            <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
+                                           rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
+                                           style="float: left!important; color: #428BCA; margin-right:5px;"
+                                           action="#{poListBean.redirectToEdit}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                            </h:commandLink>
+                            &#160;
+                            <h:commandLink value="#{msgs['project.list.action.view']}"
+                                           rendered="#{poListBean.canView(_p)}"
+                                           style="float: left!important; color: #428BCA; margin-right:5px;"
+                                           action="#{poListBean.redirectToView}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                            </h:commandLink>
+                            &#160;
+                            <p:commandLink id="printPOBtn" value="#{msgs['project.list.action.print.po']}"
+                                           action="#{poListBean.loadCurrentPo(_p)}"
+                                           rendered="#{permissionBean.hasPermission(1406) and _p.id!=null}"
+                                           oncomplete="PF('printPoDlg').show();"  async="false" partialSubmit="true" process="@this"
+                                           style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink id="variationBtn" value="#{msgs['project.list.action.variation']}"
+                                           rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
+                                           action="#{poListBean.createVarNumberToPO(_p)}" partialSubmit="true" process="@this"
+                                           update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
+                                           style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink id="commitBtn"
+                                           ajax="true" async="false" partialSubmit="true" process="@this"
+                                           value="#{msgs['project.list.action.commit']}" update="groupActionsBtn groupStatusTxt :listPooFormId:poGlbMsgs"
+                                           action="#{poListBean.doCommitPo}"
+                                           style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                           rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}"
+                                           onstart="PF('waitingModalWg').show();" oncomplete="PF('waitingModalWg').hide();" >
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['project.list.lbl.msg.confirmation.commit']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink id="uncommitBtn" value="#{msgs['project.list.action.uncommit']}"
+                                           ajax="true" async="false" partialSubmit="true" process="@this"
+                                           action="#{poListBean.doUncommit}" update="groupActionsBtn groupStatusTxt"
+                                           style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                           rendered="#{poListBean.canUncommit(_p) and permissionBean.hasUserPermission(1409)}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['project.list.lbl.msg.confirmation.uncommit']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
+                                           update="projectListId"
+                                           rendered="#{poListBean.canExportCMS(_p)}"
+                                           onclick="PF('cmsExport').show();"
+                                           style="float: left!important; color: #428BCA; padding-top: 0px!important;">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink
+                                    id="exportJde"
+                                    update="projectListId"
+                                    value="#{msgs['project.list.action.export.jde']}"
+                                    onclick="PF('jdeExport').show();"
+                                    style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                    rendered="#{poListBean.canExportJDE(_p)}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink id="exportJdeCsv"
+                                           style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                           value="#{msgs['project.list.action.export.jde.csv']}"
+                                           onclick="PF('jdeCsvExport').show();" update=":JDECSVformId"
+                                           rendered="#{poListBean.canExportJDECsv(_p)}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                            </p:commandLink>
+                            &#160;
+                            <p:commandLink
+                                    id="finaliseBtn"  update="groupActionsBtn groupStatusTxt :listPooFormId:poGlbMsgs"
+                                    ajax="true" async="false" partialSubmit="true" process="@this"
+                                    value="#{msgs['project.list.action.finalise']}"
+                                    action="#{poListBean.doFinalise()}"
+                                    style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                    rendered="#{poListBean.actionForReady(_p)}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['project.list.lbl.msg.confirmation.finalise']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
 
-                        <p:commandLink
-                                id="releaseBtn"
-                                update="projectListId" ajax="true" partialSubmit="true" process="@this"
-                                value="#{msgs['project.list.action.release']}"
-                                action="#{poListBean.doReleasePo}"
-                                async="false"
-                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                            <p:confirm header="#{msgs['lbl.confirmation']}"
-                                       message="#{msgs['project.list.lbl.msg.confirmation.release']}"
-                                       icon="ui-icon-alert">
-                            </p:confirm>
-                        </p:commandLink>
-                        <p:commandLink
-                                id="deletePOBtn" update="projectListId"
-                                async="false" ajax="true" partialSubmit="true" process="@this"
-                                value="#{msgs['project.list.action.delete']}"
-                                action="#{poListBean.doDeletePo}"
-                                style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                rendered="#{poListBean.canDelete(_p)}">
-                            <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                         value="#{_p}"/>
-                            <p:confirm header="#{msgs['lbl.confirmation']}"
-                                       message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
-                                       icon="ui-icon-alert">
-                            </p:confirm>
+                            <p:commandLink
+                                    id="releaseBtn" update="groupActionsBtn groupStatusTxt"
+                                    ajax="true" partialSubmit="true" process="@this"
+                                    value="#{msgs['project.list.action.release']}"
+                                    action="#{poListBean.doReleasePo}"
+                                    async="false"
+                                    style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                    rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['project.list.lbl.msg.confirmation.release']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
+                            </p:commandLink>
+                            <p:commandLink
+                                    id="deletePOBtn" update="projectListId"
+                                    async="false" ajax="true" partialSubmit="true" process="@this"
+                                    value="#{msgs['project.list.action.delete']}"
+                                    action="#{poListBean.doDeletePo}"
+                                    style="float: left!important; color: #428BCA; padding-top: 0px!important;"
+                                    rendered="#{poListBean.canDelete(_p)}">
+                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
+                                                             value="#{_p}"/>
+                                <p:confirm header="#{msgs['lbl.confirmation']}"
+                                           message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
+                                           icon="ui-icon-alert">
+                                </p:confirm>
 
-                        </p:commandLink>
+                            </p:commandLink>
+                        </h:panelGroup>
                     </p:column>
 
                 </p:dataTable>
@@ -364,7 +368,7 @@
                                         <p:ajax oncomplete="PF('variationModal').hide();"
                                                 process="@form"
                                                 async="false"
-                                                update=":listPooFormId:projectListId"/>
+                                                update=":listPooFormId"/>
                                     </h:commandButton>
                                     &#160;
                                     <button class="btn btn-primary btn-sm" type="button"

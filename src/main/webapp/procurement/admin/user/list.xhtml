@@ -12,6 +12,19 @@
     </f:metadata>
     <ui:define name="body">
         <style>
+            table {
+                display: block;
+            }
+
+            thead {
+                position: fixed;
+            }
+            tbody:before {
+                content: "-";
+                display: block;
+                line-height: 2em;
+                color: transparent;
+            }
             .ui-paginator {
                 position: fixed;
                 width: 100% !important;
@@ -59,32 +72,30 @@
                                      paginatorPosition="top">
                             <p:ajax async="false" event="page" process="@this"
                                     listener="#{tableCommonFeature.onPaginate}"/>
-                            <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50"
-                                      style="text-align: center">
+                            <p:column headerText="#{msgs['lbl.dt.column.active']}" style="width: 103px; text-align: center;">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.username']}" width="80">
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}" style="width: 165px;">
                                 #{_u.username}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.name']}" width="90">
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}" style="width: 185px;">
                                 #{_u.firstName}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.surname']}" width="90">
+                            <p:column headerText="#{msgs['lbl.dt.column.surname']}" style="width: 185px;">
                                 #{_u.name}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">
+                            <p:column headerText="#{msgs['lbl.dt.column.email']}" style="width: 287px;">
                                 #{_u.email}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" width="70"
-                                      style="text-align: center;">
+                            <p:column headerText="#{msgs['lbl.dt.column.procurment.access']}" style="width: 143px; text-align: center;">
                                 <h:selectBooleanCheckbox value="#{usersBean.getAccessModuleProcurement(_u.id)}"
                                                          disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100">
+                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" style="width: 205px;">
                                 #{usersBean.getAccessLevelProcurement(_u.id)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" style="width: 194px;">
                                 <div>
                                     <h:link id="editLinkId" value="#{msgs['lbl.edit']}" outcome="edit"
                                             styleClass="btn btn-link btn-sm"
@@ -161,32 +172,30 @@
                                      paginatorPosition="top">
                             <p:ajax async="false" event="page" process="@this"
                                     listener="#{tableCommonFeature.onPaginate}"/>
-                            <p:column headerText="#{msgs['lbl.dt.column.active']}" width="50"
-                                      style="text-align: center">
+                            <p:column headerText="#{msgs['lbl.dt.column.active']}" style="width: 103px; text-align: center;">
                                 <h:selectBooleanCheckbox value="#{usersBean.getActiveUser(_u.status)}"
                                                          disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.username']}" width="80">
+                            <p:column headerText="#{msgs['lbl.dt.column.username']}" style="width: 165px;">
                                 #{_u.username}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.name']}" width="90">
+                            <p:column headerText="#{msgs['lbl.dt.column.name']}" style="width: 185px;">
                                 #{_u.firstName}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.surname']}" width="90">
+                            <p:column headerText="#{msgs['lbl.dt.column.surname']}" style="width: 185px;">
                                 #{_u.name}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.email']}" width="140">
+                            <p:column headerText="#{msgs['lbl.dt.column.email']}" style="width: 287px;">
                                 #{_u.email}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.expediting.access']}" width="70"
-                                      style="text-align: center;">
+                            <p:column headerText="#{msgs['lbl.dt.column.expediting.access']}" style="width: 143px; text-align: center;">
                                 <h:selectBooleanCheckbox value="#{usersBean.getAccessModuleExpediting(_u.id)}"
                                                          disabled="true" styleClass="disabled"/>
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" width="100">
+                            <p:column headerText="#{msgs['lbl.dt.column.access.level']}" style="width: 205px;">
                                 #{usersBean.getAccessLevelExpediting(_u.id)}
                             </p:column>
-                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" width="95">
+                            <p:column headerText="#{msgs['lbl.dt.column.actions']}" style="width: 194px;">
                                 <h:link id="editExpediting" value="#{msgs['lbl.edit']}" outcome="edit"
                                         styleClass="btn btn-link btn-sm"
                                         style="color: #428BCA;">
