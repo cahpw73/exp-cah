@@ -429,6 +429,7 @@ public class PurchaseOrderService extends Service implements Serializable {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
         }
+        purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
         verifyAndSetRequiredOnSideDate(purchaseOrderEntity, po.getRequisitions());
         dao.update(purchaseOrderEntity);
         doUpdateProjectTextEntity(purchaseOrderEntity);
@@ -511,19 +512,19 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
-        removePrefixIfAny(purchaseOrderEntity);
-        String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
+        //removePrefixIfAny(purchaseOrderEntity);
+        /*String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
         if (exitsDeliveryPointInIncoTerms(incoTerms)) {
             purchaseOrderEntity.setIncoTerm(incoTerms);
             purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
         } else {
             purchaseOrderEntity.setIncoTerm(null);
             purchaseOrderEntity.setFullIncoTerms(null);
-        }
-        purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
-        purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
+        }*/
+        //purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
+        //purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
         //TODO Remove if sure that not is necessary
-        purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
+        //purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         if(StringUtils.isEmpty(purchaseOrderEntity.getExpeditingStatus())) {
             purchaseOrderEntity.setExpeditingStatus(String.valueOf(ExpeditingStatusEnum.ISSUED.ordinal()));
             ExpeditingStatusEntity expeditingStatusEntity = new ExpeditingStatusEntity();
@@ -531,6 +532,22 @@ public class PurchaseOrderService extends Service implements Serializable {
             expeditingStatusEntity.setPurchaseOrderEntity(purchaseOrderEntity);
             expeditingStatusDao.doSave(expeditingStatusEntity);
         }
+        dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+        purchaseOrderEntity.setGeneralComment(null);
+        purchaseOrderEntity.setNextKeyDateComment(null);
+        purchaseOrderEntity.setNextKeyDate(null);
+        dao.update(purchaseOrderEntity);
+        return purchaseOrderEntity;
+    }
+
+    @Transactional
+    public PurchaseOrderEntity updatePOStatus(PurchaseOrderEntity purchaseOrderEntity){
+        dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
+        return purchaseOrderEntity;
+    }
+
+    @Transactional
+    public PurchaseOrderEntity updatePOAfterCommitted(PurchaseOrderEntity purchaseOrderEntity){
         dao.updatePOEntity(purchaseOrderEntity.getPurchaseOrderProcurementEntity());
         purchaseOrderEntity.setGeneralComment(null);
         purchaseOrderEntity.setNextKeyDateComment(null);
@@ -581,6 +598,22 @@ public class PurchaseOrderService extends Service implements Serializable {
             if (po.getPurchaseOrderProcurementEntity().getTextEntity() != null) {
                 List<ClausesEntity> clausesEntities = textService.findClausesByTextId(po.getPurchaseOrderProcurementEntity().getTextEntity().getId());
                 po.getPurchaseOrderProcurementEntity().getTextEntity().getClausesList().addAll(clausesEntities);
+            }
+        }
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    public PurchaseOrderEntity findPOForCommitByPoId(Long id) {
+        List<PurchaseOrderEntity> list = dao.findById(PurchaseOrderEntity.class, id != null ? id : 0L);
+        PurchaseOrderEntity po = list.isEmpty() ? null : list.get(0);
+        if (po != null) {
+            po.getPurchaseOrderProcurementEntity().getRequisitions().addAll(requisitionDao.findRequisitionByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId()));
+            po.getPurchaseOrderProcurementEntity().getScopeSupplyList().addAll(itemService.findByPoId(po.getId()));
+            po.getPurchaseOrderProcurementEntity().getScopeSupplyEntities().addAll(scopeSupplyDao.findByPurchaseOrder(po.getId()));
+            List<CashflowEntity> cashflows = cashflowService.findByPoId(po.getPurchaseOrderProcurementEntity().getId());
+            po.getPurchaseOrderProcurementEntity().setCashflow(!cashflows.isEmpty() ? cashflows.get(0) : null);
+            if (po.getPurchaseOrderProcurementEntity().getCashflow() != null) {
+                po.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList().addAll(cashflowService.findDetailByCashflowId(po.getPurchaseOrderProcurementEntity().getCashflow().getId()));
             }
         }
         return list.isEmpty() ? null : list.get(0);

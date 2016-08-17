@@ -32,6 +32,7 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private ClassEnum clazz;
     private ProcurementStatus poProcStatus;
     private List<ItemEntity> scopeSupplyList = new ArrayList<>();
+    private List<ScopeSupplyEntity> scopeSupplyEntities = new ArrayList<>();
     private List<RequisitionEntity> requisitions = new ArrayList<>();
     private List<DeliverableEntity> deliverables = new ArrayList<>();
     private List<PODocumentEntity> poDocumentList = new ArrayList<>();
@@ -212,6 +213,11 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     @Transient
     public List<ItemEntity> getScopeSupplyList() {
         return scopeSupplyList;
+    }
+
+    @Transient
+    public List<ScopeSupplyEntity> getScopeSupplyEntities() {
+        return scopeSupplyEntities;
     }
 
     @Transient

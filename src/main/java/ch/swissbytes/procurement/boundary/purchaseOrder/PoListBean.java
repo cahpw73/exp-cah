@@ -295,14 +295,38 @@ public class PoListBean implements Serializable {
     public void doCommitPo() {
         log.info("doCommitPo()");
         if (currentPurchaseOrder != null) {
-            currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
+            Date startDoCommit = new Date();
+
+            Date startFindCurrentPo = new Date();
+            currentPurchaseOrder = service.findPOForCommitByPoId(currentPurchaseOrder.getId());
+            Date endFindCurrentPo = new Date();
+            log.info("time between startFindCurrentPo - endFindCurrentPo = " +(endFindCurrentPo.getTime() - startFindCurrentPo.getTime()));
             if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
+
+                Date startPopulateFromPreviousRevision = new Date();
                 populateFromPreviousRevision(currentPurchaseOrder);
+                Date endPopulateFromPreviousRevision = new Date();
+                log.info("time between populateFromPreviousRevision = " + (endPopulateFromPreviousRevision.getTime() - startPopulateFromPreviousRevision.getTime()));
+
+                Date startUpdateROSDateInExpediting = new Date();
                 List<ScopeSupplyEntity> supplyList = updateROSDateInExpediting();
-                currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+                Date endUpdateROSDateInExpediting = new Date();
+                log.info("time between updateROSDateInExpediting= "+(endUpdateROSDateInExpediting.getTime()-startUpdateROSDateInExpediting.getTime()));
+
+                Date startUpdateOnlyPOOnProcurement = new Date();
+                currentPurchaseOrder = service.updatePOAfterCommitted(currentPurchaseOrder);
+                Date endUpdateOnlyPOOnProcurement = new Date();
+                log.info("time between UpdateOnlyPOOnProcurement = " + (endUpdateOnlyPOOnProcurement.getTime()-startUpdateOnlyPOOnProcurement.getTime()));
+
+                Date startUpdateScopeSuppliesAfterCommitted = new Date();
                 maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
                 updateScopeSuppliesAfterCommitted(supplyList);
+                Date endUpdateScopeSuppliesAfterCommitted = new Date();
+                log.info("time between UpdateScopeSuppliesAfterCommitted = "+ (endUpdateScopeSuppliesAfterCommitted.getTime()-startUpdateScopeSuppliesAfterCommitted.getTime()));
+
+                Date endDoCommit = new Date();
+                log.info("time for doCommitPO = "+ (endDoCommit.getTime()-startDoCommit.getTime()));
             }
         }
         findPOs();
@@ -326,7 +350,9 @@ public class PoListBean implements Serializable {
     private List<ScopeSupplyEntity> updateROSDateInExpediting() {
         log.info("private List<ScopeSupplyEntity> updateROSDateInExpediting()");
         List<ScopeSupplyEntity> scopeSupplyList = new ArrayList<>();
-        List<RequisitionEntity> requisitionList = requisitionDao.findRequisitionByPurchaseOrder(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        //List<RequisitionEntity> requisitionList = requisitionDao.findRequisitionByPurchaseOrder(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getId());
+        List<RequisitionEntity> requisitionList = new ArrayList<>();
+        requisitionList.addAll(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getRequisitions());
         boolean wasUpdateRosMin = false;
         Date rosMin = null;
         for (RequisitionEntity r : requisitionList) {
@@ -339,7 +365,8 @@ public class PoListBean implements Serializable {
             }
         }
         if (!requisitionList.isEmpty() && wasUpdateRosMin) {
-            scopeSupplyList = scopeSupplyService.findByPoId(currentPurchaseOrder.getId());
+            //scopeSupplyList = scopeSupplyService.findByPoId(currentPurchaseOrder.getId());
+            scopeSupplyList.addAll(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getScopeSupplyEntities());
             for (ScopeSupplyEntity s : scopeSupplyList) {
                 s.setRequiredSiteDate(rosMin);
             }
@@ -366,10 +393,14 @@ public class PoListBean implements Serializable {
     }
 
     public void doUncommit() {
+        log.info("doUncommit()");
+        Date d1 = new Date();
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-            currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+            currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
         }
+        Date d2 = new Date();
+        log.info("time process doUncommit= " + (d2.getTime() - d1.getTime()));
     }
 
     public void doFinalise() {
@@ -378,19 +409,22 @@ public class PoListBean implements Serializable {
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
             if (validate()) {
-                currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
             }
         }
         findPOs();
         Date d2 = new Date();
+        log.info("time process doFinalise= " + (d2.getTime() - d1.getTime()));
     }
 
     public void doReleasePo() {
         log.info("do release purchase order");
+        Date d1 = new Date();
         currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
-        currentPurchaseOrder = service.updateOnlyPOOnProcurement((currentPurchaseOrder));
+        currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
+        Date d2 = new Date();
+        log.info("time process doReleasePo= " + (d2.getTime() - d1.getTime()));
     }
 
     public void doDeletePo() {
