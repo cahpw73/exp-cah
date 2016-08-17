@@ -271,15 +271,6 @@
                                                              value="#{_p}"/>
                             </p:commandLink>
                             &#160;
-                            <p:commandLink id="exportJdeCsv"
-                                           style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                           value="#{msgs['project.list.action.export.jde.csv']}"
-                                           onclick="PF('jdeCsvExport').show();" update=":JDECSVformId"
-                                           rendered="#{poListBean.canExportJDECsv(_p)}">
-                                <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
-                                                             value="#{_p}"/>
-                            </p:commandLink>
-                            &#160;
                             <p:commandLink
                                     id="finaliseBtn"  update="groupActionsBtn groupStatusTxt :listPooFormId:poGlbMsgs"
                                     ajax="true" async="false" partialSubmit="true" process="@this"
