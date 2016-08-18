@@ -40,6 +40,9 @@ public class ItemBean implements Serializable {
     @Inject
     private EnumService enumService;
 
+    @Inject
+    private PoBean poBean;
+
 
         private List<ItemEntity> itemList;
 
@@ -67,6 +70,11 @@ public class ItemBean implements Serializable {
             ItemEntity supply = new ItemEntity();
             supply.setId(preId);
             supply.startEditing();
+            if(!scopeSupplyList.isEmpty()){
+                ItemEntity firstItem = scopeSupplyList.get(0);
+                supply.setCostCode(firstItem.getCostCode());
+            }
+            supply.setPoDeliveryDate(poBean.getPurchaseOrder().getPoDeliveryDate());
             scopeSupplyList.add(supply);
             preId--;
             sortBean.sortItemEntity(scopeSupplyList);

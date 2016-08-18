@@ -132,7 +132,7 @@ public class ReportProcBean implements Serializable {
         log.info("printDetailedProcurementReport");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDetailedProcurement("/procurement/detailedProcurementReport/detailedProcurementReport", "Procurement.Detailed.Procurement", messages, locale, configuration,  project, sortMap,dataSource);
+        ReportView reportView = new ReportDetailedProcurement("/procurement/detailedProcurementReport/detailedProcurementReport", "Procurement.Detailed.Procurement", messages, locale, configuration, project, sortMap, dataSource);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -215,8 +215,13 @@ public class ReportProcBean implements Serializable {
         log.info("printDetailedSupplierInformation");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportDetailedSupplierInformation("/procurement/DetailedSupplierInformation/DetailedSupplierInformation", "Procurement.Detailed.supplier.information", messages, locale, configuration, project, sortMap,dataSource);
-        reportView.printDocument(null);
+        if(project.getId().longValue()>0L) {
+            ReportView reportView = new ReportDetailedSupplierInformation("/procurement/DetailedSupplierInformation/DetailedSupplierInformation", "Procurement.Detailed.supplier.information", messages, locale, configuration, project, sortMap, dataSource);
+            reportView.printDocument(null);
+        }else{
+            ReportView reportView = new ReportDetailedSupplierInformation("/procurement/DetailedSupplierInformation/DetailedSupplierFullInformation", "Procurement.Detailed.supplier.information", messages, locale, configuration, project, sortMap, dataSource);
+            reportView.printDocument(null);
+        }
         openReport = true;
     }
     public void printUncommittedData(final ProjectEntity project, final Map<String, Boolean> sortMap) {

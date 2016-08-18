@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintSummaryPO" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.zoom" value="1.771561000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="22"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -217,7 +217,7 @@ order by $P!{sortBySummary}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Supplier</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="370" y="14" width="70" height="12"/>
+				<reportElement uuid="f89c6f4f-568a-4c6c-b623-1c68e5e404b0" x="399" y="14" width="70" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
@@ -230,14 +230,14 @@ order by $P!{sortBySummary}]]>
 				<reportElement uuid="8e2854d4-2ccc-4436-b38e-c98f9c9dd360" x="0" y="28" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="296" y="14" width="70" height="12"/>
+				<reportElement uuid="c3fc1210-29cf-47b2-b78f-6dd7c97362ef" x="323" y="14" width="70" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Status</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="de877ce8-1dd2-448a-b138-5db7529f116c" x="64" y="14" width="170" height="12"/>
+				<reportElement uuid="de877ce8-1dd2-448a-b138-5db7529f116c" x="128" y="14" width="190" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="10"/>
@@ -245,11 +245,19 @@ order by $P!{sortBySummary}]]>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Title</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d4a58a41-3aba-4167-a754-313373a61293" x="445" y="14" width="70" height="12"/>
+				<reportElement uuid="d4a58a41-3aba-4167-a754-313373a61293" x="475" y="14" width="70" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project Value</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="084ccaf2-d22e-478e-ad54-0ccbf258ebd4" x="64" y="14" width="60" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="7" isBold="true"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Date</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

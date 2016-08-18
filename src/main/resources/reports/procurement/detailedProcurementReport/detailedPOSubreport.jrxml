@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detailedPOSubreport" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="858d46b2-620c-4e2a-9685-a346bf5fdf9e">
-	<property name="ireport.zoom" value="2.6620000000000013"/>
-	<property name="ireport.x" value="724"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
@@ -16,7 +16,7 @@
 	<parameter name="projectCurrency" class="java.lang.String"/>
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<queryString>
-		<![CDATA[select po.po,po.variation,sp.company,ct.email,po.po_title,p.po_status,po.orderedvariation,po.id
+		<![CDATA[select po.po,po.variation,sp.company,ct.email,po.po_title,p.po_status,po.orderedvariation,po.id,p.order_date
 from purchase_order po inner join p_order p on po.po_id = p.id
 left join supplier_proc sp on p.supplier_id=sp.id inner join contact ct on ct.supplier_id = sp.id
 where po.po = $P{poNoFilter} and po.project_id=$P{projectId}
@@ -30,8 +30,9 @@ order by $P!{sortBy}]]>
 	<field name="po_status" class="java.lang.Integer"/>
 	<field name="orderedvariation" class="java.lang.Integer"/>
 	<field name="id" class="java.lang.Long"/>
+	<field name="order_date" class="java.sql.Timestamp"/>
 	<detail>
-		<band height="37" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="27a407a1-a859-4044-83ff-d253f414aea5" positionType="Float" x="0" y="0" width="35" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
@@ -61,7 +62,7 @@ order by $P!{sortBy}]]>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport($F{po_title}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$F{po_title}+"</style>":"")]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="4819981d-c290-4c8e-a2d1-7359c2d4d3b4" positionType="Float" x="0" y="12" width="802" height="25"/>
+				<reportElement uuid="4819981d-c290-4c8e-a2d1-7359c2d4d3b4" positionType="Float" x="0" y="24" width="802" height="25"/>
 				<subreportParameter name="poNoFilter">
 					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -104,6 +105,13 @@ order by $P!{sortBy}]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ProjectValue.jasper"]]></subreportExpression>
 			</subreport>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="061ddd12-d1ab-4072-969d-e2f5b88ecbbe" positionType="Float" x="0" y="12" width="60" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_date}!=null?"<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{order_date}.getTime()))+"</style>":null]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

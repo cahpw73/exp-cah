@@ -160,6 +160,7 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "dsi":
                     reportTitle = detailedSupplierReport;
+                    addAllProjectToProjectList();
                     break;
                 case "udr":
                     reportTitle = uncommitedDataReport;
@@ -178,14 +179,32 @@ public class ReportProcurementBean implements Serializable {
         log.info("report title: " + reportTitle);
     }
 
+    private void addAllProjectToProjectList() {
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setId(-1L);
+        projectEntity.setProjectNumber("All Projects");
+        List<ProjectEntity> auxList = new ArrayList<>();
+        auxList.add(projectEntity);
+        for (ProjectEntity p : projectList) {
+            auxList.add(p);
+        }
+        projectList.clear();
+        projectList.addAll(auxList);
+    }
+
     public boolean isMaterialRequisitionReport(){
         return reportTitle.equals(materialRequisitionReport);
     }
     public boolean canshowFilterDeliveryDate(){
-        return reportTitle.equals(materialRequisitionReport) || reportTitle.equals(committedCurrenciesReport)|| reportTitle.equals(detailedSupplierReport);
+        return reportTitle.equals(materialRequisitionReport) || reportTitle.equals(committedCurrenciesReport)||
+                reportTitle.equals(detailedSupplierReport) || reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport);
     }
     public boolean isDetailSupplier(){
         return reportTitle.equals(detailedSupplierReport);
+    }
+
+    public boolean canShowFilterCountry(){
+        return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport)||reportTitle.equals(projectProcurementReport);
     }
 
 
