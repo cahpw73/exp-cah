@@ -190,7 +190,7 @@ public class ReportProcurementBean implements Serializable {
     }
 
     public boolean canShowFilterCountry(){
-        return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport);
+        return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport)||reportTitle.equals(projectProcurementReport);
     }
 
 
