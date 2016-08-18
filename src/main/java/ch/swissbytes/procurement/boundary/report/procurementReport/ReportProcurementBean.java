@@ -182,10 +182,15 @@ public class ReportProcurementBean implements Serializable {
         return reportTitle.equals(materialRequisitionReport);
     }
     public boolean canshowFilterDeliveryDate(){
-        return reportTitle.equals(materialRequisitionReport) || reportTitle.equals(committedCurrenciesReport)|| reportTitle.equals(detailedSupplierReport);
+        return reportTitle.equals(materialRequisitionReport) || reportTitle.equals(committedCurrenciesReport)||
+                reportTitle.equals(detailedSupplierReport) || reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport);
     }
     public boolean isDetailSupplier(){
         return reportTitle.equals(detailedSupplierReport);
+    }
+
+    public boolean canShowFilterCountry(){
+        return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport);
     }
 
 
