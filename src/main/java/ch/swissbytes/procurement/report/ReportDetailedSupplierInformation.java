@@ -22,6 +22,10 @@ public class ReportDetailedSupplierInformation extends ReportProject {
         addParameters("PROJECT_ID", project.getId());
         addParameters("SUBREPORT_DIR", "reports/procurement/DetailedSupplierInformation/");
         addParameters("sortBy", getStrSort());
+        if(project.getId().longValue()<0){
+            //addParameters("projectCode", "All Projects");
+            addParameters("projectName", "All Projects");
+        }
     }
 
     @Override
