@@ -67,6 +67,10 @@ public class ItemBean implements Serializable {
             ItemEntity supply = new ItemEntity();
             supply.setId(preId);
             supply.startEditing();
+            if(!scopeSupplyList.isEmpty()){
+                ItemEntity firstItem = scopeSupplyList.get(0);
+                supply.setCostCode(firstItem.getCostCode());
+            }
             scopeSupplyList.add(supply);
             preId--;
             sortBean.sortItemEntity(scopeSupplyList);
