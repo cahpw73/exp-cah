@@ -874,7 +874,7 @@ public class PoListBean implements Serializable {
         p1.setSupplier(spe1);
         po1.setPo("-");
         po1.setPurchaseOrderProcurementEntity(p1);
-        purchaseOrders.add(po1);
+        //purchaseOrders.add(po1);
 
         List<PurchaseOrderEntity> list = service.findPosBy(getFilter());
         purchaseOrders.addAll(list);
@@ -887,7 +887,7 @@ public class PoListBean implements Serializable {
         p.setSupplier(spe);
         po.setPo("¯");
         po.setPurchaseOrderProcurementEntity(p);
-        purchaseOrders.add(po);
+        //purchaseOrders.add(po);
 
     }
 

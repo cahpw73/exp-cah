@@ -21,6 +21,12 @@
             thead {
                 position: fixed;
             }
+            tbody:before {
+                content: "-";
+                display: block;
+                line-height: 2em;
+                color: transparent;
+            }
         </style>
         <o:form id="listPooFormId" includeViewParams="true" prependId="false">
             <div class="col-md-12">
@@ -176,7 +182,7 @@
                         #{_p.variation}
                     </p:column>
                     <p:column id="colTitle" headerText="#{msgs['project.purchase.order.column.title']}"
-                              style="width: 385px;">
+                              style="width: 385px;" sortBy="#{_p.poTitle}">
                         #{_p.poTitle}
                     </p:column>
                     <p:column id="colSupplier" headerText="#{msgs['project.purchase.order.column.supplier']}"
