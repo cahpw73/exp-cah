@@ -438,7 +438,7 @@ public class PoBean extends Bean {
                         validated = false;
                     }
                 } catch (NumberFormatException nfe) {
-                    Messages.addFlashGlobalError("PO Number must be a number because Class chosen is PO");
+                    //Messages.addFlashGlobalError("PO Number must be a number because Class chosen is PO");
                     validated = false;
                 }
             }
@@ -451,7 +451,7 @@ public class PoBean extends Bean {
             Messages.addFlashGlobalError("Enter a valid Delivery Point");
             validated = false;
         }
-        if(!validatePoNumber()){
+        if(!validatePoNumberBeforeSave()){
             validated = false;
         }
         return validated;
@@ -487,7 +487,7 @@ public class PoBean extends Bean {
                         validate = false;
                     }
                 } catch (NumberFormatException nfe) {
-                    Messages.addFlashGlobalError("PO Number must be a number because Class chosen is PO");
+                    //Messages.addFlashGlobalError("PO Number must be a number because Class chosen is PO");
                     validate = false;
                 }
             }
@@ -839,35 +839,112 @@ public class PoBean extends Bean {
         if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz()!=null){
             switch (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz()){
                 case PO:
-                    try{
-                        int poNumber = Integer.parseInt(purchaseOrder.getPo());
-                    }catch(NumberFormatException nfe){
-                        validate = false;
-                        Messages.addFlashGlobalError("The PO Number must be only number");
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        try{
+                            int poNumber = Integer.parseInt(purchaseOrder.getPo());
+                        }catch(NumberFormatException nfe){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be only number");
+                        }
+                    }else{
+                     validate = true;
                     }
                     break;
                 case SERVICE_CONTRACT:
-                    String sc = purchaseOrder.getPo().substring(0,2).toUpperCase();
-                    log.info("Service contract: " + sc);
-                    if(!StringUtils.equals(sc,"SC")){
-                        validate = false;
-                        Messages.addFlashGlobalError("The PO Number must be start with SC");
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        String sc = purchaseOrder.getPo().substring(0,2).toUpperCase();
+                        log.info("Service contract: " + sc);
+                        if(!StringUtils.equals(sc,"SC")){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be start with SC");
+                        }
+                    }else{
+                        validate = true;
                     }
                     break;
                 case CONSTRUCTION_CONTRACT:
-                    String cc = purchaseOrder.getPo().substring(0,2).toUpperCase();
-                    log.info("Construction contract: " + cc);
-                    if(!StringUtils.equals(cc,"CC")){
-                        validate = false;
-                        Messages.addFlashGlobalError("The PO Number must be start with CC");
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        String cc = purchaseOrder.getPo().substring(0,2).toUpperCase();
+                        log.info("Construction contract: " + cc);
+                        if(!StringUtils.equals(cc,"CC")){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be start with CC");
+                        }
+                    }else{
+                        validate = true;
                     }
                     break;
                 case MINING_FLEET:
-                    String mf = purchaseOrder.getPo().substring(0,2).toUpperCase();
-                    log.info("Mining fleet: " + mf);
-                    if(!StringUtils.equals(mf,"MF")){
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        String mf = purchaseOrder.getPo().substring(0,2).toUpperCase();
+                        log.info("Mining fleet: " + mf);
+                        if(!StringUtils.equals(mf,"MF")){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be start with MF");
+                        }
+                    }else{
+                        validate = true;
+                    }
+                    break;
+                default:
+                    validate = true;
+                    break;
+            }
+        }
+        return validate;
+    }
+
+    public boolean validatePoNumberBeforeSave(){
+        log.info("validatePoNumberBeforeSave()");
+        boolean validate = true;
+        if(purchaseOrder.getPurchaseOrderProcurementEntity().getClazz()!=null){
+            switch (purchaseOrder.getPurchaseOrderProcurementEntity().getClazz()){
+                case PO:
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        try{
+                            int poNumber = Integer.parseInt(purchaseOrder.getPo());
+                        }catch(NumberFormatException nfe){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be only number");
+                        }
+                    }else{
                         validate = false;
-                        Messages.addFlashGlobalError("The PO Number must be start with MF");
+                    }
+                    break;
+                case SERVICE_CONTRACT:
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        String sc = purchaseOrder.getPo().substring(0,2).toUpperCase();
+                        log.info("Service contract: " + sc);
+                        if(!StringUtils.equals(sc,"SC")){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be start with SC");
+                        }
+                    }else{
+                        validate = false;
+                    }
+                    break;
+                case CONSTRUCTION_CONTRACT:
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        String cc = purchaseOrder.getPo().substring(0,2).toUpperCase();
+                        log.info("Construction contract: " + cc);
+                        if(!StringUtils.equals(cc,"CC")){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be start with CC");
+                        }
+                    }else{
+                        validate = false;
+                    }
+                    break;
+                case MINING_FLEET:
+                    if(!StringUtils.isEmpty(purchaseOrder.getPo())){
+                        String mf = purchaseOrder.getPo().substring(0,2).toUpperCase();
+                        log.info("Mining fleet: " + mf);
+                        if(!StringUtils.equals(mf,"MF")){
+                            validate = false;
+                            Messages.addFlashGlobalError("The PO Number must be start with MF");
+                        }
+                    }else{
+                        validate = false;
                     }
                     break;
                 default:

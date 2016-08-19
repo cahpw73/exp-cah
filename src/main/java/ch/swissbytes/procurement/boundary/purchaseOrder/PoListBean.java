@@ -10,7 +10,6 @@ import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
-import ch.swissbytes.domain.types.ExpeditingStatusEnum;
 import ch.swissbytes.domain.types.ProcurementStatus;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderTbl;
 import ch.swissbytes.fqmes.util.SortBean;
@@ -182,7 +181,6 @@ public class PoListBean implements Serializable {
         service.savePOOnProcurement(purchaseOrderToVariation);
         sortPurchaseListByVariationAndDoUpdate();
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
-        //list = service.purchaseListByProject(Long.parseLong(projectId));
     }
 
     public void doSavePOONewVariation() {
@@ -193,7 +191,6 @@ public class PoListBean implements Serializable {
         findPOs();
         allPurchaseOrders.clear();
         allPurchaseOrders = service.findAllPOs(Long.parseLong(projectId));
-        //list = service.purchaseListByProject(Long.parseLong(projectId));
     }
 
     private void sortPurchaseListByVariationAndDoUpdate() {
@@ -228,26 +225,16 @@ public class PoListBean implements Serializable {
         purchaseOrderToVariation.setId(null);
 
         purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setId(null);
-        /*if(purchaseOrderToVariation.getOrderedVariation()>1){
-            PurchaseOrderEntity previousPO = service.findPOPreviousRevision(purchaseOrderToVariation.getProjectEntity().getId(),purchaseOrderToVariation.getPo(),purchaseOrderToVariation.getOrderedVariation());
-            if(previousPO!=null){
-                purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setDeliveryInstruction(previousPO.getPurchaseOrderProcurementEntity().getDeliveryInstruction());
-            }
-        }else {
-            purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setDeliveryInstruction(project.getDeliveryInstructions());
-        }*/
         purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setDeliveryInstruction(project.getDeliveryInstructions());
         purchaseOrderToVariation.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
         purchaseOrderToVariation.setVariation(newVariationNumber);
         purchaseOrderToVariation.setResponsibleExpediting("");
-        //purchaseOrderToVariation.getPoEntity().getTextEntity().setId(null);
         if (purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getCashflow() != null) {
             purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getCashflow().setId(null);
             for (CashflowDetailEntity entity : purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getCashflow().getCashflowDetailList()) {
                 entity.setId(null);
             }
         }
-
         for (DeliverableEntity entity : purchaseOrderToVariation.getPurchaseOrderProcurementEntity().getDeliverables()) {
             entity.setId(null);
         }
@@ -866,29 +853,9 @@ public class PoListBean implements Serializable {
     public void findPOs() {
         log.info("PoListBean  findPOs");
         purchaseOrders.clear();
-
-        PurchaseOrderEntity po1 = new PurchaseOrderEntity();
-        PurchaseOrderProcurementEntity p1 = new PurchaseOrderProcurementEntity();
-        SupplierProcEntity spe1 = new SupplierProcEntity();
-        spe1.setCompany("-");
-        p1.setSupplier(spe1);
-        po1.setPo("-");
-        po1.setPurchaseOrderProcurementEntity(p1);
-        //purchaseOrders.add(po1);
-
         List<PurchaseOrderEntity> list = service.findPosBy(getFilter());
         purchaseOrders.addAll(list);
         allPurchaseOrders.addAll(purchaseOrders);
-
-        PurchaseOrderEntity po = new PurchaseOrderEntity();
-        PurchaseOrderProcurementEntity p = new PurchaseOrderProcurementEntity();
-        SupplierProcEntity spe = new SupplierProcEntity();
-        spe.setCompany("¯");
-        p.setSupplier(spe);
-        po.setPo("¯");
-        po.setPurchaseOrderProcurementEntity(p);
-        //purchaseOrders.add(po);
-
     }
 
     public List<PurchaseOrderEntity> getPurchaseOrders() {
@@ -941,11 +908,6 @@ public class PoListBean implements Serializable {
 
     public void refreshListPo(){
         log.info("refreshListPo()");
-        /*project = projectService.findProjectById(Long.parseLong(projectId));
-        if (project == null) {
-            throw new IllegalArgumentException("project Id invalid");
-        }
-        Date d1 = new Date();*/
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
         ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
         findPOs();
