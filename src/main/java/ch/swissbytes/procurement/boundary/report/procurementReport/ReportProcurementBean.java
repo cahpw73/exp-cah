@@ -7,6 +7,7 @@ import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.procurement.report.ReportProcBean;
 import ch.swissbytes.procurement.report.dtos.ProjectProcurementDto;
+import ch.swissbytes.procurement.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 
@@ -16,10 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -56,6 +54,9 @@ public class ReportProcurementBean implements Serializable {
     private boolean sortCurrency;
     private boolean sortCode;
     private boolean sortCountry;
+
+    private Date sortFrom;
+    private Date sortTo;
 
     private String reportName;
 
@@ -104,7 +105,8 @@ public class ReportProcurementBean implements Serializable {
         if (selectedProject != null) {
             switch (reportName) {
                 case "ppr":
-                    reportProcBean.printProjectPurchaseOrder(selectedProject, sortMap);
+                    verifyDataToSortDate();
+                    reportProcBean.printProjectPurchaseOrder(selectedProject, sortMap,sortFrom,sortTo);
                     break;
                 case "rrr":
                     reportProcBean.printRequiredRetentions(selectedProject, sortMap);
@@ -122,7 +124,8 @@ public class ReportProcurementBean implements Serializable {
                     reportProcBean.printMaterialRequisition(selectedProject, sortMap);
                     break;
                 case "spor":
-                    reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap);
+                    verifyDataToSortDate();
+                    reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap,sortFrom,sortTo);
                     break;
                 case "pdp":
                     reportProcBean.printDetailedProcurementReport(selectedProject, sortMap);
@@ -137,7 +140,15 @@ public class ReportProcurementBean implements Serializable {
         } else {
             Messages.addFlashGlobalError("Select a project first");
         }
+    }
 
+    private void verifyDataToSortDate(){
+        if(sortFrom == null){
+            sortFrom = DateUtil.getFirstDateDefault();
+        }
+        if(sortTo == null){
+            sortTo = DateUtil.getLastDateDefault();
+        }
     }
 
     public void loadNameReport() {
@@ -205,6 +216,10 @@ public class ReportProcurementBean implements Serializable {
 
     public boolean canShowFilterCountry(){
         return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport)||reportTitle.equals(projectProcurementReport);
+    }
+
+    public boolean canshowFilterPoDeliveryDate(){
+        return reportTitle.equals(summaryPOReport) || reportTitle.equals(projectProcurementReport);
     }
 
 
@@ -418,5 +433,21 @@ public class ReportProcurementBean implements Serializable {
 
     public void setSortCountry(boolean sortCountry) {
         this.sortCountry = sortCountry;
+    }
+
+    public Date getSortFrom() {
+        return sortFrom;
+    }
+
+    public void setSortFrom(Date sortFrom) {
+        this.sortFrom = sortFrom;
+    }
+
+    public Date getSortTo() {
+        return sortTo;
+    }
+
+    public void setSortTo(Date sortTo) {
+        this.sortTo = sortTo;
     }
 }

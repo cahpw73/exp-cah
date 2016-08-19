@@ -69,13 +69,15 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<parameter name="sortBySummary" class="java.lang.String"/>
+	<parameter name="sortFrom" class="java.util.Date"/>
+	<parameter name="sortTo" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select po.po,sp.company
 from purchase_order po
      left outer join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
 where po.project_id=$P{projectIdFilter} and po.status_id = 1 and p.po_status=0
-      and sp.status=0
+      and sp.status=0 and p.order_date >= $P{sortFrom} and p.order_date <= $P{sortTo}
 group by po.po, sp.company
 order by $P!{sortBySummary}]]>
 	</queryString>
@@ -272,11 +274,11 @@ order by $P!{sortBySummary}]]>
 			</textField>
 			<subreport>
 				<reportElement uuid="0cc93b17-b147-48bb-adcb-a420f30badee" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="13" width="555" height="14" isPrintWhenDetailOverflows="true"/>
-				<subreportParameter name="poNoFilter">
-					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="poNoFilter">
+					<subreportParameterExpression><![CDATA[$F{po}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="FORMAT_DATE">
 					<subreportParameterExpression><![CDATA[$P{FORMAT_DATE}]]></subreportParameterExpression>
@@ -287,14 +289,20 @@ order by $P!{sortBySummary}]]>
 				<subreportParameter name="sortBy">
 					<subreportParameterExpression><![CDATA[$P{sortBy}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="projectCurrency">
-					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
+				<subreportParameter name="sortTo">
+					<subreportParameterExpression><![CDATA[$P{sortTo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="TIME_ZONE">
 					<subreportParameterExpression><![CDATA[$P{TIME_ZONE}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="projectCurrency">
+					<subreportParameterExpression><![CDATA[$P{projectCurrency}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="projectIdFilter">
 					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sortFrom">
+					<subreportParameterExpression><![CDATA[$P{sortFrom}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>

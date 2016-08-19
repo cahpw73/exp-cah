@@ -15,11 +15,14 @@
 	</parameter>
 	<parameter name="projectCurrency" class="java.lang.String"/>
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
+	<parameter name="sortFrom" class="java.util.Date"/>
+	<parameter name="sortTo" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select po.variation,po.po_title,p.po_status,po.id,po.project,p.order_date
 from purchase_order po
      left outer join p_order p on po.po_id = p.id
 where po.po = $P{poNoFilter} and po.project_id = $P{projectIdFilter} and status_id=1 and p.po_status=0
+      and p.order_date >= $P{sortFrom} and p.order_date <= $P{sortTo}
 order by po.orderedvariation]]>
 	</queryString>
 	<field name="variation" class="java.lang.String"/>
