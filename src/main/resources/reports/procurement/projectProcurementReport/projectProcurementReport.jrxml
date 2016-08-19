@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintPurchaseOrder" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.6105100000000057"/>
-	<property name="ireport.x" value="390"/>
-	<property name="ireport.y" value="133"/>
+	<property name="ireport.zoom" value="1.4641000000000053"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -70,11 +70,13 @@
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="currencyCode" class="java.lang.String"/>
+	<parameter name="sortFrom" class="java.util.Date"/>
+	<parameter name="sortTo" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select po,po.variation,order_date,sp.company,po.po_title,po_delivery_date,p.po_status,po.id as po_id
 from purchase_order po inner join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
-where po.project_id=$P{projectIdFilter} and po.status_id = 1
+where po.project_id=$P{projectIdFilter} and po.status_id = 1 and p.order_date >= $P{sortFrom} and p.order_date <= $P{sortTo}
 order by $P!{sortBy}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>

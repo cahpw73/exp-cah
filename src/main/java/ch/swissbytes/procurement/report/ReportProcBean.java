@@ -111,11 +111,11 @@ public class ReportProcBean implements Serializable {
         }
         openReport = true;
     }
-    public void printProjectPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
+    public void printProjectPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap,Date sortFrom,Date sortTo) {
         log.info("printProjectPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.project.purchase.order", messages, locale, configuration, project, sortMap,entityManager,dataSource);
+        ReportView reportView = new ReportProjectProcurement("/procurement/projectProcurementReport/projectProcurementReport", "Procurement.project.purchase.order", messages, locale, configuration, project, sortMap,entityManager,dataSource,sortFrom,sortTo);
         reportView.printDocument(null);
         openReport = true;
     }
@@ -173,11 +173,11 @@ public class ReportProcBean implements Serializable {
     }
 
 
-    public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap) {
+    public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap,Date sortFrom,Date sortTo) {
         log.info("printSummaryPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();
-        ReportView reportView = new ReportSummaryPurchaseOrder("/procurement/summaryPurchaseOrderReport/summaryPOReport", "Procurement.Summary.Purchase.order", messages, locale, configuration, project, sortMap,dataSource);
+        ReportView reportView = new ReportSummaryPurchaseOrder("/procurement/summaryPurchaseOrderReport/summaryPOReport", "Procurement.Summary.Purchase.order", messages, locale, configuration, project, sortMap,dataSource,sortFrom,sortTo);
         reportView.printDocument(null);
         openReport = true;
     }

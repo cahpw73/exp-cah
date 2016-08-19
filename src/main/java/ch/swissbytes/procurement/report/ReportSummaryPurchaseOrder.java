@@ -28,9 +28,13 @@ public class ReportSummaryPurchaseOrder extends ReportProject implements Seriali
      * @param messages
      * @param locale           {@link java.util.Locale}
      */
+
+
     public ReportSummaryPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds) {
+                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds,Date sortFrom,Date sortTo) {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap,ds);
+        addParameters("sortFrom",sortFrom);
+        addParameters("sortTo",sortTo);
     }
 
     @Override

@@ -32,9 +32,11 @@ public class ReportProjectProcurement extends ReportProject implements Serializa
      * @param locale           {@link java.util.Locale}
      */
     public ReportProjectProcurement(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                    Configuration configuration, ProjectEntity project, Map<String, Boolean> sortMap, EntityManager entityManager,DataSource ds) {
+                                    Configuration configuration, ProjectEntity project, Map<String, Boolean> sortMap, EntityManager entityManager,DataSource ds,Date sortFrom,Date sortTo) {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap,ds);
         this.entityManager = entityManager;
+        addParameters("sortFrom",sortFrom);
+        addParameters("sortTo",sortTo);
     }
 
     @Override
