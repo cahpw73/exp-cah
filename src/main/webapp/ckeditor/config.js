@@ -24,4 +24,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Underline,Subscript,Superscript,PasteText,PasteFromWord,Link,Unlink,Anchor,Scayt,Image,SpecialChar,HorizontalRule,Blockquote,About,Styles,RemoveFormat';
 	config.pasteFromWordRemoveStyles = false;
     config.pasteFromWordRemoveFontStyles = false;
+	config.height = '300px';
 };
