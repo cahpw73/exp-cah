@@ -239,7 +239,7 @@
                 <ui:include src="../../admin/supplier/components/addBrand.xhtml"/>
             </h:form>
         </p:dialog>
-        <p:dialog header="Add New PO Doc" widgetVar="addPODocModal" resizable="false">
+        <p:dialog header="Add New PO Doc" widgetVar="addPODocModal" resizable="false" width="790" height="500">
             <h:panelGroup id="addPODocModalId">
                 <ui:include src="component/newPODocument.xhtml"/>
             </h:panelGroup>
@@ -250,7 +250,7 @@
             </h:panelGroup>
         </p:dialog>
 
-        <p:dialog header="Edit PO Doc" widgetVar="poDocModal1" resizable="false">
+        <p:dialog header="Edit PO Doc" widgetVar="poDocModal1" resizable="false" width="790" height="500">
             <h:panelGroup id="poDocModalId1">
                 <ui:include src="component/editPODocument.xhtml">
                     <ui:param name="bean" value="#{poDocumentBean.selectedPODocument}"/>
@@ -268,7 +268,7 @@
             </h:panelGroup>
         </p:dialog>
 
-        <p:dialog header="View Project Doc" widgetVar="poDocModal2" resizable="false">
+        <p:dialog header="View Project Doc" widgetVar="poDocModal2" resizable="false" width="790" height="500">
             <h:panelGroup id="poDocModalId2">
                 <ui:include src="component/editPODocument.xhtml">
                     <ui:param name="bean" value="#{poDocumentBean.selectedProjectDocument}"/>
