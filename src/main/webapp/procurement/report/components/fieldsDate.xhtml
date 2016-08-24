@@ -20,7 +20,7 @@
                                     pattern="#{configuration.formatDate}"
                                     converter="#{dateConverter}"
                                     timeZone="#{configuration.timeZone2}">
-                            <p:ajax event="change" process="@this"
+                            <p:ajax event="select" process="@this" partialSubmit="fieldsTypeDateGrp"
                                     async="false"/>
                         </p:calendar>
                     </div>
@@ -34,7 +34,7 @@
                                     pattern="#{configuration.formatDate}"
                                     converter="#{dateConverter}"
                                     timeZone="#{configuration.timeZone2}">
-                            <p:ajax event="change" process="@this"
+                            <p:ajax event="select" process="@this" partialSubmit="fieldsTypeDateGrp"
                                     async="false"/>
                         </p:calendar>
                     </div>

@@ -23,6 +23,8 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
 
     private static final Logger log = Logger.getLogger(PurchaseOrderViewDao.class.getName());
 
+    private static final String filterAllProjectStr = "all";
+
 
     public VPurchaseOrder load(final Long id) {
         return super.load(VPurchaseOrder.class, id);
@@ -34,7 +36,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
         if (f != null) {
             log.info("filtering.....");
             SearchPurchase filter = (SearchPurchase) f;
-            if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject())) {
+            if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject()) && !StringUtils.equals(filter.getProject(),filterAllProjectStr)) {
                 query.setParameter("PROJECT", "%" + filter.getProject().trim() + "%");
             }
             if (StringUtils.isNotBlank(filter.getPo()) && StringUtils.isNotEmpty(filter.getPo())) {
@@ -178,7 +180,7 @@ public class PurchaseOrderViewDao extends GenericDao<VPurchaseOrder> implements 
         if (f != null) {
             log.info("filtering.....");
             SearchPurchase filter = (SearchPurchase) f;
-            if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject())) {
+            if (StringUtils.isNotBlank(filter.getProject()) && StringUtils.isNotEmpty(filter.getProject()) && !StringUtils.equals(filter.getProject(),filterAllProjectStr)) {
                 sb.append(" AND lower(x.project) like lower(:PROJECT)");
             }
             if (StringUtils.isNotBlank(filter.getPo()) && StringUtils.isNotEmpty(filter.getPo())) {
