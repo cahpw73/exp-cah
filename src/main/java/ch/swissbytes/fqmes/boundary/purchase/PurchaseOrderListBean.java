@@ -1,10 +1,12 @@
 package ch.swissbytes.fqmes.boundary.purchase;
 
 import ch.swissbytes.Service.business.project.ProjectService;
+import ch.swissbytes.Service.business.projectUser.ProjectUserService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderDao;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderViewDao;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
+import ch.swissbytes.domain.model.entities.ProjectUserEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.domain.types.ExpeditingStatusEnum;
@@ -45,6 +47,11 @@ public class PurchaseOrderListBean implements Serializable {
 
     @Inject
     private ProjectService projectService;
+
+    @Inject
+    private ProjectUserService projectUserService;
+
+    private static final String filterAllProjectStr = "all";
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
@@ -152,6 +159,18 @@ public class PurchaseOrderListBean implements Serializable {
         }
         return statusStr;
     }
+
+    public List<String> projectAssigned(){
+        Long userId = userSession.getCurrentUser().getId();
+        List<ProjectUserEntity> list = projectUserService.findByUserId(userId);
+        List<String> projects = new ArrayList<>();
+        projects.add(filterAllProjectStr);
+        for(ProjectUserEntity pj : list){
+            projects.add(pj.getProject().getProjectNumber());
+        }
+        return projects;
+    }
+
 
     @Produces
     @Named
