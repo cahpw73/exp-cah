@@ -439,8 +439,14 @@ order by $P!{sortBy}]]>
 			</staticText>
 			<subreport>
 				<reportElement uuid="abcda71d-65a2-4e95-9d9f-3c34354c4dbc" x="598" y="0" width="90" height="12"/>
+				<subreportParameter name="sortTo">
+					<subreportParameterExpression><![CDATA[$P{sortTo}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="projectIdFilter">
 					<subreportParameterExpression><![CDATA[$P{projectIdFilter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sortFrom">
+					<subreportParameterExpression><![CDATA[$P{sortFrom}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="patternDecimal">
 					<subreportParameterExpression><![CDATA[$P{patternDecimal}]]></subreportParameterExpression>

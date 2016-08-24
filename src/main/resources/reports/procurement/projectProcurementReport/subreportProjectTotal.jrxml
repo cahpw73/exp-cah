@@ -5,6 +5,8 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
+	<parameter name="sortFrom" class="java.util.Date"/>
+	<parameter name="sortTo" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select cu.code,sum(cd.project_amt)as amount, pc.exchange_rate as exchange_rate_ini,pc2.exchange_rate as exchange_rate_default
 from cashflow_detail cd
@@ -16,7 +18,7 @@ from cashflow_detail cd
      left outer join project_currency pc2 on pc2.project_id=pj.id
      left outer join  currency cu on cu.id = pc2.currency_id
 where po.project_id = $P{projectIdFilter} and cd.project_amt is not null and pc2.project_default = true
-      and po.status_id=1 and cd.status=0 and pc.status=0 and pc2.status=0
+      and po.status_id=1 and cd.status=0 and pc.status=0 and pc2.status=0 and p.order_date >= $P{sortFrom} and p.order_date <= $P{sortTo}
 group by cu.code,pc.exchange_rate,pc2.exchange_rate
 order by cu.code]]>
 	</queryString>
