@@ -24,9 +24,6 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class='control-label'>#{msgs['purchase.order.filter.lbl.project']}</label>
-                    <ui:remove>
-                    <h:inputText value="#{purchaseOrderListBean.searchPurchase.project}" styleClass="form-control"/>
-                    </ui:remove>
                     <p:selectOneMenu id="projectSlcOne" value="#{purchaseOrderListBean.searchPurchase.project}"
                                      styleClass="menu-ddp" style="width: 100%; display: block;">
                         <f:selectItems value="#{purchaseOrderListBean.projectAssigned()}"/>
