@@ -13,6 +13,7 @@
         <f:viewParam name="poId" value="#{purchaseOrderEdit.purchaseOrderId}"/>
         <f:viewParam name="anchor" value="#{purchaseOrderEdit.anchor}"/>
         <f:viewParam name="fase" value="#{purchaseOrderEdit.fase}"/>
+        <f:viewParam name="project" value="#{purchaseOrderEdit.projectName}"/>
         <f:viewAction action="#{permissionBean.canAccess(102)}"/>
         <f:viewAction action="#{purchaseOrderEdit.load}"/>
 
@@ -536,6 +537,7 @@
                                                             return false;
                                                             }else window.location='../purchase/list.jsf'">
                                 <f:param name="anchor" value="#{purchaseOrderEdit.anchor}"></f:param>
+                                <f:param name="project" value="#{purchaseOrderEdit.projectName eq null ?'all':purchaseOrderEdit.projectName}"></f:param>
                             </h:link>
                         </div>
                     </div>
@@ -562,7 +564,7 @@
                                              onclick="setTimeout('document.getElementById(\'' + this.id + '\').disabled=true;', 50);"/>
                             &#160;
 
-                            <h:link id="cancelCreateBtn" value="#{msgs['lbl.close']}"
+                            <h:link id="cancelCreateBtn" value="#{msgs['lbl.cancel']}"
                                     styleClass="btn btn-primary btn-sm" onclick="this.preventDefault;
                                                                      if(hasChanges){
                                                                      PF('confCancelDlg').show();
@@ -570,6 +572,7 @@
                                                                      }else window.location='../purchase/list.jsf'"
                                     outcome="list">
                                 <f:param name="anchor" value="#{purchaseOrderEdit.anchor}"></f:param>
+                                <f:param name="project" value="#{purchaseOrderEdit.projectName eq null ?'all':purchaseOrderEdit.projectName}"></f:param>
                             </h:link>
                         </div>
                     </div>

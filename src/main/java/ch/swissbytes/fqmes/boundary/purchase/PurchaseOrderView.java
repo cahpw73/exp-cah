@@ -66,6 +66,8 @@ public class PurchaseOrderView implements Serializable {
 
     private static final Logger log = Logger.getLogger(PurchaseOrderView.class.getName());
 
+    private String projectName;
+
     @PostConstruct
     public void create() {
         log.log(Level.INFO, String.format("creating bean [%s]", this.getClass().toString()));
@@ -210,5 +212,13 @@ public class PurchaseOrderView implements Serializable {
 
     public void setExpeditingStatuses(String expeditingStatuses) {
         this.expeditingStatuses = expeditingStatuses;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

@@ -199,6 +199,7 @@
                                                                      }else window.location='../purchase/list.jsf'"
                         outcome="list">
                     <f:param name="anchor" value="#{purchaseOrderEdit.anchor}"></f:param>
+                    <f:param name="project" value="#{purchaseOrderEdit.projectName eq null ?'all':purchaseOrderEdit.projectName}"></f:param>
                 </h:link>
             </div>
         </div>

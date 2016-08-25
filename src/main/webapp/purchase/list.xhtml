@@ -9,7 +9,9 @@
     <ui:define name="title">Inicio</ui:define>
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewParam name="project" value="#{purchaseOrderListBean.projectName}"/>
         <f:viewAction action="#{permissionBean.canAccess(100)}"/>
+        <f:viewAction action="#{purchaseOrderListBean.posLoad()}"/>
     </f:metadata>
 
     <ui:define name="body">

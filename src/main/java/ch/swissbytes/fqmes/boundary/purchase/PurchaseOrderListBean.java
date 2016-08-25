@@ -71,6 +71,8 @@ public class PurchaseOrderListBean implements Serializable {
 
     private Long poId;
 
+    private String projectName;
+
 
     @PostConstruct
     public void create() {
@@ -83,6 +85,12 @@ public class PurchaseOrderListBean implements Serializable {
         }
         searchPurchase.getProjectsAssignedId().addAll(projectsAssignIds);
         vTbl = new PurchaseOrderViewTbl(dao, searchPurchase);
+    }
+
+    public void posLoad(){
+        log.info("projectName= "+(StringUtils.isEmpty(projectName)?"null":projectName));
+        searchPurchase.setProject(projectName);
+        search();
     }
 
     private void search() {
@@ -203,10 +211,16 @@ public class PurchaseOrderListBean implements Serializable {
     }
 
     public String redirectToEdit() {
+        if(!StringUtils.isEmpty(searchPurchase.getProject())){
+            return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project="+searchPurchase.getProject();
+        }
         return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
     public String redirectToView() {
+        if(!StringUtils.isEmpty(searchPurchase.getProject())){
+            return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project="+searchPurchase.getProject();
+        }
         return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
@@ -224,5 +238,13 @@ public class PurchaseOrderListBean implements Serializable {
 
     public void setPoId(Long poId) {
         this.poId = poId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }
