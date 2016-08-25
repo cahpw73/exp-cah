@@ -174,6 +174,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private boolean showButtons = false;
 
+    private String projectName;
+
 
 
     public void selectingForAttachment(Long id) {
@@ -1615,5 +1617,13 @@ public class PurchaseOrderEdit implements Serializable {
 
     public void renderButtons() {
         setShowButtons(true);
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

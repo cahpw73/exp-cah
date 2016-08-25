@@ -11,6 +11,7 @@
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewParam name="poId" value="#{purchaseOrderView.purchaseOrderId}"/>
         <f:viewParam name="anchor" value="#{purchaseOrderView.anchor}"/>
+        <f:viewParam name="project" value="#{purchaseOrderView.projectName}"/>
         <f:viewAction action="#{permissionBean.canAccess(103)}"/>
         <f:viewAction action="#{purchaseOrderView.load}"/>
     </f:metadata>
@@ -377,6 +378,7 @@
                                         styleClass="btn btn-primary btn-sm"
                                         outcome="/purchase/list" >
                                     <f:param name="anchor" value="#{purchaseOrderView.anchor}"></f:param>
+                                    <f:param name="project" value="#{purchaseOrderView.projectName eq null ?'all':purchaseOrderView.projectName}"></f:param>
                                 </h:link>
                             </div>
                         </div>
@@ -393,6 +395,7 @@
                                     styleClass="btn btn-primary btn-sm"
                                     outcome="/purchase/list" >
                                 <f:param name="anchor" value="#{purchaseOrderView.anchor}"></f:param>
+                                <f:param name="project" value="#{purchaseOrderView.projectName eq null ?'all':purchaseOrderView.projectName}"></f:param>
                             </h:link>
                         </div>
                     </div>
@@ -405,6 +408,7 @@
                                     styleClass="btn btn-primary btn-sm"
                                     outcome="/purchase/list" >
                                 <f:param name="anchor" value="#{purchaseOrderView.anchor}"></f:param>
+                                <f:param name="project" value="#{purchaseOrderView.projectName eq null ?'all':purchaseOrderView.projectName}"></f:param>
                             </h:link>
                         </div>
                     </div>
