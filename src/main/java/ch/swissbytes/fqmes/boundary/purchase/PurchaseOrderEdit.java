@@ -202,7 +202,12 @@ public class PurchaseOrderEdit implements Serializable {
             originalQuantity = new BigDecimal("0");
             poEdit = service.load(Long.parseLong(purchaseOrderId));
             if (!hasPermissionToEditPO()){
-                return "/purchase/list?faces-redirect=true";
+                if(!StringUtils.isEmpty(projectName)) {
+                    return "/purchase/list?faces-redirect=true&project="+projectName;
+                }else{
+                    projectName=null;
+                    return "/purchase/list?faces-redirect=true";
+                }
             }
             service.removePrefixIfAny(poEdit);
             currentHashCode = service.getAbsoluteHashcode(poEdit.getId());
@@ -238,6 +243,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     private void loadPurchaseOrderStatuses() {
+        expeditingStatuses="";
         List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(Long.parseLong(purchaseOrderId));
         for (ExpeditingStatusEntity ex : expeditingStatusList) {
             expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
@@ -300,9 +306,19 @@ public class PurchaseOrderEdit implements Serializable {
             updateStatusesAndLastUpdate();
             poEdit.setExpeditingStatus(expeditingStatuses);
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
-            url = "view?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            if(!StringUtils.isEmpty(projectName)){
+                log.info("has projectName to view");
+                url = "view?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor+"&project="+projectName;
+            }else {
+                url = "view?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            }
         } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            log.info("has projectName  to edit");
+            if(!StringUtils.isEmpty(projectName)){
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor+"&project="+projectName;
+            }else{
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -421,7 +437,11 @@ public class PurchaseOrderEdit implements Serializable {
         scopeSupplyEdit.setRequiredSiteDate(poEdit.getRequiredDate());
         scopeSupplyEdit.setIsForecastSiteDateManual(false);
         scopeSupplyEdit.setDeliveryLeadTimeMs(TimeMeasurementEnum.DAY);
-        return "/purchase/modal/EditModalScopeSupply?faces-redirect=true";
+        if(!StringUtils.isEmpty(projectName)) {
+            return "/purchase/modal/EditModalScopeSupply?faces-redirect=true&project="+projectName;
+        }else{
+            return "/purchase/modal/EditModalScopeSupply?faces-redirect=true";
+        }
     }
 
     private boolean isValidDataUpdate() {
@@ -559,6 +579,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void resetBulkUpdateModal() {
+        log.info("resetBulkUpdateModal");
         bulkScopeSupply = new ScopeSupplyEntity();
         titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getPo();
         hasValueForecastSiteDate = false;
@@ -707,7 +728,11 @@ public class PurchaseOrderEdit implements Serializable {
             registerScopeSupply();
             scopeActives.clear();
             scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
-            return "/purchase/edit?faces-redirect=true&fase=1";
+            if(!StringUtils.isEmpty(projectName)) {
+                return "/purchase/edit?faces-redirect=true&fase=1&project="+projectName;
+            }else{
+                return "/purchase/edit?faces-redirect=true&fase=1";
+            }
         }
         return "";
     }
@@ -724,24 +749,43 @@ public class PurchaseOrderEdit implements Serializable {
     public String cancel() {
         log.info("cancel to edit purchase order...........");
         log.info("anchorscope= " + anchorScope);
-        return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope;
+        if(!StringUtils.isEmpty(projectName)) {
+            return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp=" + anchorScope+"&project="+projectName;
+        }else{
+            return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp=" + anchorScope;
+        }
     }
 
     public String exitOnlyNoSave(){
-        return "/purchase/list?faces-redirect=true&anchor="+anchor;
+        log.info("exitOnlyNoSave");
+        if(!StringUtils.isEmpty(projectName)) {
+            log.info("/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName);
+            return "/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName;
+        }else{
+            log.info("/purchase/list?faces-redirect=true&anchor=" + anchor);
+            return "/purchase/list?faces-redirect=true&anchor=" + anchor;
+        }
     }
 
     public String exitOnlyNoSaveRedirectToReportList(){
         return "/report/list?faces-redirect=true";
     }
     public String exitOnlyNoSaveRedirectToPurchaseList(){
-        return "/purchase/list?faces-redirect=true&anchor="+anchor;
+        if(!StringUtils.isEmpty(projectName)) {
+            return "/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName;
+        }else{
+            return "/purchase/list?faces-redirect=true&anchor=" + anchor;
+        }
     }
     public String exitOnlyNoSaveRedirectToDashboard(){
         return "/home?faces-redirect=true";
     }
     public String exitOnlyNoSaveRedirectToEdit(){
-        return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope;
+        if(!StringUtils.isEmpty(projectName)){
+            return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope+"&project="+projectName;
+        }else{
+            return "/purchase/edit?faces-redirect=true&cid=" + conversation.getId() + "&fase=1&anchorsp="+anchorScope;
+        }
     }
 
     public String exitAndSave() {
@@ -752,9 +796,18 @@ public class PurchaseOrderEdit implements Serializable {
             updateStatusesAndLastUpdate();
             poEdit.setExpeditingStatus(expeditingStatuses);
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
-            url = "/purchase/list?faces-redirect=true&anchor=" + anchor;
+            if(!StringUtils.isEmpty(projectName)){
+                url = "/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName;
+            }else{
+                url = "/purchase/list?faces-redirect=true&anchor=" + anchor;
+            }
+
         } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor+"&project="+projectName;
+            }else{
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchor=" + anchor;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -773,7 +826,11 @@ public class PurchaseOrderEdit implements Serializable {
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
             url = "/home?faces-redirect=true";
         } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope;
+            if(!StringUtils.isEmpty(projectName)){
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope+"&project="+projectName;
+            }else {
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -790,12 +847,21 @@ public class PurchaseOrderEdit implements Serializable {
             updateStatusesAndLastUpdate();
             poEdit.setExpeditingStatus(expeditingStatuses);
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
-            url = "/purchase/list?faces-redirect=true&anchor=" + anchor;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName;
+            }else{
+                url = "/purchase/list?faces-redirect=true&anchor=" + anchor;
+            }
         } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+            }else{
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
+            log.info("finishing conversation");
             conversation.end();
         }
         return url;
@@ -811,7 +877,11 @@ public class PurchaseOrderEdit implements Serializable {
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
             url = "/report/list?faces-redirect=true&anchor=" + anchor;
         } else {
-            url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp="+anchorScope;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+            }else{
+                url = "edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -863,7 +933,11 @@ public class PurchaseOrderEdit implements Serializable {
                 service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
                 url = "/home?faces-redirect=true";
             } else {
-                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                if(!StringUtils.isEmpty(projectName)) {
+                    url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+                }else{
+                    url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                }
                 Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
             }
             if (!conversation.isTransient()) {
@@ -897,7 +971,11 @@ public class PurchaseOrderEdit implements Serializable {
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
             url = "/home?faces-redirect=true";
         } else {
-            url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            if(!StringUtils.isEmpty(projectName)){
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+            }else {
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -949,7 +1027,11 @@ public class PurchaseOrderEdit implements Serializable {
                 service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
                 url = "/report/list?faces-redirect=true&fase=1";
             } else {
-                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                if(!StringUtils.isEmpty(projectName)) {
+                    url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+                }else{
+                    url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                }
                 Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
             }
             if (!conversation.isTransient()) {
@@ -1004,9 +1086,17 @@ public class PurchaseOrderEdit implements Serializable {
                 updateStatusesAndLastUpdate();
                 poEdit.setExpeditingStatus(expeditingStatuses);
                 service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
-                url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor;
+                if(!StringUtils.isEmpty(projectName)){
+                    url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor+"&project="+projectName;
+                }else {
+                    url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor;
+                }
             } else {
-                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                if(!StringUtils.isEmpty(projectName)) {
+                    url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+                }else{
+                    url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+                }
                 Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
             }
             if (!conversation.isTransient()) {
@@ -1038,9 +1128,17 @@ public class PurchaseOrderEdit implements Serializable {
             updateStatusesAndLastUpdate();
             poEdit.setExpeditingStatus(expeditingStatuses);
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
-            url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor+"&project="+projectName;
+            }else{
+                url = "/purchase/list?faces-redirect=true&fase=1&anchor=" + anchor;
+            }
         } else {
-            url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+            }else{
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -1070,7 +1168,11 @@ public class PurchaseOrderEdit implements Serializable {
             service.doUpdate(poEdit, comments, scopeSupplies, expeditingStatuses);
             url = "/report/list?faces-redirect=true&fase=1";
         } else {
-            url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            if(!StringUtils.isEmpty(projectName)) {
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope+"&project="+projectName;
+            }else{
+                url = "/purchase/edit?faces-redirect=true&poId=" + poEdit.getId() + "&anchorsp=" + anchorScope;
+            }
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
@@ -1080,7 +1182,12 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public String split() {
-        String url = "/purchase/edit?faces-redirect=true&fase=1";
+        String url;
+        if(!StringUtils.isEmpty(projectName)) {
+            url = "/purchase/edit?faces-redirect=true&fase=1&project="+projectName;
+        }else{
+            url = "/purchase/edit?faces-redirect=true&fase=1";
+        }
         if (validateValuesAboutSplit()) {
             relativeCurrentScopeSupplyId--;
             scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
@@ -1139,13 +1246,23 @@ public class PurchaseOrderEdit implements Serializable {
             scopeActives.clear();
             scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
             log.info("anchorscope= " + anchorScope);
-            return "/purchase/edit?faces-redirect=true&fase=1&anchorsp="+anchorScope;
+            if(!StringUtils.isEmpty(projectName)) {
+                return "/purchase/edit?faces-redirect=true&fase=1&anchorsp=" + anchorScope + "&project=" + projectName;
+            }else{
+                return "/purchase/edit?faces-redirect=true&fase=1&anchorsp="+anchorScope;
+            }
+
         }
         return "";
     }
 
     public String exitAndSaveSplitRedirectToEdit(){
-        String url = "/purchase/edit?faces-redirect=true&fase=1";
+        String url;
+        if(!StringUtils.isEmpty(projectName)) {
+            url = "/purchase/edit?faces-redirect=true&fase=1&project="+projectName;
+        }else{
+            url = "/purchase/edit?faces-redirect=true&fase=1";
+        }
         if (validateValuesAboutSplit()) {
             relativeCurrentScopeSupplyId--;
             scopeSupplySplit.setId(relativeCurrentScopeSupplyId);
@@ -1198,7 +1315,11 @@ public class PurchaseOrderEdit implements Serializable {
             scopeActives.clear();
             scopeActives.addAll(scopeSupplyService.getActives(scopeSupplies));
             log.info("anchorscope= " + anchorScope);
-            return "/purchase/edit?faces-redirect=true&fase=1&anchorsp="+anchorScope;
+            if(!StringUtils.isEmpty(projectName)) {
+                return "/purchase/edit?faces-redirect=true&fase=1&anchorsp=" + anchorScope+"&project="+projectName;
+            }else{
+                return "/purchase/edit?faces-redirect=true&fase=1&anchorsp=" + anchorScope;
+            }
         }
         return "";
     }
@@ -1222,7 +1343,11 @@ public class PurchaseOrderEdit implements Serializable {
         }
         anchorScope = scrollTop;
         log.info("anchorScope= "+ anchorScope);
-        return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;
+        if(!StringUtils.isEmpty(projectName)) {
+            return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply+"&project="+projectName;
+        }else{
+            return "/purchase/modal/EditModalSplitScopeSupply?faces-redirect=true&poId=" + idScopeSupply;
+        }
     }
 
     public String selectScopeSuppplyForEditing(Long id) {
@@ -1239,7 +1364,11 @@ public class PurchaseOrderEdit implements Serializable {
         updateTdpActives();
         anchorScope = scrollTop;
         log.info("anchorScope= "+ anchorScope);
-        return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id;
+        if(!StringUtils.isEmpty(projectName)) {
+            return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id+"&project="+projectName;
+        }else {
+            return "/purchase/modal/EditModalScopeSupplyEditing?faces-redirect=true&poId=" + id;
+        }
     }
 
     public ScopeSupplyEntity getScopeSupplySplit() {
@@ -1624,6 +1753,8 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void setProjectName(String projectName) {
+        log.info("projectName="+projectName);
         this.projectName = projectName;
+        log.info("this.projectName="+this.projectName);
     }
 }
