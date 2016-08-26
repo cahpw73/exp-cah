@@ -5,93 +5,100 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough"
                 template="/WEB-INF/layout/template.xhtml">
-<f:metadata>
-    <f:viewAction action="#{identity.isLoggedIn()}"/>
-</f:metadata>
-<ui:define name="body">
-    <h:form id="scopeSupplySplitFormId" role="form" prependId="false" enctype="multipart/form-data"
-            acceptcharset="UTF-8">
-    <div class="title-page">
-        <h4 class="page-header">#{msgs['poi.title.split']}</h4>
-    </div>
-        <div class="col-md-2">
-            <div class="form-group input-general-po">
-                <p:outputLabel for="arrivedQuantity"
-                               value="#{msgs['supply.scope.split.lbl.initial.quantity']}"/>
-                <div style="width: 130px!important;">
-                    <h:inputText id="arrivedQuantity" type="text"
-                                 value="#{purchaseOrderEdit.selectedScopeSupply.quantity}"
-                                 class="form-control"
-                                 requiredMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
-                                 validatorMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
-                                 converterMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
-                                 onkeyup="calculateNewScopeSupplyQuantity();"
-                                 onblur="verifyArrivedQuantity();">
-                        <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
-                                          locale="#{configuration.langLocalDecimal}"/>
-                    </h:inputText>
-                    <p:message for="arrivedQuantity"/>
-                </div>
+    <f:metadata>
+        <f:viewAction action="#{identity.isLoggedIn()}"/>
+        <f:viewParam name="project" value="#{purchaseOrderEdit.projectName}"/>
+    </f:metadata>
+    <ui:define name="body">
+        <h:form id="scopeSupplySplitFormId" role="form" prependId="false" enctype="multipart/form-data"
+                acceptcharset="UTF-8">
+            <div class="title-page">
+                <h4 class="page-header">#{msgs['poi.title.split']}</h4>
             </div>
-            <div class="form-group">
-                <h:outputLabel for="arrivedActualSiteDate" value="#{msgs['supply.scope.lbl.actual.site.date']}"/>
-                <div style="width: 130px!important;">
-                <p:calendar id="arrivedActualSiteDate" mask="#{configuration.mask}"
-                            navigator="true"
-                            pattern="#{configuration.formatDate}"
-                            timeZone="#{configuration.timeZone}"
-                            converter="#{dateConverter}"
-                            converterMessage="#{msgs['validator.date.invalid']}"
-                            jsf:placeholder="#{configuration.formatDate}"
-                            value="#{purchaseOrderEdit.selectedScopeSupply.actualSiteDate}"
-                            onselect="calendarChanges();" onchange="calendarChanges();">
-                </p:calendar>
-                    </div>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div>
-                <div class="form-group" style="float: left; margin-right: 20px;">
-                    <p:outputLabel for="newQuantitySupplySplit" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
-                    <div style="width: 130px!important;">
-                    <h:inputText id="newQuantitySupplySplit"
-                                 value="#{purchaseOrderEdit.scopeSupplySplit.quantity}"
-                                 class="form-control"
-                                 requiredMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
-                                 validatorMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
-                                 converterMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
-                                 onkeyup="calculateOldScopeSupplyQuantity();"
-                                 onblur="verifyNewQuantity();">
-                        <f:convertNumber  pattern="#{configuration.patternIntegerDecimal}"
-                                          locale="#{configuration.langLocalDecimal}"/>
-                    </h:inputText>
-                    <p:message for="newQuantitySupplySplit" id="msgScopeSupplySplitQuantity"/>
-                    </div>
-                </div>
+            <div class="col-md-2">
+                <div class="form-group input-general-po">
+                    <p:outputLabel for="arrivedQuantity"
+                                   value="#{msgs['supply.scope.split.lbl.initial.quantity']}"/>
 
-                <div class="form-group" style="float: left">
-                    <p:outputLabel for="unitId" value="#{msgs['po.supply.scope.lbl.unit']}"/>
                     <div style="width: 130px!important;">
-                    <h:outputText id="unitId" value="#{purchaseOrderEdit.scopeSupplySplit.unit}"
-                                  class="form-control"/>
+                        <h:inputText id="arrivedQuantity" type="text"
+                                     value="#{purchaseOrderEdit.selectedScopeSupply.quantity}"
+                                     class="form-control"
+                                     requiredMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
+                                     validatorMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
+                                     converterMessage="#{msgs['po.supply.scope.lbl.quantity.initial.msg.error']}"
+                                     onkeyup="calculateNewScopeSupplyQuantity();"
+                                     onblur="verifyArrivedQuantity();">
+                            <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                             locale="#{configuration.langLocalDecimal}"/>
+                        </h:inputText>
+                        <p:message for="arrivedQuantity"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel for="arrivedActualSiteDate" value="#{msgs['supply.scope.lbl.actual.site.date']}"/>
+
+                    <div style="width: 130px!important;">
+                        <p:calendar id="arrivedActualSiteDate" mask="#{configuration.mask}"
+                                    navigator="true"
+                                    pattern="#{configuration.formatDate}"
+                                    timeZone="#{configuration.timeZone}"
+                                    converter="#{dateConverter}"
+                                    converterMessage="#{msgs['validator.date.invalid']}"
+                                    jsf:placeholder="#{configuration.formatDate}"
+                                    value="#{purchaseOrderEdit.selectedScopeSupply.actualSiteDate}"
+                                    onselect="calendarChanges();" onchange="calendarChanges();">
+                        </p:calendar>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div>
+                    <div class="form-group" style="float: left; margin-right: 20px;">
+                        <p:outputLabel for="newQuantitySupplySplit" value="#{msgs['po.supply.scope.lbl.quantity']}"/>
+
+                        <div style="width: 130px!important;">
+                            <h:inputText id="newQuantitySupplySplit"
+                                         value="#{purchaseOrderEdit.scopeSupplySplit.quantity}"
+                                         class="form-control"
+                                         requiredMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
+                                         validatorMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
+                                         converterMessage="#{msgs['po.supply.scope.lbl.quantity.msg.error']}"
+                                         onkeyup="calculateOldScopeSupplyQuantity();"
+                                         onblur="verifyNewQuantity();">
+                                <f:convertNumber pattern="#{configuration.patternIntegerDecimal}"
+                                                 locale="#{configuration.langLocalDecimal}"/>
+                            </h:inputText>
+                            <p:message for="newQuantitySupplySplit" id="msgScopeSupplySplitQuantity"/>
                         </div>
+                    </div>
+
+                    <div class="form-group" style="float: left">
+                        <p:outputLabel for="unitId" value="#{msgs['po.supply.scope.lbl.unit']}"/>
+
+                        <div style="width: 130px!important;">
+                            <h:outputText id="unitId" value="#{purchaseOrderEdit.scopeSupplySplit.unit}"
+                                          class="form-control"/>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <div>
-                <div class="form-group" style="width: 280px;">
-                    <h:outputLabel for="descriptionSplit"
-                                   value="#{msgs['po.supply.scope.column.description']}"/>
-                    <p:inputTextarea id="descriptionSplit" value="#{purchaseOrderEdit.scopeSupplySplit.description}"
-                                     maxlength="950" styleClass="form-control"/>
-                    <p:message for="descriptionSplit"/>
+                <div class="clearfix"></div>
+                <div>
+                    <div class="form-group" style="width: 280px;">
+                        <h:outputLabel for="descriptionSplit"
+                                       value="#{msgs['po.supply.scope.column.description']}"/>
+                        <p:inputTextarea id="descriptionSplit" value="#{purchaseOrderEdit.scopeSupplySplit.description}"
+                                         maxlength="950" styleClass="form-control"/>
+                        <p:message for="descriptionSplit"/>
+                    </div>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-            <br/>
-            <div>
-                <h4>Source</h4>
-                <div style="width: 130px; float: left;">
+                <div class="clearfix"></div>
+                <br/>
+
+                <div>
+                    <h4>Source</h4>
+
+                    <div style="width: 130px; float: left;">
                         <h:outputLabel value="#{msgs['supply.scope.lbl.delivery.date']}" style="margin-bottom: 10px;"/>
                         <p:calendar id="exWorkDateSplit"
                                     pattern="#{configuration.formatDate}"
@@ -111,220 +118,239 @@
                                     listener="#{purchaseOrderEdit.calculateDate}"/>
                         </p:calendar>
                         <p:message id="msgSiteDate" for="exWorkDateSplit"/>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;"
+                                         rows="3"
                                          value="#{purchaseOrderEdit.scopeSupplySplit.deliveryDateObs}"
-                                         id="deliveryDateObs"  class="form-control"/>
-                        <p:message  for="deliveryDateObs"/>
+                                         id="deliveryDateObs" class="form-control"/>
+                        <p:message for="deliveryDateObs"/>
                     </div>
                     <div style="float: left; margin-left: 335px; width: 220px;">
                         <h:outputLabel value="#{msgs['supply.scope.lbl.work.date']}" style="margin-bottom: 10px;"/>
-                        <div style="width: 130px!important;">
-                        <p:calendar
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                mask="#{configuration.mask}"
-                                navigator="true"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                value="#{purchaseOrderEdit.scopeSupplySplit.forecastExWorkDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();">
-                            <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
-                                    async="false"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
-                            <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
-                                    async="false"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
-                        </p:calendar>
-                        </div>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
-                                         id="exWorkDateDescription"
-                                         value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDateDescription}"
-                                         class="form-control"/>
-                        <p:message  for="exWorkDateDescription"/>
 
-                    </div>
-                    <div style="float: left; margin-left: 35px;">
-                        <h:outputLabel value="#{msgs['supply.scope.lbl.actual.ex.works.date']}" style="margin-bottom: 10px;"/>
                         <div style="width: 130px!important;">
-                        <p:calendar
-                                pattern="#{configuration.formatDate}"
-                                converterMessage="#{msgs['validator.date.invalid']}"
-                                jsf:placeholder="#{configuration.formatDate}"
-                                mask="#{configuration.mask}"
-                                navigator="true"
-                                converter="#{dateConverter}"
-                                timeZone="#{configuration.timeZone}"
-                                value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDate}"
-                                onselect="calendarChanges();" onchange="calendarChanges();">
-                            <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
-                                    async="false"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
-                            <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
-                                    async="false"
-                                    listener="#{purchaseOrderEdit.calculateDate}"/>
-                        </p:calendar>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
-                                         value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDateObs}"
-                                         id="actualExWorkDateObs"
-                                         class="form-control"/>
-                        <p:message  for="actualExWorkDateObs"/>
-                            </div>
-                    </div>
-            </div>
-            <div class="clearfix"></div>
-            <br/>
-            <div>
-                <h4>#{msgs['supply.scope.split.lbl.destination']}</h4>
-
-                <div class="source-section-date-poi" style="padding-left: 0px!important;">
-                    <div class="form-horizontal">
-                        <h:outputLabel value="#{msgs['supply.scope.lbl.required.site.date']}" style="margin-bottom: 10px;"/>
-                        <div style="width: 130px;">
-                        <p:calendar id="siteId" pattern="#{configuration.formatDate}"
+                            <p:calendar
+                                    pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     jsf:placeholder="#{configuration.formatDate}"
                                     mask="#{configuration.mask}"
                                     navigator="true"
                                     converter="#{dateConverter}"
                                     timeZone="#{configuration.timeZone}"
-                                    value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDate}"
+                                    value="#{purchaseOrderEdit.scopeSupplySplit.forecastExWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
-                        </p:calendar>
-                        <p:message id="msgSisteDate" for="siteId"/>
-                        <p:inputTextarea maxlength="950" type="text"
-                                         style="margin-top: 10px; max-height: 62px;" rows="3"
-                                         id="requiredSiteDateObs"
-                                         value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDateObs}"
-                                         class="form-control"/>
-                        <p:message  for="requiredSiteDateObs"/>
+                                <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                        async="false"
+                                        listener="#{purchaseOrderEdit.calculateDate}"/>
+                                <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                        async="false"
+                                        listener="#{purchaseOrderEdit.calculateDate}"/>
+                            </p:calendar>
                         </div>
-                    </div>
-                </div>
-                <div class="destination-block-lead-time" style="margin-left: 20px!important;">
-                    <div class="form-horizontal">
-                        <h:outputLabel for="deliveryTimeId" style="margin-bottom: 10px;"
-                                       value="#{msgs['supply.scope.lbl.delivery.time']}"/>
-                        <h:panelGroup id="deliveryLeadTimeGrp" style="display: block;  width: 100%;">
-                            <h:panelGroup id="deliveryLeadTimeGrpId" style="float: left; margin-right: 10px; width: 130px;">
-                                <h:inputText id="deliveryTimeId" maxlength="255" type="text"
-                                             value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeQt}"
-                                             class="form-control">
+                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;"
+                                         rows="3"
+                                         id="exWorkDateDescription"
+                                         value="#{purchaseOrderEdit.scopeSupplySplit.exWorkDateDescription}"
+                                         class="form-control"/>
+                        <p:message for="exWorkDateDescription"/>
 
-                                    <p:ajax event="change" async="false" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
-                                </h:inputText>
-                                <p:message  for="deliveryTimeId"/>
-                            </h:panelGroup>
-                            <h:selectOneMenu id="measurementUnitSplit" style="float: left; width: 130px; margin-bottom: 10px;!important"
-                                             value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeMs}"
-                                             styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
-                                <f:selectItems value="#{allTimeMeasurement}"/>
-                                <p:ajax event="change" async="false" update="forescastSiteDateSplit" listener="#{purchaseOrderEdit.calculateDate}" />
-                            </h:selectOneMenu>
-                        </h:panelGroup>
                     </div>
-                </div>
-                <div class="destination-block-forecast-site-date">
-                    <div class="form-horizontal">
-                        <h:outputLabel style="margin-bottom: 10px;" value="#{msgs['supply.scope.lbl.site.date']}"/>
-                        <h:panelGroup id="forecastSiteDateCreateGrId" style="display: block;">
-                            <div class="destination-block-forecast-site-date-calendar">
-                                <p:calendar pattern="#{configuration.formatDate}"
-                                            id="forescastSiteDateSplit"
-                                            mask="#{configuration.mask}" navigator="true"
-                                            converterMessage="#{msgs['validator.date.invalid']}"
-                                            jsf:placeholder="#{configuration.formatDate}"
-                                            timeZone="#{configuration.timeZone}"
-                                            converter="#{dateConverter}"
-                                            disabled="#{not purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
-                                            value="#{purchaseOrderEdit.scopeSupplySplit.forecastSiteDate}"
-                                            onselect="calendarChanges();" onchange="calendarChanges();">
-                                    <p:ajax async="false" event="dateSelect" />
-                                    <p:ajax async="false" event="change"/>
-                                </p:calendar>
-                            </div>
-                            <div style="float: left;  ">
-                                <p:selectBooleanCheckbox  value="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
-                                                          style="margin-left: 5px; margin-right: 5px;">
-                                    <p:ajax update=":scopeSupplySplitFormId:forescastSiteDateSplit"
-                                            async="false"
-                                            listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}" />
-                                </p:selectBooleanCheckbox>
-                                &#160;
-                                <h:outputText value="#{msgs['lbl.manual']}"/>
-                            </div>
-                        </h:panelGroup>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; width:220px; max-height: 62px;" rows="3"
-                                         value="#{purchaseOrderEdit.scopeSupplySplit.siteDateDescription}"
-                                         id="siteDateDescription" class="form-control"/>
-                        <p:message  for="siteDateDescription"/>
-                    </div>
-                </div>
-                <div class="destination-block-actual-site-date">
-                    <div class="form-row">
-                        <h:outputLabel value="#{msgs['supply.scope.lbl.actual.site.date']}" style="margin-bottom: 10px;"/>
-                        <p:calendar mask="#{configuration.mask}"
-                                    navigator="true"
+                    <div style="float: left; margin-left: 35px;">
+                        <h:outputLabel value="#{msgs['supply.scope.lbl.actual.ex.works.date']}"
+                                       style="margin-bottom: 10px;"/>
+
+                        <div style="width: 130px!important;">
+                            <p:calendar
                                     pattern="#{configuration.formatDate}"
                                     converterMessage="#{msgs['validator.date.invalid']}"
                                     jsf:placeholder="#{configuration.formatDate}"
-                                    timeZone="#{configuration.timeZone}"
+                                    mask="#{configuration.mask}"
+                                    navigator="true"
                                     converter="#{dateConverter}"
-                                    value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDate}"
+                                    timeZone="#{configuration.timeZone}"
+                                    value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDate}"
                                     onselect="calendarChanges();" onchange="calendarChanges();">
-                        </p:calendar>
-                        <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;" rows="3"
-                                         value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDateObs}"
-                                         id="actualSiteDateObs" class="form-control"/>
-                        <p:message  for="actualSiteDateObs"/>
+                                <p:ajax event="dateSelect" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                        async="false"
+                                        listener="#{purchaseOrderEdit.calculateDate}"/>
+                                <p:ajax event="change" update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                        async="false"
+                                        listener="#{purchaseOrderEdit.calculateDate}"/>
+                            </p:calendar>
+                            <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;"
+                                             rows="3"
+                                             value="#{purchaseOrderEdit.scopeSupplySplit.actualExWorkDateObs}"
+                                             id="actualExWorkDateObs"
+                                             class="form-control"/>
+                            <p:message for="actualExWorkDateObs"/>
+                        </div>
                     </div>
                 </div>
-                <div class="clearfix"/>
+                <div class="clearfix"></div>
                 <br/>
-                <div style="width: 860px;">
-                    <div class="pull-right">
-                        <h:commandButton value="#{msgs['supply.scope.lbl.split']}" action="#{purchaseOrderEdit.split()}"
-                                         styleClass="btn btn-primary btn-sm">
-                        </h:commandButton>
-                        &#160;
 
-                        <button class="btn btn-primary btn-sm" type="button"
-                                onclick="PF('confCancelDlg').show();">
-                            #{msgs['lbl.cancel']}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="clearfix"/>
-        <br/>
-        <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
-            <f:facet name="message">
                 <div>
-                    <div class="col-md-2">
-                        <h:graphicImage name="img/icon-alert.jpg"/>
+                    <h4>#{msgs['supply.scope.split.lbl.destination']}</h4>
+
+                    <div class="source-section-date-poi" style="padding-left: 0px!important;">
+                        <div class="form-horizontal">
+                            <h:outputLabel value="#{msgs['supply.scope.lbl.required.site.date']}"
+                                           style="margin-bottom: 10px;"/>
+
+                            <div style="width: 130px;">
+                                <p:calendar id="siteId" pattern="#{configuration.formatDate}"
+                                            converterMessage="#{msgs['validator.date.invalid']}"
+                                            jsf:placeholder="#{configuration.formatDate}"
+                                            mask="#{configuration.mask}"
+                                            navigator="true"
+                                            converter="#{dateConverter}"
+                                            timeZone="#{configuration.timeZone}"
+                                            value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDate}"
+                                            onselect="calendarChanges();" onchange="calendarChanges();">
+                                </p:calendar>
+                                <p:message id="msgSisteDate" for="siteId"/>
+                                <p:inputTextarea maxlength="950" type="text"
+                                                 style="margin-top: 10px; max-height: 62px;" rows="3"
+                                                 id="requiredSiteDateObs"
+                                                 value="#{purchaseOrderEdit.scopeSupplySplit.requiredSiteDateObs}"
+                                                 class="form-control"/>
+                                <p:message for="requiredSiteDateObs"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        You have unsaved data
+                    <div class="destination-block-lead-time" style="margin-left: 20px!important;">
+                        <div class="form-horizontal">
+                            <h:outputLabel for="deliveryTimeId" style="margin-bottom: 10px;"
+                                           value="#{msgs['supply.scope.lbl.delivery.time']}"/>
+                            <h:panelGroup id="deliveryLeadTimeGrp" style="display: block;  width: 100%;">
+                                <h:panelGroup id="deliveryLeadTimeGrpId"
+                                              style="float: left; margin-right: 10px; width: 130px;">
+                                    <h:inputText id="deliveryTimeId" maxlength="255" type="text"
+                                                 value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeQt}"
+                                                 class="form-control">
+
+                                        <p:ajax event="change" async="false" update="forescastSiteDateSplit"
+                                                listener="#{purchaseOrderEdit.calculateDate}"/>
+                                    </h:inputText>
+                                    <p:message for="deliveryTimeId"/>
+                                </h:panelGroup>
+                                <h:selectOneMenu id="measurementUnitSplit"
+                                                 style="float: left; width: 130px; margin-bottom: 10px;!important"
+                                                 value="#{purchaseOrderEdit.scopeSupplySplit.deliveryLeadTimeMs}"
+                                                 styleClass="ui-selectonemenu-label ui-inputfield ui-corner-all">
+                                    <f:selectItems value="#{allTimeMeasurement}"/>
+                                    <p:ajax event="change" async="false" update="forescastSiteDateSplit"
+                                            listener="#{purchaseOrderEdit.calculateDate}"/>
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                    <div class="destination-block-forecast-site-date">
+                        <div class="form-horizontal">
+                            <h:outputLabel style="margin-bottom: 10px;" value="#{msgs['supply.scope.lbl.site.date']}"/>
+                            <h:panelGroup id="forecastSiteDateCreateGrId" style="display: block;">
+                                <div class="destination-block-forecast-site-date-calendar">
+                                    <p:calendar pattern="#{configuration.formatDate}"
+                                                id="forescastSiteDateSplit"
+                                                mask="#{configuration.mask}" navigator="true"
+                                                converterMessage="#{msgs['validator.date.invalid']}"
+                                                jsf:placeholder="#{configuration.formatDate}"
+                                                timeZone="#{configuration.timeZone}"
+                                                converter="#{dateConverter}"
+                                                disabled="#{not purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
+                                                value="#{purchaseOrderEdit.scopeSupplySplit.forecastSiteDate}"
+                                                onselect="calendarChanges();" onchange="calendarChanges();">
+                                        <p:ajax async="false" event="dateSelect"/>
+                                        <p:ajax async="false" event="change"/>
+                                    </p:calendar>
+                                </div>
+                                <div style="float: left;  ">
+                                    <p:selectBooleanCheckbox
+                                            value="#{purchaseOrderEdit.scopeSupplySplit.isForecastSiteDateManual}"
+                                            style="margin-left: 5px; margin-right: 5px;">
+                                        <p:ajax update=":scopeSupplySplitFormId:forescastSiteDateSplit"
+                                                async="false"
+                                                listener="#{purchaseOrderEdit.switchModeForecastSiteDate()}"/>
+                                    </p:selectBooleanCheckbox>
+                                    &#160;
+                                    <h:outputText value="#{msgs['lbl.manual']}"/>
+                                </div>
+                            </h:panelGroup>
+                            <p:inputTextarea maxlength="950" type="text"
+                                             style="margin-top: 10px; width:220px; max-height: 62px;" rows="3"
+                                             value="#{purchaseOrderEdit.scopeSupplySplit.siteDateDescription}"
+                                             id="siteDateDescription" class="form-control"/>
+                            <p:message for="siteDateDescription"/>
+                        </div>
+                    </div>
+                    <div class="destination-block-actual-site-date">
+                        <div class="form-row">
+                            <h:outputLabel value="#{msgs['supply.scope.lbl.actual.site.date']}"
+                                           style="margin-bottom: 10px;"/>
+                            <p:calendar mask="#{configuration.mask}"
+                                        navigator="true"
+                                        pattern="#{configuration.formatDate}"
+                                        converterMessage="#{msgs['validator.date.invalid']}"
+                                        jsf:placeholder="#{configuration.formatDate}"
+                                        timeZone="#{configuration.timeZone}"
+                                        converter="#{dateConverter}"
+                                        value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDate}"
+                                        onselect="calendarChanges();" onchange="calendarChanges();">
+                            </p:calendar>
+                            <p:inputTextarea maxlength="950" type="text" style="margin-top: 10px; max-height: 62px;"
+                                             rows="3"
+                                             value="#{purchaseOrderEdit.scopeSupplySplit.actualSiteDateObs}"
+                                             id="actualSiteDateObs" class="form-control"/>
+                            <p:message for="actualSiteDateObs"/>
+                        </div>
+                    </div>
+                    <div class="clearfix"/>
+                    <br/>
+
+                    <div style="width: 860px;">
+                        <div class="pull-right">
+                            <h:commandButton value="#{msgs['supply.scope.lbl.split']}"
+                                             action="#{purchaseOrderEdit.split()}"
+                                             styleClass="btn btn-primary btn-sm">
+                            </h:commandButton>
+                            &#160;
+
+                            <button class="btn btn-primary btn-sm" type="button"
+                                    onclick="PF('confCancelDlg').show();">
+                                #{msgs['lbl.cancel']}
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </f:facet>
-
-            <div class="pull-right">
-                <h:commandButton value="Exit and Save" type='submit'
-                                 styleClass="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderEdit.exitAndSaveSplitRedirectToEdit}">
-                </h:commandButton>
-                &#160;
-                <h:commandButton value="Exit Only (no save)" immediate="true"
-                                 styleClass="btn btn-primary btn-sm"
-                                 action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToEdit}">
-                </h:commandButton>
             </div>
-        </p:confirmDialog>
-        <ui:include src="../../WEB-INF/layout/confirmDialogs/confirm-dialogs-expediting-part-delivery.xhtml"/>
-    </h:form>
-    <h:outputScript name="js/calculateSplitQuantity.js"/>
-</ui:define>
+
+            <div class="clearfix"/>
+            <br/>
+            <p:confirmDialog widgetVar="confCancelDlg" id="confirmDialogId" header="Cancel">
+                <f:facet name="message">
+                    <div>
+                        <div class="col-md-2">
+                            <h:graphicImage name="img/icon-alert.jpg"/>
+                        </div>
+                        <div class="col-md-10">
+                            You have unsaved data
+                        </div>
+                    </div>
+                </f:facet>
+
+                <div class="pull-right">
+                    <h:commandButton value="Exit and Save" type='submit'
+                                     styleClass="btn btn-primary btn-sm"
+                                     action="#{purchaseOrderEdit.exitAndSaveSplitRedirectToEdit}">
+                    </h:commandButton>
+                    &#160;
+                    <h:commandButton value="Exit Only (no save)" immediate="true"
+                                     styleClass="btn btn-primary btn-sm"
+                                     action="#{purchaseOrderEdit.exitOnlyNoSaveRedirectToEdit}">
+                    </h:commandButton>
+                </div>
+            </p:confirmDialog>
+            <ui:include src="../../WEB-INF/layout/confirmDialogs/confirm-dialogs-expediting-part-delivery.xhtml"/>
+        </h:form>
+        <h:outputScript name="js/calculateSplitQuantity.js"/>
+    </ui:define>
 </ui:composition>

@@ -8,6 +8,7 @@
     <f:metadata>
         <f:viewAction action="#{identity.isLoggedIn()}"/>
         <f:viewParam name="anchorScope" value="#{purchaseOrderEdit.anchorScope}"/>
+        <f:viewParam name="project" value="#{purchaseOrderEdit.projectName}"/>
     </f:metadata>
     <ui:define name="body">
         <h:form id="scopeSupplyEditFormId" role="form" prependId="false" enctype="multipart/form-data"

@@ -130,9 +130,10 @@ public class PurchaseOrderListBean implements Serializable {
         search();
     }
 
-    public void doClean() {
+    public String doClean() {
         searchPurchase.clean();
         search();
+        return "list?faces-redirect=true";
     }
 
     public String addPrefixToVariation(VPurchaseOrder po) {
