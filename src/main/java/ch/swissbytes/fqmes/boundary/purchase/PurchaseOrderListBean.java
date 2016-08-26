@@ -212,17 +212,23 @@ public class PurchaseOrderListBean implements Serializable {
     }
 
     public String redirectToEdit() {
+        log.info("redirectToEdit() searchPurchase.Project= " + (searchPurchase.getProject()!=null?searchPurchase.getProject():"null"));
         if(!StringUtils.isEmpty(searchPurchase.getProject())){
+            log.info("/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project="+searchPurchase.getProject());
             return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project="+searchPurchase.getProject();
+        }else {
+            log.info("/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project=all");
+            return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project=all";
         }
-        return "/purchase/edit.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
     public String redirectToView() {
+        log.info("redirectToView() searchPurchase.Project= " + (searchPurchase.getProject()!=null?searchPurchase.getProject():"null"));
         if(!StringUtils.isEmpty(searchPurchase.getProject())){
             return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop+"&project="+searchPurchase.getProject();
+        }else {
+            return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop + "&project=all";
         }
-        return "/purchase/view.xhtml?faces-redirect=true&poId=" + poId + "&anchor=" + scrollTop;
     }
 
     public String getScrollTop() {

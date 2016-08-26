@@ -203,6 +203,7 @@ public class PurchaseOrderEdit implements Serializable {
                 if(!StringUtils.isEmpty(projectName)) {
                     return "/purchase/list?faces-redirect=true&project="+projectName;
                 }else{
+                    projectName=null;
                     return "/purchase/list?faces-redirect=true";
                 }
             }
@@ -240,6 +241,7 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     private void loadPurchaseOrderStatuses() {
+        expeditingStatuses="";
         List<ExpeditingStatusEntity> expeditingStatusList = service.findExpeditingStatusByPOid(Long.parseLong(purchaseOrderId));
         for (ExpeditingStatusEntity ex : expeditingStatusList) {
             expeditingStatuses = expeditingStatuses + ex.getPurchaseOrderStatus().ordinal() + ",";
@@ -755,8 +757,10 @@ public class PurchaseOrderEdit implements Serializable {
     public String exitOnlyNoSave(){
         log.info("exitOnlyNoSave");
         if(!StringUtils.isEmpty(projectName)) {
+            log.info("/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName);
             return "/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName;
         }else{
+            log.info("/purchase/list?faces-redirect=true&anchor=" + anchor);
             return "/purchase/list?faces-redirect=true&anchor=" + anchor;
         }
     }
@@ -855,6 +859,7 @@ public class PurchaseOrderEdit implements Serializable {
             Messages.addFlashGlobalError("Somebody has already updated this purchase order! Please enter your data one more time");
         }
         if (!conversation.isTransient()) {
+            log.info("finishing conversation");
             conversation.end();
         }
         return url;
@@ -1746,6 +1751,8 @@ public class PurchaseOrderEdit implements Serializable {
     }
 
     public void setProjectName(String projectName) {
+        log.info("projectName="+projectName);
         this.projectName = projectName;
+        log.info("this.projectName="+this.projectName);
     }
 }
