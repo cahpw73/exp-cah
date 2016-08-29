@@ -215,7 +215,7 @@ public class ReportProcurementBean implements Serializable {
     }
 
     public boolean canShowFilterCountry(){
-        return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport)||reportTitle.equals(projectProcurementReport);
+        return reportTitle.equals(summaryPOReport) || reportTitle.equals(detailProcurementReport);
     }
 
     public boolean canshowFilterPoDeliveryDate(){
