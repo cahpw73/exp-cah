@@ -199,6 +199,7 @@ public class PurchaseOrderEdit implements Serializable {
     public String load() {
         log.info("loading...");
         if (!fase.equals("1")) {
+            refreshLists();
             originalQuantity = new BigDecimal("0");
             poEdit = service.load(Long.parseLong(purchaseOrderId));
             if (!hasPermissionToEditPO()){
@@ -235,6 +236,11 @@ public class PurchaseOrderEdit implements Serializable {
         commentActives = commentService.getActives(comments);
         log.info("");
         return "";
+    }
+
+    private void refreshLists(){
+        comments = new ArrayList<>();
+        scopeSupplies = new ArrayList<>();
     }
 
     private boolean hasPermissionToEditPO(){

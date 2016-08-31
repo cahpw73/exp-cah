@@ -52,6 +52,7 @@ public class ExportationPOBean implements Serializable {
     @Inject
     private CashflowService cashflowService;
 
+    private String pathAbsolute;
 
     @PostConstruct
     public void create() {
@@ -89,11 +90,12 @@ public class ExportationPOBean implements Serializable {
                 }
             }catch (IOException e){
                 String messageError = "Error Trying to export POs under project: " + projectName;
+                String exportationPath="Exportation Path: "+pathAbsolute;
                 log.info(messageError);
                 log.log(Level.SEVERE, e.getMessage());
                 StringWriter errors = new StringWriter();
                 e.printStackTrace(new PrintWriter(errors));
-                createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString(),messageError);
+                createEmailSender.createEmailToInfoErrorExportCmsOrJde(errors.toString(),messageError,exportationPath);
                 e.printStackTrace();
             }
         }
@@ -101,7 +103,10 @@ public class ExportationPOBean implements Serializable {
 
     public void exportCMS(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
         log.info("exportCMS");
+        String pathCMS = System.getProperty("fqmes.path.export.cms");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        pathCMS = pathCMS.replace("{project_field}", fName);
+        pathAbsolute = pathCMS;
         exporter.generateWorkbookToExport(list, fName);
         for (PurchaseOrderEntity po : list) {
             poService.markCMSAsExported(po);
@@ -110,7 +115,10 @@ public class ExportationPOBean implements Serializable {
 
     public void exportJDE(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
         log.info("exportJDE");
+        String pathJDE = System.getProperty("fqmes.path.export.jde");
         String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        pathJDE = pathJDE.replace("{project_field}", fName);
+        pathAbsolute = pathJDE;
         exporterToJDE.generateWorkbookToExport(list, fName);
         for(PurchaseOrderEntity po : list) {
             poService.markJDEAsExported(po);

@@ -418,6 +418,9 @@
 
             </div>
             <!-- /.col-lg-12 -->
+            <h:form>
+                <p:remoteCommand name="redirectToPOList" process="@this" action="#{purchaseOrderView.exitOnlyNoSave}"/>
+            </h:form>
         </div>
 
         <p:dialog id="attachmentScopeSupplyId" header="#{msgs['attachment.title.scope.supply']}"

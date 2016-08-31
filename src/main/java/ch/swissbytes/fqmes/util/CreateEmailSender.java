@@ -69,9 +69,9 @@ public class CreateEmailSender implements Serializable {
         }
     }
 
-    public void createEmailToInfoErrorExportCmsOrJde(final String error, final String messageError){
+    public void createEmailToInfoErrorExportCmsOrJde(final String error, final String messageError, final String exportationPath){
         try {
-            MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error,messageError);
+            MimeMultipart multipart = createMimeMultipartErrorExportCmsOrJde(error,messageError,exportationPath);
             sendMailExprtCmsOrJde(sendToSmacneall, multipart,sendToDevs);
             log.info("Token was generated and sent to email");
         } catch (MessagingException e) {
@@ -139,7 +139,7 @@ public class CreateEmailSender implements Serializable {
         return null;
     }
 
-    private MimeMultipart createMimeMultipartErrorExportCmsOrJde(final String error,final String messageError) {
+    private MimeMultipart createMimeMultipartErrorExportCmsOrJde(final String error,final String messageError,final String exportationPath) {
         try {
             //Create the html body
             MimeMultipart multipart = new MimeMultipart("related");
@@ -147,6 +147,8 @@ public class CreateEmailSender implements Serializable {
             BodyPart messageBodyPart = new MimeBodyPart();
             StringBuilder sbHtmlText = new StringBuilder();
             sbHtmlText.append("<p> " + messageError + " </p>\n");
+            sbHtmlText.append("<br/>\n");
+            sbHtmlText.append("<p> " + exportationPath + " </p>\n");
             sbHtmlText.append("<br/>\n");
             sbHtmlText.append("<p> " + "Here you are the stack trace:" + " </p>\n");
             sbHtmlText.append("<p> " +  error +  " </p>\n");
