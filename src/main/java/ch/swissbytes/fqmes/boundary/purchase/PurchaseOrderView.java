@@ -190,6 +190,17 @@ public class PurchaseOrderView implements Serializable {
         return statusStr;
     }
 
+    public String exitOnlyNoSave(){
+        log.info("exitOnlyNoSave");
+        if(!StringUtils.isEmpty(projectName)) {
+            log.info("/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName);
+            return "/purchase/list?faces-redirect=true&anchor=" + anchor+"&project="+projectName;
+        }else{
+            log.info("/purchase/list?faces-redirect=true&anchor=" + anchor);
+            return "/purchase/list?faces-redirect=true&anchor=" + anchor;
+        }
+    }
+
     public Long getCurrentSelected() {
         return currentSelected;
     }
