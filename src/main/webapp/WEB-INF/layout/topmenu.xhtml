@@ -117,7 +117,7 @@
 
         $("#purchaseOrderId").click(function(e){
             console.log("click purchase order....")
-            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1) {
+            if(window.location.href.indexOf("purchase/create.jsf")  != -1 || window.location.href.indexOf("purchase/edit.jsf")  != -1 || window.location.href.indexOf("purchase/view.jsf")  != -1) {
                 console.log("is create or edit..");
                 leavePageToPurchaseList(e);
             }else{
