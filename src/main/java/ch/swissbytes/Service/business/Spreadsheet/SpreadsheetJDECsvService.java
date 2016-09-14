@@ -132,7 +132,9 @@ public class SpreadsheetJDECsvService implements Serializable {
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
+        log.info("generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list)");
         for (PurchaseOrderEntity entity : list) {
+            log.info("PO id = " + entity.getId());
             List<ItemEntity> itemEntityList = scopeSupplyService.getItemsOrderedByCurrency(entity.getId());
             if (!itemEntityList.isEmpty()) {
                 PurchaseOrderEntity originalPO = null;
@@ -142,6 +144,7 @@ public class SpreadsheetJDECsvService implements Serializable {
                 CashflowEntity cashflowEntity = getCashflowEntity(entity);
                 processor.createRow(rowNo);
                 for (ItemEntity ss : itemEntityList) {
+                    log.info("ItemEntity Id = " + ss.getId());
                     processor.createRow(rowNo);
                     fillingDetailContent(entity, ss, originalPO, cashflowEntity);
                     rowNo++;
@@ -159,7 +162,8 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(2, entity.getPoTitle() != null ? entity.getPoTitle() : " ");
         processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getPoint() != null ? entity.getPurchaseOrderProcurementEntity().getPoint() : " ");
         processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getSupplierId() : " ");
-        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? (entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().length() >= 30 ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "").substring(0, 30) : entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "")) : " ");
+        entity.getPurchaseOrderProcurementEntity().setDeliveryInstruction(entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", ""));
+        processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction() != null ? (entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().length() >= 30 ? entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().substring(0, 29) : entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction()) : " ");
         processor.writeStringValue(6, collectMRNo(entity));
         processor.writeStringValue(7, collectRTFNo(entity));
         Date originalOrderDate = originalPO != null ? originalPO.getPurchaseOrderProcurementEntity().getOrderDate() : entity.getPurchaseOrderProcurementEntity().getOrderDate();
@@ -175,7 +179,10 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(15, item.getCode() != null ? item.getCode() : " ");
         processor.writeStringValue(16, item.getQuantity() != null ? item.getQuantity().toString() : " ");
         processor.writeStringValue(17, item.getUnit() != null ? item.getUnit() : " ");
-        processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().replace("\n", "").replace("\r", "").substring(0, 30) : item.getDescription().replace("\n", "").replace("\r", "")) : " ");
+        log.info("item.getDescription() Length A = " + (item.getDescription() != null ? item.getDescription().length() : "0"));
+        item.setDescription(item.getDescription().replace("\n", "").replace("\r", ""));
+        log.info("item.getDescription() Length B = " + (item.getDescription() != null ? item.getDescription().length() : "0"));
+        processor.writeStringValue(18, item.getDescription() != null ? (item.getDescription().length() >= 30 ? item.getDescription().substring(0, 29) : item.getDescription()) : " ");
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
         processor.writeStringValue(19, item.getCost() != null ? decFormat.format(item.getCost()) : " ");
         String currencyCode = (item.getProjectCurrency() != null && item.getProjectCurrency().getCurrency() != null && item.getProjectCurrency().getCurrency().getCode() != null) ? item.getProjectCurrency().getCurrency().getCode() : " ";
