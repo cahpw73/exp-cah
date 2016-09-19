@@ -47,6 +47,7 @@ public class ProjectUserDao extends GenericDao<ProjectUserEntity> implements Ser
         sb.append(" FROM ProjectUserEntity x ");
         sb.append(" WHERE x.status = :ENABLE ");
         sb.append(" AND x.user.id = :USER_ID ");
+        sb.append(" ORDER BY x.project.projectNumber ");
         Map<String,Object> params = new HashMap<>();
         params.put("USER_ID", id);
         params.put("ENABLE", StatusEnum.ENABLE);
