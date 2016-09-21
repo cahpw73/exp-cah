@@ -6,7 +6,7 @@
 	<parameter name="PO_ID" class="java.lang.Long"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select cu.code,sum(cd.order_amt) as order_amt
+		<![CDATA[select cu.code,sum(cd.order_amt)::numeric(18,5) as order_amt
 from cashflow_detail cd  left outer join cashflow c on cd.cashflow_id=c.id left outer join p_order p on c.po_id=p.id left outer join purchase_order po on po.po_id = p.id
               left outer join project_currency pc on pc.id = cd.project_currency_id left outer join  currency cu on cu.id = pc.currency_id
 where po.id = $P{PO_ID} and cd.status = 0
