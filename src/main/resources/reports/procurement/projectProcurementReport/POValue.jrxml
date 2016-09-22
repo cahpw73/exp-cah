@@ -35,12 +35,12 @@ group by code]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="d2e01c29-03df-4c9f-8d95-6005b75f1db2" positionType="Float" x="20" y="0" width="50" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{order_amt})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{order_amt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
