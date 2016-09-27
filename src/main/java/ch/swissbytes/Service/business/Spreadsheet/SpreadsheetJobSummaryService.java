@@ -37,12 +37,14 @@ public class SpreadsheetJobSummaryService implements Serializable {
     public SpreadsheetProcessor processor;
     @Inject
     public LanguagePreference languagePreference;
+    @Inject
+    private Configuration configuration;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
     private String formatDateReport = "dd MMM yyyy";
 
-    public Configuration configuration = new Configuration();
+    //public Configuration configuration = new Configuration();
 
     int rowNo;
 
@@ -112,7 +114,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
                 String aux = poH + titleH;
                 nexIndex = aux.length();
 
-                String deliveryDateH = "PO Del. Date: " + (entity.getPoDeliveryDate() != null ? Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), formatDateReport) + ", " : ", ");
+                String deliveryDateH = "PO Del. Date: " + (entity.getPoDeliveryDate() != null ? Util.toLocal(entity.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) + ", " : ", ");
                 indexRichString.put("dateIni", nexIndex);
                 indexRichString.put("dateEnd", nexIndex + 14);
                 aux = aux + deliveryDateH;
@@ -174,15 +176,15 @@ public class SpreadsheetJobSummaryService implements Serializable {
         processor.writeStringValue(3, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
         processor.writeStringValue(4, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
         processor.writeStringValue(5, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
-        processor.writeStringValue(6, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-        processor.writeStringValue(7, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-        processor.writeStringValue(8, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), languagePreference.getTimeZone(), formatDateReport) : "");
+        processor.writeStringValue(6, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
+        processor.writeStringValue(7, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
+        processor.writeStringValue(8, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
         String deliveryQt = ss.getDeliveryLeadTimeQt() != null ? String.valueOf(ss.getDeliveryLeadTimeQt().intValue()) : "";
         String deliveryMt = ss.getDeliveryLeadTimeMs() != null ? bundle.getString("measurement.time." + ss.getDeliveryLeadTimeMs().name().toLowerCase()) : "";
         processor.writeStringValue(9, deliveryQt + " " + deliveryMt);
-        processor.writeStringValue(10, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-        processor.writeStringValue(11, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-        processor.writeStringValue(12, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), languagePreference.getTimeZone(), formatDateReport) : "");
+        processor.writeStringValue(10, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+        processor.writeStringValue(11, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+        processor.writeStringValue(12, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
         Integer dateDiff = datePart(ss.getRequiredSiteDate(), ss.getForecastSiteDate());
         processor.writeStringValue(13, dateDiff != null ? String.valueOf(dateDiff.intValue()) : "");
     }
@@ -190,7 +192,7 @@ public class SpreadsheetJobSummaryService implements Serializable {
     private void createHeaderJS() {
         processor.createRow(0);
         processor.writeStringBoldValue(0, "Job Summary Report");
-        processor.writeStringBoldValue(1, Util.toLocal(new Date(), languagePreference.getTimeZone(), formatDateReport));
+        processor.writeStringBoldValue(1, Util.toLocal(new Date(), configuration.getTimeZone(), formatDateReport));
         processor.createRow(1);
     }
 

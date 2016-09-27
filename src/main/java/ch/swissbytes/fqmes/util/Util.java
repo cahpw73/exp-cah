@@ -69,6 +69,18 @@ public class Util {
         return null;
     }
 
+    public static String toLocal(Date date, String timeZone, String formatDate) {
+        DateTimeZone dtz = DateTimeZone.getDefault();
+        Date utcDate = convertUTC(date, dtz.toTimeZone().getID());
+        if (utcDate != null) {
+            DateTimeZone zone = DateTimeZone.forID(timeZone);
+            long local = zone.convertUTCToLocal(utcDate.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat(formatDate, new Locale("en"));
+            return sdf.format(new Date(local));
+        }
+        return "";
+    }
+
     public Date toLocalDate(Date date) {
         if (date != null) {
             DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
@@ -85,18 +97,6 @@ public class Util {
             DateTimeZone zone = DateTimeZone.forID(configuration.getTimeZone());
             long local = zone.convertUTCToLocal(utcDate.getTime());
             SimpleDateFormat sdf = new SimpleDateFormat(configuration.getFormatDate(), new Locale("en"));
-            return sdf.format(new Date(local));
-        }
-        return "";
-    }
-
-    public static String toLocal(Date date, String timeZone, String formatDate) {
-        DateTimeZone dtz = DateTimeZone.getDefault();
-        Date utcDate = convertUTC(date, dtz.toTimeZone().getID());
-        if (utcDate != null) {
-            DateTimeZone zone = DateTimeZone.forID(timeZone);
-            long local = zone.convertUTCToLocal(utcDate.getTime());
-            SimpleDateFormat sdf = new SimpleDateFormat(formatDate, new Locale("en"));
             return sdf.format(new Date(local));
         }
         return "";
