@@ -71,12 +71,12 @@ public class Util {
 
     public static String toLocal(Date date, String timeZone, String formatDate) {
         DateTimeZone dtz = DateTimeZone.getDefault();
-        Date utcDate = convertUTC(date, dtz.toTimeZone().getID());
-        if (utcDate != null) {
+        //Date utcDate = convertUTC(date, dtz.toTimeZone().getID());
+        if (date != null) {
             DateTimeZone zone = DateTimeZone.forID(timeZone);
-            long local = zone.convertUTCToLocal(utcDate.getTime());
+            long local = zone.convertUTCToLocal(date.getTime());
             SimpleDateFormat sdf = new SimpleDateFormat(formatDate, new Locale("en"));
-            return sdf.format(new Date(local));
+            return sdf.format(local);
         }
         return "";
     }
