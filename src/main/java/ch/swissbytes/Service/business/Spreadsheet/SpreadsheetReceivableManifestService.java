@@ -38,10 +38,12 @@ public class SpreadsheetReceivableManifestService implements Serializable {
     public SpreadsheetProcessor processor;
     @Inject
     public LanguagePreference languagePreference;
+    @Inject
+    private Configuration configuration;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
-    public Configuration configuration = new Configuration();
+    //public Configuration configuration = new Configuration();
 
     int rowNo;
 
@@ -105,7 +107,7 @@ public class SpreadsheetReceivableManifestService implements Serializable {
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
-        DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         for (PurchaseOrderEntity entity : list) {
             List<ScopeSupplyEntity> scopeSupplyListList = scopeSupplyService.scopeSupplyListByPOId(entity.getId());
             if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
@@ -120,8 +122,8 @@ public class SpreadsheetReceivableManifestService implements Serializable {
                             processor.writeStringValue(4, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
                             processor.writeStringValue(5, ss.getDescription());
                             processor.writeStringValue(6, ss.getTagNo());
-                            processor.writeStringValue(7, ss.getActualSiteDate()!=null?Util.toLocal(ss.getActualSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
-                            processor.writeStringValue(8, ss.getRequiredSiteDate()!=null?Util.toLocal(ss.getRequiredSiteDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
+                            processor.writeStringValue(7, ss.getActualSiteDate()!=null?Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), configuration.getFormatDate()):"");
+                            processor.writeStringValue(8, ss.getRequiredSiteDate()!=null?Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), configuration.getFormatDate()):"");
                             processor.writeStringValue(9, "");
                             rowNo++;
                         }
@@ -143,7 +145,7 @@ public class SpreadsheetReceivableManifestService implements Serializable {
     private void createHeaderJS() {
         processor.createRow(0);
         processor.writeStringBoldValue(0, "Receivable Manifest Report");
-        processor.writeStringBoldValue(1, Util.toLocal(new Date(), languagePreference.getTimeZone(), "MMM, dd yyyy"));
+        processor.writeStringBoldValue(1, Util.toLocal(new Date(), configuration.getTimeZone(), "MMM, dd yyyy"));
         processor.createRow(1);
     }
 

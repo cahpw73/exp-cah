@@ -40,10 +40,12 @@ public class SpreadsheetPlannerService implements Serializable {
     public SpreadsheetProcessor processor;
     @Inject
     public LanguagePreference languagePreference;
+    @Inject
+    private Configuration configuration;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
-    public Configuration configuration = new Configuration();
+    //public Configuration configuration = new Configuration();
 
     int rowNo;
 
@@ -134,7 +136,7 @@ public class SpreadsheetPlannerService implements Serializable {
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
-        DecimalFormat decFormat = new DecimalFormat(new Configuration().getPatternDecimal());
+        DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimal());
         for (PurchaseOrderEntity entity : list) {
             List<ScopeSupplyEntity> scopeSupplyListList = scopeSupplyService.scopeSupplyListByPOId(entity.getId());
             if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
@@ -144,7 +146,7 @@ public class SpreadsheetPlannerService implements Serializable {
                             processor.createRow(rowNo);
                             processor.writeStringValue(0, entity.getProjectEntity().getProjectNumber() + " " + entity.getPo() + " v" + entity.getVariation());
                             processor.writeStringValue(1, entity.getPoTitle());
-                            processor.writeStringValue(2, entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), languagePreference.getTimeZone(), configuration.getFormatDate()):"");
+                            processor.writeStringValue(2, entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), configuration.getTimeZone(), configuration.getFormatDate()):"");
                             processor.writeStringValue(3, StringUtils.isNotEmpty(entity.getFullIncoTerms()) ? entity.getFullIncoTerms() : "");
                             processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany());
                             processor.writeStringValue(5, Util.getNamesStatuses(entity.getExpeditingStatus()).toUpperCase());
@@ -155,15 +157,15 @@ public class SpreadsheetPlannerService implements Serializable {
                             processor.writeStringValue(10, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
                             processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
                             processor.writeStringValue(12, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
-                            processor.writeStringValue(13, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(14, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(15, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), languagePreference.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(13, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(14, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(15, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
                             String deliveryQt = ss.getDeliveryLeadTimeQt() != null ? String.valueOf(ss.getDeliveryLeadTimeQt().intValue()) : "";
                             String deliveryMt = ss.getDeliveryLeadTimeMs() != null ? bundle.getString("measurement.time." + ss.getDeliveryLeadTimeMs().name().toLowerCase()) : "";
                             processor.writeStringValue(16, deliveryQt + " " + deliveryMt);
-                            processor.writeStringValue(17, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(18, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), languagePreference.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(19, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), languagePreference.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(17, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(18, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(19, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
                             Integer dateDiff = datePart(ss.getRequiredSiteDate(), ss.getForecastSiteDate());
                             processor.writeStringValue(20, dateDiff != null ? String.valueOf(dateDiff.intValue()) : "");
                             rowNo++;
@@ -186,7 +188,7 @@ public class SpreadsheetPlannerService implements Serializable {
     private void createHeaderJS() {
         processor.createRow(0);
         processor.writeStringBoldValue(0, "Planner Report");
-        processor.writeStringBoldValue(1, Util.toLocal(new Date(), languagePreference.getTimeZone(), "MMM, dd yyyy"));
+        processor.writeStringBoldValue(1, Util.toLocal(new Date(), configuration.getTimeZone(), "MMM, dd yyyy"));
         processor.createRow(1);
     }
 
