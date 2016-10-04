@@ -19,7 +19,7 @@ from item ss
      left outer join project pj on pj.id = po.project_id
      left outer join  currency cu on cu.id = pc.currency_id
 where po.project_id = $P{projectIdFilter} and po.po=$P{poNoFilter}
-and po.status_id=1 and pc.status=0 and pc.status=0
+and po.status_id=1 and pc.status=0 and pc.status=0 and ss.status_id=1
 group by cu.code
 order by cu.code]]>
 	</queryString>
