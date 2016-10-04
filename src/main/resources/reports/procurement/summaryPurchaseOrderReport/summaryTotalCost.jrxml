@@ -13,6 +13,7 @@ from item i left outer join purchase_order po on i.purchase_order_id=po.id
 	    left outer join project_currency pc on pc.id=i.project_currency_id
 	    left outer join currency c on c.id = pc.currency_id
 where po.project_id = $P{projectIdFilter} and po.po = $P{poNoFilter} and i.total_cost is not null
+      and i.status_id=1
 group by c.code
 order by c.code]]>
 	</queryString>

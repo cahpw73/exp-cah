@@ -17,8 +17,8 @@ from cashflow_detail cd
      left outer join project pj on pj.id = po.project_id
      left outer join project_currency pc2 on pc2.project_id=pj.id
      left outer join currency cu on cu.id = pc2.currency_id
-where po.id = $P{poIdFilter} and cd.status = 0 and pc2.project_default = true
-and po.status_id=1 and cd.status=0 and pc.status=0 and pc2.status=0
+where po.id = $P{poIdFilter} and pc2.project_default = true
+and po.status_id=1 and cd.status = 0 and pc.status=0 and pc2.status=0
 group by cu.code,pc.exchange_rate,pc2.exchange_rate
 order by cu.code]]>
 	</queryString>

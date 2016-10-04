@@ -18,7 +18,7 @@ from item i left outer join purchase_order po on i.purchase_order_id=po.id
             left outer join p_order p on p.id = po.po_id
 	    left outer join project_currency pc on pc.id=i.project_currency_id
 	    left outer join currency c on c.id = pc.currency_id
-where po.id = $P{PO_ID} and po.status_id=1 and p.po_status=0
+where po.id = $P{PO_ID} and po.status_id=1 and p.po_status=0 and i.status_id=1
 group by c.code
 order by c.code]]>
 	</queryString>
