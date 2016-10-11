@@ -17,9 +17,7 @@
                         <p:calendar value="#{reportProcurementBean.sortFrom}"
                                     navigator="true" jsf:placeholder="#{configuration.formatDate}"
                                     styleClass="calendar-filter"
-                                    pattern="#{configuration.formatDate}"
-                                    converter="#{dateConverter}"
-                                    timeZone="#{configuration.timeZone2}">
+                                    pattern="#{configuration.formatDate}">
                             <p:ajax event="select" process="@this" partialSubmit="fieldsTypeDateGrp"
                                     async="false"/>
                         </p:calendar>
@@ -31,9 +29,7 @@
                         <p:calendar value="#{reportProcurementBean.sortTo}"
                                     styleClass="calendar-filter"
                                     navigator="true" jsf:placeholder="#{configuration.formatDate}"
-                                    pattern="#{configuration.formatDate}"
-                                    converter="#{dateConverter}"
-                                    timeZone="#{configuration.timeZone2}">
+                                    pattern="#{configuration.formatDate}">
                             <p:ajax event="select" process="@this" partialSubmit="fieldsTypeDateGrp"
                                     async="false"/>
                         </p:calendar>

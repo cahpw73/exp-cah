@@ -92,6 +92,10 @@ public class ReportProcurementBean implements Serializable {
 
     public void printProjectProcurementReport() {
         log.info("print project procurement");
+        sortFrom = DateUtil.getDateMinHour(sortFrom);
+        sortTo = DateUtil.getDateMaxHour(sortTo);
+        log.info("sortFrom = " + sortFrom);
+        log.info("sortTo = " + sortTo);
         Map<String, Boolean> sortMap = new HashMap<>();
         sortMap.put("poNo", sortByPoNo);
         sortMap.put("supplier", sortBySupplier);
