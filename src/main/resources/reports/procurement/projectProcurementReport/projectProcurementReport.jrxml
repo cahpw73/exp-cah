@@ -70,8 +70,8 @@
 	<parameter name="projectIdFilter" class="java.lang.Long"/>
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="currencyCode" class="java.lang.String"/>
-	<parameter name="sortFrom" class="java.util.Date"/>
-	<parameter name="sortTo" class="java.util.Date"/>
+	<parameter name="sortFrom" class="java.sql.Timestamp"/>
+	<parameter name="sortTo" class="java.sql.Timestamp"/>
 	<queryString>
 		<![CDATA[select po,po.variation,order_date,sp.company,po.po_title,po_delivery_date,p.po_status,po.id as po_id,sp.country
 from purchase_order po inner join p_order p on p.id=po.po_id

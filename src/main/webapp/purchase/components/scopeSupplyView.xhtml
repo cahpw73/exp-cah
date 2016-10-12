@@ -23,12 +23,13 @@
                   sortFunction="#{sortBean.sortStrings}">
             #{_scopeSupply.unit}
         </p:column>
-        <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" style="min-width: 100px;"
+        <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}" width="155"
                   sortFunction="#{sortBean.sortStrings}">
             <h:outputText escape="false" value="#{_scopeSupply.description}"/>
-            <ui:remove>
-                <p:editor value="#{_scopeSupply.description}" disabled="true" controls="" height="200"/>
-            </ui:remove>
+        </p:column>
+        <p:column headerText="#{msgs['po.supply.scope.column.shipping.detail']}" sortBy="#{_scopeSupply.shippingDetails}" width="155"
+                  sortFunction="#{sortBean.sortStrings}">
+            <h:outputText escape="false" value="#{_scopeSupply.shippingDetails}"/>
         </p:column>
         <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}" width="110"
                   sortFunction="#{sortBean.sortStrings}">
