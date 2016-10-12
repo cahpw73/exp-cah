@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ public class ReportProjectProcurement extends ReportProject implements Serializa
      * @param locale           {@link java.util.Locale}
      */
     public ReportProjectProcurement(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                    Configuration configuration, ProjectEntity project, Map<String, Boolean> sortMap, EntityManager entityManager,DataSource ds,Date sortFrom,Date sortTo) {
+                                    Configuration configuration, ProjectEntity project, Map<String, Boolean> sortMap, EntityManager entityManager,DataSource ds,Timestamp sortFrom,Timestamp sortTo) {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap,ds);
         this.entityManager = entityManager;
         addParameters("sortFrom",sortFrom);

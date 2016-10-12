@@ -17,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -94,8 +95,13 @@ public class ReportProcurementBean implements Serializable {
         log.info("print project procurement");
         sortFrom = DateUtil.getDateMinHour(sortFrom);
         sortTo = DateUtil.getDateMaxHour(sortTo);
+        Timestamp sqSortFrom = new java.sql.Timestamp(sortFrom.getTime());
+        Timestamp sqSortTo = new java.sql.Timestamp(sortTo.getTime());
+
         log.info("sortFrom = " + sortFrom);
         log.info("sortTo = " + sortTo);
+        log.info("sortFromSq = " + sqSortFrom);
+        log.info("sortToSq = " + sqSortTo);
         Map<String, Boolean> sortMap = new HashMap<>();
         sortMap.put("poNo", sortByPoNo);
         sortMap.put("supplier", sortBySupplier);
@@ -110,7 +116,7 @@ public class ReportProcurementBean implements Serializable {
             switch (reportName) {
                 case "ppr":
                     verifyDataToSortDate();
-                    reportProcBean.printProjectPurchaseOrder(selectedProject, sortMap,sortFrom,sortTo);
+                    reportProcBean.printProjectPurchaseOrder(selectedProject, sortMap,sqSortFrom,sqSortTo);
                     break;
                 case "rrr":
                     reportProcBean.printRequiredRetentions(selectedProject, sortMap);
@@ -129,7 +135,7 @@ public class ReportProcurementBean implements Serializable {
                     break;
                 case "spor":
                     verifyDataToSortDate();
-                    reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap,sortFrom,sortTo);
+                    reportProcBean.printSummaryPurchaseOrder(selectedProject, sortMap,sqSortFrom,sqSortTo);
                     break;
                 case "pdp":
                     reportProcBean.printDetailedProcurementReport(selectedProject, sortMap);
