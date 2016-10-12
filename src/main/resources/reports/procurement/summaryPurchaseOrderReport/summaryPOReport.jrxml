@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrintSummaryPO" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eaf4508-d50f-4b23-8229-6c9385abdfc1">
-	<property name="ireport.zoom" value="1.771561000000002"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="53"/>
+	<property name="ireport.zoom" value="2.1435888100000047"/>
+	<property name="ireport.x" value="23"/>
+	<property name="ireport.y" value="128"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -69,20 +69,21 @@
 	<parameter name="sortByName" class="java.lang.String"/>
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
 	<parameter name="sortBySummary" class="java.lang.String"/>
-	<parameter name="sortFrom" class="java.util.Date"/>
-	<parameter name="sortTo" class="java.util.Date"/>
+	<parameter name="sortFrom" class="java.sql.Timestamp"/>
+	<parameter name="sortTo" class="java.sql.Timestamp"/>
 	<queryString>
-		<![CDATA[select po.po,sp.company
+		<![CDATA[select po.po,sp.company,p.order_date
 from purchase_order po
      left outer join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
 where po.project_id=$P{projectIdFilter} and po.status_id = 1 and p.po_status=0
       and sp.status=0 and p.order_date >= $P{sortFrom} and p.order_date <= $P{sortTo}
-group by po.po, sp.company
+group by po.po, sp.company,p.order_date
 order by $P!{sortBySummary}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
+	<field name="order_date" class="java.sql.Timestamp"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
@@ -264,7 +265,7 @@ order by $P!{sortBySummary}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="31" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement uuid="9ba26152-fe46-4998-a3ae-33e525482693" x="0" y="1" width="60" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement verticalAlignment="Middle" markup="styled">

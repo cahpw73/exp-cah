@@ -15,8 +15,8 @@
 	</parameter>
 	<parameter name="projectCurrency" class="java.lang.String"/>
 	<parameter name="projectDefaultExchangeRate" class="java.math.BigDecimal"/>
-	<parameter name="sortFrom" class="java.util.Date"/>
-	<parameter name="sortTo" class="java.util.Date"/>
+	<parameter name="sortFrom" class="java.sql.Timestamp"/>
+	<parameter name="sortTo" class="java.sql.Timestamp"/>
 	<queryString>
 		<![CDATA[select po.variation,po.po_title,p.po_status,po.id,po.project,p.order_date
 from purchase_order po
