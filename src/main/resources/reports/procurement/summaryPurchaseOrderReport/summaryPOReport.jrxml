@@ -72,18 +72,17 @@
 	<parameter name="sortFrom" class="java.sql.Timestamp"/>
 	<parameter name="sortTo" class="java.sql.Timestamp"/>
 	<queryString>
-		<![CDATA[select po.po,sp.company,p.order_date
+		<![CDATA[select po.po,sp.company
 from purchase_order po
      left outer join p_order p on p.id=po.po_id
      left outer join supplier_proc sp on sp.id = p.supplier_id
 where po.project_id=$P{projectIdFilter} and po.status_id = 1 and p.po_status=0
       and sp.status=0 and p.order_date >= $P{sortFrom} and p.order_date <= $P{sortTo}
-group by po.po, sp.company,p.order_date
+group by po.po, sp.company
 order by $P!{sortBySummary}]]>
 	</queryString>
 	<field name="po" class="java.lang.String"/>
 	<field name="company" class="java.lang.String"/>
-	<field name="order_date" class="java.sql.Timestamp"/>
 	<variable name="LAST_PAGE" class="java.lang.Integer" resetType="Page" incrementType="Report">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 	</variable>
