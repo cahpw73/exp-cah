@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -111,7 +112,7 @@ public class ReportProcBean implements Serializable {
         }
         openReport = true;
     }
-    public void printProjectPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap,Date sortFrom,Date sortTo) {
+    public void printProjectPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap,Timestamp sortFrom,Timestamp sortTo) {
         log.info("printProjectPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();
@@ -173,7 +174,7 @@ public class ReportProcBean implements Serializable {
     }
 
 
-    public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap,Date sortFrom,Date sortTo) {
+    public void printSummaryPurchaseOrder(final ProjectEntity project, final Map<String, Boolean> sortMap,Timestamp sortFrom,Timestamp sortTo) {
         log.info("printSummaryPurchaseOrder");
         openReport = false;
         initializeParametersToJasperReport();

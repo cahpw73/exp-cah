@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class ReportSummaryPurchaseOrder extends ReportProject implements Seriali
 
 
     public ReportSummaryPurchaseOrder(String filenameJasper, String reportNameMsgKey, Map<String, String> messages, Locale locale,
-                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds,Date sortFrom,Date sortTo) {
+                                      Configuration configuration, ProjectEntity project, final Map<String, Boolean> sortMap,DataSource ds,Timestamp sortFrom,Timestamp sortTo) {
         super(filenameJasper, reportNameMsgKey, messages, locale,configuration,project,sortMap,ds);
         addParameters("sortFrom",sortFrom);
         addParameters("sortTo",sortTo);
