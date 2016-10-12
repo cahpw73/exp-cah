@@ -28,21 +28,21 @@
                 #{_scopeSupply.unit}
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.description']}" sortBy="#{_scopeSupply.description}"
-                      width="160"
+                      width="150"
                       sortFunction="#{sortBean.sortStrings}">
                 <h:outputText escape="false" value="#{_scopeSupply.description}"/>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.column.shipping.detail']}" sortBy="#{_scopeSupply.shippingDetails}"
-                      width="160"
+                      width="150"
                       sortFunction="#{sortBean.sortStrings}">
                 <h:outputText escape="false" value="#{_scopeSupply.shippingDetails}"/>
             </p:column>
             <p:column headerText="#{msgs['po.supply.scope.lbl.inco.term']}" sortBy="#{_scopeSupply.spIncoTerm}"
-                      width="100"
+                      width="90"
                       sortFunction="#{sortBean.sortStrings}">
                 #{_scopeSupply.spIncoTerm}
             </p:column>
-            <p:column sortBy="#{_scopeSupply.poDeliveryDate}" width="110"
+            <p:column sortBy="#{_scopeSupply.poDeliveryDate}" width="90"
                       sortFunction="#{sortBean.sortDate}" styleClass="orginal-delivery-date">
                 <f:facet name="header">
                     #{msgs['po.supply.scope.column.original.delivery.date']}
