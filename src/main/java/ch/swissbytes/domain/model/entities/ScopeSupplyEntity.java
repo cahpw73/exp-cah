@@ -64,6 +64,7 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
     private Boolean excludeFromExpediting;
     private ProjectCurrencyEntity projectCurrency;
     private ItemEntity itemEntity;
+    private String shippingDetails;
 
 
 
@@ -131,6 +132,16 @@ public class ScopeSupplyEntity extends RecordEditable<ScopeSupplyEntity> impleme
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Size(max = 90000)
+    @Column(name="shipping_details",length = 90000)
+    public String getShippingDetails() {
+        return shippingDetails;
+    }
+
+    public void setShippingDetails(String shippingDetails) {
+        this.shippingDetails = shippingDetails;
     }
 
     //@TODO Cambiamos el valor nullable por true, se tiene que controlar la nullabilidad desde el modulo expediting
