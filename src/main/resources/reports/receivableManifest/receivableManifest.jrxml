@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="receivableManifest" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1fb189a7-77ee-4550-aa38-66303c165570">
-	<property name="ireport.zoom" value="1.8627639691774651"/>
-	<property name="ireport.x" value="353"/>
+	<property name="ireport.zoom" value="2.253944402704734"/>
+	<property name="ireport.x" value="349"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="purchaseID" class="java.util.Collection"/>
 	<parameter name="patternDecimal" class="java.lang.String"/>
@@ -10,7 +10,8 @@
 	<parameter name="TIME_ZONE" class="java.lang.String"/>
 	<parameter name="FORMAT_DATE" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select ss.code,ss.quantity,ss.cost,ss.unit,po.project,ss.description,ss.currency,po.po,po.variation,ss.required_site_date,ss.actual_site_date,ss.tag_no
+		<![CDATA[select ss.code,ss.quantity,ss.cost,ss.unit,po.project,ss.description,ss.currency,po.po,
+po.variation,ss.required_site_date,ss.actual_site_date,ss.tag_no,ss.shipping_details
 from scope_supply ss inner join purchase_order po on po.id=ss.purchase_order_id
 where ss.status_id<>3 and $X{IN, purchase_order_id, purchaseID} and po.status_id<>3
       and (ss.exclude_from_expediting is null or ss.exclude_from_expediting = false)
@@ -28,6 +29,7 @@ order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po
 	<field name="required_site_date" class="java.sql.Timestamp"/>
 	<field name="actual_site_date" class="java.sql.Timestamp"/>
 	<field name="tag_no" class="java.lang.String"/>
+	<field name="shipping_details" class="java.lang.String"/>
 	<variable name="total" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -70,74 +72,81 @@ order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Project</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7c65b847-823a-4ffc-a118-21c5e14e5f25" x="92" y="0" width="75" height="12"/>
+				<reportElement uuid="7c65b847-823a-4ffc-a118-21c5e14e5f25" x="91" y="0" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">PO Number</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="da394d0c-83f5-44d7-b8d7-088a535d5f15" x="170" y="0" width="50" height="12"/>
+				<reportElement uuid="da394d0c-83f5-44d7-b8d7-088a535d5f15" x="152" y="0" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Var.</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7cb49c4e-5c92-4c92-b249-d7ff142c656d" x="515" y="0" width="63" height="12"/>
+				<reportElement uuid="7cb49c4e-5c92-4c92-b249-d7ff142c656d" x="539" y="0" width="55" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Tag No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="17c44e72-71c7-4897-b305-f0a4246eab47" x="725" y="0" width="77" height="12"/>
+				<reportElement uuid="17c44e72-71c7-4897-b305-f0a4246eab47" x="731" y="0" width="70" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Location</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9d8e13d5-efa6-4cd3-8435-c951459d943c" x="582" y="0" width="60" height="12"/>
+				<reportElement uuid="9d8e13d5-efa6-4cd3-8435-c951459d943c" x="594" y="0" width="60" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Actual Site Date</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c2c1ca85-140e-4486-be93-3279a7c20331" x="645" y="0" width="75" height="12"/>
+				<reportElement uuid="c2c1ca85-140e-4486-be93-3279a7c20331" x="655" y="0" width="75" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Required on Site Date</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4c6e42d1-7742-42a7-857e-5a90a097899d" x="225" y="0" width="65" height="12"/>
+				<reportElement uuid="4c6e42d1-7742-42a7-857e-5a90a097899d" x="194" y="0" width="40" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item No</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bb1f6c60-ff44-4810-acb4-167f3904ad1a" x="292" y="0" width="45" height="12"/>
+				<reportElement uuid="bb1f6c60-ff44-4810-acb4-167f3904ad1a" x="236" y="0" width="35" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Qty</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="981518fb-499b-4e88-9a06-6d31bbed7299" x="339" y="0" width="45" height="12"/>
+				<reportElement uuid="981518fb-499b-4e88-9a06-6d31bbed7299" x="272" y="0" width="30" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Unit</style>]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bc51e8bd-0b45-4694-a5c9-e64484c199a1" x="386" y="0" width="120" height="12"/>
+				<reportElement uuid="bc51e8bd-0b45-4694-a5c9-e64484c199a1" x="303" y="0" width="113" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Item Description</style>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="950a0611-ec1e-4782-b5ec-9b22638cd1e3" x="423" y="0" width="114" height="12"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[<style size="7" isBold="true" pdfFontName="Helvetica-Bold">Shipping Details</style>]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -158,49 +167,49 @@ order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po
 				<textFieldExpression><![CDATA[$F{project}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="a38b802b-159f-4bc9-b9e3-1563f4d89ff7" x="92" y="0" width="75" height="12"/>
+				<reportElement uuid="a38b802b-159f-4bc9-b9e3-1563f4d89ff7" x="91" y="0" width="60" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{po}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="785269f3-6071-499b-88a8-862a958ceab4" x="171" y="0" width="50" height="12"/>
+				<reportElement uuid="785269f3-6071-499b-88a8-862a958ceab4" x="152" y="0" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{variation}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="be2332c0-64d7-467b-a359-910ee8af1a1d" x="582" y="0" width="60" height="12"/>
+				<reportElement uuid="be2332c0-64d7-467b-a359-910ee8af1a1d" x="594" y="0" width="60" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{actual_site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{actual_site_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="f054b588-b156-467a-8920-8473e87aba39" x="645" y="0" width="75" height="12"/>
+				<reportElement uuid="f054b588-b156-467a-8920-8473e87aba39" x="655" y="0" width="75" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{required_site_date}!=null?new java.text.SimpleDateFormat($P{FORMAT_DATE},new Locale("en")).format( org.joda.time.DateTimeZone.forID($P{TIME_ZONE}).convertUTCToLocal($F{required_site_date}.getTime())):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="ad3dccbc-1b42-412e-8975-35258be91da0" x="225" y="0" width="65" height="12"/>
+				<reportElement uuid="ad3dccbc-1b42-412e-8975-35258be91da0" x="194" y="0" width="40" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="876f3717-13ef-4fc7-b5af-fb6d5e9b8116" x="292" y="0" width="45" height="12"/>
+				<reportElement uuid="876f3717-13ef-4fc7-b5af-fb6d5e9b8116" x="236" y="0" width="35" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{quantity}!=null?new ch.swissbytes.fqmes.util.Configuration().format("###.##",$F{quantity}):null]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement uuid="7349ef2b-90c6-4ca8-8627-c09847720d64" x="339" y="0" width="45" height="12"/>
+				<reportElement uuid="7349ef2b-90c6-4ca8-8627-c09847720d64" x="272" y="0" width="30" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6" isBold="false"/>
 				</textElement>
@@ -208,18 +217,25 @@ order by po.project,CASE WHEN isnumeric(po.po) THEN lpad(po.po, 50, '0') ELSE po
 				<patternExpression><![CDATA[$P{patternDecimal}]]></patternExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="df5ad6be-0750-4cbb-91b3-2cd3ab147b16" x="386" y="0" width="120" height="12"/>
+				<reportElement uuid="df5ad6be-0750-4cbb-91b3-2cd3ab147b16" x="303" y="0" width="113" height="12"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{description}))]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55b865ca-6d5e-45a6-a6d8-8e2c8f5318ab" x="515" y="0" width="63" height="12"/>
+				<reportElement uuid="55b865ca-6d5e-45a6-a6d8-8e2c8f5318ab" x="539" y="0" width="55" height="12"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tag_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="5611f5a1-2d48-4a43-920e-6e5d9cb1770a" x="423" y="0" width="114" height="12"/>
+				<textElement textAlignment="Justified" markup="styled">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[ch.swissbytes.fqmes.util.Util.removeSpecialCharactersForJasperReport(new ch.swissbytes.Service.processor.Processor(true).processSnippetText($F{shipping_details}))]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
