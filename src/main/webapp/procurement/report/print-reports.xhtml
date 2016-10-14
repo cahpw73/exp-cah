@@ -63,7 +63,7 @@
                                 <div class="clearfix"></div>
                                 <br/>
                                 <div class="col-md-12" style="float: left!important;">
-                                    <h:panelGroup id="groupOptionPrint">
+                                    <h:panelGroup id="groupOptionPrint" style="float: left;">
                                         <div class="form-group">
                                             <h:panelGroup rendered="#{!reportProcurementBean.detailSupplier}">
                                                 <div class="checkbox-inline">
@@ -177,10 +177,10 @@
                                                     </label>
                                                 </div>
                                             </h:panelGroup>
-                                            <h:panelGroup rendered="#{reportProcurementBean.canshowFilterPoDeliveryDate()}">
-                                                <ui:include src="components/fieldsDate.xhtml"/>
-                                            </h:panelGroup>
                                         </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{reportProcurementBean.canshowFilterPoDeliveryDate()}" style="float: left;">
+                                        <ui:include src="components/fieldsDate.xhtml"/>
                                     </h:panelGroup>
                                     <div class="clearfix"></div>
                                     <br/>
