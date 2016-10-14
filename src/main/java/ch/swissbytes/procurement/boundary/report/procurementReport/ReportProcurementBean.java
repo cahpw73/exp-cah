@@ -97,7 +97,7 @@ public class ReportProcurementBean implements Serializable {
         sortTo = DateUtil.getDateMaxHour(sortTo);
         Timestamp sqSortFrom = new java.sql.Timestamp(sortFrom != null ? sortFrom.getTime() : DateUtil.getFirstDateDefault().getTime());
         Timestamp sqSortTo = new java.sql.Timestamp(sortTo != null ? sortTo.getTime() : DateUtil.getLastDateDefault().getTime());
-        
+
         log.info("sortFrom = " + sortFrom);
         log.info("sortTo = " + sortTo);
         log.info("sortFromSq = " + sqSortFrom);
