@@ -96,7 +96,7 @@ public class SpreadsheetPlannerService implements Serializable {
         processor.configureWithColumn(8,3000);
         processor.configureWithColumn(9,3000);
         processor.configureWithColumn(10,5000);//item description
-        processor.configureWithColumn(11,3000);
+        processor.configureWithColumn(11,5000);//shipping details
         processor.configureWithColumn(12,3000);
         processor.configureWithColumn(13,3000);
         processor.configureWithColumn(14,3000);
@@ -106,6 +106,7 @@ public class SpreadsheetPlannerService implements Serializable {
         processor.configureWithColumn(18,3000);
         processor.configureWithColumn(19,3000);
         processor.configureWithColumn(20,3000);
+        processor.configureWithColumn(21,3000);
     }
     private void createHeaderPO() {
         processor.createRowWithHeight(2,(short)600);
@@ -122,17 +123,18 @@ public class SpreadsheetPlannerService implements Serializable {
         processor.writeStringValueWithStyles(7, "Item No",styles);
         processor.writeStringValueWithStyles(8, "Qty",styles);
         processor.writeStringValueWithStyles(9, "Unit",styles);
-        processor.writeStringValueWithStyles(10, "Item Description",styles);
-        processor.writeStringValueWithStyles(11, "Equipment Tag",styles);
-        processor.writeStringValueWithStyles(12, "Full Inco Term",styles);
-        processor.writeStringValueWithStyles(13, "PO Delivery Date",styles);
-        processor.writeStringValueWithStyles(14, "Forecast Ex Works Date",styles);
-        processor.writeStringValueWithStyles(15, "Actual Ex Works",styles);
-        processor.writeStringValueWithStyles(16, "Lead Time",styles);
-        processor.writeStringValueWithStyles(17, "Forecast Site Date",styles);
-        processor.writeStringValueWithStyles(18, "Actual Site Date",styles);
-        processor.writeStringValueWithStyles(19, "Required on Site Date",styles);
-        processor.writeStringValueWithStyles(20, "Var",styles);
+        processor.writeStringValueWithStyles(10, "Item Description", styles);
+        processor.writeStringValueWithStyles(11, "Shipping Details",styles);
+        processor.writeStringValueWithStyles(12, "Equipment Tag",styles);
+        processor.writeStringValueWithStyles(13, "Full Inco Term",styles);
+        processor.writeStringValueWithStyles(14, "PO Delivery Date",styles);
+        processor.writeStringValueWithStyles(15, "Forecast Ex Works Date",styles);
+        processor.writeStringValueWithStyles(16, "Actual Ex Works",styles);
+        processor.writeStringValueWithStyles(17, "Lead Time",styles);
+        processor.writeStringValueWithStyles(18, "Forecast Site Date",styles);
+        processor.writeStringValueWithStyles(19, "Actual Site Date",styles);
+        processor.writeStringValueWithStyles(20, "Required on Site Date",styles);
+        processor.writeStringValueWithStyles(21, "Var",styles);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
@@ -155,19 +157,20 @@ public class SpreadsheetPlannerService implements Serializable {
                             processor.writeStringValue(8, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
                             processor.writeStringValue(9, StringUtils.isNotEmpty(ss.getUnit()) ? ss.getUnit() : "");
                             processor.writeStringValue(10, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
-                            processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
-                            processor.writeStringValue(12, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
-                            processor.writeStringValue(13, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(14, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(15, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
+                            processor.writeStringValue(12, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
+                            processor.writeStringValue(13, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
+                            processor.writeStringValue(14, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(15, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(16, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
                             String deliveryQt = ss.getDeliveryLeadTimeQt() != null ? String.valueOf(ss.getDeliveryLeadTimeQt().intValue()) : "";
                             String deliveryMt = ss.getDeliveryLeadTimeMs() != null ? bundle.getString("measurement.time." + ss.getDeliveryLeadTimeMs().name().toLowerCase()) : "";
-                            processor.writeStringValue(16, deliveryQt + " " + deliveryMt);
-                            processor.writeStringValue(17, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(18, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(19, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(17, deliveryQt + " " + deliveryMt);
+                            processor.writeStringValue(18, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(19, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(20, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
                             Integer dateDiff = datePart(ss.getRequiredSiteDate(), ss.getForecastSiteDate());
-                            processor.writeStringValue(20, dateDiff != null ? String.valueOf(dateDiff.intValue()) : "");
+                            processor.writeStringValue(21, dateDiff != null ? String.valueOf(dateDiff.intValue()) : "");
                             rowNo++;
                         }
                     }
