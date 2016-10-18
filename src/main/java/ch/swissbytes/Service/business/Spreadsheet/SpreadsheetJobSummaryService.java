@@ -86,8 +86,8 @@ public class SpreadsheetJobSummaryService implements Serializable {
         processor.configureWithColumn(1, 3000);
         processor.configureWithColumn(2, 2000);
         processor.configureWithColumn(3, 11000);
-        processor.configureWithColumn(4, 11000);
-        processor.configureWithColumn(5, 4000);
+        processor.configureWithColumn(4, 4000);
+        processor.configureWithColumn(5, 11000);
         processor.configureWithColumn(6, 4000);
         processor.configureWithColumn(7, 5000);
         processor.configureWithColumn(8, 5000);
@@ -176,8 +176,8 @@ public class SpreadsheetJobSummaryService implements Serializable {
         processor.writeStringValue(1, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
         processor.writeStringValue(2, StringUtils.isNotEmpty(ss.getUnit()) ? ss.getUnit() : "");
         processor.writeStringValue(3, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
-        processor.writeStringValue(4, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
-        processor.writeStringValue(5, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
+        processor.writeStringValue(4, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
+        processor.writeStringValue(5, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
         processor.writeStringValue(6, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
         processor.writeStringValue(7, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
         processor.writeStringValue(8, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
@@ -205,8 +205,8 @@ public class SpreadsheetJobSummaryService implements Serializable {
         processor.writeStringValue(1, "Qty");
         processor.writeStringValue(2, "Unit");
         processor.writeStringValue(3, "Item Description");
-        processor.writeStringValue(4, "Shipping Details");
-        processor.writeStringValue(5, "Equipment Tag");
+        processor.writeStringValue(4, "Equipment Tag");
+        processor.writeStringValue(5, "Shipping Details");
         processor.writeStringValue(6, "Full Inco Term");
         processor.writeStringValue(7, "PO Delivery Date");
         processor.writeStringValue(8, "Forecast Ex Works Date");
