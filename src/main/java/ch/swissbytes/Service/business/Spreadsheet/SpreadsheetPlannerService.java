@@ -96,8 +96,8 @@ public class SpreadsheetPlannerService implements Serializable {
         processor.configureWithColumn(8,3000);
         processor.configureWithColumn(9,3000);
         processor.configureWithColumn(10,5000);//item description
-        processor.configureWithColumn(11,5000);//shipping details
-        processor.configureWithColumn(12,3000);
+        processor.configureWithColumn(11,4000);
+        processor.configureWithColumn(12,5000);//shipping details
         processor.configureWithColumn(13,3000);
         processor.configureWithColumn(14,3000);
         processor.configureWithColumn(15,3000);
@@ -124,8 +124,8 @@ public class SpreadsheetPlannerService implements Serializable {
         processor.writeStringValueWithStyles(8, "Qty",styles);
         processor.writeStringValueWithStyles(9, "Unit",styles);
         processor.writeStringValueWithStyles(10, "Item Description", styles);
-        processor.writeStringValueWithStyles(11, "Shipping Details",styles);
-        processor.writeStringValueWithStyles(12, "Equipment Tag",styles);
+        processor.writeStringValueWithStyles(11, "Equipment Tag",styles);
+        processor.writeStringValueWithStyles(12, "Shipping Details",styles);
         processor.writeStringValueWithStyles(13, "Full Inco Term",styles);
         processor.writeStringValueWithStyles(14, "PO Delivery Date",styles);
         processor.writeStringValueWithStyles(15, "Forecast Ex Works Date",styles);
@@ -157,8 +157,8 @@ public class SpreadsheetPlannerService implements Serializable {
                             processor.writeStringValue(8, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
                             processor.writeStringValue(9, StringUtils.isNotEmpty(ss.getUnit()) ? ss.getUnit() : "");
                             processor.writeStringValue(10, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
-                            processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
-                            processor.writeStringValue(12, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
+                            processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
+                            processor.writeStringValue(12, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
                             processor.writeStringValue(13, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
                             processor.writeStringValue(14, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
                             processor.writeStringValue(15, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");

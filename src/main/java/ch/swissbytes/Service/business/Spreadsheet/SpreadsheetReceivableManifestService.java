@@ -87,8 +87,8 @@ public class SpreadsheetReceivableManifestService implements Serializable {
         processor.configureWithColumn(2,3000);
         processor.configureWithColumn(4,3000);
         processor.configureWithColumn(5,12000);
-        processor.configureWithColumn(6,12000);
-        processor.configureWithColumn(7,5000);
+        processor.configureWithColumn(6,5000);
+        processor.configureWithColumn(7,12000);
         processor.configureWithColumn(8,5000);
         processor.configureWithColumn(9,6000);
         processor.configureWithColumn(10,5000);
@@ -101,8 +101,8 @@ public class SpreadsheetReceivableManifestService implements Serializable {
         processor.writeStringValue(3, "Item No");
         processor.writeStringValue(4, "Qty Unit");
         processor.writeStringValue(5, "Item Description");
-        processor.writeStringValue(6, "Shipping Details");
-        processor.writeStringValue(7, "Tag No");
+        processor.writeStringValue(6, "Tag No");
+        processor.writeStringValue(7, "Shipping Details");
         processor.writeStringValue(8, "Actual Site Date");
         processor.writeStringValue(9, "Required on Site Date");
         processor.writeStringValue(10, "Location");
@@ -123,8 +123,8 @@ public class SpreadsheetReceivableManifestService implements Serializable {
                             processor.writeStringValue(3, ss.getCode());
                             processor.writeStringValue(4, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
                             processor.writeStringValue(5, ss.getDescription());
-                            processor.writeStringValue(6, ss.getShippingDetails());
-                            processor.writeStringValue(7, ss.getTagNo());
+                            processor.writeStringValue(6, ss.getTagNo());
+                            processor.writeStringValue(7, ss.getShippingDetails());
                             processor.writeStringValue(8, ss.getActualSiteDate()!=null?Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), configuration.getFormatDate()):"");
                             processor.writeStringValue(9, ss.getRequiredSiteDate()!=null?Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), configuration.getFormatDate()):"");
                             processor.writeStringValue(10, "");
