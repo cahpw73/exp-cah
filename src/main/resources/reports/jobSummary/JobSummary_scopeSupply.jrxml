@@ -2,7 +2,6 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="JobSummary_scopeSupply" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b9465e6-4f0c-45d0-a4df-9c93b428fda1">
 	<property name="ireport.zoom" value="1.7715610000000017"/>
 	<property name="ireport.x" value="0"/>
-
 	<property name="ireport.y" value="0"/>
 	<style name="overdue" markup="styled" fontSize="6" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
 		<conditionalStyle>
@@ -158,7 +157,7 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{deliveryDateLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e9077965-1a13-4a98-8b54-78376fdc6bb1" positionType="Float" x="316" y="22" width="45" height="12"/>
+				<reportElement uuid="e9077965-1a13-4a98-8b54-78376fdc6bb1" positionType="Float" x="197" y="22" width="45" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="2"/>
@@ -217,7 +216,7 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA["<style size='7' isBold='true' pdfFontName='Helvetica-Bold'>"+$P{varLbl}+"</style>"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="17e98533-d077-466f-bd8f-d1d49bb7220d" x="201" y="22" width="114" height="12"/>
+				<reportElement uuid="17e98533-d077-466f-bd8f-d1d49bb7220d" x="244" y="22" width="114" height="12"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
@@ -312,7 +311,7 @@ order by ss.ordered]]>
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="e2e1d922-e22d-4f6f-859c-0f3bc4353515" style="overdue" x="316" y="1" width="45" height="12"/>
+				<reportElement uuid="e2e1d922-e22d-4f6f-859c-0f3bc4353515" style="overdue" x="197" y="1" width="45" height="12"/>
 				<textElement verticalAlignment="Top" markup="styled">
 					<font fontName="Arial" size="6"/>
 					<paragraph leftIndent="2"/>
@@ -341,7 +340,7 @@ order by ss.ordered]]>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="80f298f4-e5ec-4c8f-8f44-1881be777f6a" x="201" y="1" width="114" height="13"/>
+				<reportElement uuid="80f298f4-e5ec-4c8f-8f44-1881be777f6a" x="244" y="1" width="114" height="13"/>
 				<textElement>
 					<font fontName="Arial" size="6"/>
 				</textElement>
