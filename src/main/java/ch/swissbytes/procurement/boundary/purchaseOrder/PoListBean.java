@@ -298,6 +298,9 @@ public class PoListBean implements Serializable {
 
                 Date startUpdateOnlyPOOnProcurement = new Date();
                 currentPurchaseOrder = service.updatePOAfterCommitted(currentPurchaseOrder);
+
+               // currentPurchaseOrder.getPurchaseOrderProcurementEntity().setCanVariation(canCreateVariation(currentPurchaseOrder));
+
                 Date endUpdateOnlyPOOnProcurement = new Date();
                 log.info("time between UpdateOnlyPOOnProcurement = " + (endUpdateOnlyPOOnProcurement.getTime()-startUpdateOnlyPOOnProcurement.getTime()));
 
@@ -414,6 +417,7 @@ public class PoListBean implements Serializable {
 
     public void doDeletePo() {
         log.info("do delete purchase order");
+        deletePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
         service.doDelete(currentPurchaseOrder.getId());
         refreshListPo();
     }
@@ -453,6 +457,7 @@ public class PoListBean implements Serializable {
     }
 
     private boolean canCreateVariation(PurchaseOrderEntity entity) {
+        log.info("canCreateVariation(PurchaseOrderEntity entity)");
         boolean canCreateVar = false;
         boolean poCommitted = false;
         if (entity.getPurchaseOrderProcurementEntity().getPoProcStatus() != null) {
@@ -999,8 +1004,21 @@ public class PoListBean implements Serializable {
     }
 
     public void variationPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
-        po.setCanEdit(false);
+        po.setCanEdit(true);
         po.setCanView(true);
+        po.setCanVariation(false);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(false);
+        po.setCanFinalise(true);
+        po.setCanRelease(false);
+        po.setCanDelete(true);
+    }
+
+    public void deletePOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(false);
         po.setCanVariation(false);
         po.setCanCommit(false);
         po.setCanUncommit(false);
