@@ -8,6 +8,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.domain.model.entities.CashflowEntity;
 import ch.swissbytes.domain.model.entities.ProjectEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.PurchaseOrderProcurementEntity;
 import ch.swissbytes.fqmes.util.CreateEmailSender;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DefaultStreamedContent;
@@ -105,6 +106,7 @@ public class ExportationPOBean implements Serializable {
         pathAbsolute = pathCMS;
         exporter.generateWorkbookToExport(list, fName);
         for (PurchaseOrderEntity po : list) {
+            exportCsvPOModifyValidationButtons(po.getPurchaseOrderProcurementEntity());
             poService.markCMSAsExported(po);
         }
     }
@@ -117,7 +119,34 @@ public class ExportationPOBean implements Serializable {
         pathAbsolute = pathJDE;
         exporterToJDE.generateWorkbookToExport(list, fName);
         for(PurchaseOrderEntity po : list) {
+            exportJdePOModifyValidationButtons(po.getPurchaseOrderProcurementEntity());
             poService.markJDEAsExported(po);
         }
+    }
+
+    public void exportCsvPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(true);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(po.getCanExportJde());
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
+    }
+
+    public void exportJdePOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(true);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(po.getCanExportCsv());
+        po.setCanExportJde(false);
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
     }
 }

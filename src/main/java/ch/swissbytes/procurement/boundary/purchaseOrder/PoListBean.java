@@ -185,6 +185,7 @@ public class PoListBean implements Serializable {
 
     public void doSavePOONewVariation() {
         log.info("do save POO with variation");
+        variationPOModifyValidationButtons(purchaseOrderToVariation.getPurchaseOrderProcurementEntity());
         service.savePOOnProcurementNewVariation(purchaseOrderToVariation);
         sortPurchaseListByVariationAndDoUpdate();
         maxVariationsList = service.findPOMaxVariations(Long.parseLong(projectId));
@@ -284,7 +285,7 @@ public class PoListBean implements Serializable {
             log.info("time between startFindCurrentPo - endFindCurrentPo = " +(endFindCurrentPo.getTime() - startFindCurrentPo.getTime()));
             if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
-
+                commitPOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
                 Date startPopulateFromPreviousRevision = new Date();
                 populateFromPreviousRevision(currentPurchaseOrder);
                 Date endPopulateFromPreviousRevision = new Date();
@@ -378,6 +379,7 @@ public class PoListBean implements Serializable {
         Date d1 = new Date();
         if (currentPurchaseOrder != null) {
             currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            unCommitPOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
             currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
         }
         Date d2 = new Date();
@@ -391,6 +393,7 @@ public class PoListBean implements Serializable {
             currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
             if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
+                finalisePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
             }
         }
@@ -403,6 +406,7 @@ public class PoListBean implements Serializable {
         log.info("do release purchase order");
         Date d1 = new Date();
         currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+        releasePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
         currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
         Date d2 = new Date();
         log.info("time process doReleasePo= " + (d2.getTime() - d1.getTime()));
@@ -690,6 +694,7 @@ public class PoListBean implements Serializable {
             List<PurchaseOrderEntity> list = new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             InputStream is = exporter.generateWorkbook(list);
+            exportCsvPOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
             service.markCMSAsExported(currentPurchaseOrder);
             content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
         }
@@ -704,6 +709,7 @@ public class PoListBean implements Serializable {
             List<PurchaseOrderEntity> list = new ArrayList<>();
             list.add(service.findById(currentPurchaseOrder.getId()));
             InputStream is = exporterToJDE.generateWorkbook(list);
+            exportJdePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
             service.markJDEAsExported(currentPurchaseOrder);
             content = new DefaultStreamedContent(is, "application/xls", service.generateName(currentPurchaseOrder) + ".xlsx");
         }
@@ -912,4 +918,97 @@ public class PoListBean implements Serializable {
         ((FilterPO) poManagerTable.getFilter()).setProjectId(project.getId());
         findPOs();
     }
+
+
+    public void finalisePOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(false);
+        po.setCanCommit(true);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(false);
+        po.setCanFinalise(false);
+        po.setCanRelease(true);
+        po.setCanDelete(true);
+    }
+
+    public void releasePOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(true);
+        po.setCanView(true);
+        po.setCanVariation(false);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(false);
+        po.setCanFinalise(true);
+        po.setCanRelease(false);
+        po.setCanDelete(true);
+    }
+
+    public void commitPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(true);
+        po.setCanCommit(false);
+        po.setCanUncommit(true);
+        po.setCanExportCsv(true);
+        po.setCanExportJde(true);
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
+    }
+
+    public void unCommitPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(true);
+        po.setCanView(true);
+        po.setCanVariation(false);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(false);
+        po.setCanFinalise(true);
+        po.setCanRelease(false);
+        po.setCanDelete(true);
+    }
+
+    public void exportCsvPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(true);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(po.getCanExportJde());
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
+    }
+
+    public void exportJdePOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(true);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(po.getCanExportCsv());
+        po.setCanExportJde(false);
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
+    }
+
+    public void variationPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(false);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(false);
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
+    }
+
 }
