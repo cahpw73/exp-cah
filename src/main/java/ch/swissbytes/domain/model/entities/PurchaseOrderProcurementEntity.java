@@ -51,6 +51,17 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     private Boolean cmsExported=false;
     private Boolean jdeExported=false;
 
+    private Boolean canEdit;
+    private Boolean canView;
+    private Boolean canVariation;
+    private Boolean canCommit;
+    private Boolean canUncommit;
+    private Boolean canExportCsv;
+    private Boolean canExportJde;
+    private Boolean canFinalise;
+    private Boolean canRelease;
+    private Boolean canDelete;
+
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -204,6 +215,97 @@ public class PurchaseOrderProcurementEntity implements Serializable{
     public void setVendorDrawingData(Boolean vendorDrawingData) {
         this.vendorDrawingData = vendorDrawingData;
     }
+
+    @Column(name = "CAN_EDIT")
+    public Boolean getCanEdit() {
+        return canEdit;
+    }
+
+    public void setCanEdit(Boolean canEdit) {
+        this.canEdit = canEdit;
+    }
+
+    @Column(name = "CAN_VIEW")
+    public Boolean getCanView() {
+        return canView;
+    }
+
+    public void setCanView(Boolean canView) {
+        this.canView = canView;
+    }
+
+    @Column(name = "CAN_VARIATION")
+    public Boolean getCanVariation() {
+        return canVariation;
+    }
+
+    public void setCanVariation(Boolean canVariation) {
+        this.canVariation = canVariation;
+    }
+
+    @Column(name = "CAN_COMMIT")
+    public Boolean getCanCommit() {
+        return canCommit;
+    }
+
+    public void setCanCommit(Boolean canCommit) {
+        this.canCommit = canCommit;
+    }
+
+    @Column(name = "CAN_UNCOMMIT")
+    public Boolean getCanUncommit() {
+        return canUncommit;
+    }
+
+    public void setCanUncommit(Boolean canUncommit) {
+        this.canUncommit = canUncommit;
+    }
+
+    @Column(name = "CAN_EXPORT_CSV")
+    public Boolean getCanExportCsv() {
+        return canExportCsv;
+    }
+
+    public void setCanExportCsv(Boolean canExportCsv) {
+        this.canExportCsv = canExportCsv;
+    }
+
+    @Column(name = "CAN_EXPORT_JDE")
+    public Boolean getCanExportJde() {
+        return canExportJde;
+    }
+
+    public void setCanExportJde(Boolean canExportJde) {
+        this.canExportJde = canExportJde;
+    }
+
+    @Column(name = "CAN_FINALISE")
+    public Boolean getCanFinalise() {
+        return canFinalise;
+    }
+
+    public void setCanFinalise(Boolean canFinalise) {
+        this.canFinalise = canFinalise;
+    }
+
+    @Column(name = "CAN_RELEASE")
+    public Boolean getCanRelease() {
+        return canRelease;
+    }
+
+    public void setCanRelease(Boolean canRelease) {
+        this.canRelease = canRelease;
+    }
+
+    @Column(name = "CAN_DELETE")
+    public Boolean getCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(Boolean canDelete) {
+        this.canDelete = canDelete;
+    }
+
 
     /*@Transient
     public List<ItemEntity> getItemList() {

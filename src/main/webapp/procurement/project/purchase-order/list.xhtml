@@ -198,9 +198,8 @@
                     </p:column>
                     <p:column id="colAction" headerText="#{msgs['lbl.dt.column.actions']}" style="width: 370px;">
                         <h:panelGroup id="groupActionsBtn">
-
                             <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
-                                           rendered="#{poListBean.canEdit(_p) and permissionBean.hasPermission(1402) }"
+                                           rendered="#{_p.purchaseOrderProcurementEntity.canEdit and permissionBean.hasPermission(1402) }"
                                            style="float: left!important; color: #428BCA; margin-right:5px;"
                                            action="#{poListBean.redirectToEdit}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -208,7 +207,7 @@
                             </h:commandLink>
                             &#160;
                             <h:commandLink value="#{msgs['project.list.action.view']}"
-                                           rendered="#{poListBean.canView(_p)}"
+                                           rendered="#{_p.purchaseOrderProcurementEntity.canView}"
                                            style="float: left!important; color: #428BCA; margin-right:5px;"
                                            action="#{poListBean.redirectToView}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -223,7 +222,7 @@
                             </p:commandLink>
                             &#160;
                             <p:commandLink id="variationBtn" value="#{msgs['project.list.action.variation']}"
-                                           rendered="#{poListBean.isPossibleCreateVariation(_p) and permissionBean.hasPermission(1407)}"
+                                           rendered="#{_p.purchaseOrderProcurementEntity.canVariation and permissionBean.hasPermission(1407)}"
                                            action="#{poListBean.createVarNumberToPO(_p)}" partialSubmit="true" process="@this"
                                            update=":variationGroupId :listPooFormId:poGlbMsgs" async="false"
                                            style="float: left!important; color: #428BCA; margin-right:5px; padding-top: 0px!important;">
@@ -234,7 +233,7 @@
                                            value="#{msgs['project.list.action.commit']}" update="groupActionsBtn groupStatusTxt :listPooFormId:poGlbMsgs"
                                            action="#{poListBean.doCommitPo}"
                                            style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                           rendered="#{poListBean.canCommitt(_p) and permissionBean.hasPermission(1405)}"
+                                           rendered="#{_p.purchaseOrderProcurementEntity.canCommit and permissionBean.hasPermission(1405)}"
                                            onstart="PF('waitingModalWg').show();" oncomplete="PF('waitingModalWg').hide();" >
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                              value="#{_p}"/>
@@ -248,7 +247,7 @@
                                            ajax="true" async="false" partialSubmit="true" process="@this"
                                            action="#{poListBean.doUncommit}" update="groupActionsBtn groupStatusTxt"
                                            style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                           rendered="#{poListBean.canUncommit(_p) and permissionBean.hasUserPermission(1409)}">
+                                           rendered="#{_p.purchaseOrderProcurementEntity.canUncommit and permissionBean.hasUserPermission(1409)}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                              value="#{_p}"/>
                                 <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -259,7 +258,7 @@
                             &#160;
                             <p:commandLink id="exportCsv" value="#{msgs['project.list.action.export.cms']}"
                                            update="projectListId"
-                                           rendered="#{poListBean.canExportCMS(_p)}"
+                                           rendered="#{_p.purchaseOrderProcurementEntity.canExportCsv}"
                                            onclick="PF('cmsExport').show();"
                                            style="float: left!important; color: #428BCA; padding-top: 0px!important;">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
@@ -272,7 +271,7 @@
                                     value="#{msgs['project.list.action.export.jde']}"
                                     onclick="PF('jdeExport').show();"
                                     style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                    rendered="#{poListBean.canExportJDE(_p)}">
+                                    rendered="#{_p.purchaseOrderProcurementEntity.canExportJde}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                              value="#{_p}"/>
                             </p:commandLink>
@@ -292,7 +291,7 @@
                                     value="#{msgs['project.list.action.finalise']}"
                                     action="#{poListBean.doFinalise()}"
                                     style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                    rendered="#{poListBean.actionForReady(_p)}">
+                                    rendered="#{_p.purchaseOrderProcurementEntity.canFinalise}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                              value="#{_p}"/>
                                 <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -308,7 +307,7 @@
                                     action="#{poListBean.doReleasePo}"
                                     async="false"
                                     style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                    rendered="#{poListBean.canRelease(_p) and permissionBean.hasPermission(1407)}">
+                                    rendered="#{_p.purchaseOrderProcurementEntity.canRelease and permissionBean.hasPermission(1407)}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                              value="#{_p}"/>
                                 <p:confirm header="#{msgs['lbl.confirmation']}"
@@ -322,18 +321,16 @@
                                     value="#{msgs['project.list.action.delete']}"
                                     action="#{poListBean.doDeletePo}"
                                     style="float: left!important; color: #428BCA; padding-top: 0px!important;"
-                                    rendered="#{poListBean.canDelete(_p)}">
+                                    rendered="#{_p.purchaseOrderProcurementEntity.canDelete}">
                                 <f:setPropertyActionListener target="#{poListBean.currentPurchaseOrder}"
                                                              value="#{_p}"/>
                                 <p:confirm header="#{msgs['lbl.confirmation']}"
                                            message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
                                            icon="ui-icon-alert">
                                 </p:confirm>
-
                             </p:commandLink>
                         </h:panelGroup>
                     </p:column>
-
                 </p:dataTable>
                 <br/>
             </div>
@@ -490,7 +487,7 @@
                 <div class="form-group">
                     <div class="pull-right">
                         <h:form>
-                            <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces"
+                            <p:commandLink id="exportJdeBtnMod" styleClass="btn btn-primary btn-commandLink-primeFaces"
                                            value="#{msgs['lbl.yes']}"
                                            ajax="false"
                                            onclick="PrimeFaces.monitorDownload(null, stop); PF('jdeExport').hide();"

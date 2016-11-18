@@ -276,6 +276,7 @@ public class PoBean extends Bean {
         if (validate()) {
             collectData();
             purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+            createPOModifyValidationButtons(purchaseOrder.getPurchaseOrderProcurementEntity());
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
             poId = purchaseOrder.getId().toString();
@@ -295,9 +296,11 @@ public class PoBean extends Bean {
             collectData();
             if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus() == null) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+                createPOModifyValidationButtons(purchaseOrder.getPurchaseOrderProcurementEntity());
             }
             if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
                 purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
+                createPOModifyValidationButtons(purchaseOrder.getPurchaseOrderProcurementEntity());
             }
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
             doLastOperationsOverPO(true);
@@ -975,6 +978,19 @@ public class PoBean extends Bean {
             return purchaseOrder.getProjectEntity().getId().toString();
         }
         return "";
+    }
+
+    public void createPOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        po.setCanEdit(true);
+        po.setCanView(true);
+        po.setCanVariation(false);
+        po.setCanCommit(false);
+        po.setCanUncommit(false);
+        po.setCanExportCsv(false);
+        po.setCanExportJde(false);
+        po.setCanFinalise(true);
+        po.setCanRelease(false);
+        po.setCanDelete(true);
     }
 
     public String getAnchor() {
