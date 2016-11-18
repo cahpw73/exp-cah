@@ -280,9 +280,12 @@ public class PoListBean implements Serializable {
             Date startDoCommit = new Date();
 
             Date startFindCurrentPo = new Date();
+            log.info("before currentPO id = "+ currentPurchaseOrder.getId());
             currentPurchaseOrder = service.findPOForCommitByPoId(currentPurchaseOrder.getId());
+            log.info("after currentPO id = "+ currentPurchaseOrder.getId());
             Date endFindCurrentPo = new Date();
             log.info("time between startFindCurrentPo - endFindCurrentPo = " +(endFindCurrentPo.getTime() - startFindCurrentPo.getTime()));
+
             if (validate()) {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.COMMITTED);
                 commitPOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
@@ -722,6 +725,7 @@ public class PoListBean implements Serializable {
     }
 
     private boolean validate() {
+        Date startFindCurrentPo = new Date();
         boolean validate = true;
         if (StringUtils.isEmpty(currentPurchaseOrder.getPo())) {
             Messages.addFlashGlobalError("Enter a valid PO Number");
@@ -777,6 +781,8 @@ public class PoListBean implements Serializable {
             Messages.addFlashGlobalError("The Balance must be zero");
             validate = false;
         }
+        Date endFindCurrentPo = new Date();
+        log.info("time between startValidatePO - endValidatePO = " +(endFindCurrentPo.getTime() - startFindCurrentPo.getTime()));
         return validate;
     }
 

@@ -198,7 +198,6 @@
                     </p:column>
                     <p:column id="colAction" headerText="#{msgs['lbl.dt.column.actions']}" style="width: 370px;">
                         <h:panelGroup id="groupActionsBtn">
-
                             <h:commandLink id="editExpediting" value="#{msgs['lbl.edit']}"
                                            rendered="#{_p.purchaseOrderProcurementEntity.canEdit and permissionBean.hasPermission(1402) }"
                                            style="float: left!important; color: #428BCA; margin-right:5px;"
@@ -320,11 +319,9 @@
                                            message="#{msgs['project.list.lbl.msg.confirmation.delete']}"
                                            icon="ui-icon-alert">
                                 </p:confirm>
-
                             </p:commandLink>
                         </h:panelGroup>
                     </p:column>
-
                 </p:dataTable>
                 <br/>
             </div>
@@ -481,7 +478,7 @@
                 <div class="form-group">
                     <div class="pull-right">
                         <h:form>
-                            <p:commandLink styleClass="btn btn-primary btn-commandLink-primeFaces"
+                            <p:commandLink id="exportJdeBtnMod" styleClass="btn btn-primary btn-commandLink-primeFaces"
                                            value="#{msgs['lbl.yes']}"
                                            ajax="false"
                                            onclick="PrimeFaces.monitorDownload(null, stop); PF('jdeExport').hide();"
