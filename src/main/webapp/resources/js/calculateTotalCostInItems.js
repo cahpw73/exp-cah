@@ -5,9 +5,10 @@ function calculateTotalCost() {
     var totalPrice;
     try {
         if (!isNaN(parseInt(quantity)) && unitPrice != "") {
-            var unitPriceCalc = unitPrice.replace(",", "");
-            console.log("calculating....")
+            var unitPriceCalc = unitPrice.replace(/,/g, "");
+            console.log("unitPriceCalc = " + unitPriceCalc);
             totalPrice = parseFloat(quantity) * parseFloat(unitPriceCalc);
+            console.log("totalPrice = " + totalPrice);
             var totalPriceFixed = parseFloat(totalPrice.toFixed(2));
             document.getElementsByClassName('form-control edTotalCostItems')[0].value = accounting.toFixed(totalPriceFixed, 2);
         } else {
@@ -25,7 +26,7 @@ function calculateUnitCost() {
     var unitCost;
     try {
         if (!isNaN(parseInt(quantity)) && !isNaN(parseInt(totalCost))) {
-            var totalCostCalc = totalCost.replace(",", "");
+            var totalCostCalc = totalCost.replace(/,/g, "");
             console.log("calculating....")
             unitCost = parseFloat(totalCostCalc) / parseFloat(quantity);
             var unitPriceFixed = parseFloat(unitCost.toFixed(2));
