@@ -77,12 +77,12 @@ order by $P!{sortBy}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="b1a04cd0-298d-4e20-a203-89a8931dc16b" positionType="Float" x="271" y="0" width="50" height="12"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="6"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{order_amt}!=null?new java.text.DecimalFormat($P{patternDecimal}, new java.text.DecimalFormatSymbols()).format($F{order_amt}):""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{order_amt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

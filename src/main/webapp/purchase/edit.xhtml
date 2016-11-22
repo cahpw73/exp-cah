@@ -416,7 +416,7 @@
                                     class="form-control" rows="3"/>
                         </div>
                     </div>
-
+                    <h:panelGroup id="panelAId">
                     <div style="border: 1px solid #cccccc; margin-left: -15px; padding-left: 6px; margin-top: 10px; padding-bottom: 5px;
                                 padding-top: 5px; width: 1023px; height: 225px; z-index: -10; margin-bottom: -216px; border-radius: 4px;"></div>
                     <div style="margin-left: -9px; padding-left: 9px; margin-bottom: 5px;
@@ -503,6 +503,7 @@
                             </div>
                         </div>
                     </div>
+                    </h:panelGroup>
                     <ui:include src="components/additionalDataEdit.xhtml"/>
 
                     <div class="clearfix"></div>
@@ -511,6 +512,13 @@
                     <div style="width: 940px;">
                         <div class="pull-left">
                             <h:panelGroup id="bntBulkUpdateShow">
+                                <p:commandLink id="initialUpdateBtn" value="#{msgs['po.lbl.button.initial.update']}"
+                                               styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                               action="#{purchaseOrderEdit.resetBulkInitialUpdateModal}"
+                                               rendered="#{permissionBean.hasPermission(1410)}"
+                                               oncomplete="PF('bulkInitialUpdateSp').show();"
+                                               update=":bulkInitialUpdateFormId"/>
+                                &#160;
                                 <h:panelGroup rendered="#{purchaseOrderEdit.showButtons}">
                                     <p:commandLink id="bulk" value="#{msgs['po.lbl.button.bulk.scope.supply.update']}"
                                                    styleClass="btn btn-primary btn-commandLink-primeFaces"
@@ -585,6 +593,10 @@
             <!-- /.col-lg-12 -->
         </div>
 
+        <p:dialog id="bulkInitalUpdateSpId" header="#{msgs['modal.bulk.initial.update']}" widgetVar="bulkInitialUpdateSp"
+                  resizable="false" width="630">
+            <ui:include src="modal/BulkInitialUpdate.xhtml"/>
+        </p:dialog>
         <p:dialog id="bulkUpdateSpId" header="#{msgs['modal.bulk.scope.supply.update']}" widgetVar="bulkUpdateSp"
                   resizable="false" width="630">
             <ui:include src="modal/BulkScopeSupplyEdit.xhtml"/>
@@ -632,7 +644,7 @@
                                                     supplierId
                                                    :empForm:supplierSuburb :empForm:supplierState :empForm:supplierPostCode
                                                    :empForm:supplierCountry :empForm:contactId :empForm:supplierNameId"/>
-                </ui:include>
+                </ui:include>º
             </h:form>
         </p:dialog>
         <p:dialog header="New Category" widgetVar="categoryModal" width="400" height="120" resizable="false">
@@ -646,6 +658,8 @@
                 <ui:include src="../procurement/admin/supplier/components/addBrand.xhtml"/>
             </h:form>
         </p:dialog>
+
+        <h:outputScript name="js/multipleSelectionInitialUpdate.js"/>
         <h:outputScript name="js/multipleSelectionPoEdit.js"/>
     </ui:define>
 </ui:composition>
