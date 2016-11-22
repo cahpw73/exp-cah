@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf/passthrough">
+    <h:form id="bulkInitialUpdateFormId" role="form" prependId="false"
+            styleClass="form-horizontal">
+        <div class="col-lg-12" style="text-align: center; margin-bottom: 15px">
+            <div style="display: inline-block">
+                <h:outputText value="#{purchaseOrderEdit.titleInitialUpdate}"
+                              style="font-weight: bold; font-size: 16pt;"/>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.responsible']}"/>
+
+                <div class="inputText-general-po">
+                    <h:inputText maxlength="100"
+                                 value="#{purchaseOrderEdit.poEdit.responsibleExpediting}"
+                                 class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.expediting.title']}"/>
+
+                <div class="inputText-general-po">
+                    <h:inputText  maxlength="50"
+                                 value="#{purchaseOrderEdit.poEdit.expeditingTitle}"
+                                 class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.intro.email.sent']}"/>
+
+                <div class="calendar-general-po">
+                    <p:calendar type="text"
+                                styleClass="calendar-date-po"
+                                mask="#{configuration.mask}" navigator="true"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                value="#{purchaseOrderEdit.poEdit.introEmail}"
+                                onselect="calendarChanges();" onclick="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.next.key.date']}"/>
+
+                <div class="calendar-general-po">
+                    <p:calendar type="text"
+                                navigator="true"
+                                mask="#{configuration.mask}"
+                                pattern="#{configuration.formatDate}"
+                                converterMessage="#{msgs['validator.date.invalid']}"
+                                converter="#{dateConverter}"
+                                timeZone="#{configuration.timeZone}"
+                                jsf:placeholder="#{configuration.formatDate}"
+                                value="#{purchaseOrderEdit.poEdit.nextKeyDate}"
+                                onselect="calendarChanges();" onclick="calendarChanges();"/>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="col-lg-12">
+            <div class="form-group input-general-po" >
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.expediting.status']}"/>
+                <div class="inputText-general-po">
+                    <h:inputHidden id="poInitialStatusesHidenId" value="#{purchaseOrderEdit.expeditingStatuses}"/>
+                    <select id="poInitialStatuses" multiple="multiple">
+                        <ui:repeat value="#{poStatuses.keySet().toArray()}" var="x">
+                            <option value="#{poStatuses.get(x).ordinal()}">#{x}</option>
+                        </ui:repeat>
+                    </select>
+                </div>
+                <p:remoteCommand name="onload"
+                                 oncomplete="initializeMultiselectionInitial('#{purchaseOrderEdit.expeditingStatuses}');"
+                                 autoRun="true"></p:remoteCommand>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group input-general-po">
+                <h:outputLabel class="label-general-po text-lbl-ltr control-label"
+                               value="#{msgs['po.lbl.next.key.date.comment']}"/>
+
+                <div class="inputText-general-po">
+                    <p:inputTextarea maxlength="950" type="text"
+                                     style="max-height: 127px!important;"
+                                     value="#{purchaseOrderEdit.poEdit.nextKeyDateComment}"
+                                     class="form-control" rows="7"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" style="margin-bottom: 20px; padding-right: 5px!important;">
+            <div class="pull-right">
+                <h:commandButton value="#{msgs['lbl.update']}" styleClass="btn btn-primary btn-sm">
+                    <p:ajax onsuccess="PF('bulkInitialUpdateSp').hide();" update=":empForm:panelAId :empForm:panelBId"
+                            async="false"
+                            process="bulkInitialUpdateFormId"/>
+                </h:commandButton>
+                <button type="button" onclick="PF('bulkInitialUpdateSp').hide();" class="btn btn-primary btn-sm">
+                    #{msgs['lbl.cancel']}
+                </button>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

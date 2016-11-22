@@ -158,6 +158,8 @@ public class PurchaseOrderEdit implements Serializable {
 
     private String titleBulkUpdateModal;
 
+    private String titleInitialUpdate;
+
     private String expeditingStatuses = "";
 
     private boolean hasValueLeadTime;
@@ -588,6 +590,11 @@ public class PurchaseOrderEdit implements Serializable {
         titleBulkUpdateModal = "Bulk update for PO #" + poEdit.getPo();
         hasValueForecastSiteDate = false;
         hasValueLeadTime = false;
+    }
+
+    public void resetBulkInitialUpdateModal() {
+        log.info("resetBulkInitialUpdateModal");
+        titleInitialUpdate = "Initial update for PO #" + poEdit.getPo();
     }
 
     public void doBulkUpdateInScopeSupplyForActualSiteDate(){
@@ -1760,5 +1767,13 @@ public class PurchaseOrderEdit implements Serializable {
         log.info("projectName="+projectName);
         this.projectName = projectName;
         log.info("this.projectName="+this.projectName);
+    }
+
+    public String getTitleInitialUpdate() {
+        return titleInitialUpdate;
+    }
+
+    public void setTitleInitialUpdate(String titleInitialUpdate) {
+        this.titleInitialUpdate = titleInitialUpdate;
     }
 }
