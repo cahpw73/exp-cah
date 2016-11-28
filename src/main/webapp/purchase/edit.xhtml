@@ -595,10 +595,12 @@
             <!-- /.col-lg-12 -->
         </div>
 
+        <ui:remove>
         <p:dialog id="bulkInitalUpdateSpId" header="#{msgs['modal.bulk.initial.update']}" widgetVar="bulkInitialUpdateSp"
                   resizable="false" width="630">
             <ui:include src="modal/BulkInitialUpdate.xhtml"/>
         </p:dialog>
+        </ui:remove>
         <p:dialog id="bulkUpdateSpId" header="#{msgs['modal.bulk.scope.supply.update']}" widgetVar="bulkUpdateSp"
                   resizable="false" width="630">
             <ui:include src="modal/BulkScopeSupplyEdit.xhtml"/>
@@ -661,7 +663,7 @@
             </h:form>
         </p:dialog>
 
-        <h:outputScript name="js/multipleSelectionInitialUpdate.js"/>
+        <!--<h:outputScript name="js/multipleSelectionInitialUpdate.js"/>-->
         <h:outputScript name="js/multipleSelectionPoEdit.js"/>
     </ui:define>
 </ui:composition>
