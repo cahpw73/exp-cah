@@ -552,10 +552,12 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
         sb.append(" WHERE po.po= :PO_NUMBER ");
         sb.append(" AND  po.projectEntity.id = :PROJECT_ID ");
         sb.append(" AND po.orderedVariation = :ORDERED_VARIATION ");
+        sb.append("AND po.status.id=:ENABLED");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("PO_NUMBER", po);
         parameters.put("PROJECT_ID", projectId);
         parameters.put("ORDERED_VARIATION",previousOrderedVariation);
+        parameters.put("ENABLED",StatusEnum.ENABLE.getId());
         return super.findBy(sb.toString(), parameters);
     }
 

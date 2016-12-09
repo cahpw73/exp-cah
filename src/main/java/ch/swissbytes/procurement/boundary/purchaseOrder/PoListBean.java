@@ -441,6 +441,11 @@ public class PoListBean implements Serializable {
         service.doDelete(currentPurchaseOrder.getId());
         log.info("Process on ["+new Date()+"] by user["+userSession.getCurrentUser().getUsername()+"]");
         log.info("PO["+currentPurchaseOrder.getProject()+", "+currentPurchaseOrder.getPo()+","+ currentPurchaseOrder.getVariation()+"]");
+        PurchaseOrderEntity previousPO = service.findPOPreviousRevision(currentPurchaseOrder.getProjectEntity().getId(),currentPurchaseOrder.getPo(),currentPurchaseOrder.getOrderedVariation()-1);
+        log.info("previousPO = " +previousPO.getProject()+" - " + previousPO.getPo()+" - "+previousPO.getVariation());
+        log.info("previousPO.getPurchaseOrderProcurementEntity() = " +(previousPO.getPurchaseOrderProcurementEntity()!=null?"not null":"null"));
+        afterDeletePOModifyValidationButtons(previousPO.getPurchaseOrderProcurementEntity());
+        service.updatePOStatus(previousPO);
         refreshListPo();
     }
 
@@ -984,6 +989,20 @@ public class PoListBean implements Serializable {
         po.setCanUncommit(true);
         po.setCanExportCsv(true);
         po.setCanExportJde(true);
+        po.setCanFinalise(false);
+        po.setCanRelease(false);
+        po.setCanDelete(false);
+    }
+
+    public void afterDeletePOModifyValidationButtons(PurchaseOrderProcurementEntity po){
+        log.info("afterDeletePOModifyValidationButtons(PurchaseOrderProcurementEntity po)");
+        po.setCanEdit(false);
+        po.setCanView(true);
+        po.setCanVariation(true);
+        po.setCanCommit(false);
+        po.setCanUncommit(po.getCanUncommit());
+        po.setCanExportCsv(po.getCanExportCsv());
+        po.setCanExportJde(po.getCanExportJde());
         po.setCanFinalise(false);
         po.setCanRelease(false);
         po.setCanDelete(false);
