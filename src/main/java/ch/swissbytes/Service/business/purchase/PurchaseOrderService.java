@@ -880,7 +880,9 @@ public class PurchaseOrderService extends Service implements Serializable {
     }
 
     public PurchaseOrderEntity findPOPreviousRevision(Long projectId, String po, Integer previousOrderedVariation) {
+        log.info("PurchaseOrderEntity findPOPreviousRevision(projectId["+projectId+"], po["+po+"], previousOrderedVariation["+previousOrderedVariation+"])");
         List<PurchaseOrderEntity> list = dao.findPreviousRevisionPO(projectId, po, previousOrderedVariation);
+        log.info("found list size = " + list.size());
         return list.isEmpty() ? null : list.get(0);
     }
 
