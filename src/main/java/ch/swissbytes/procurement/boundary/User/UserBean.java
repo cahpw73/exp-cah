@@ -114,12 +114,23 @@ public class UserBean implements Serializable {
             if (moduleGrantedAccessList.size() == 1) {
                 ModuleGrantedAccessEntity moduleProcurement = new ModuleGrantedAccessEntity();
                 moduleProcurement.setUserEntity(userEntity);
-                moduleProcurement.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                if(moduleGrantedAccessList.get(0).getModuleSystem().ordinal()==ModuleSystemEnum.EXPEDITING.ordinal()){
+                    moduleProcurement.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                }else{
+                    moduleProcurement.setModuleSystem(ModuleSystemEnum.EXPEDITING);
+                }
                 moduleGrantedAccessList.add(moduleProcurement);
             }
             userRoleList = userRoleService.findListByUserId(userId);
             if(userRoleList.size() == 1){
                 UserRoleEntity userProcurement = new UserRoleEntity();
+                userProcurement.setUser(userEntity);
+                userProcurement.setUser(userEntity);
+                if(userRoleList.get(0).getModuleSystem().ordinal() == ModuleSystemEnum.EXPEDITING.ordinal()){
+                    userProcurement.setModuleSystem(ModuleSystemEnum.PROCUREMENT);
+                }else{
+                    userProcurement.setModuleSystem(ModuleSystemEnum.EXPEDITING);
+                }
                 userRoleList.add(userProcurement);
             }
             ModuleGrantedAccessEntity mga = moduleGrantedAccessService.findByUserIdAndModuleSystem(userId, ModuleSystemEnum.EXPEDITING);
@@ -193,17 +204,41 @@ public class UserBean implements Serializable {
             if (!oldPassword.equals(userEntity.getPassword())) {
                 userEntity.setPassword(getEncodePass(userEntity.getPassword()));
             }
-
-            getModuleProcurement().setModuleAccess(moduleAccessProcurement);
-            getModuleExpediting().setModuleAccess(moduleAccessExpediting);
-
-            getUserExpediting().setRole(roleExpediting);
-            getUserProcurement().setRole(roleProcurement);
+            updateModuleGrantedAccessListBeforeUpdate();
+            updateRoleListBeforeUpdate();
             userService.doUpdateUser(userEntity, moduleGrantedAccessList, userRoleList);
             return "list?faces-redirect=true";
         }
         mainMenuBean.select(2);
         return "";
+    }
+
+    public void updateRoleListBeforeUpdate(){
+        log.info("void updateRoleListBeforeUpdate()");
+        for(UserRoleEntity u : userRoleList){
+            if (roleProcurement != null && u.getModuleSystem().ordinal() == roleProcurement.getModuleSystem().ordinal()) {
+                u.setRole(roleProcurement);
+            }else if(u.getModuleSystem().ordinal() == ModuleSystemEnum.PROCUREMENT.ordinal()){
+                u.setRole(null);
+            }
+            if(roleExpediting != null && u.getModuleSystem().ordinal() == roleExpediting.getModuleSystem().ordinal()){
+                u.setRole(roleExpediting);
+            }else if(u.getModuleSystem().ordinal() == ModuleSystemEnum.EXPEDITING.ordinal()){
+                u.setRole(null);
+            }
+        }
+    }
+
+    public void updateModuleGrantedAccessListBeforeUpdate(){
+        log.info("void updateModuleGrantedAccessListBeforeUpdate()");
+        for(ModuleGrantedAccessEntity m : moduleGrantedAccessList){
+            if (m.getModuleSystem().ordinal() == ModuleSystemEnum.PROCUREMENT.ordinal()) {
+                m.setModuleAccess(moduleAccessProcurement);
+            }
+            if(m.getModuleSystem().ordinal() == ModuleSystemEnum.EXPEDITING.ordinal()){
+                m.setModuleAccess(moduleAccessExpediting);
+            }
+        }
     }
 
     public List<RoleEntity> getProcurementRoles() {
@@ -251,11 +286,15 @@ public class UserBean implements Serializable {
     }
 
     public void resetRoleProcurement() {
+        log.info("resetRoleProcurement()");
+        log.info("moduleAccessProcurement = " + moduleAccessProcurement);
         if (!moduleAccessProcurement)
             roleProcurement = null;
     }
 
     public void resetRoleExpediting() {
+        log.info("resetRoleExpediting()");
+        log.info("moduleAccessExpediting = " + moduleAccessExpediting);
         if (!moduleAccessExpediting)
             roleExpediting = null;
     }

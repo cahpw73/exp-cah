@@ -109,14 +109,14 @@
                                         <div class="checkbox">
                                             <label>
                                                 <h:selectBooleanCheckbox value="#{userBean.moduleAccessProcurement}">
-                                                    <p:ajax process="@this" update="roleProcurement" async="false" listener="#{userBean.resetRoleProcurement}"/>
+                                                    <p:ajax process="@this" update="roleProcurement" async="false" listener="#{userBean.resetRoleProcurement}" event="change"/>
                                                 </h:selectBooleanCheckbox> #{msgs['lbl.crud.user.procurement']}
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
                                                 <h:selectBooleanCheckbox value="#{userBean.moduleAccessExpediting}">
-                                                    <p:ajax process="@this" update="roleExpediting" async="false" listener="#{userBean.resetRoleExpediting}"/>
+                                                    <p:ajax process="@this" update="roleExpediting" async="false" listener="#{userBean.resetRoleExpediting}" event="change"/>
                                                 </h:selectBooleanCheckbox> #{msgs['lbl.crud.user.expediting']}
                                             </label>
                                         </div>
