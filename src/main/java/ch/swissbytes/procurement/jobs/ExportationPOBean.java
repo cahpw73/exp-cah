@@ -131,7 +131,7 @@ public class ExportationPOBean implements Serializable {
 
     public void exportJDECsv(List<PurchaseOrderEntity> list, ProjectEntity project) throws IOException {
         log.info("exportJDECsv");
-        String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+        String fName = project.getProjectNumber();
         exporterToJDECsv.generateWorkbookToExport(list, fName);
     }
 

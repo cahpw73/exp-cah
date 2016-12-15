@@ -84,7 +84,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         //pathJDE = pathJDE.replace("{project_field}", folderName);
         log.info("Create spreadSheet for JDE PkgHdr csv");
         processWorkbook(list);
-        String fileNamePckIGenerated = generateFileName(packageHeaderInformation);
+        String fileNamePckIGenerated = generateFileName(packageHeaderInformation,folderName);
         processor.doSaveWorkBook(pathJDE, fileNamePckIGenerated);
 
         log.info("written JDE PkgHdr CSV successfully...");
@@ -103,7 +103,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         log.info("Create spreadSheet for JDE PkgScInf csv");
         rowNoMilestone = 0;
         processWorkbookForMilestone(list);
-        String fileNameScheludeIGenerated = generateFileName(packageScheduleInformation);
+        String fileNameScheludeIGenerated = generateFileName(packageScheduleInformation,folderName);
         processor.doSaveWorkBook(pathJDE, fileNameScheludeIGenerated);
         log.info("written JDE PkgScInf CSV successfully...");
         convertToCsv(pathJDE + File.separator + fileNameScheludeIGenerated, pathJDE);
@@ -317,10 +317,10 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFileCsv(cashflowDetail.getPaymentDate()) : " ");
     }
 
-    private String generateFileName(String fileNameSource) {
+    private String generateFileName(String fileNameSource, String folderName) {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy");
         String dateStr = format.format(new Date());
-        String fileName = dateStr.toUpperCase() + " - " + fileNameSource;
+        String fileName = folderName+" - "+dateStr.toUpperCase() + " - " + fileNameSource;
         return fileName;
     }
 

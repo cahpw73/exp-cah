@@ -814,7 +814,7 @@ public class PoListBean implements Serializable {
             if (currentPurchaseOrder != null && currentPurchaseOrder.getId() != null) {
                 List<PurchaseOrderEntity> list = new ArrayList<>();
                 list.add(service.findById(currentPurchaseOrder.getId()));
-                String fName = StringUtils.isNotEmpty(project.getFolderName()) ? project.getFolderName() : project.getProjectNumber() + " " + project.getTitle();
+                String fName = project.getProjectNumber();
                 pathCSVFiles.addAll(jdeCsvService.generateJDECsvFileAndGetPaths(list,fName));
                 jdeCsvService.deleteTemporalFiles(pathCSVFiles);
             }
