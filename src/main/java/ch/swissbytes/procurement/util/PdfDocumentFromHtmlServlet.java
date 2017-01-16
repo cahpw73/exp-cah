@@ -33,22 +33,21 @@ public class PdfDocumentFromHtmlServlet extends HttpServlet implements Serializa
         System.out.println("PdfDocumentFromHtmlServlet");
         String attachmentMainDocId = request.getParameter("pdfMainId");
         String pdfType = request.getParameter("pdfType");
-
         if(StringUtils.isNotEmpty(attachmentMainDocId)){
             System.out.println("attachmentMainDocId = " +attachmentMainDocId);
             String description = "";
             if(pdfType.equals("1")) {
                 System.out.println("pdfType = " +1);
                 MainDocumentEntity attachmentPdf = service.findById(Long.parseLong(attachmentMainDocId));
-                description = attachmentPdf.getDescription();
+                description = attachmentPdf!=null? attachmentPdf.getDescription():"";
             }else if(pdfType.equals("2")){
                 System.out.println("pdfType = " +2);
                 ProjectDocumentEntity attachmentPdf = service.findProjectDocumentEntityById(Long.parseLong(attachmentMainDocId));
-                description = attachmentPdf.getDescription();
+                description = attachmentPdf!=null? attachmentPdf.getDescription():"";
             }else if (pdfType.equals("3")){
                 System.out.println("pdfType = " +3);
                 PODocumentEntity attachmentPdf = service.findPODocumentEntityById(Long.parseLong(attachmentMainDocId));
-                description = attachmentPdf.getDescription();
+                description = attachmentPdf!=null? attachmentPdf.getDescription():"";
             }
 
             if(StringUtils.isNotEmpty(description)) {
