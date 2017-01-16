@@ -267,6 +267,16 @@
                 </ui:include>
             </h:panelGroup>
         </p:dialog>
+        <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml2" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPDFProjectHtmlModalId2">
+                <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
+                    <ui:param name="attachId" value="#{poDocumentBean.selectedPODocument.id}"/>
+                    <ui:param name="pdfTypeId" value="3"/>
+                    <ui:param name="entitySelected" value="#{poDocumentBean.selectedPODocument}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
 
         <p:dialog header="View Project Doc" widgetVar="poDocModal2" resizable="false" width="790" height="500">
             <h:panelGroup id="poDocModalId2">
@@ -282,6 +292,16 @@
                     <ui:param name="entitySelected" value="#{poDocumentBean.selectedProjectDocument}"/>
                     <ui:param name="attachId" value="#{poDocumentBean.selectedProjectDocument.attachmentProjectDocument.id}"/>
                     <ui:param name="id" value="2"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml1" width="850" height="350" resizable="false">
+            <h:panelGroup id="previewPDFProjectHtmlModalId1">
+                <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
+                    <ui:param name="attachId" value="#{poDocumentBean.selectedProjectDocument.id}"/>
+                    <ui:param name="pdfTypeId" value="2"/>
+                    <ui:param name="entitySelected" value="#{poDocumentBean.selectedProjectDocument}"/>
+                    <ui:param name="id" value="1"/>
                 </ui:include>
             </h:panelGroup>
         </p:dialog>
