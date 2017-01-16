@@ -86,4 +86,23 @@ public class XmlWorker {
         document.close();
         return  baos;
     }
+
+    public ByteArrayOutputStream convertHtml(String content) throws FileNotFoundException, IOException, DocumentException {
+        log.info("convertHtml");
+        Document document = new Document(PageSize.A4,55F, 27f, 89f, 27f);
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        PdfWriter writer = PdfWriter.getInstance(document, baos);
+        //HeaderFooterPageEvent event = new HeaderFooterPageEvent(titleHeader);
+        //writer.setPageEvent(event);
+        document.open();
+        ByteArrayInputStream bis=new ByteArrayInputStream(content.getBytes());
+
+        // convert the HTML with the built-in convenience method
+        Date startConvertHtml = new Date();
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, bis);
+        Date endConvertHtml = new Date();
+        log.info("endConvertHtml time - startConvertHtml time = "+(endConvertHtml.getTime()-startConvertHtml.getTime())+"ms");
+        document.close();
+        return  baos;
+    }
 }

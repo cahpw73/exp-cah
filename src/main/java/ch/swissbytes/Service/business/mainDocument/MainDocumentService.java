@@ -4,6 +4,8 @@ package ch.swissbytes.Service.business.mainDocument;
 import ch.swissbytes.Service.business.Service;
 import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.MainDocumentEntity;
+import ch.swissbytes.domain.model.entities.PODocumentEntity;
+import ch.swissbytes.domain.model.entities.ProjectDocumentEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 import org.omnifaces.util.Messages;
 
@@ -78,6 +80,18 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     @Transactional
     public MainDocumentEntity findById(Long id) {
         List<MainDocumentEntity> list = dao.findById(MainDocumentEntity.class, id);
+        return !list.isEmpty() ? list.get(0) : null;
+    }
+
+    @Transactional
+    public ProjectDocumentEntity findProjectDocumentEntityById(Long id) {
+        List<ProjectDocumentEntity> list = dao.findById(ProjectDocumentEntity.class, id);
+        return !list.isEmpty() ? list.get(0) : null;
+    }
+
+    @Transactional
+    public PODocumentEntity findPODocumentEntityById(Long id) {
+        List<PODocumentEntity> list = dao.findById(PODocumentEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;
     }
 
