@@ -59,8 +59,8 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
     }
 
 
-    @Size(max = 100000)
-    @Column(name = "TEXT_SNIPPET", nullable = true, length = 100000)
+    @Lob
+    @Column(name = "TEXT_SNIPPET", nullable = true)
     public String getTextSnippet() {
         return textSnippet;
     }

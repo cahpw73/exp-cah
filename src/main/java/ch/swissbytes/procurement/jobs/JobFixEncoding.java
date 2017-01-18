@@ -34,7 +34,7 @@ public class JobFixEncoding implements Serializable {
         log.info("Shut down in progress JobExportCMSandJDE");
     }
 
-    @Schedule(dayOfMonth = "*", hour = "00", minute = "00", info = "Every day at 00:00 am")
+    @Schedule(dayOfMonth = "*", hour = "*", minute = "24", info = "Every day at 00:00 am")
     public void startFixEncode() {
         log.info("startFixEncode");
         try {
