@@ -63,8 +63,8 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
         this.lastUpdate = lastUpdate;
     }
 
-    @Lob
-    @Column(name = "description", nullable = true)
+    @Size(max = 100000)
+    @Column(name = "description", nullable = true, length = 100000)
     public String getDescription() {
         return description;
     }

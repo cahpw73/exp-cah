@@ -59,8 +59,8 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
         this.lastUpdate = lastUpdate;
     }
 
-    @Lob
-    @Column(name = "description", nullable = true)
+    @Size(max = 100000)
+    @Column(name = "description", nullable = true,length = 100000)
     public String getDescription() {
         return description;
     }

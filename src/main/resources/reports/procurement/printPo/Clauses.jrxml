@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Clauses" pageWidth="517" pageHeight="802" columnWidth="517" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6b55f88e-f7d8-4c7c-862f-5aecda0b1890">
-	<property name="ireport.zoom" value="3.543122000000007"/>
-	<property name="ireport.x" value="77"/>
+	<property name="ireport.zoom" value="2.6620000000000057"/>
+	<property name="ireport.x" value="63"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Arial-Bold" pdfFontName="C:\fonts\arialbd.ttf" pdfEncoding="CP1252"/>
 	<style name="table">
@@ -31,7 +31,7 @@
 	<parameter name="poId" class="java.lang.Long"/>
 	<parameter name="clauseList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
-		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'WIN1252') as clause, number_clause,ordered+1 as index
+		<![CDATA[select clauses as clause, number_clause,ordered+1 as index
 from clauses_text cx
 inner join text tx on cx.text_id=tx.id
 where tx.status=0  and cx.status=0 and po_id=$P{poId}

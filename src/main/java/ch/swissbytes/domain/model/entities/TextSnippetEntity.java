@@ -58,9 +58,9 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
         this.lastUpdate = lastUpdate;
     }
 
-    @Lob
-    @Size(max = 20000)
-    @Column(name = "TEXT_SNIPPET", nullable = true, length = 20000)
+
+    @Size(max = 100000)
+    @Column(name = "TEXT_SNIPPET", nullable = true, length = 100000)
     public String getTextSnippet() {
         return textSnippet;
     }

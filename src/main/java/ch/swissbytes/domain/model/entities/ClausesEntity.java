@@ -49,9 +49,9 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
         this.code = code;
     }
 
-    @Lob
-    @Size(max = 20000)
-    @Column(name = "clauses",length = 20000,nullable = true)
+
+    @Size(max = 100000)
+    @Column(name = "clauses",length = 100000,nullable = true)
     public String getClauses() {
         return clauses;
     }
