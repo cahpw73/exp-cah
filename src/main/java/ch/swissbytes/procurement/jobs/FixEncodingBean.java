@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,6 +35,7 @@ import java.util.logging.Logger;
  * Created by Christian on 16/11/2015.
  */
 @Stateless
+@Named
 public class FixEncodingBean implements Serializable {
 
     private static final Logger log = Logger.getLogger(FixEncodingBean.class.getName());

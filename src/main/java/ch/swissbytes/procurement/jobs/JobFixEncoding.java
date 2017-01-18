@@ -38,7 +38,7 @@ public class JobFixEncoding implements Serializable {
     public void startFixEncode() {
         log.info("startFixEncode");
         try {
-            fixEncodingBean.fixTextEncode();
+            //fixEncodingBean.fixTextEncode();
         } catch (Exception e) {
             log.info("Error background job CronNotifier.startTracingActivities " + e.getMessage());
         }
