@@ -94,4 +94,15 @@ public class PODocumentService implements Serializable {
             }
         }
     }
+
+    @Transactional
+    public List<PODocumentEntity> getAll(){
+       return dao.getAll();
+    }
+
+    @Transactional
+    public void doUpdate(PODocumentEntity entity){
+        dao.doUpdate(entity);
+    }
+
 }

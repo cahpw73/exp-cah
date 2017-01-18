@@ -70,4 +70,12 @@ public class PODocumentDao extends GenericDao<PODocumentEntity> implements Seria
         map.put("PROJECT_DOC_ID", projectDocId);
         return super.findBy(sb.toString(),map);
     }
+
+    public List<PODocumentEntity> getAll() {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM PODocumentEntity x ");
+        Map<String,Object> map=new HashMap<>();
+        return super.findBy(sb.toString(),map);
+    }
 }

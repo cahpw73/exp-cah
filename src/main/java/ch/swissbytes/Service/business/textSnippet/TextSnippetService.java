@@ -77,6 +77,12 @@ public class TextSnippetService extends Service<TextSnippetEntity> implements Se
     }
 
     @Transactional
+    public List<TextSnippetEntity> getAllTextSnippetList() {
+        log.info("getAllTextSnippetList");
+        return dao.getAllTextSnippetList();
+    }
+
+    @Transactional
     public boolean isCodeDuplicated(Long id, String code) {
         return !dao.findByCodeButWithNoId(code, id).isEmpty();
     }

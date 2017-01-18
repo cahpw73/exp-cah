@@ -167,4 +167,12 @@ public class MainDocumentDao extends GenericDao<MainDocumentEntity> implements S
         map.put("MAIN_DOC_ID", mainDocId);
         return super.findBy(sb.toString(), map);
     }
+
+    public List<MainDocumentEntity> getAll() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM MainDocumentEntity x ");
+        Map<String, Object> map = new HashMap<>();
+        return super.findBy(sb.toString(), map);
+    }
 }

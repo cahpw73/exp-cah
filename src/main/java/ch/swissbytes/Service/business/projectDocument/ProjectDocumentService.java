@@ -45,6 +45,7 @@ public class ProjectDocumentService implements Serializable {
             mainDocument.setLastUpdate(new Date());
             mainDocument.setStatus(StatusEnum.ENABLE);
             mainDocument.setDescription(entity.getDescription());
+            mainDocument.setDescriptionDocument(entity.getDescriptionDocument());
             mainDocument.setProject(entity.getProject());
             dao.saveAndFlush(mainDocument);
         }
@@ -110,6 +111,11 @@ public class ProjectDocumentService implements Serializable {
     @Transactional
     public List<ProjectDocumentEntity> findByProjectDocIdAndPoId(final Long projectDocId, final Long poId) {
         return dao.findByProjectDocIdAndPoId(projectDocId,poId);
+    }
+
+    @Transactional
+    public List<ProjectDocumentEntity> getAll() {
+        return dao.getAll();
     }
 
 }

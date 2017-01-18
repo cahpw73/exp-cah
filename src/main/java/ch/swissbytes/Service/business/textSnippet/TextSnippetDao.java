@@ -129,4 +129,12 @@ public class TextSnippetDao extends GenericDao<TextSnippetEntity> implements Ser
         map.put("ID", textSnippetId);
         return super.findBy(sb.toString(),map);
     }
+
+    public List<TextSnippetEntity> getAllTextSnippetList(){
+        StringBuilder sb=new StringBuilder();
+        sb.append("SELECT x ");
+        sb.append("FROM TextSnippetEntity x ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        return super.findBy(sb.toString(),map);
+    }
 }

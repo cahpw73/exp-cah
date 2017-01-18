@@ -26,6 +26,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     private ProjectEntity project;
     private TextSnippetEntity textSnippet;
     private PurchaseOrderEntity purchaseOrder;
+    private String descriptionSnippet;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -50,13 +51,23 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
 
     @Lob
     @Size(max = 20000)
-    @Column(name = "description", nullable = false, length = 20000)
+    @Column(name = "description", nullable = true, length = 20000)
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Size(max = 100000)
+    @Column(name = "description_snippet", nullable = true, length = 100000)
+    public String getDescriptionSnippet() {
+        return descriptionSnippet;
+    }
+
+    public void setDescriptionSnippet(String descriptionSnippet) {
+        this.descriptionSnippet = descriptionSnippet;
     }
 
     @Column (name = "status",nullable = false)

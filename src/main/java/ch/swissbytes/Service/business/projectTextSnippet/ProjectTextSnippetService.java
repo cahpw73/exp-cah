@@ -56,6 +56,11 @@ public class ProjectTextSnippetService implements Serializable {
     }
 
     @Transactional
+    public List<ProjectTextSnippetEntity> getAllProjectText() {
+        return dao.getAllProjectText();
+    }
+
+    @Transactional
     public List<ProjectTextSnippetEntity> findByProjectIdToEditPo(final Long id,final Long poId) {
         return dao.findByProjectIdToEditPO(id, poId);
     }

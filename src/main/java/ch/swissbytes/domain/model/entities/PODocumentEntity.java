@@ -28,6 +28,7 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
     private ProjectDocumentEntity projectDocumentEntity;
     private Boolean scheduleE;
     private AttachmentMainDocumentEntity attachmentProjectDocument;
+    private String descriptionDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -71,6 +72,17 @@ public class PODocumentEntity extends RecordEditable<PODocumentEntity> implement
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Size(max = 100000)
+    @Column(name = "description_document", nullable = true, length = 100000)
+    public String getDescriptionDocument() {
+        return descriptionDocument;
+    }
+
+    public void setDescriptionDocument(String descriptionDocument) {
+        this.descriptionDocument = descriptionDocument;
+    }
+
     @Size(max = 250)
     @Column(name = "code", nullable = false, length = 250)
     public String getCode() {

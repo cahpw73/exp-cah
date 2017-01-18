@@ -26,6 +26,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
     private MainDocumentEntity mainDocumentEntity;
     private PurchaseOrderEntity purchaseOrder;
     private AttachmentMainDocumentEntity attachmentProjectDocument;
+    private String descriptionDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -77,6 +78,16 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Size(max = 100000)
+    @Column(name = "description_document", nullable = true, length = 100000)
+    public String getDescriptionDocument() {
+        return descriptionDocument;
+    }
+
+    public void setDescriptionDocument(String descriptionDocument) {
+        this.descriptionDocument = descriptionDocument;
     }
 
     @ManyToOne(fetch=FetchType.EAGER)

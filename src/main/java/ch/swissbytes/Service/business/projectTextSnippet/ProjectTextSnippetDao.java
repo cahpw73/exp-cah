@@ -129,4 +129,12 @@ public class ProjectTextSnippetDao extends GenericDao<ProjectTextSnippetEntity> 
         params.put("PROJECT_TEXT_ID",projectTextId);
         return super.findBy(sb.toString(),params);
     }
+
+    public List<ProjectTextSnippetEntity> getAllProjectText(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectTextSnippetEntity p ");
+        Map<String,Object> params = new HashMap<>();
+        return super.findBy(sb.toString(),params);
+    }
 }
