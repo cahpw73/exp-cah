@@ -50,7 +50,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     }
 
 
-    @Lob
+    //@Lob
     @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;

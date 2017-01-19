@@ -59,7 +59,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
         this.lastUpdate = lastUpdate;
     }
 
-    @Lob
+    //@Lob
     @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
