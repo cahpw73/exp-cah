@@ -293,11 +293,8 @@ public class PoListBean implements Serializable {
         log.info("doCommitPo()");
         if (currentPurchaseOrder != null) {
             Date startDoCommit = new Date();
-
             Date startFindCurrentPo = new Date();
-            log.info("before currentPO id = "+ currentPurchaseOrder.getId());
             currentPurchaseOrder = service.findPOForCommitByPoId(currentPurchaseOrder.getId());
-            log.info("after currentPO id = "+ currentPurchaseOrder.getId());
             Date endFindCurrentPo = new Date();
             log.info("time between startFindCurrentPo - endFindCurrentPo = " +(endFindCurrentPo.getTime() - startFindCurrentPo.getTime()));
 
@@ -329,10 +326,10 @@ public class PoListBean implements Serializable {
                 log.info("time between UpdateScopeSuppliesAfterCommitted = "+ (endUpdateScopeSuppliesAfterCommitted.getTime()-startUpdateScopeSuppliesAfterCommitted.getTime()));
 
                 log.info("Process on ["+new Date()+"] by user["+userSession.getCurrentUser().getUsername()+"]");
-                log.info("PO["+currentPurchaseOrder.getProject()+", "+currentPurchaseOrder.getPo()+","+ currentPurchaseOrder.getVariation()+"]");
 
                 Date endDoCommit = new Date();
                 log.info("time for doCommitPO = "+ (endDoCommit.getTime()-startDoCommit.getTime()));
+                log.info("PurchaseOrderEntity values after doSave: " + currentPurchaseOrder.getPurchaseOrderProcurementEntity().toString());
             }
         }
         findPOs();
@@ -405,8 +402,8 @@ public class PoListBean implements Serializable {
             currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
             unCommitPOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
             currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
-            log.info("Process on ["+d1+"] by user["+userSession.getCurrentUser().getUsername()+"]");
-            log.info("PO["+currentPurchaseOrder.getProject()+", "+currentPurchaseOrder.getPo()+","+ currentPurchaseOrder.getVariation()+"]");
+            log.info("Process on ["+d1+"] by user["+userSession.getCurrentUser().getUsername() + "]");
+            log.info("PurchaseOrderEntity values: " + currentPurchaseOrder.getPurchaseOrderProcurementEntity().toString());
         }
         Date d2 = new Date();
         log.info("time process doUncommit= " + (d2.getTime() - d1.getTime()));
@@ -421,8 +418,8 @@ public class PoListBean implements Serializable {
                 currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
                 finalisePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
                 currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
-                log.info("Process on ["+d1+"] by user["+userSession.getCurrentUser().getUsername()+"]");
-                log.info("PO["+currentPurchaseOrder.getProject()+", "+currentPurchaseOrder.getPo()+","+ currentPurchaseOrder.getVariation()+"]");
+                log.info("Process on ["+ d1 + "] by user[" + userSession.getCurrentUser().getUsername() + "]");
+                log.info("PurchaseOrderEntity values: " + currentPurchaseOrder.getPurchaseOrderProcurementEntity().toString());
             }
         }
         findPOs();
@@ -436,8 +433,8 @@ public class PoListBean implements Serializable {
         currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
         releasePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
         currentPurchaseOrder = service.updatePOStatus(currentPurchaseOrder);
-        log.info("Process on ["+d1+"] by user["+userSession.getCurrentUser().getUsername()+"]");
-        log.info("PO["+currentPurchaseOrder.getProject()+", "+currentPurchaseOrder.getPo()+","+ currentPurchaseOrder.getVariation()+"]");
+        log.info("Process on [" + d1 + "] by user[" + userSession.getCurrentUser().getUsername() + "]");
+        log.info("PurchaseOrderEntity values: " + currentPurchaseOrder.getPurchaseOrderProcurementEntity().toString());
         Date d2 = new Date();
         log.info("time process doReleasePo= " + (d2.getTime() - d1.getTime()));
     }
@@ -449,11 +446,10 @@ public class PoListBean implements Serializable {
         log.info("Process on ["+new Date()+"] by user["+userSession.getCurrentUser().getUsername()+"]");
         log.info("PO["+currentPurchaseOrder.getProject()+", "+currentPurchaseOrder.getPo()+","+ currentPurchaseOrder.getVariation()+"]");
         PurchaseOrderEntity previousPO = service.findPOPreviousRevision(currentPurchaseOrder.getProjectEntity().getId(),currentPurchaseOrder.getPo(),currentPurchaseOrder.getOrderedVariation()-1);
-        log.info("previousPO = " +previousPO.getProject()+" - " + previousPO.getPo()+" - "+previousPO.getVariation());
-        log.info("previousPO.getPurchaseOrderProcurementEntity() = " +(previousPO.getPurchaseOrderProcurementEntity()!=null?"not null":"null"));
         afterDeletePOModifyValidationButtons(previousPO.getPurchaseOrderProcurementEntity());
         service.updatePOStatus(previousPO);
         refreshListPo();
+        log.info("PurchaseOrderEntity values: " + currentPurchaseOrder.getPurchaseOrderProcurementEntity().toString());
     }
 
     public boolean canView(PurchaseOrderEntity entity) {

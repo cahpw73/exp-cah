@@ -127,6 +127,7 @@ public class PoBean extends Bean {
 
 
     private void initializeNewPurchaseOrder(ProjectEntity projectEntity) {
+        log.info("initializeNewPurchaseOrder(ProjectEntity projectEntity)");
         Util util = new Util();
         util.setConfiguration(configuration);
         List<ProjectCurrencyEntity> projectCurrencyList = projectService.findProjectCurrencyByProjectId(projectEntity.getId());
@@ -134,6 +135,12 @@ public class PoBean extends Bean {
         purchaseOrder.setProject(projectEntity.getProjectNumber());
         purchaseOrder.setPurchaseOrderProcurementEntity(new PurchaseOrderProcurementEntity());
         Date orderDate = util.toLocalDate(DateUtil.setZeroHour(new Date()));
+        //Date orderDate = DateUtil.setZeroHour(new Date());
+        //Date orderDate = util.toLocalDate(new Date());
+        log.info("newDate = " + new Date());
+        log.info("DateUtil.setZeroHour(new Date()) = " + DateUtil.setZeroHour(new Date()));
+        log.info("util.toLocalDate((new Date()); = " + util.toLocalDate(new Date()));
+        log.info("orderDate = "  + orderDate);
         purchaseOrder.getPurchaseOrderProcurementEntity().setOrderDate(orderDate);
         purchaseOrder.getPurchaseOrderProcurementEntity().setDeliveryInstruction(projectEntity.getDeliveryInstructions() != null ? projectEntity.getDeliveryInstructions() : "");
         poTextBean.loadTextNewPO(projectEntity.getId());
@@ -273,6 +280,7 @@ public class PoBean extends Bean {
 
     public void doSave() {
         log.info("trying to save purchase order on procurement module");
+        log.info("PO is  processing  by user["+userSession.getCurrentUser().getUsername()+"]");
         if (validate()) {
             collectData();
             purchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.READY);
@@ -286,12 +294,14 @@ public class PoBean extends Bean {
             isCreatePO = false;
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
+            log.info("PurchaseOrderEntity values after doSave: " + purchaseOrder.toString());
         }
 
     }
 
     public void doUpdate() {
         log.info("trying to update purchase order on procurement module");
+        log.info("PO is  processing  by user["+userSession.getCurrentUser().getUsername()+"]");
         if (validate()) {
             collectData();
             if (purchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus() == null) {
@@ -308,6 +318,7 @@ public class PoBean extends Bean {
             loadPurchaseOrder();
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
+            log.info("PurchaseOrderEntity values after doSave: " + purchaseOrder.getPurchaseOrderProcurementEntity().toString());
         }
     }
 
@@ -322,6 +333,7 @@ public class PoBean extends Bean {
 
     public String doSaveView() {
         log.info("trying to saveView purchase order on procurement module");
+        log.info("PO is  processing  by user["+userSession.getCurrentUser().getUsername()+"]");
         if (validate()) {
             collectData();
             purchaseOrder = service.savePOOnProcurement(purchaseOrder);
@@ -333,12 +345,14 @@ public class PoBean extends Bean {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
             context.execute("printDraft();");
+            log.info("PurchaseOrderEntity values after doSave: " + purchaseOrder.getPurchaseOrderProcurementEntity().toString());
         }
         return null;
     }
 
     public String doUpdateView() {
         log.info("trying to updateView purchase order on procurement module");
+        log.info("PO is  processing  by user["+userSession.getCurrentUser().getUsername()+"]");
         if (validate()) {
             collectData();
             purchaseOrder = service.updatePOOnProcurement(purchaseOrder);
@@ -348,6 +362,7 @@ public class PoBean extends Bean {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("restartChanges();");
             context.execute("printDraft();");
+            log.info("PurchaseOrderEntity values after doSave: " + purchaseOrder.getPurchaseOrderProcurementEntity().toString());
         }
         return null;
     }

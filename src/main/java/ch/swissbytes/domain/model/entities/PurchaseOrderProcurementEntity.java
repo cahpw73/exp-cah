@@ -384,6 +384,26 @@ public class PurchaseOrderProcurementEntity implements Serializable{
         return contactExpediting;
     }
 
+    @Override
+    public String toString() {
+        return "PurchaseOrderProcurementEntity{" +
+                "id=" + id +
+                ", orderDate=" + orderDate +
+                ", cmsExported=" + cmsExported +
+                ", jdeExported=" + jdeExported +
+                ", canEdit=" + canEdit +
+                ", canView=" + canView +
+                ", canVariation=" + canVariation +
+                ", canCommit=" + canCommit +
+                ", canUncommit=" + canUncommit +
+                ", canExportCsv=" + canExportCsv +
+                ", canExportJde=" + canExportJde +
+                ", canFinalise=" + canFinalise +
+                ", canRelease=" + canRelease +
+                ", canDelete=" + canDelete +
+                '}';
+    }
+
     public void setContactExpediting(ContactEntity contactEntity) {
         this.contactExpediting = contactEntity;
     }
