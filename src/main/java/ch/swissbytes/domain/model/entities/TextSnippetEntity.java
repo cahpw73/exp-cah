@@ -59,7 +59,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
     }
 
 
-    @Lob
+    //@Lob
     @Column(name = "TEXT_SNIPPET", nullable = true)
     public String getTextSnippet() {
         return textSnippet;

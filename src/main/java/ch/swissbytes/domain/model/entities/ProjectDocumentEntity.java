@@ -61,7 +61,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
         this.lastUpdate = lastUpdate;
     }
 
-    @Lob
+    //@Lob
     @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;

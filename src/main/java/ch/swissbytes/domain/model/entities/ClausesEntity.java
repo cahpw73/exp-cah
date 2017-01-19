@@ -50,7 +50,7 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
     }
 
 
-    @Lob
+    //@Lob
     @Column(name = "clauses",nullable = true)
     public String getClauses() {
         return clauses;
