@@ -441,8 +441,6 @@ public class PurchaseOrderEntity implements Serializable{
                 ", po='" + po + '\'' +
                 ", variation='" + variation + '\'' +
                 ", poTitle='" + poTitle + '\'' +
-                ", poDeliveryDate=" + poDeliveryDate +
-                ", orderedVariation=" + orderedVariation +
                 '}';
     }
 }
