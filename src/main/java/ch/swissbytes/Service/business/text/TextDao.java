@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.text;
 
 import ch.swissbytes.Service.infrastructure.Filter;
 import ch.swissbytes.Service.infrastructure.GenericDao;
+import ch.swissbytes.domain.model.entities.ClausesEntity;
 import ch.swissbytes.domain.model.entities.TextEntity;
 import ch.swissbytes.domain.types.StatusEnum;
 

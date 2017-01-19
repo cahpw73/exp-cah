@@ -80,6 +80,14 @@ public class TextClausesDao extends GenericDao<ClausesEntity> implements Seriali
         return super.findBy(sb.toString(),map);
     }
 
+    public List<ClausesEntity> getAll() {
+        StringBuilder sb=new StringBuilder();
+        sb.append(" SELECT x ");
+        sb.append(" FROM ClausesEntity x ");
+        Map<String,Object> map=new HashMap<String,Object>();
+        return super.findBy(sb.toString(),map);
+    }
+
 
     @Override
     protected void applyCriteriaValues(Query query, Filter filter) {

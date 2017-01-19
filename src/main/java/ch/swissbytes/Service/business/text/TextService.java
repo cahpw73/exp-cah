@@ -72,6 +72,11 @@ public class TextService implements Serializable {
     }
 
     @Transactional
+    public List<ClausesEntity> getAll() {
+        return textClausesDao.getAll();
+    }
+
+    @Transactional
     public void doBulkUpdateCode(List<ProjectTextSnippetEntity> projectTextSnippetList){
         for(ProjectTextSnippetEntity p : projectTextSnippetList){
             List<ClausesEntity> list = textClausesDao.findByProjectTextId(p.getId());
@@ -79,6 +84,14 @@ public class TextService implements Serializable {
                 c.setCode(p.getCode().toUpperCase());
                 textClausesDao.doUpdate(c);
             }
+        }
+    }
+
+    @Transactional
+    public void doUpdateClauses(ClausesEntity detachedEntity){
+        if(detachedEntity != null){
+            ClausesEntity entity = dao.merge(detachedEntity);
+            dao.saveAndFlush(entity);
         }
     }
 }

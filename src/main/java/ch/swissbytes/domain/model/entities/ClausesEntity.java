@@ -26,6 +26,7 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
     private String numberClause;
     private TextEntity text;
     private ProjectTextSnippetEntity projectTextSnippet;
+    private String descriptionSnippet;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -48,15 +49,25 @@ public class ClausesEntity extends RecordEditable<ClausesEntity> implements Seri
         this.code = code;
     }
 
+
     @Lob
-    @Size(max = 20000)
-    @Column(name = "clauses",length = 20000,nullable = false)
+    @Column(name = "clauses",nullable = true)
     public String getClauses() {
         return clauses;
     }
 
     public void setClauses(String clauses) {
         this.clauses = clauses;
+    }
+
+    @Size(max = 100000)
+    @Column(name = "description_snippet", nullable = true, length = 100000)
+    public String getDescriptionSnippet() {
+        return descriptionSnippet;
+    }
+
+    public void setDescriptionSnippet(String descriptionSnippet) {
+        this.descriptionSnippet = descriptionSnippet;
     }
 
     @Column (name = "status",nullable = false)

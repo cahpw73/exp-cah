@@ -84,6 +84,11 @@ public class MainDocumentService extends Service<MainDocumentEntity> implements 
     }
 
     @Transactional
+    public List<MainDocumentEntity> getAll() {
+        return dao.getAll();
+    }
+
+    @Transactional
     public ProjectDocumentEntity findProjectDocumentEntityById(Long id) {
         List<ProjectDocumentEntity> list = dao.findById(ProjectDocumentEntity.class, id);
         return !list.isEmpty() ? list.get(0) : null;

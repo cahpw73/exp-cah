@@ -126,4 +126,12 @@ public class ProjectDocumentDao extends GenericDao<ProjectDocumentEntity> implem
         return null;
     }
 
+    public List<ProjectDocumentEntity> getAll() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT p ");
+        sb.append(" FROM ProjectDocumentEntity p ");
+        Map<String, Object> params = new HashMap<>();
+        return super.findBy(sb.toString(), params);
+    }
+
 }
