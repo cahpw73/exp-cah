@@ -37,7 +37,7 @@
                             <br/>
                             <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_t.attachmentProjectDocument == null}" process="@this"
                                            update=":previewPDFProjectHtmlModalId1" oncomplete="PF('previewPDFProjectHtml1').show()"
-                                           async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
+                                           async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPdf(_t)}"/>
                             &#160;
                             <p:commandLink value="Delete" rendered="#{poDocumentBean.canDeleteProjectDocumentCreatedFromPOEdit(_t)}"
                                            action="#{poDocumentBean.doDeleteProjectDocumentCreatedFromPOEdit(_t)}"
@@ -92,7 +92,7 @@
                                                    update=":previewPODocModalId1" oncomplete="PF('previewPODocModal1').show()"
                                                    async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
                                     <br/>
-                                    <p:commandLink value="#{msgs['lbl.preview.pdf']}" process="@this"
+                                    <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
                                                    update=":previewPDFProjectHtmlModalId2" oncomplete="PF('previewPDFProjectHtml2').show()"
                                                    async="false" action="#{poDocumentBean.loadSelectedPODocumentToPdf(_dt)}"/>
                                     </h:panelGroup>

@@ -105,7 +105,7 @@
                                            update=":previewProjectDocModalId1" oncomplete="PF('previewProjectDocModal1').show()"
                                            async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
                             <br/>
-                            <p:commandLink value="#{msgs['lbl.preview.pdf']}"  process="@this"
+                            <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_pt.attachmentProjectDocument == null}"  process="@this"
                                            update=":previewPDFProjectHtmlModalId2" oncomplete="PF('previewPDFProjectHtml2').show()"
                                            async="false" action="#{documentBean.loadSelectedProjectDocumentToPdf(_pt)}"/>
                         </p:column>

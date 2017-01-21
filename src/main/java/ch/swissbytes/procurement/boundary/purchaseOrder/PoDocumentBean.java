@@ -447,6 +447,41 @@ public class PoDocumentBean implements Serializable {
         }
     }
 
+    public void loadSelectedProjectDocumentToPdf(ProjectDocumentEntity entity){
+        log.info("loadSelectedProjectDocumentToPdf(ProjectDocumentEntity entity)");
+        loadSelectedProjectDocumentToPreview(entity);
+        createProjectDocPdfFile();
+    }
+    public void createProjectDocPdfFile(){
+        log.info("createProjectDocPdfFile()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+        String fileName = new Date().getTime()+""+selectedProjectDocument.getId();
+        FileUtil fileUtil = new FileUtil();
+        try {
+            log.info("creating file on path = " + pathTempPdf);
+            fileUtil.saveFileTemporal(selectedProjectDocument.getDescription(),pathTempPdf,fileName);
+            tempFilePdfPath = pathTempPdf + File.separator + fileName;
+            log.info("tempFilePdfPath = "  + tempFilePdfPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createPODocPdfFileToNewProjectDoc(){
+        log.info("createPODocPdfFileToNewProjectDoc()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+        String fileName = new Date().getTime()+"";
+        FileUtil fileUtil = new FileUtil();
+        try {
+            log.info("creating file on path = " + pathTempPdf);
+            fileUtil.saveFileTemporal(poDocumentEntity.getDescription(),pathTempPdf,fileName);
+            tempFilePdfPath = pathTempPdf + File.separator + fileName;
+            log.info("tempFilePdfPath = "  + tempFilePdfPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void changeValueDocumentEditing() {
         documentEditing = false;
     }
