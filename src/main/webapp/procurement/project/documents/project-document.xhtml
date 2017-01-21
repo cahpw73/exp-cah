@@ -50,7 +50,7 @@
                         <br/>
                         <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_md.attachmentMainDocument == null}" process="@this"
                                        update=":previewPDFProjectHtmlModalId1" oncomplete="PF('previewPDFProjectHtml1').show()"
-                                       async="false" action="#{documentBean.loadSelectedMainDocumentPreview(_md)}"/>
+                                       async="false" action="#{documentBean.loadSelectedMainDocumentToPdf(_md)}"/>
                         &#160;
                         <p:commandLink value="Delete" rendered="#{documentBean.canDeleteMainDocumentCreatedFromProject(_md)}"
                                        action="#{documentBean.doDeleteMainDocCreatedFromProject(_md)}"
@@ -105,9 +105,9 @@
                                            update=":previewProjectDocModalId1" oncomplete="PF('previewProjectDocModal1').show()"
                                            async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
                             <br/>
-                            <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_pt.id gt 0}" process="@this"
+                            <p:commandLink value="#{msgs['lbl.preview.pdf']}"  process="@this"
                                            update=":previewPDFProjectHtmlModalId2" oncomplete="PF('previewPDFProjectHtml2').show()"
-                                           async="false" action="#{documentBean.loadSelectedProjectDocPreview(_pt)}"/>
+                                           async="false" action="#{documentBean.loadSelectedProjectDocumentToPdf(_pt)}"/>
                         </p:column>
                     </p:dataTable>
                 </h:panelGroup>

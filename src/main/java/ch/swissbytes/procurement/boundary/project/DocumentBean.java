@@ -212,7 +212,11 @@ public class DocumentBean extends Bean implements Serializable {
         log.info("loadSeletedProjectDoc(ProjectDocumentEntity entity)");
         selectedProjectDoc = entity;
         docPreview = false;
-        /*String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+    }
+
+    public void createProjectDocPdfFile(){
+        log.info("createProjectDocPdfFile()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
         String fileName = new Date().getTime()+""+selectedProjectDoc.getId();
         FileUtil fileUtil = new FileUtil();
         try {
@@ -222,7 +226,33 @@ public class DocumentBean extends Bean implements Serializable {
             log.info("tempFilePdfPath = "  + tempFilePdfPath);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+    }
+
+    public void createMainDocPdfFile(){
+        log.info("createMainDocPdfFile()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+        String fileName = new Date().getTime()+""+selectedMainDocument.getId();
+        FileUtil fileUtil = new FileUtil();
+        try {
+            log.info("creating file on path = " + pathTempPdf);
+            fileUtil.saveFileTemporal(selectedMainDocument.getDescription(),pathTempPdf,fileName);
+            tempFilePdfPath = pathTempPdf + File.separator + fileName;
+            log.info("tempFilePdfPath = "  + tempFilePdfPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadSelectedProjectDocumentToPdf(ProjectDocumentEntity entity){
+        log.info("loadSelectedProjectDocumentToPdf(ProjectDocumentEntity entity)");
+        loadSeletedProjectDoc(entity);
+        createProjectDocPdfFile();
+    }
+    public void loadSelectedMainDocumentToPdf(MainDocumentEntity entity){
+        log.info("loadSelectedProjectDocumentToPdf(ProjectDocumentEntity entity)");
+        loadSelectedMainDocumentPreview(entity);
+        createMainDocPdfFile();
     }
 
     public void loadSelectedProjectDocPreview(ProjectDocumentEntity entity) {

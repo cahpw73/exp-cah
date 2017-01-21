@@ -140,8 +140,7 @@
         <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml2" width="1000" height="600" resizable="false">
             <h:panelGroup id="previewPDFProjectHtmlModalId2">
                 <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
-                    <ui:param name="attachId" value="#{documentBean.selectedProjectDoc.id}"/>
-                    <ui:param name="pdfTypeId" value="2"/>
+                    <ui:param name="pathfile" value="#{documentBean.tempFilePdfPath}"/>
                     <ui:param name="entitySelected" value="#{documentBean.selectedProjectDoc}"/>
                     <ui:param name="id" value="2"/>
                 </ui:include>
@@ -169,8 +168,7 @@
         <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml1" width="1000" height="600" resizable="false">
             <h:panelGroup id="previewPDFProjectHtmlModalId1">
                 <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
-                    <ui:param name="attachId" value="#{documentBean.selectedMainDocument.id}"/>
-                    <ui:param name="pdfTypeId" value="1"/>
+                    <ui:param name="pathfile" value="#{documentBean.tempFilePdfPath}"/>
                     <ui:param name="entitySelected" value="#{documentBean.selectedMainDocument}"/>
                     <ui:param name="id" value="1"/>
                 </ui:include>

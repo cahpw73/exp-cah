@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
  * Created by Christian on 25/02/2016.
@@ -25,13 +26,36 @@ import java.io.Serializable;
 @WebServlet(urlPatterns = "/document/html/pdf", asyncSupported = true)
 public class PdfDocumentFromHtmlServlet extends HttpServlet implements Serializable {
 
+
+    public static final Logger log = Logger.getLogger(PdfDocumentFromHtmlServlet.class.getName());
+
     @Inject
     private MainDocumentService service;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("PdfDocumentFromHtmlServlet");
-        String attachmentMainDocId = request.getParameter("pdfMainId");
+        log.info("PdfDocumentFromHtmlServlet");
+        String pathfile = request.getParameter("pathfile");
+
+        FileUtil file = new FileUtil();
+        String description =  file.getContentFileToString(pathfile);
+
+        if(StringUtils.isNotEmpty(description)) {
+            try {
+                byte[] content = getReportFromHtml(description).toByteArray();
+                response.setContentType("application/pdf");
+                response.setContentLength(content.length);
+                response.getOutputStream().write(content);
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            }
+
+        }
+        log.info("deleting file");
+        file.deleteFileTemporal(pathfile);
+        log.info("deleted file");
+
+        /*String attachmentMainDocId = request.getParameter("pdfMainId");
         String pdfType = request.getParameter("pdfType");
         if(StringUtils.isNotEmpty(attachmentMainDocId)){
             System.out.println("attachmentMainDocId = " +attachmentMainDocId);
@@ -61,7 +85,7 @@ public class PdfDocumentFromHtmlServlet extends HttpServlet implements Serializa
                 }
 
             }
-        }
+        }*/
     }
 
     private ByteArrayOutputStream getReportFromHtml(final String contentPdf) throws IOException, DocumentException {

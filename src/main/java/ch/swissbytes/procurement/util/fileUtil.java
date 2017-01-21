@@ -52,6 +52,7 @@ public class FileUtil implements Serializable {
     }
 
     public String getContentFileToString(String filePath) throws FileNotFoundException, IOException {
+        log.info("getContentFileToString");
         String str;
         String content="";
         FileReader f = new FileReader(filePath);
