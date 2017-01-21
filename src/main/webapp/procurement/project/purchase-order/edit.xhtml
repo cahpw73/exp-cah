@@ -270,8 +270,7 @@
         <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml2" width="1000" height="600" resizable="false">
             <h:panelGroup id="previewPDFProjectHtmlModalId2">
                 <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
-                    <ui:param name="attachId" value="#{poDocumentBean.selectedPODocument.id}"/>
-                    <ui:param name="pdfTypeId" value="3"/>
+                    <ui:param name="pathfile" value="#{poDocumentBean.tempFilePdfPath}"/>
                     <ui:param name="entitySelected" value="#{poDocumentBean.selectedPODocument}"/>
                     <ui:param name="id" value="2"/>
                 </ui:include>

@@ -9,6 +9,7 @@ import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
 import ch.swissbytes.Service.business.text.TextService;
 import ch.swissbytes.domain.model.entities.*;
 import ch.swissbytes.domain.types.StatusEnum;
+import ch.swissbytes.procurement.util.FileUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.context.RequestContext;
@@ -23,6 +24,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -89,6 +91,8 @@ public class PoDocumentBean implements Serializable {
     private boolean docPreview = false;
 
     private boolean documentEditing = false;
+
+    private String tempFilePdfPath = "";
 
     @PostConstruct
     public void create() {
@@ -416,6 +420,33 @@ public class PoDocumentBean implements Serializable {
         projectDocumentList.addAll(auxList);
     }
 
+    public void loadSelectedPODocumentToPdf(PODocumentEntity entity){
+        log.info("loadSelectedPODocumentToPdf(PODocumentEntity entity)");
+        loadSeletedPODoc(entity);
+        createPODocPdfFile();
+    }
+
+    public void loadSeletedPODoc(PODocumentEntity entity) {
+        log.info("loadSeletedPODoc(PODocumentEntity entity)");
+        selectedPODocument = entity;
+        docPreview = false;
+    }
+
+    public void createPODocPdfFile(){
+        log.info("createPODocPdfFile()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+        String fileName = new Date().getTime()+"";
+        FileUtil fileUtil = new FileUtil();
+        try {
+            log.info("creating file on path = " + pathTempPdf);
+            fileUtil.saveFileTemporal(selectedPODocument.getDescription(),pathTempPdf,fileName);
+            tempFilePdfPath = pathTempPdf + File.separator + fileName;
+            log.info("tempFilePdfPath = "  + tempFilePdfPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void changeValueDocumentEditing() {
         documentEditing = false;
     }
@@ -498,4 +529,11 @@ public class PoDocumentBean implements Serializable {
         this.documentEditing = documentEditing;
     }
 
+    public String getTempFilePdfPath() {
+        return tempFilePdfPath;
+    }
+
+    public void setTempFilePdfPath(String tempFilePdfPath) {
+        this.tempFilePdfPath = tempFilePdfPath;
+    }
 }
