@@ -229,6 +229,21 @@ public class DocumentBean extends Bean implements Serializable {
         }
     }
 
+    public void createProjectDocPdfFileToNewProjectDoc(){
+        log.info("createProjectDocPdfFileToNewProjectDoc()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+        String fileName = new Date().getTime()+"";
+        FileUtil fileUtil = new FileUtil();
+        try {
+            log.info("creating file on path = " + pathTempPdf);
+            fileUtil.saveFileTemporal(projectDocument.getDescription(),pathTempPdf,fileName);
+            tempFilePdfPath = pathTempPdf + File.separator + fileName;
+            log.info("tempFilePdfPath = "  + tempFilePdfPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void createMainDocPdfFile(){
         log.info("createMainDocPdfFile()");
         String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
