@@ -213,6 +213,7 @@ public class SpreadsheetJDEService implements Serializable {
         processor.writeStringValue(0, entity.getPo() != null ? entity.getPo() : "");
         processor.writeStringValue(1, entity.getVariation() != null ? entity.getVariation() : "");
         processor.writeStringValue(2, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? configuration.convertDateToExportFile(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
+        entity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(entity.getPurchaseOrderProcurementEntity().getOrderDate(), configuration.getTimeZone()));
         processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() : "");
         processor.writeStringValue(4, item.getCode() != null ? item.getCode() : "");
         processor.writeStringValue(5, item.getDescription() != null ? item.getDescription() : "");

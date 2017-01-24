@@ -8,6 +8,7 @@ import ch.swissbytes.domain.model.entities.ProjectCurrencyEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
 import ch.swissbytes.fqmes.util.Configuration;
 import ch.swissbytes.fqmes.util.Util;
+import ch.swissbytes.procurement.util.DateUtil;
 import ch.swissbytes.procurement.util.SpreadsheetProcessor;
 
 import javax.inject.Inject;
@@ -147,7 +148,9 @@ public class SpreadsheetService implements Serializable {
         processor.writeStringValue(0, entity.getPurchaseOrderProcurementEntity().getClazz() != null ? entity.getPurchaseOrderProcurementEntity().getClazz().getLabel() : "");
         processor.writeStringValue(1, entity.getPo() != null ? entity.getPo() : "");
         processor.writeStringValue(2, entity.getVariation() != null ? entity.getVariation() : "");
-        processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? configuration.convertDateToExportFile(entity.getPurchaseOrderProcurementEntity().getOrderDate()) : "");
+        Date dateToExportFile = entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? entity.getPurchaseOrderProcurementEntity().getOrderDate() : null;
+        processor.writeStringValue(3, dateToExportFile != null ? configuration.convertDateToExportFile(dateToExportFile) : "");
+        entity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(entity.getPurchaseOrderProcurementEntity().getOrderDate(), configuration.getTimeZone()));
         processor.writeStringValue(4, entity.getPoTitle() != null ? entity.getPoTitle() : "");
         processor.writeStringValue(5, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany() : "");
         processor.writeStringValue(6, item.getCode() != null ? item.getCode() : "");
