@@ -145,7 +145,7 @@ public class Configuration implements Serializable {
         return "dd/MM/yyyy";
     }
 
-    public String convertDateToExportFile(Date date) {
+    public String convertDateToExportFile(final Date date) {
         String converted = "";
         if (date != null) {
             DateTimeZone dtz = org.joda.time.DateTimeZone.forID(getTimeZone());

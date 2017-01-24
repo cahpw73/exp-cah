@@ -432,4 +432,15 @@ public class PurchaseOrderEntity implements Serializable{
         result = 31 * result + (rfeComment != null ? rfeComment.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseOrderEntity{" +
+                "id=" + id +
+                ", project='" + project + '\'' +
+                ", po='" + po + '\'' +
+                ", variation='" + variation + '\'' +
+                ", poTitle='" + poTitle + '\'' +
+                '}';
+    }
 }
