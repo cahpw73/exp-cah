@@ -512,19 +512,6 @@ public class PurchaseOrderService extends Service implements Serializable {
 
     @Transactional
     public PurchaseOrderEntity updateOnlyPOOnProcurement(PurchaseOrderEntity purchaseOrderEntity) {
-        //removePrefixIfAny(purchaseOrderEntity);
-        /*String incoTerms = getStrToIncoTerm(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
-        if (exitsDeliveryPointInIncoTerms(incoTerms)) {
-            purchaseOrderEntity.setIncoTerm(incoTerms);
-            purchaseOrderEntity.setFullIncoTerms(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getPoint());
-        } else {
-            purchaseOrderEntity.setIncoTerm(null);
-            purchaseOrderEntity.setFullIncoTerms(null);
-        }*/
-        //purchaseOrderEntity.setExpeditingTitle(purchaseOrderEntity.getPoTitle());
-        //purchaseOrderEntity.getPurchaseOrderProcurementEntity().setContactExpediting(purchaseOrderEntity.getPurchaseOrderProcurementEntity().getContactEntity());
-        //TODO Remove if sure that not is necessary
-        //purchaseOrderEntity.setPurchaseOrderStatus(ExpeditingStatusEnum.ISSUED);
         if(StringUtils.isEmpty(purchaseOrderEntity.getExpeditingStatus())) {
             purchaseOrderEntity.setExpeditingStatus(String.valueOf(ExpeditingStatusEnum.ISSUED.ordinal()));
             ExpeditingStatusEntity expeditingStatusEntity = new ExpeditingStatusEntity();

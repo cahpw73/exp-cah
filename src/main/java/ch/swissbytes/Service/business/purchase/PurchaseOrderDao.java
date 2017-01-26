@@ -201,11 +201,17 @@ public class PurchaseOrderDao extends GenericDao<PurchaseOrderEntity> implements
     }
 
     public PurchaseOrderProcurementEntity savePOEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        log.info("Save PO Entity");
+        log.info("PO supplier contact = " + (purchaseOrderProcurementEntity.getContactEntity() != null ? purchaseOrderProcurementEntity.getContactEntity().getFullName() : "NULL"));
+        log.info("PO consigns to = " + (purchaseOrderProcurementEntity.getDeliveryInstruction() != null ? purchaseOrderProcurementEntity.getDeliveryInstruction() : "NULL"));
         entityManager.persist(purchaseOrderProcurementEntity);
         return purchaseOrderProcurementEntity;
     }
 
     public PurchaseOrderProcurementEntity updatePOEntity(PurchaseOrderProcurementEntity purchaseOrderProcurementEntity) {
+        log.info("Update PO Entity");
+        log.info("PO supplier contact = " + (purchaseOrderProcurementEntity.getContactEntity() != null ? purchaseOrderProcurementEntity.getContactEntity().getFullName() : "NULL"));
+        log.info("PO consigns to = " + (purchaseOrderProcurementEntity.getDeliveryInstruction() != null ? purchaseOrderProcurementEntity.getDeliveryInstruction() : "NULL"));
         PurchaseOrderProcurementEntity entityManaged = entityManager.merge(purchaseOrderProcurementEntity);
         entityManager.persist(entityManaged);
         return entityManaged;
