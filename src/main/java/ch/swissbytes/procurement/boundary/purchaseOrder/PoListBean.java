@@ -128,6 +128,8 @@ public class PoListBean implements Serializable {
     private Date end;
     private String scrollTop = "0";
 
+    private boolean canPrintFinalPdf;
+
     public boolean isShowButtons() {
         return showButtons;
     }
@@ -427,6 +429,27 @@ public class PoListBean implements Serializable {
         log.info("time process doFinalise= " + (d2.getTime() - d1.getTime()));
     }
 
+    public boolean doFinaliseAndPrint() {
+        log.info("doFinalise()");
+        Date d1 = new Date();
+        boolean result = false;
+        if (currentPurchaseOrder != null) {
+            currentPurchaseOrder = service.findById(currentPurchaseOrder.getId());
+            result = validate();
+            if (result) {
+                currentPurchaseOrder.getPurchaseOrderProcurementEntity().setPoProcStatus(ProcurementStatus.FINAL);
+                finalisePOModifyValidationButtons(currentPurchaseOrder.getPurchaseOrderProcurementEntity());
+                currentPurchaseOrder = service.updateOnlyPOOnProcurement(currentPurchaseOrder);
+                log.info("Process on ["+ d1 + "] by user[" + userSession.getCurrentUser().getUsername() + "]");
+                log.info("PurchaseOrderEntity values: " + currentPurchaseOrder.getPurchaseOrderProcurementEntity().toString());
+            }
+        }
+        findPOs();
+        Date d2 = new Date();
+        log.info("time process doFinalise= " + (d2.getTime() - d1.getTime()));
+        return result;
+    }
+
     public void doReleasePo() {
         log.info("do release purchase order");
         Date d1 = new Date();
@@ -624,11 +647,28 @@ public class PoListBean implements Serializable {
     }
 
     public void printPOFinal() {
-        log.info("printing po final");
-        if (currentPurchaseOrder != null && currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.COMMITTED.ordinal()
-                && currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() != ProcurementStatus.INCOMPLETE.ordinal()) {
-            doFinalise();
+        log.info("printing PO  print final PDF");
+        if (currentPurchaseOrder != null && currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus().ordinal() == ProcurementStatus.READY.ordinal()) {
+            log.info("PO is ready status, trying doFinalize PO");
+            //canPrintFinalPdf = doFinaliseAndPrint();
+            if(doFinaliseAndPrint()){
+                log.info("Passed validations before doFinalize");
+                //printPo(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus(), false);
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("printFinalPdf();");
+            }
+        }else{
+            log.info("PO is not ready status, printing final PO");
+            //canPrintFinalPdf = true;
+            //printPo(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus(), false);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("printFinalPdf();");
         }
+        log.info("canPrintFinalPdf =  " + canPrintFinalPdf);
+    }
+
+    public void printFinalPOPDF(){
+        log.info("printFinalPOPDF()");
         printPo(currentPurchaseOrder.getPurchaseOrderProcurementEntity().getPoProcStatus(), false);
     }
 
@@ -1169,4 +1209,11 @@ public class PoListBean implements Serializable {
         po.setCanDelete(false);
     }
 
+    public boolean isCanPrintFinalPdf() {
+        return canPrintFinalPdf;
+    }
+
+    public void setCanPrintFinalPdf(boolean canPrintFinalPdf) {
+        this.canPrintFinalPdf = canPrintFinalPdf;
+    }
 }
