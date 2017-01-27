@@ -28,6 +28,14 @@
                 color: transparent;
             }
         </style>
+        <script>
+            // On mouse-over, execute myFunction
+            function printFinalPdf() {
+                console.log("function printFinalPdf(canPrint)");
+                $("#printFinalPdfForm\\:printFinalBtnId2" ).click();
+            }
+
+        </script>
         <o:form id="listPooFormId" includeViewParams="true" prependId="false">
             <div class="col-md-12">
                 <p:remoteCommand name="renderBodyButtons" async="true" global="true" ignoreAutoUpdate="true"
@@ -404,12 +412,17 @@
 
                         <div class="form-group">
                             <div class="pull-right">
-                                <h:form>
-                                    <h:commandLink id="printFinalBtnId" styleClass="btn btn-primary btn-sm"
+                                <h:form id="printFinalPdfForm">
+                                    <p:commandLink id="printFinalBtnPId" styleClass="btn btn-primary btn-commandLink-primeFaces"
+                                                   value="#{msgs['project.list.lbl.btn.print.po.final']}" style="color: #ffffff"
+                                                   action="#{poListBean.printPOFinal}" update=":listPooFormId:projectListId :listPooFormId:poGlbMsgs"
+                                                   oncomplete="PF('printPoDlg').hide();">
+
+                                    </p:commandLink>
+                                    <h:commandLink id="printFinalBtnId2" styleClass="btn btn-primary btn-sm"
                                                    value="#{msgs['project.list.lbl.btn.print.po.final']}"
-                                                   action="#{poListBean.printPOFinal}"
-                                                   target="_blank" style="color: #ffffff"
-                                                   onclick="PF('printPoDlg').hide();">
+                                                   action="#{poListBean.printFinalPOPDF}"
+                                                   target="_blank" style="display: none;">
                                     </h:commandLink>
                                     &#160;
                                     <h:commandLink id="printDraftlBtnId" styleClass="btn btn-primary btn-sm"
