@@ -456,6 +456,7 @@ public class PoDocumentBean implements Serializable {
         log.info("createProjectDocPdfFile()");
         String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
         String fileName = new Date().getTime()+""+selectedProjectDocument.getId();
+        log.info("project selected Id = " + selectedProjectDocument.getId());
         FileUtil fileUtil = new FileUtil();
         try {
             log.info("creating file on path = " + pathTempPdf);

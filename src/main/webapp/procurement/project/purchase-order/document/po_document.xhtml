@@ -29,10 +29,10 @@
                             </h:commandLink>
                             &#160;
                             <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_t.attachmentProjectDocument == null}" process="@this"
-                                           update=":poDocModalId2" oncomplete="PF('poDocModal2').show()"
+                                           update=":projectModalId1" oncomplete="PF('previewProjectDocModal1').show()"
                                            async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
                             <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_t.attachmentProjectDocument != null}" process="@this"
-                                           update=":previewPODocModalId2" oncomplete="PF('previewPODocModal2').show()"
+                                           update=":previewProjectDocModalId2" oncomplete="PF('previewProjectDocModal2').show()"
                                            async="false" action="#{poDocumentBean.loadSelectedProjectDocumentToPreview(_t)}"/>
                             <br/>
                             <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_t.attachmentProjectDocument == null}" process="@this"
@@ -86,7 +86,7 @@
                                                    async="false" action="#{poDocumentBean.loadSelectedPODocument(_dt)}"/>
                                     &#160;
                                     <p:commandLink value="#{msgs['lbl.preview']}" rendered="#{_dt.attachmentProjectDocument == null}" process="@this"
-                                                   update=":poDocModalId1" oncomplete="PF('poDocModal1').show()"
+                                                   update=":poDocModalId2" oncomplete="PF('previewPODocModal2').show()"
                                                    async="false" action="#{poDocumentBean.loadSelectedPODocumentToPreview(_dt)}"/>
                                     <p:commandLink value="#{msgs['lbl.preview.pdf']}" rendered="#{_dt.attachmentProjectDocument != null}" process="@this"
                                                    update=":previewPODocModalId1" oncomplete="PF('previewPODocModal1').show()"
