@@ -127,6 +127,24 @@
                 </ui:include>
             </h:panelGroup>
         </p:dialog>
+        <p:dialog header="View Project Doc" widgetVar="previewProjectDoc1" resizable="false" width="785" height="500">
+            <h:panelGroup id="previewDocModalId1">
+                <ui:include src="component/previewDocument.xhtml">
+                    <ui:param name="bean" value="#{documentBean.selectedProjectDoc}"/>
+                    <ui:param name="id" value="1"/>
+                    <ui:param name="previewId" value="previewProjectDoc1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="View Doc Template" widgetVar="previewDocTemp1" resizable="false" width="785" height="500">
+            <h:panelGroup id="previewDocTempModalId1">
+                <ui:include src="component/previewDocument.xhtml">
+                    <ui:param name="bean" value="#{documentBean.selectedMainDocument}"/>
+                    <ui:param name="id" value="2"/>
+                    <ui:param name="previewId" value="previewDocTemp1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
         <p:dialog header="Preview Project Doc" widgetVar="previewProjectDocModal1" width="850" height="350" resizable="false">
             <h:panelGroup id="previewProjectDocModalId1">
                 <ui:include src="component/previewProjectDocument.xhtml">

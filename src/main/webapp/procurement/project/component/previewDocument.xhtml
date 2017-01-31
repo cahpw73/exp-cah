@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="col-md-12">
+        <h:form id="previewDocMainFormDlg#{id}">
+            <h:inputTextarea value="#{bean.description}" id="editorValue#{id}"  styleClass="textCKEditor"
+                         style="position: absolute; top:-200px"/>
+            <textarea id="editorPr#{id}" name="editorPr#{id}" style="width: 730px!important; height: 275px!important;" disabled="disabled">
+                <h:outputText value="#{bean.description}"/>
+            </textarea>
+            <script type="text/javascript">
+                CKEDITOR.replace('editorPr#{id}');
+            </script>
+            <br/>
+            <p:commandLink value="#{msgs['lbl.preview.pdf']}" process="previewDocMainFormDlg#{id}" rendered="#{previewId eq 'previewDocTemp1'}"
+                           update=":previewPDFProjectHtmlModalId1" oncomplete="PF('previewPDFProjectHtml1').show()"
+                           async="false" styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
+                           action="#{documentBean.createMainDocPdfFile}">
+            </p:commandLink>
+            <p:commandLink value="#{msgs['lbl.preview.pdf']}" process="previewDocMainFormDlg#{id}" rendered="#{previewId eq 'previewProjectDoc1'}"
+                           update=":previewPDFProjectHtmlModalId2" oncomplete="PF('previewPDFProjectHtml2').show()"
+                           async="false" styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
+                           action="#{documentBean.createProjectDocPdfFile}"/>
+            &#160;
+            <button class="btn btn-primary btn-sm"
+                    onclick="PF('#{previewId}').hide();"
+                    type="button">
+                #{msgs['lbl.cancel']}
+            </button>
+
+        </h:form>
+    </div>
+ </ui:composition>
