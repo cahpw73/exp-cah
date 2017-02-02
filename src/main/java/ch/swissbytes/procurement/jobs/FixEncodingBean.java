@@ -74,7 +74,7 @@ public class FixEncodingBean implements Serializable {
     public void fixTextEncode() {
         log.info("running process to fixTextEncode.");
 
-        List<TextSnippetEntity> textSnippetList = mainTextSnippetService.getAllTextSnippetList();
+        /*List<TextSnippetEntity> textSnippetList = mainTextSnippetService.getAllTextSnippetList();
         for(TextSnippetEntity t : textSnippetList){
             t.setDescriptionSnippet(t.getTextSnippet());
             mainTextSnippetService.doUpdate(t);
@@ -108,7 +108,7 @@ public class FixEncodingBean implements Serializable {
         for(PODocumentEntity p : poDocumentList){
             p.setDescriptionDocument(p.getDescription());
             poDocumentService.doUpdate(p);
-        }
+        }*/
 
 
         log.info("finalize job.");

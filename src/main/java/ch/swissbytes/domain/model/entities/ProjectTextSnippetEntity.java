@@ -26,7 +26,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     private ProjectEntity project;
     private TextSnippetEntity textSnippet;
     private PurchaseOrderEntity purchaseOrder;
-    private String descriptionSnippet;
+    //private String descriptionSnippet;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -50,7 +50,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
     }
 
 
-    //@Lob
+    @Lob
     @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
@@ -60,7 +60,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
         this.description = description;
     }
 
-    @Size(max = 100000)
+   /* @Size(max = 100000)
     @Column(name = "description_snippet", nullable = true, length = 100000)
     public String getDescriptionSnippet() {
         return descriptionSnippet;
@@ -68,7 +68,7 @@ public class ProjectTextSnippetEntity extends RecordEditable<ProjectTextSnippetE
 
     public void setDescriptionSnippet(String descriptionSnippet) {
         this.descriptionSnippet = descriptionSnippet;
-    }
+    }*/
 
     @Column (name = "status",nullable = false)
     @Enumerated(EnumType.ORDINAL)

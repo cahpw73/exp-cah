@@ -23,7 +23,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
     private StatusEnum status;
     private Date lastUpdate;
     private ProjectEntity project;
-    private String descriptionSnippet;
+    //private String descriptionSnippet;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -59,7 +59,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
     }
 
 
-    //@Lob
+    @Lob
     @Column(name = "TEXT_SNIPPET", nullable = true)
     public String getTextSnippet() {
         return textSnippet;
@@ -69,7 +69,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
         this.textSnippet = textSnippet;
     }
 
-    @Size(max = 100000)
+    /*@Size(max = 100000)
     @Column(name = "description_snippet", nullable = true, length = 100000)
     public String getDescriptionSnippet() {
         return descriptionSnippet;
@@ -77,7 +77,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
 
     public void setDescriptionSnippet(String descriptionSnippet) {
         this.descriptionSnippet = descriptionSnippet;
-    }
+    }*/
 
     @Size(max = 250)
     @Column(name = "code", nullable = false, length = 250)
@@ -107,8 +107,8 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
         TextSnippetEntity that = (TextSnippetEntity) o;
 
         if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (descriptionSnippet != null ? !descriptionSnippet.equals(that.descriptionSnippet) : that.descriptionSnippet != null)
-            return false;
+        /*if (descriptionSnippet != null ? !descriptionSnippet.equals(that.descriptionSnippet) : that.descriptionSnippet != null)
+            return false;*/
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (lastUpdate != null ? !lastUpdate.equals(that.lastUpdate) : that.lastUpdate != null) return false;
         if (project != null ? !project.equals(that.project) : that.project != null) return false;
@@ -126,7 +126,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
         result = 31 * result + (project != null ? project.hashCode() : 0);
-        result = 31 * result + (descriptionSnippet != null ? descriptionSnippet.hashCode() : 0);
+        //result = 31 * result + (descriptionSnippet != null ? descriptionSnippet.hashCode() : 0);
         return result;
     }
 }

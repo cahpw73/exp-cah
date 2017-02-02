@@ -45,7 +45,7 @@ public class ProjectDocumentService implements Serializable {
             mainDocument.setLastUpdate(new Date());
             mainDocument.setStatus(StatusEnum.ENABLE);
             mainDocument.setDescription(entity.getDescription());
-            mainDocument.setDescriptionDocument(entity.getDescriptionDocument());
+            //mainDocument.setDescriptionDocument(entity.getDescriptionDocument());
             mainDocument.setProject(entity.getProject());
             dao.saveAndFlush(mainDocument);
         }

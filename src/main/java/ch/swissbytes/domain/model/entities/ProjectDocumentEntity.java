@@ -26,7 +26,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
     private MainDocumentEntity mainDocumentEntity;
     private PurchaseOrderEntity purchaseOrder;
     private AttachmentMainDocumentEntity attachmentProjectDocument;
-    private String descriptionDocument;
+    //private String descriptionDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -61,7 +61,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
         this.lastUpdate = lastUpdate;
     }
 
-    //@Lob
+    @Lob
     @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
@@ -80,7 +80,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
         this.code = code;
     }
 
-    @Size(max = 100000)
+    /*@Size(max = 100000)
     @Column(name = "description_document", nullable = true, length = 100000)
     public String getDescriptionDocument() {
         return descriptionDocument;
@@ -88,7 +88,7 @@ public class ProjectDocumentEntity extends RecordEditable<ProjectDocumentEntity>
 
     public void setDescriptionDocument(String descriptionDocument) {
         this.descriptionDocument = descriptionDocument;
-    }
+    }*/
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="project_id", nullable = false)
