@@ -58,12 +58,11 @@
                                 <h:form id="editForm" prependId="false" style="width: 734px!important;">
                                     <h:inputText id="codeTS" value="#{mainDocumentBean.mainDocument.code}"
                                                  jsf:placeholder="Enter code"
-                                                 required="true" style="text-transform: uppercase;"
-                                                 requiredMessage="Enter valid code"
+                                                 style="text-transform: uppercase;"
                                                  styleClass="form-control" maxlength="50"/>
                                     <p:message for="codeTS"/>
                                     <br/>
-                                    <h:inputTextarea value="#{mainDocumentBean.mainDocument.description}" id="editorValue"  styleClass="textCKEditor"
+                                    <h:inputTextarea  value="#{mainDocumentBean.mainDocument.description}" id="editorValue"  styleClass="textCKEditor"
                                                  style="position: absolute; top:-200px"/>
                                     <textarea cols="140" rows="40" id="editor1" name="editor1">
                                     </textarea>
@@ -82,11 +81,16 @@
                                                    async="false" update=":addPdfGrpId" process="@this"
                                                    onclick="doChangeProc();">
                                     </p:commandLink>
+                                    &#160;
+                                    <p:commandLink value="#{msgs['lbl.preview']}" process="@form"
+                                                   onclick="document.getElementsByClassName('textCKEditor')[0].value = CKEDITOR.instances.editor1.getData();"
+                                                   update=":previewPDFProjectHtmlModalId1 :textSnippetGlbMsgs"
+                                                   async="false" styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
+                                                   action="#{mainDocumentBean.createMainDocPdfFile}"/>
+                                    <script type="text/javascript">
+                                        CKEDITOR.replace('editor1');
+                                    </script>
                                 </h:form>
-                                <script type="text/javascript">
-                                    CKEDITOR.replace('editor1');
-                                </script>
-
                             </div>
                             <br/>
                             <div>
@@ -134,6 +138,12 @@
                                                    message="Are you sure delete this Other Document Template?"/>
                                     </p:commandLink>
                                     &#160;
+                                    <p:commandLink value="#{msgs['lbl.preview']}" process="@form"
+                                                   onclick="document.getElementsByClassName('textCKEditor2')[0].value = CKEDITOR.instances.editor2.getData();"
+                                                   update=":previewPDFProjectHtmlModalId2" oncomplete="PF('previewPDFProjectHtml2').show()"
+                                                   async="false" styleClass="btn btn-primary btn-commandLink-primeFaces" style="color:#ffffff"
+                                                   action="#{mainDocumentBean.previewMainDocPdfSelect}"/>
+                                    &#160;
                                     <h:link value="#{msgs['lbl.cancel']}"
                                             disabled="#{mainDocumentBean.selected eq null}"
                                             styleClass="btn btn-primary btn-sm #{mainDocumentBean.selected eq null?'disabled':''}"
@@ -159,6 +169,22 @@
         <p:dialog header="Add Pdf" widgetVar="addPdfModal" resizable="false" width="450" style="overflow: hidden" modal="true">
             <h:panelGroup id="addPdfGrpId">
                 <ui:include src="component/previewPdf.xhtml"/>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml1" width="1000" height="600" resizable="false">
+            <h:panelGroup id="previewPDFProjectHtmlModalId1">
+                <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
+                    <ui:param name="pathfile" value="#{mainDocumentBean.tempFilePdfPath}"/>
+                    <ui:param name="id" value="1"/>
+                </ui:include>
+            </h:panelGroup>
+        </p:dialog>
+        <p:dialog header="Preview Doc Template" widgetVar="previewPDFProjectHtml2" width="1000" height="600" resizable="false">
+            <h:panelGroup id="previewPDFProjectHtmlModalId2">
+                <ui:include src="component/previewPDFDocumentFromHtml.xhtml">
+                    <ui:param name="pathfile" value="#{mainDocumentBean.tempFilePdfPath}"/>
+                    <ui:param name="id" value="2"/>
+                </ui:include>
             </h:panelGroup>
         </p:dialog>
     </ui:define>

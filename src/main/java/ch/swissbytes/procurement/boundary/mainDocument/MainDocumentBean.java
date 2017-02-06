@@ -7,7 +7,9 @@ import ch.swissbytes.Service.business.projectDocument.ProjectDocumentService;
 import ch.swissbytes.domain.model.entities.AttachmentMainDocumentEntity;
 import ch.swissbytes.domain.model.entities.MainDocumentEntity;
 import ch.swissbytes.domain.types.ModeOperationEnum;
+import ch.swissbytes.procurement.util.FileUtil;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
@@ -21,10 +23,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -59,6 +58,8 @@ public class MainDocumentBean implements Serializable {
     private String criteria;
 
     private AttachmentMainDocumentEntity attachmentMainDocument;
+
+    private String tempFilePdfPath = "";
 
     @PostConstruct
     public void create() {
@@ -102,6 +103,14 @@ public class MainDocumentBean implements Serializable {
 
     private boolean validate(MainDocumentEntity entity) {
         boolean valid = true;
+        if(StringUtils.isEmpty(entity.getCode())){
+            Messages.addFlashGlobalError("Enter valid code");
+            valid = false;
+        }
+        if(StringUtils.isEmpty(entity.getDescription())){
+            Messages.addFlashGlobalError("Enter valid text");
+            valid = false;
+        }
         if (service.isCodeDuplicated(entity.getId(), entity.getCode())) {
             Messages.addFlashError("codeTS", String.format("Code [%s] is duplicated ", entity.getCode()));
             valid = false;
@@ -206,6 +215,45 @@ public class MainDocumentBean implements Serializable {
         }
     }
 
+    public void createMainDocPdfFile(){
+        log.info("createMainDocPdfFile()");
+        if(StringUtils.isNotEmpty(mainDocument.getCode())){
+            log.info("the code is not null");
+            String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+            String fileName = new Date().getTime()+"";
+            FileUtil fileUtil = new FileUtil();
+            try {
+                log.info("creating file on path = " + pathTempPdf);
+                fileUtil.saveFileTemporal(mainDocument.getDescription(),pathTempPdf,fileName);
+                tempFilePdfPath = pathTempPdf + File.separator + fileName;
+                log.info("tempFilePdfPath = "  + tempFilePdfPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('previewPDFProjectHtml1').show();");
+        }else{
+            log.info("the code is null");
+            Messages.addFlashGlobalError("Enter valid code");
+        }
+
+    }
+
+    public void previewMainDocPdfSelect(){
+        log.info("createMainDocPdfFile()");
+        String pathTempPdf = System.getProperty("fqmes.path.preview.pdf");
+        String fileName = new Date().getTime()+"";
+        FileUtil fileUtil = new FileUtil();
+        try {
+            log.info("creating file on path = " + pathTempPdf);
+            fileUtil.saveFileTemporal(selected.getDescription(),pathTempPdf,fileName);
+            tempFilePdfPath = pathTempPdf + File.separator + fileName;
+            log.info("tempFilePdfPath = "  + tempFilePdfPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public String getCriteria() {
         return criteria;
@@ -245,5 +293,13 @@ public class MainDocumentBean implements Serializable {
 
     public void setAttachmentMainDocument(AttachmentMainDocumentEntity attachmentMainDocument) {
         this.attachmentMainDocument = attachmentMainDocument;
+    }
+
+    public String getTempFilePdfPath() {
+        return tempFilePdfPath;
+    }
+
+    public void setTempFilePdfPath(String tempFilePdfPath) {
+        this.tempFilePdfPath = tempFilePdfPath;
     }
 }
