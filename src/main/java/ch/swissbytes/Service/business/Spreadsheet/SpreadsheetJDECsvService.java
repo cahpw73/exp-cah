@@ -155,6 +155,7 @@ public class SpreadsheetJDECsvService implements Serializable {
     }
 
     private void fillingDetailContent(final PurchaseOrderEntity entity,final ItemEntity item,final PurchaseOrderEntity originalPO,final CashflowEntity cashflowEntity) {
+        log.info("fillingDetailContent(final PurchaseOrderEntity entity,final ItemEntity item,final PurchaseOrderEntity originalPO,final CashflowEntity cashflowEntity)");
         Util util = new Util();
         util.setConfiguration(configuration);
         processor.writeStringValue(0, entity.getProjectEntity().getTitle() != null ? entity.getProjectEntity().getTitle() : " ");
@@ -162,7 +163,9 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(2, entity.getPoTitle() != null ? entity.getPoTitle() : " ");
         processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getPoint() != null ? entity.getPurchaseOrderProcurementEntity().getPoint() : " ");
         processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier() != null ? entity.getPurchaseOrderProcurementEntity().getSupplier().getSupplierId() : " ");
-        String deliveryInstruction = entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction().replace("\n", "").replace("\r", "");
+        String deliveryInstruction = entity.getPurchaseOrderProcurementEntity().getDeliveryInstruction();
+        deliveryInstruction = deliveryInstruction.replace("\n", "").replace("\r", "");
+        log.info("deliveryInstruction = " + deliveryInstruction);
         processor.writeStringValue(5, deliveryInstruction != null ? (deliveryInstruction.length() >= 30 ? deliveryInstruction.substring(0, 29) : deliveryInstruction) : " ");
         processor.writeStringValue(6, collectMRNo(entity));
         processor.writeStringValue(7, collectRTFNo(entity));
