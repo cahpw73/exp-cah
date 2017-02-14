@@ -23,7 +23,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
     private StatusEnum status;
     private Date lastUpdate;
     private ProjectEntity project;
-    //private String descriptionSnippet;
+    private String descriptionSnippet;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -59,7 +59,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
     }
 
 
-    @Lob
+    //@Lob
     @Column(name = "TEXT_SNIPPET", nullable = true)
     public String getTextSnippet() {
         return textSnippet;
@@ -69,7 +69,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
         this.textSnippet = textSnippet;
     }
 
-    /*@Size(max = 100000)
+    @Size(max = 100000)
     @Column(name = "description_snippet", nullable = true, length = 100000)
     public String getDescriptionSnippet() {
         return descriptionSnippet;
@@ -77,7 +77,7 @@ public class TextSnippetEntity extends RecordEditable<TextSnippetEntity> impleme
 
     public void setDescriptionSnippet(String descriptionSnippet) {
         this.descriptionSnippet = descriptionSnippet;
-    }*/
+    }
 
     @Size(max = 250)
     @Column(name = "code", nullable = false, length = 250)

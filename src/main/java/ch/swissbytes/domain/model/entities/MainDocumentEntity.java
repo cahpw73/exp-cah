@@ -24,7 +24,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
     private Date lastUpdate;
     private AttachmentMainDocumentEntity attachmentMainDocument;
     private ProjectEntity project;
-    //private String descriptionDocument;
+    private String descriptionDocument;
 
     @Id
     @Column(name = "id", unique = true, nullable = false)
@@ -59,7 +59,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
         this.lastUpdate = lastUpdate;
     }
 
-    @Lob
+    //@Lob
     @Column(name = "description", nullable = true)
     public String getDescription() {
         return description;
@@ -69,7 +69,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
         this.description = description;
     }
 
-    /*@Size(max = 100000)
+    @Size(max = 100000)
     @Column(name = "description_document", nullable = true, length = 100000)
     public String getDescriptionDocument() {
         return descriptionDocument;
@@ -77,7 +77,7 @@ public class MainDocumentEntity extends RecordEditable<MainDocumentEntity> imple
 
     public void setDescriptionDocument(String descriptionDocument) {
         this.descriptionDocument = descriptionDocument;
-    }*/
+    }
 
     @Size(max = 250)
     @Column(name = "code", nullable = false, length = 250)

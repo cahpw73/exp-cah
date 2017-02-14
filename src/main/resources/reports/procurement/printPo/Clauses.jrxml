@@ -31,7 +31,7 @@
 	<parameter name="poId" class="java.lang.Long"/>
 	<parameter name="clauseList" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<queryString>
-		<![CDATA[select convert_from(loread(lo_open(clauses::int, x'40000'::int), x'40000'::int),  'WIN1252') as clause, number_clause,ordered+1 as index
+		<![CDATA[select clauses as clause, number_clause,ordered+1 as index
 from clauses_text cx
 inner join text tx on cx.text_id=tx.id
 where tx.status=0  and cx.status=0 and po_id=$P{poId}
