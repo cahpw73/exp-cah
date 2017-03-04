@@ -110,6 +110,7 @@ public class ExportationPOBean implements Serializable {
         pathAbsolute = pathCMS;
         exporter.generateWorkbookToExport(list, fName);
         for (PurchaseOrderEntity po : list) {
+            log.info("PO ["+po.getProject()+"-"+po.getPo()+" "+po.getVariation()+"]");
             exportCsvPOModifyValidationButtons(po.getPurchaseOrderProcurementEntity());
             poService.markCMSAsExported(po);
         }

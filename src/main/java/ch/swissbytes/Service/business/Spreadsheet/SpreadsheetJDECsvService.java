@@ -2,6 +2,7 @@ package ch.swissbytes.Service.business.Spreadsheet;
 
 import ch.swissbytes.Service.business.cashflow.CashflowService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.requisition.RequisitionDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyDao;
 import ch.swissbytes.Service.business.scopesupply.ScopeSupplyService;
 import ch.swissbytes.domain.model.entities.*;
@@ -42,6 +43,8 @@ public class SpreadsheetJDECsvService implements Serializable {
     private ScopeSupplyService scopeSupplyService;
     @Inject
     private Util util;
+    @Inject
+    private RequisitionDao requisitionDao;
 
     public SpreadsheetProcessor processor;
 
@@ -169,18 +172,27 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(5, deliveryInstruction != null ? (deliveryInstruction.length() >= 30 ? deliveryInstruction.substring(0, 29) : deliveryInstruction) : " ");
         processor.writeStringValue(6, collectMRNo(entity));
         processor.writeStringValue(7, collectRTFNo(entity));
+
         Date originalOrderDate = originalPO != null ? originalPO.getPurchaseOrderProcurementEntity().getOrderDate() : entity.getPurchaseOrderProcurementEntity().getOrderDate();
+        log.info("orderDate = " + originalOrderDate);
         processor.writeStringValue(8, originalOrderDate != null ? configuration.convertDateToExportFileCsv(originalOrderDate) : " ");
-        Date originalDeliveryDate = originalPO != null ? originalPO.getPoDeliveryDate() : entity.getPoDeliveryDate();
+
         entity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(entity.getPurchaseOrderProcurementEntity().getOrderDate(), configuration.getTimeZone()));
+        log.info("entity orderDate = " + entity.getPurchaseOrderProcurementEntity().getOrderDate());
         if(originalPO!=null) {
             originalPO.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(originalPO.getPurchaseOrderProcurementEntity().getOrderDate(), configuration.getTimeZone()));
         }
+
+        Date originalDeliveryDate = originalPO != null ? originalPO.getPoDeliveryDate() : entity.getPoDeliveryDate();
+        log.info("deliveryDate = " + originalDeliveryDate);
+        processor.writeStringValue(9, originalDeliveryDate != null ? configuration.convertDateToExportFileCsv(originalDeliveryDate) : " ");
+
         entity.setPoDeliveryDate(Util.convertUTC(entity.getPoDeliveryDate(), configuration.getTimeZone()));
-        if(originalPO!=null) {
+        log.info("entity deliveryDate = " + entity.getPoDeliveryDate());
+        if(originalPO != null) {
             originalPO.setPoDeliveryDate(Util.convertUTC(originalPO.getPoDeliveryDate(), configuration.getTimeZone()));
         }
-        processor.writeStringValue(9, originalDeliveryDate != null ? configuration.convertDateToExportFileCsv(originalDeliveryDate) : " ");
+
         processor.writeStringValue(10, entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : " ");
         processor.writeStringValue(11, entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getExchangeRateVariation()).toUpperCase() : " ");
         processor.writeStringValue(12, entity.getPurchaseOrderProcurementEntity().getVendorDrawingData() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getVendorDrawingData()).toUpperCase() : " ");
@@ -201,17 +213,23 @@ public class SpreadsheetJDECsvService implements Serializable {
     }
 
     private String collectMRNo(PurchaseOrderEntity po) {
+        log.info("collection MRNo ");
         StringBuilder sb = new StringBuilder();
-        for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
+        List<RequisitionEntity> list  = requisitionDao.findRequisitionByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId());
+        for (RequisitionEntity requisitionEntity : list) {
             sb.append(requisitionEntity.getRequisitionNumber());
             sb.append("-");
         }
-        return sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : " ";
+        String mrno = sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : " ";
+        log.info("MRNo = " + mrno);
+        return mrno;
     }
 
     private String collectRTFNo(PurchaseOrderEntity po) {
+        log.info("Collection RTFNo");
         StringBuilder sb = new StringBuilder();
-        for (RequisitionEntity requisitionEntity : po.getPurchaseOrderProcurementEntity().getRequisitions()) {
+        List<RequisitionEntity> list  = requisitionDao.findRequisitionByPurchaseOrder(po.getPurchaseOrderProcurementEntity().getId());
+        for (RequisitionEntity requisitionEntity : list) {
             if (StringUtils.isNotEmpty(requisitionEntity.getrTFNo()) && StringUtils.isNotBlank(requisitionEntity.getrTFNo())) {
                 sb.append(requisitionEntity.getrTFNo());
             } else if (StringUtils.isNotEmpty(requisitionEntity.getOriginator()) && StringUtils.isNotBlank(requisitionEntity.getOriginator())) {
@@ -219,7 +237,9 @@ public class SpreadsheetJDECsvService implements Serializable {
             }
             sb.append("-");
         }
-        return sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : " ";
+        String rtfno =  sb.toString().length() > 0 ? sb.toString().substring(0, sb.toString().length() - 1) : " ";
+        log.info("RTFNo = " + rtfno);
+        return rtfno;
     }
 
     private String getValueBankGuarantee(CashflowEntity cashflowEntity) {
