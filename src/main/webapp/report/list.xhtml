@@ -298,20 +298,23 @@
 
                 </div>
                 <br/>
-                <div>
-                    <h:outputLabel value="#{msgs['report.purchase.order.btn.get.ex.works.report.label']}"/>
-                    &#160;
-                    <h:commandLink styleClass="btn btn-primary btn-sm"
-                                   value="#{msgs['report.purchase.order.btn.get.pdf.label']}"
-                                   action="#{reportBean.printPlannerReport()}"
-                                   target="_blank" style="margin-left: 75px;"/>
-                    &#160;
-                    <h:commandButton styleClass="btn btn-primary btn-sm"
-                                     onclick="PrimeFaces.monitorDownload(start, stop);"
-                                     value="#{msgs['report.purchase.order.btn.get.xls.label']}">
-                        <p:fileDownload value="#{reportBean.downloadExWorksReportFileExport()}"/>
-                    </h:commandButton>
-                </div>
+                <h:panelGroup rendered="#{reportBean.canAccessToExWorksReport()}">
+                    <div>
+                        <h:outputLabel value="#{msgs['report.purchase.order.btn.get.ex.works.report.label']}"/>
+                        &#160;
+                        <h:commandLink styleClass="btn btn-primary btn-sm"
+                                       value="#{msgs['report.purchase.order.btn.get.pdf.label']}"
+                                       action="#{reportBean.printPlannerReport()}"
+                                       target="_blank" style="margin-left: 65px; display: none"/>
+                        &#160;
+                        <h:commandButton styleClass="btn btn-primary btn-sm"
+                                         onclick="PrimeFaces.monitorDownload(start, stop);"
+                                         value="#{msgs['report.purchase.order.btn.get.xls.label']}"
+                                         style="margin-left: 136px;">
+                            <p:fileDownload value="#{reportBean.downloadExWorksReportFileExport()}"/>
+                        </h:commandButton>
+                    </div>
+                </h:panelGroup>
             </div>
         </h:form>
 

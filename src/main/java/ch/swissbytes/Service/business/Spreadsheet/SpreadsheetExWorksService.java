@@ -109,8 +109,8 @@ public class SpreadsheetExWorksService implements Serializable {
         processor.configureWithColumn(18,3000);
         processor.configureWithColumn(19,3000);
         processor.configureWithColumn(20,3000);
-        processor.configureWithColumn(21,5000);
-        processor.configureWithColumn(22,5000);
+        processor.configureWithColumn(21,6000);
+        processor.configureWithColumn(22,6000);
     }
     private void createHeaderPO() {
         processor.createRowWithHeight(2,(short)600);
@@ -139,7 +139,7 @@ public class SpreadsheetExWorksService implements Serializable {
         processor.writeStringValueWithStyles(18, "Actual Site Date",styles);
         processor.writeStringValueWithStyles(19, "Required on Site Date",styles);
         processor.writeStringValueWithStyles(20, "Var",styles);
-        processor.writeStringValueWithStyles(21, "Ex Works Date - PO Delivery date",styles);
+        processor.writeStringValueWithStyles(21, "Forecast Ex Works Date - PO Delivery date",styles);
         processor.writeStringValueWithStyles(22, "Forecast Ex Works Date - Required on site date",styles);
     }
 

@@ -6,10 +6,15 @@ import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetJobSummaryService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetPlannerService;
 import ch.swissbytes.Service.business.Spreadsheet.SpreadsheetReceivableManifestService;
 import ch.swissbytes.Service.business.purchase.PurchaseOrderService;
+import ch.swissbytes.Service.business.userRole.UserRoleService;
 import ch.swissbytes.domain.model.entities.ExpeditingStatusEntity;
 import ch.swissbytes.domain.model.entities.PurchaseOrderEntity;
+import ch.swissbytes.domain.model.entities.UserRoleEntity;
 import ch.swissbytes.domain.model.entities.VPurchaseOrder;
 import ch.swissbytes.domain.types.ExpeditingStatusEnum;
+import ch.swissbytes.domain.types.ModuleSystemEnum;
+import ch.swissbytes.domain.types.RoleEnum;
+import ch.swissbytes.fqm.boundary.UserSession;
 import ch.swissbytes.fqmes.boundary.purchase.PurchaseOrderViewTbl;
 import ch.swissbytes.fqmes.report.util.DocTypeEnum;
 import ch.swissbytes.fqmes.report.util.ReportView;
@@ -66,6 +71,12 @@ public class ReportBean implements Serializable {
 
     @Inject
     private SpreadsheetExWorksService spreadsheetExWorksService;
+
+    @Inject
+    private UserSession userSession;
+
+    @Inject
+    private UserRoleService userRoleService;
 
     private ResourceBundle bundle = ResourceBundle.getBundle("messages_en");
 
@@ -253,6 +264,15 @@ public class ReportBean implements Serializable {
 
         }
         return expeditingStatuses;
+    }
+
+    public boolean canAccessToExWorksReport(){
+        UserRoleEntity userRoleEntity = userRoleService.findByUserIdAndModuleSystem(userSession.getCurrentUser().getId(), ModuleSystemEnum.EXPEDITING);
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> roleEntity = " + userRoleEntity.getRole().getName());
+        if(RoleEnum.ADMINISTRATOR.equalsTo(userRoleEntity.getRole().getId()) || RoleEnum.SENIOR.equalsTo(userRoleEntity.getRole().getId())){
+            return true;
+        }
+        return false;
     }
 
 
