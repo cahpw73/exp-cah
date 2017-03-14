@@ -297,6 +297,21 @@
                                    target="_blank" style="margin-left: 34px;"/>
 
                 </div>
+                <br/>
+                <div>
+                    <h:outputLabel value="#{msgs['report.purchase.order.btn.get.ex.works.report.label']}"/>
+                    &#160;
+                    <h:commandLink styleClass="btn btn-primary btn-sm"
+                                   value="#{msgs['report.purchase.order.btn.get.pdf.label']}"
+                                   action="#{reportBean.printPlannerReport()}"
+                                   target="_blank" style="margin-left: 75px;"/>
+                    &#160;
+                    <h:commandButton styleClass="btn btn-primary btn-sm"
+                                     onclick="PrimeFaces.monitorDownload(start, stop);"
+                                     value="#{msgs['report.purchase.order.btn.get.xls.label']}">
+                        <p:fileDownload value="#{reportBean.downloadExWorksReportFileExport()}"/>
+                    </h:commandButton>
+                </div>
             </div>
         </h:form>
 

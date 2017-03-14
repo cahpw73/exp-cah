@@ -1,6 +1,8 @@
 package ch.swissbytes.procurement.util;
 
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
@@ -76,6 +78,20 @@ public class SpreadsheetProcessor implements Serializable {
         XSSFCellStyle style1 = workbook.createCellStyle();
         style1.setVerticalAlignment(XSSFCellStyle.VERTICAL_JUSTIFY);
         return style1;
+    }
+    public XSSFCellStyle getStyleForegroundColorRED(){
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setFillBackgroundColor(HSSFColor.RED.index);
+        style.setFillPattern(XSSFCellStyle.LESS_DOTS);
+        return style;
+    }
+
+    public XSSFCellStyle getStyleFontColorRED(){
+        XSSFCellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setColor(HSSFColor.RED.index);
+        style.setFont(font);
+        return style;
     }
 
     public void writeStringBoldValue(int colNo, String value) {

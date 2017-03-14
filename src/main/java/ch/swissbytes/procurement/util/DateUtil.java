@@ -1,6 +1,7 @@
 package ch.swissbytes.procurement.util;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
@@ -499,6 +500,12 @@ public class DateUtil {
         cal.setTime(currentDate);
         cal.add(Calendar.DATE,days);
         return cal.getTime();
+    }
+
+    public static int numberOfDaysBetween(Date startDate, Date endDate){
+        DateTime startDateJd = new DateTime(startDate);
+        DateTime endDateJd = new DateTime(endDate);
+        return Days.daysBetween(startDateJd, endDateJd).getDays();
     }
 
     public static void main(String[] args) {
