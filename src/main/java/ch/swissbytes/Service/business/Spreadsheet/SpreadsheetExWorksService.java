@@ -103,14 +103,9 @@ public class SpreadsheetExWorksService implements Serializable {
         processor.configureWithColumn(13,3000);
         processor.configureWithColumn(14,3000);
         processor.configureWithColumn(15,3000);
-        //processor.configureWithColumn(16,3000);
         processor.configureWithColumn(16,3000);
-        processor.configureWithColumn(17,3000);
-        processor.configureWithColumn(18,3000);
-        processor.configureWithColumn(19,3000);
-        processor.configureWithColumn(20,3000);
-        processor.configureWithColumn(21,6000);
-        processor.configureWithColumn(22,6000);
+        processor.configureWithColumn(17,8500);
+        processor.configureWithColumn(18,7500);
     }
     private void createHeaderPO() {
         processor.createRowWithHeight(2,(short)600);
@@ -119,28 +114,23 @@ public class SpreadsheetExWorksService implements Serializable {
         styles.add(processor.getStyleVerticalJustify());
         processor.writeStringValueWithStyles(0, "PO", styles);
         processor.writeStringValueWithStyles(1, "Title",styles);
-        processor.writeStringValueWithStyles(2, "PO Del Date",styles);
-        processor.writeStringValueWithStyles(3, "INCO Term",styles);
-        processor.writeStringValueWithStyles(4, "Supplier",styles);
-        processor.writeStringValueWithStyles(5, "Status",styles);
-        processor.writeStringValueWithStyles(6, "Rfe",styles);
-        processor.writeStringValueWithStyles(7, "Item No",styles);
-        processor.writeStringValueWithStyles(8, "Qty",styles);
-        processor.writeStringValueWithStyles(9, "Unit",styles);
-        processor.writeStringValueWithStyles(10, "Item Description", styles);
-        processor.writeStringValueWithStyles(11, "Equipment Tag",styles);
-        processor.writeStringValueWithStyles(12, "Shipping Details",styles);
-        processor.writeStringValueWithStyles(13, "Full Inco Term",styles);
-        processor.writeStringValueWithStyles(14, "PO Delivery Date",styles);
-        processor.writeStringValueWithStyles(15, "Forecast Ex Works Date",styles);
-        //processor.writeStringValueWithStyles(16, "Actual Ex Works",styles);
-        processor.writeStringValueWithStyles(16, "Lead Time",styles);
-        processor.writeStringValueWithStyles(17, "Forecast Site Date",styles);
-        processor.writeStringValueWithStyles(18, "Actual Site Date",styles);
-        processor.writeStringValueWithStyles(19, "Required on Site Date",styles);
-        processor.writeStringValueWithStyles(20, "Var",styles);
-        processor.writeStringValueWithStyles(21, "Forecast Ex Works Date - PO Delivery date",styles);
-        processor.writeStringValueWithStyles(22, "Forecast Ex Works Date - Required on site date",styles);
+        processor.writeStringValueWithStyles(2, "INCO Term",styles);
+        processor.writeStringValueWithStyles(3, "Supplier",styles);
+        processor.writeStringValueWithStyles(4, "Status",styles);
+        processor.writeStringValueWithStyles(5, "Rfe",styles);
+        processor.writeStringValueWithStyles(6, "Item No",styles);
+        processor.writeStringValueWithStyles(7, "Qty",styles);
+        processor.writeStringValueWithStyles(8, "Unit",styles);
+        processor.writeStringValueWithStyles(9, "Item Description", styles);
+        processor.writeStringValueWithStyles(10, "Equipment Tag",styles);
+        processor.writeStringValueWithStyles(11, "Shipping Details",styles);
+        processor.writeStringValueWithStyles(12, "PO Delivery Date",styles);
+        processor.writeStringValueWithStyles(13, "Forecast Ex Works Date",styles);
+        processor.writeStringValueWithStyles(14, "Lead Time",styles);
+        processor.writeStringValueWithStyles(15, "Forecast Site Date",styles);
+        processor.writeStringValueWithStyles(16, "Required on Site Date",styles);
+        processor.writeStringValueWithStyles(17, "Difference in days between Forecast Ex Works Date and PO Delivery date",styles);
+        processor.writeStringValueWithStyles(18, "Difference in days between Forecast Site Date and ROS date",styles);
     }
 
     private void generateSpreadsheetPurchaseOrderDetail(final List<PurchaseOrderEntity> list) {
@@ -154,54 +144,49 @@ public class SpreadsheetExWorksService implements Serializable {
                             processor.createRow(rowNo);
                             processor.writeStringValue(0, entity.getProjectEntity().getProjectNumber() + " " + entity.getPo() + " v" + entity.getVariation());
                             processor.writeStringValue(1, entity.getPoTitle());
-                            processor.writeStringValue(2, entity.getPoDeliveryDate()!=null?Util.toLocal(entity.getPoDeliveryDate(), configuration.getTimeZone(), configuration.getFormatDate()):"");
-                            processor.writeStringValue(3, StringUtils.isNotEmpty(entity.getFullIncoTerms()) ? entity.getFullIncoTerms() : "");
-                            processor.writeStringValue(4, entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany());
-                            processor.writeStringValue(5, Util.getNamesStatuses(entity.getExpeditingStatus()).toUpperCase());
-                            processor.writeStringValue(6, entity.getResponsibleExpediting() != null ? entity.getResponsibleExpediting() : "");
-                            processor.writeStringValue(7, StringUtils.isNotEmpty(ss.getCode()) ? ss.getCode() : "");
-                            processor.writeStringValue(8, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
-                            processor.writeStringValue(9, StringUtils.isNotEmpty(ss.getUnit()) ? ss.getUnit() : "");
-                            processor.writeStringValue(10, StringUtils.isNotEmpty(ss.getDescription()) ? ss.getDescription() : "");
-                            processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
-                            processor.writeStringValue(12, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
-                            processor.writeStringValue(13, StringUtils.isNotEmpty(ss.getSpIncoTermDescription()) ? ss.getSpIncoTermDescription() : "");
-                            processor.writeStringValue(14, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(15, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            //processor.writeStringValue(16, ss.getActualExWorkDate() != null ? Util.toLocal(ss.getActualExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(2, StringUtils.isNotEmpty(entity.getFullIncoTerms()) ? entity.getFullIncoTerms() : "");
+                            processor.writeStringValue(3, entity.getPurchaseOrderProcurementEntity().getSupplier().getCompany());
+                            processor.writeStringValue(4, Util.getNamesStatuses(entity.getExpeditingStatus()).toUpperCase());
+                            processor.writeStringValue(5, entity.getResponsibleExpediting() != null ? entity.getResponsibleExpediting() : "");
+                            processor.writeStringValue(6, StringUtils.isNotEmpty(ss.getCode()) ? ss.getCode() : "");
+                            processor.writeStringValue(7, ss.getQuantity() != null ? decFormat.format(ss.getQuantity()) : "");
+                            processor.writeStringValue(8, StringUtils.isNotEmpty(ss.getUnit()) ? ss.getUnit() : "");
+                            String description = removedTagsHtml(ss.getDescription());
+                            processor.writeStringValue(9, description);
+                            processor.writeStringValue(10, StringUtils.isNotEmpty(ss.getTagNo()) ? ss.getTagNo() : "");
+                            processor.writeStringValue(11, StringUtils.isNotEmpty(ss.getShippingDetails()) ? ss.getShippingDetails() : "");
+                            processor.writeStringValue(12, ss.getPoDeliveryDate() != null ? Util.toLocal(ss.getPoDeliveryDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(13, ss.getForecastExWorkDate() != null ? Util.toLocal(ss.getForecastExWorkDate(), configuration.getTimeZone(), formatDateReport) : "");
                             String deliveryQt = ss.getDeliveryLeadTimeQt() != null ? String.valueOf(ss.getDeliveryLeadTimeQt().intValue()) : "";
                             String deliveryMt = ss.getDeliveryLeadTimeMs() != null ? bundle.getString("measurement.time." + ss.getDeliveryLeadTimeMs().name().toLowerCase()) : "";
-                            processor.writeStringValue(16, deliveryQt + " " + deliveryMt);
-                            processor.writeStringValue(17, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(18, ss.getActualSiteDate() != null ? Util.toLocal(ss.getActualSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            processor.writeStringValue(19, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
-                            Integer dateDiff = datePart(ss.getRequiredSiteDate(), ss.getForecastSiteDate());
-                            processor.writeStringValue(20, dateDiff != null ? String.valueOf(dateDiff.intValue()) : "");
+                            processor.writeStringValue(14, deliveryQt + " " + deliveryMt);
+                            processor.writeStringValue(15, ss.getForecastSiteDate() != null ? Util.toLocal(ss.getForecastSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
+                            processor.writeStringValue(16, ss.getRequiredSiteDate() != null ? Util.toLocal(ss.getRequiredSiteDate(), configuration.getTimeZone(), formatDateReport) : "");
 
                             if (ss.getForecastExWorkDate() != null && ss.getPoDeliveryDate() != null){
                                 int dateDiffForecastExWorksAndPoDelDate = DateUtil.numberOfDaysBetween(ss.getForecastExWorkDate(), ss.getPoDeliveryDate());
                                 if(dateDiffForecastExWorksAndPoDelDate >= 0) {
-                                    processor.writeStringValue(21, String.valueOf(dateDiffForecastExWorksAndPoDelDate));
+                                    processor.writeStringValue(17, String.valueOf(dateDiffForecastExWorksAndPoDelDate));
                                 }else if (dateDiffForecastExWorksAndPoDelDate < 0) {
                                     List<XSSFCellStyle> styles = new ArrayList<>();
                                     styles.add(processor.getStyleFontColorRED());
-                                    processor.writeStringValueWithStyles(21, String.valueOf(dateDiffForecastExWorksAndPoDelDate), styles);
+                                    processor.writeStringValueWithStyles(17, String.valueOf(dateDiffForecastExWorksAndPoDelDate), styles);
                                 }
                             }else {
-                                processor.writeStringValue(21, "");
+                                processor.writeStringValue(17, "");
                             }
 
-                            if (ss.getForecastExWorkDate() != null && ss.getRequiredSiteDate() != null){
-                                int dateDiffForecastExWorksAndRequiredSiteDate = DateUtil.numberOfDaysBetween(ss.getForecastExWorkDate(), ss.getRequiredSiteDate());
+                            if (ss.getForecastSiteDate() != null && ss.getRequiredSiteDate() != null){
+                                int dateDiffForecastExWorksAndRequiredSiteDate = DateUtil.numberOfDaysBetween(ss.getForecastSiteDate(), ss.getRequiredSiteDate());
                                 if(dateDiffForecastExWorksAndRequiredSiteDate >= 0) {
-                                    processor.writeStringValue(22, String.valueOf(dateDiffForecastExWorksAndRequiredSiteDate) );
+                                    processor.writeStringValue(18, String.valueOf(dateDiffForecastExWorksAndRequiredSiteDate) );
                                 }else if(dateDiffForecastExWorksAndRequiredSiteDate < 0){
                                     List<XSSFCellStyle> styles = new ArrayList<>();
                                     styles.add(processor.getStyleFontColorRED());
-                                    processor.writeStringValueWithStyles(22, String.valueOf(dateDiffForecastExWorksAndRequiredSiteDate), styles);
+                                    processor.writeStringValueWithStyles(18, String.valueOf(dateDiffForecastExWorksAndRequiredSiteDate), styles);
                                 }
                             }else{
-                                processor.writeStringValue(22, "");
+                                processor.writeStringValue(18, "");
                             }
 
                             rowNo++;
@@ -210,6 +195,29 @@ public class SpreadsheetExWorksService implements Serializable {
                 }
             }
         }
+    }
+
+    private String removedTagsHtml(final String description){
+        if(StringUtils.isNotEmpty(description)){
+            String desc = description;
+            desc = desc.replace("<i>","");
+            desc = desc.replace("<b>","");
+            desc = desc.replace("<u>","");
+            desc = desc.replace("<h1>","");
+            desc = desc.replace("<h2>","");
+            desc = desc.replace("<h3>","");
+            desc = desc.replace("<p>","");
+
+            desc = desc.replace("</i>","");
+            desc = desc.replace("</b>","");
+            desc = desc.replace("</u>","");
+            desc = desc.replace("</h1>","");
+            desc = desc.replace("</h2>","");
+            desc = desc.replace("</h3>","");
+            desc = desc.replace("</p>","");
+            return desc;
+        }
+        return "";
     }
 
     private boolean hasScopeSupplyExcludeFromExpediting(List<ScopeSupplyEntity> list) {
