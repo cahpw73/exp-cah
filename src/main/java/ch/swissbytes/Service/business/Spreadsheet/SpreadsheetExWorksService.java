@@ -140,7 +140,7 @@ public class SpreadsheetExWorksService implements Serializable {
             if(hasScopeSupplyExcludeFromExpediting(scopeSupplyListList)){
                 if (!scopeSupplyListList.isEmpty()) {
                     for (ScopeSupplyEntity ss : scopeSupplyListList) {
-                        if(ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting()) {
+                        if((ss.getExcludeFromExpediting()==null || !ss.getExcludeFromExpediting()) && ss.getActualExWorkDate() == null) {
                             processor.createRow(rowNo);
                             processor.writeStringValue(0, entity.getProjectEntity().getProjectNumber() + " " + entity.getPo() + " v" + entity.getVariation());
                             processor.writeStringValue(1, entity.getPoTitle());
