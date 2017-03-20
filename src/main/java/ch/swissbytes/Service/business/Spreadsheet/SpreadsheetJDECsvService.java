@@ -329,7 +329,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         }
     }
 
-    private void fillingContentCashflowDetail(PurchaseOrderEntity entity, CashflowDetailEntity cashflowDetail) {
+    private void fillingContentCashflowDetail(final PurchaseOrderEntity entity, final CashflowDetailEntity cashflowDetail) {
         Util util = new Util();
         util.setConfiguration(configuration);
         DecimalFormat decFormat = new DecimalFormat(configuration.getPatternDecimalWithoutComma());
@@ -339,7 +339,18 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(3, cashflowDetail.getMilestone() != null ? cashflowDetail.getMilestone() : " ");
         processor.writeStringValue(4, cashflowDetail.getProjectCurrency() != null ? cashflowDetail.getProjectCurrency().getCurrency().getCode() : " ");
         processor.writeStringValue(5, cashflowDetail.getOrderAmt() != null ? decFormat.format(cashflowDetail.getOrderAmt()) : " ");
-        processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFileCsv(cashflowDetail.getPaymentDate()) : " ");
+        //processor.writeStringValue(6, cashflowDetail.getPaymentDate() != null ? configuration.convertDateToExportFileCsv(cashflowDetail.getPaymentDate()) : " ");
+
+        Date claimDate = cashflowDetail.getClaimDate() != null ? cashflowDetail.getClaimDate() : null;
+
+        processor.writeStringValue(6, claimDate != null ? configuration.convertDateToExportFileCsv(claimDate) : " ");
+
+        if(cashflowDetail.getClaimDate() != null) {
+            log.info(">>>>>>>>> Claim Date 1: " + cashflowDetail.getClaimDate());
+            cashflowDetail.setClaimDate(Util.convertUTC(cashflowDetail.getClaimDate(), configuration.getTimeZone()));
+            log.info(">>>>>>>>> Claim Date 2: " + cashflowDetail.getClaimDate());
+        }
+
     }
 
     private String generateFileName(String fileNameSource, String folderName) {
