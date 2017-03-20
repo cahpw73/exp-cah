@@ -140,16 +140,12 @@ public class SpreadsheetJDECsvService implements Serializable {
             log.info("PO id = " + entity.getId());
             List<ItemEntity> itemEntityList = scopeSupplyService.getItemsOrderedByCurrency(entity.getId());
             if (!itemEntityList.isEmpty()) {
-                PurchaseOrderEntity originalPO = null;
-                if (entity.getOrderedVariation() > 1) {
-                    originalPO = service.findFirstPO(entity);
-                }
                 CashflowEntity cashflowEntity = getCashflowEntity(entity);
                 processor.createRow(rowNo);
                 for (ItemEntity ss : itemEntityList) {
                     log.info("ItemEntity Id = " + ss.getId());
                     processor.createRow(rowNo);
-                    fillingDetailContent(entity, ss, originalPO, cashflowEntity);
+                    fillingDetailContent(entity, ss, cashflowEntity);
                     rowNo++;
                     log.info("rowNo: " + rowNo);
                 }
@@ -157,7 +153,7 @@ public class SpreadsheetJDECsvService implements Serializable {
         }
     }
 
-    private void fillingDetailContent(final PurchaseOrderEntity entity,final ItemEntity item,final PurchaseOrderEntity originalPO,final CashflowEntity cashflowEntity) {
+    private void fillingDetailContent(final PurchaseOrderEntity entity,final ItemEntity item,final CashflowEntity cashflowEntity) {
         log.info("fillingDetailContent(final PurchaseOrderEntity entity,final ItemEntity item,final PurchaseOrderEntity originalPO,final CashflowEntity cashflowEntity)");
         Util util = new Util();
         util.setConfiguration(configuration);
@@ -173,27 +169,24 @@ public class SpreadsheetJDECsvService implements Serializable {
         processor.writeStringValue(6, collectMRNo(entity));
         processor.writeStringValue(7, collectRTFNo(entity));
 
-        Date originalOrderDate = (originalPO != null && originalPO.getPurchaseOrderProcurementEntity().getOrderDate() != null) ? originalPO.getPurchaseOrderProcurementEntity().getOrderDate() : (entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? entity.getPurchaseOrderProcurementEntity().getOrderDate() : null);
+        Date originalOrderDate = entity.getPurchaseOrderProcurementEntity().getOrderDate() != null ? entity.getPurchaseOrderProcurementEntity().getOrderDate() : null;
 
         processor.writeStringValue(8, originalOrderDate != null ? configuration.convertDateToExportFileCsv(originalOrderDate) : " ");
 
         if(entity.getPurchaseOrderProcurementEntity().getOrderDate() != null) {
+            log.info(">>>>>>>>>>>> Order Date 1: " + entity.getPurchaseOrderProcurementEntity().getOrderDate());
             entity.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(entity.getPurchaseOrderProcurementEntity().getOrderDate(), configuration.getTimeZone()));
-        }
-        if(originalPO != null && originalPO.getPurchaseOrderProcurementEntity().getOrderDate() != null) {
-            originalPO.getPurchaseOrderProcurementEntity().setOrderDate(Util.convertUTC(originalPO.getPurchaseOrderProcurementEntity().getOrderDate(), configuration.getTimeZone()));
+            log.info(">>>>>>>>>>>> Order Date 2: " + entity.getPurchaseOrderProcurementEntity().getOrderDate());
         }
 
-        Date originalDeliveryDate = (originalPO != null && originalPO.getPoDeliveryDate() != null) ?  originalPO.getPoDeliveryDate() :(entity.getPoDeliveryDate() != null ? entity.getPoDeliveryDate() : null);
+        Date originalDeliveryDate = entity.getPoDeliveryDate() != null ? entity.getPoDeliveryDate() : null;
 
         processor.writeStringValue(9, originalDeliveryDate != null ? configuration.convertDateToExportFileCsv(originalDeliveryDate) : " ");
 
         if(entity.getPoDeliveryDate() != null) {
+            log.info(">>>>>>>>> Delivery Date 1: " + entity.getPoDeliveryDate());
             entity.setPoDeliveryDate(Util.convertUTC(entity.getPoDeliveryDate(), configuration.getTimeZone()));
-        }
-
-        if(originalPO != null && originalPO.getPoDeliveryDate() != null) {
-            originalPO.setPoDeliveryDate(Util.convertUTC(originalPO.getPoDeliveryDate(), configuration.getTimeZone()));
+            log.info(">>>>>>>>> Delivery Date 2: " + entity.getPoDeliveryDate());
         }
 
         processor.writeStringValue(10, entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable() != null ? BooleanUtils.toStringYesNo(entity.getPurchaseOrderProcurementEntity().getLiquidatedDamagesApplicable()).toUpperCase() : " ");

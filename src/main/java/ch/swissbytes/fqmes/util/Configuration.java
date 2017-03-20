@@ -156,7 +156,7 @@ public class Configuration implements Serializable {
         return converted;
     }
 
-    public String convertDateToExportFileCsv(Date date) {
+    public String convertDateToExportFileCsv(final Date date) {
         String converted = "";
         if (date != null) {
             DateTimeZone dtz = org.joda.time.DateTimeZone.forID(getTimeZone());
